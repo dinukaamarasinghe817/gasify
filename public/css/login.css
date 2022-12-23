@@ -1,0 +1,247 @@
+*,*::after,::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --button-orange: #FFC296;
+    --cancel-red: #FF4D4D;
+    --error-red: #c91919;
+    --success-green: #29a915;
+    --accept-blue: #80B3FF;
+    --table-gray: #EBEBEB;
+    --border-gray: #dddddd;
+    --navmenu-orange: #FFF8F3;
+    --navmenu-orange-dark: #F9896B;
+    --navmenu-gray-dark: #8A8B9F;
+    --button-blue: #3E8CFF;
+    --button-blue-hover: #1672fc;
+    --white: #ffffff;
+    --black: #000000;
+    --logo-background: #ffde59;
+    --shadow-wide: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --input-border: rgb(201, 201, 201) solid 1px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+a,button,input[type="file"]{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+h1{
+    font-size: 30px;
+    text-align: center;
+    padding: 5px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body{
+    display: inline-block;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 90%;
+    /* height: max-content; */
+    max-width: 1000px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-wide);
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px 0px 0px 10px;
+    width: 40%;
+    height: 100%;
+    background-color: var(--logo-background)
+}
+.form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 80%;
+    border-radius: 0px 10px 10px 0px;
+}
+.logo img{
+    border-radius: 10px;
+    max-width: 70%;
+    max-height: 70%;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width: 100%;
+    max-height: 100%;
+    margin: 15px;
+}
+form .error-txt{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #ffaeae;
+    color: var(--error-red);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: 0.5s ease;
+}
+form .success{
+    display: none;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #d0ffae;
+    color: var(--success-green);
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+form .error-txt p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+form .error-txt a{
+    height: 25px;
+    margin-left: auto;
+}
+form .error-txt svg path{
+    stroke: var(--error-red);
+}
+form .success svg path{
+    stroke: var(--success-green);
+}
+form .forgotpwd{
+    /* display: none;; */
+    width: fit-content;
+    justify-content: left;
+}
+form .forgotpwd a{
+    /* align-items: center; */
+    /* justify-content: center; */
+    display: flex;
+    color: var(--error-red);
+}
+form p{
+    text-align: center;
+}
+form .info{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    /* padding-bottom: 10px; */
+    max-height: 400px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-left: 10px;
+    border: 1px solid var(--border-gray);
+    border-radius: 4px;
+}
+.info label{
+    padding-bottom: 5px;
+    font-weight: 500;
+}
+.info input,
+.info select{
+    position: relative;
+    padding: 10px;
+    width: 90%;
+    margin-bottom: 10px;
+    margin-left: 1px;
+    border-radius: 5px;
+    /* this was usefull */
+    box-sizing: border-box;
+    border: var(--input-border)
+}
+/* .acc_no::-webkit-inner-spin-button,
+.acc_no::-webkit-outer-spin-button{
+    -webkit-appearance: none; 
+    margin: 0; 
+} */
+form button{
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--button-blue);
+    border: none;
+    border-radius: 5px;
+    color: var(--white);
+    font-size: medium;
+}
+form button:hover{
+    background-color: var(--button-blue-hover);
+}
+.info .address{
+    display: flex;
+    flex-direction: row;
+}
+input[type="file"]{
+    display: none;
+}
+label[for="image"]{
+    color: white;
+    padding: 10px;
+    width: max-content;
+    background-color: var(--navmenu-gray-dark);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+label[for="image"] svg path{
+    stroke: white;
+    stroke-width: 3;
+}
+.capacity .span{
+    display: flex;
+    flex-direction: row;
+}
+.capacity .span p{
+    padding: 10px;
+    margin-right: 20px;
+    display: flex;
+    align-items: top;
+    font-size: 13px;
+    width: 100px;
+}
+form .half{
+    margin-right: 20px;
+    width: 42.55%;
+}
+
+form .part{
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+
