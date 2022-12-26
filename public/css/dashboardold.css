@@ -22,10 +22,9 @@ table td{
     --button-orange: #ffbb96;
     --cancel-red: #FF4D4D;
     --error-red: #c91919;
-    --error-background: #ffaeae;
     --accept-blue: #80B3FF;
     --table-gray: #EBEBEB;
-    --navmenu-orange: #fff2e9;
+    --navmenu-orange: #FFF8F3;
     --navmenu-blue: #e8f6ff;
     --navmenu-orange-dark: #F9896B;
     --button-orange-hover: #f9a282;
@@ -99,10 +98,6 @@ body{
     min-width: 26px;
     min-height: 26px;
 }
-/* .leftpanel ul .panel-tile svg path{
-    stroke: var(--navmenu-gray-dark);
-} */
-/* when you hover teh panel-tile make this by js*/
 .leftpanel ul .panel-tile:hover svg path{
     stroke: var(--white);
 }
@@ -172,34 +167,23 @@ body{
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    z-index: 1;
 }
 .logout-menu {
-    /* box-sizing: border-box; */
-    z-index: 2;
+    z-index: 1;
     display: none;
     position: absolute;
     top: 16%;
-    /* right: 3%; */
-    width: 200px;
-    border-radius: 10px;
-    /* border: #8A8B9F solid 2px; */
-    background-color: var(--table-gray);
-}
-.logout-menu ul{
-    box-sizing: border-box;
-    width: 100%;
+    right: 3%;
+    width: 150px;
+    border: #8A8B9F solid 1px;
+    border-radius: 5px;
+    background-color: var(--white);
 }
 .logout-menu ul li{
-    background-color: var(--white);
     display: flex;;
     flex-direction: row;
-    /* justify-content: center; */
-    margin: 5px;
-    /* width: 100%; */
-    padding: 10px;
-    border-radius: 10px;
-    box-sizing: border-box;
+    /* justify-content: center;; */
+    padding: 8px 10px;
 }
 .logout-menu ul li a{
     margin-left: 10px;
@@ -219,33 +203,6 @@ body{
 /* onclick set this to fill */
 .body-header-right svg:hover{
     fill: var(--navmenu-orange-dark);
-}
-
-.logout-menu::before{
-    position: absolute;
-    content: '';
-    /* background-color: rgb(255, 255, 255); */
-    width: 0px;
-    height: 0px;
-    rotate: 45deg;
-    left: 58%;
-    top: -12px;
-    border-top: 15px solid var(--table-gray);
-    border-left: 15px solid var(--table-gray);
-    border-bottom: 15px solid transparent;
-    border-right: 15px solid transparent;
-}
-
-body.blur > *::before{
-    /* filter: blur(5px); */
-    /* opacity: 0.5; */
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-    background-color: Black;
-    z-index: 1;
 }
 
 
@@ -286,11 +243,6 @@ body.blur > *::before{
     height: 100%;
     color: var(--white);
     background-color: var(--button-orange-hover);
-
-    border-top: solid transparent;
-    border-bottom: solid transparent;
-    border-right: solid transparent;
-    border-left: solid transparent;
 }
 /* .top-panel ul li:hover{
     background-color: var(--button-orange);
@@ -302,16 +254,10 @@ body.blur > *::before{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-top: solid var(--button-orange-hover);
+    /* border-top: solid var(--button-orange-hover);
     border-bottom: solid var(--button-orange-hover);
     border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
-}
-.top-panel ul li .active:hover{
-    border-top: solid var(--button-orange-hover);
-    border-bottom: solid transparent;
-    border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
+    border-left: solid var(--button-orange-hover); */
 }
 .top-panel ul li .active{
     background-color: var(--white);
@@ -319,9 +265,9 @@ body.blur > *::before{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-top: solid var(--button-orange-hover);
+    /* border-top: solid var(--button-orange-hover);
     border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
+    border-left: solid var(--button-orange-hover); */
 }
 
 .body-content .content-data{
@@ -343,11 +289,12 @@ body.blur > *::before{
 }
 .body-content .content-data table{
     box-sizing: border-box;
-    /* padding: 20px; */
+    padding: 20px;
     width: 100%;
-    /* table-layout: fixed; */
-    /* border-collapse: collapse; */
-    /* margin: 25px 0; */
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 25px 0;
+    border: 1.5px solid var(--navmenu-gray-dark);
 }
 .content-data table th{
     box-sizing: border-box;
@@ -368,7 +315,6 @@ body.blur > *::before{
     height: 40px;
     text-align: left;
     padding-left: 10px;
-    border: 1.5px solid var(--navmenu-gray-dark);
 }
 .content-data table tr:nth-child(odd):hover,
 .content-data table tr:nth-child(even):hover{
@@ -379,7 +325,7 @@ table td input{
     width: 100%;
 }
 .content-data table td:not(:nth-child(3)){
-    /* padding: 10px; */
+    padding: 10px;
 }
 .content-data table tr:nth-last-child(2) td:nth-child(3){
     padding: 10px;
@@ -391,47 +337,8 @@ table td input{
 .content-data .po tr:nth-last-child(2){
     background-color: transparent;
 }
-.content-data table.po tr:nth-last-child(1) td:nth-child(4){
+.content-data table tr:nth-last-child(1) td:nth-child(4){
     padding: 0;
-}
-
-table tr{
-    border: 1px solid black;
-}
-table.history tr td:nth-child(2){
-    padding: 0px 0px;
-}
-td:nth-child(3),
-td:nth-child(4) {
-    max-width: 100px;
-    padding: 10px;
-}
-
-table .innertable{
-    margin: 0px 0px;
-    padding: 0px 0px;
-    border-collapse: unset;
-}
-
-table .innertable tr th{
-    background-color: #1672fc;
-    padding: 5px 10px;
-    height: 17px;
-}
-table.history .innertable tr td{
-    background-color: var(--table-gray);
-    padding: 10px;
-}
-.content-data table.innertable tr:nth-child(even){
-    background-color: var(--table-gray);
-}
-table.po{
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-table.po tr, 
-table.po tr td{
-    border: none;
 }
 
 /* po tab css */
@@ -527,14 +434,10 @@ td button:hover{
 }
 
 .variable .chart{
-    /* background-color: var(--table-gray); */
+    background-color: var(--table-gray);
     height: 300px;
     margin-top: 10px;
     border-radius: 10px;
-}
-
-.chart #bargraph{
-    height: 100%;
 }
 
 .body-left table{
@@ -572,7 +475,7 @@ td button:hover{
 .body-right .accordion{
     padding-left: 10px;
     box-sizing: border-box;
-    width: 100%;
+    width: 90%;
     border: 2px solid var(--table-gray);
     border-radius: 5px;
     padding: 10px;
@@ -675,13 +578,4 @@ td button:hover{
 }
 .accordion .box.active .content table tbody tr:nth-child(odd){
     background-color: var(--table-gray);
-}
-
-.error-txt{
-    width: 100%;
-    padding: 10px;
-    color: var(--error-red);
-    background-color: var(--error-background);
-    display: none;
-    justify-content: center;
 }

@@ -26,17 +26,17 @@ class Body{
                                     <p>Orders Recieved</p>
                                 </div>
                                 <div class="tile">
-                                    <h1>12</h1>
-                                    <p>Orders Recieved</p>
+                                    <h1>08</h1>
+                                    <p>Pending Orders</p>
                                 </div>
                                 <div class="tile">
-                                    <h1>12</h1>
-                                    <p>Orders Recieved</p>
+                                    <h1>03</h1>
+                                    <p>Canceled Orders</p>
                                 </div>
                             </div>
-                            <div class="chart">
-
-                            </div>
+                            <div class="chart">';
+                                $chart = new Chart("dealerordersanalytic");
+                        echo    '</div>
                         </div>
                         <table class="table">
                             <thead>
