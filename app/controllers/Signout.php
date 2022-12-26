@@ -12,7 +12,7 @@
             if(isset($_SESSION['role'])){
                 unset($_SESSION['role']);
             }
-            header("Location: ../home");
+            header("Location: home");
             return;
         }
     }
