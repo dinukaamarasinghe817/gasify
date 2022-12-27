@@ -18,13 +18,14 @@
             }
         }
 
-        public function userssignin(){
-            $user = $_POST['user'];
+        public function usersignin(){
+            $this->view('dashboard/company');
+            /*$user = $_POST['user'];
             if($user == 'admin' || $user == 'company' || $user == 'distributor'|| $user == 'customer' || $user == 'dealer' || $user == 'deliveryperson'){
                 $this->view('signin/user');
             }else{
                 $this->view('home/index');
-            }
+            }*/
         }
 
         // public function dealer($error = null){
@@ -114,10 +115,12 @@
                 
             }
             $this->view('signin/user', $data);
+            //header('Location: '.BASEURL.'/dashboard/'.'dealer');
         }
 
-        public function usersignin(){
-            // session_start();
+        public function userasignin(){
+            header("Location: ./dealer/");
+            /*session_start();
             $email = $_POST['email'];
             $password = $_POST['password'];
 
@@ -156,7 +159,7 @@
             }else{
                 $error = "4";
                 header("Location: ./user/$error");
-            }
+            }*/
         }
     }
 ?>

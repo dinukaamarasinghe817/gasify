@@ -166,7 +166,7 @@
                     $query2 = $this->model('Dealer')->getDealer($email);
                     $row = mysqli_fetch_assoc($query2);
                     $dealer_id = $row['dealer_id'];
-                    $query3;
+                    //$query3;
 
                     // set the capacity of the dealer
                     for($i = 0; $i<count($capacity); $i++){
@@ -196,7 +196,7 @@
                 $row = mysqli_fetch_assoc($query2);
                 $dealer_id = $row['dealer_id'];
                 echo $dealer_id;
-                $query3;
+                //$query3;
                 
                 // set the capacity
                 for($i = 0; $i<count($capacity); $i++){
