@@ -39,5 +39,13 @@
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/dealer', $data);
         }
+        public function company($error=null){
+            $data=[];
+            $this->view('dashboard/company', $data);
+        }
+        public function delivery($error=null){
+            $data=[];
+            $this->view('dashboard/delivery', $data);
+        }
     }
 ?>
