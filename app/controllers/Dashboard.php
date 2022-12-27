@@ -9,6 +9,9 @@
         }
 
         public function dealer($error = null){
+            // check if the user is actually a gas dealer
+            // AuthorizeUser("dealer");
+
             $dealer_id = $_SESSION['user_id'];
             // get the current stock
             $data['stock'] = $this->model('Dealer')->getcurrentstock($dealer_id);

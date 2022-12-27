@@ -7,7 +7,7 @@ class Body{
     }
 
     function dealerdashboard($data){
-        echo '<section class="body-content">
+        echo '<section class="body-content dashboard">
                     <div class="body-left">
                         <div class="variable">
                             <div class="topic">
@@ -202,6 +202,15 @@ class Body{
                         </div>
                     </div>
                 </section>';
+            // js
+            // echo '<script>
+            //         let accordion = document.querySelectorAll(".accordion .box");
+            //         for(i=0; i<accordion.length; i++) {
+            //             accordion[i].addEventListener("click", function(){
+            //                 this.classList.toggle("active")
+            //             })
+            //         }
+            //     </script>';
     }
 
     function customerdashboard($data){
