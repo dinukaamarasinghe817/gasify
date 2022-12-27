@@ -42,5 +42,15 @@
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/dealer', $data);
         }
+
+        public function customer($error = null){
+            $customer_id = $_SESSION['user_id'];
+            $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+            $row = mysqli_fetch_assoc($customer_details);
+            $data['image'] = $row['image'];
+            // get new pending orders
+            $data['navigation'] = 'dashboard';
+            $this->view('dashboard/customer', $data);
+        }
     }
 ?>
