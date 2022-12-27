@@ -20,6 +20,11 @@ class Distributor extends Model
         }
         return $data['distributor'];
     }
+
+    public function getDistributorImage($distributor_id){
+        $result = $this->read('distributor', "distributor_id = $distributor_id");
+        return $result;
+    }
     
     
 }
