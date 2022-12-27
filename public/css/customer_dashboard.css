@@ -1,0 +1,103 @@
+/* customer body-content css  */
+/* under the header top part */
+.under_topbar{
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+
+}
+.top_image{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--button-orange);
+    margin: 20px 90px 0px 50px;
+    height: 75%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+   
+}
+.image img{
+    width: 110%;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+}
+
+/* top image right side */
+.text{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding: 20px 0px 20px 200px;
+ }
+
+
+.logo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: var(--black);
+    width: 100%;
+    font-size: var(--larger);
+}
+.any_brand{
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    color: var(--navmenu-orange);
+}
+
+.pay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.para{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     margin-top: 20px;
+}
+
+.text .btn:hover button svg{
+    fill: var(--button-orange-hover);
+}
+.text .btn:hover button{
+    color: var(--button-orange-hover);
+}
+
+
+
+.btn button{
+    display: flex;
+    column-gap: 10px;
+    width: 250px;
+    height: 50px;
+    background-color: var(--navmenu-orange);
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    font-size: var(--mediums);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn button:hover{
+    fill:var(--button-orange-hover);
+}
+
+.btn svg:hover{
+    fill: var(--button-orange-hover);
+}
+

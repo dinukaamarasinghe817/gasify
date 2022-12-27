@@ -42,5 +42,25 @@
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/dealer', $data);
         }
+
+        public function customer($error = null){
+            $customer_id = $_SESSION['user_id'];
+            $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+            $row = mysqli_fetch_assoc($customer_details);
+            $data['image'] = $row['image'];
+            // get new pending orders
+            $data['navigation'] = 'dashboard';
+            $this->view('dashboard/customer', $data);
+        }
+        
+        public function distributor($error = null){
+            $distributor_id = $_SESSION['user_id'];
+            $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
+            $row = mysqli_fetch_assoc($distributor_details);
+            $data['image'] = $row['image'];
+            // get new pending orders
+            $data['navigation'] = 'dashboard';
+            $this->view('dashboard/distributor', $data);
+        }
     }
 ?>
