@@ -8,7 +8,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
-        $bodycontent = new Body('customerdashboard', $data);
+        // $bodycontent = new Body('customerdashboard', $data);
+        
     ?>
 </section>
 <!-- <script src="<?php echo BASEURL;?>/public/js/dashboard.js"></script> -->
