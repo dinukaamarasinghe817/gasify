@@ -252,7 +252,7 @@ body.blur > *::before{
 /* body content css */
 .body-content{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     box-sizing: border-box;
     padding: 10px 10px 10px 40px;
     height: 85%;
@@ -261,6 +261,9 @@ body.blur > *::before{
     overflow-y: scroll;
     scroll-behavior: smooth;
     /* background-color: var(--navmenu-gray-dark); */
+}
+.body-content.dashboard{
+    flex-direction: row;
 }
 .body-content::-webkit-scrollbar{
     display: hidden;
@@ -341,7 +344,7 @@ body.blur > *::before{
 .content-data::-webkit-scrollbar{
     display: none;
 }
-.body-content .content-data table{
+.content-data table{
     box-sizing: border-box;
     /* padding: 20px; */
     width: 100%;

@@ -94,4 +94,11 @@ class Dealer extends Model
 
         return $orders;
     }
+
+    public function getStockInfo($dealer_id){
+        $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,
+        p.weight as product_weight,p.unit_price as unit_price,p.quantity as quantity
+        FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
+        return $result;
+    }
 }
