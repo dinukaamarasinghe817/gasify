@@ -1,0 +1,30 @@
+:root{
+    /* colors */
+    --button-orange: #ffbb96;
+    --cancel-red: #FF4D4D;
+    --error-red: #c91919;
+    --error-background: #ffaeae;
+    --accept-blue: #80B3FF;
+    --table-gray: #EBEBEB;
+    /* --navmenu-orange: #e9f8ff;
+    --navmenu-blue: #e8f6ff;
+    --navmenu-orange-dark: #6bb9f9;
+    --button-orange-hover: #82c3f9; */
+    --navmenu-gray-dark: #8A8B9F;
+    --button-blue: #3E8CFF;
+    --button-blue-hover: #1672fc;
+    --white: #ffffff;
+    --black: #000000;
+    --logo-background: #ffde59;
+    --shadow-wide: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --shadow-3d: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    --input-border: rgb(201, 201, 201) solid 1px;
+
+
+    /* font sizes */
+    --larger: 28px;
+    --medium: 18px;
+    --mediums: 16px;
+    --small: 14px;
+    --exsmall: 12px;
+}
