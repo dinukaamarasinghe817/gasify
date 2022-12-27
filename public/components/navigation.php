@@ -382,7 +382,9 @@ class Navigation {
                             <h3>Settings</h3>
                         </a>
                     </li>
-                    <li class="nav-tile">';            
+                    <li class="nav-tile">
+                </ul>
+                </section>';            
             
     }
 
