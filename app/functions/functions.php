@@ -85,3 +85,16 @@ function isNotConfirmedpwd($password, $confirmpassword){
         return true;
     }
 }
+
+function AuthorizeLogin(){
+    session_start();
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+        header('Location: ' . BASEURL . '/home');
+    }
+}
+
+function AuthorizeUser($user){
+    if($_SESSION['role'] != '{$user}'){
+        header('Location: ' . BASEURL . '/home');
+    }
+}

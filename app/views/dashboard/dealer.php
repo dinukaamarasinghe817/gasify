@@ -1,5 +1,5 @@
 <?php
-$header = new Header();
+$header = new Header("dealer");
 $sidebar = new Navigation('dealer',$data['navigation']);
 ?>
 
@@ -11,15 +11,6 @@ $sidebar = new Navigation('dealer',$data['navigation']);
         $bodycontent = new Body('dealerdashboard', $data);
     ?>
 </section>
-<!-- <script src="<?php echo BASEURL;?>/public/js/dashboard.js"></script> -->
-<script>
-    let accordion = document.querySelectorAll('.accordion .box');
-    for(i=0; i<accordion.length; i++) {
-        accordion[i].addEventListener('click', function(){
-            this.classList.toggle('active')
-        })
-    }
-</script>
 
 <?php
 $footer = new Footer();
