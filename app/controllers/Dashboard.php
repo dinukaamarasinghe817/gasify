@@ -58,8 +58,7 @@
             $order_details = $this->model('Customer')->getRecentOrders($customer_id);
             $data['order_details'] = $order_details;
 
-            $product_details = $this->model('Customer')->getRecentOrderInclude($order_id);
-
+           
 
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/customer', $data);
