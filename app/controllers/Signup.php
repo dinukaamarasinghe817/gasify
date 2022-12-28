@@ -219,5 +219,8 @@
 
             // header("Location: ../signin/dealer");
         }
+        public function companysignup(){
+            
+        }
     }
 ?>

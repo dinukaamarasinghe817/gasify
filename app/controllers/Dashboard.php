@@ -37,10 +37,16 @@
             //             ]
             // ]
             $data['navigation'] = 'dashboard';
+            //echo $data['image'];
             $this->view('dashboard/dealer', $data);
         }
         public function company($error=null){
-            $data=[];
+            $company_id=$_SESSION['user_id'];
+            $company_details = $this->model('Company')->getCompanyImage($company_id);
+            $row = mysqli_fetch_assoc($company_details);
+            $data['navigation'] = 'dashboard';
+            $data['image'] = $row['logo'];
+            //$data=[];
             $this->view('dashboard/company', $data);
         }
         public function delivery($error=null){

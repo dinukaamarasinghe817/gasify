@@ -13,3 +13,4 @@ class Orders extends Controller{
         $this->view('dashboard/dealer', $data);
     }
 }
+?>

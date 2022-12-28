@@ -25,6 +25,10 @@ class Company extends Model
         }
         return $data['company'];
     }
+    public function getCompanyImage($company_id){
+        $result = $this->read('company', "company_id = $company_id");
+        return $result;
+    }
     
     
 }

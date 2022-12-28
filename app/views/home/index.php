@@ -25,7 +25,7 @@
         <div >
             <ul id="signup">
                 <li><a href="signin/user">Login</a></li>
-                <li><a href="signup/users">Signup</a></li>
+                <li><a href="signup/dealer">Signup</a></li>
             </ul>
         </div>
     </section>
