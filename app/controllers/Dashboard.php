@@ -45,10 +45,22 @@
 
         public function customer($error = null){
             $customer_id = $_SESSION['user_id'];
+            //profile image
             $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-            $row = mysqli_fetch_assoc($customer_details);
-            $data['image'] = $row['image'];
-            // get new pending orders
+            $row1 = mysqli_fetch_assoc($customer_details);
+            $data['image'] = $row1['image'];
+
+            // get registered company brands
+            $brand = $this->model('Customer')->getCompanyBrand(); 
+            $data['brand'] = $brand;
+
+            //get recent orders of customer
+            $order_details = $this->model('Customer')->getRecentOrders($customer_id);
+            $data['order_details'] = $order_details;
+
+            $product_details = $this->model('Customer')->getRecentOrderInclude($order_id);
+
+
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/customer', $data);
         }

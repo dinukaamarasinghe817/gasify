@@ -11,15 +11,26 @@ class Customer extends Model{
         $result = $this->read('customer', "customer_id = $customer_id");
         return $result;
     }
+
+    public function getCompanyBrand(){
+        $result = $this->Query("SELECT name,logo FROM company");
+        return $result;
+    }
     
-    public function getrecentorders($customer_id){
-        $result = $this->Query("SELECT order_id,order_state,place_date
+    public function getRecentorders($customer_id){
+        $result1 = $this->Query("SELECT order_id,order_state,place_date
             FROM reservation
             WHERE customer_id = '{$customer_id}'
             ORDER BY place_date DESC LIMIT 3");
-        return $result;
+        
+        
 
+        if($result1>0){
+            $result2 = $this->Query("");
+        }
     }
+
+
 
   
 
