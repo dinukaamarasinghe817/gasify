@@ -240,8 +240,33 @@ class Body{
                     </svg>Place Reservation</button>
                 </div>
             
-            </div>
-        </div>';
+            </div></div>';
+
+            echo '<div class="middle">
+                <div class="brand">
+                <div class="brand_title"> <h3>Our Brands</h3></div>
+                <div class="brand_img">';
+
+            if(isset($data["brand"])){
+                $result = $data["brand"];
+                $brand = "";
+                while($row = mysqli_fetch_assoc($result)){
+                    $company_name = $row["name"];
+                    $logo = $row["logo"];
+                    $image = BASEURL.'/public/img/profile/'.$logo;
+                    $brand .=   '<div >
+                                <img src="'.$image.'" alt="" class="litro">
+                                <h3>'.$company_name.'</h3>
+                                </div>'; 
+                
+                }
+                echo $brand.' </div>
+                </div>';
+               
+            }
+
+
+        echo '</div>';
     }
 
 }
