@@ -2,6 +2,7 @@
 class BodyHeader{
     public function __construct($data){
         $image = BASEURL.'/public/img/profile/'.$data['image'];
+        //echo $image;
         date_default_timezone_set("Asia/Colombo");
         $date = date('j M Y');
         echo '<section class="body-header">

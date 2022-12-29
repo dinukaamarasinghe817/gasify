@@ -578,4 +578,88 @@ class Body{
 
         </section>';
     }
+    function deliverydashboard($data){
+        echo
+        '<section class="body-content">
+            <div class="Top" id="Top">
+            <div class="Col_1" id="Col_1">
+                <div class="Title_1">
+                <div class="ChartTitle">Previous week</div><br>
+                </div>
+                <div class="Content_1"></div>
+            </div>
+            <div class="Col_2" id="Col_2">
+                <div class="Title_2">
+                <div class="ChartTitle">Today</div>
+                </div>
+                <div class="Content_2" id="Content_2"></div>
+            
+            </div>
+            <div class="Col_3" id="Col_3">
+                <div class="Title_3">
+                <div class="ChartTitle">My Vehicle</div>
+                </div>
+                <div class="Content_3" id="Content_3"></div>
+                </div>
+            </div>
+            <div class="DistributorTableHeadings" id="DistributorTableHeadings">
+                <div class="Distributor_table_name" id="Distributor_table_name">
+                    <div class="distibutor_title">Current Deliveries</div>
+                </div>
+                <div class="tableTitles" id="tableTitles">
+                    <div class="distributor_name" id="col"style="width:25%;margin-top:1%">Customer</div>
+                    <div class="distributor_contactno" id="col"style="width:25%;margin-top:1%">Destination</div>
+                    <div class="distributor_location" id="col"style="width:25%;margin-top:1%">Contact no</div>
+                </div>       
+            </div> 
+            <div class="DistributorTable" id="DistributorTable">
+
+            </div> 
+            <div class="DealerTableHeadings" id="DealerTableHeadings">
+                <div class="Dealer_table_name" id=\"Dealer_table_name\">
+                    <div class="distibutor_title">Available Deliveries</div>
+                    </div>
+                    <div class="tableTitles" id="tableTitles">
+                    <div class="Dealer_name" id="col" style="width:25%;margin-top:1%">Name</div>
+                    <div class="Dealer_contactno" id="col"style="width:20%;margin-top:1%">Destination</div>
+                    <div class="Dealer_location" id="col"style="width:22%;margin-top:1%">Contact no</div>
+                    <div class="Dealer_email" id="col" style="width:20%;margin-top:1%">Placed date</div>
+                    </div>
+                </div>
+            </div>  
+            <div class="DealerTable" id="DealerTable"></div>
+        </section>';
+    }
+    function gasdeliveries($data){
+        echo
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+            <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" style="width:100%;height:100%">Pool</div></a>
+            <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" style="width:100%;height:100%" >Current deliveries</div></a>
+            </div>
+            <div class="dealerTableTitles" id="dealerTableTitles">
+            <div class="distributor_name" id="col" style=\"width:23%\">Name</div>
+            <div class="distributor_location" id="col" style="width:20%">Location</div>
+            <div class="distributor_contactno" id="col" style="width:15%">Contact no</div>
+            <div class="distributor_contactno" id="col" style="width:15%">Placed date</div>
+            <div class="distributor_contactno" id="col" style="width:15%">Placed time</div>
+            </div>
+        <div class="DealerTables" id="DealerTables"></div>
+        </section>';
+    }   
+    function currentgasdeliveries($data){
+        echo
+        '<section class="body-content">
+         <div class="Distributor_table_name" id="Distributor_table_name">
+         <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%">Pool</div></a>
+         <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" id="temp" style="width:100%;height:100%">Current deliveries</div></a>
+         </div>
+         <div class="dealerTableTitles" id="dealerTableTitles" style="box-sizing:border-box">
+        <div class="distributor_name" id="col" style="width:20%">Name</div>
+        <div class="distributor_location" id="col" style="width:25%">Location</div>
+        <div class="distributor_contactno" id="col" style="width:15%">Contact no</div>
+        </div>
+        <div class="DealerTables" id="DealerTables"></div>
+        </section>';
+    }
 }

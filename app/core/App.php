@@ -6,7 +6,7 @@
 
         public function __construct(){
             $url =$this->getURL();
-           //print_r($url);
+           print_r($url);
             if(isset($url[0])){
                 if(file_exists('../app/controllers/'.ucwords($url[0]).'.php')){
                     // if controller exists

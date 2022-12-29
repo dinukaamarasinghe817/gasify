@@ -51,6 +51,12 @@
         }
         public function delivery($error=null){
             $data=[];
+            $delivery_id=$_SESSION['user_id'];
+            $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+            $row = mysqli_fetch_assoc($delivery_details);
+            $data['navigation'] = 'dashboard';
+            $data['image'] = $row['image'];
+            //$data=[];
             $this->view('dashboard/delivery', $data);
         }
     }
