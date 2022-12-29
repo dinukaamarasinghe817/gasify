@@ -25,6 +25,12 @@ class Distributor extends Model
         $result = $this->read('distributor', "distributor_id = $distributor_id");
         return $result;
     }
+
+    public function getVehicleInfo($distributor_id){
+        $result = $this->read('distributor', "distributor_id = $distributor_id");
+        return $result;
+
+    }
     
     
 }
