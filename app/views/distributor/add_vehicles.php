@@ -10,7 +10,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
     // $bodycontent = new Body('vehicles_comp', $data);
     ?>
 
-<section class="body-content">
+    <section class="body-content">
           <h2>Vehicles</h2> <br>
 
           <?php 

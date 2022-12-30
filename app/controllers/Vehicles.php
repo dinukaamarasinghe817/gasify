@@ -83,4 +83,32 @@ class Vehicles extends Controller{
             echo "All input fields are required!";
         }
     }
+
+    public function viewvehicle() {
+        $user_id = $_SESSION['user_id'];
+
+        echo "Your Distributor ID - $user_id".'<br><br>';
+        echo "Your Vehicles' Details : ";
+
+
+        $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
+
+        if(mysqli_num_rows($vehicle)>0) {
+            while($row2 = mysqli_fetch_assoc($vehicle)) {
+                $vehicle_no = $row2['vehicle_no'];
+
+                $productdetails =  $this->model('Distributor')->productdetails($distributor_id, $vehicle_no);
+
+
+
+
+
+        }
+
+
+
+    }
+
+
+
 }
