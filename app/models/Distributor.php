@@ -54,12 +54,26 @@ class Distributor extends Model
     public function ifDataInserted($number){
         $sql = "SELECT * FROM distributor_vehicle WHERE vehicle_no='{$number}' ";
         $result = $this->Query($sql);
+        return $result;   
+    }
+
+    public function viewvehicle($distributor_id) {
+        $sql = "SELECT * FROM distributor_vehicle WHERE distributor_id = '{$distributor_id}'";
+        // $result = $this->read('distributor', "distributor_id = $distributor_id");
+        $result = $this->Query($sql);
         return $result;
-        
+    }
+
+    public function productdetails($distributor_id, $vehicle_no) {
+        $sql = "SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_vehicle_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$distributor_id}' AND d.vehicle_no = '{$vehicle_no}'";
+        $result = $this->Query($sql);
+        return $result;
+
+
+
     }
 
 
 
-    
-    
+
 }
