@@ -66,10 +66,12 @@
         
         public function distributor($error = null){
             $distributor_id = $_SESSION['user_id'];
+            
             $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
             $row = mysqli_fetch_assoc($distributor_details);
             $data['image'] = $row['image'];
-            // get new pending orders
+
+    
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/distributor', $data);
         }
