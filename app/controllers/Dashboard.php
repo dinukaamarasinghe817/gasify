@@ -4,22 +4,22 @@
         header('Location: ' . BASEURL . '/home');
     }
     class Dashboard extends Controller{
+        public $user_id;
         public function __construct(){
-            
+            $this->user_id = $_SESSION['user_id'];
         }
 
         public function dealer($error = null){
             // check if the user is actually a gas dealer
             // AuthorizeUser("dealer");
 
-            $dealer_id = $_SESSION['user_id'];
-            // get the current stock
-            $data['stock'] = $this->model('Dealer')->getcurrentstock($dealer_id);
-            $dealer_details = $this->model('Dealer')->getDealerImage($dealer_id);
+            $data['stock'] = $this->model('Dealer')->getcurrentstock($this->user_id);
+            $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
             $row = mysqli_fetch_assoc($dealer_details);
             $data['image'] = $row['image'];
+            
             // get new pending orders
-            $result1 = $this->model('Dealer')->getpendigorders($dealer_id);
+            $result1 = $this->model('Dealer')->getpendigorders($this->user_id);
             $data['pending'] = $result1; // multi dimensional array
             // result1 [
             //     [0] = [
@@ -61,6 +61,13 @@
             // get new pending orders
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/distributor', $data);
+        }
+
+        public function admin($error = null){
+            $data['image'] = 'user.png';
+            // get new pending orders
+            $data['navigation'] = 'dashboard';
+            $this->view('dashboard/admin', $data);
         }
     }
 ?>

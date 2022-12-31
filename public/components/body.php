@@ -213,6 +213,33 @@ class Body{
             //     </script>';
     }
 
+    public function dealerstock($data){
+        $stockheader = '<ul>';
+        if($data['tab'] == "currentstock"){
+            $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/currentstock" class="current active" onclick="stockclicked(); return false;">Current Stock</a></li>';
+        }else{
+            $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/currentstock" class="current" onclick="stockclicked(); return false;">Current Stock</a></li>';
+        }
+        if($data['tab'] == "purchaseorder"){
+            $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/purchaseorder" class="current active" onclick="purchaseclicked(); return false;">Purchase Order</a></li>';
+        }else{
+            $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/purchaseorder" class="current" onclick="purchaseclicked(); return false;">Purchase Order</a></li>';
+        }
+        if($data['tab'] == "pohistory"){
+            $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/pohistory" class="current active" onclick="historyclicked(); return false;">Order History</a></li>';
+        }else{
+            $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/pohistory" class="current" onclick="historyclicked(); return false;">Order History</a></li>';
+        }
+        $stockheader .= '</ul>';
+        echo '<section class="body-content">
+        <div class="top-panel">
+            '.$stockheader.'
+        </div>
+        <div class="content-data">';
+        $stock = new StockHTML('dealer'.$data['tab'],$data);
+        echo '</div></section>';
+    }
+
     function customerdashboard($data){
         echo '<div class="under_topbar">
         <div class="top_image">
@@ -242,6 +269,111 @@ class Body{
             
             </div>
         </div>';
+    }
+
+    function admindashboard($data){
+        echo '<section class="body-content">
+        <div class="tiles one">
+            <div class="tile">
+                <h1>246</h1>
+                <p>Customers</p>
+            </div>
+            <div class="tile">
+                <h1>74</h1>
+                <p>Dealers</p>
+            </div>
+            <div class="tile">
+                <h1>53</h1>
+                <p>Delivery People</p>
+            </div>
+            <div class="tile">
+                <h1>24</h1>
+                <p>Distributors</p>
+            </div>
+            <div class="tile">
+                <h1>2</h1>
+                <p>Companies</p>
+            </div>
+        </div>
+        <div class="graph">
+            <div class="variable">
+                <div class="topic">
+                    <h2>Analytic Overview</h2>
+                    <!-- drop down component -->
+                    <form action="#">
+                        <select id="period" onchange="updatechart()" class="dropdowndate">
+                            <option value="today" selected>To day</option>
+                            <option  value="30day">Last 30 days</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="chart">
+
+                </div>
+            </div>
+            <div class="reviews">
+                <h2>Recent Reviews</h2>
+                <div class="contents">
+                    <div class="review">
+                        <img src="css/admin.png" alt="">
+                        <div class="review-info">
+                            <div class="name-time">
+                                <h3>Dinuka Ashan</h3>
+                                <span>12:03 p.m</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Nobis nulla, asperiores animi similique rem totam aliquam, 
+                                facilis quibusdam incidunt corrupti provident sit suscipit 
+                                sed vel obcaecati modi nisi velit optio?
+                            </p>
+                        </div>
+                    </div>
+                    <div class="review">
+                        <img src="css/admin.png" alt="">
+                        <div class="review-info">
+                            <div class="name-time">
+                                <h3>Dinuka Ashan</h3>
+                                <span>12:03 p.m</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Nobis nulla, asperiores animi similique rem totam aliquam, 
+                                facilis quibusdam incidunt corrupti provident sit suscipit 
+                                sed vel obcaecati modi nisi velit optio?
+                            </p>
+                        </div>
+                    </div>
+                    <div class="review">
+                        <img src="css/admin.png" alt="">
+                        <div class="review-info">
+                            <div class="name-time">
+                                <h3>Dinuka Ashan</h3>
+                                <span>12:03 p.m</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Nobis nulla, asperiores animi similique rem totam aliquam, 
+                                facilis quibusdam incidunt corrupti provident sit suscipit 
+                                sed vel obcaecati modi nisi velit optio?
+                            </p>
+                        </div>
+                    </div>
+                    <div class="review">
+                        <img src="css/admin.png" alt="">
+                        <div class="review-info">
+                            <div class="name-time">
+                                <h3>Dinuka Ashan</h3>
+                                <span>12:03 p.m</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Nobis nulla, asperiores animi similique rem totam aliquam, 
+                                facilis quibusdam incidunt corrupti provident sit suscipit 
+                                sed vel obcaecati modi nisi velit optio?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>';
     }
 
 }

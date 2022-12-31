@@ -21,24 +21,24 @@ class Dealer extends Model
         return $data['dealer'];
     }
 
-    public function getDealer($email){
-        // $sql = "SELECT u.user_id as dealer_id,
-        //         u.first_name as first_name,
-        //         u.last_name as last_name,
-        //         u.email as email,
-        //         u.password as password,
-        //         u.verification_code as verification_code,
-        //         u.verification_state as verification_state
-        //         d.image as image
-        //         FROM users u
-        //         INNER JOIN dealer d
-        //         ON u.user_id = d.dealer_id";
-        $result = $this->read('users', "email = '$email' AND type = 'dealer'");
-        // $result = $this->Query($sql);
-        return $result;
-    }
+    // public function getDealer($email){
+    //     // $sql = "SELECT u.user_id as dealer_id,
+    //     //         u.first_name as first_name,
+    //     //         u.last_name as last_name,
+    //     //         u.email as email,
+    //     //         u.password as password,
+    //     //         u.verification_code as verification_code,
+    //     //         u.verification_state as verification_state
+    //     //         d.image as image
+    //     //         FROM users u
+    //     //         INNER JOIN dealer d
+    //     //         ON u.user_id = d.dealer_id";
+    //     $result = $this->read('users', "email = '$email' AND type = 'dealer'");
+    //     // $result = $this->Query($sql);
+    //     return $result;
+    // }
 
-    public function getDealerImage($dealer_id){
+    public function getDealer($dealer_id){
         $result = $this->read('dealer', "dealer_id = $dealer_id");
         return $result;
     }
@@ -54,6 +54,70 @@ class Dealer extends Model
         FROM dealer_keep INNER JOIN product 
         ON dealer_keep.product_id = product.product_id 
         WHERE dealer_id = '$dealer_id'");
+        return $result;
+    }
+
+    public function dealerstockofproduct($dealer_id, $product){
+        $result = $this->Query("SELECT * FROM dealer_keep WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product}'");
+        return $result;
+    }
+
+    public function dealerpoofpending($dealer_id){
+        $result = $this->Query("SELECT * FROM purchase_order WHERE dealer_id = '{$dealer_id}' AND po_state = 'pending'");
+        return $result;
+    }
+
+    public function dealerpoincludesofpending($po_id,$product){
+        $result = $this->Query("SELECT * FROM purchase_include WHERE po_id = '{$po_id}' AND product_id = '{$product}'");
+        return $result;
+    }
+
+    public function dealercapofproduct($dealer_id,$product){
+        $result = $this->Query("SELECT * FROM dealer_capacity WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product}'");
+        return $result;
+    }
+
+    public function dealergetproductinfo($product){
+        $result = $this->Query("SELECT unit_price FROM product WHERE product_id = '$product'");
+        return $result;
+    }
+
+    public function dealerpoinclude($po_id,$product,$quantity,$unit_price){
+        $result = $this->Query("INSERT INTO purchase_include (po_id, product_id, quantity, unit_price) VALUES ($po_id,'$product',$quantity,$unit_price)");
+        return $result;
+    }
+
+    public function getPOForm($dealer_id){
+        $result = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price
+        FROM dealer_capacity d INNER JOIN product p
+        ON d.product_id = p.product_id 
+        WHERE dealer_id = '$dealer_id'");
+        return $result;
+    }
+
+    public function placePurchaseOrder($dealer_id,$distributor_id,$place_date,$place_time){
+        $result = $this->Query("INSERT INTO purchase_order (dealer_id,po_state,distributor_id,place_date,place_time) VALUES ('{$dealer_id}','pending','{$distributor_id}','{$place_date}','{$place_time}');");
+        return $result;
+    }
+
+    public function getPurchaseInfo($dealer_id){
+        $result = $this->Query("SELECT * FROM purchase_order WHERE dealer_id = '{$dealer_id}' ORDER BY place_date DESC, place_time DESC LIMIT 1");
+        return $result;
+    }
+
+    public function dealerLastPO($dealer_id){
+        $result = $this->Query("SELECT * FROM purchase_order WHERE dealer_id = $dealer_id ORDER BY po_id DESC LIMIT 1");
+        return $result;
+    }
+
+    public function dealerLastPOIncludes($po_id){
+        $result = $this->Query("SELECT pi.product_id as product_id,
+        p.name as product_name,
+        pi.quantity as quantity,
+        pi.unit_price as unit_price
+        FROM purchase_include pi INNER JOIN product p
+        ON pi.product_id = p.product_id
+        WHERE po_id = $po_id");
         return $result;
     }
     
@@ -100,5 +164,73 @@ class Dealer extends Model
         p.weight as product_weight,p.unit_price as unit_price,p.quantity as quantity
         FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
         return $result;
+    }
+
+    public function getPOHistory($dealer_id){
+        // get the dealer's stock information
+        $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$dealer_id}' ORDER BY po_id DESC");
+        $purchase_orders = array();
+        // $output = '<table class="history">
+        //                     <tr>
+        //                         <th>Purchase Order ID</th>
+        //                         <th>Includes</th>
+        //                         <th>Purchase Order State</th>
+        //                         <th>Place Date</th>
+        //                         <th>Place Time</th>
+        //                     </tr>';
+
+        if(mysqli_num_rows($query2) > 0){
+            while($row2 = mysqli_fetch_assoc($query2)){
+                    // $output .= '<tr>
+                    //                 <td>'.$row2['po_id'].'</td>
+                    //                 <td>';
+                    
+                    // $output .= '<table class = "innertable">
+                    //                 <tr>
+                    //                 <th>Product Name</th>
+                    //                 <th>Quantity</th>
+                    //                 </tr>';
+                    
+                    $sql = "SELECT pi.product_id AS product_id, pi.quantity AS quantity, pr.name AS name 
+                            FROM purchase_include pi 
+                            INNER JOIN product pr 
+                            ON pi.product_id = pr.product_id 
+                            WHERE pi.po_id = '{$row2['po_id']}'";
+                    $result3 = $this->Query($sql);
+                    $products = array();
+                    if(mysqli_num_rows($result3)>0){
+                        while($row3 = mysqli_fetch_assoc($result3)){
+                            // $output .= $row3['name'].' - '.$row3['quantity'].'<br>';
+                            array_push($products, $row3);
+                            // $output .= '<tr>
+                            //                 <td>'.$row3['name'].'</td>
+                            //                 <td>'.$row3['quantity'].'</td>  
+                            //             </tr>';
+                        }
+                        array_push($purchase_orders, ['purchase_order' => $row2, 'products' => $products]);
+                    }else{
+                        // $output .= 'unsuccess';
+                    }
+
+                    // $output .= '</table>';
+                                    
+                    // $output .=      '</td>
+                    //                 <td>'.$row2['po_state'].'</td>
+                    //                 <td>'.$row2['place_date'].'</td>
+                    //                 <td>'.$row2['place_time'].'</td>
+                    //             </tr>'; // change subtotal manually when input changes.
+                // }
+            }
+
+            // $_SESSION["productarray"] = $product_array;
+
+            // $output .= '</table>'; // static html
+        }else{
+            // $output .= '</table>'; // static html
+            // $output .= '<p style="text-align: center; width: 100%;">no records found</p>';
+            // echo $output;
+        }
+        // echo $output;
+        return $purchase_orders;
     }
 }
