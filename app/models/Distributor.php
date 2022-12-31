@@ -42,12 +42,12 @@ class Distributor extends Model
 
     // insert to distributor_vehicle table
     public function distributorVehicle($user_id, $number, $type, $fuelCon){
-        $this->insert('distributor_vehicle', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'type'=>$type, 'fuel_consumption'=> $fuelCon, 'availability'=>"Yes"]);
+        return $this->insert('distributor_vehicle', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'type'=>$type, 'fuel_consumption'=> $fuelCon, 'availability'=>"Yes"]);
         
     }
     // insert to distributor_vehicle_capacity table
     public function vehicleCapacity($user_id, $number, $product, $qty){
-        $this->insert('distributor_vehicle_capacity', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'product_id'=>$product, 'capacity'=> $qty]);
+        return $this->insert('distributor_vehicle_capacity', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'product_id'=>$product, 'capacity'=> $qty]);
         
     }
 

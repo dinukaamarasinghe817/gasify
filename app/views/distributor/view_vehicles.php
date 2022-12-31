@@ -20,8 +20,8 @@ $user_id = $_SESSION['distributor_id'];
         ?>
 
         <?php        
-        // echo "Your Distributor ID - $user_id".'<br><br>';
-        // echo "Your Vehicles' Details : ";
+        echo "Your Distributor ID - $user_id".'<br><br>';
+        echo "Your Vehicles' Details : ";
         
         // $query = mysqli_query($conn,"SELECT * FROM distributor_vehicle WHERE distributor_id = '{$user_id}'");
 

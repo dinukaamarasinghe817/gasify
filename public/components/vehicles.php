@@ -16,34 +16,22 @@ class Vehicles_Comp {
             $output .= '<li><a href="#" class="update"><b>Update Vehicle</b></a></li>'; 
         }
 
-        if($active == "add") {
+        if($active == "view") {
             $output .= '<li><a href="#" class="view active"><b>View Vehicle</b></a></li>'; 
         }else {
             $output .= '<li><a href="#" class="view"><b>View Vehicle</b></a></li>'; 
         }
 
-
         echo '
-       
-
             <div class="top">
                 <ul>'.$output.'</ul>
-
-            </div>
-            
+            </div> 
         ';
 
         // $row = $data['row'];
         // $vehicles = $data['vehicles'];
         // js
-
-
     }
-
-    
-
-
 }
-
 
 ?>

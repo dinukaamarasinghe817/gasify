@@ -87,8 +87,8 @@ class Vehicles extends Controller{
     public function viewvehicle() {
         $user_id = $_SESSION['user_id'];
 
-        echo "Your Distributor ID - $user_id".'<br><br>';
-        echo "Your Vehicles' Details : ";
+        // echo "Your Distributor ID - $user_id".'<br><br>';
+        // echo "Your Vehicles' Details : ";
 
 
         $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
@@ -99,16 +99,11 @@ class Vehicles extends Controller{
 
                 $productdetails =  $this->model('Distributor')->productdetails($distributor_id, $vehicle_no);
 
-
-
-
+            }
 
         }
 
 
-
     }
-
-
 
 }
