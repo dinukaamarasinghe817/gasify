@@ -21,24 +21,7 @@ class Vehicles extends Controller{
         $data['vehicles'] = $this->model('Distributor')->getVehicleInfo($user_id);
         $this->view('distributor/add_vehicles', $data);
 
-        // $data1['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
-        // $this->view('distributor/view_vehicles', $data1);
-
     }
-
-    // public function distributor_viewVehicle() {
-    //     $user_id = $_SESSION['user_id'];
-    //     $data['navigation'] = 'vehicles';
-
-    //     $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-    //     $row = mysqli_fetch_assoc($distributor_details);
-    //     $data['image'] = $row['image'];
-
-        
-    //     $data1['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
-    //     $this->view('distributor/view_vehicles', $data1);
-    // }
-
 
     public function addvehicle() {
         $number=$_POST['vehiclenum'];
@@ -69,20 +52,14 @@ class Vehicles extends Controller{
             }else { 
                 $user_id = $_SESSION['user_id'];
                 $addvehicle = $this->model('Distributor')->distributorVehicle($user_id, $number, $type, $fuelCon);
-                // $query2 = mysqli_query($addvehicle);
-
-                // $query4;
 
                 for($i=0; $i<count($capacity); $i++) {
                     $product = $capacity[$i][0];
                     $qty = $capacity[$i][1];
-                    // $sql2 = "INSERT INTO distributor_capacity(distributor_id, product_id, capacity) values ($distributor_id, $product, $qty);"; 
-                    // $sql4 = mysqli_query($conn,"INSERT INTO distributor_vehicle_capacity(distributor_id, vehicle_no, product_id, capacity) VALUES('{$_id}', '{$number}', '{$product}','{$qty}');");
-                    // $query4 = mysqli_query($conn,$sql2);
+
                     $vehiclecapacity = $this->model('Distributor')->vehicleCapacity($user_id, $number, $product, $qty);
                 }
             
-                // if($sql2 && $sql4) {
                 if($addvehicle && $vehiclecapacity) {
                     //if data inserted
                     $ifdatainserted = $this->model('Distributor')->ifDataInserted($number);
@@ -98,89 +75,23 @@ class Vehicles extends Controller{
         }else {
             echo "All input fields are required!";
         }
+
+        $this->distributor();
+
     }
 
     public function viewvehicle() {
         $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'vehicles';
 
-        echo "Your Distributor ID - $user_id".'<br><br>';
-        echo "Your Vehicles' Details : ";
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
 
         $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
 
-        if(mysqli_num_rows($vehicle)>0) {
-            while($row2 = mysqli_fetch_assoc($vehicle)) {
-                $vehicle_no = $row2['vehicle_no'];
-
-                $productdetails =  $this->model('Distributor')->productdetails($user_id, $vehicle_no);
-                $output = "";
-
-                if(mysqli_num_rows($productdetails)>0){
-                    $output .= '<tr>
-                                    <td>'.$vehicle_no.'</td>
-                                    <td>'.$row2['type'].'</td>
-                                    <td>
-                                    <table class="table2">
-                                        <tr>
-                                            <th>Product Name</th>
-                                            <th>Capacity</th>
-                                        </tr>';
-                                    
-                    while($row3 = mysqli_fetch_assoc($productdetails)){
-                        $output .= '
-                            <tr>
-                                <td>'.$row3['product_name'].'</td>
-                                <td>'.$row3['capacity'].'</td>
-                            </tr>
-                        ';
-                    }
-
-                    $output .= '</table>
-                    </td>
-                    <td>'.$row2['fuel_consumption'].'</td>
-                    <td>'.$row2['availability'].'</td>
-                    ';
-                    if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
-                        $output .= '<td><button class="btn4" style="background-color: B4AAFF;"><b>Release</b></button></td>';
-                    }else{
-                        $output .= '<td><button type="button" class="btn4" onclick="deleteVehicle('.$vehicle_no.')" style="background-color: red;"><b>Remove</b></button></td>';
-                    }
-                    $output .=  '
-                        </tr>';   
-                }
-            }
-        }
-        $output .= '</table>';
-        echo $output;
+        $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
+        $this->view('distributor/view_vehicles', $data);
     }
 
 }
-
-// class viewVehicles extends Controller {
-//     function __construct(){
-//         parent::__construct();
-//     }
-
-//     public function viewvehicle() {
-//         $user_id = $_SESSION['user_id'];
-
-//         // echo "Your Distributor ID - $user_id".'<br><br>';
-//         // echo "Your Vehicles' Details : ";
-
-
-//         $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
-
-//         if(mysqli_num_rows($vehicle)>0) {
-//             while($row2 = mysqli_fetch_assoc($vehicle)) {
-//                 $vehicle_no = $row2['vehicle_no'];
-
-//                 $productdetails =  $this->model('Distributor')->productdetails($distributor_id, $vehicle_no);
-
-//             }
-
-//         }
-
-
-//     }
-
-// }
