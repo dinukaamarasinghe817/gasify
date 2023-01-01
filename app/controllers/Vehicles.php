@@ -27,16 +27,16 @@ class Vehicles extends Controller{
     }
 
     // public function distributor_viewVehicle() {
-    //     $user_id = $_SESSION['user_id'];
-    //     $data['navigation'] = 'vehicles';
+        // $user_id = $_SESSION['user_id'];
+        // $data['navigation'] = 'vehicles';
 
-    //     $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-    //     $row = mysqli_fetch_assoc($distributor_details);
-    //     $data['image'] = $row['image'];
+        // $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        // $row = mysqli_fetch_assoc($distributor_details);
+        // $data['image'] = $row['image'];
 
         
-    //     $data1['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
-    //     $this->view('distributor/view_vehicles', $data1);
+        // $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
+        // $this->view('distributor/view_vehicles', $data);
     // }
 
 
@@ -102,6 +102,17 @@ class Vehicles extends Controller{
 
     public function viewvehicle() {
         $user_id = $_SESSION['user_id'];
+        // $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'vehicles';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        
+        // $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
+        // $this->view('distributor/view_vehicles', $data);
+
 
         echo "Your Distributor ID - $user_id".'<br><br>';
         echo "Your Vehicles' Details : ";
@@ -152,6 +163,9 @@ class Vehicles extends Controller{
         }
         $output .= '</table>';
         echo $output;
+
+        $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
+        $this->view('distributor/view_vehicles', $data);
     }
 
 }

@@ -61,6 +61,7 @@ class Distributor extends Model
         $sql = "SELECT * FROM distributor_vehicle WHERE distributor_id = '{$distributor_id}'";
         // $result = $this->read('distributor', "distributor_id = $distributor_id");
         $result = $this->Query($sql);
+        // $result = $this->view($sql);
         return $result;
     }
 
