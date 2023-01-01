@@ -45,20 +45,33 @@
 
         public function customer($error = null){
             $customer_id = $_SESSION['user_id'];
+            //profile image
             $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-            $row = mysqli_fetch_assoc($customer_details);
-            $data['image'] = $row['image'];
-            // get new pending orders
+            $row1 = mysqli_fetch_assoc($customer_details);
+            $data['image'] = $row1['image'];
+
+            // get registered company brands
+            $brand = $this->model('Customer')->getCompanyBrand(); 
+            $data['brand'] = $brand;
+
+            //get recent orders of customer
+            $order_details = $this->model('Customer')->getRecentOrders($customer_id);
+            $data['order_details'] = $order_details;
+
+           
+
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/customer', $data);
         }
         
         public function distributor($error = null){
             $distributor_id = $_SESSION['user_id'];
+            
             $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
             $row = mysqli_fetch_assoc($distributor_details);
             $data['image'] = $row['image'];
-            // get new pending orders
+
+    
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/distributor', $data);
         }

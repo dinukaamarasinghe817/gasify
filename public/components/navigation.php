@@ -326,9 +326,9 @@ class Navigation {
 
 
                 if($active == 'vehicles'){
-                    echo '<a href="#" class="panel-tile active delivery">';
+                    echo '<a href="../vehicles/distributor" class="panel-tile active delivery">';
                 }else{
-                    echo '<a href="#" class="panel-tile delivery">';
+                    echo '<a href="../vehicles/distributor" class="panel-tile delivery">';
                 }
                         
                         echo ' <svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">

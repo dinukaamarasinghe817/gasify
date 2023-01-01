@@ -267,8 +267,192 @@ class Body{
                     </svg>Place Reservation</button>
                 </div>
             
-            </div>
-        </div>';
+            </div></div>';
+
+            echo '<div class="middle">
+                <div class="brand">
+                <div class="brand_title"> <h3>Our Brands</h3></div>
+                <div class="brand_img">';
+
+            if(isset($data["brand"])){
+                $result = $data["brand"];
+                $brand = "";
+                while($row = mysqli_fetch_assoc($result)){
+                    $company_name = $row["name"];
+                    $logo = $row["logo"];
+                    $image = BASEURL.'/public/img/profile/'.$logo;
+                    $brand .=   '<div >
+                                <img src="'.$image.'" alt="" class="litro">
+                                <h3>'.$company_name.'</h3>
+                                </div>'; 
+                
+                }
+                echo $brand.' </div>
+                </div>';
+               
+            }
+
+
+        echo '</div>';
+    }
+
+    function distributordashboard($data){
+        echo '<section class="body-content dashboard">
+                    <div class="body-left">
+
+                        <div class="variable">
+                            <div class="topic">
+                                <h3>Analytic Overview</h3>
+                                <!-- drop down component -->
+                                <form action="#">
+                                    <select id="period" onchange="updatechart()" class="dropdowndate">
+                                        <option value="today" selected>To day</option>
+                                        <option  value="30day">Last 30 days</option>
+                                    </select>
+                                </form>
+                            </div>
+
+                            <div class="box1">
+                                <div class="box2">
+                                    <p class="p1"><b>10</b></p>
+                                    <p>pending distributions</p>
+                                </div>
+
+                                <div class="box2">
+                                    <p class="p1"><b>14</b></p>
+                                    <p>received orders</p>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="box3">
+                            <h3>Current Stock</h3>
+
+                                <div class="content1">
+
+                                    <div class="tab2">
+                                        <p>Buddy :  200</p>
+                                    </div>
+
+                                    <div class="tab2">
+                                        <p>Budget :  160</p>
+                                    </div>
+
+                                    <div class="tab2">
+                                        <p>Regular :  100</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>';
+
+                    echo '
+                    <div class="body-right">
+                        <div class="accordion new">
+                            <h3>New Purchase Orders</h3>
+                            <div class="box">
+                                <div class="label"> Purchase Order ID : 1
+                                    <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#a66bf9"/>
+                                    </svg>
+                                </div>
+                                <div class="content">
+                                    <span><strong>Dealer ID : </strong>16</span> &nbsp;
+                                    <span><strong>Dealer Name : </strong>Jerry Perera</span>
+                                    <hr>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Buddy</td>
+                                                <td>20</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Regular</td>
+                                                <td>50</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                            </div>          
+                        </div>
+
+                        <div class="box">
+                            <div class="label"> Purchase Order ID : 2
+                                <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#a66bf9"/>
+                                </svg>
+                            </div>
+                            <div class="content">
+                                <span><strong>Dealer ID : </strong>28</span> &nbsp;
+                                <span><strong>Dealer Name : </strong>Swetha Dissanayake</span>
+                                <hr>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Buddy</td>
+                                            <td>30</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Budget</td>
+                                            <td>100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regular</td>
+                                            <td>50</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>         
+                        </div>
+
+                        <div class="box">
+                            <div class="label"> Purchase Order ID : 3
+                                <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#a66bf9"/>
+                                </svg>
+                            </div>
+                            <div class="content">
+                                <span><strong>Dealer ID : </strong>15</span> &nbsp;
+                                <span><strong>Dealer Name : </strong>Saman Gunathilake</span>
+                                <hr>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Buddy</td>
+                                            <td>50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Budget</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regular</td>
+                                            <td>100</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>       
+                        </div>
+                    </div>
+                    ';
+
+                    echo '</section>';                         
     }
 
     function admindashboard($data){
