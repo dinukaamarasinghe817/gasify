@@ -29,6 +29,25 @@ class Orders extends Controller{
         $this->view('customer/allmyreservation', $data);
     }
 
+    // distributor phurchase orders to company
+    public function distributor() {
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'orders';
+
+        // profile picture
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        // phurchase order  view
+        // create the model
+        // $this->view('distributor/reports',$data);
+        $this->view('distributor/phurchase_orders',$data);
+
+
+    }
+
+
 
 
 }
