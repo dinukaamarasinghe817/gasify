@@ -68,9 +68,6 @@ class Distributor extends Model
         $sql = "SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_vehicle_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$distributor_id}' AND d.vehicle_no = '{$vehicle_no}'";
         $result = $this->Query($sql);
         return $result;
-
-
-
     }
 
 
