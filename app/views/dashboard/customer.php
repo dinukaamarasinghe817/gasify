@@ -13,7 +13,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 </section>
 <!-- <script src="<?php echo BASEURL;?>/public/js/dashboard.js"></script> -->
 <script>
-    let accordion = document.querySelectorAll('.accordion .box');
+    let accordion = document.querySelectorAll('.recent_order .dropdown');
     for(i=0; i<accordion.length; i++) {
         accordion[i].addEventListener('click', function(){
             this.classList.toggle('active')
