@@ -23,10 +23,28 @@ class Orders extends Controller{
     function customer(){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
+
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row['image'];
+
+        $data['allmyreservations'] = $this->model('Customer')->getAllmyreservations($customer_id);
+       
         $this->view('customer/allmyreservation', $data);
+    }
+
+    function customer_myreservation($order_id){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'myreservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row['image'];
+
+        $data['allmyreservations'] = $this->model('Customer')->getMyreservation($customer_id,$order_id);
+        
+
+        $this->view('customer/viewmyreservation', $data);
     }
 
 
