@@ -371,9 +371,9 @@ class Navigation {
 
 
                 if($active == 'settings'){
-                    echo '<a href="#" class="panel-tile active settings">';
+                    echo '<a href="../settings/distributor" class="panel-tile active settings">';
                 }else{
-                    echo '<a href="#" class="panel-tile settings">';
+                    echo '<a href="../settings/distributor" class="panel-tile settings">';
                 }
                         
                         echo ' <svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">
