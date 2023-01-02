@@ -265,6 +265,90 @@ class Body{
                
             }
 
+            echo '<div class="recent_order">';
+
+            if(isset($data['orders'])){
+                echo '  <div class="order_title"> <h3>Recent Orders</h3></div>';
+
+                $orders = $data['orders'];
+                foreach($orders as $order){
+                   $row1 = $order['order'];
+                    $products = $order['products'];
+                    echo '  <div class="dropdown">
+                    <div class="label">
+                        <div><span><strong>Order ID:</strong></span><span>'.$row1['order_id'].'</span></div>
+                        <div class="icon"><svg class="img" width="20" height="10" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span><strong>Placed Date:</strong></span><span> '.$row1['place_date'].'</span><br>
+                        <span><strong>Status:</strong></span><span> '.$row1['order_state'].'</span><br>';
+                    echo '<span><strong>Total Amount:</strong></span><span> Rs.'.number_format($order['total_amount']).'.00</span>
+                    <table>
+                    <tr><th>Brand</th><th>Item</th> <th>Quantity</th></tr>';
+                    foreach($products as $product){
+                        echo '<tr><td>'.$product['company_name'].'</td><td>'.$product['product_name'].'</td><td>'.$product['quantity'].'</td></tr>';
+
+
+                    }
+                    echo '</table></div></div>';
+                }
+    
+        
+
+            }
+
+          
+          
+                       
+
+            echo '
+            
+            
+            </div>';
+           
+        echo '</div>';
+    }
+
+    function allmyreservation($data){
+        echo ' <div class="under_topbar">
+        <div class="subtitle">
+            <h3>My Reservations</h3>
+        </div>
+        <div class="table">';
+         $allmyreservations = $data['allmyreservations'];
+        //  $orders = $data['orders'];
+        if(count($allmyreservations)==0){
+            echo '<table><tr id="first_row"><th><h3><center>No reservations Found!</center></h3></td></tr></table>';
+        }else{
+            if(isset($data['allmyreservations'])){
+                echo '<table><div class="table_header">
+                <tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></div>';
+
+                foreach($allmyreservations as $order){
+                    $row1 = $order['order'];
+                  
+                    //  $products = $order['products'];
+                    $url = BASEURL.'/Orders/customer_myreservation/'.$row1['order_id'];
+                     echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td>'.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
+
+                }
+            }
+        }
+            
+           
+        echo'</div>  
+        </div>';
+    }
+
+    function viewmyreservation($data){
+        echo ' <div class="under_topbar">
+        <div class="subtitle">
+            <h3>Order Details</h3>
+        </div><div class="card">';
+
 
         echo '</div>';
     }
@@ -427,5 +511,7 @@ class Body{
 
                     echo '</section>';                         
     }
+
+
 
 }

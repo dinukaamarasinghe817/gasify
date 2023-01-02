@@ -10,7 +10,7 @@ class Header{
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> 
             <link rel="stylesheet" href="'.BASEURL.'/public/css/dashboard.css">
             <link rel="stylesheet" href="'.BASEURL.'/public/css/'.$user.'.css">
-            <title>Dealer-dashboard</title>
+            <title>'.$user.'</title>
         </head>
         <body>';
     }

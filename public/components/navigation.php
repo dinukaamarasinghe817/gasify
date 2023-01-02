@@ -183,9 +183,9 @@ class Navigation {
         <ul class="nav-tiles">
             <li class="nav-tile">';
             if($active=="dashboard"){
-                echo '<a href="../dashboard/customer" class="panel-tile active dashboard">';
+                echo '<a href= "'.BASEURL.'/dashboard/customer" class="panel-tile active dashboard">';
             }else{
-                echo '<a href="../dashboard/customer" class="panel-tile dashboard">';
+                echo '<a href="'.BASEURL.'/dashboard/customer" class="panel-tile dashboard">';
             }
     
                 
