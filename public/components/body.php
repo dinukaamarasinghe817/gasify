@@ -434,8 +434,8 @@ class Body{
                                             </tr>
                                             </tbody>
                                         </table>
-                            </div>          
-                        </div>
+                                </div>          
+                            </div>
 
                         <div class="box">
                             <div class="label"> Purchase Order ID : 2

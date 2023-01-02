@@ -111,7 +111,7 @@ class Customer extends Model{
         $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,dealer.name
         FROM reservation
         JOIN dealer ON reservation.dealer_id = dealer.dealer_id
-        WHERE reservation.customer_id = '{$customer_id}' && reservation.order_id = '{$orderid}'");
+        WHERE reservation.customer_id = '{$customer_id}' && reservation.order_id = '{$order_id}'");
 
         $result2 = $this->Query("SELECT p.name as product_name, p.image as product_image, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price 
                 FROM reservation_include r 

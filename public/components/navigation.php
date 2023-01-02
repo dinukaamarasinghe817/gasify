@@ -311,9 +311,9 @@ class Navigation {
 
 
                 if($active == 'orders'){
-                    echo '<a href="#" class="panel-tile active orders">';
+                    echo '<a href="../orders/distributor" class="panel-tile active orders">';
                 }else{
-                    echo '<a href="#" class="panel-tile orders">';
+                    echo '<a href="../orders/distributor" class="panel-tile orders">';
                 }
 
                         echo ' <svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -356,9 +356,9 @@ class Navigation {
 
 
                 if($active == 'reports'){
-                    echo '<a href="#" class="panel-tile active reports">';
+                    echo '<a href="../reports/distributor" class="panel-tile active reports">';
                 }else{
-                    echo '<a href="#" class="panel-tile reports">';
+                    echo '<a href="../reports/distributor" class="panel-tile reports">';
                 }
                         
                         echo '<svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">

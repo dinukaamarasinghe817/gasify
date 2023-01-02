@@ -59,18 +59,55 @@ class Distributor extends Model
 
     public function viewvehicle($distributor_id) {
         $sql = "SELECT * FROM distributor_vehicle WHERE distributor_id = '{$distributor_id}'";
-        // $result = $this->read('distributor', "distributor_id = $distributor_id");
-        $result = $this->Query($sql);
-        return $result;
+        $sql = $this->Query($sql);
+        $output = '';
+
+        if(mysqli_num_rows($sql)>0) {
+            while($row2 = mysqli_fetch_assoc($sql)) {
+                $vehicle_no = $row2['vehicle_no'];
+
+                $vehicle = "SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_vehicle_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$distributor_id}' AND d.vehicle_no = '{$vehicle_no}'";
+                $vehicle = $this->Query($vehicle);
+
+
+                if(mysqli_num_rows($vehicle)>0) {
+                    $output .= '<tr>
+                        <td>'.$vehicle_no.'</td>
+                        <td>'.$row2['type'].'</td>
+                        <td>
+                        <table class="table2">
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Capacity</th>
+                            </tr>';
+                    
+                    while($row3 = mysqli_fetch_assoc($vehicle)) {
+                        $output .= '
+                            <tr>
+                                <td>'.$row3['product_name'].'</td>
+                                <td>'.$row3['capacity'].'</td>
+                            </tr>
+                        ';
+                    }
+
+                    $output .= '</table>
+                                </td>
+                                <td>'.$row2['fuel_consumption'].'</td>
+                                <td>'.$row2['availability'].'</td>
+                                ';
+                    if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
+                        $output .= '<td><button class="btn4" style="background-color: B4AAFF;"><b>Release</b></button></td>';
+                    }else{
+                        $output .= '<td><button type="button" class="btn4" onclick="deleteVehicle('.$vehicle_no.')" style="background-color: red;"><b>Remove</b></button></td>';
+                    }
+
+                    $output .=  '
+                            </tr>'; 
+
+                }
+            }
+        }
+        
     }
-
-    public function productdetails($distributor_id, $vehicle_no) {
-        $sql = "SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_vehicle_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$distributor_id}' AND d.vehicle_no = '{$vehicle_no}'";
-        $result = $this->Query($sql);
-        return $result;
-    }
-
-
-
 
 }
