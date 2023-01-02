@@ -27,10 +27,6 @@ class Vehicles_Comp {
                 <ul>'.$output.'</ul>
             </div> 
         ';
-
-        // $row = $data['row'];
-        // $vehicles = $data['vehicles'];
-        // js
     }
 }
 
