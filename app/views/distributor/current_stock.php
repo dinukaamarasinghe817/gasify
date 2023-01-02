@@ -18,13 +18,11 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             <div class="top">
                 <ul>
                     <li>
-                        <!-- <a href="../distributor/current_stock" class="stock"><b>Current Stock</b></a> -->
-                        <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
-                    </li>
-                    <li>
                         <!-- <a href="../distributor/phurchase_orders" class="place"><b>Place an Order</b></a> -->
                         <a href="../orders/distributor" class="place"><b>Place an Order</b></a>
-
+                    </li>
+                    <li>
+                        <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
                     </li>
                     <li>
                         <!-- <a href="#" class="placedlist"><b>Placed Order List</b></a> -->

@@ -17,12 +17,12 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             <div class="top">
                 <ul>
                     <li>
-                        <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
-                        <!-- <a href="#" class="stock"><b>Current Stock</b></a> -->
-                    </li>
-                    <li>
                         <a href="../orders/distributor" class="place"><b>Place an Order</b></a>
                         <!-- <a href="#" class="place"><b>Place an Order</b></a> -->
+                    </li>
+                    <li>
+                        <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
+                        <!-- <a href="#" class="stock"><b>Current Stock</b></a> -->
                     </li>
                     <li>
                         <a href="../orders/dis_placed_pending" class="placedlist"><b>Placed Order List</b></a>
@@ -33,13 +33,13 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             <div class="middle">
                 <ul>
                     <li>
-                        <a href="#" class="pending"><b>Pending Gas Orders</b><a>
+                        <a href="../orders/dis_placed_pending" class="pending"><b>Pending Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="#" class="accepted"><b>Accepted Gas Orders</b><a>
+                        <a href="../orders/dis_placed_accepted" class="accepted"><b>Accepted Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="#" class="completed"><b>Completed Gas Orders</b><a>
+                        <a href="../orders/dis_placed_completed" class="completed"><b>Completed Gas Orders</b><a>
                     </li>
 
                 </ul>
@@ -60,7 +60,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         </div>
 
                         <div class="content">
-                            <span><strong>Order Details : </strong></span>
+                            <span><strong>Phurchase Order Details : </strong></span>
                             <hr>
                             <table>
                                 <thead>
@@ -105,7 +105,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         </div>
 
                         <div class="content">
-                            <span><strong>Order Details : </strong></span>
+                            <span><strong>Phurchase Order Details : </strong></span>
                             <hr>
                             <table>
                                 <thead>
