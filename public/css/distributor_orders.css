@@ -350,6 +350,19 @@ body.blur > *::before{
     margin-top: 10px;
 }
 
+.accordion .box .labelbgn{
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 100%;
+    height: 25px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 10px;
+}
+
 .accordion .box .label{
     box-sizing: border-box;
     font-size: 16px;
@@ -535,8 +548,37 @@ td:nth-child(4) {
     border-bottom: solid transparent;
     border-right: solid transparent;
     border-left: solid transparent;
-
 }
+.middle ul {
+    display: inline-flex;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.middle ul li {
+    float: left;
+    width: 100%;
+    font-size: var(--mediums);
+    text-align: center;
+}
+/* 
+.middle ul li a {
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 10px;
+    width: 100%;
+    height: 100%;
+    color: var(--black);
+    background-color:#B4AAFF;
+    background-color:white;
+    border-top: solid transparent;
+    border-bottom: solid transparent;
+    border-right: solid transparent;
+    border-left: solid transparent;
+} */
+
+
 
 table {
     border-collapse: collapse;
@@ -611,6 +653,18 @@ table td {
 .total p {
     text-align: center;
 }
+
+
+.inside{
+    padding: 7px;
+    background-color: #875899;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    width: 50%;
+
+}
+
 
 
 

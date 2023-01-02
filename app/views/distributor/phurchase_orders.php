@@ -3,7 +3,6 @@ $header = new Header("distributor_orders");
 $sidebar = new Navigation('distributor',$data['navigation']);
 ?>
 
-
 <section class="body">
     <?php 
     $bodyheader = new BodyHeader($data);
@@ -15,13 +14,23 @@ $sidebar = new Navigation('distributor',$data['navigation']);
         
         <h1>Gas Orders</h1>
 
+        <?php 
+        //   $result = new GasOrders_Comp("place");
+        ?>
+
         <div class="top">
             <ul>
                 <li>
-                    <a href="#" class="place"><b>Place an Order</b></a>
+                    <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
+                    <!-- <a href="#" class="stock"><b>Current Stock</b></a> -->
                 </li>
                 <li>
-                    <a href="#" class="placedlist"><b>Placed Order List</b></a>
+                    <a href="../orders/distributor" class="place"><b>Place an Order</b></a>
+                    <!-- <a href="#" class="place"><b>Place an Order</b></a> -->
+                </li>
+                <li>
+                    <a href="../orders/dis_placed_pending" class="placedlist"><b>Placed Order List</b></a>
+                    <!-- <a href="#" class="placedlist"><b>Placed Order List</b></a> -->
                 </li>
             </ul>
         </div>
@@ -75,7 +84,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             </div>
         </div>
     </div>
-
     </section>
 </section>
 
