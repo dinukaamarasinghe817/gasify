@@ -11,9 +11,9 @@ class Vehicles_Comp {
         }
 
         if($active == "update") {
-            $output .= '<li><a href="#" class="update active"><b>Update Vehicle</b></a></li>'; 
+            $output .= '<li><a href="../vehicles/updatevehicle" class="update active"><b>Update Vehicle</b></a></li>'; 
         }else {
-            $output .= '<li><a href="#" class="update"><b>Update Vehicle</b></a></li>'; 
+            $output .= '<li><a href="../vehicles/updatevehicle" class="update"><b>Update Vehicle</b></a></li>'; 
         }
 
         if($active == "view") { 

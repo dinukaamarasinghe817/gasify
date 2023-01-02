@@ -44,8 +44,8 @@ class Orders extends Controller{
         // $this->view('distributor/reports',$data);
         $this->view('distributor/phurchase_orders',$data);
 
-
     }
+
     // distributor current stock (Gas Orders)
     public function distributor_currentstock() {
         $user_id = $_SESSION['user_id'];
@@ -76,7 +76,7 @@ class Orders extends Controller{
         // phurchase order  view
         // create the model
         // $this->view('distributor/reports',$data);
-        $this->view('distributor/current_stock',$data);
+        $this->view('distributor/placed_pending',$data);
 
     }
 
@@ -112,6 +112,7 @@ class Orders extends Controller{
         $this->view('distributor/placed_accepted',$data);
 
     }
+
     // Gas Orders -> Places orders list , completed gas orders
     public function dis_placed_completed() {
         $user_id = $_SESSION['user_id'];
