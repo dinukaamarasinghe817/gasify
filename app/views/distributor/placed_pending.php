@@ -1,5 +1,5 @@
 <?php
-$header = new Header("distributor_orders");
+$header = new Header("distributor");
 $sidebar = new Navigation('distributor',$data['navigation']);
 ?>
 

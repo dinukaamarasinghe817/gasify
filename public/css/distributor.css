@@ -534,8 +534,8 @@ td:nth-child(4) {
     width: 100%;
     font-size: var(--mediums);
     text-align: center;
-}
-
+} 
+ 
 .top ul li a {
     box-sizing: border-box;
     display: block;
@@ -549,6 +549,7 @@ td:nth-child(4) {
     border-right: solid transparent;
     border-left: solid transparent;
 }
+
 .middle ul {
     display: inline-flex;
     width: 100%;
@@ -639,7 +640,6 @@ table td {
 .total p {
     text-align: center;
 }
-
 
 .inside{
     padding: 7px;

@@ -9,6 +9,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
     ?>
 
     <section class="body-content">
+        
         <h1>Reports</h1><br>
 
         <div class="main">

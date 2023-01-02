@@ -341,9 +341,9 @@ class Navigation {
 
 
                 if($active == 'dealers'){
-                    echo '<a href="#" class="panel-tile active dealers">';
+                    echo '<a href="../dealers/distributor_dealers" class="panel-tile active dealers">';
                 }else{
-                    echo '<a href="#" class="panel-tile dealers">';
+                    echo '<a href="../dealers/distributor_dealers" class="panel-tile dealers">';
                 }
                         
                         echo ' <svg width="34" height="31" viewBox="0 0 34 31" fill="" xmlns="http://www.w3.org/2000/svg">
