@@ -240,7 +240,7 @@ body{
     border-radius: 10px;
     padding: 5px;
     color: #630101;
-    display: none;
+    /* display: flex; */
 }
 
 

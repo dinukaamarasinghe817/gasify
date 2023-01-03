@@ -110,4 +110,56 @@ class Distributor extends Model
         
     }
 
+    public function f1($dis_id){
+        $vehicles = array();
+        $query2= $this->Query("SELECT * FROM distributor_vehicle WHERE distributor_id = '{$dis_id}' ");
+            
+            if(mysqli_num_rows($query2)>0) {
+                while($row2 = mysqli_fetch_assoc($query2)) {
+                    $vehicle_no = $row2['vehicle_no'];
+                    $vehicle_capacities = array();
+                    // get the details from product details
+                    // $query3 = mysqli_query($conn, "SELECT * FROM product WHERE company_id = '{$row['company_id']}' and product_id = '{$product_id}'");
+                    $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_vehicle_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$dis_id}' AND d.vehicle_no = '{$vehicle_no}'");
+    
+                    if(mysqli_num_rows($query3)>0) {
+                        // $output .= '<tr>
+                        //                 <td>'.$row2['vehicle_no'].'</td>
+                        //                 <td>'.$row2['type'].'</td>
+                        //                 <td>
+                        //                 <table class="table2">
+                        //                     <tr>
+                        //                         <th>Product Name</th>
+                        //                         <th>Capacity</th>
+                        //                     </tr>';
+                                        
+                        while($row3 = mysqli_fetch_assoc($query3)){
+                            array_push($vehicle_capacities, $row3);
+                            // $output .= '
+                            //     <tr>
+                            //         <td>'.$row3['product_name'].'</td>
+                            //         <td>'.$row3['capacity'].'</td>
+                            //     </tr>
+                            // ';
+                        }
+    
+                        // $output .= '</table>
+                        //             </td>
+                        //             <td>'.$row2['fuel_consumption'].'</td>
+                        //             <td>'.$row2['availability'].'</td>
+                        //             ';
+                        // if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
+                        //     $output .= '<td><button class="btn4" style="background-color: B4AAFF;"><b>Release</b></button></td>';
+                        // }else{
+                        //     $output .= '<td><button type="button" class="btn4" onclick="deleteVehicle('.$vehicle_no.')" style="background-color: red;"><b>Remove</b></button></td>';
+                        // }
+                        // $output .=  '
+                        //         </tr>';                            
+                    }
+                    array_push($vehicles, ['vehicleinfo'=> $row2, 'capacities' => $vehicle_capacities]);
+                }
+            }
+        return $vehicles;     
+    }
+
 }

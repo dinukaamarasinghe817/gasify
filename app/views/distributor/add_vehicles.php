@@ -21,7 +21,13 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
             <!-- <form action=BASEURL."/vehicles/addvehicle" method="POST"> -->
             <form action="<?php echo BASEURL;?>/vehicles/addvehicle" method="POST">
-                <div class="err-txt1"><p>This is an error message!</p></div>
+                <div class="err-txt1">
+                <?php
+                    if(isset($data['error'])){
+                        echo '<p>'.$data['error'].'</p>';
+                    }
+                ?>
+                </div>
 
                 <div class="part1">
                     <label>Vehicle Number </label>               
