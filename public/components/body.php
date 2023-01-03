@@ -349,6 +349,10 @@ class Body{
             <h3>Order Details</h3>
         </div><div class="card">';
 
+        if(isset($data['myreservation'])){
+            foreach($myre)
+        }
+
 
         echo '</div>';
     }
