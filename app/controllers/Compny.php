@@ -1,7 +1,12 @@
 <?php
     session_start();
 class Compny extends Controller{
+    
     function __construct(){
+        if(isset($_POST['productImage '])){
+            echo "done";
+            die();
+        }
         
     }
 
@@ -9,8 +14,12 @@ class Compny extends Controller{
         $data['navigation'] = 'dealer';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
+        $row = mysqli_fetch_assoc($dealer_details);
+        $data['cc']=$row['account_no'];
+        echo $data['cc'];
             //$data=[];
         $this->view('dashboard/company', $data);
     }
@@ -38,6 +47,8 @@ class Compny extends Controller{
         $data['image'] = $row['logo'];
             //$data=[];
         $this->view('dashboard/company', $data);
+    }function getCompanyDealers(){
+        echo "hell";
     }
 }
 ?>

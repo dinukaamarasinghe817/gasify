@@ -9,7 +9,7 @@
     <title>Company-dashboard</title>
     <!--<link rel="stylesheet" href="./CSS/company.css">  -->
 </head>
-<script src="../../controller/Delivery/delivery.js" >
+<script src="../../../public/js/Company/company.js">
 
 </script>
 

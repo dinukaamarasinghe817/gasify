@@ -599,6 +599,7 @@ input[type=password]:focus{
     background-size: 20vh 20vh;
     background-repeat: no-repeat;
     background-color: #b9b6d3;
+    outline: 3px solid "#000";
 }
 ::-webkit-file-upload-button {
     font-family: poppins;

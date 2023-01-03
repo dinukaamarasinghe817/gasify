@@ -553,7 +553,7 @@ class Body{
                 <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage()" required> <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage(this)" required> <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Add product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -561,7 +561,7 @@ class Body{
                 </form></div><div class="right">
                 <div style="height:10vh"></div>
                 <label>Preview</label>
-                <div class="productPreview" id="productPreview">
+                <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
                 </div></div>
                 
                 

@@ -13,10 +13,8 @@
     <link rel="stylesheet" href="<?php echo BASEURL; ?>/public/css/dashboard_company.css">
     <<link rel="stylesheet" href="<?php echo BASEURL; ?>/public/css/company.css">
     <title>Company-dashboard</title>
-    <!--<link rel="stylesheet" href="./CSS/company.css">  -->
 </head>
-<!--<script src="../../controller/Company/company.js" >
-</script>-->
+<script src="<?php echo BASEURL; ?>/public/js/Company/company.js"></script>
 
 <body id="Body">
     <?php 
