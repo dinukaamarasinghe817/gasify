@@ -105,7 +105,7 @@ class Customer extends Model{
 
     public function getMyreservation($order_id,$customer_id){
 
-        $allmyreservations = array();
+        $myreservation = array();
         $products = array();
 
         $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,dealer.name
@@ -133,9 +133,9 @@ class Customer extends Model{
 
         }
 
-        array_push( $allmyreservations,['order'=>$order_id,'products'=>$products, 'total_amount'=>$total_amount]);
+        array_push( $myreservation,['order'=>$order_id,'products'=>$products, 'total_amount'=>$total_amount]);
 
-        return $allmyreservations;
+        return $myreservation;
         
 
     }
