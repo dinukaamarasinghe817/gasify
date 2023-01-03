@@ -18,8 +18,9 @@ class Compny extends Controller{
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
         $row = mysqli_fetch_assoc($dealer_details);
-        $data['cc']=$row['account_no'];
-        echo $data['cc'];
+        $data['dealer']=$row;
+        //$data['cc']=$row['account_no'];
+        //echo $data['cc'];
             //$data=[];
         $this->view('dashboard/company', $data);
     }

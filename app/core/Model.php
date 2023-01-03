@@ -24,7 +24,8 @@ class Model extends Database
         return $result;
     }
     public function readJoin($company_id){
-        $sql="SELECT dealer.account_no,dealer.name,dealer.city,dealer.street,dealer.contact_no,dealer_keep.quantity FROM dealer JOIN dealer_keep ON dealer.dealer_id=dealer_keep.dealer_id AND dealer.company_id='{$company_id}'";
+        //$sql="SELECT dealer.account_no,dealer.name,dealer.city,dealer.street,dealer.contact_no,dealer_keep.quantity FROM dealer JOIN dealer_keep ON dealer.dealer_id=dealer_keep.dealer_id AND dealer.company_id='{$company_id}'";
+        $sql="SELECT * FROM dealer WHERE {$company_id}";
         $result = $this->Query($sql);
         return $result;
     } 

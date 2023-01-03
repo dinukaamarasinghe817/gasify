@@ -30,6 +30,7 @@ class Company extends Model
         return $result;
     }
     public function getRegisteredDealers($company_id){
+        //$result = $this->read('dealer',"company_id=$company_id");
         $result = $this->readJoin("company_id = $company_id");
         return $result;
 
