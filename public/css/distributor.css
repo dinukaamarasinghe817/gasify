@@ -600,10 +600,6 @@ table td {
     margin-bottom: 10px;
     border-radius: 10px;
     text-align: center;
-    /* padding: 5px; */
-    /* text-align: center; */
-    /* padding: 5px; */
-    
 }
 
 .middle{
@@ -667,7 +663,10 @@ table td {
     width: 50%;
 }
 
-
-
+.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 

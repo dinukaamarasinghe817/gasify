@@ -296,9 +296,9 @@ class Navigation {
 
 
                 if($active == 'distributions'){
-                    echo '<a href="#" class="panel-tile active distributions">';
+                    echo '<a href="../gasdistributions/pending_distributions" class="panel-tile active distributions">';
                 }else{
-                    echo '<a href="#" class="panel-tile distributions">';
+                    echo '<a href="../gasdistributions/pending_distributions" class="panel-tile distributions">';
                 }
 
                         echo '<svg width="29" height="22" viewBox="0 0 29 22" fill="" xmlns="http://www.w3.org/2000/svg">
