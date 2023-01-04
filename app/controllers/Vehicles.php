@@ -95,11 +95,11 @@ class Vehicles extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
+        // $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
 
-        $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
+        // $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
 
-        $data['vehicles'] = $this->model("Distributor")->f1($user_id);
+        $data['vehicles'] = $this->model("Distributor")->viewvehicle($user_id);
 
         $this->view('distributor/view_vehicles', $data);
     }
