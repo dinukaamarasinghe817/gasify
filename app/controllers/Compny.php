@@ -17,8 +17,8 @@ class Compny extends Controller{
         $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
-        $row = mysqli_fetch_assoc($dealer_details);
-        $data['dealer']=$row;
+        //$row = mysqli_fetch_assoc($dealer_details);
+        $data['dealer']=$dealer_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
             //$data=[];
@@ -28,6 +28,7 @@ class Compny extends Controller{
         $data['navigation'] = 'distributor';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        //$distributor_details = $this->model('Company')->getRegisteredDealers($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
             //$data=[];
@@ -36,6 +37,8 @@ class Compny extends Controller{
         $data['navigation'] = 'products';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $product_details = $this->model('Company')->getProductDetails($company_id);
+        $data['products']=$product_details;
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
             //$data=[];

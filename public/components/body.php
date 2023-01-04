@@ -472,7 +472,7 @@ class Body{
                 if(isset($data["dealer"])){
                     $result = $data["dealer"];
                     $dealer = "";
-                    while($row = mysqli_fetch_assoc($result)){
+                    /*while($row){
                         $dealer.='';
                         //$name = $row["name"];
                         //$qty = $row["quantity"];
@@ -483,8 +483,21 @@ class Body{
                                         <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
                                         <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
                                         </div>';                    
+                    }*/
+                    foreach($result as $row){
+                        //print_r($data) ;
+                        $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #85B6E2;height:10%">
+                                        <div class="dealer_name" id="col">'.$row['name']. '</div>
+                                        <div class="dealer_location" id="col">'.$row['city'].'</div>
+                                        <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
+                                        <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
+                                        <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
+                                        </div>';             
                     }
                     echo $dealer;
+
+
+                    
 
                 }
             
@@ -530,7 +543,42 @@ class Body{
                  <div class="product_lastUpdated" id="product_col">Last updated</div>
                  <div class="product_lastUpdated" id="product_col">Qty</div>
              </div>
-             <div class="DealerTables" id="DealerTables"></div>
+             <div class="DealerTables" id="DealerTables">';
+             if(isset($data["products"])){
+                $result = $data["products"];
+                $products = "";
+                /*while($row){
+                    $dealer.='';
+                    //$name = $row["name"];
+                    //$qty = $row["quantity"];
+                    $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #85B6E2;height:10%">
+                                    <div class="dealer_name" id="col">'.$row['name']. '</div>
+                                    <div class="dealer_location" id="col">'.$row['city'].$row['street'].'</div>
+                                    <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
+                                    <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
+                                    <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
+                                    </div>';                    
+                }*/
+                foreach($result as $row){
+                    //print_r($data) ;
+                    $products .=  '<div class="Products_tableHead_row" id="Products_tableHead_row" style="background-color: #deb4f8;height:10%">
+                                    <div class="product_id\" id="product_col" style="margin-top:1%">' .$row['product_id']. '</div>
+                                    <div class="product_name" id="product_col" style="margin-top:1%;width:27%">' .$row['name']. '</div>
+                                    <div class="product_type" id="product_col" style="margin-top:1%;width:25%">'.$row['type'].'</div>
+                                    <div class="product_unit_price" id="product_col" style="margin-top:1%;width:25%">' .$row['unit_price']. '</div>
+                                    <div class="product_weight" id="product_col" style="margin-top:1%;width:25%">' .$row['weight'].'</div>
+                                    <div class="product_prod_time" id="product_col" style="margin-top:1%">' .$row['production_time']. '</div>
+                                    <div class="product_lastUpdated" id="product_col" style=\"margin-top:1%">' .$row['last_updated_date']. '</div>
+                                    <div class="product_quantity" id="product_col" style=\"margin-top:1%">' .$row['quantity'].'</div>
+                                </div>';             
+                }
+                echo $products;
+
+
+                
+
+            }          
+            echo '</div>
         </section>';
     }
     function companyRegProducts($data){

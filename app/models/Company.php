@@ -32,7 +32,26 @@ class Company extends Model
     public function getRegisteredDealers($company_id){
         //$result = $this->read('dealer',"company_id=$company_id");
         $result = $this->readJoin("company_id = $company_id");
-        return $result;
+        //$data=[];
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['name'=>$row['name'], 'city'=>$row['city'], 'bank'=>$row['bank'], 'contact_no'=>$row['contact_no'],'account_no'=>$row['account_no'],'street'=>$row['street']]);
+            }
+            return $info;
+        }
+        //return $result;
+
+    }
+    public function getProductDetails($company_id){
+        $result = $this->read('product', "company_id = $company_id");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['product_id'=>$row['product_id'], 'name'=>$row['name'], 'type'=>$row['type'], 'unit_price'=>$row['unit_price'],'weight'=>$row['weight'],'production_time'=>$row['production_time'],'last_updated_date'=>$row['last_updated_date'],'quantity'=>$row['quantity']]);
+            }
+            return $info;
+        }
 
     }
     
