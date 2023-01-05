@@ -103,47 +103,184 @@ class Customer extends Model{
 
     }
 
-    public function getMyreservation($order_id,$customer_id){
+    public function ViewMyreservation($order_id,$customer_id){
 
-        $myreservation = array();
-        $products = array();
+            $myreservation = array();
 
-        $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,dealer.name
-        FROM reservation
-        JOIN dealer ON reservation.dealer_id = dealer.dealer_id
-        WHERE reservation.customer_id = '{$customer_id}' && reservation.order_id = '{$order_id}'");
+          //take dealer name using dealer and reservation tables
+            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,dealer.name as dealer_name
+            FROM reservation
+            INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
+            WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
 
-        $result2 = $this->Query("SELECT p.name as product_name, p.image as product_image, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price 
-                FROM reservation_include r 
-                INNER JOIN product p ON r.product_id = p.product_id 
-                INNER JOIN company c ON p.company_id = c.company_id 
-                WHERE r.order_id = '{$order_id}'");
+            // $result1 = mysqli_query($conn,$sql1);
+
+            // $output = '<div class="subtitle">
+            // <h3>Order Details</h3>
+            // </div><div class="card">';
+            if(mysqli_num_rows($result1) > 0){
+                while($row1=mysqli_fetch_assoc($result1)){
+                        
+                    //     $output.='<div class="order_card">
+                    //     <div class="card_top">';
+
+                        //    $order_id= $row1['order_id'] ;
+                        // $status= $row1['order_state'] ;
+                    //     $placed_date= $row1['place_date'] ;
+                    //     $dealer= $row1['name'] ;
+                    
+                        
+                        
+                    //     $output .= '<div class="top_content">
+                    //     <div>
+                    //         <strong>Order ID</strong>
+                    //     </div>
+                    //     <div>
+                    //         '.$orderid.'
+                    //     </div>
+                    // </div>
+                    // <div class="top_content">
+                    //     <div>
+                    //         <strong>Placed Date</strong>
+                    //     </div>
+                    //     <div>
+                    //         '.$placed_date.'
+                    //     </div>
+                    // </div>';
+
+                    //select products' product_id which include relavant reservation and product names relavant product ids include relavant reservation
+                    // $result2 = $this->Query("SELECT * FROM reservation_include WHERE order_id = '{$order_id}'");
+                    $result2 = $this->Query("SELECT p.name as product_name, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price,p.image as product_image,p.weight as product_weight 
+                            FROM reservation_include r 
+                            INNER JOIN product p ON r.product_id = p.product_id 
+                            INNER JOIN company c ON p.company_id = c.company_id 
+                            WHERE r.order_id = '{$order_id}'");
+                    $total_amount = 0;
+                    // $document = '';
+                    $products = array();
+                    while($row2 = mysqli_fetch_assoc($result2)){
+                    
+                        //select product names relavant product ids include relavant reservation
+                        // $result3 = $this->Query()"SELECT p.name as product_name, c.name as company_name,p.image as product_image,p.weight as product_weight FROM product p INNER JOIN company c ON p.company_id = c.company_id WHERE product_id = '{$row2['product_id']}'");
+                        
+                        //print items and their quantity
+                        // while($row3 = mysqli_fetch_assoc($result3)){
+                            $quantity = $row2['quantity'];
+                            $unit_price = $row2['unit_price'];
+                            // $product_img = $row3['product_image'];
+                            $amount = $quantity * $unit_price;
+                            $total_amount = $total_amount + $amount;
+                        //     $document .= '<div class="item">
+                        //     <div class="item_img">
+                        //         <img src="../../model/Company/images/'.$product_img.'" alt="">
+                        //     </div>
+                        //     <div class="item_content">
+                        //         <h5>'.$row3['company_name'].'</h5>
+                        //         <h4>'.$row3['product_weight'].'Kg '.$row3['product_name'].'</h3>
+                        //         <div><p>Unit Price:<strong> RS.'.number_format($unit_price).'.00</strong></p><p>Qty:<strong>'.$quantity.'</strong></p></div>
+                        //     </div>
+                        // </div>';
+                        
+                    
+                        array_push($products,$row2);
+                    
+                        
+                    }
         
-        $total_amount = 0;
-        while($row2=mysqli_fetch_assoc($result2)){
+                    //     $output .= '<div class="top_content">
+                    //     <div>
+                    //         <strong>Total Amount</strong>
+                    //     </div>
+                    //     <div>
+                    //         Rs.'.number_format($total_amount).'.00
+                    //     </div>
+                    // </div>
+                    // <div class="top_content">
+                    //     <div>
+                    //         <strong>Status</strong>
+                    //     </div>
+                    //     <div>
+                    //         '.$status.'
+                    //     </div>
+                    // </div>
+                    // <div class="top_content">
+                    //     <div>
+                    //         <strong>Dealer</strong>
+                    //     </div>
+                    //     <div>
+                    //         '.$dealer.'
+                    //     </div>
+                    // </div>
 
-            // $result3 = $this->Query("SELECT p.name as product_name, c.name as company_name FROM product p INNER JOIN company c ON p.company_id = c.company_id WHERE product_id = '{$row2['product_id']}'"); 
-            // if($row3 = mysqli_fetch_assoc($result3)){
-            $quantity = $row2['quantity'];
-            $unit_price = $row2['unit_price'];
-            $amount = $quantity * $unit_price;
-            $total_amount = $total_amount + $amount;
-            array_push($products,$row2);
-            // }
+                    // </div>';
 
+                    // $output .= '</div>';
+
+
+                    //check status is Pending or Accepted then active cancel option
+                    // if($status == "Pending" || $status == "Accepted"){
+                    //     $output .= '<div class="cancel_card_bottom">
+                    //     <div class="cancel_item_side">';
+                    //     $output .= $document;
+                    //     $output .= '<div class="cancel_btn"><button>Cancel Reservation</button></div>
+                    //                 <div class="back_btn"><a href="allmyreservation.php"><button class="bbtn">Back</button></a></div>
+                    //             </div>'; //item_side div close tag
+                    // }
+                
+                    //check status is Completed or Delivered then display already added reviews and reviews count<3 then active add review option
+                    // else if($status == "Completed" || $status == "Delivered"){
+
+                    //     $result4 = mysqli_query($conn, "SELECT * FROM review WHERE  order_id = '{$orderid}' ORDER BY date DESC LIMIT 3");
+                    //     //check there is previous reviews or not
+                    //     if(mysqli_num_rows($result4)==0){
+                    //         $output .= '<div class="card_bottom">
+                    //         <div class="item_side">';
+                    //         $output .= $document;
+                    //         $output .= '</div><div class="review_side"><strong>Reviews</strong>
+                    //         <div class="review_box">
+                    //             <div class="content"><p><center>Add your reviews!</center></p></div>
+                    //         </div>
+                    //         <div class="review_btn"><button class="rbtn" onclick="openreview('.$orderid.')">Write Review</button></div>
+                    //         <div class="back_btn"><a href="allmyreservation.php"><button class="bbtn">Back</button></a></div>
+                    //         </div>';
+                    //     }else{
+                    //         // $output .= '<table class="review_table"><tr><td><b>Review:</b></td><td>';
+                    //         $output .= '<div class="card_bottom">
+                    //         <div class="item_side">';
+                    //         $output .= $document;
+                    //         $output .= '</div><div class="review_side"><strong>Reviews</strong>';
+                    //         //display previous added review
+                    //         while($row4 = mysqli_fetch_assoc($result4)){
+                    //             $output .= '<div class="review_box">
+                    //             <div class="date"><h5>'.$row4['date'].'</h5></div>
+                    //             <div class="content"><p>'.$row4['message'].'</p></div>
+                    //             </div>';
+                    //         }
+
+                    //         $output .= '<div class="review_btn"><button class="rbtn" onclick="openreview('.$orderid.')">Write Review</button></div>
+                    //         <div class="back_btn"><a href="allmyreservation.php"><button class="bbtn">Back</button></a></div>
+                    //         </div>';
+                    //     }
+
+                    
+                
+                    // }
+                        array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount]);
+                }
+            // $output .= '</div>
+            // </div>
+            // </div>';
+            
+            // echo $output;
         }
-
-        array_push( $myreservation,['order'=>$order_id,'products'=>$products, 'total_amount'=>$total_amount]);
-
+    
         return $myreservation;
+    }
+    
+
         
 
-    }
-
-
-
-  
-
+    
 }
 
 
