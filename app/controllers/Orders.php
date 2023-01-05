@@ -41,7 +41,7 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row['image'];
 
-        $data['myreservations'] = $this->model('Customer')->getMyreservation($customer_id,$order_id);
+        $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
         
 
         $this->view('customer/viewmyreservation', $data);

@@ -1,3 +1,16 @@
+
+.subtitle{
+    display: flex;
+    /* height: 10%; */
+    align-items: center;
+    padding-bottom: 20px;
+    margin-left: 40px;
+    font-size: var(--larger);
+    font-weight:900;
+    /* overflow-y: scroll;
+    scrollbar-width: none; */
+    color: var(--button-orange);
+}
 .card{
     position: relative;
     box-sizing: border-box;
@@ -13,16 +26,8 @@
     scrollbar-width: thin; */
 }
 
-.card .subtitle{
-    display: flex;
-    /* height: 10%; */
-    align-items: center;
-    padding-bottom: 20px;
-    /* margin: 20px 90px 0px 50px; */
-    font-size: var(--larger);
-    font-weight:900;
-    color: var(--dark-orange-color);
-}
+
+
 
 /* .card .main_table{
     padding: 6px 0px 10px 50px;
@@ -213,7 +218,7 @@
     width: 100%;
     margin:10px 10px 0px 0;
     height:30px;
-    background-color: var(--dark-orange-color);
+    background-color: var(--button-orange);
     border: none;
     border-radius: 5px;
     color: var(--white);
