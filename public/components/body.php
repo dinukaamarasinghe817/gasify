@@ -468,7 +468,6 @@ class Body{
             <div class="dealer_capacity" id="dealer_col"style="width:30%">Hold time</div>
             </div>
             <div class="DealerTables" id="DealerTables">';
-            
                 if(isset($data["dealer"])){
                     $result = $data["dealer"];
                     $dealer = "";
@@ -486,7 +485,7 @@ class Body{
                     }*/
                     foreach($result as $row){
                         //print_r($data) ;
-                        $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #85B6E2;height:10%">
+                        $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #deb4f8;height:10%">
                                         <div class="dealer_name" id="col">'.$row['name']. '</div>
                                         <div class="dealer_location" id="col">'.$row['city'].'</div>
                                         <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
@@ -522,7 +521,43 @@ class Body{
                 <div class="dealer_email" id="dealer_col" style="font-size: 12pt"style="width:28%">Email</div>
                 <div class="dealer_capacity" id="dealer_col"style="width:30%">Hold time</div>
             </div>
-            <div class="DealerTables" id="DealerTables"></div>
+            <div class="DealerTables" id="DealerTables">';
+            if(isset($data["distributor"])){
+                $result = $data["distributor"];
+                $distributor = "";
+                /*while($row){
+                    $dealer.='';
+                    //$name = $row["name"];
+                    //$qty = $row["quantity"];
+                    $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #85B6E2;height:10%">
+                                    <div class="dealer_name" id="col">'.$row['name']. '</div>
+                                    <div class="dealer_location" id="col">'.$row['city'].$row['street'].'</div>
+                                    <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
+                                    <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
+                                    <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
+                                    </div>';                    
+                }*/
+                foreach($result as $row){
+                    //print_r($data) ;
+                    $distributor .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #deb4f8;height:10%">
+                                    <div class="dealer_name" id="col">Sample</div>
+                                    <div class="dealer_location" id="col">'.$row['city'].'</div>
+                                    <div class="dealer_contactno" id="col">'.$row['street'].'</div>
+                                    <div class="dealer_accountno" id="col">'.$row['contact_no'].'</div>
+                                    <div class="dealer_capacity" id="col">'.$row['hold_time'].'</div>
+                                    </div>';             
+                }
+                echo $distributor;
+
+
+                
+
+            }
+                
+            
+            
+            
+            echo '</div>
         </section>';
     }
     function companyProducts($data){

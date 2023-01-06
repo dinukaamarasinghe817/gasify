@@ -54,6 +54,16 @@ class Company extends Model
         }
 
     }
+    public function getRegisteredDistributors($company_id){
+        $result = $this->read('distributor', "company_id = $company_id");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['contact_no'=>$row['contact_no'], 'hold_time'=>$row['hold_time'], 'city'=>$row['city'], 'street'=>$row['street']]);
+            }
+            return $info;
+        }
+    }
     
     
 }

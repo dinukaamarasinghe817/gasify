@@ -28,10 +28,10 @@ class Compny extends Controller{
         $data['navigation'] = 'distributor';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
-        //$distributor_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $distributor_details = $this->model('Company')->getRegisteredDistributors($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
-            //$data=[];
+        $data['distributor']=$distributor_details;
         $this->view('dashboard/company', $data);
     }function products(){
         $data['navigation'] = 'products';
