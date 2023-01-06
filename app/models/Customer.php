@@ -7,16 +7,19 @@ class Customer extends Model{
         parent::__construct();
     }
 
+    //get customer profile image
     public function getCustomerImage($customer_id){
         $result = $this->read('customer', "customer_id = $customer_id");
         return $result;
     }
 
+    //get company brands in dashboard
     public function getCompanyBrand(){
         $result = $this->Query("SELECT name,logo FROM company");
         return $result;
     }
     
+    //display most recent 3 reservations in dashboard
     public function getRecentorders($customer_id){
         $result1 = $this->Query("SELECT order_id,order_state,place_date
             FROM reservation
@@ -59,6 +62,7 @@ class Customer extends Model{
         return $orders;
     }
 
+    //display all past reservations in my reservation tab
     public function getAllmyreservations($customer_id){
 
         $result1 = $this->Query("SELECT order_id,order_state,place_date
@@ -103,6 +107,7 @@ class Customer extends Model{
 
     }
 
+    //display one reservation details which is selected from all reservations
     public function ViewMyreservation($order_id,$customer_id){
 
             $myreservation = array();
@@ -229,8 +234,11 @@ class Customer extends Model{
                 
                     //check status is Completed or Delivered then display already added reviews and reviews count<3 then active add review option
                     // else if($status == "Completed" || $status == "Delivered"){
-
-                    //     $result4 = mysqli_query($conn, "SELECT * FROM review WHERE  order_id = '{$orderid}' ORDER BY date DESC LIMIT 3");
+                        $reviews = array();
+                        $result3 = $this->Query("SELECT * FROM review WHERE  order_id = '{$order_id}' ORDER BY date DESC LIMIT 3");
+                        while($row3 = mysqli_fetch_assoc($result3)){
+                            array_push($reviews,$row3);
+                        }
                     //     //check there is previous reviews or not
                     //     if(mysqli_num_rows($result4)==0){
                     //         $output .= '<div class="card_bottom">
@@ -265,7 +273,7 @@ class Customer extends Model{
                     
                 
                     // }
-                        array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount]);
+                        array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews]);
                 }
             // $output .= '</div>
             // </div>
@@ -275,6 +283,75 @@ class Customer extends Model{
         }
     
         return $myreservation;
+    }
+
+    //add new review for selected reservation
+    public function AddReviw($order_id,$customer_id){
+
+        $review = array();
+        
+        $result1 = $this->Query("SELECT collecting_method FROM reservation WHERE order_id = '{$order_id}'");
+        while($row1=mysqli_fetch_assoc($result1)){
+             $collecting_method = $row1['collecting_method'] ;
+             array_push($review,['collecting_methods'=>$collecting_method]);
+        }
+       
+      
+       
+
+        //check collecting method , Pick up orders only has review_type 'Dealer'
+        if($collecting_method == 'Pick up'){
+            $type = 'Dealer';
+
+            //check fields are empty
+            if(!empty($message)){
+                //add review to review table relavant customer relavant order
+                $result2 =  $this->Query("INSERT INTO review(order_id, date, time, message, review_type) VALUES('{$order_id}','{$date}','{$time}','{$message}','{$type}')");
+                
+                if($result2){
+                    $result3 = $this->Query("SELECT * FROM review WHERE order_id = '{$order_id}'");
+                    $row = mysqli_fetch_assoc($result3);
+                    $_SESSION['customer_id'] = $customer_id; 
+                    echo "success";
+                
+                }else{
+                    echo "Something went wrong!";
+                }
+            }
+            else{
+                echo "Write your review!";
+            }
+        }
+        //collecting method delivery then have both review_type Delivery and Dealer 
+        else{
+            if(isset($_POST['review_type'])){
+                $type = mysqli_real_escape_string($conn,$_POST['review_type']);
+            }
+
+            //check fields are empty
+            if(!empty($message) && !empty($type)){
+                //add review to review table relavant customer relavant order
+                $result2 = mysqli_query($conn, "INSERT INTO review(order_id, date, time, message, review_type) VALUES('{$orderid}','{$date}','{$time}','{$message}','{$type}')");
+                
+                if($result2){
+                    $result3 = mysqli_query($conn,"SELECT * FROM review WHERE order_id = '{$orderid}'");
+                    $row = mysqli_fetch_assoc($result3);
+                    $_SESSION['customer_id'] =$customer_id; 
+                    echo "success";
+                
+                }else{
+                    echo "Something went wrong!";
+                }
+                
+            }
+            else{
+                echo "All input fields are required!";
+            }
+        
+        }
+
+        return $review;
+
     }
     
 
