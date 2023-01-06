@@ -20,7 +20,7 @@ class Orders extends Controller{
 
 
     //customer past all reservtions
-    function customer(){
+    function customer_allreservations(){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -32,7 +32,7 @@ class Orders extends Controller{
        
         $this->view('customer/allmyreservation', $data);
     }
-
+    //customer one selected past reservation details from past all reservations
     function customer_myreservation($order_id){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
@@ -45,6 +45,21 @@ class Orders extends Controller{
         
 
         $this->view('customer/viewmyreservation', $data);
+    }
+
+    //write review for completed or delivered orders
+    function customer_orderreview($order_id){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'myreservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row['image'];
+
+        $data['add_review'] = $this->model('Customer')->AddReviw($order_id,$customer_id);
+        $data['order_id'] = $order_id;
+        $data['customer_id'] = $customer_id;
+        $this->view('customer/addreview', $data);
     }
 
 

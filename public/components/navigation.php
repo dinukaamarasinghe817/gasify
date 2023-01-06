@@ -210,9 +210,9 @@ class Navigation {
             </li>
             <li class="nav-tile">';
             if($active=="myreservation"){
-                echo ' <a href="../orders/customer" class="panel-tile active my_reservation">';
+                echo ' <a href="../orders/customer_allreservations" class="panel-tile active my_reservation">';
             }else{
-                echo '<a href="../orders/customer" class="panel-tile my_reservation"> ';
+                echo '<a href="../orders/customer_allreservations" class="panel-tile my_reservation"> ';
             }
                 
             echo    '<svg width="26" height="26" viewBox="0 0 27 29" fill="none" xmlns="http://www.w3.org/2000/svg">

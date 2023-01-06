@@ -213,6 +213,9 @@ class Body{
             //     </script>';
     }
 
+
+    //.............customer..............//
+    //customer dashboard
     function customerdashboard($data){
         echo '<div class="under_topbar">
         <div class="top_image">
@@ -312,6 +315,7 @@ class Body{
         echo '</div>';
     }
 
+    //customer all past reservation in my reservation tab
     function allmyreservation($data){
         echo ' <div class="under_topbar">
         <div class="subtitle">
@@ -343,6 +347,7 @@ class Body{
         </div>';
     }
 
+    //display all details customer selected reservtion in my reservation tab
     function viewmyreservation($data){
 
     
@@ -386,14 +391,15 @@ class Body{
                 </div>';
 
                 $products = $order['products'];
-                $row3 = $order['total_amount'];
+                $total_amount = $order['total_amount'];
+                $reviews = $order['reviews'];
 
                 echo '<div class="top_content">
                          <div>
                              <strong>Total Amount</strong>
                          </div>
                          <div>
-                             Rs.'.number_format($row3).'.00
+                             Rs.'.number_format($total_amount).'.00
                          </div>
                      </div>
                      <div class="top_content">
@@ -415,17 +421,17 @@ class Body{
 
                      </div>';
 
-                     echo '<div class="card_bottom"><div class="item_side">';
+                    //  echo '<div class="card_bottom"><div class="item_side">';
                      $output = "";
-                foreach($products as $row2){
+                foreach($products as $product){
                     $output .= '<div class="item">
                         <div class="item_img">
-                            <img src="'.BASEURL.'/public/img/products/'.$row2['product_image'].'" alt="">
+                            <img src="'.BASEURL.'/public/img/products/'.$product['product_image'].'" alt="">
                         </div>
                         <div class="item_content">
-                            <h5>'.$row2['company_name'].'</h5>
-                            <h4>'.$row2['product_weight'].'Kg  '.$row2['product_name'].'</h3>
-                            <div><p>Unit Price:<strong> RS.'.number_format($row2['unit_price']).'.00</strong></p><p>Qty:<strong>'.$row2['quantity'].'</strong></p></div>
+                            <h5>'.$product['company_name'].'</h5>
+                            <h4>'.$product['product_weight'].'Kg  '.$product['product_name'].'</h3>
+                            <div><p>Unit Price:<strong> RS.'.number_format($product['unit_price']).'.00</strong></p><p>Qty:<strong>'.$product['quantity'].'</strong></p></div>
                         </div>
                     </div>';
                      
@@ -439,36 +445,46 @@ class Body{
                         <div class="cancel_item_side">
                         '.$output.'
                         <div class="cancel_btn"><button>Cancel Reservation</button></div>
-                         <div class="back_btn"><a href="allmyreservation.php"><button class="bbtn">Back</button></a></div>
+                         <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
                       </div>';
                 }
                  //check status is Completed or Delivered then display already added reviews and reviews count<3 then active add review option
                 else if($row1['order_state'] == "Completed" || $row1['order_state']=="Delivered"){
-                    echo '<div class="card_bottom">
+                    
+                    $url = BASEURL.'/Orders/customer_orderreview/'.$row1['order_id'];
+
+                    if(count($reviews)==0){
+                        echo '<div class="card_bottom">
                         <div class="item_side">
                         '.$output.'
                         </div><div class="review_side"><strong>Reviews</strong>';
-                }
-                // echo '<div class="review_side">
-                //     <div class="review_box">
-                //         <div class="date"><h5>2020/12/23</h5></div>
-                //         <div class="content"><p>Lorem ipsum dolor sit amet consectetur adipisicing elitassumenda temporibus incidunt recusandae est laudantium a rem blanditiis?</p></div>
-                //     </div>
-                //     <div class="review_box">
-                //         <div class="date"><h5>2020/12/23</h5></div>
-                //         <div class="content"><p>Lorem ipsum dolor sit amet consectetur adipisicing elitassumenda temporibus incidunt recusandae est laudantium a rem blanditiis?</p></div>
-                //     </div>
-                //     <div class="review_box">
-                //         <div class="date"><h5>2020/12/23</h5></div>
-                //         <div class="content"><p>Lorem ipsum dolor sit amet consectetur adipisicing elitassumenda temporibus incidunt recusandae est laudantium a rem blanditiis?</p></div>
-                //     </div>
-                //     <div class="review_btn"><button class="rbtn">Write Review</button></div>
-                //     <div class="back_btn"><a href="allmyreservation.php"><button class="bbtn">Back</button></a></div>
-                // </div>
-               
-                
+                        echo '<div class="review_box">
+                                <div class="content"><p><center>Add your reviews!</center></p></div>
+                             </div>
+                             <div class="review_btn"><button class="rbtn" onclick="location.href=\''.$url.'\'" )">Write Review</button></div>
+                             <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                             </div>';
 
-            // </div>';
+                    }else{
+                        echo '<div class="card_bottom">
+                        <div class="item_side">
+                        '.$output.'
+                        </div><div class="review_side"><strong>Reviews</strong>';
+
+                        foreach($reviews as $review){
+                            echo '<div class="review_box">
+                                         <div class="date"><h5>'.$review['date'].'</h5></div>
+                                         <div class="content"><p>'.$review['message'].'</p></div>
+                                         </div>';
+                        }
+
+                        echo '<div class="review_btn"><button class="rbtn" onclick="location.href=\''.$url.'\'">Write Review</button></div>
+                                 <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                                 </div>';
+                    }
+
+                }
+               
 
             }
 
@@ -477,6 +493,64 @@ class Body{
         echo '</div>';
     
     }
+
+    //write a review for selected customer completed or delivered reservation
+    function addreview($data){
+
+        $reviews = $data['add_review'];
+
+        foreach($reviews as $review){
+            $collecting_methods = $review['collecting_methods'];
+        }
+         
+        echo ' <div class="under_topbar">
+        <!-- subtitle -->
+       <div class="subtitle">
+           <h3>Add Review</h3>
+       </div>
+       
+       <!-- write review -->
+       <div class="write_review">
+           <form id="write_review_form" method="POST" action='.BASEURL.'"/Orders/AddReviw('.$data['order_id'].','.$data['customer_id'].')">';
+               
+
+            //    <!-- review type -->
+
+            //    <?php
+                   if($collecting_methods == 'Pick up'){
+                       echo '<div class="type_title"><h3>Add Review for Dealer:</h3></div><div class="radio"></div>';
+                   }else{
+
+                       echo '<div class="type_title"><h3>Select Review Type:</h3></div>
+                       <div class="radio">
+                           <div>
+                               <input type="radio" value="Dealer" id="Dealer" name="review_type" >
+                               <label for="Dealer">Delaer</label>
+                           </div>
+                           <div>
+                               <input type="radio" value="Delivery" id="Delivery"  name="review_type" >
+                               <label for="Delivery">Delivery</label>
+                           </div>
+                       </div>';
+                   }
+               
+               $url =  BASEURL.'/Orders/customer_myreservation/'.$data['order_id'];
+             echo '<div class="error-txt">This is error message!</div>';
+              echo' <div class="write_box">
+             <textarea name="review" placeholder="Write your review here....." cols="30" rows="10"></textarea>
+               </div>
+               <div class="btn">
+                   <button id="send" class="send" type="button" onclick="location.href=\''.$url.'\'" >Submit</button>
+                   <button id="cancel" class="cancel" type="button" onclick="location.href=\''.$url.'\'" >Cancel</button>
+                  
+                    </div>
+                </form>
+            </div>
+            </div>';
+    }
+
+
+
     function distributordashboard($data){
         echo '<section class="body-content dashboard">
                     <div class="body-left">
