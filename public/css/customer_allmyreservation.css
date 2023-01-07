@@ -36,8 +36,6 @@
     scrollbar-width: thin;
     height: 80%;
 
-   
-
 }
 
 .under_topbar{
@@ -102,7 +100,7 @@
 .content-data table tr:nth-child(even):hover{
     background-color: rgb(204, 204, 204);
 }
-table td input{
+.table td input{
     height: 100%;
     width: 100%;
 }

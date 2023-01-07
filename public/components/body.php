@@ -298,21 +298,42 @@ class Body{
                     }
                     echo '</table></div></div>';
                 }
-    
+                
+               
         
 
+            }
+            echo '</div>
+                </div>';
+
+
+            echo '<div class="bottom">
+            <div class="product_title"><h3>Popular Products</h3></div>
+            <div class="cards">';
+
+            if(isset($data['popular_products'])){
+                $popular_products = $data['popular_products'];
+
+                foreach($popular_products as $popular_product){
+                    echo '<div class="product_card">
+                             <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$popular_product['image'].'" alt=""></div>
+                             <div class="product_details">
+                                <div class="brand_name">'.$popular_product['c_name'].'</div>
+                                <div class="name"><h5>'.$popular_product['weight'].'Kg '.$popular_product['p_name'].'</h5></div>
+                                <div class="price"><h4>Rs.'.number_format($popular_product['unit_price']).'.00</h4></div>
+                            </div>
+                        </div>';
+                }
             }
 
           
           
                        
 
-            echo '
-            
-            
-            </div>';
+            // echo '</div> 
+            // </div>';
            
-        echo '</div>';
+       
     }
 
     //customer all past reservation in my reservation tab

@@ -398,7 +398,7 @@ table td input{
     padding: 0;
 }
 
-table tr{
+.content data table tr{
     border: 1px solid black;
 }
 table.history tr td:nth-child(2){
