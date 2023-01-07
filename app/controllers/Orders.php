@@ -47,8 +47,8 @@ class Orders extends Controller{
         $this->view('customer/viewmyreservation', $data);
     }
 
-    //write review for completed or delivered orders
-    function customer_orderreview($order_id){
+    //get collecting method for write review
+    function customer_reviewform($order_id){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -56,10 +56,22 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row['image'];
 
-        $data['add_review'] = $this->model('Customer')->AddReviw($order_id,$customer_id);
+        $data['collecting_method'] = $this->model('Customer')->getcollecting_method($order_id,$customer_id);
         $data['order_id'] = $order_id;
         $data['customer_id'] = $customer_id;
         $this->view('customer/addreview', $data);
+    }
+
+    function customer_addreview($order_id){
+        $customer_id = $_SESSION['user_id'];
+        $reviews = $_POST['review'];
+        $review_type = "";
+        if(isset($_POST['review_type'])){
+            $review_type = $_POST['review_type'];
+        }
+        $data['add_review'] = $this->model('Customer')->AddReviw($order_id,$customer_id,$reviews,$review_type);
+
+        $this->customer_myreservation($order_id);
     }
 
 

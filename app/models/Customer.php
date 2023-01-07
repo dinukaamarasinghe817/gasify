@@ -285,38 +285,48 @@ class Customer extends Model{
         return $myreservation;
     }
 
-    //add new review for selected reservation
-    public function AddReviw($order_id,$customer_id){
 
-        $review = array();
+
+
+    public function getcollecting_method($order_id,$customer_id){
+        $collecting_methods = "";
+
+        $result1 = $this->Query("SELECT collecting_method FROM reservation WHERE order_id = '{$order_id}'");
+       
+        if(mysqli_num_rows($result1)>0){
+            $row1=mysqli_fetch_assoc($result1);
+            $collecting_methods = $row1['collecting_method'] ;
+        }
+
+        return $collecting_methods;
+       
+    }
+
+
+    //add new review for selected reservation
+    public function AddReviw($order_id,$customer_id,$reviews,$review_type){
+
+        // $add_review = array();
         
         $result1 = $this->Query("SELECT collecting_method FROM reservation WHERE order_id = '{$order_id}'");
-        while($row1=mysqli_fetch_assoc($result1)){
-             $collecting_method = $row1['collecting_method'] ;
-             array_push($review,['collecting_methods'=>$collecting_method]);
+        if(mysqli_num_rows($result1)>0){
+            $row1=mysqli_fetch_assoc($result1);
+            $collecting_method = $row1['collecting_method'] ;
         }
        
       
-       
+        date_default_timezone_set("Asia/Colombo");
+        $time = date('H:i:s');
+        $date = date('Y-m-d');
+        $result2 = "";
 
         //check collecting method , Pick up orders only has review_type 'Dealer'
         if($collecting_method == 'Pick up'){
-            $type = 'Dealer';
+            $review_type = 'Dealer';
 
             //check fields are empty
-            if(!empty($message)){
-                //add review to review table relavant customer relavant order
-                $result2 =  $this->Query("INSERT INTO review(order_id, date, time, message, review_type) VALUES('{$order_id}','{$date}','{$time}','{$message}','{$type}')");
-                
-                if($result2){
-                    $result3 = $this->Query("SELECT * FROM review WHERE order_id = '{$order_id}'");
-                    $row = mysqli_fetch_assoc($result3);
-                    $_SESSION['customer_id'] = $customer_id; 
-                    echo "success";
-                
-                }else{
-                    echo "Something went wrong!";
-                }
+            if(!empty($reviews)){
+                $result2 = $this->insert('review',['order_id'=> $order_id,'date' => $date,'time'=>$time,'message'=>$reviews,'review_type'=>$review_type]);
             }
             else{
                 echo "Write your review!";
@@ -324,34 +334,17 @@ class Customer extends Model{
         }
         //collecting method delivery then have both review_type Delivery and Dealer 
         else{
-            if(isset($_POST['review_type'])){
-                $type = mysqli_real_escape_string($conn,$_POST['review_type']);
-            }
 
             //check fields are empty
-            if(!empty($message) && !empty($type)){
-                //add review to review table relavant customer relavant order
-                $result2 = mysqli_query($conn, "INSERT INTO review(order_id, date, time, message, review_type) VALUES('{$orderid}','{$date}','{$time}','{$message}','{$type}')");
-                
-                if($result2){
-                    $result3 = mysqli_query($conn,"SELECT * FROM review WHERE order_id = '{$orderid}'");
-                    $row = mysqli_fetch_assoc($result3);
-                    $_SESSION['customer_id'] =$customer_id; 
-                    echo "success";
-                
-                }else{
-                    echo "Something went wrong!";
-                }
-                
+            if(!empty($reviews) && !empty($review_type)){
+                $result2 = $this->insert('review',['order_id'=> $order_id,'date' => $date,'time'=>$time,'message'=>$reviews,'review_type'=>$review_type]);  
             }
             else{
                 echo "All input fields are required!";
             }
         
         }
-
-        return $review;
-
+        return $result2;
     }
     
 
