@@ -43,7 +43,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     </li>
 
                 </ul>
-            <!-- </div> -->
 
                 <div class="accordion new">
 

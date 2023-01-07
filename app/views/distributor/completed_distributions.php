@@ -109,28 +109,15 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         <td>300 000.00</td>
                                     </tr>
                                     </tbody>
-                                </table>
+                            </table>
                         </div>          
                     </div>
-
-
-
-
-
                 </div>
+                <!-- </div> -->
             </div>
-
-
-
-            </div>
-
         </div>
-
     </section>
-
-
 </section>
-
 
 <script>
     let accordion = document.querySelectorAll('.accordion .box');
