@@ -8,7 +8,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
     $bodyheader = new BodyHeader($data);
     ?>
 
-    
 <section class="body-content">
 
     <div class="split right">
@@ -24,7 +23,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
         </div>
 
         <div class="middle">
-
             <div class="accordion new">
 
                 <div class="box">
@@ -68,7 +66,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             </table>
                     </div>          
                 </div>
-
 
                 <div class="box">
                     <div class="labelbgn">
