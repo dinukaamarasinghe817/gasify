@@ -102,9 +102,8 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // phurchase order  view
-        // create the model
-        // $this->view('distributor/reports',$data);
+        $data['currentstock']= $this->model("Distributor")->currentstock($user_id);
+        
         $this->view('distributor/current_stock',$data);
 
     }

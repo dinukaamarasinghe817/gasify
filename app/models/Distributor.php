@@ -188,40 +188,42 @@ class Distributor extends Model
         }
         return $dealers;
     }
+
+    public function currentstock($user_id) {
+        $stock = array();
+
+        $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id='{$user_id}' ");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                $product_id = $row1['product_id'];
+                $product_name = $row1['name'];
+                $quantity = $row1['quantity'];
+
+                array_push($stock, ['stockinfo'=> $row1]);
+
+            }
+        }
+        return $stock;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-
-    // public function viewdealers($user_id) {
-    //     $dealers = array();
-
-    //     $query1 = $this->Query("SELECT * FROM users WHERE type='dealer' ");
-    //     if(mysqli_num_rows($query1)>0) {
-    //         while($row1 = mysqli_fetch_assoc($query1)) {
-    //             $dealer_id = $row1['user_id'];
-    //             $email = $row1['email'];
-
-    //             $query2 = $this->Query("SELECT * FROM dealer WHERE dealer_id = '{$user_id}'");
-    //             if(mysqli_num_rows($query2)>0) {
-    //                 while($row2 = mysqli_fetch_assoc($query2)){
-    //                     $dealer_name = $row2['name'];
-    //                     $contact = $row2['contact_no'];
-    //                     $city = $row2['city'];
-    //                     $account_num = $row2['account_no'];
-    //                     $bank = $row2['bank'];
-
-    //                     $capacities = array();
-    //                     $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM dealer_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.dealer_id = '{$dealer_id}' ");
-    //                     if(mysqli_num_rows($query3)>0) {
-    //                         while($row3 = mysqli_fetch_assoc($query3)) {
-    //                             array_push($capacities,$row3);
-    //                         }
-    //                     } 
-    //                 }
-    //             }
-    //             array_push($dealers, ['dealerinfo'=> $row1, 'details'=> $row2, 'capacities'=>$capacities]);
-    //         }
-    //     }
-    //     return $dealers;
-    // }
-
 
