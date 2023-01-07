@@ -161,4 +161,66 @@ class Distributor extends Model
         return $vehicles;     
     }
 
+    public function viewdealers($user_id) {
+        $dealers = array();
+
+        $query1 = $this->Query("SELECT DISTINCT d.dealer_id as dealer_id, u.email as email, d.contact_no as contact_no, d.city as city, d.account_no as account_no, d.bank as bank FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.dealer_id='{$user_id}' AND u.type='dealer' ");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                $dealer_id = $row1['user_id'];
+                $email = $row1['email'];
+                $dealer_name = $row1['name'];
+                $contact = $row1['contact_no'];
+                $city = $row1['city'];
+                $account_num = $row1['account_no'];
+                $bank = $row1['bank'];
+
+                $capacities = array();
+                $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM dealer_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.dealer_id = '{$dealer_id}' ");
+                if(mysqli_num_rows($query3)>0) {
+                    while($row3 = mysqli_fetch_assoc($query3)) {
+                        array_push($capacities,$row3);
+                    }
+                } 
+                array_push($dealers, ['dealerinfo'=> $row1, 'capacities'=>$capacities]);    
+            }
+        }
+        return $dealers;
+    }
 }
+
+
+    // public function viewdealers($user_id) {
+    //     $dealers = array();
+
+    //     $query1 = $this->Query("SELECT * FROM users WHERE type='dealer' ");
+    //     if(mysqli_num_rows($query1)>0) {
+    //         while($row1 = mysqli_fetch_assoc($query1)) {
+    //             $dealer_id = $row1['user_id'];
+    //             $email = $row1['email'];
+
+    //             $query2 = $this->Query("SELECT * FROM dealer WHERE dealer_id = '{$user_id}'");
+    //             if(mysqli_num_rows($query2)>0) {
+    //                 while($row2 = mysqli_fetch_assoc($query2)){
+    //                     $dealer_name = $row2['name'];
+    //                     $contact = $row2['contact_no'];
+    //                     $city = $row2['city'];
+    //                     $account_num = $row2['account_no'];
+    //                     $bank = $row2['bank'];
+
+    //                     $capacities = array();
+    //                     $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM dealer_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.dealer_id = '{$dealer_id}' ");
+    //                     if(mysqli_num_rows($query3)>0) {
+    //                         while($row3 = mysqli_fetch_assoc($query3)) {
+    //                             array_push($capacities,$row3);
+    //                         }
+    //                     } 
+    //                 }
+    //             }
+    //             array_push($dealers, ['dealerinfo'=> $row1, 'details'=> $row2, 'capacities'=>$capacities]);
+    //         }
+    //     }
+    //     return $dealers;
+    // }
+
+

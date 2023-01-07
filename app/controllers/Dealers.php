@@ -14,11 +14,13 @@ class Dealers extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-    //   rest of models
+        $data['dealers']= $this->model("Distributor")->viewdealers($user_id);
+
         $this->view('distributor/dealers',$data);
 
     }
 
+   
 }
 
 ?>
