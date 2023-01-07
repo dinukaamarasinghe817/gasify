@@ -9,14 +9,16 @@ class Vehicles extends Controller{
         parent::__construct();
     }
 
-    public function distributor(){
+    public function distributor($error=null){
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'vehicles';
         // profile picture & notifications
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
-
+        if($error != null){
+            $data['error'] = $error;
+        }
         // body data
         $data['vehicles'] = $this->model('Distributor')->getVehicleInfo($user_id);
         $this->view('distributor/add_vehicles', $data);
@@ -69,14 +71,19 @@ class Vehicles extends Controller{
                         // echo "success";
                     }
                 }else {
-                    echo "Something went wrong!";
+                    $data['error'] = "Something went wrong!";
                 }
             }
         }else {
-            echo "All input fields are required!";
+            $data['error'] = "All input fields are required!";
         }
 
-        $this->distributor();
+        if(isset($data['error'])){
+            $this->distributor($data['error']);
+        }else{
+            $this->distributor();
+        }
+        
 
     }
 
@@ -88,10 +95,24 @@ class Vehicles extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
+        // $vehicle =  $this->model('Distributor')->viewvehicle($user_id);
 
-        $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
+        // $data['viewvehicles'] = $this->model('Distributor')->viewvehicle($user_id);
+
+        $data['vehicles'] = $this->model("Distributor")->viewvehicle($user_id);
+
         $this->view('distributor/view_vehicles', $data);
+    }
+
+    public function updatevehicle() {
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'vehicles';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        $this->view('distributor/updateVehicle', $data);
     }
 
 }

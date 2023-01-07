@@ -314,21 +314,11 @@ body.blur > *::before{
     display: flex;
     flex-direction: column;
 }
-/* 
-.body-right{
-    box-sizing: border-box;
-    width: 50%;
-    margin: 0px 60px;
-} */
-
-
 
 .body-right{
     box-sizing: border-box;
     width: 50%;
     margin: 0px 60px;
-    /* overflow-y: scroll; */
-    /* scroll-behavior: smooth; */
 }
 
 .body-right .accordion{
@@ -358,6 +348,19 @@ body.blur > *::before{
     border: 2px solid black;
     align-items: center;
     margin-top: 10px;
+}
+
+.accordion .box .labelbgn{
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 100%;
+    height: 25px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 10px;
 }
 
 .accordion .box .label{
@@ -397,7 +400,6 @@ body.blur > *::before{
     color: var(--table-gray);
     margin: 10px 0px;
 }
-
 
 .accordion .box .content{
     box-sizing: border-box;
@@ -520,17 +522,62 @@ td:nth-child(4) {
     margin-left: 420px;
 }
 
+.top ul {
+    display: inline-flex;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.top ul li {
+    float: left;
+    width: 100%;
+    font-size: var(--mediums);
+    text-align: center;
+} 
+ 
+.top ul li a {
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 10px;
+    width: 100%;
+    height: 100%;
+    color: var(--black);
+    background-color:#B4AAFF;
+    border-top: solid transparent;
+    border-bottom: solid transparent;
+    border-right: solid transparent;
+    border-left: solid transparent;
+}
+
+.middle ul {
+    display: inline-flex;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.middle ul li {
+    float: left;
+    width: 100%;
+    font-size: var(--mediums);
+    text-align: center;
+    background-color: white;
+    border-radius: 7px;
+    padding: 3px;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
-}
+} 
 
 table th {
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 5px;
     text-align: left;
-    background-color: white;
+    background-color:white;
     color: black;
     width: 800px;
     border: 1px solid black;
@@ -544,6 +591,7 @@ table td {
 .main{
     margin-top: 10px;
     padding: 10px;
+    width: 100%;
 }
 
 .header {
@@ -552,30 +600,58 @@ table td {
     margin-bottom: 10px;
     border-radius: 10px;
     text-align: center;
-    padding: 5px;
 }
-
 
 .middle{
-    padding-top: 20px;
-    padding-bottom: 30px;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding:20px;
     background-color:#DBD8FC ;
-    border-radius: 10px;
 }
 
-.beginbtn {
-    padding-top: 10px;
-    padding-bottom: 20px;
-}
-
-.btn {
-    padding: 15px;
-    background-color:#875899;
-    color: white;
-    border-radius: 10px;
+.btn2-1 {
+    width: 12%;
     border: none;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #875899;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-left: 85%;
+}
+
+.btn2-2 {
+    width: 12%;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    margin-left: 85%;
+}
+
+.btnclz {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.total {
+
+    background-color: white;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-top: 20px;
+    width: 20%;
+    margin-left: 79%;
+}
+
+.total p {
+    text-align: center;
 }
 
 .inside{
@@ -584,11 +660,13 @@ table td {
     color: white;
     border-radius: 10px;
     border: none;
-    width: 100%;
-
+    width: 50%;
 }
 
-
-
+.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 
