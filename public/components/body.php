@@ -451,7 +451,7 @@ class Body{
                  //check status is Completed or Delivered then display already added reviews and reviews count<3 then active add review option
                 else if($row1['order_state'] == "Completed" || $row1['order_state']=="Delivered"){
                     
-                    $url = BASEURL.'/Orders/customer_orderreview/'.$row1['order_id'];
+                    $url = BASEURL.'/Orders/customer_reviewform/'.$row1['order_id'];
 
                     if(count($reviews)==0){
                         echo '<div class="card_bottom">
@@ -497,11 +497,11 @@ class Body{
     //write a review for selected customer completed or delivered reservation
     function addreview($data){
 
-        $reviews = $data['add_review'];
-
-        foreach($reviews as $review){
-            $collecting_methods = $review['collecting_methods'];
-        }
+        $collecting_method = $data['collecting_method'];
+        // $error = $data['add_review'];
+        // foreach($reviews as $review){
+            // $collecting_method = $reviews['collecting_methods'];
+        // }
          
         echo ' <div class="under_topbar">
         <!-- subtitle -->
@@ -511,13 +511,13 @@ class Body{
        
        <!-- write review -->
        <div class="write_review">
-           <form id="write_review_form" method="POST" action='.BASEURL.'"/Orders/AddReviw('.$data['order_id'].','.$data['customer_id'].')">';
+           <form id="write_review_form" method="POST" action="'.BASEURL.'/Orders/customer_addreview/'.$data['order_id'].'">';
                
 
             //    <!-- review type -->
 
             //    <?php
-                   if($collecting_methods == 'Pick up'){
+                   if($collecting_method == 'Pick up'){
                        echo '<div class="type_title"><h3>Add Review for Dealer:</h3></div><div class="radio"></div>';
                    }else{
 
@@ -535,13 +535,15 @@ class Body{
                    }
                
                $url =  BASEURL.'/Orders/customer_myreservation/'.$data['order_id'];
-             echo '<div class="error-txt">This is error message!</div>';
+                
+             echo '<div class="error-txt">This is error text!</div>';
+
               echo' <div class="write_box">
              <textarea name="review" placeholder="Write your review here....." cols="30" rows="10"></textarea>
                </div>
                <div class="btn">
-                   <button id="send" class="send" type="button" onclick="location.href=\''.$url.'\'" >Submit</button>
-                   <button id="cancel" class="cancel" type="button" onclick="location.href=\''.$url.'\'" >Cancel</button>
+                   <button id="send" class="send" type="submit"  >Submit</button>
+                   <button id="cancel" class="cancel" type="submit" onclick="location.href=\''.$url.'\'" >Cancel</button>
                   
                     </div>
                 </form>
