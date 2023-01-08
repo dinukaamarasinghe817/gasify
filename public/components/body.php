@@ -334,7 +334,6 @@ class Body{
        
     }
 
-<<<<<<< HEAD
     //customer all past reservation in my reservation tab
     function allmyreservation($data){
         echo ' <div class="under_topbar">
@@ -571,9 +570,6 @@ class Body{
             </div>';
     }
 
-=======
->>>>>>> 7ab5f4c8013a6e81b09443ce1cfca9edb4144bcc
- 
         
  
   
