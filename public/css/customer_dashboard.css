@@ -1,5 +1,11 @@
 /* customer body-content css  */
+
 /* under the header top part */
+a,button{
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .under_topbar{
     width: 100%;
     overflow-y: scroll;
@@ -79,11 +85,17 @@
 .text .btn:hover button svg{
     fill: var(--button-orange-hover);
 }
-.text .btn:hover button{
+.text .btn:hover button a{
     color: var(--button-orange-hover);
 }
 
+.btn a{
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+}
 
 .btn button{
     display: flex;
@@ -100,14 +112,14 @@
     cursor: pointer;
 }
 
-.btn button:hover{
+/* .btn a:hover{
     fill:var(--button-orange-hover);
 }
 
 .btn svg:hover{
     fill: var(--button-orange-hover);
 }
-
+ */
 
 
 
@@ -141,6 +153,7 @@
     font-size: var(--larger); 
 }
 
+
 .brand{
     font-size: var(--small);
 }
@@ -168,6 +181,10 @@
 .brand img{
     width: 90px;
     height: 90px;
+}
+
+.brand_img a{
+    color: black;
 }
 
 
