@@ -15,7 +15,7 @@ class Orders extends Controller{
         $dealer_details = $this->model('Dealer')->getDealer($dealer_id);
         $row = mysqli_fetch_assoc($dealer_details);
         $data['image'] = $row['image'];
-        $this->view('dashboard/dealer', $data);
+        $this->view('dealer/orders', $data);
     }
 
 
