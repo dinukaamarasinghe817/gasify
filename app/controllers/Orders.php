@@ -19,7 +19,7 @@ class Orders extends Controller{
     }
 
 
-    //customer past all reservtions
+    //customer all past reservtions
     function customer_allreservations(){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
@@ -32,7 +32,8 @@ class Orders extends Controller{
        
         $this->view('customer/allmyreservation', $data);
     }
-    //customer one selected past reservation details from past all reservations
+
+    //customer selected one reservation details from all past reservations
     function customer_myreservation($order_id){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
@@ -43,11 +44,10 @@ class Orders extends Controller{
 
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
         
-
         $this->view('customer/viewmyreservation', $data);
     }
 
-    //get collecting method for write review
+    //get collecting method for display review type in review form
     function customer_reviewform($order_id){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
@@ -62,6 +62,7 @@ class Orders extends Controller{
         $this->view('customer/addreview', $data);
     }
 
+    //add review for the selected past reservstion
     function customer_addreview($order_id){
         $customer_id = $_SESSION['user_id'];
         $reviews = $_POST['review'];
