@@ -43,6 +43,7 @@
             $this->view('dashboard/dealer', $data);
         }
 
+        //customer dashboard 
         public function customer($error = null){
             $customer_id = $_SESSION['user_id'];
             //profile image
