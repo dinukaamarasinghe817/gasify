@@ -7,6 +7,8 @@ class Customer extends Model{
         parent::__construct();
     }
 
+    /*............Customer Dashboard...................*/
+
     //get customer profile image
     public function getCustomerImage($customer_id){
         $result = $this->read('customer', "customer_id = $customer_id");
@@ -75,12 +77,6 @@ class Customer extends Model{
 
         if(mysqli_num_rows($result1)>0){
             while($row1=mysqli_fetch_assoc($result1)){
-                // $product_name = $row1['p_name'];
-                // $product_weight = $row1['weight'];
-                // $unit_price = $row1['unit_price'];
-                // $product_image = $row1['image'];
-                // $company_name = $row1['c_name'];
-                // array_push($popular_products,$product_name, $product_weight, $unit_price,$product_image,$company_name);
                 array_push($popular_products,$row1);
             }
         }
@@ -89,6 +85,10 @@ class Customer extends Model{
        
     }
 
+
+
+
+    /*............Customer My Reservation tab...................*/
 
     //display all past reservations in my reservation tab
     public function getAllmyreservations($customer_id){
@@ -135,7 +135,7 @@ class Customer extends Model{
 
     }
 
-    //display one reservation details which is selected from all reservations
+    //display selected reservation details from all reservations
     public function ViewMyreservation($order_id,$customer_id){
 
             $myreservation = array();
@@ -182,9 +182,7 @@ class Customer extends Model{
         return $myreservation;
     }
 
-
-
-
+    //get collecting method of selected reservation to display review type in review form
     public function getcollecting_method($order_id,$customer_id){
         $collecting_methods = "";
 
@@ -198,7 +196,6 @@ class Customer extends Model{
         return $collecting_methods;
        
     }
-
 
     //add new review for selected reservation
     public function AddReviw($order_id,$customer_id,$reviews,$review_type){
