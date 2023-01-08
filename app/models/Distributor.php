@@ -38,6 +38,7 @@ class Distributor extends Model
         $sql = "SELECT vehicle_no FROM distributor_vehicle WHERE vehicle_no= '{$number}'";
         $result = $this->Query($sql);
         return $result;
+
     }
 
     // insert to distributor_vehicle table
@@ -56,58 +57,6 @@ class Distributor extends Model
         return $result;   
     }
 
-    // public function viewvehicle($distributor_id) {
-    //     $sql = "SELECT * FROM distributor_vehicle WHERE distributor_id = '{$distributor_id}'";
-    //     $sql = $this->Query($sql);
-    //     $output = '';
-
-    //     if(mysqli_num_rows($sql)>0) {
-    //         while($row2 = mysqli_fetch_assoc($sql)) {
-    //             $vehicle_no = $row2['vehicle_no'];
-
-    //             $vehicle = "SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_vehicle_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$distributor_id}' AND d.vehicle_no = '{$vehicle_no}'";
-    //             $vehicle = $this->Query($vehicle);
-
-
-    //             if(mysqli_num_rows($vehicle)>0) {
-    //                 $output .= '<tr>
-    //                     <td>'.$vehicle_no.'</td>
-    //                     <td>'.$row2['type'].'</td>
-    //                     <td>
-    //                     <table class="table2">
-    //                         <tr>
-    //                             <th>Product Name</th>
-    //                             <th>Capacity</th>
-    //                         </tr>';
-                    
-    //                 while($row3 = mysqli_fetch_assoc($vehicle)) {
-    //                     $output .= '
-    //                         <tr>
-    //                             <td>'.$row3['product_name'].'</td>
-    //                             <td>'.$row3['capacity'].'</td>
-    //                         </tr>
-    //                     ';
-    //                 }
-
-    //                 $output .= '</table>
-    //                             </td>
-    //                             <td>'.$row2['fuel_consumption'].'</td>
-    //                             <td>'.$row2['availability'].'</td>
-    //                             ';
-    //                 if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
-    //                     $output .= '<td><button class="btn4" style="background-color: B4AAFF;"><b>Release</b></button></td>';
-    //                 }else{
-    //                     $output .= '<td><button type="button" class="btn4" onclick="deleteVehicle('.$vehicle_no.')" style="background-color: red;"><b>Remove</b></button></td>';
-    //                 }
-
-    //                 $output .=  '
-    //                         </tr>'; 
-
-    //             }
-    //         }
-    //     }
-        
-    // }
 
     public function viewvehicle($dis_id){
         $vehicles = array();
@@ -161,6 +110,23 @@ class Distributor extends Model
         return $vehicles;     
     }
 
+    public function updatevehicle($user_id) {
+        $vehiclelist = array();
+
+        // $query1 = $this->Query("SELECT vehicle_no FROM distributor_vehicle WHERE vehicle_no= '{$number}'");
+        $query1 = $this->Query("SELECT DISTINCT v.vehicle_no as number FROM distributor_vehicle v INNER JOIN distributor d on v.distributor_id=d.distributor_id WHERE d.distributor_id= '{$user_id}'");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                $number = $row1['number'];
+
+                array_push($vehiclelist,['listinfo'=>$row1]);
+            }
+        }
+        return $vehiclelist;
+    }
+
+
+
     public function viewdealers($user_id) {
         $dealers = array();
 
@@ -200,29 +166,29 @@ class Distributor extends Model
                 $quantity = $row1['quantity'];
 
                 array_push($stock, ['stockinfo'=> $row1]);
-
             }
         }
         return $stock;
-
     }
+    public function viewprofile($user_id) {
+        $profile = array();
 
+        // $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id='{$user_id}' ");
+        $query1 = $this->Query("SELECT DISTINCT d.distributor_id as distributor_id, d.contact_no as contact_no, d.city as city, d.street as street, u.email as email, u.first_name as first, u.last_name as last FROM distributor d inner join users u on d.distributor_id = u.user_id where d.sitributor_id='{$user_id}'");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                $contact = $row1['contact_no'];
+                $city = $row1['city'];
+                $street = $row1['street'];
+                $email = $row1['email'];
+                $first_name = $row1['first'];
+                $last_name = $row1['last'];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                array_push($profile, ['profileinfo'=>$row1]);
+            }
+        }
+        return $profile;
+    }
 
 
 }

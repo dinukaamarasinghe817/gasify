@@ -1,6 +1,8 @@
 <?php
 $header = new Header("vehicles");
 $sidebar = new Navigation('distributor',$data['navigation']);
+
+$user_id = $_SESSION['user_id'];
 ?>
 
 <section class="body">
@@ -18,40 +20,31 @@ $sidebar = new Navigation('distributor',$data['navigation']);
         ?>
 
         <div class="main2">
-            <table class="table1">
-                <tr>
-                    <th>Vehicle Number</th>
-                    <th></th>
-                </tr>
+            <?php
+            echo "Your Distributor ID : $user_id".'<br><br>';
+            echo "Your Vehicle List".'<br>';
 
-                <tr>
-                    <td>WE1234</td>
-                    <td><button class="btn3">Select</button></td>
-                </tr>
+            $output = '<table class="table1">
+            <tr>
+                <th>Vehicle Number</th>
+              
+            </tr>';
 
-                <tr>
-                    <td>GH7889</td>
-                    <td><button class="btn3">Select</button></td>
-                </tr>
-
-                <tr>
-                    <td>SD4450</td>
-                    <td><button class="btn3">Select</button></td>
-                </tr>
-
-                <tr>
-                    <td>JH1120</td>
-                    <td><button class="btn3">Select</button></td>
-                </tr>
-
-                <tr>
-                    <td>CV5660</td>
-                    <td><button class="btn3">Select</button></td>
-                </tr>
-            </table>
-
+            $vehicles = $data['vehicles'];
+            foreach($vehicles as $vehicle) {
+                $row1 = $vehicle['listinfo'];
+            
+                $output .= '<tr>
+                                <td>'.$row1['number'].'</td>
+                                <td><button class="btn3">Select</button></td>
+                            </tr>';
+                // echo "HI";
+            }
+            $output .= '</table>';
+            echo $output; 
+            // echo "end";  
+            ?>    
         </div>
-
     </section>
 </section>
 
