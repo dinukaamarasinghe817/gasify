@@ -1,6 +1,7 @@
 *,*::after,::before{
     margin: 0;
     padding: 0;
+    border: none;
 }
 
 a,button,input[type="button"],input[type="file"]{
@@ -42,6 +43,7 @@ table td{
 
     /* font sizes */
     --larger: 28px;
+    --large: 24px;
     --medium: 18px;
     --mediums: 16px;
     --small: 14px;
@@ -64,6 +66,8 @@ body{
     font-style: normal;
     font-size: var(--small);
     box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
 }
 
 /* left panel css */
@@ -91,19 +95,19 @@ body{
     display: flex;
     font-size: var(--small);
     color: var(--navmenu-gray-dark);
+    transition: 0.3s;
 }
 .leftpanel ul .panel-tile:hover{
     color: var(--white);
     background-color: var(--button-orange-hover);
 }
+.leftpanel ul .panel-tile svg path{
+    transition: 0.3s;
+}
 .leftpanel ul .panel-tile svg{
     min-width: 26px;
     min-height: 26px;
 }
-/* .leftpanel ul .panel-tile svg path{
-    stroke: var(--navmenu-gray-dark);
-} */
-/* when you hover teh panel-tile make this by js*/
 .leftpanel ul .panel-tile:hover svg path{
     stroke: var(--white);
 }
@@ -260,6 +264,7 @@ body.blur::before{
     /* padding-bottom: 50px; */
     overflow-y: scroll;
     scroll-behavior: smooth;
+    transition: 0.5s ease-in-out;
     /* background-color: var(--navmenu-gray-dark); */
 }
 .body-content.dashboard{
@@ -289,7 +294,7 @@ body.blur::before{
     height: 100%;
     color: var(--white);
     background-color: var(--button-orange-hover);
-
+    transition: 0.3s;
     border-top: solid transparent;
     border-bottom: solid transparent;
     border-right: solid transparent;
@@ -306,7 +311,7 @@ body.blur::before{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border-top: solid var(--button-orange-hover);
-    border-bottom: solid var(--button-orange-hover);
+    border-bottom: solid transparent;
     border-right: solid var(--button-orange-hover);
     border-left: solid var(--button-orange-hover);
 }
@@ -325,6 +330,15 @@ body.blur::before{
     border-top: solid var(--button-orange-hover);
     border-right: solid var(--button-orange-hover);
     border-left: solid var(--button-orange-hover);
+}
+.top-panel ul li:first-child a{
+    border-radius: 10px 0px 0px 0px;
+}
+.top-panel ul li:last-child a{
+    border-radius: 0px 10px 0px 0px;
+}
+.top-panel ul:nth-child(2) li a:hover{
+    border-top: none;
 }
 
 .body-content .content-data{
@@ -372,6 +386,7 @@ body.blur::before{
     text-align: left;
     padding-left: 10px;
     border: 1.5px solid var(--navmenu-gray-dark);
+    
 }
 .content-data table tr:nth-child(odd):hover,
 .content-data table tr:nth-child(even):hover{
@@ -398,8 +413,9 @@ table td input{
     padding: 0;
 }
 
-.content data table tr{
-    border: 1px solid black;
+.content-data table tr{
+    /* border: 1px solid black; */
+    transition: 0.3s;
 }
 table.history tr td:nth-child(2){
     padding: 0px 0px;
