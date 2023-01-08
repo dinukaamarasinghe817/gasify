@@ -3,7 +3,7 @@
     --button-orange: #ffbb96;
     --cancel-red: #FF4D4D;
     --error-red: #c91919;
-    --error-background: #ffaeae;
+    --error-background: #ffecec;
     --accept-blue: #80B3FF;
     --table-gray: #EBEBEB;
     /* --navmenu-orange: #e9f8ff;
@@ -27,4 +27,8 @@
     --mediums: 16px;
     --small: 14px;
     --exsmall: 12px;
+}
+
+.error-text a svg path{
+    stroke: var(--error-red);
 }

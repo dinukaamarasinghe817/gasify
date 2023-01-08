@@ -17,9 +17,9 @@ class StockHTML{
                                         <th>Quantity</th>
                                     </tr>';
 
-            if(mysqli_num_rows($data['current_stock']) > 0){
+            if(mysqli_num_rows($data['currentstock']) > 0){
                 
-                while($row = mysqli_fetch_assoc($data['current_stock'])){
+                while($row = mysqli_fetch_assoc($data['currentstock'])){
                     // dynamic html
                     $output .= '<tr>
                                     <td>'.$row['product_id'].'</td>
@@ -36,11 +36,22 @@ class StockHTML{
     }
 
     public function dealerpurchaseorder($data){
-        $output = '
-                    <div class="error-txt">
-                        Insufficient storage
-                    </div>
-                    <form action="'.BASEURL.'/stock/dealerpoplace" target="_blank" class="po" method="post" onsubmit="pobuttonclicked(); return false;">
+        $output = '';
+        if(isset($data['error'])){
+            // $output .= '
+            // <div class="error-txt">
+            //     <p>'.$data['error'].'</p>
+            //     <a onclick="errorclose();">
+            //     <svg width="25" height="25" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            //         <path d="M17.6682 32.2388C25.9525 32.2388 32.6682 25.523 32.6682 17.2388C32.6682 8.9545 25.9525 2.23877 17.6682 2.23877C9.38391 2.23877 2.66818 8.9545 2.66818 17.2388C2.66818 25.523 9.38391 32.2388 17.6682 32.2388Z" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+            //         <path d="M22.1682 12.7388L13.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+            //         <path d="M13.1682 12.7388L22.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+            //     </svg>
+            //     </a>
+            // </div>
+            // <script src="'.BASEURL.'/public/js/Dealer/signup.js"></script>';
+        }
+        $output .= '<form action="'.BASEURL.'/stock/dealerpoplace" class="po" method="post" onsubmit="pobuttonclicked(); return false;">
                     <table class="po">
                         <tr>
                             <th>Product ID</th>

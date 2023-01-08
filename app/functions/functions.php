@@ -1,5 +1,10 @@
 <?php
-
+$cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
+sort($cities);
+$banks = ['Bank Of Ceylon', 'Commercial Bank', 'DFCC Bank', 'Hatton National Bank', 'Nation Trus Bank', 'Peoples Bank', 'Sampath Bank', 'Seylan Bank', 'National Saving Bank'];
+sort($banks);
+define('CITIES',$cities);
+define('BANKS',$banks);
 function createSession($conn, $email, $user){
     $sql = "SELECT * FROM {$user} WHERE email = '{$email}'";
     $query = mysqli_query($conn, $sql);
@@ -83,18 +88,5 @@ function isNotConfirmedpwd($password, $confirmpassword){
         return false;
     }else{
         return true;
-    }
-}
-
-function AuthorizeLogin(){
-    session_start();
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-        header('Location: ' . BASEURL . '/home');
-    }
-}
-
-function AuthorizeUser($user){
-    if($_SESSION['role'] != '{$user}'){
-        header('Location: ' . BASEURL . '/home');
     }
 }

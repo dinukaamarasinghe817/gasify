@@ -42,33 +42,48 @@
                     
                     <div>
                         
-                        <div class="info">
+                    <div class="info">
                             <label for="" class="part">Personal Info</label>
-                            <input name="name" type="text" placeholder="Business name" ><br>
-                            <input name="email" type="text" placeholder="Email address" ><br>
+                            <input name="name" type="text" placeholder="Business name" required><br>
+                            <div class="address owner">
+                                <input name="fname" class="half" type="text" placeholder="First name" required>
+                                <input name="lname" class="half" type="text" placeholder="Last name" required><br>
+                            </div>
+                            <input name="email" type="text" placeholder="Email address" required><br>
 
                             <div class="address password">
-                                <input name="password" class="half" type="password" placeholder="Password" ><br>
-                                <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" ><br>
+                                <input name="password" class="half" type="password" placeholder="Password" required><br>
+                                <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" required><br>
                             </div>
 
                             <div class="address">
                                 
-                                    <select id="city" name="city" class="half">
-                                        <option value="-1" selected disabled hidden>Select your city</option>
-                                        <?php 
-                                            $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
-                                            sort($cities);
-                                            foreach ($cities as $city){
-                                                echo "<option value=$city>$city</option>";
-                                            }
-                                        ?>
-                                    </select>
-                                <input name="street" class="half" type="text" placeholder="Address Street" >
+                                <select id="city" name="city" class="half">
+                                    <option value="-1" selected disabled hidden>Select your city</option>
+                                    <?php 
+                                        // include_once '../../model/functions/functions.php';
+                                        foreach (CITIES as $city){
+                                            echo "<option value=$city>$city</option>";
+                                        }
+                                    ?>
+                                </select>
+                                <input name="street" class="half" type="text" placeholder="Address Street" required>
                             </div>
 
                             <input name="contactno" type="text" placeholder="Contact number" maxlength="10">
-                            <input class="acc_no" name="acc_no" type="number" placeholder="Payhere Merchant ID">
+                            <div class="address bank">
+                                <select id="city2" name="bank" class="half">
+                                    <option value="-1" selected disabled hidden>Select your Bank</option>
+                                    <?php 
+                                        // include_once '../../model/functions/functions.php';
+                                        foreach (BANKS as $bank){
+                                            echo "<option value=$bank>$bank</option>";
+                                        }
+                                    ?>
+                                </select>
+                                <input name="account_no" class="half" type="number" placeholder="Bank Account No" required><br>
+                            </div>
+                            <input class="acc_no" name="merchant_id" type="number" placeholder="Payhere Merchant ID">
 
                             <label for="image">
                                 <svg width="20" height="20" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,18 +99,14 @@
                             <div class="capacity">
                                 <?php
                                     // include_once "../../model/Dealer/products.php";
-                                    // echo var_dump($data['productresult']);
-                                    if(isset($data['productresult'])){
-                                        $productresult = $data['productresult'];
-                                        while($product = mysqli_fetch_assoc($productresult)){
-                                        // foreach(productresult as $product){
-                                            $productid = $product['product_id'];
-                                            $productname = $product['name'];
-                                            echo '<div class="span">
-                                                        <p>'.$productname.' :</p>
-                                                        <input class="half" name="'.$productid.'" type="number" min=0 placeholder="Store Capacity">
-                                                    </div>';
-                                        }
+                                    $result = $data['productresult'];
+                                    while($product = mysqli_fetch_assoc($result)){
+                                        $productid = $product['product_id'];
+                                        $productname = $product['name'];
+                                        echo '<div class="span">
+                                                    <p>'.$productname.' :</p>
+                                                    <input class="half" name="'.$productid.'" type="number" min=0 placeholder="Store Capacity">
+                                                </div>';
                                     }
                                 ?>
                             </div>
@@ -104,17 +115,14 @@
                                 <option value="-1" selected disabled hidden>Select a distributor</option>
                                 <?php 
                                     // include_once "../../model/Dealer/distributors.php";
-                                    if(isset($data['distributorresult'])){
-                                        $distributorresult = $data['distributorresult'];
-                                        while($distributor = mysqli_fetch_assoc($distributorresult)){
-                                            $distributor_id = $distributor['distributor_id'];
-                                            $distributor_city = $distributor['city'];
-                                            $distributor_firstname = $distributor['first_name'];
-                                            $distributor_lastname = $distributor['last_name'];
-                                            $option = "$distributor_city - $distributor_firstname $distributor_lastname";
-                                            echo "<option value=$distributor_id>$option</option>";
-                                        } 
-                                    }
+                                    $result = $data['distributorresult'];
+                                    while($distributor = mysqli_fetch_assoc($result)){
+                                        $distributor_id = $distributor['distributor_id'];
+                                        $distributor_city = $distributor['city'];
+                                        $distributor_name = $distributor['name'];
+                                        $option = "$distributor_city - $distributor_name";
+                                        echo "<option value=$distributor_id>$option</option>";
+                                    } 
                                 ?>
                             </select>
                         </div>

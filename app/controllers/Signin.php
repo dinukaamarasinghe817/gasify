@@ -36,42 +36,14 @@
             // form information
             $email = $_POST['email'];
             $password = $_POST['password'];
-
-            if(isEmpty(array($email, $password))){
-                echo "fill all fields";
-                $error = "1";
-                header("Location: ./dealer/$error");
-                return;
-            }
             
             // check if user is already registered
             $result = $this->model('User')->getUser($email);
-            
-            if(mysqli_num_rows($result) > 0){
-                $row = mysqli_fetch_assoc($result);
-                if(password_verify($password, $row['password'])){
-                    if(isset($_SESSION['login_attempt'])){
-                        $_SESSION['login_attempt'] = 0;
-                    }
-                    $dealer_id = $row['user_id'];
-                    $_SESSION['user_id'] = "$dealer_id";
-                    $_SESSION['role'] = $row['type'];
-                    header('Location: '.BASEURL.'/dashboard/'.$row['type']);
-                }else{
-                    if(!isset($_SESSION['login_attempt'])){
-                        $_SESSION['login_attempt'] = 0;
-                    }
-                    $_SESSION['login_attempt'] += 1;
-                    if($_SESSION['login_attempt'] > 5){
-                        $error = "2";
-                    }else{
-                        $error = "3";
-                    }
-                    header("Location: ./user/$error");
-                }
+            $data = $this->model('User')->userSignin($email,$password);
+            if($data['success']){
+                header('Location: '.BASEURL.'/dashboard/'.$_SESSION['role']);
             }else{
-                $error = "4";
-                header("Location: ./user/$error");
+                header('Location: '.BASEURL.'/signin/user/'.$data['error']);
             }
         }
     }

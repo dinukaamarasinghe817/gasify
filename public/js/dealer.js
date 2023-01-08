@@ -6,11 +6,11 @@ function changeqty(id, unitprice) {
     let inputvalue = input.value;
     let subtotaltring = `.data${id} .subtotal`;
     let subtotal = document.querySelector(subtotaltring);
-    subtotal.innerHTML = "Rs. "+unitprice* inputvalue+".00";
+    subtotal.innerHTML = "Rs. "+(unitprice* inputvalue).toLocaleString('en-US');
     let total = document.querySelector('.total .amount');
 
     let totalvalue = gettotal();
-    total.innerHTML = "Rs. "+totalvalue+".00";
+    total.innerHTML = "Rs. "+totalvalue;
 }
 
 function gettotal() {
@@ -19,8 +19,9 @@ function gettotal() {
     for(let i = 0; i < subtotals.length; i++) {
         let sub = subtotals[i].innerHTML;
         sub = sub.substring(4);
-        sub = parseFloat(sub);
+        sub = parseFloat(sub.replace(/,/g, ''));
         total += sub;
     }
-    return total;
+    // parseFloat("2,299.00".replace(/,/g, ''))
+    return total.toLocaleString('en-US');
 }

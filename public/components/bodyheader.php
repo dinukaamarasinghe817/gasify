@@ -39,6 +39,19 @@ class BodyHeader{
                         
         //             </div>
         //         </section>';
+        if(isset($data['error'])){
+            echo '<div class="error-txt dashboard">
+                        <a onclick="errorclose();">
+                        <svg width="25" height="25" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.6682 32.2388C25.9525 32.2388 32.6682 25.523 32.6682 17.2388C32.6682 8.9545 25.9525 2.23877 17.6682 2.23877C9.38391 2.23877 2.66818 8.9545 2.66818 17.2388C2.66818 25.523 9.38391 32.2388 17.6682 32.2388Z" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22.1682 12.7388L13.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13.1682 12.7388L22.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        </a>
+                        <p><b>ERROR : </b>'.$data['error'].'</p>
+                    </div>
+                    <script src="'.BASEURL.'/public/js/Dealer/signup.js"></script>';
+        }
         echo '<section class="body-header">
                 <div class="body-header-left">
                     <p class="today">Today</p>
