@@ -15,6 +15,8 @@ class Settings extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image']=$row['image'];
 
+        $data['profile'] = $this->model("Distributor")->viewprofile($user_id);
+
         $this->view('distributor/settings', $data);
     }
 

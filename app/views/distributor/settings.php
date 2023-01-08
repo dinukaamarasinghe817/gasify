@@ -1,6 +1,9 @@
 <?php
 $header = new Header("distributor_settings");
 $sidebar = new Navigation('distributor',$data['navigation']);
+
+$user_id = $_SESSION['user_id'];
+
 ?>
 
 <section class="body">
@@ -19,36 +22,67 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </div>
 
                 <div class="con">
+
                     <div class="left-con">
                         <table class="detailstable">
                             <tr>
-                                <td>Distributor ID </td>
-                                <td>26</td>
+                            <?php
+                                $output = '<td>Distributor ID </td>
+                                            <td>'.$user_id.'</td>
+                            </tr>';
+                                
+                              
+
+
+
+
+                                echo $output;
+
+                            ?>
+                            
+
+                            <!-- <tr>
+                                <td>First Name</td>
+                                <td>'.$row1['first'].'</td>
                             </tr>
                             <tr>
-                                <td>Distributor Name</td>
-                                <td>Mr. Saman Perera</td>
+                                <td>Last Name</td>
+                                <td>'.$row1['last'].'</td>
                             </tr>
                             <tr>
                                 <td>Email Address</td>
-                                <td>saman@gmail.com</td>
+                                <td>'.$row1['email'].'</td>
                             </tr>
                             <tr>
                                 <td>Contact Number</td>
-                                <td>0778901221</td>
+                                <td>'.$row1['contact_no'].'</td>
                             </tr>
                             <tr>
-                                <td>Address</td>
-                                <td>No: 20, Back Street, Nugegoda</td>
+                                <td>City</td>
+                                <td>'.$row1['city'].'</td>
                             </tr>
+                            <tr>
+                                <td>Street</td>
+                                <td>'.$row1['street'].'</td>
+                            </tr>'; -->
+                            
                         </table>
                     </div>
+                            
+
+
+
+
 
                     <div class="right-con">
                         <ul>
                             <li><b>Profile Picture</b></li>
-
-                            <!-- <li><a href='../settings/profileimg'>img</a></li> -->
+                            <?php
+                                $image = BASEURL.'/public/img/profile/'.$data['image'];
+                                $output1 = '
+                                <img src="'.$image.'" alt=""> ';
+                                echo $output1;
+                            ?>
                         </ul>
 
                     </div>
