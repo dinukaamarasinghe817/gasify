@@ -12,7 +12,7 @@ class Orders extends Controller{
     function dealer(){
         $dealer_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
-        $dealer_details = $this->model('Dealer')->getDealerImage($dealer_id);
+        $dealer_details = $this->model('Dealer')->getDealer($dealer_id);
         $row = mysqli_fetch_assoc($dealer_details);
         $data['image'] = $row['image'];
         $this->view('dashboard/dealer', $data);

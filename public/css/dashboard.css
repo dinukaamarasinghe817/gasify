@@ -22,7 +22,7 @@ table td{
     --button-orange: #ffbb96;
     --cancel-red: #FF4D4D;
     --error-red: #c91919;
-    --error-background: #ffaeae;
+    --error-background: #ffe0e0;
     --accept-blue: #80B3FF;
     --table-gray: #EBEBEB;
     --navmenu-orange: #fff2e9;
@@ -63,6 +63,7 @@ body{
     font-family: poppins;
     font-style: normal;
     font-size: var(--small);
+    box-sizing: border-box;
 }
 
 /* left panel css */
@@ -130,6 +131,7 @@ body{
     flex-direction: column;
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 /* body header section css */
@@ -172,7 +174,7 @@ body{
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    z-index: 1;
+    z-index: 2;
 }
 .logout-menu {
     /* box-sizing: border-box; */
@@ -236,9 +238,7 @@ body{
     border-right: 15px solid transparent;
 }
 
-body.blur > *::before{
-    /* filter: blur(5px); */
-    /* opacity: 0.5; */
+body.blur::before{
     position: absolute;
     content: '';
     width: 100%;
@@ -254,7 +254,7 @@ body.blur > *::before{
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 10px 10px 10px 40px;
+    padding: 10px 40px 10px 40px;
     height: 85%;
     width: 100%;
     /* padding-bottom: 50px; */
@@ -567,7 +567,8 @@ td button:hover{
 .body-right{
     box-sizing: border-box;
     width: 50%;
-    margin: 0px 60px;
+    /* margin: 0px 60px; */
+    margin-left: 40px;
     overflow-y: scroll;
     scroll-behavior: smooth;
 }
@@ -685,38 +686,29 @@ td button:hover{
     padding: 10px;
     color: var(--error-red);
     background-color: var(--error-background);
-    display: none;
+    display: flex;
     justify-content: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.error-txt.dashboard{
+    box-sizing: border-box;
+    position : absolute;
+    z-index: 3;
+    width: 94%;
+    padding: 10px;
+    margin: 20px 80px 10px 40px;
+    justify-self: center;
+    border-radius: 15px;
+    border: 2px solid #e3968f;
+    background-color: var(--error-background);
+    align-items: left;
+    justify-content: left;
+    transition: ease-in 0.5s;
+    color: black;
+}
+.error-txt.dashboard a{
+    margin-right: 15px;
+}
+.error-txt.dashboard a svg path{
+    stroke: #e3968f;
+}

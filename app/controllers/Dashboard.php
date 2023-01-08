@@ -1,26 +1,26 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-        header('Location: ' . BASEURL . '/home');
-    }
+    // session_start();
+    // if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    //     header('Location: ' . BASEURL . '/home');
+    // }
     class Dashboard extends Controller{
+        public $user_id;
         public function __construct(){
-            
+            $this->AuthorizeLogin();
+            $this->user_id = $_SESSION['user_id'];
         }
 
         public function dealer($error = null){
             // check if the user is actually a gas dealer
-            // AuthorizeUser("dealer");
+            $this->AuthorizeUser("dealer");
 
-            $dealer_id = $_SESSION['user_id'];
-            // get the current stock
-            $data['stock'] = $this->model('Dealer')->getcurrentstock($dealer_id);
-            $dealer_details = $this->model('Dealer')->getDealerImage($dealer_id);
+            $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
             $row = mysqli_fetch_assoc($dealer_details);
             $data['image'] = $row['image'];
-            // get new pending orders
-            $result1 = $this->model('Dealer')->getpendigorders($dealer_id);
-            $data['pending'] = $result1; // multi dimensional array
+            
+            $result = $this->model('Dealer')->dashboard($this->user_id);
+            $data['stock'] = $result['stock'];
+            $data['pending'] = $result['pending']; // multi dimensional array
             // result1 [
             //     [0] = [
             //         'row' => $row,
@@ -75,6 +75,13 @@
     
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/distributor', $data);
+        }
+
+        public function admin($error = null){
+            $data['image'] = 'user.png';
+            // get new pending orders
+            $data['navigation'] = 'dashboard';
+            $this->view('dashboard/admin', $data);
         }
     }
 ?>

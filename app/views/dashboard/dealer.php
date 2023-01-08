@@ -13,5 +13,5 @@ $sidebar = new Navigation('dealer',$data['navigation']);
 </section>
 
 <?php
-$footer = new Footer();
+$footer = new Footer("dealer");
 ?>

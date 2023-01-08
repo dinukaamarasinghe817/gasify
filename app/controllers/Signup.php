@@ -11,14 +11,9 @@
 
         public function dealer($error=null){
 
-            $company_id = 1; // company_id should be taken from session
+            $company_id = 2; // company_id should be taken from session
             // prduct breakdown
-            $productresult = $this->model("Products")->getProducts($company_id);
-            $data['productresult'] = $productresult;
-
-            // distributors breakdown
-            $distributorresult = $this->model('Company')->getDistributors($company_id);
-            $data['distributorresult'] = $distributorresult;
+            $data = $this->model("Dealer")->dealerSignupForm($company_id);
 
             // if any errors to be printed
             $data['error'] = $error;
@@ -61,21 +56,30 @@
 
             // take post inputs
             $data = [];
-            $company_id = 1;
+            // $company_id = $_SESSION['user_id']; // user who register a dealer
+            $company_id = 2;
             $name = $_POST['name'];
+            $first_name = $_POST['fname']; //
+            $last_name = $_POST['lname']; //
             $email = $_POST['email'];
             if(isset($_POST['city']) ? $city = $_POST['city'] : $city = -1);
             $street = $_POST['street'];
             if(isset($_POST['distributor']) ? $distributor_id = (int)$_POST['distributor'] : $distributor_id = -1);
             $contact_no = $_POST['contactno'];
-            $acc_no = $_POST['acc_no'];
+            if(isset($_POST['bank']) ? $bank = $_POST['bank'] : $bank = -1);
+            $account_no = $_POST['account_no'];
+            $merchant_id = $_POST['merchant_id'];
             $password = $_POST['password'];
             $confirmpassword = $_POST['confirmpassword'];
-
+            $image_name = '';$tmp_name = '';
+            if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                $image_name = $_FILES['image']['name'];
+                $tmp_name = $_FILES['image']['tmp_name'];
+            }
             // capacity should be taken as product breakdown
             $capacity = array();
             $isvalidqty = false;
-            $result = $this->model("Products")->getProducts($company_id);
+            $result = $this->model("Dealer")->getProducts($company_id);
             $records = mysqli_num_rows($result);
             for($i = 0; $i < $records; $i++){
                 $product = mysqli_fetch_assoc($result); // this is a query
@@ -86,135 +90,16 @@
                 }
                 $capacity[$i] = array($product['product_id'],$qty);
             }
-
+            
             // password hashing
-            $hashed_pwd = password_hash($password,PASSWORD_DEFAULT);
-
-            $query2 = $this->model('Dealer')->getDealer($email);
-            echo var_dump($query2);
-            if(mysqli_num_rows($query2) > 0){
-                $row = mysqli_fetch_assoc($query2);
-                $dealer_id = $row['dealer_id'];
-            }else{
-                $dealer_id = NULL;
-            }
-            
-            // check all fields are filled or not
-            if(isEmpty(array($name, $email, $password, $confirmpassword, $city, $street, $distributor_id, $contact_no, $acc_no))){
-                $data['error'] = '1';
-            }
-
-            //check validity of email
-            else if(isNotValidEmail($email)){
-                $data['error'] = '2';
-            }
-
-            //check if user already exists
-            else if($dealer_id != NULL){
-                $data['error'] = "3";
-            }
-            
-            //check if two passwords matching
-            else if(isNotConfirmedpwd($password, $confirmpassword)){
-                $data['error'] = "4";
-            }
-            
-            //check the password strength is enough
-            else if(isPasswordNotStrength($password)){
-                $data['error'] = "5";
-            }
-            
-            //check if distributor assigned
-            else if($city == -1){
-                $data['error'] = "6";
-            }
-            
-            else if(!$isvalidqty){
-                $data['error'] = "7";
-            }
-            
-            //check if distributor assigned
-            else if($distributor_id == -1){
-                $data['error'] = "8";
-            }
-
-            //redirect if any error occured
+            $data = $this->model("User")->dealerSignup($name,$first_name,$last_name,$email,
+            $city,$street,$company_id,$distributor_id,$contact_no,$bank,$account_no,$merchant_id,
+            $password,$confirmpassword,$image_name,$tmp_name,$capacity,$isvalidqty);
             if(isset($data['error'])){
                 $error = $data['error'];
-                header("Location: ./dealer/$error");
-                return;
-            }
-
-            // optional image uploaded
-            if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
-                $image_name = $_FILES['image']['name'];
-                $tmp_name = $_FILES['image']['tmp_name'];
-
-                // image type validity jpg png jpeg
-                if(isNotValidImageFormat($image_name)){
-                    $data['error'] = "invalid image type";
-                    exit();
-                }
-
-                $image = getImageRename($image_name,$tmp_name);
-                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
-                echo $path;
-                if(move_uploaded_file($tmp_name, $path.($image))){
-                    //add the dealer to database with image
-                    $query1 = $this->model('Signin')->addDealer($name, $email, $hashed_pwd, $city, $street, $contact_no, $acc_no, $image, $company_id, $distributor_id);
-                    //get dealer_id of newly inserted dealer
-                    $query2 = $this->model('Dealer')->getDealer($email);
-                    $row = mysqli_fetch_assoc($query2);
-                    $dealer_id = $row['dealer_id'];
-                    $query3;
-
-                    // set the capacity of the dealer
-                    for($i = 0; $i<count($capacity); $i++){
-                        $product = $capacity[$i][0];
-                        $qty = $capacity[$i][1];
-                        $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
-                    }
-                    
-                    // if successfully registred and set capacity
-                    if($query1 && $query3){
-                        $_SESSION['user_id'] = $dealer_id;
-                        $_SESSION['role'] = 'dealer';
-                        $data['error'] = "success";
-                    }else{
-                        $error = '9';
-                        header("Location: ./dealer/$error");
-                    }
-
-                }
+                header("Location: ".BASEURL."/signup/dealer/$error");
             }else{
-
-                // add the dealer to the database without image
-                $query1 = $this->model('Signin')->addDealer($name, $email, $hashed_pwd, $city, $street, $contact_no, $acc_no, NULL, $company_id, $distributor_id);
-                // get the dealer_id from the database
-                echo $email;
-                $query2 = $this->model('Dealer')->getDealer($email);
-                $row = mysqli_fetch_assoc($query2);
-                $dealer_id = $row['dealer_id'];
-                echo $dealer_id;
-                $query3;
-                
-                // set the capacity
-                for($i = 0; $i<count($capacity); $i++){
-                    $product = $capacity[$i][0];
-                    $qty = $capacity[$i][1];
-                    // $sql = "INSERT INTO dealer_capacity (dealer_id, company_id, product_id, capacity) VALUES ($dealer_id,1,$product,$qty)";
-                    $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
-                }
-
-                if($query1 && $query3){
-                    $_SESSION['user_id'] = $dealer_id;
-                    $_SESSION['role'] = 'dealer';
-                    $data['error'] = "success";
-                }else{
-                    $error = "9";
-                    header("Location: ./dealer/$error");
-                }
-
+                header("Location: ".BASEURL."/signin/user");
             }
 
             // header("Location: ../signin/dealer");
