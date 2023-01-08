@@ -236,9 +236,9 @@ class Body{
                 <div class="any_brand"><h3><strong>ANY BRAND,ANY PLACE,ANY TIME</strong></h3></div>
                 <div class="pay"><h1><strong>NOW PAY & RESERVE</strong></h1></div>
                 <div class="para"> <p>Your gas cylinder in smart way......</p></div>
-                <div class="btn"><button><svg width="50" height="30" viewBox="0 0 36 27" fill="black" xmlns="http://www.w3.org/2000/svg">
+                <div class="btn"><button><a href="'.BASEURL.'/Orders/select_brand_city_dealer""><svg width="50" height="30" viewBox="0 0 36 27" fill="black" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.91898 0.00888084C1.32213 0.101743 0.787668 0.421359 0.433159 0.897418C0.0786496 1.37348 -0.0668626 1.96698 0.0286329 2.54737C0.124128 3.12775 0.452809 3.64748 0.942369 3.99221C1.43193 4.33695 2.04227 4.47844 2.63911 4.38558H9.39036L9.79543 5.47976L11.6408 10.9506L13.4861 16.4215C13.6661 16.9905 14.4313 17.5157 15.0164 17.5157H30.7693C31.3994 17.5157 32.1195 16.9905 32.2996 16.4215L35.9452 5.47976C36.1253 4.91079 35.8552 4.38558 35.2251 4.38558H15.2414L13.5311 1.23436C13.349 0.872664 13.0677 0.566869 12.7183 0.350647C12.3688 0.134424 11.9649 0.0161615 11.5508 0.00888084L2.5491 0.00888084C2.41435 -0.00296028 2.27877 -0.00296028 2.14402 0.00888084C2.05409 0.00362406 1.96391 0.00362406 1.87397 0.00888084L1.91898 0.00888084ZM16.1416 21.8924C14.8814 21.8924 13.8912 22.8553 13.8912 24.0807C13.8912 25.3062 14.8814 26.2691 16.1416 26.2691C17.4018 26.2691 18.392 25.3062 18.392 24.0807C18.392 22.8553 17.4018 21.8924 16.1416 21.8924ZM29.6441 21.8924C28.3839 21.8924 27.3937 22.8553 27.3937 24.0807C27.3937 25.3062 28.3839 26.2691 29.6441 26.2691C30.9043 26.2691 31.8945 25.3062 31.8945 24.0807C31.8945 22.8553 30.9043 21.8924 29.6441 21.8924Z" fill=""/>
-                    </svg>Place Reservation</button>
+                    </svg>Place Reservation</a></button>
                 </div>
             
             </div></div>';
@@ -255,10 +255,10 @@ class Body{
                     $company_name = $row["name"];
                     $logo = $row["logo"];
                     $image = BASEURL.'/public/img/profile/'.$logo;
-                    $brand .=   '<div >
+                    $brand .=   '<a href ="'.BASEURL.'/Products/view_company_products/'.$row["company_id"].'"><div >
                                 <img src="'.$image.'" alt="" class="litro">
                                 <h3>'.$company_name.'</h3>
-                                </div>'; 
+                                </div></a>'; 
                 
                 }
                 echo $brand.' </div>

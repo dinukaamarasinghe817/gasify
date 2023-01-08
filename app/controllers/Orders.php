@@ -18,7 +18,7 @@ class Orders extends Controller{
         $this->view('dashboard/dealer', $data);
     }
 
-
+    /*.................Customer my reservation...............*/
     //customer all past reservtions
     function customer_allreservations(){
         $customer_id = $_SESSION['user_id'];
@@ -74,6 +74,22 @@ class Orders extends Controller{
 
         $this->customer_myreservation($order_id);
     }
+
+    /*.................Customer place reservation.................*/
+    //select brand,city and dealer
+    function select_brand_city_dealer(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row['image'];
+
+        $this->view('customer/select_brand_city_dealer',$data);
+
+    }
+
+
 
 
      // distributor phurchase orders to company (Gas Orders)
