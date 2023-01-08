@@ -112,6 +112,8 @@ class Vehicles extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
+        $data['vehicles'] = $this->model("Distributor")->updatevehicle($user_id);
+
         $this->view('distributor/updateVehicle', $data);
     }
 

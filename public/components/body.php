@@ -572,8 +572,6 @@ class Body{
             </div>';
     }
 
-
-
     function distributordashboard($data){
         echo '<section class="body-content dashboard">
                     <div class="body-left">
@@ -623,6 +621,8 @@ class Body{
                         </div>
                     </div>';
 
+
+                    
                     echo '
                     <div class="body-right">
                         <div class="accordion new">
@@ -732,8 +732,7 @@ class Body{
 
                     echo '</section>';                         
     }
-
-
+    
         
         
 }
