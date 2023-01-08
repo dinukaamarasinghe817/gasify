@@ -212,7 +212,6 @@ class Body{
             //         }
             //     </script>';
     }
-
     public function dealerstock($data){
         $stockheader = '<ul>';
         if($data['tab'] == "currentstock"){
@@ -240,6 +239,7 @@ class Body{
         echo '</div></section>';
     }
 
+    //customer dashboard
     function customerdashboard($data){
         echo '<div class="under_topbar">
         <div class="top_image">
@@ -292,10 +292,310 @@ class Body{
                
             }
 
+            echo '<div class="recent_order">';
 
-        echo '</div>';
+            if(isset($data['orders'])){
+                echo '  <div class="order_title"> <h3>Recent Orders</h3></div>';
+
+                $orders = $data['orders'];
+                foreach($orders as $order){
+                   $row1 = $order['order'];
+                    $products = $order['products'];
+                    echo '  <div class="dropdown">
+                    <div class="label">
+                        <div><span><strong>Order ID:</strong></span><span>'.$row1['order_id'].'</span></div>
+                        <div class="icon"><svg class="img" width="20" height="10" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span><strong>Placed Date:</strong></span><span> '.$row1['place_date'].'</span><br>
+                        <span><strong>Status:</strong></span><span> '.$row1['order_state'].'</span><br>';
+                    echo '<span><strong>Total Amount:</strong></span><span> Rs.'.number_format($order['total_amount']).'.00</span>
+                    <table>
+                    <tr><th>Brand</th><th>Item</th> <th>Quantity</th></tr>';
+                    foreach($products as $product){
+                        echo '<tr><td>'.$product['company_name'].'</td><td>'.$product['product_name'].'</td><td>'.$product['quantity'].'</td></tr>';
+
+
+                    }
+                    echo '</table></div></div>';
+                }
+                
+               
+        
+
+            }
+            echo '</div>
+                </div>';
+
+
+            echo '<div class="bottom">
+            <div class="product_title"><h3>Popular Products</h3></div>
+            <div class="cards">';
+
+            if(isset($data['popular_products'])){
+                $popular_products = $data['popular_products'];
+
+                foreach($popular_products as $popular_product){
+                    echo '<div class="product_card">
+                             <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$popular_product['image'].'" alt=""></div>
+                             <div class="product_details">
+                                <div class="brand_name">'.$popular_product['c_name'].'</div>
+                                <div class="name"><h5>'.$popular_product['weight'].'Kg '.$popular_product['p_name'].'</h5></div>
+                                <div class="price"><h4>Rs.'.number_format($popular_product['unit_price']).'.00</h4></div>
+                            </div>
+                        </div>';
+                }
+            }
+
+          
+          
+                       
+
+            // echo '</div> 
+            // </div>';
+           
+       
     }
 
+    //customer all past reservation in my reservation tab
+    function allmyreservation($data){
+        echo ' <div class="under_topbar">
+        <div class="subtitle">
+            <h3>My Reservations</h3>
+        </div>
+        <div class="table">';
+         $allmyreservations = $data['allmyreservations'];
+        //  $orders = $data['orders'];
+        if(count($allmyreservations)==0){
+            echo '<table><tr id="first_row"><th><h3><center>No reservations Found!</center></h3></td></tr></table>';
+        }else{
+            if(isset($data['allmyreservations'])){
+                echo '<table><div class="table_header">
+                <tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></div>';
+
+                foreach($allmyreservations as $order){
+                    $row1 = $order['order'];
+                  
+                    //  $products = $order['products'];
+                    $url = BASEURL.'/Orders/customer_myreservation/'.$row1['order_id'];
+                     echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td>'.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
+
+                }
+            }
+        }
+            
+           
+        echo'</div>  
+        </div>';
+    }
+
+    //display all details customer selected reservtion in my reservation tab
+    function viewmyreservation($data){
+
+    
+        echo ' <div class="under_topbar">
+        <div class="subtitle">
+            <h3>Order Details</h3>
+        </div><div class="card">';
+
+        $myreservation = $data['myreservation'];
+        // echo count($myreservation);
+
+        if(isset($data['myreservation'])){
+            foreach($myreservation as $order){
+                
+                echo '<div class="order_card">
+                <div class="card_top">';
+
+                // $order_id= $row1['order_id'] ;
+                // $status= $row1['order_state'] ;
+                // $placed_date= $row1['place_date'] ;
+                // $dealer= $row1['name'] ;
+                $row1 = $order['order'];
+            
+                
+                
+                echo '<div class="top_content">
+                <div>
+                    <strong>Order ID</strong>
+                </div>
+                <div>
+                    '.$row1['order_id'].'
+                </div>
+                </div>
+                <div class="top_content">
+                    <div>
+                        <strong>Placed Date</strong>
+                    </div>
+                    <div>
+                        '.$row1['place_date'].'
+                    </div>
+                </div>';
+
+                $products = $order['products'];
+                $total_amount = $order['total_amount'];
+                $reviews = $order['reviews'];
+
+                echo '<div class="top_content">
+                         <div>
+                             <strong>Total Amount</strong>
+                         </div>
+                         <div>
+                             Rs.'.number_format($total_amount).'.00
+                         </div>
+                     </div>
+                     <div class="top_content">
+                         <div>
+                             <strong>Status</strong>
+                         </div>
+                         <div>
+                             '.$row1['order_state'].'
+                         </div>
+                     </div>
+                     <div class="top_content">
+                         <div>
+                             <strong>Dealer</strong>
+                         </div>
+                         <div>
+                             '.$row1['dealer_name'].'
+                         </div>
+                     </div>
+
+                     </div>';
+
+                    //  echo '<div class="card_bottom"><div class="item_side">';
+                     $output = "";
+                foreach($products as $product){
+                    $output .= '<div class="item">
+                        <div class="item_img">
+                            <img src="'.BASEURL.'/public/img/products/'.$product['product_image'].'" alt="">
+                        </div>
+                        <div class="item_content">
+                            <h5>'.$product['company_name'].'</h5>
+                            <h4>'.$product['product_weight'].'Kg  '.$product['product_name'].'</h3>
+                            <div><p>Unit Price:<strong> RS.'.number_format($product['unit_price']).'.00</strong></p><p>Qty:<strong>'.$product['quantity'].'</strong></p></div>
+                        </div>
+                    </div>';
+                     
+                   
+                }
+                
+                // echo '</div>';
+                //check status is Pending or Accepted then active cancel option
+                if($row1['order_state'] == "Pending" || $row1['order_state']=="Accepted"){
+                    echo '<div class="cancel_card_bottom">
+                        <div class="cancel_item_side">
+                        '.$output.'
+                        <div class="cancel_btn"><button>Cancel Reservation</button></div>
+                         <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                      </div>';
+                }
+                 //check status is Completed or Delivered then display already added reviews and reviews count<3 then active add review option
+                else if($row1['order_state'] == "Completed" || $row1['order_state']=="Delivered"){
+                    
+                    $url = BASEURL.'/Orders/customer_reviewform/'.$row1['order_id'];
+
+                    if(count($reviews)==0){
+                        echo '<div class="card_bottom">
+                        <div class="item_side">
+                        '.$output.'
+                        </div><div class="review_side"><strong>Reviews</strong>';
+                        echo '<div class="review_box">
+                                <div class="content"><p><center>Add your reviews!</center></p></div>
+                             </div>
+                             <div class="review_btn"><button class="rbtn" onclick="location.href=\''.$url.'\'" )">Write Review</button></div>
+                             <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                             </div>';
+
+                    }else{
+                        echo '<div class="card_bottom">
+                        <div class="item_side">
+                        '.$output.'
+                        </div><div class="review_side"><strong>Reviews</strong>';
+
+                        foreach($reviews as $review){
+                            echo '<div class="review_box">
+                                         <div class="date"><h5>'.$review['date'].'</h5></div>
+                                         <div class="content"><p>'.$review['message'].'</p></div>
+                                         </div>';
+                        }
+
+                        echo '<div class="review_btn"><button class="rbtn" onclick="location.href=\''.$url.'\'">Write Review</button></div>
+                                 <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                                 </div>';
+                    }
+
+                }
+               
+
+            }
+
+        
+        }
+        echo '</div>';
+    
+    }
+
+    //write a review for selected customer completed or delivered reservation
+    function addreview($data){
+
+        $collecting_method = $data['collecting_method'];
+        // $error = $data['add_review'];
+        // foreach($reviews as $review){
+            // $collecting_method = $reviews['collecting_methods'];
+        // }
+         
+        echo ' <div class="under_topbar">
+        <!-- subtitle -->
+       <div class="subtitle">
+           <h3>Add Review</h3>
+       </div>
+       
+       <!-- write review -->
+       <div class="write_review">
+           <form id="write_review_form" method="POST" action="'.BASEURL.'/Orders/customer_addreview/'.$data['order_id'].'">';
+               
+
+            //    <!-- review type -->
+
+            //    <?php
+                   if($collecting_method == 'Pick up'){
+                       echo '<div class="type_title"><h3>Add Review for Dealer:</h3></div><div class="radio"></div>';
+                   }else{
+
+                       echo '<div class="type_title"><h3>Select Review Type:</h3></div>
+                       <div class="radio">
+                           <div>
+                               <input type="radio" value="Dealer" id="Dealer" name="review_type" >
+                               <label for="Dealer">Delaer</label>
+                           </div>
+                           <div>
+                               <input type="radio" value="Delivery" id="Delivery"  name="review_type" >
+                               <label for="Delivery">Delivery</label>
+                           </div>
+                       </div>';
+                   }
+               
+               $url =  BASEURL.'/Orders/customer_myreservation/'.$data['order_id'];
+                
+             echo '<div class="error-txt">This is error text!</div>';
+
+              echo' <div class="write_box">
+             <textarea name="review" placeholder="Write your review here....." cols="30" rows="10"></textarea>
+               </div>
+               <div class="btn">
+                   <button id="send" class="send" type="submit"  >Submit</button>
+                   <button id="cancel" class="cancel" type="submit" onclick="location.href=\''.$url.'\'" >Cancel</button>
+                  
+                    </div>
+                </form>
+            </div>
+            </div>';
+    }
+  
     function distributordashboard($data){
         echo '<section class="body-content dashboard">
                     <div class="body-left">
@@ -345,6 +645,8 @@ class Body{
                         </div>
                     </div>';
 
+
+                    
                     echo '
                     <div class="body-right">
                         <div class="accordion new">
@@ -377,8 +679,8 @@ class Body{
                                             </tr>
                                             </tbody>
                                         </table>
-                            </div>          
-                        </div>
+                                </div>          
+                            </div>
 
                         <div class="box">
                             <div class="label"> Purchase Order ID : 2
@@ -559,5 +861,4 @@ class Body{
         </div>
     </section>';
     }
-
 }

@@ -240,7 +240,7 @@ body{
     border-radius: 10px;
     padding: 5px;
     color: #630101;
-    display: none;
+    /* display: flex; */
 }
 
 
@@ -259,6 +259,17 @@ body{
     margin-left: 87.2%;
     background-color: #875899;
     margin-top: 30px;
+}
+
+.btn3 {
+    width: 150px;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    /* margin-left: 87.2%; */
+    background-color: #875899;
+    /* margin-top: 30px; */
 }
 
 .part1 {
@@ -310,9 +321,6 @@ body{
 }
 
 
-
-
-
 /* view vehicles */
 .table1 {
     border-collapse: collapse;
@@ -336,20 +344,17 @@ body{
     width: 800px;
     /* background-color: gray; */
     background-color: var(--navmenu-gray-dark);
-
 }
 
 .table1 td {
     padding: 8px;
     border: 1px solid black;
-
 }
 
 .table1 .table2 {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 15px;
-    /* background-color:#630101; */
 }
 
 .table1 .table2 th {
@@ -367,14 +372,11 @@ body{
     /* background-color:#630101; */
     background-color: #adaecc;
     /* background-color: var(--input-border); */
-
-
 }
 
 .table1 .table2 td {
     padding: 8px;
     border: 1px solid black;
-
 }
 
 .btn4 {
@@ -412,6 +414,5 @@ body{
     border-bottom: solid transparent;
     border-right: solid transparent;
     border-left: solid transparent;
-
 }
 

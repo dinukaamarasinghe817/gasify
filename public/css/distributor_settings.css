@@ -22,13 +22,14 @@ table td{
     --button-orange: #ffbb96;
     --cancel-red: #FF4D4D;
     --error-red: #c91919;
-    --error-background: #ffe0e0;
+    --error-background: #ffaeae;
     --accept-blue: #80B3FF;
     --table-gray: #EBEBEB;
-    --navmenu-orange: #fff2e9;
+    /* --navmenu-orange: #FFF8F3; */
+    --navmenu-orange: #f3e9ff;
     --navmenu-blue: #e8f6ff;
-    --navmenu-orange-dark: #F9896B;
-    --button-orange-hover: #f9a282;
+    --navmenu-orange-dark: #a66bf9;
+    --button-orange-hover: #bf82f9;
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
@@ -50,7 +51,7 @@ table td{
 
 
 @font-face{
-    src: url(fonts/Poppins-Regular.ttf);
+    src: url(Poppins-Regular.ttf);
     font-family: poppins;
 }
 
@@ -63,14 +64,14 @@ body{
     font-family: poppins;
     font-style: normal;
     font-size: var(--small);
-    box-sizing: border-box;
 }
 
 /* left panel css */
 .leftpanel{
     width: 20%;
     max-width: 220px;
-    background-color: var(--navmenu-orange);
+    /* background-color: var(--navmenu-orange); */
+    background-color: var( --navmenu-orange);
     height: 100%;
     overflow-x: hidden;
 }
@@ -89,6 +90,7 @@ body{
 .leftpanel ul .panel-tile{
     padding: 10px 15px;
     display: flex;
+    flex-direction: row;
     font-size: var(--small);
     color: var(--navmenu-gray-dark);
 }
@@ -100,10 +102,6 @@ body{
     min-width: 26px;
     min-height: 26px;
 }
-/* .leftpanel ul .panel-tile svg path{
-    stroke: var(--navmenu-gray-dark);
-} */
-/* when you hover teh panel-tile make this by js*/
 .leftpanel ul .panel-tile:hover svg path{
     stroke: var(--white);
 }
@@ -123,6 +121,9 @@ body{
 .leftpanel .nav-tiles .nav-tile .active svg path{
     stroke: var(--white);
 }
+.leftpanel .nav-tiles .nav-tile:hover svg path{
+    fill: var(--white);
+}
 
 
 /* body section css */
@@ -131,7 +132,6 @@ body{
     flex-direction: column;
     width: 100%;
     height: 100%;
-    position: relative;
 }
 
 /* body header section css */
@@ -174,34 +174,22 @@ body{
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    z-index: 2;
 }
 .logout-menu {
-    /* box-sizing: border-box; */
-    z-index: 2;
+    z-index: 1;
     display: none;
     position: absolute;
     top: 16%;
-    /* right: 3%; */
-    width: 200px;
-    border-radius: 10px;
-    /* border: #8A8B9F solid 2px; */
-    background-color: var(--table-gray);
-}
-.logout-menu ul{
-    box-sizing: border-box;
-    width: 100%;
+    right: 3%;
+    width: 150px;
+    border: #8A8B9F solid 1px;
+    border-radius: 5px;
+    background-color: var(--white);
 }
 .logout-menu ul li{
-    background-color: var(--white);
     display: flex;;
     flex-direction: row;
-    /* justify-content: center; */
-    margin: 5px;
-    /* width: 100%; */
-    padding: 10px;
-    border-radius: 10px;
-    box-sizing: border-box;
+    padding: 8px 10px;
 }
 .logout-menu ul li a{
     margin-left: 10px;
@@ -238,7 +226,9 @@ body{
     border-right: 15px solid transparent;
 }
 
-body.blur::before{
+body.blur > *::before{
+    /* filter: blur(5px); */
+    /* opacity: 0.5; */
     position: absolute;
     content: '';
     width: 100%;
@@ -252,18 +242,13 @@ body.blur::before{
 /* body content css */
 .body-content{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     box-sizing: border-box;
-    padding: 10px 40px 10px 40px;
+    padding: 10px 10px 10px 40px;
     height: 85%;
     width: 100%;
-    /* padding-bottom: 50px; */
     overflow-y: scroll;
     scroll-behavior: smooth;
-    /* background-color: var(--navmenu-gray-dark); */
-}
-.body-content.dashboard{
-    flex-direction: row;
 }
 .body-content::-webkit-scrollbar{
     display: hidden;
@@ -295,10 +280,7 @@ body.blur::before{
     border-right: solid transparent;
     border-left: solid transparent;
 }
-/* .top-panel ul li:hover{
-    background-color: var(--button-orange);
-} */
-/* when hovering the bottom border should appear on innactive anchor tags */
+
 .top-panel ul li a:hover{
     background-color: var(--white);
     color: var(--button-orange-hover);
@@ -327,250 +309,16 @@ body.blur::before{
     border-left: solid var(--button-orange-hover);
 }
 
-.body-content .content-data{
-    position: relative;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    height: 87%;
-    border-bottom: solid var(--button-orange-hover);
-    border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
-    padding-bottom: 20px;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-}
-.content-data::-webkit-scrollbar{
-    display: none;
-}
-.content-data table{
-    box-sizing: border-box;
-    /* padding: 20px; */
-    width: 100%;
-    /* table-layout: fixed; */
-    /* border-collapse: collapse; */
-    /* margin: 25px 0; */
-}
-.content-data table th{
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border: none;
-    height: 50px;
-    color: white;
-    font-size: var(--small);
-    padding-left: 10px;
-    text-align: left;;
-    background-color: var(--navmenu-gray-dark);
-}
-.content-data table td{
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    height: 40px;
-    text-align: left;
-    padding-left: 10px;
-    border: 1.5px solid var(--navmenu-gray-dark);
-}
-.content-data table tr:nth-child(odd):hover,
-.content-data table tr:nth-child(even):hover{
-    background-color: rgb(204, 204, 204);
-}
-table td input{
-    height: 100%;
-    width: 100%;
-}
-.content-data table td:not(:nth-child(3)){
-    /* padding: 10px; */
-}
-.content-data table tr:nth-last-child(2) td:nth-child(3){
-    padding: 10px;
-}
-.content-data table tr:nth-child(odd){
-    background-color: var(--table-gray);
-}
-.content-data .po tr:nth-last-child(1),
-.content-data .po tr:nth-last-child(2){
-    background-color: transparent;
-}
-.content-data table.po tr:nth-last-child(1) td:nth-child(4){
-    padding: 0;
-}
-
-.content data table tr{
-    border: 1px solid black;
-}
-table.history tr td:nth-child(2){
-    padding: 0px 0px;
-}
-td:nth-child(3),
-td:nth-child(4) {
-    max-width: 100px;
-    padding: 10px;
-}
-
-table .innertable{
-    margin: 0px 0px;
-    padding: 0px 0px;
-    border-collapse: unset;
-}
-
-table .innertable tr th{
-    background-color: #1672fc;
-    padding: 5px 10px;
-    height: 17px;
-}
-table.history .innertable tr td{
-    background-color: var(--table-gray);
-    padding: 10px;
-}
-.content-data table.innertable tr:nth-child(even){
-    background-color: var(--table-gray);
-}
-table.po{
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-table.po tr, 
-table.po tr td{
-    border: none;
-}
-
-/* po tab css */
-td button{
-    width: 100%;
-    height: 100%;
-    background-color: var(--button-blue);
-    border-radius: 5px;
-    color: var(--white);
-    font-size: var(--mediums);
-    border: none;
-}
-td button:hover{
-    background-color: var(--button-blue-hover);
-}
-
-/* dashboard body */
 .body-content .body-left{
     width: 60%;
     display: flex;
     flex-direction: column;
 }
 
-.variable{
-    border: 2px solid var(--navmenu-orange-dark);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.variable .topic{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.dropdowndate{
-    padding: 10px;
-    border: 1.5px solid var(--button-blue-hover);
-    color: var(--black);
-    background-color: white;
-    border-radius: 5px;
-    min-width: 150px;
-    appearance: none;
-    background-image:
-    linear-gradient(45deg, transparent 50%, var(--button-blue-hover) 50%),
-    linear-gradient(135deg, var(--button-blue-hover) 50%, transparent 50%),
-    linear-gradient(to right, #ccc, #ccc);
-    background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px);
-    background-size:
-        5px 5px,
-        5px 5px;
-    background-repeat: no-repeat;
-}
-
-.dropdowndate option{
-    color: var(--navmenu-gray-dark);
-}
-
-.variable .tiles{
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.variable .tiles .tile{
-    width: 30%;
-    height: 134px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-}
-
-.variable .tiles .tile:nth-child(1){
-    background-color: #EBEBEB;
-}
-
-.variable .tiles .tile:nth-child(2){
-    background-color: #B6D3FF;
-}
-
-.variable .tiles .tile:nth-child(3){
-    background-color: #FAE5E5;
-}
-
-.variable .tiles .tile h1{
-    font-size: 64px;
-    font-weight: bold;
-}
-
-.variable .chart{
-    /* background-color: var(--table-gray); */
-    height: 300px;
-    margin-top: 10px;
-    border-radius: 10px;
-}
-
-.chart #bargraph{
-    height: 100%;
-}
-
-.body-left table{
-    border-collapse: collapse;
-}
-
-.body-left table{
-    width: 100%;
-    margin-top: 10px;
-}
-
-.body-left table tr th{
-    background-color: #3E8CFF;
-    color: white;
-    padding: 10px;
-    text-align: left;
-}
-
-.body-left table tr td{
-    padding: 10px;
-}
-
-.body-left table tbody tr:nth-child(odd){
-    background-color: var(--table-gray);
-}
-
 .body-right{
     box-sizing: border-box;
     width: 50%;
-    /* margin: 0px 60px; */
-    margin-left: 40px;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    margin: 0px 60px;
 }
 
 .body-right .accordion{
@@ -585,37 +333,27 @@ td button:hover{
 }
 
 .body-right .new{
-    border: 2px solid var(--button-blue);
+    border: 2px solid var(--navmenu-orange-dark);
 }
 .body-right .dispatched{
     border: 2px solid var(--navmenu-gray-dark);
 }
 
-/* .body-right .accordion:hover{
-    border: 2px solid var(--button-blue-hover);
-} */
-
 .accordion .box{
-    /* width: 100%; */
-    background-color: var(--navmenu-orange);
     box-sizing: border-box;
     position: relative;
-    margin: 5px 0px;
     border-radius: 5px;
-    border: 2px solid var(--navmenu-orange-dark);
-    overflow-x: scroll;
-    scroll-behavior: smooth;
-    transition: 0.5s ease;
+    border: 2px solid black;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .accordion .box .label{
     box-sizing: border-box;
     font-size: 16px;
     width: 100%;
-    /* width: 532px; */
-    height: 37px;
+    height: 25px;
     position: relative;
-    color: var(--navmenu-orange-dark);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -627,6 +365,7 @@ td button:hover{
     width: 25px;
     height: 40px;
     margin-right: 5px;
+    margin-bottom: 10px;
 }
 
 .accordion .box.active .label svg{
@@ -677,38 +416,122 @@ td button:hover{
 .accordion .box.active .content table tbody td{
     padding: 5px 10px;
 }
+
 .accordion .box.active .content table tbody tr:nth-child(odd){
     background-color: var(--table-gray);
 }
 
-.error-txt{
-    width: 100%;
-    padding: 10px;
-    color: var(--error-red);
-    background-color: var(--error-background);
-    display: flex;
-    justify-content: center;
+table tr{
+    /* border: 1px solid black; */
 }
 
-.error-txt.dashboard{
-    box-sizing: border-box;
-    position : absolute;
-    z-index: 3;
-    width: 94%;
+td:nth-child(3),
+td:nth-child(4) {
+    max-width: 100px;
     padding: 10px;
-    margin: 20px 80px 10px 40px;
-    justify-self: center;
-    border-radius: 15px;
-    border: 2px solid #e3968f;
-    background-color: var(--error-background);
-    align-items: left;
-    justify-content: left;
-    transition: ease-in 0.5s;
+}
+
+.variable{
+    border: 2px solid var(--navmenu-orange-dark);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.variable .topic{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#period {
+    padding: 5px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 5px;
+    text-align: left;
+    background-color: white;
     color: black;
+    width: 800px;
 }
-.error-txt.dashboard a{
-    margin-right: 15px;
+
+table td {
+    padding: 8px;
 }
-.error-txt.dashboard a svg path{
-    stroke: #e3968f;
+
+.main{
+    margin-top: 10px;
+    padding: 10px;
 }
+
+.header {
+    padding:3px;
+    background-color:#DBD8FC ;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    text-align: center;
+    padding: 5px;
+    width: 1200px;
+    
+}
+
+.btn {
+    padding: 15px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    width: 90%;
+    margin-top: 5px;
+}
+
+.update {
+    background-color:#875899 ;
+}
+
+.delete {
+    background-color: red;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    margin-left: 80%;
+}
+
+.inside{
+    padding: 7px;
+    background-color: #875899;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+}
+
+.con {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.left-con, .right-con {
+    background-color: #DBD8FC ;
+    width: 50%;
+    margin-right: 10px;
+    padding: 10px;
+}
+
+
+

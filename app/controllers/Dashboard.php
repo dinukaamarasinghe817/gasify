@@ -43,6 +43,7 @@
             $this->view('dashboard/dealer', $data);
         }
 
+        //customer dashboard 
         public function customer($error = null){
             $customer_id = $_SESSION['user_id'];
             //profile image
@@ -55,10 +56,10 @@
             $data['brand'] = $brand;
 
             //get recent orders of customer
-            $order_details = $this->model('Customer')->getRecentOrders($customer_id);
-            $data['order_details'] = $order_details;
-
+            $data['orders'] = $this->model('Customer')->getRecentOrders($customer_id);
            
+            //get popular products
+            $data['popular_products'] = $this->model('Customer')->getPopularProducts();
 
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/customer', $data);
