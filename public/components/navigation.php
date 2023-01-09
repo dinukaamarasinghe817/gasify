@@ -253,9 +253,9 @@ class Navigation {
             </li>
             <li class="nav-tile">';
             if($active=="help"){
-                echo '  <a href="#" class="panel-tile active help">';
+                echo '  <a href="'.BASEURL.'/Support/customer_support"  class="panel-tile active help">';
             }else{
-                echo ' <a href="#" class="panel-tile help">';
+                echo ' <a href="'.BASEURL.'/Support/customer_support" class="panel-tile help">';
             }
                
             echo     '<svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
