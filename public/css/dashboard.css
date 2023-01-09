@@ -48,6 +48,7 @@ table td{
     --mediums: 16px;
     --small: 14px;
     --exsmall: 12px;
+    --large-numbers: 64px;
 }
 
 
@@ -310,16 +311,16 @@ body.blur::before{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-top: solid var(--button-orange-hover);
-    border-bottom: solid transparent;
-    border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
+    border-top: 2px solid var(--button-orange-hover);
+    border-bottom: 2px solid transparent;
+    border-right: 2px solid var(--button-orange-hover);
+    border-left: 2px solid var(--button-orange-hover);
 }
 .top-panel ul li .active:hover{
-    border-top: solid var(--button-orange-hover);
-    border-bottom: solid transparent;
-    border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
+    border-top: 2px solid var(--button-orange-hover);
+    border-bottom: 2px solid transparent;
+    border-right: 2px solid var(--button-orange-hover);
+    border-left: 2px solid var(--button-orange-hover);
 }
 .top-panel ul li .active{
     background-color: var(--white);
@@ -327,9 +328,9 @@ body.blur::before{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-top: solid var(--button-orange-hover);
-    border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
+    border-top: 2px solid var(--button-orange-hover);
+    border-right: 2px solid var(--button-orange-hover);
+    border-left: 2px solid var(--button-orange-hover);
 }
 .top-panel ul li:first-child a{
     border-radius: 10px 0px 0px 0px;
@@ -347,9 +348,9 @@ body.blur::before{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     height: 87%;
-    border-bottom: solid var(--button-orange-hover);
-    border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover);
+    border-bottom: 2px solid var(--button-orange-hover);
+    border-right: 2px solid var(--button-orange-hover);
+    border-left: 2px solid var(--button-orange-hover);
     padding-bottom: 20px;
     overflow-y: scroll;
     scroll-behavior: smooth;
@@ -541,7 +542,7 @@ td button:hover{
 }
 
 .variable .tiles .tile h1{
-    font-size: 64px;
+    font-size: var(--large-numbers);
     font-weight: bold;
 }
 

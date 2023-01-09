@@ -9,7 +9,7 @@ $sidebar = new Navigation('dealer',$data['navigation']);
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
-        // $bodycontent = new Body('dealerstock', $data);
+        // $bodycontent = new Orders($data,'accepted','pickup');
     ?>
     <section class="body-content">
         <div class="top-panel">
@@ -54,7 +54,7 @@ $sidebar = new Navigation('dealer',$data['navigation']);
                         </div>
                         <div class="info">
                             <div><p><strong>Customer ID : </strong>24</p><p><strong>Customer Name : </strong>Dinuka Ashan</p></div><br>
-                            <table>
+                            <table class="order-info">
                                 <tr>
                                     <th>Product ID</th>
                                     <th>Product Name</th>
