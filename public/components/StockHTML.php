@@ -73,8 +73,8 @@ class StockHTML{
                                 $output .= '<tr class="data'.$row['product_id'].'">
                                                 <td>'.$row['product_id'].'</td>
                                                 <td>'.$row['name'].'</td>
-                                                <td><input type="number" name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
-                                                <td class="subtotal">Rs. 0.00</td>
+                                                <td><input type="number" step="1" name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
+                                                <td class="subtotal">Rs. 0</td>
                                             </tr>'; // change subtotal manually when input changes.
                                 
                             }

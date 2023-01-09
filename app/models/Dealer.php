@@ -244,4 +244,19 @@ class Dealer extends Model
                 break;
         }
     }//
+
+    public function dealerOrders($dealer_id,$tab1,$tab2){
+        $orders = array();
+        $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
+        while($order = mysqli_fetch_assoc($result)){
+            $id = $order['order_id'];
+            $products = array();
+            $result2 = $this->read("reservation_include","order_id = $id");
+            while($product = mysqli_fetch_assoc($result2)){
+                array_push($products, $product);
+            }
+            array_push($orders, ['order'=>$order, 'products'=>$products]);
+        }
+        return $orders;
+    }//
 }

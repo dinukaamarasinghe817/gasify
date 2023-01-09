@@ -9,12 +9,13 @@ class Orders extends Controller{
         parent::__construct();
     }
 
-    function dealer(){
+    function dealer($tab1, $tab2){
         $dealer_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
         $dealer_details = $this->model('Dealer')->getDealer($dealer_id);
         $row = mysqli_fetch_assoc($dealer_details);
         $data['image'] = $row['image'];
+        $dealer_details = $this->model('Dealer')->dealerOrders($dealer_id,$tab1,$tab2);
         $this->view('dealer/orders', $data);
     }
 
