@@ -34,11 +34,16 @@
             $bodycontent = new Body('companyProducts', $data);
         }elseif($data['navigation']=='regproducts'){
             $bodycontent = new Body('companyRegProducts', $data);
+        }elseif($data['navigation']=='regDealer'){
+            $bodycontent = new Body('companyRegDealer', $data);
+        }
+        elseif($data['navigation']=='regDistributor'){
+            $bodycontent = new Body('companyRegDistributor', $data);
         }
         
         ?>
     </section>
 
-
+    
 </body>
 </html>

@@ -457,8 +457,8 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
-            <div class="DealerTableTopics" onClick="loadDistributorTableTopics()">Registered Dealers</div>
-            <div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()">Register New Dealer</div>
+            <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
+            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
             <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
@@ -511,8 +511,8 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
-                <div class="DealerTableTopics" onClick="loadDistributorTableTopics()">Registered Distributors</div>
-                <div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()">Register New Distributor</div>
+                <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%">Registered Distributors</div></a>
+                <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
                 <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
@@ -564,7 +564,7 @@ class Body{
         echo 
         '<section class="body-content">
              <div class="Distributor_table_name" id="Distributor_table_name">
-                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
+                 <a href="../Compny/dealer" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#cda6e4">Register New Product</div></a>
                  <a href="../Compny/dealer" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
              </div>
@@ -643,7 +643,7 @@ class Body{
                 <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage(this)" required> <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" required> <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Add product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -653,19 +653,7 @@ class Body{
                 <label>Preview</label>
                 <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
                 </div></div>
-                
-                
-                
-            
-            
-            
-            
-            
             </div>
-
-
-
-
         </section>';
     }
     function deliverydashboard($data){
@@ -751,5 +739,83 @@ class Body{
         </div>
         <div class="DealerTables" id="DealerTables"></div>
         </section>';
+    }
+    function companyRegDealer($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+                 <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
+                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
+                 
+             </div>
+            <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">
+                <div class="left">
+                <form action="#" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="Productname" placeholder="Enter dealer name" style="margin-bottom:3%;border:3px solid #deb4f8" required>
+                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter city" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                <input type="text" class="registerProduct" name="weight" placeholder="Enter street" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                </div>
+                <div class="product_reg_row">
+                <select name="distributor_id" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">
+                <option value="3">Kavish Ltd</option>
+                <option value="11">JT Agencies</option>
+                </select>
+                <input type="text" class="registerProduct" name="quantity" placeholder="Enter merchant ID" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="bank" placeholder="Enter bank" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                <input type="text" class="registerProduct" name="bank_acc" placeholder="Enter bank account no" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage(this)" required> <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="submit" name="Sign In" value="Register Dealer" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                </div>
+                </form></div><div class="right">
+                <div style="height:10vh"></div>
+                <label>Preview</label>
+                <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
+                </div></div>
+            </div>
+        </section>';
+    }
+    function companyRegDistributor($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+                 <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Distributors</div></a>
+                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Distributor</div></a>
+                 
+             </div>
+            <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">
+                <div class="left">
+                <form action="#" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="Productname" placeholder="Enter  name" style="margin-bottom:3%;border:3px solid #deb4f8" required>
+                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter city" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                <input type="text" class="registerProduct" name="weight" placeholder="Enter street" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage(this)" required> <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="submit" name="Sign In" value="Register Distributor" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                </div>
+                </form></div><div class="right">
+                <div style="height:10vh"></div>
+                <label>Preview</label>
+                <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
+                </div></div>
+            </div>
+        </section>';
+
     }
 }

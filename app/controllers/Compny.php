@@ -51,8 +51,24 @@ class Compny extends Controller{
         $data['image'] = $row['logo'];
             //$data=[];
         $this->view('dashboard/company', $data);
-    }function getCompanyDealers(){
-        echo "hell";
+    }function regDealer(){
+        $data['navigation'] = 'regDealer';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        //$product_details = $this->model('Company')->getProductDetails($company_id);
+        //$data['products']=$product_details;
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        $this->view('dashboard/company', $data);
+    }function regDistributor(){
+        $data['navigation'] = 'regDistributor';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        //$product_details = $this->model('Company')->getProductDetails($company_id);
+        //$data['products']=$product_details;
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        $this->view('dashboard/company', $data);
     }
 }
 ?>
