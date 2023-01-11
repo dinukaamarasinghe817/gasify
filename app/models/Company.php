@@ -64,6 +64,11 @@ class Company extends Model
             return $info;
         }
     }
+    public function registerNewProduct($data){
+        //$result = $this->insert("product",$data);
+        print_r($data);
+
+    }
     
     
 }

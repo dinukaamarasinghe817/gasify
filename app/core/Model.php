@@ -35,10 +35,10 @@ class Model extends Database
         foreach ($data as $key => $value) {
             $sql .= "$key = '$value', ";
         }
-        $sql = substr($sql, 0, -2);
-        // echo $sql;
-        $result = $this->Query($sql);
-        return $result;
+        //$sql = substr($sql, 0, -2);
+        print_r($sql);
+        //$result = $this->Query($sql);
+        //return $result;
     }
 
     public function update($table, $data, $where)

@@ -36,9 +36,10 @@
             $bodycontent = new Body('companyRegProducts', $data);
         }elseif($data['navigation']=='regDealer'){
             $bodycontent = new Body('companyRegDealer', $data);
-        }
-        elseif($data['navigation']=='regDistributor'){
+        }elseif($data['navigation']=='regDistributor'){
             $bodycontent = new Body('companyRegDistributor', $data);
+        }elseif($data['navigation']=='updateProducts'){
+            $bodycontent = new Body('companyUpdateProducts', $data);
         }
         
         ?>

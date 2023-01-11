@@ -548,15 +548,7 @@ class Body{
                                     </div>';             
                 }
                 echo $distributor;
-
-
-                
-
-            }
-                
-            
-            
-            
+            } 
             echo '</div>
         </section>';
     }
@@ -564,9 +556,9 @@ class Body{
         echo 
         '<section class="body-content">
              <div class="Distributor_table_name" id="Distributor_table_name">
-                 <a href="../Compny/dealer" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
+                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#cda6e4">Register New Product</div></a>
-                 <a href="../Compny/dealer" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
+                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
              </div>
              <div class="productTableTitles" id="productTableTitles">
                  <div class="product_id" id="product_col">Product ID</div>
@@ -622,11 +614,11 @@ class Body{
             <div class="Distributor_table_name" id="Distributor_table_name">
                  <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#cda6e4">Register New Product</div></a>
-                 <a href="../Compny/dealer" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
+                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex">
                 <div class="left">
-                <form action="#" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <form action="'. BASEURL.'/Compny/registerProducts" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
                 <input type="text" class="registerProduct" name="Productname" placeholder="Enter product name" style="margin-bottom:3%;border:3px solid #deb4f8" required>
                 <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">
@@ -817,5 +809,43 @@ class Body{
             </div>
         </section>';
 
+    }
+    function companyUpdateProducts($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
+                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#cda6e4">Register New Product</div></a>
+                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
+             </div>
+            <div class="DealerTables" id="DealerTables" style="display:flex">
+                <div class="left">
+                <form action="'. BASEURL.'/Compny/registerProducts" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <div class="product_reg_row">
+                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">
+                <option value="small">Small</option>
+                <option value="buddy">Buddy</option>
+                <option value="regular">Regular</option>
+                <option value="commercial">Commercial</option>
+                </select>
+                <input type="text" class="registerProduct" name="Productname" placeholder="Enter new price" style="margin-bottom:3%;border:3px solid #deb4f8" required>
+                </div>
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" required> <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="submit" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                </div>
+                </form></div><div class="right">
+                <div style="height:10vh"></div>
+                <label>Preview</label>
+                <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
+                </div></div>
+            </div>
+        </section>';
     }
 }
