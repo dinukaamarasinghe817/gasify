@@ -190,6 +190,10 @@ class Distributor extends Model
         return $profile;
     }
 
+    // public function updateprofile() {
+
+    // }
+
 
 }
 
