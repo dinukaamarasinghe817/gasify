@@ -281,6 +281,9 @@
             <button class="normal" onclick="location.href='signup.php';">Signup</button>
         </div>
     </section>
+    
+    <button onclick="ajaxcall()">Ajax call</button>
+    <p id="uniqueidentifier">change this text</p>
 
     <footer class="section-p1">
         <div class="col">
@@ -347,8 +350,20 @@
                 banner.style.display = 'flex';
             });
         });
-        
 
+        function ajaxcall(){
+            let xhr = new XMLHttpRequest(); //new xml object
+            xhr.open('POST', "<?php echo BASEURL?>/ajax/index", true);
+            xhr.onload = ()=>{
+                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+                    let data = xhr.response;
+                    console.log(data);
+                    let para = document.getElementById('uniqueidentifier');
+                    para.innerHTML = data;
+                }
+            }
+            xhr.send();
+        }
     </script>
 </body>
 </html>

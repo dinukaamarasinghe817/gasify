@@ -38,7 +38,7 @@ class Body{
                                 $chart = new Chart("dealerordersanalytic");
                         echo    '</div>
                         </div>
-                        <table class="table">
+                        <table class="styled-table">
                             <thead>
                                 <tr>
                                     <th>Product Name</th>

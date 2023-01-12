@@ -20,6 +20,7 @@ class Stock extends Controller{
         $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
         $row = mysqli_fetch_assoc($dealer_details);
         $data['image'] = $row['image'];
+        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data[$data['tab']] = $this->model('Dealer')->dealerStock($this->user_id, $data['tab']);
         $this->view('dealer/stock', $data);
     }

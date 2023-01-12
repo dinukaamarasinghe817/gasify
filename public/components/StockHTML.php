@@ -8,14 +8,18 @@ class StockHTML{
 
     public function dealercurrentstock($data){
         $output = '
-                                <table>
+                                <table class="styled-table">
+                                <thead>
                                     <tr>
                                         <th>Product ID</th>
                                         <th>Name</th>
                                         <th>Weight</th>
                                         <th>Unit Price</th>
                                         <th>Quantity</th>
-                                    </tr>';
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    ';
 
             if(mysqli_num_rows($data['currentstock']) > 0){
                 
@@ -31,7 +35,7 @@ class StockHTML{
                 }
 
             }
-        $output .= '</table>'; // static html
+        $output .= '</tbody></table>'; // static html
         echo $output;
     }
 
@@ -52,13 +56,17 @@ class StockHTML{
             // <script src="'.BASEURL.'/public/js/Dealer/signup.js"></script>';
         }
         $output .= '<form action="'.BASEURL.'/stock/dealerpoplace" class="po" method="post" onsubmit="pobuttonclicked(); return false;">
-                    <table class="po">
+                    <table class="po styled-table">
+                    <thead>
                         <tr>
                             <th>Product ID</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Subtotal</th>
-                        </tr>';
+                        </tr>
+                        </thead>
+                        <tbody>
+                        ';
 
                     
                         if(mysqli_num_rows($data['purchaseorder']) > 0){
@@ -95,7 +103,7 @@ class StockHTML{
                                         </tr>'; // static html
                         }
                     
-                    $output .= '</table>
+                    $output .= '</tbody></table>
                                 </form>';
                     echo $output;
     }
@@ -105,14 +113,17 @@ class StockHTML{
         // $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$unique_id}' ORDER BY po_id DESC");
         // $purchase_orders = array();
         $results = $data['pohistory'];
-        $output = '<table class="history">
+        $output = '<table class="history styled-table">
+                        <thead>
                             <tr>
                                 <th>Purchase Order ID</th>
                                 <th>Includes</th>
                                 <th>Purchase Order State</th>
                                 <th>Place Date</th>
                                 <th>Place Time</th>
-                            </tr>';
+                            </tr>
+                        </thead>
+                        <tbody>';
         if(count($results) > 0){
             foreach($results as $result){
                 $row2 = $result['purchase_order'];
@@ -121,11 +132,15 @@ class StockHTML{
                                 <td>'.$row2['po_id'].'</td>
                                 <td>';
                 
-                $output .= '<table class = "innertable">
+                $output .= '<table class = "innertable styled-table">
+                                <thead>
                                 <tr>
                                 <th>Product Name</th>
                                 <th>Quantity</th>
-                                </tr>';
+                                </tr>
+                                </thead>
+                                <tbody>
+                                ';
                 foreach($poitems as $row3){
                     $output .= '<tr>
                                     <td>'.$row3['name'].'</td>
@@ -134,14 +149,14 @@ class StockHTML{
                 }
                 $time = $row2['place_time']; 
                 $time = date('h:i a', strtotime($time));                
-                $output .=      '</table></td>
+                $output .=      '</tbody></table></td>
                                 <td>'.$row2['po_state'].'</td>
                                 <td>'.$row2['place_date'].'</td>
                                 <td>'.$time.'</td>
                             </tr>';
                 
             }
-            $output .= '</table>';
+            $output .= '</tbody></table>';
         }else{
             $output .= '</table>'; // static html
             $output .= '<p style="text-align: center; width: 100%;">no records found</p>';

@@ -17,6 +17,7 @@
             $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
             $row = mysqli_fetch_assoc($dealer_details);
             $data['image'] = $row['image'];
+            $data['name'] = $row['first_name'].' '.$row['last_name'];
             
             $result = $this->model('Dealer')->dashboard($this->user_id);
             $data['stock'] = $result['stock'];

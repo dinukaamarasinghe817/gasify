@@ -69,9 +69,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'orders'){
-                    echo '<a href="'.BASEURL.'/orders/dealer" class="panel-tile active orders">';
+                    echo '<a href="'.BASEURL.'/orders/dealer/pending" class="panel-tile active orders">';
                 }else{
-                    echo '<a href="'.BASEURL.'/orders/dealer" class="panel-tile orders">';
+                    echo '<a href="'.BASEURL.'/orders/dealer/pending" class="panel-tile orders">';
                 }
 
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">

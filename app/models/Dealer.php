@@ -28,7 +28,8 @@ class Dealer extends Model
     }//
 
     public function getDealer($dealer_id){
-        $result = $this->read('dealer', "dealer_id = $dealer_id");
+        // $result = $this->read('dealer', "dealer_id = $dealer_id");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.dealer_id = $dealer_id");
         return $result;
     }//
     
@@ -246,16 +247,25 @@ class Dealer extends Model
     }//
 
     public function dealerOrders($dealer_id,$tab1,$tab2){
+        $tab1 = ucwords($tab1);
         $orders = array();
-        $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
+        $result;
+        if($tab2 == null){
+            $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1'","order_id ASC");
+        }else{
+            $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
+        }
         while($order = mysqli_fetch_assoc($result)){
+            $total_amount = 0;
             $id = $order['order_id'];
             $products = array();
-            $result2 = $this->read("reservation_include","order_id = $id");
+            // $result2 = $this->read("reservation_include","order_id = $id");
+            $result2 = $this->Query("SELECT * FROM reservation_include r INNER JOIN product p ON r.product_id = p.product_id WHERE r.order_id = $id");
             while($product = mysqli_fetch_assoc($result2)){
                 array_push($products, $product);
+                $total_amount += $product['unit_price']*$product['quantity'];
             }
-            array_push($orders, ['order'=>$order, 'products'=>$products]);
+            array_push($orders, ['order'=>$order, 'products'=>$products, 'total_amount'=>$total_amount]);
         }
         return $orders;
     }//

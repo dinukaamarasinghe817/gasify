@@ -14,7 +14,7 @@ class NewOrder{
                         <span><strong>Customer ID :</strong> '.$row['customer_id'].'</span> &nbsp;
                         <span><strong>Customer Name :</strong> '.$row['customer_name'].'</span>
                         <hr>
-                        <table>
+                        <table class="styled-table">
                             <thead>
                                 <tr>
                                     <th>Item</th>
