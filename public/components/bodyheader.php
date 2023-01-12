@@ -39,27 +39,27 @@ class BodyHeader{
                         
         //             </div>
         //         </section>';
-        if(isset($data['error'])){
-            echo '<div class="error-txt dashboard">
-                        <a onclick="errorclose();">
-                        <svg width="25" height="25" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.6682 32.2388C25.9525 32.2388 32.6682 25.523 32.6682 17.2388C32.6682 8.9545 25.9525 2.23877 17.6682 2.23877C9.38391 2.23877 2.66818 8.9545 2.66818 17.2388C2.66818 25.523 9.38391 32.2388 17.6682 32.2388Z" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22.1682 12.7388L13.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M13.1682 12.7388L22.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        </a>
-                        <p><b>ERROR : </b>'.$data['error'].'</p>
-                    </div>
-                    <script src="'.BASEURL.'/public/js/Dealer/signup.js"></script>';
-        }
+        // if(isset($data['error'])){
+        //     echo '<div class="error-txt dashboard">
+        //                 <a onclick="errorclose();">
+        //                 <svg width="25" height="25" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+        //                     <path d="M17.6682 32.2388C25.9525 32.2388 32.6682 25.523 32.6682 17.2388C32.6682 8.9545 25.9525 2.23877 17.6682 2.23877C9.38391 2.23877 2.66818 8.9545 2.66818 17.2388C2.66818 25.523 9.38391 32.2388 17.6682 32.2388Z" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+        //                     <path d="M22.1682 12.7388L13.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+        //                     <path d="M13.1682 12.7388L22.1682 21.7388" stroke="" stroke-width="3.91255" stroke-linecap="round" stroke-linejoin="round"/>
+        //                 </svg>
+        //                 </a>
+        //                 <p><b>ERROR : </b>'.$data['error'].'</p>
+        //             </div>
+        //             <script src="'.BASEURL.'/public/js/Dealer/signup.js"></script>';
+        // }
         echo '<section class="body-header">
                 <div class="body-header-left">
-                    <p class="today">Today</p>
-                    <p class="date">'.$date.'</p>
+                    <p class="date">'.$data['name'].'</p>
+                    <p class="today">'.$date.'</p>
                 </div>
                 <div class="body-header-right">
                     <button class="bell">
-                        <svg width="30" height="33" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="22" height="25" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M23.4075 10.563C23.4075 8.29194 22.5053 6.11391 20.8994 4.50804C19.2936 2.90217 17.1155 2 14.8445 2C12.5734 2 10.3954 2.90217 8.78954 4.50804C7.18366 6.11391 6.28149 8.29194 6.28149 10.563C6.28149 20.5531 2 23.4075 2 23.4075H27.689C27.689 23.4075 23.4075 20.5531 23.4075 10.563Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M17.3145 29.1157C17.0635 29.5483 16.7034 29.9073 16.2701 30.1569C15.8368 30.4065 15.3455 30.5378 14.8455 30.5378C14.3454 30.5378 13.8541 30.4065 13.4208 30.1569C12.9875 29.9073 12.6274 29.5483 12.3765 29.1157" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>

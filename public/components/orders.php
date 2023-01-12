@@ -1,12 +1,12 @@
 <?php
 
 class Order{
-    function __construct($order){
+    function __construct($order,$products,$totalamount){
         echo '<li>
                 <div class="order">
                     <div class="head">
                         <div class="details">
-                            <div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Total amount : </strong>Rs.'.$order['total_amount'].'</div>
+                            <div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Total amount : </strong>Rs.'.$totalamount.'</div>
                             <div><strong>Date : </strong>'.$order['place_date'].'<br><strong>Time : </strong>'.$order['place_time'].'</div>
                         </div>
                         <button onclick="viewinfo(); return false;" class="btn">Issue</button>
@@ -18,21 +18,24 @@ class Order{
                     </div>
                     <div class="info">
                         <div><p><strong>Customer ID : </strong>'.$order['customer_id'].'</p><p><strong>Customer Name : </strong>'.$order['customer_id'].'</p></div><br>
-                        <table>
+                        <table class="styled-table">
+                            <thead>
                             <tr>
                                 <th>Product ID</th>
                                 <th>Product Name</th>
                                 <th>Unit Price</th>
                                 <th>Quantity</th>
                                 <th>Subtotal</th>
-                            </tr>';
-                            foreach($order['items'] as $item){
+                            </tr>
+                            </thead>
+                            <tbody>';
+                            foreach($products as $product){
                                 echo '<tr>
-                                    <td>'.$item['product_id'].'</td>
-                                    <td>'.$item['product_name'].'</td>
-                                    <td>Rs.'.$item['unit_price'].'</td>
-                                    <td>'.$item['quantity'].'</td>
-                                    <td>Rs.'.$item['unit_price']*$item['quantity'].'</td>
+                                    <td>'.$product['product_id'].'</td>
+                                    <td>'.$product['name'].'</td>
+                                    <td>Rs.'.$product['unit_price'].'</td>
+                                    <td>'.$product['quantity'].'</td>
+                                    <td>Rs.'.$product['unit_price']*$product['quantity'].'</td>
                                 </tr>';
                             }
                     echo   '<tr>
@@ -40,8 +43,9 @@ class Order{
                                 <td></td>
                                 <td></td>
                                 <td><strong>Total</strong></td>
-                                <td><strong>Rs.10,600.00</strong></td>
+                                <td><strong>Rs.'.$totalamount.'</strong></td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -49,11 +53,12 @@ class Order{
     }
 }
 
-class Orders{
-    function __construct($active1,$active2=null){
+class OrdersHTML{
+    function __construct($active1,$active2,$data){
         $func = $active1.''.$active2;
-        $this->$func();
-        echo '<div class="top-panel">
+        
+        echo '<section class="body-content">
+                <div class="top-panel">
                     <ul>';
                     if($active1 == 'pending'){
                         echo '<li><a href="#" class="current active">Pending</a></li>';
@@ -101,9 +106,11 @@ class Orders{
                 echo '</ul>';
         }
         echo '</div>';
+        $this->func($active1,$active2,$data);
+        echo '</section>';
     }
 
-    public function acceptedpickup(){
+    public function func($active1,$active2,$data){
         echo '<div class="content-data">
                     <div class="search-bar">
                         <input type="text" class="ticker-input" placeholder="Type to search" autocomplete="off">
@@ -116,8 +123,9 @@ class Orders{
                         </button>
                     </div>
                     <ul>';
-                        foreach($orders as $order){
-                            new Order($order);
+                        $orders = $data['orders'];
+                        foreach($orders as $tuple){
+                            $o = new Order($tuple['order'], $tuple['products'], $tuple['total_amount']);
                         }
                 echo '</ul>
                 </div>';

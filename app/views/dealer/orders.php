@@ -1,6 +1,6 @@
 <?php
-$prompt = new Prompt("verification",$data);
 $header = new Header("dealer");
+$prompt = new Prompt("verification",$data);
 $sidebar = new Navigation('dealer',$data['navigation']);
 ?>
 
@@ -9,9 +9,9 @@ $sidebar = new Navigation('dealer',$data['navigation']);
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
-        // $bodycontent = new Body('dealerstock', $data);
+        $bodycontent = new OrdersHTML('pending',null,$data);
     ?>
-    <section class="body-content">
+    <!-- <section class="body-content">
         <div class="top-panel">
             <ul>
                 <li><a href="#" class="current">Pending</a></li>
@@ -54,7 +54,7 @@ $sidebar = new Navigation('dealer',$data['navigation']);
                         </div>
                         <div class="info">
                             <div><p><strong>Customer ID : </strong>24</p><p><strong>Customer Name : </strong>Dinuka Ashan</p></div><br>
-                            <table>
+                            <table class="order-info">
                                 <tr>
                                     <th>Product ID</th>
                                     <th>Product Name</th>
@@ -138,7 +138,7 @@ $sidebar = new Navigation('dealer',$data['navigation']);
                 </li>
             </ul>
         </div>
-    </section>
+    </section> -->
 </section>
 
 <script>

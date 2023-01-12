@@ -1,5 +1,11 @@
 <?php
 $header = new Header("dealer");
+if(isset($data['error'])){
+    $error = new Prompt('error',$data);
+    echo '<script>
+        showToast();
+    </script>';
+}
 $sidebar = new Navigation('dealer',$data['navigation']);
 ?>
 
