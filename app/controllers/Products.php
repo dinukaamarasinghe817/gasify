@@ -17,8 +17,10 @@ class Products extends Controller{
         $data['company_id'] = $company_id;
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row['image'];
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
 
         $data['products']= $this ->model('Customer')->getCompanyProducts($company_id);
         $this->view('customer/view_company_products',$data);
@@ -31,8 +33,10 @@ class Products extends Controller{
         $data['company_id'] = $company_id;
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row['image'];
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
 
         $data['products']= $this ->model('Customer')->getCompanyProducts($company_id);
 

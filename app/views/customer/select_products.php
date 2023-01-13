@@ -37,7 +37,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>
                                 <div class="increment_box">
                                     <div class="minus">-</div>
-                                    <input type="text" name="qty" id="qty" value="00" class="num">
+                                    <input type="text" name="qty" id="qty" value="0" class="num">
                                     <div class="plus">+</div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div> 
                                 <div class="increment_box">
                                     <div class="minus">-</div>
-                                    <input type="text" name="qty" id="qty" value="00" class="num">
+                                    <input type="text" name="qty" id="qty" value="0" class="num">
                                     <div class="plus">+</div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             
             var buttonClicked = event.target;
             console.log(buttonClicked);
-            var input = buttonClicked.parentElement.children[2];
+            var input = buttonClicked.parentElement.children[1];
             console.log(input);
             
             var inputValue = input.value;
@@ -113,7 +113,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             
             var buttonClicked = event.target;
             console.log(buttonClicked);
-            var input = buttonClicked.parentElement.children[2];
+            var input = buttonClicked.parentElement.children[1];
             console.log(input);
             
             var inputValue = input.value;
