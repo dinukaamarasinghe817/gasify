@@ -28,8 +28,10 @@ class Orders extends Controller{
         $data['navigation'] = 'myreservation';
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row['image'];
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
 
         $data['allmyreservations'] = $this->model('Customer')->getAllmyreservations($customer_id);
        
@@ -42,8 +44,10 @@ class Orders extends Controller{
         $data['navigation'] = 'myreservation';
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row['image'];
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
 
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
         
@@ -56,8 +60,10 @@ class Orders extends Controller{
         $data['navigation'] = 'myreservation';
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row['image'];
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
 
         $data['collecting_method'] = $this->model('Customer')->getcollecting_method($order_id,$customer_id);
         $data['order_id'] = $order_id;
@@ -85,8 +91,10 @@ class Orders extends Controller{
         $data['navigation'] = 'placereservation';
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row['image'];
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
 
         $this->view('customer/select_brand_city_dealer',$data);
 
