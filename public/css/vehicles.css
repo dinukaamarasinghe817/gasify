@@ -326,8 +326,6 @@ body{
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 15px;
-    /* border-radius: 10px; */
-    /* background-color: gray; */
 }
 
 .table1 th {
@@ -362,16 +360,12 @@ body{
     padding-bottom: 12px;
     padding-left: 5px;
     text-align: center;
-    /* background-color: white; */
     border: 1px solid rgb(8, 8, 8);
-    /* border-color: mediumpurple; */
     border-color:black;
     padding: 8px;
     color: black;
     width: 800px;
-    /* background-color:#630101; */
     background-color: #adaecc;
-    /* background-color: var(--input-border); */
 }
 
 .table1 .table2 td {
