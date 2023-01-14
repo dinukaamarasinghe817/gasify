@@ -54,8 +54,9 @@ class BodyHeader{
         // }
         echo '<section class="body-header">
                 <div class="body-header-left">
-                    <p class="date">'.$data['name'].'</p>
-                    <p class="today">'.$date.'</p>
+                   
+                    <p class="today">Today</p>
+                    <p class="date">'.$date.'</p>
                 </div>
                 <div class="body-header-right">
                     <button class="bell">
