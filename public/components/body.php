@@ -629,24 +629,26 @@ class Body{
                             <h3>Current Stock</h3>
 
                                 <div class="content1">
+                                    <table>';
+                                
+                                $stocks = $data['currentstock'];
+                                $output="";
+                                foreach($stocks as $stock) {
+                                    $row1 = $stock['stockinfo'];
 
-                                    <div class="tab2">
-                                        <p>Buddy :  200</p>
-                                    </div>
+                                    $output = '
+                                    <tr>
+                                        <td>'.$row1['name'].'</td>
+                                        <td>'.$row1['quantity'].'</td> 
+                                    </tr>';
+                                }
+                                echo $output;
 
-                                    <div class="tab2">
-                                        <p>Budget :  160</p>
-                                    </div>
-
-                                    <div class="tab2">
-                                        <p>Regular :  100</p>
-                                    </div>
+                                    echo '</table>
                                 </div>
                         </div>
                     </div>';
 
-
-                    
                     echo '
                     <div class="body-right">
                         <div class="accordion new">
