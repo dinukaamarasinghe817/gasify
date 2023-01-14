@@ -23,34 +23,70 @@ $user_id = $_SESSION['user_id'];
                     <div class="left-con">
                         <table class="detailstable">
                             <tr>
+                                <th class="th1"></th>
+                                <th class="th2"></th>
+                            </tr>
+                            <tr>
                                 <?php
                                     $output = '<td>Distributor ID </td>
                                                 <td>'.$user_id.'</td>
                             </tr>';
-                           
-                                    $output .= '
-                                    <tr>
-                                        <td>Contact Number</td>
-                                        <td></td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>Name</td>
-                                        <td></td> 
-                                    </tr>
+                            $profiles = $data['profile'];
 
+                            foreach($profiles as $profile) {
+                                $row1 = $profile['profileinfo'];
+                                $capacities = $profile['capacities'];
+                                $output .= '
+                            <tr>
+                                <td>Name</td>
+                               
+         
+                            </tr>
+
+                            <tr>
+                                <td>Email Address</td>
+                                                            
+                            </tr>
+
+                            <tr>
+                                <td>Contact Number</td>
+                                <td>'.$row1['contact_no'].'</td>
                                 
-                                    ';
+                            </tr>
 
-                                $output .= '</table>';
-                                echo $output;
+                            <tr>
+                                <td>Address</td>
+                                <td>'.$row1['address'].'</td>
+                            </tr>
+
+                            <tr>
+                                <td>Capacities</td>
+                                <td>
+                                    <table class="table2">
+                                        <tr>
+                                            <th class="tablet1">Product Name</th>
+                                            <th class="tablet2">Capacity</th>
+                                         </tr>
+                                ';
+                                foreach($capacities as $capacity) {
+                                    $row3 = $capacity;
+                                    $output .= '
+                                        <tr>
+                                            <td>'.$row3['product_name'].'</td>
+                                            <td>'.$row3['capacity'].'</td>
+                                        </tr>';
+                                }
+                                    $output .= '</table>
+                                </td>
+                            </tr>';        
+                            }
+                            $output .= '</table>';
+                            echo $output;
 
                                 ?>
-                            
-                            
                         </table>
                     </div>
-                            
 
                     <div class="right-con">
                         <ul>
@@ -58,11 +94,10 @@ $user_id = $_SESSION['user_id'];
                             <?php
                                 $image = BASEURL.'/public/img/profile/'.$data['image'];
                                 $output1 = '
-                                <img src="'.$image.'" alt=""> ';
+                                <img src="'.$image.'" alt="" class="ppimg"> ';
                                 echo $output1;
                             ?>
                         </ul>
-
                     </div>
                 </div>
 

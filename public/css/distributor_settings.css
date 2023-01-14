@@ -462,7 +462,6 @@ table th {
     text-align: left;
     background-color: white;
     color: black;
-    width: 800px;
 }
 
 table td {
@@ -483,7 +482,7 @@ table td {
     padding: 5px;
     text-align: center;
     padding: 5px;
-    width: 1200px;
+    width: 1220px;
     
 }
 
@@ -533,5 +532,51 @@ table td {
     padding: 10px;
 }
 
+.detailstable {
+    width: 100%;
+}
 
+.detailstable th {
+    background-color:#DBD8FC;
+}
+
+.th1 {
+    width: 30%;
+}
+
+.th2 {
+    width: 70%;
+}
+
+.table2 {
+    border-collapse: collapse;
+    width: 50%;
+    margin-bottom: 15px;
+}
+
+.table2 th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 5px;
+    text-align: center;
+    border: 1px solid rgb(8, 8, 8);
+    border-color:black;
+    padding: 8px;
+    color: black;
+    background-color: #adaecc;
+    border-radius: 5px;
+}
+
+.table2 td {
+    padding: 8px;
+    border: 1px solid black;  
+}
+
+.ppimg {
+    display: block;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
 
