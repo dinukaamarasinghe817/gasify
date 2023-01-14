@@ -102,7 +102,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="bottom">
-                    <button class="btn update"><b>Update Profile</b></button> 
+                    <button class="btn update" onclick="window.location.href='update_profile.php';"><b>Update Profile</b></button> 
                     <button class="btn delete"><b>Delete Profile</b></button>
                 </div>
 
