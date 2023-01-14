@@ -174,7 +174,7 @@ class Distributor extends Model
         $profile = array();
 
         // $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id='{$user_id}' ");
-        $query1 = $this->Query("SELECT DISTINCT d.distributor_id as distributor_id, d.contact_no as contact_no, d.city as city, d.street as street, u.email as email, u.first_name as first, u.last_name as last FROM distributor d inner join users u on d.distributor_id = u.user_id where d.distributor_id='{$user_id}'");
+        $query1 = $this->Query("SELECT DISTINCT d.contact_no as contact_no, d.city as city, d.street as street, u.email as email, u.first_name as first, u.last_name as last FROM distributor d inner join users u on d.distributor_id = u.user_id where d.distributor_id='{$user_id}'");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $contact = $row1['contact_no'];
@@ -190,9 +190,7 @@ class Distributor extends Model
         return $profile;
     }
 
-    // public function updateprofile() {
-
-    // }
+    
 
 
 }
