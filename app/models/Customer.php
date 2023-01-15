@@ -11,7 +11,9 @@ class Customer extends Model{
 
     //get customer profile image
     public function getCustomerImage($customer_id){
-        $result = $this->read('customer', "customer_id = $customer_id");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN customer c ON u.user_id = c.customer_id WHERE u.user_id = '$customer_id' ");
+
+        // $result = $this->read('customer', "customer_id = $customer_id");
         return $result;
     }
 

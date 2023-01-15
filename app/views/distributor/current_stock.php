@@ -31,7 +31,7 @@ $user_id = $_SESSION['user_id'];
             <div>
                 <div class="middle">
                     <?php
-                        echo "Your Distribution ID : $user_id";
+                        echo "Your Distributor ID : $user_id";
 
                         $output = '<table>
                                     <tr>

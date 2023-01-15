@@ -57,6 +57,9 @@
             $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
             $row1 = mysqli_fetch_assoc($customer_details);
             $data['image'] = $row1['image'];
+            $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+
 
             // get registered company brands
             $brand = $this->model('Customer')->getCompanyBrand(); 
@@ -78,10 +81,15 @@
             $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
             $row = mysqli_fetch_assoc($distributor_details);
             $data['image'] = $row['image'];
-
     
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/distributor', $data);
+
+            $data['currentstock']= $this->model("Distributor")->currentstock($distributor_id);
+            $this->view('dashboard/distributor',$data);
+
+
+
         }
 
         public function admin($error = null){

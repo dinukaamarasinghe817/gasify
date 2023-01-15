@@ -462,7 +462,6 @@ table th {
     text-align: left;
     background-color: white;
     color: black;
-    width: 800px;
 }
 
 table td {
@@ -500,6 +499,12 @@ table td {
     background-color:#875899 ;
 }
 
+.updateupdate {
+    background-color:#875899 ;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
 .delete {
     background-color: red;
 }
@@ -532,6 +537,109 @@ table td {
     margin-right: 10px;
     padding: 10px;
 }
+
+.detailstable {
+    width: 100%;
+}
+
+.detailstable th {
+    background-color:#DBD8FC;
+}
+
+.th1 {
+    width: 30%;
+}
+
+.th2 {
+    width: 70%;
+}
+
+.table2 {
+    border-collapse: collapse;
+    width: 50%;
+    margin-bottom: 15px;
+}
+
+.table2 th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 5px;
+    text-align: center;
+    border: 1px solid rgb(8, 8, 8);
+    border-color:black;
+    padding: 8px;
+    color: black;
+    background-color: #adaecc;
+    border-radius: 5px;
+}
+
+.table2 td {
+    padding: 8px;
+    border: 1px solid black;  
+}
+
+.ppimg {
+    display: block;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+
+
+/* ........update profile........... */
+
+input[type=text],[type=number],[type=tele],[type=submit], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+  
+.forminfo {
+    border-radius: 5px;
+    background-color: #DBD8FC;
+    padding: 20px;
+}
+
+.newform {
+    margin-top: 10px;
+}
+
+/* .table1 {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 15px;
+} */
+
+/* .table1 th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 5px;
+    text-align: center;
+    border: 1px solid rgb(8, 8, 8);
+    border-color: black;
+    padding: 8px;
+    color: black;
+    width: 800px;
+    background-color: var(--navmenu-gray-dark);
+} */
+
+/* .table1 td {
+    padding: 8px;
+    border: 1px solid black;
+} */
+
+
+
 
 
 
