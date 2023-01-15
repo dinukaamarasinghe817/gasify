@@ -20,27 +20,47 @@ $user_id = $_SESSION['user_id'];
                     <h2>Update Profile</h2>
                 </div>
 
-                <div class="con">
+                <div class="forminfo">
+                    <?php echo "Your Distributor ID : $user_id" ?>
 
-                    <div class="left-con">
-                        <table class="detailstable">
-                            <tr>
-                          
-                           
+                      
+                    <form class="newform">
+                        <label>Contact Number</label>
+                        <input type="tele" placeholder="Contact Number">
+
+                        <label>Address</label>
+                        <input type="text" placeholder="Address">
+
+                        <label>Capacity</label>
+                        <!-- <input type="number" placeholder="Capacity"> -->
+                        <?php 
+                            $output = '<table class="table2">
+                                <tr>
+                                   
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                </tr>';
+             
+                            $profiles = $data['profiledata'];
+                            foreach($profiles as $profile) {
+                                $row1 = $profile['info'];
                             
-                        </table>
-                    </div>
-                            
+                            $output .= '<tr>
+                                            <td>'.$row1['name'].'</td> 
+                                            <td>
+                                                <input type="number" placeholder="Capacity">
+                                            </td>                 
+                                        </tr>';
 
-
-
-
-
-                   
+                            }
+                            $output .= '</table>';
+                            echo $output;
+                        ?>
+                    </form>
                 </div>
 
                 <div class="bottom">
-                    <button class="btn update"><b>Done</b></button> 
+                    <button class="btn updateupdate" type="submit"><b>Done</b></button> 
                     <!-- <button class="btn delete"><b>Delete Profile</b></button> -->
                 </div>
 

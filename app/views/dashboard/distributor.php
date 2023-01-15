@@ -1,6 +1,8 @@
 <?php
 $header = new Header("distributor_dashboard");
 $sidebar = new Navigation('distributor',$data['navigation']);
+$user_id = $_SESSION['user_id'];
+
 ?>
 
 <section class="body">
