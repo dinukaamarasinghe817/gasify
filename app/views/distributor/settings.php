@@ -40,13 +40,13 @@ $user_id = $_SESSION['user_id'];
                                 $output .= '
                             <tr>
                                 <td>Name</td>
-                               
-         
+                                
                             </tr>
 
                             <tr>
                                 <td>Email Address</td>
-                                                            
+                              
+                                                           
                             </tr>
 
                             <tr>
@@ -102,7 +102,8 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="bottom">
-                    <button class="btn update" onclick="document.location.href='settings/updateprofile';"><b>Update Profile</b></button> 
+                    <button class="btn update" onclick="document.location.href='../settings/updateprofile';"><b>Update Profile</b></button> 
+                    <!-- <button class="btn update" onclick="<?php echo BASEURL;?>/settings/updateprofile"><b>Update Profile</b></button>  -->
                     <button class="btn delete"><b>Delete Profile</b></button>
                 </div>
 

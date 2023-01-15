@@ -322,7 +322,7 @@ body{
 
 
 /* view vehicles */
-.table1 {
+/* .table1 {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 15px;
@@ -333,21 +333,18 @@ body{
     padding-bottom: 12px;
     padding-left: 5px;
     text-align: center;
-    /* background-color: white; */
     border: 1px solid rgb(8, 8, 8);
-    /* border-color: mediumpurple; */
     border-color: black;
     padding: 8px;
     color: black;
     width: 800px;
-    /* background-color: gray; */
     background-color: var(--navmenu-gray-dark);
 }
 
 .table1 td {
     padding: 8px;
     border: 1px solid black;
-}
+} */
 
 .table1 .table2 {
     border-collapse: collapse;
