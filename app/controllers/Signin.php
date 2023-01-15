@@ -46,5 +46,9 @@
                 header('Location: '.BASEURL.'/signin/user/'.$data['error']);
             }
         }
+
+        public function forgetpassword(){
+            return $this->view('signin/forgetpassword');
+        }
     }
 ?>

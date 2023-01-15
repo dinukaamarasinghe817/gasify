@@ -1,19 +1,6 @@
 <?php
-    // session_start();
-    // if(isset($_SESSION['unique_id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'dealer'){
-    //     header('Location: home/index');
-    // }
+    $header = new Header("login");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?php echo BASEURL ?>/public/css/login.css">
-    <title>Gasify Dealer</title>
-</head>
-<body>
     <div class="container">
         <div class="wrapper">
             <div class="logo">
@@ -41,7 +28,7 @@
                     <div class="info">
                     <input name="email" type="text" placeholder="Email Address"><br>
                     <input name="password" type="password" placeholder="Password"><br>
-                    <p class="forgotpwd" ><a href = "forgotpwd.php" >Forgot password?</a><br></p>
+                    <p class="forgotpwd" ><a onclick="forgetpassword('<?php echo BASEURL ;?>/signin/forgetpassword')" >Forgot password?</a><br></p>
                     </div>
                     <button type="submit" name="submit">Login</button><br>
                     <p>Not Registered? <a href="<?php echo BASEURL;?>/signup/users">Create Account</a></p>
@@ -49,6 +36,6 @@
             </div>
         </div>
     </div>
-    <script src="<?php echo BASEURL;?>/public/js/signin.js"></script>
-</body>
-</html>
+<?php
+$footer = new Footer("signin");
+?>
