@@ -37,3 +37,20 @@ errorclose.onclick = () =>{
     console.log("cancel clicked");
     error.style.display = 'none';
 }
+
+function forgetpassword(url){
+    let form = document.querySelector('.form form')
+    let xhr = new XMLHttpRequest(); //new xml object
+    xhr.open('POST', url, true);
+    xhr.onload = ()=>{
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+            let data = xhr.response;
+            if(data){
+                let f = document.querySelector('.form');
+                f.innerHTML = "<?php $fp = new ForgotPWD('reset'); ?>";
+            }
+        }
+    }
+    let formData = new FormData(form); // new form data object
+    xhr.send(formData);
+}
