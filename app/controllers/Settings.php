@@ -21,18 +21,18 @@ class Settings extends Controller {
     }
 
 
-    // public function updateprofile() {
-    //     $user_id = $_SESSION['user_id'];
-    //     $data['navigation'] = 'settings';
+    public function updateprofile() {
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'settings';
 
-    //     $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-    //     $row = mysqli_fetch_assoc($distributor_details);
-    //     $data['image']=$row['image'];
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image']=$row['image'];
 
-    //     $data['profiledata'] = $this->model("Distributor")->viewprofile($user_id);
+        // $data['profiledata'] = $this->model("Distributor")->updateprofile($user_id);
 
-    //     $this->view('distributor/settings', $data);
-    // }
+        $this->view('distributor/update_profile', $data);
+    }
 
     // public function updateprofile_form() {
     //     $user_id = $_SESSION['user_id'];

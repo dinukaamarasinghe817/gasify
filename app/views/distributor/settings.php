@@ -23,7 +23,7 @@ $user_id = $_SESSION['user_id'];
                     <div class="left-con">
                         <table class="detailstable">
                             <tr>
-                                <th class="th1"></th>
+                                <th class="th1"><b>Your Details : </b></th>
                                 <th class="th2"></th>
                             </tr>
                             <tr>
@@ -102,7 +102,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="bottom">
-                    <button class="btn update" onclick="window.location.href='update_profile.php';"><b>Update Profile</b></button> 
+                    <button class="btn update" onclick="document.location.href='settings/updateprofile';"><b>Update Profile</b></button> 
                     <button class="btn delete"><b>Delete Profile</b></button>
                 </div>
 
