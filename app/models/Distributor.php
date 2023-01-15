@@ -201,6 +201,10 @@ class Distributor extends Model
         return $profile;
     }
 
+    // public function updateprofile($user_id) {
+
+    // }
+
     
 
 
