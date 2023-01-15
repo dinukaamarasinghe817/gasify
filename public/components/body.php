@@ -13,29 +13,39 @@ class Body{
                             <div class="topic">
                                 <h3>Analytic Overview</h3>
                                 <!-- drop down component -->
-                                <form action="#">
-                                    <select id="period" onchange="updatechart()" class="dropdowndate">
-                                        <option value="today" selected>To day</option>
-                                        <option  value="30day">Last 30 days</option>
-                                    </select>
+                                <form action="'.BASEURL.'/dashboard/dealer" method="post">
+                                    <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">';
+                                        if($data['option'] == 'today') {
+                                            echo '<option value="today" selected>To day</option>
+                                            <option  value="30day">Last 30 days</option>';
+                                        }else{
+                                            echo '<option value="today" >To day</option>
+                                            <option  value="30day" selected>Last 30 days</option>';
+                                        }
+                                    echo '</select>
                                 </form>
                             </div>
                             <div class="tiles">
                                 <div class="tile">
-                                    <h1>12</h1>
+                                    <h1>'.sprintf("%02d",$data['total_count']).'</h1>
                                     <p>Orders Recieved</p>
                                 </div>
                                 <div class="tile">
-                                    <h1>08</h1>
+                                    <h1>'.sprintf("%02d",$data['pending_count']).'</h1>
                                     <p>Pending Orders</p>
                                 </div>
                                 <div class="tile">
-                                    <h1>03</h1>
+                                    <h1>'.sprintf("%02d",$data['canceled_count']).'</h1>
                                     <p>Canceled Orders</p>
                                 </div>
                             </div>
+                            <div class="topic"><h3>Product Sale</h3></div>
                             <div class="chart">';
-                                $chart = new Chart("dealerordersanalytic");
+                                if(mysqli_num_rows($data['sold_count']) > 0){
+                                    $chart = new Chart("dealerdashboard",$data);
+                                }else{
+                                    echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
+                                }
                         echo    '</div>
                         </div>
                         <table class="styled-table">
@@ -70,136 +80,36 @@ class Body{
                         <div class="accordion new">
                             <h3>New Orders</h3>';
                             
-                                if(isset($data["pending"])){
+                                if(isset($data["pending"]) && !empty($data["pending"])){
                                     $results = $data["pending"];
                                     foreach($results as $result){
-                                        $newpending = new NewOrder($result);
+                                        $newpending = new NewOrder('pending',$result);
                                     }
-
-                                    echo "<script>
-                                            let accordion = document.querySelectorAll('.accordion .box');
-                                            for(i=0; i<accordion.length; i++) {
-                                                accordion[i].addEventListener('click', function(){
-                                                    this.classList.toggle('active')
-                                                })
-                                            }
-                                        </script>";
                                 }else{
-                                    echo "No pending orders";
+                                    echo "<img src = ".BASEURL."/public/img/placeholders/1.png>";
                                 }
+                                
                             
                         echo '</div>
                         <div class="accordion dispatched">
-                            <h3>Deliveries</h3>
-                            <div class="box">
-                                <div class="label">Order ID : 1
-                                    <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                                    </svg>
-                                </div>
-                                <div class="content">
-                                    <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                                    <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                                    <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                                    <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                                    <hr>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Quantity</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Buddy</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Budget</td>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Regular</td>
-                                                <td>3</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="label">Order ID : 1
-                                    <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                                    </svg>
-                                </div>
-                                <div class="content">
-                                    <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                                    <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                                    <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                                    <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                                    <hr>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Quantity</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Buddy</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Budget</td>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Regular</td>
-                                                <td>3</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="label">Order ID : 1
-                                    <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                                    </svg>
-                                </div>
-                                <div class="content">
-                                    <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                                    <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                                    <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                                    <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                                    <hr>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Quantity</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Buddy</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Budget</td>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Regular</td>
-                                                <td>3</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                            <h3>Dispatched Orders</h3>';
+                            if(isset($data["dispatched"]) && !empty($data["dispatched"])){
+                                $results = $data["dispatched"];
+                                foreach($results as $result){
+                                    $newpending = new NewOrder('dispatched',$result);
+                                }
+                            }else{
+                                echo "<img src = ".BASEURL."/public/img/placeholders/1.png>";
+                            }
+                    echo    '</div>
+                        <script>
+                            let accordion = document.querySelectorAll(".accordion .box");
+                            for(i=0; i<accordion.length; i++) {
+                                accordion[i].addEventListener("click", function(){
+                                    this.classList.toggle("active")
+                                })
+                            }
+                        </script>
                     </div>
                 </section>';
             // js

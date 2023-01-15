@@ -46,6 +46,20 @@
     --exsmall: 12px;
 }
 
+/* dashboard css */
+.body-right .accordion{
+    height: 350px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.body-right{
+    overflow-y: unset;
+}
+.body-right img,
+.body-left img{
+    width: 100%;
+}
+
 .error-text a svg path{
     stroke: var(--error-red);
 }
