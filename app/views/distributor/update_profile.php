@@ -7,7 +7,6 @@ $user_id = $_SESSION['user_id'];
 
 <section class="body">
     <?php 
-    // call the default header for your interface
     $bodyheader = new BodyHeader($data);
     ?>
 
@@ -20,48 +19,51 @@ $user_id = $_SESSION['user_id'];
                     <h2>Update Profile</h2>
                 </div>
 
-                <div class="forminfo">
-                    <?php echo "Your Distributor ID : $user_id" ?>
+                <div class="con">
+                    <div class="left-con">
+                        <form class="newform">
+                            <label>Contact Number</label>
+                            <input type="tele" placeholder="Contact Number">
 
-                      
-                    <form class="newform">
-                        <label>Contact Number</label>
-                        <input type="tele" placeholder="Contact Number">
+                            <label>Address</label>
+                            <input type="text" placeholder="Address">
 
-                        <label>Address</label>
-                        <input type="text" placeholder="Address">
+                            <label>Capacity</label>
+                            <?php 
+                                $output = '<table class="table2">
+                                    <tr>
+                                            
+                                        <th>Item Name</th>
+                                        <th>Quantity</th>
+                                    </tr>';
+                        
+                                $profiles = $data['profiledata'];
+                                foreach($profiles as $profile) {
+                                    $row1 = $profile['info'];
+                                        
+                                    $output .= '<tr>
+                                        <td>'.$row1['name'].'</td> 
+                                        <td>
+                                            <input type="number" placeholder="Capacity">
+                                        </td>                 
+                                    </tr>';
+                                }
+                                $output .= '</table>';
+                                echo $output;
+                            ?>
+                        </form>
+                    </div>
 
-                        <label>Capacity</label>
-                        <!-- <input type="number" placeholder="Capacity"> -->
-                        <?php 
-                            $output = '<table class="table2">
-                                <tr>
-                                   
-                                    <th>Item Name</th>
-                                    <th>Quantity</th>
-                                </tr>';
-             
-                            $profiles = $data['profiledata'];
-                            foreach($profiles as $profile) {
-                                $row1 = $profile['info'];
-                            
-                            $output .= '<tr>
-                                            <td>'.$row1['name'].'</td> 
-                                            <td>
-                                                <input type="number" placeholder="Capacity">
-                                            </td>                 
-                                        </tr>';
-
-                            }
-                            $output .= '</table>';
-                            echo $output;
-                        ?>
-                    </form>
+                    <div class="right-con">
+                        <form>
+                            <label>Profile Picture </label>
+                            <input type="file">
+                        </form>
+                    </div>
                 </div>
 
                 <div class="bottom">
-                    <button class="btn updateupdate" type="submit"><b>Done</b></button> 
-                    <!-- <button class="btn delete"><b>Delete Profile</b></button> -->
+                    <button class="btn updateupdate" onclick="document.location.href='../settings/distributor';"><b>Update Profile</b></button> 
                 </div>
 
             </div>
@@ -73,12 +75,50 @@ $user_id = $_SESSION['user_id'];
 
 
 
-
-
-
-
-
-
 <?php
 $footer = new Footer();
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
