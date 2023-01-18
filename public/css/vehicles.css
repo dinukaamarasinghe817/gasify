@@ -322,7 +322,7 @@ body{
 
 
 /* view vehicles */
-/* .table1 {
+.table1 {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 15px;
@@ -344,15 +344,15 @@ body{
 .table1 td {
     padding: 8px;
     border: 1px solid black;
-} */
+}
 
-.table1 .table2 {
+.table2 {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 15px;
 }
 
-.table1 .table2 th {
+.table2 th {
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 5px;
@@ -365,7 +365,7 @@ body{
     background-color: #adaecc;
 }
 
-.table1 .table2 td {
+.table2 td {
     padding: 8px;
     border: 1px solid black;
 }
