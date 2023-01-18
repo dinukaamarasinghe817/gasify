@@ -65,9 +65,31 @@ class Company extends Model
         }
     }
     public function registerNewProduct($data){
-        //$result = $this->insert("product",$data);
-        print_r($data);
+        /*foreach ($data as $key => $value) {
+            //print_r($data);
+            // $sql .= "$key = '$value', ";
+            print_r($data['cmp_id']);
+         }*/
+        $this->insert("product",$data);
+        //print_r($data);
 
+    }
+    public function getDealerID($data){
+        $result=$this->readi('users','email =\''.$data.'\'');
+        $row=mysqli_fetch_assoc($result);
+        return $row['user_id'];
+
+    }public function registerUser($data){
+        $this->insert("users",$data);
+
+    }public function registerNewDealer($data){
+        $this->insert("dealer",$data);
+    }
+    public function registerNewDistributor($data){
+        $this->insert("distributor",$data);
+    }public function updateProduct($data,$productID,$companyID){
+        //print_r("tu");
+        $this->update("product",$data,"company_id=".$companyID." AND product_id=".$productID);
     }
     
     

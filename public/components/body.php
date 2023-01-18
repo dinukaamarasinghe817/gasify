@@ -225,10 +225,22 @@ class Body{
                 <div class="Title_3">
                 <div class="ChartTitle">Current stock</div>
                 </div>
-                <div class="Content_3" id="Content_3"></div>
+                <div class="Content_3" id="Content_3">
+                <div class="Content_3_tableHead_row" id="Content_3_tableHead_row"><div class="product_type" style="margin-left: 4%;margin-top:3.5%">Product</div><div class="product_stock" style="margin-top:3.5%">Stock</div></div>';
+               $result=$data['products'];
+                //echo $result;
+                foreach($result as $results){
+                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">'.$results['name'].'</div><div class="data_value" style="margin-right: 10%;">'.$results['quantity'].'</div></div>';
+                }
+                
+                
+                
+                
+                
+                echo'</div>
                 </div>
-            </div>
-            <div class="DistributorTableHeadings" id="DistributorTableHeadings">
+            </div>';
+            /*'<div class="DistributorTableHeadings" id="DistributorTableHeadings">
                 <div class="Distributor_table_name" id="Distributor_table_name">
                     <div class="distibutor_title">Distributor</div>
                 </div>
@@ -255,8 +267,8 @@ class Body{
                     <div class="Dealer_capacity" id="col">Capacity</div>
                 </div>
             </div>  
-            <div class="DealerTable" id="DealerTable"></div>
-        </section>';
+            <div class="DealerTable" id="DealerTable"></div>*/
+        echo'</section>';
         /*echo '<section class="body-content">
         <div class="body-left">
             <div class="variable">
@@ -486,11 +498,11 @@ class Body{
                     foreach($result as $row){
                         //print_r($data) ;
                         $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #deb4f8;height:10%">
-                                        <div class="dealer_name" id="col">'.$row['name']. '</div>
-                                        <div class="dealer_location" id="col">'.$row['city'].'</div>
-                                        <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
-                                        <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
-                                        <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
+                                        <div class="dealer_name" id="col" style="margin-top:1%">'.$row['name']. '</div>
+                                        <div class="dealer_location" id="col" style="margin-top:1%">'.$row['city'].'</div>
+                                        <div class="dealer_contactno" id="col" style="margin-top:1%">'.$row['contact_no'].'</div>
+                                        <div class="dealer_accountno" id="col" style="margin-top:1%">'.$row['account_no'].'</div>
+                                        <div class="dealer_capacity" id="col" style="margin-top:1%">'.$row['bank'].'</div>
                                         </div>';             
                     }
                     echo $dealer;
@@ -540,11 +552,11 @@ class Body{
                 foreach($result as $row){
                     //print_r($data) ;
                     $distributor .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #deb4f8;height:10%">
-                                    <div class="dealer_name" id="col">Sample</div>
-                                    <div class="dealer_location" id="col">'.$row['city'].'</div>
-                                    <div class="dealer_contactno" id="col">'.$row['street'].'</div>
-                                    <div class="dealer_accountno" id="col">'.$row['contact_no'].'</div>
-                                    <div class="dealer_capacity" id="col">'.$row['hold_time'].'</div>
+                                    <div class="dealer_name" id="col" style="margin-top:1%">Sample</div>
+                                    <div class="dealer_location" id="col" style="margin-top:1%">'.$row['city'].'</div>
+                                    <div class="dealer_contactno" id="col" style="margin-top:1%">'.$row['street'].'</div>
+                                    <div class="dealer_accountno" id="col" style="margin-top:1%">'.$row['contact_no'].'</div>
+                                    <div class="dealer_capacity" id="col" style="margin-top:1%">'.$row['hold_time'].'</div>
                                     </div>';             
                 }
                 echo $distributor;
@@ -662,17 +674,29 @@ class Body{
                 <div class="Title_2">
                 <div class="ChartTitle">Today</div>
                 </div>
-                <div class="Content_2" id="Content_2"></div>
+                <div class="Content_3" id="Content_3">';
+                echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Completed Orders</div><div class="data_value" style="margin-right: 10%;">6</div></div>';
+                echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;"> Ongoing  Orders</div><div class="data_value" style="margin-right: 10%;">1</div></div>';
+                
+                
+                echo'</div>
             
             </div>
             <div class="Col_3" id="Col_3">
                 <div class="Title_3">
                 <div class="ChartTitle">My Vehicle</div>
                 </div>
-                <div class="Content_3" id="Content_3"></div>
+                <div class="Content_3" id="Content_3">';
+                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Vehicle no</div><div class="data_value" style="margin-right: 10%;">'.$data['vehicle_no'].'</div></div>';
+                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Vehicle type</div><div class="data_value" style="margin-right: 10%;">'. $data['vehicle_type'].'</div></div>';
+                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Weight limit</div><div class="data_value" style="margin-right: 10%;">'.$data['weight_limit'].'</div></div>';
+                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Cost per KM</div><div class="data_value" style="margin-right: 10%;">'.$data['cost_per_km'].'</div></div>';
+                
+                
+                '</div>
                 </div>
-            </div>
-            <div class="DistributorTableHeadings" id="DistributorTableHeadings">
+            </div>';
+            /*<div class="DistributorTableHeadings" id="DistributorTableHeadings">
                 <div class="Distributor_table_name" id="Distributor_table_name">
                     <div class="distibutor_title">Current Deliveries</div>
                 </div>
@@ -697,8 +721,8 @@ class Body{
                     </div>
                 </div>
             </div>  
-            <div class="DealerTable" id="DealerTable"></div>
-        </section>';
+            <div class="DealerTable" id="DealerTable"></div>*/
+        echo'</section>';
     }
     function gasdeliveries($data){
         echo
@@ -714,7 +738,24 @@ class Body{
             <div class="distributor_contactno" id="col" style="width:15%">Placed date</div>
             <div class="distributor_contactno" id="col" style="width:15%">Placed time</div>
             </div>
-        <div class="DealerTables" id="DealerTables"></div>
+        <div class="DealerTables" id="DealerTables">';
+        if(isset($data["pool"])){
+            $result=$data['pool'];
+            foreach($result as $row){
+                //print_r($row);
+                echo
+                '<div class="Distributor_tableHead_row" id="Distributor_tableHead_row" style="background-color: transparent;height:10%;border:3px solid #90CAFF;">
+                <div class="distributor_name" id="col" style="width:25%;margin-top:1%">'.$row['first_name'].' '.$row['last_name'].'</div>
+                <div class="distributor_location" id="col" style="width:25%;margin-top:1%">'.$row['city'].$row['street'].'</div>
+                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['contact_no'].'</div>
+                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_date'].'</div>
+                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_time'].'</div>
+                <div class="accept_btn" id="col" onClick="takeJob(this)" style="width:10%;margin:auto" key="data[index].order_id ">Accept</div>
+                </div>';
+            }
+        }
+        
+        echo'</div>
         </section>';
     }   
     function currentgasdeliveries($data){
@@ -728,8 +769,27 @@ class Body{
         <div class="distributor_name" id="col" style="width:20%">Name</div>
         <div class="distributor_location" id="col" style="width:25%">Location</div>
         <div class="distributor_contactno" id="col" style="width:15%">Contact no</div>
+        <div class="distributor_contactno" id="col" style="width:15%">Placed date</div>
+        <div class="distributor_contactno" id="col" style="width:15%">Placed time</div>
         </div>
-        <div class="DealerTables" id="DealerTables"></div>
+        <div class="DealerTables" id="DealerTables">';
+        if (isset($data["current"])) {
+            $result=$data['current'];
+            foreach ($result as $row) {
+                echo
+                '<div class="Distributor_tableHead_row" id="Distributor_tableHead_row" style="background-color: transparent;height:10%;border:3px solid #90CAFF;">
+                <div class="distributor_name" id="col" style="width:25%;margin-top:1%">'.$row['first_name'].' '.$row['last_name'].'</div>
+                <div class="distributor_location" id="col" style="width:25%;margin-top:1%">'.$row['city'].$row['street'].'</div>
+                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['contact_no'].'</div>
+                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_date'].'</div>
+                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_time'].'</div>
+                <div class="delete_btn" id="delete_btn" onClick="takeJob(this)" style="width:10%;margin:auto" key="data[index].order_id ">Cancel</div>
+                </div>';
+            }
+        }
+
+        echo
+        '</div>
         </section>';
     }
     function companyRegDealer($data){
@@ -740,30 +800,37 @@ class Body{
                  <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
                  
              </div>
-            <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">
+            <div class="DealerTables" id="DealerTables" style="display:flex;height:90%">
                 <div class="left">
-                <form action="#" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <form action="'. BASEURL.'/Compny/registerDealer" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="Productname" placeholder="Enter dealer name" style="margin-bottom:3%;border:3px solid #deb4f8" required>
-                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                <input type="text" class="registerProduct" name="name" placeholder="Firstname    Lastname" style="margin-bottom:2%;border:3px solid #deb4f8" >
+                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter city" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
-                <input type="text" class="registerProduct" name="weight" placeholder="Enter street" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                    <input type="text" class="registerProduct" name="email" placeholder="Enter email" style="margin-bottom:2%;border:3px solid #deb4f8;width:65%" >
                 </div>
                 <div class="product_reg_row">
-                <select name="distributor_id" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">
+                <input type="text" class="registerProduct" name="password" placeholder="Enter password" style="margin-bottom:2%;border:3px solid #deb4f8" >
+                <input type="text" class="registerProduct" name="confirmpswd" placeholder="Confirm password" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="city" placeholder="Enter city" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="street" placeholder="Enter street" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                </div>
+                <div class="product_reg_row">
+                <select name="distributor_id" id="Producttype" class="registerProduct" style="margin-bottom:2%;border:3px solid #deb4f8">
                 <option value="3">Kavish Ltd</option>
                 <option value="11">JT Agencies</option>
                 </select>
-                <input type="text" class="registerProduct" name="quantity" placeholder="Enter merchant ID" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
+                <input type="text" class="registerProduct" name="merchantid" placeholder="Enter merchant ID" style="margin-bottom:2%;border:3px solid #deb4f8;font-family:poppins"  > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="bank" placeholder="Enter bank" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
-                <input type="text" class="registerProduct" name="bank_acc" placeholder="Enter bank account no" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
+                <input type="text" class="registerProduct" name="bank" placeholder="Enter bank" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="bank_acc" placeholder="Enter bank account no" style="margin-bottom:2%;border:3px solid #deb4f8;font-family:poppins"  > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage(this)" required> <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:2%;border:3px solid #deb4f8" onchange="showProductImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Register Dealer" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -786,14 +853,21 @@ class Body{
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">
                 <div class="left">
-                <form action="#" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <form action="'. BASEURL.'/Compny/registerDistributor" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="Productname" placeholder="Enter  name" style="margin-bottom:3%;border:3px solid #deb4f8" required>
-                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                <input type="text" class="registerProduct" name="name" placeholder="Firstname    Lastname" style="margin-bottom:2%;border:3px solid #deb4f8" >
+                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter city" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
-                <input type="text" class="registerProduct" name="weight" placeholder="Enter street" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                    <input type="text" class="registerProduct" name="email" placeholder="Enter email" style="margin-bottom:2%;border:3px solid #deb4f8;width:65%" >
+                </div>
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="password" placeholder="Enter password" style="margin-bottom:2%;border:3px solid #deb4f8" >
+                <input type="text" class="registerProduct" name="confirmpswd" placeholder="Confirm password" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                </div>
+                <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="city" placeholder="Enter city" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="street" placeholder="Enter street" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage(this)" required> <br>
@@ -820,22 +894,23 @@ class Body{
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex">
                 <div class="left">
-                <form action="'. BASEURL.'/Compny/registerProducts" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
-                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">
-                <option value="small">Small</option>
-                <option value="buddy">Buddy</option>
-                <option value="regular">Regular</option>
-                <option value="commercial">Commercial</option>
-                </select>
-                <input type="text" class="registerProduct" name="Productname" placeholder="Enter new price" style="margin-bottom:3%;border:3px solid #deb4f8" required>
+                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">';
+                $result=$data['products'];
+                //echo $result;
+                foreach($result as $results){
+                    echo '<option value='.$results['product_id'].'>'.$results['name'].'</option>';
+                }echo
+                '</select>
+                <input type="text" class="registerProduct" name="Productname" placeholder="Enter new price" style="margin-bottom:3%;border:3px solid #deb4f8">
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
-                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
+                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #deb4f8"> <br>
+                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins"> <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" required> <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">

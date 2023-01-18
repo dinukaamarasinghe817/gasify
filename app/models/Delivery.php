@@ -29,6 +29,18 @@ class Delivery extends Model
         $result = $this->read('delivery_person', "delivery_id = $delivery_id");
         return $result;
     }
+    public function getDeliveryVehicle($delivery_id){
+        $result = $this->read('delivery_person', "delivery_id = $delivery_id");
+        return $result;
+    }
+    public function getPoolDetails(){
+        $result = $this->loadPool();
+        return $result;
+    }
+    public function getCurrentDeliveries(){
+        $result=$this->loadCurrenGasDeliveies();
+        return $result;
+    }
     
     
 }
