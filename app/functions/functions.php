@@ -46,20 +46,20 @@ function isNotValidEmail($email){
     }
 }
 
-function isUserExist($conn, $email){
-    $sql = "SELECT email FROM (SELECT email FROM admin
-    UNION SELECT email FROM customer
-    UNION SELECT email FROM dealer
-    UNION SELECT email FROM company
-    UNION SELECT email FROM distributor
-    UNION SELECT email FROM delivery_person) temp WHERE temp.email = '{$email}'";
-    $result = mysqli_query($conn, $sql);
-    if(mysqli_num_rows($result) > 0){
-        return true;
-    }else{
-        return false;
-    }
-}
+// function isUserExist($conn, $email){
+//     $sql = "SELECT email FROM (SELECT email FROM admin
+//     UNION SELECT email FROM customer
+//     UNION SELECT email FROM dealer
+//     UNION SELECT email FROM company
+//     UNION SELECT email FROM distributor
+//     UNION SELECT email FROM delivery_person) temp WHERE temp.email = '{$email}'";
+//     $result = mysqli_query($conn, $sql);
+//     if(mysqli_num_rows($result) > 0){
+//         return true;
+//     }else{
+//         return false;
+//     }
+// }
 
 function getImageRename($image_name,$tmp_name){
     $time  = time();

@@ -18,6 +18,7 @@ class Orders extends Controller{
         $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['orders'] = $this->model('Dealer')->dealerOrders($dealer_id,$tab1,$tab2);
         // var_dump($data);
+        $data['verification'] = '';
         $this->view('dealer/orders', $data);
     }
 

@@ -15,7 +15,7 @@ class Stock extends Controller{
         // navigation and active tab in body
         $data['navigation'] = 'stock';
         $data['tab'] = $param;
-        if($error != null) {$data['error'] = $error;}
+        if($error != null) {$data['toast'] = ['type'=>'error', 'message'=>$error];}
         // profile picture & notifications
         $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
         $row = mysqli_fetch_assoc($dealer_details);

@@ -1,6 +1,6 @@
 <?php
 class Header{
-    public function __construct($user){
+    public function __construct($user,$data=null){
         echo '<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -13,6 +13,15 @@ class Header{
             <title>'.$user.'</title>
         </head>
         <body>';
+
+        if(isset($data['toast'])){
+            $error = new Prompt('toast',$data['toast']);
+            echo '<script>
+                showToast();
+            </script>';
+        }else if(isset($data['verification'])){
+            $prompt = new Prompt("verification",$data);
+        }
     }
 }
 ?>
