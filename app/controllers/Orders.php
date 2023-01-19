@@ -55,7 +55,7 @@ class Orders extends Controller{
     }
 
     //get collecting method for display review type in review form
-    function customer_reviewform($order_id){
+    function customer_reviewform($order_id,$error=null){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -68,6 +68,11 @@ class Orders extends Controller{
         $data['collecting_method'] = $this->model('Customer')->getcollecting_method($order_id,$customer_id);
         $data['order_id'] = $order_id;
         $data['customer_id'] = $customer_id;
+        if($error != null){
+            // $data['error'] = $error;
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
+       
         $this->view('customer/addreview', $data);
     }
 
@@ -79,9 +84,15 @@ class Orders extends Controller{
         if(isset($_POST['review_type'])){
             $review_type = $_POST['review_type'];
         }
-        $data['add_review'] = $this->model('Customer')->AddReviw($order_id,$customer_id,$reviews,$review_type);
-
-        $this->customer_myreservation($order_id);
+        $data['add_review_error'] = $this->model('Customer')->AddReviw($order_id,$customer_id,$reviews,$review_type);
+        if(!empty($data['add_review_error'])){
+            $this->customer_reviewform($order_id,$data['add_review_error']);
+        }
+        else{
+            $this->customer_myreservation($order_id);
+            // $this->view('customer/viewmyreservation', $data);
+        }    
+       
     }
 
     /*.................Customer place reservation.................*/
