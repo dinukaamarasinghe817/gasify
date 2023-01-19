@@ -33,8 +33,8 @@ class Customer extends Model{
         if(mysqli_num_rows($result1)>0){
             while($row1=mysqli_fetch_assoc($result1)){
                 array_push($company_products,$row1);
+            }
         }
-}
 
 
         return $company_products;
@@ -220,6 +220,8 @@ class Customer extends Model{
     public function AddReviw($order_id,$customer_id,$reviews,$review_type){
 
         // $add_review = array();
+        $add_review_errors =array();
+        $error = "";
         
         $result1 = $this->Query("SELECT collecting_method FROM reservation WHERE order_id = '{$order_id}'");
         if(mysqli_num_rows($result1)>0){
@@ -242,7 +244,8 @@ class Customer extends Model{
                 $result2 = $this->insert('review',['order_id'=> $order_id,'date' => $date,'time'=>$time,'message'=>$reviews,'review_type'=>$review_type]);
             }
             else{
-                echo "Write your review!";
+                $error = "Write your review!";
+                // array_push($add_review_errors,$error); 
             }
         }
         //collecting method delivery then have both review_type Delivery and Dealer 
@@ -253,11 +256,13 @@ class Customer extends Model{
                 $result2 = $this->insert('review',['order_id'=> $order_id,'date' => $date,'time'=>$time,'message'=>$reviews,'review_type'=>$review_type]);  
             }
             else{
-                echo "All input fields are required!";
+                $error = "All input fields are required!";
+                // array_push($add_review_errors,$error); 
             }
         
         }
-        return $result2;
+        return $error;
+
     }
     
 
