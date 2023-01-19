@@ -14,11 +14,11 @@
 
         <div>
             <ul id="navbar">
-                <li><a href="home.html" class="active">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#product">Shop</a></li>
+                <!-- <li><a href="blog.html">Blog</a></li> -->
+                <li><a href="#footer">About</a></li>
+                <li><a href="#footer">Contact</a></li>
             </ul>
         </div>
 
@@ -281,11 +281,8 @@
             <button class="normal" onclick="location.href='signup.php';">Signup</button>
         </div>
     </section>
-    
-    <button onclick="ajaxcall()">Ajax call</button>
-    <p id="uniqueidentifier">change this text</p>
 
-    <footer class="section-p1">
+    <footer id="footer" class="section-p1">
         <div class="col">
             <img src="<?php echo BASEURL ?>/public/img/logo.png" class="logo" alt="">
             <h4>Contact</h4>

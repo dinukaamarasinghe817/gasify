@@ -1,6 +1,9 @@
 <?php
 $header = new Header("vehicles");
 $sidebar = new Navigation('distributor',$data['navigation']);
+
+$user_id = $_SESSION['user_id'];
+
 ?>
 
 <section class="body">
@@ -18,6 +21,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
           ?>
 
           <div class="main2">
+            <?php
+                echo "Your Distributor ID : $user_id";
+            ?>
 
             <!-- <form action=BASEURL."/vehicles/addvehicle" method="POST"> -->
             <form action="<?php echo BASEURL;?>/vehicles/addvehicle" method="POST">

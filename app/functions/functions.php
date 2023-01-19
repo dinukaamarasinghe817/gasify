@@ -90,3 +90,13 @@ function isNotConfirmedpwd($password, $confirmpassword){
         return true;
     }
 }
+
+function phpArrtoJs($array){
+    $result = '[';
+    foreach($array as $elem){
+        $result .= '"'.$elem.'",';
+    }
+    $result = rtrim($result,',');
+    $result .= ']';
+    return $result;
+}

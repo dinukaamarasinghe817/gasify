@@ -13,15 +13,18 @@
         public function dealer($error = null){
             // check if the user is actually a gas dealer
             $this->AuthorizeUser("dealer");
-
+            if(isset($_POST['option'])){
+                $option = $_POST['option'];
+            }else{
+                $option = 'today';
+            }
             $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
             $row = mysqli_fetch_assoc($dealer_details);
-            $data['image'] = $row['image'];
-            $data['name'] = $row['first_name'].' '.$row['last_name'];
             
-            $result = $this->model('Dealer')->dashboard($this->user_id);
-            $data['stock'] = $result['stock'];
-            $data['pending'] = $result['pending']; // multi dimensional array
+            $data = $this->model('Dealer')->dashboard($this->user_id,$option);
+            // $data['stock'] = $result['stock'];
+            // $data['dispatched'] = $result['dispatched'];
+            // $data['pending'] = $result['pending']; // multi dimensional array
             // result1 [
             //     [0] = [
             //         'row' => $row,
@@ -40,7 +43,10 @@
             //                         ]
             //             ]
             // ]
+            $data['image'] = $row['image'];
+            $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
+            $data['option'] = $option;
             $this->view('dashboard/dealer', $data);
         }
 
@@ -75,10 +81,15 @@
             $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
             $row = mysqli_fetch_assoc($distributor_details);
             $data['image'] = $row['image'];
-
     
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/distributor', $data);
+
+            $data['currentstock']= $this->model("Distributor")->currentstock($distributor_id);
+            $this->view('dashboard/distributor',$data);
+
+
+
         }
 
         public function admin($error = null){

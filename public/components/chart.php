@@ -6,7 +6,13 @@ class Chart{
         $this->$name($data);
     }
 
-    public function dealerordersanalytic($data){
+    public function dealerdashboard($data){
+        $products = $data['sold_count'];
+        $pname = array(); $pqty = array();
+        foreach($products as $product){
+            array_push($pname,$product['name']);
+            array_push($pqty,$product['quantity']);
+        }
         echo '
         <canvas id="bargraph"></canvas>
         
@@ -17,10 +23,10 @@ class Chart{
         new Chart(ctx, {
             type: "bar",
             data: {
-            labels: ["Buddy", "Budget", "Regular", "Commercial", "Regulator"],
+            labels: '.phpArrtoJs($pname).',
             datasets: [{
                 label: "Sold Quantity",
-                data: [7, 10, 2, 5, 6],
+                data: '.phpArrtoJs($pqty).',
                 backgroundColor: "rgba(255, 159, 64, 0.5)",
                 borderWidth: 1
             }]
@@ -33,8 +39,8 @@ class Chart{
             }
             }
         });
-        </script>
-        '; 
+        </script>';
+        
     }
 }
 

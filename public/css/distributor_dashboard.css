@@ -47,6 +47,8 @@ table td{
     --mediums: 16px;
     --small: 14px;
     --exsmall: 12px;
+    --large-numbers: 64px;
+
 }
 
 
@@ -474,6 +476,8 @@ td:nth-child(4) {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
+    margin-bottom: 10px;
+
 }
 
 .box1 {
@@ -497,7 +501,8 @@ td:nth-child(4) {
 }
 
 .p1 {
-    font-size: var(--larger);
+    /* font-size: var(--larger); */
+    font-size: var( --large-numbers);
 }
 
 .box4 {

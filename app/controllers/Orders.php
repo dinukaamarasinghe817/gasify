@@ -144,6 +144,7 @@ class Orders extends Controller{
         $data['currentstock']= $this->model("Distributor")->currentstock($user_id);
         
         $this->view('distributor/current_stock',$data);
+        // $this->view('distributor/dashboard/distributor',$data);
       
 
     }

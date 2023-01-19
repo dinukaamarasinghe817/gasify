@@ -484,6 +484,10 @@ td button:hover{
     justify-content: space-between;
 }
 
+.variable .chart{
+    overflow: hidden;
+}
+
 .dropdowndate{
     padding: 10px;
     border: 1.5px solid var(--button-blue-hover);
@@ -510,7 +514,7 @@ td button:hover{
 }
 
 .variable .tiles{
-    margin-top: 10px;
+    margin: 10px 0px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -545,20 +549,23 @@ td button:hover{
 
 .variable .chart{
     /* background-color: var(--table-gray); */
-    height: 300px;
+    height: 250px;
     margin-top: 10px;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .chart #bargraph{
     height: 100%;
 }
 
-/* .body-left table{
-    border-collapse: collapse;
+.body-left table{
+    margin-bottom: 20px;
 }
 
-.body-left table{
+/* .body-left table{
     width: 100%;
     margin-top: 10px;
 }

@@ -38,26 +38,22 @@ class Dealer extends Model
         return $result;
     }//
     
-    public function dashboard($dealer_id){
+    public function dashboard($dealer_id,$option){
         $data = [];
-        // direct query since joins used
+        // stock information
         $result = $this->Query("SELECT dealer_keep.quantity as quantity, product.name as name
         FROM dealer_keep INNER JOIN product 
         ON dealer_keep.product_id = product.product_id 
         WHERE dealer_id = '$dealer_id'");
         $data['stock'] = $result;
 
-
+        // pending order information
         $orders = array();
-        // $result = $this->read('reservation', "dealer_id = $dealer_id AND order_state = 'pending'");
         $sql = "SELECT r.order_id as order_id,r.customer_id as customer_id, CONCAT(u.first_name,' ',u.last_name) as customer_name 
                 FROM reservation r
                 INNER JOIN
-                customer c
-                ON r.customer_id = c.customer_id
-                INNER JOIN
                 users u
-                ON c.customer_id = u.user_id
+                ON r.customer_id = u.user_id
                 WHERE r.dealer_id = $dealer_id
                 AND r.order_state = 'pending'";
         $result = $this->Query($sql);
@@ -65,7 +61,6 @@ class Dealer extends Model
             while($row = mysqli_fetch_assoc($result)){
                 $products = array();
                 $order_id = $row['order_id'];
-                // $result2 = $this->read('reservation_include',"order_id = $order_id");
                 $sql = "SELECT r.quantity as qty,p.name as product_name
                         FROM reservation_include r
                         INNER JOIN
@@ -82,6 +77,61 @@ class Dealer extends Model
             }
         }
         $data['pending'] = $orders;
+
+        // dispatched orders information
+        $orders = array();
+        $sql = "SELECT r.order_id as order_id,r.customer_id as customer_id,r.delivery_id as delivery_id, CONCAT(u.first_name,' ',u.last_name) as customer_name, CONCAT(u2.first_name,' ',u2.last_name) as delivery_name 
+                FROM reservation r
+                INNER JOIN
+                users u
+                ON r.customer_id = u.user_id
+                INNER JOIN
+                users u2
+                ON r.delivery_id = u2.user_id
+                WHERE r.dealer_id = $dealer_id
+                AND r.order_state = 'dispatched'";
+        $result = $this->Query($sql);
+        if(mysqli_num_rows($result) > 0){
+            while($row = mysqli_fetch_assoc($result)){
+                $products = array();
+                $order_id = $row['order_id'];
+                $sql = "SELECT r.quantity as qty,p.name as product_name
+                        FROM reservation_include r
+                        INNER JOIN
+                        product p
+                        ON r.product_id = p.product_id
+                        WHERE r.order_id = $order_id";
+                $result2 = $this->Query($sql);
+                if(mysqli_num_rows($result2) > 0){
+                    while($row2 = mysqli_fetch_assoc($result2)){
+                        array_push($products, $row2);
+                    }
+                }
+                array_push($orders, ['row' => $row, 'products' => $products]);
+            }
+        }
+        $data['dispatched'] = $orders;
+
+        // variable data
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+        $data['total_count'] = mysqli_num_rows($this->read("reservation","dealer_id = $dealer_id AND place_date >= '$start_date' AND place_date <= '$end_date'"));
+        $data['pending_count'] = mysqli_num_rows($this->read("reservation","dealer_id = $dealer_id AND place_date <= '$today' AND order_state = 'pending'"));
+        $data['canceled_count'] = mysqli_num_rows($this->read("reservation","dealer_id = $dealer_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND order_state = 'canceled'"));
+        $sql = "SELECT p.product_id, SUM(r.quantity) as quantity, p.name as name
+        FROM reservation_include r INNER JOIN product p 
+        ON r.product_id = p.product_id WHERE order_id IN 
+            (SELECT order_id FROM reservation 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND dealer_id = 6 AND order_state = 'Completed') 
+        GROUP BY product_id";
+        $data['sold_count'] = $this->Query($sql);
+
         return $data;
     }//
 

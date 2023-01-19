@@ -29,10 +29,14 @@ class Settings extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image']=$row['image'];
 
-        // $data['profile'] = $this->model("Distributor")->viewprofile($user_id);
+        $data['profiledata'] = $this->model("Distributor")->updateprofile($user_id);
+        
 
-        $this->view('distributor/settings', $data);
+
+        $this->view('distributor/update_profile', $data);
     }
+
+   
 
 
 
