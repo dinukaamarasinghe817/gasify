@@ -1,5 +1,7 @@
 <?php
-
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception;
 class User extends Model
 {
 
@@ -12,6 +14,86 @@ class User extends Model
         $result = $this->read('users', "email = '$email'");
         return $result;
     }
+    public function resetPassword($email){
+        if(empty($email)){
+            $data['toast'] = ['type'=>'error', 'message'=>'Email field empty'];
+            return $data;
+        }
+        
+        //Import PHPMailer classes into the global namespace
+        //These must be at the top of your script, not inside a function
+        
+        $sql = "SELECT * FROM users WHERE email = '{$email}'";
+        $result = $this->Query($sql);
+        if(mysqli_num_rows($result) > 0){
+            $token = md5(rand());
+            $row = mysqli_fetch_assoc($result);
+            $sql = "UPDATE users SET verification_code = '{$token}' WHERE email = '{$email}'";
+            $result2 = $this->Query($sql);
+        
+            if($result2){
+                $reciepName = $row['first_name'].' '.$row['last_name'];
+                $from = 'admin@gasify.com';
+                $to = $row['email'];
+                $subject = 'Gasify: Reset Password';
+                $message = 'You are receiving this email because you requested to reset your password.';
+                $link = BASEURL."/signin/passwordverify/$token/$email";
+                // sendResetLink($name, $row['email'], $token);
+                //Create an instance; passing `true` enables exceptions
+                $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
+                $data = $mail->send();
+                return $data;
+            }else{
+                $data['toast'] = ['type' => 'error', 'message' => 'Server error'];
+                return $data;
+            }
+        }
+        
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_assoc($result);
+            
+        }else{
+            $data['toast'] = 'Email does not exist';
+            return $data;
+        }
+        
+    }
+    // function sendResetLink($name,$email,$token){
+    //     //Create an instance; passing `true` enables exceptions
+    //     $mail = new PHPMailer(true);
+    
+    //     try {
+    //         //Server settings
+    //         $mail->isSMTP();                                            //Send using SMTP
+    //         $mail->Host       = 'localhost';                     //Set the SMTP server to send through
+    //         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    //         $mail->Username   = 'admin@gasify.com';                     //SMTP username
+    //         $mail->Password   = '1234567';                               //SMTP password
+    //         $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    
+    //         //Recipients
+    //         $mail->setFrom('admin@gasify.com', "Gasify (Pvt.Ltd.)");    //Add a recipient
+    //         $mail->addAddress($email);
+            
+    //         //message
+    //         $message = "
+    //         <h2>Hello $name,</h2>
+    //         <h3>You are receiving this email because you requested to reset your password.</h3>
+    //         <br/><br/>
+    //         <a href='http://localhost/gasify/view/Dealer/login_with_link.php?token=$token&email=$email'>Click Here</a>
+    //         ";
+    //         //Content
+    //         $mail->isHTML(true);                                  //Set email format to HTML
+    //         $mail->Subject = 'Gasify: Reset Password';
+    //         $mail->Body    = $message;
+    
+    //         $result = $mail->send();
+    //     } catch (Exception $e) {
+    //         $data['toast'] = ['type' => 'error', 'message' => "phpmailer server error"];
+    //         return $data;
+    //     }
+    // }
+
     public function userSignin($email,$password){
         $data['success'] = false;
         
@@ -176,6 +258,120 @@ class User extends Model
                 return $data;
             }
 
+        }
+    }
+
+    public function isUserExist($email){
+        $result = $this->getUser($email);
+        if(mysqli_num_rows($result) > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function isAnOldPassword($email, $password){
+        $result = $this->read('users',"email = '$email'");
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_assoc($result);
+            $user_id = $row['user_id'];
+            $result = $this->read('old_passwords',"user_id = $user_id");
+            $flag = false;
+            while($row = mysqli_fetch_assoc($result)){
+                if(password_verify($password, $row['old_password'])){
+                    $flag = true;
+                }
+            }
+            return $flag;
+        }
+        return false;
+    }
+
+    public function isCurrentPassword($email, $password){
+        $result = $this->read('users',"email = '$email'");
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_assoc($result);
+            if(password_verify($password, $row['password'])){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function passwordverify($password,$confirmpassword,$token,$email){
+        // password hashing
+        $hashed_pwd = password_hash($password,PASSWORD_DEFAULT);
+        $data = [];
+        // check all fields are filled or not
+        if(isEmpty(array($password, $confirmpassword))){
+            $data['toast'] = ['type'=>'error', 'message'=>"fill all the fields"];
+
+        }else if(empty($email)){
+            $data['toast'] = ['type'=>'error', 'message'=>"email is empty"];
+
+        }else if(empty($token)){
+            $data['toast'] = ['type'=>'error', 'message'=>"verification token is empty"];
+
+        }else if(isNotValidEmail($email)){
+            $data['toast'] = ['type'=>'error', 'message'=>"Invalid email"];
+
+        }else if(!($this->isUserExist($email))){
+            $data['toast'] = ['type'=>'error', 'message'=>"Email does not exists"];
+
+        }else if(isNotConfirmedpwd($password, $confirmpassword)){
+            $data['toast'] = ['type'=>'error', 'message'=>"Passwords do not match"];
+
+        }else if($this->isAnOldPassword($email, $password)){
+            $data['toast'] = ['type'=>'error', 'message'=>"Your password is too old, try a different one"];
+
+        }else if($this->isCurrentPassword($email, $password)){
+            $data['toast'] = ['type'=>'error', 'message'=>"Your new password can't be the same as your current one"];
+
+        }else if(isPasswordNotStrength($password)){
+            $data['toast'] = ['type'=>'error', 'message'=>"password should at least 8 characters long and include atleast one uppercase, lowercase, number and a special character"];
+
+        }
+
+        if(isset($data['toast'])){
+            return $data;
+        }
+
+        $sql = "SELECT verification_code FROM users WHERE email = '{$email}' LIMIT 1";
+        $query = $this->Query($sql);
+        if(mysqli_num_rows($query)>0){
+            $row1 = mysqli_fetch_assoc($query);
+            if($token == $row1['verification_code']){
+                $sql = "SELECT * FROM users WHERE email = '{$email}' LIMIT 1";
+                $query = $this->Query($sql);
+                if(mysqli_num_rows($query)>0){
+                    $row2 = mysqli_fetch_assoc($query);
+                    $user_id = $row2['user_id'];
+                    $old_password = $row2['password'];
+                    $sql = "INSERT INTO old_passwords(user_id, old_password) VALUES('{$user_id}','{$old_password}')";
+                    $query = $this->Query($sql);
+                    if($query){
+                        $sql = "UPDATE users SET password = '$hashed_pwd' WHERE email = '$email' LIMIT 1";
+                        $query = $this->Query($sql);
+                        if($query){
+                            if(isset($_SESSION['unique_id'])){
+                                unset($_SESSION['unique_id']);
+                            }
+                            if(isset($_SESSION['role'])){
+                                unset($_SESSION['role']);
+                            }
+                            $data['toast'] = ['type'=>'success', 'message'=>"You've successfully update your password"];
+                            return $data;
+                        }else{
+                            $data['toast'] = ['type'=>'error', 'message'=>"server Error! try again!"];
+                            return $data;
+                        }
+                    }
+                }
+
+            }else{
+                $data['toast'] = ['type'=>'error', 'message'=>"Invalid token passed"];
+                return $data;
+            }
         }
     }
 

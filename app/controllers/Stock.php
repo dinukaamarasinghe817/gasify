@@ -15,7 +15,7 @@ class Stock extends Controller{
         // navigation and active tab in body
         $data['navigation'] = 'stock';
         $data['tab'] = $param;
-        if($error != null) {$data['error'] = $error;}
+        if($error != null) {$data['toast'] = $error;}
         // profile picture & notifications
         $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
         $row = mysqli_fetch_assoc($dealer_details);
@@ -32,8 +32,8 @@ class Stock extends Controller{
             $postproducts[$productid[$i]] = $_POST[$productid[$i]];
         }
         $data = $this->model('Dealer')->dealerpoplace($this->user_id, $productid, $postproducts);
-        if(isset($data['error'])){
-            $this->dealer("purchaseorder", $data['error']);
+        if(isset($data['toast'])){
+            $this->dealer("purchaseorder", $data['toast']);
         }else{
             $this->view("/dealer/reports/purchaseorder", $data);
         }

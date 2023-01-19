@@ -20,31 +20,31 @@
             if($error != null){
                 switch($error){
                     case '1':
-                        $data['error'] = 'fill all the fields';
+                        $data['toast'] = ['type' => 'error', 'message' =>'fill all the fields'];
                         break;
                     case '2':
-                        $data['error'] = 'Invalid email';
+                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid email'];
                         break;
                     case '3':
-                        $data['error'] = 'Email already exists';
+                        $data['toast'] = ['type' => 'error', 'message' =>'Email already exists'];
                         break;
                     case '4':
-                        $data['error'] = 'Passwords do not match';
+                        $data['toast'] = ['type' => 'error', 'message' =>'Passwords do not match'];
                         break;
                     case '5':
-                        $data['error'] = 'password should at least 8 characters long and include atleast one uppercase, lowercase, number and a special character';
+                        $data['toast'] = ['type' => 'error', 'message' =>'password should at least 8 characters long and include atleast one uppercase, lowercase, number and a special character'];
                         break;
                     case '6':
-                        $data['error'] = 'Select a distributor';
+                        $data['toast'] = ['type' => 'error', 'message' =>'Select a city'];
                         break;
                     case '7':
-                        $data['error'] = 'Invalid capacity';
+                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid capacity'];
                         break;
                     case '8':
-                        $data['error'] = 'Select a distributor';
+                        $data['toast'] = ['type' => 'error', 'message' =>'Select a distributor'];
                         break;
                     case '9':
-                        $data['error'] = 'Server Error, please try again';
+                        $data['toast'] = ['type' => 'error', 'message' =>'Server Error, please try again'];
                         break;
                 }
             }

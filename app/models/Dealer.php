@@ -139,8 +139,8 @@ class Dealer extends Model
         $data = [];
         $flag = false;
         for($i=0; $i<count($productid); $i++){
-            if($postproducts[$productid[$i]] == null){
-                $data['error'] = "Please insert a valid amount of products";
+            if($postproducts[$productid[$i]] == null){ // check this.
+                $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
                 return $data;
             };
         }
@@ -180,7 +180,7 @@ class Dealer extends Model
 
         if($flag){
             // error handling needed.
-            $data['error'] = "Insufficient storage";
+            $data['toast'] = ['type'=>"error", 'message'=>"Insufficient storage"];
             return $data;
             // exit();
         }

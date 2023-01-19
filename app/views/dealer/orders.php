@@ -1,6 +1,5 @@
 <?php
-$header = new Header("dealer");
-$prompt = new Prompt("verification",$data);
+$header = new Header("dealer",$data);
 $sidebar = new Navigation('dealer',$data['navigation']);
 ?>
 

@@ -1,8 +1,10 @@
 <?php
-    // session_start();
-    // if(isset($_SESSION['unique_id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'dealer'){
-    //     header('Location: dashboard.php');
-    // }
+    if(isset($data['toast'])){
+        $error = new Prompt('toast',$data['toast']);
+        echo '<script>
+            showToast();
+        </script>';
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
