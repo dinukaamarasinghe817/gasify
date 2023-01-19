@@ -1,7 +1,7 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception;
 class User extends Model
 {
 
@@ -32,44 +32,17 @@ class User extends Model
             $result2 = $this->Query($sql);
         
             if($result2){
-                $name = $row['first_name'].' '.$row['last_name'];
-                $email = $row['email'];
+                $reciepName = $row['first_name'].' '.$row['last_name'];
+                $from = 'admin@gasify.com';
+                $to = $row['email'];
+                $subject = 'Gasify: Reset Password';
+                $message = 'You are receiving this email because you requested to reset your password.';
+                $link = BASEURL."/signin/passwordverify/$token/$email";
                 // sendResetLink($name, $row['email'], $token);
                 //Create an instance; passing `true` enables exceptions
-                $mail = new PHPMailer(true);
-            
-                try {
-                    //Server settings
-                    $mail->isSMTP();                                            //Send using SMTP
-                    $mail->Host       = 'localhost';                     //Set the SMTP server to send through
-                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                    $mail->Username   = 'admin@gasify.com';                     //SMTP username
-                    $mail->Password   = '1234567';                               //SMTP password
-                    $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-            
-                    //Recipients
-                    $mail->setFrom('admin@gasify.com', "Gasify (Pvt.Ltd.)");    //Add a recipient
-                    $mail->addAddress($email);
-                    
-                    //message
-                    $message = "
-                    <h2>Hello $name,</h2>
-                    <h3>You are receiving this email because you requested to reset your password.</h3>
-                    <br/><br/>
-                    <a href='".BASEURL."/signin/passwordverify/$token/$email'>Click Here</a>
-                    ";
-                    //Content
-                    $mail->isHTML(true);                                  //Set email format to HTML
-                    $mail->Subject = 'Gasify: Reset Password';
-                    $mail->Body    = $message;
-            
-                    $result = $mail->send();
-                    $data['toast'] = ['type' => 'success', 'message' => 'Please check your email and reset your password'];
-                    return $data;
-                } catch (Exception $e) {
-                    $data['toast'] = ['type' => 'error', 'message' =>'phpmailer server error'];
-                    return $data;
-                }
+                $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
+                $data = $mail->send();
+                return $data;
             }else{
                 $data['toast'] = ['type' => 'error', 'message' => 'Server error'];
                 return $data;
@@ -85,41 +58,41 @@ class User extends Model
         }
         
     }
-    function sendResetLink($name,$email,$token){
-        //Create an instance; passing `true` enables exceptions
-        $mail = new PHPMailer(true);
+    // function sendResetLink($name,$email,$token){
+    //     //Create an instance; passing `true` enables exceptions
+    //     $mail = new PHPMailer(true);
     
-        try {
-            //Server settings
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'localhost';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'admin@gasify.com';                     //SMTP username
-            $mail->Password   = '1234567';                               //SMTP password
-            $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    //     try {
+    //         //Server settings
+    //         $mail->isSMTP();                                            //Send using SMTP
+    //         $mail->Host       = 'localhost';                     //Set the SMTP server to send through
+    //         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    //         $mail->Username   = 'admin@gasify.com';                     //SMTP username
+    //         $mail->Password   = '1234567';                               //SMTP password
+    //         $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
-            //Recipients
-            $mail->setFrom('admin@gasify.com', "Gasify (Pvt.Ltd.)");    //Add a recipient
-            $mail->addAddress($email);
+    //         //Recipients
+    //         $mail->setFrom('admin@gasify.com', "Gasify (Pvt.Ltd.)");    //Add a recipient
+    //         $mail->addAddress($email);
             
-            //message
-            $message = "
-            <h2>Hello $name,</h2>
-            <h3>You are receiving this email because you requested to reset your password.</h3>
-            <br/><br/>
-            <a href='http://localhost/gasify/view/Dealer/login_with_link.php?token=$token&email=$email'>Click Here</a>
-            ";
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Gasify: Reset Password';
-            $mail->Body    = $message;
+    //         //message
+    //         $message = "
+    //         <h2>Hello $name,</h2>
+    //         <h3>You are receiving this email because you requested to reset your password.</h3>
+    //         <br/><br/>
+    //         <a href='http://localhost/gasify/view/Dealer/login_with_link.php?token=$token&email=$email'>Click Here</a>
+    //         ";
+    //         //Content
+    //         $mail->isHTML(true);                                  //Set email format to HTML
+    //         $mail->Subject = 'Gasify: Reset Password';
+    //         $mail->Body    = $message;
     
-            $result = $mail->send();
-        } catch (Exception $e) {
-            $data['toast'] = ['type' => 'error', 'message' => "phpmailer server error"];
-            return $data;
-        }
-    }
+    //         $result = $mail->send();
+    //     } catch (Exception $e) {
+    //         $data['toast'] = ['type' => 'error', 'message' => "phpmailer server error"];
+    //         return $data;
+    //     }
+    // }
 
     public function userSignin($email,$password){
         $data['success'] = false;

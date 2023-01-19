@@ -23,6 +23,7 @@ class Chart{
         new Chart(ctx, {
             type: "bar",
             data: {
+                
             labels: '.phpArrtoJs($pname).',
             datasets: [{
                 label: "Sold Quantity",

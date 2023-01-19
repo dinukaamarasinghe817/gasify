@@ -13,4 +13,5 @@ require_once 'StockHTML.php';
 require_once 'prompt.php';
 require_once 'orders.php';
 require_once 'forgotpwd.php';
+require_once 'mail.php';
 // require_once 'gasOrders.php';
