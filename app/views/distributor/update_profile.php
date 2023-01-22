@@ -63,7 +63,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="bottom">
-                    <button class="btn updateupdate" onclick="document.location.href='../settings/distributor';"><b>Update Profile</b></button> 
+                    <button class=" btn updateupdate" onclick="document.location.href='../settings/distributor';"><b>Update Profile</b></button> 
                 </div>
 
             </div>

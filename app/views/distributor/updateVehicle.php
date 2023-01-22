@@ -21,8 +21,8 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-            echo "Your Distributor ID : $user_id".'<br><br>';
-            echo "Your Vehicle List".'<br>';
+            // echo "Your Distributor ID : $user_id".'<br><br>';
+            echo "Your Vehicle List :".'<br><br>';
 
             $output = '<table class="table1">
             <tr>

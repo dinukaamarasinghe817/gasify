@@ -539,7 +539,11 @@ class Body{
                             <h3>Current Stock</h3>
 
                                 <div class="content1">
-                                    <table>';
+                                    <table>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                        </tr>';
                                 
                                 $stocks = $data['currentstock'];
                                 $output="";
@@ -552,9 +556,9 @@ class Body{
                                         <td>'.$row1['quantity'].'</td> 
                                     </tr>';
                                 }
-                                echo $output;
-
-                                    echo '</table>
+                                    echo '</table>';
+                                    echo $output;
+                                    echo '
                                 </div>
                         </div>
                     </div>';
