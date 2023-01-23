@@ -117,4 +117,19 @@ class Vehicles extends Controller{
         $this->view('distributor/updateVehicle', $data);
     }
 
+    public function updateVehiclePage() {
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'vehicles';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        
+
+        $this->view('distributor/updateVehiclePage', $data);
+    }
+
+
+
 }
