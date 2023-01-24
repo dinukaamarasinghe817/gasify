@@ -224,9 +224,9 @@ class Navigation {
             </li>
             <li class="nav-tile">';
             if($active=="quota"){
-                echo ' <a href="#" class="panel-tile active quota">';
+                echo ' <a href="'.BASEURL.'/Orders/customer_quota" class="panel-tile active quota">';
             }else{
-                echo ' <a href="#" class="panel-tile quota">';
+                echo ' <a href="'.BASEURL.'/Orders/customer_quota" class="panel-tile quota">';
             }
                
                

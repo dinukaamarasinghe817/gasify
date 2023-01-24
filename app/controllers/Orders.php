@@ -113,6 +113,23 @@ class Orders extends Controller{
     }
 
 
+    /*..........................Customer quota......................... */
+    //display active quotas for customers according to their types
+    function customer_quota(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'quota';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+
+        $this->view('customer/quota',$data);
+    }
+
+
+
 
 
      // distributor phurchase orders to company (Gas Orders)
