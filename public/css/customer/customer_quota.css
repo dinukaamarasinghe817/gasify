@@ -1,0 +1,220 @@
+a,button{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.under_topbar{
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.subtitle{
+    display: flex;
+    align-items: center;
+    padding-bottom: 50px;
+    margin-left: 40px;
+    font-size: var(--larger);
+    font-weight:900;
+    color: var( --navmenu-orange-dark);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.one_company{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+    margin-left: 40px;
+    column-gap: 50px;
+}
+  
+.company_details{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+  
+.company_details .name{
+    font-size: var(--medium);
+    font-weight: 800;
+    padding-bottom: 20px; ;
+}
+  
+.company_details .date{
+    display: flex;
+    font-size: small;
+    font-weight: 800;
+    justify-content: right;
+    padding-right: 150px;
+}
+  
+  
+.company_quota{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+}
+  
+.company_quota .logo{
+    padding: 20px;
+    border-radius: 5px;
+    background-color: var(--button-orange);
+    
+}
+  
+.company_quota img{
+    width: 80px;
+    height: 80px;
+   
+}
+  
+  
+.quota-bars{
+    padding: 5px 25px 5px;
+    width:80% ;
+    background: #fff;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+.quota-bars .bar{
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+   
+}
+  
+.bar .total{
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    padding-bottom:25px ;
+    
+}
+  
+.bottom_details{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 5px;
+  }
+  
+.bottom_details .days{   
+    font-size: small;
+} 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+.quota-bars .bar .info span{
+    font-weight: 500;
+    font-size: 17px;
+    opacity: 0;
+    animation: showText 0.5s 1s linear forwards;
+}
+@keyframes showText {
+    100%{
+        opacity: 1;
+    }
+}
+.quota-bars .bar .progress-line{
+    height: 10px;
+    width: 100%;
+    background: #f0f0f0;
+    position: relative;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05),
+                0 1px rgba(255,255,255,0.8);
+    animation: animate 1s cubic-bezier(1,0,0.5,1) forwards;
+}
+@keyframes animate {
+    100%{
+      transform: scaleX(1);
+    }
+}
+.bar .progress-line span{
+    height: 100%;
+    position: absolute;
+    border-radius: 10px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background:var(--button-orange);
+    animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
+}
+.bar .progress-line.litro span{
+    width: 90%;
+}
+.bar .progress-line.laugfs span{
+    width: 60%;
+}
+.progress-line span::before{
+    position: absolute;
+    content: "";
+    top: -10px;
+    right: 0;
+    height: 0;
+    width: 0;
+    border: 7px solid transparent;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+    border-top-color: #000;
+    opacity: 0;
+    animation: showText2 0.5s 1.5s linear forwards;
+}
+.progress-line span::after{
+    position: absolute;
+    top: -28px;
+    right: 0;
+    font-weight: 500;
+    background: #000;
+    color: #fff;
+    padding: 1px 8px;
+    font-size: 12px;
+    border-radius: 3px;
+    opacity: 0;
+    animation: showText2 0.5s 1.5s linear forwards;
+}
+@keyframes showText2 {
+    100%{
+      opacity: 1;
+    }
+}
+.progress-line.litro span::after{
+    content: "90%";
+}
+.progress-line.laugfs span::after{
+    content: "60%";
+}
+  
+  
