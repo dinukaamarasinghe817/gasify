@@ -1,228 +1,164 @@
+<?php
+$header = new Header("dealer",$data);
+$sidebar = new Navigation('dealer',$data['navigation']);
+?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>/public/css/dashboard.css">
-    <title>Dealer-dashboard</title>
-</head>
-<body>
-    <?php 
-    $sidebar = new Navigation($data['navigation']);
+<section class="body">
+    <?php
+        // call the default header for yout interface
+        $bodyheader = new BodyHeader($data);
+        // call whatever the component you need to show
+        $bodycontent = new OrdersHTML('pending',null,$data);
     ?>
-    <section class="body">
-        <?php
-            $bodyheader = new BodyHeader();
-        ?>
-        <section class="body-content">
-            <div class="body-left">
-                <div class="variable">
-                    <div class="topic">
-                        <h3>Analytic Overview</h3>
-                        <!-- drop down component -->
-                        <form action="#">
-                            <select id="period" onchange="updatechart()" class="dropdowndate">
-                                <option value="today" selected>To day</option>
-                                <option  value="30day">Last 30 days</option>
-                            </select>
-                        </form>
-                    </div>
-                    <div class="tiles">
-                        <div class="tile">
-                            <h1>12</h1>
-                            <p>Orders Recieved</p>
-                        </div>
-                        <div class="tile">
-                            <h1>12</h1>
-                            <p>Orders Recieved</p>
-                        </div>
-                        <div class="tile">
-                            <h1>12</h1>
-                            <p>Orders Recieved</p>
-                        </div>
-                    </div>
-                    <div class="chart">
-
-                    </div>
-                </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Current Stock</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            if(isset($data['stock'])){
-                                $result = $data['stock'];
-                                $stock = "";
-                                while($row = mysqli_fetch_assoc($result)){
-                                    $name = $row['name'];
-                                    $qty = $row['quantity'];
-                                    $stock .=   '<tr>
-                                                    <td>'.$name.'</td>
-                                                    <td>'.$qty.'</td>
-                                                </tr>';
-                                
-                                }
-                                echo $stock;
-
-                            }
-                        ?>
-                    </tbody>
-                </table>
+    <!-- <section class="body-content">
+        <div class="top-panel">
+            <ul>
+                <li><a href="#" class="current">Pending</a></li>
+                <li><a href="#" class="current active">Accepted</a></li>
+                <li><a href="#" class="current">Dispatched</a></li>
+                <li><a href="#" class="current">Delivered</a></li>
+                <li><a href="#" class="current">Completed</a></li>
+                <li><a href="#" class="current">Canceled</a></li>
+            </ul>
+            <ul>
+                <li><a href="#" class="current sub1 active">Pickup</a></li>
+                <li><a href="#" class="current sub1">Delivery</a></li>
+            </ul>
+        </div>
+        <div class="content-data">
+            <div class="search-bar">
+                <input type="text" class="ticker-input" placeholder="Type to search" autocomplete="off">
+                <button class="btn btn-primary" type="submit">
+                    <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5417 19C14.7759 19 18.2083 15.4183 18.2083 11C18.2083 6.58172 14.7759 3 10.5417 3C6.30748 3 2.875 6.58172 2.875 11C2.875 15.4183 6.30748 19 10.5417 19Z" stroke="#FFF8F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20.1248 20.9999L15.9561 16.6499" stroke="#FFF8F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p>Search</p>
+                </button>
             </div>
-            <div class="body-right">
-                <div class="accordion new">
-                    <h3>New Orders</h3>
-                    <?php
-                        if(isset($data['pending'])){
-                            $results = $data['pending'];
-                            foreach($results as $result){
-                                $newpending = new NewOrder($result);
-                            }
+            <ul>
+                <li>
+                    <div class="order">
+                        <div class="head">
+                            <div class="details">
+                                <div><strong>Order ID : </strong>12<br><strong>Total amount : </strong>Rs.10,000.00</div>
+                                <div><strong>Date : </strong>2022-01-12<br><strong>Time : </strong>09:03:14</div>
+                            </div>
+                            <button onclick="viewinfo(); return false;" class="btn">Issue</button>
+                            <button class="arrow">
+                                <svg width="22" height="22" viewBox="0 0 36 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 3L17.9551 17.9551L32.9102 3" stroke="#FCFCFC" stroke-opacity="0.97" stroke-width="6.98504" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="info">
+                            <div><p><strong>Customer ID : </strong>24</p><p><strong>Customer Name : </strong>Dinuka Ashan</p></div><br>
+                            <table class="order-info">
+                                <tr>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Regular</td>
+                                    <td>Rs.1800.00</td>
+                                    <td>2</td>
+                                    <td>Rs.3600.00</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Regular</td>
+                                    <td>Rs.1800.00</td>
+                                    <td>2</td>
+                                    <td>Rs.3600.00</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total</strong></td>
+                                    <td><strong>Rs.10,600.00</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                <div class="order">
+                    <div class="head">
+                        <div class="details">
+                            <div><strong>Order ID : </strong>12<br><strong>Total amount : </strong>Rs.10,000.00</div>
+                            <div><strong>Date : </strong>2022-01-12<br><strong>Time : </strong>09:03:14</div>
+                        </div>
+                        <button class="btn">Issue</button>
+                        <button class="arrow">
+                            <svg width="22" height="22" viewBox="0 0 36 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 3L17.9551 17.9551L32.9102 3" stroke="#FCFCFC" stroke-opacity="0.97" stroke-width="6.98504" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="info">
+                        <div><p><strong>Customer ID : </strong>24</p><p><strong>Customer Name : </strong>Dinuka Ashan</p></div><br>
+                        <table>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Unit Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Regular</td>
+                                <td>Rs.1800.00</td>
+                                <td>2</td>
+                                <td>Rs.3600.00</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Regular</td>
+                                <td>Rs.1800.00</td>
+                                <td>2</td>
+                                <td>Rs.3600.00</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td><strong>Rs.10,600.00</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                </li>
+            </ul>
+        </div>
+    </section> -->
+</section>
 
-                            echo "<script>
-                                    let accordion = document.querySelectorAll('.accordion .box');
-                                    for(i=0; i<accordion.length; i++) {
-                                        accordion[i].addEventListener('click', function(){
-                                            this.classList.toggle('active')
-                                        })
-                                    }
-                                </script>";
-                        }else{
-                            echo "No pending orders";
-                        }
-                        
-                    ?>
-                    
-                </div>
-                <div class="accordion dispatched">
-                    <h3>Deliveries</h3>
-                    <div class="box">
-                        <div class="label">Order ID : 1
-                            <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                            </svg>
-                        </div>
-                        <div class="content">
-                            <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                            <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                            <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                            <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                            <hr>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Buddy</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Budget</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Regular</td>
-                                        <td>3</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <div class="label">Order ID : 1
-                            <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                            </svg>
-                        </div>
-                        <div class="content">
-                            <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                            <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                            <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                            <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                            <hr>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Buddy</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Budget</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Regular</td>
-                                        <td>3</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <div class="label">Order ID : 1
-                            <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                            </svg>
-                        </div>
-                        <div class="content">
-                            <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                            <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                            <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                            <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                            <hr>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Buddy</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Budget</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Regular</td>
-                                        <td>3</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </section>
-    <!-- <script src="<?php echo BASEURL;?>/public/js/dashboard.js"></script> -->
-    <script>
-        let accordion = document.querySelectorAll('.accordion .box');
+<script>
+    let accordion = document.querySelectorAll(".order .head .arrow");
         for(i=0; i<accordion.length; i++) {
-            accordion[i].addEventListener('click', function(){
-                this.classList.toggle('active')
+            accordion[i].addEventListener("click", function(){
+                this.parentElement.parentElement.classList.toggle("active")
             })
         }
-    </script>
-</body>
-</html>
+        let accorinfo = document.querySelectorAll(".order .head .btn");
+        for(i=0; i<accorinfo.length; i++) {
+            accorinfo[i].addEventListener("click", function(){
+                this.parentElement.parentElement.querySelector(".verification").classList.toggle("active")
+            })
+        }
+        function viewinfo(){
+            let accorinfo = document.querySelector(".verification");
+            accorinfo.classList.toggle("active");
+            document.querySelector("body").classList.toggle("blur");
+        }
+</script>
+<?php
+$footer = new Footer("dealer");
+?>

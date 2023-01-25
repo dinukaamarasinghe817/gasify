@@ -14,11 +14,11 @@
 
         <div>
             <ul id="navbar">
-                <li><a href="home.html" class="active">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#product">Shop</a></li>
+                <!-- <li><a href="blog.html">Blog</a></li> -->
+                <li><a href="#footer">About</a></li>
+                <li><a href="#footer">Contact</a></li>
             </ul>
         </div>
 
@@ -282,7 +282,7 @@
         </div>
     </section>
 
-    <footer class="section-p1">
+    <footer id="footer" class="section-p1">
         <div class="col">
             <img src="<?php echo BASEURL ?>/public/img/logo.png" class="logo" alt="">
             <h4>Contact</h4>
@@ -347,8 +347,20 @@
                 banner.style.display = 'flex';
             });
         });
-        
 
+        function ajaxcall(){
+            let xhr = new XMLHttpRequest(); //new xml object
+            xhr.open('POST', "<?php echo BASEURL?>/ajax/index", true);
+            xhr.onload = ()=>{
+                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+                    let data = xhr.response;
+                    console.log(data);
+                    let para = document.getElementById('uniqueidentifier');
+                    para.innerHTML = data;
+                }
+            }
+            xhr.send();
+        }
     </script>
 </body>
 </html>

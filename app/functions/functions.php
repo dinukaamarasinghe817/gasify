@@ -1,5 +1,10 @@
 <?php
-
+$cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
+sort($cities);
+$banks = ['Bank Of Ceylon', 'Commercial Bank', 'DFCC Bank', 'Hatton National Bank', 'Nation Trus Bank', 'Peoples Bank', 'Sampath Bank', 'Seylan Bank', 'National Saving Bank'];
+sort($banks);
+define('CITIES',$cities);
+define('BANKS',$banks);
 function createSession($conn, $email, $user){
     $sql = "SELECT * FROM {$user} WHERE email = '{$email}'";
     $query = mysqli_query($conn, $sql);
@@ -41,20 +46,20 @@ function isNotValidEmail($email){
     }
 }
 
-function isUserExist($conn, $email){
-    $sql = "SELECT email FROM (SELECT email FROM admin
-    UNION SELECT email FROM customer
-    UNION SELECT email FROM dealer
-    UNION SELECT email FROM company
-    UNION SELECT email FROM distributor
-    UNION SELECT email FROM delivery_person) temp WHERE temp.email = '{$email}'";
-    $result = mysqli_query($conn, $sql);
-    if(mysqli_num_rows($result) > 0){
-        return true;
-    }else{
-        return false;
-    }
-}
+// function isUserExist($conn, $email){
+//     $sql = "SELECT email FROM (SELECT email FROM admin
+//     UNION SELECT email FROM customer
+//     UNION SELECT email FROM dealer
+//     UNION SELECT email FROM company
+//     UNION SELECT email FROM distributor
+//     UNION SELECT email FROM delivery_person) temp WHERE temp.email = '{$email}'";
+//     $result = mysqli_query($conn, $sql);
+//     if(mysqli_num_rows($result) > 0){
+//         return true;
+//     }else{
+//         return false;
+//     }
+// }
 
 function getImageRename($image_name,$tmp_name){
     $time  = time();
@@ -84,4 +89,14 @@ function isNotConfirmedpwd($password, $confirmpassword){
     }else{
         return true;
     }
+}
+
+function phpArrtoJs($array){
+    $result = '[';
+    foreach($array as $elem){
+        $result .= '"'.$elem.'",';
+    }
+    $result = rtrim($result,',');
+    $result .= ']';
+    return $result;
 }
