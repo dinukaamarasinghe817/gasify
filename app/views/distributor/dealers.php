@@ -25,9 +25,6 @@ $user_id = $_SESSION['user_id'];
 
         <div class="middle">
             <div class="accordion new">
-            <?php
-                echo "Your Distributor ID : $user_id";
-            ?>
      
                 <div class="box">
                     <?php

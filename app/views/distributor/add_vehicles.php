@@ -22,7 +22,7 @@ $user_id = $_SESSION['user_id'];
 
           <div class="main2">
             <?php
-                echo "Your Distributor ID : $user_id";
+                // echo "Your Distributor ID : $user_id";
             ?>
 
             <!-- <form action=BASEURL."/vehicles/addvehicle" method="POST"> -->
@@ -40,9 +40,26 @@ $user_id = $_SESSION['user_id'];
                     <input type="text" name="vehiclenum" placeholder="Vehicle Number" required>
                 </div>
                 
-                <div class="part1">
+                <!-- <div class="part1">
                     <label>Vehicle Type  </label>
                     <input type="text" name="type" placeholder="Vehicle Type" required>
+                </div> -->
+
+                <div class="part1">
+                    <label>Vehicle Type  </label>
+                    <!-- <option value="-1" selected disabled hidden>Select vehicle type</option> -->
+                    <!-- <input type="text" name="type" placeholder="Vehicle Type" required> -->
+                    <select>
+                        <option value="-1" selected disabled hidden class="optiontxt">Select vehicle type</option>
+
+                        <?php
+                            $type = ['2 axels', '3 axels', '4 axels', '5 axels', '6 axels'];
+                            foreach($type as $type) {
+                                echo "<option value=$type>$type</option>";
+                            }
+                        ?>
+
+                    </select>
                 </div>
 
                 <div class="part2">

@@ -20,9 +20,15 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </div>
         
                 <div class="middle">
-                    <div class="beginbtn">
+                    <select id="period" onchange="updatechart()" class="dropdowndate">
+                        <option value="today" selected>Last 7 days</option>
+                        <option  value="month">Last 30 days</option>
+                        <option  value="3months">Last 3 months</option>
+                    </select>
+
+                    <!-- <div class="beginbtn">
                         <button class="btn"><b>Generate pdf file</b></button>
-                    </div>
+                    </div> -->
 
                     <table>
                         <tr>
@@ -66,6 +72,12 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         </tr> 
 
                     </table>
+
+                    <div class="beginbtn">
+                        <button class="btn"><b>Generate pdf file</b></button>
+                    </div>
+
+
                 </div>
             </div>
         </div>

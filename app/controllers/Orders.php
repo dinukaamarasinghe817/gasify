@@ -24,6 +24,8 @@ class Orders extends Controller{
         $this->view('dealer/orders', $data);
     }
 
+
+
     /*.................Customer my reservation...............*/
     //customer all past reservtions
     function customer_allreservations(){
@@ -113,6 +115,23 @@ class Orders extends Controller{
         $this->view('customer/select_brand_city_dealer',$data);
 
     }
+
+
+    /*..........................Customer quota......................... */
+    //display active quotas for customers according to their types
+    function customer_quota(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'quota';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+
+        $this->view('customer/quota',$data);
+    }
+
 
 
 
@@ -221,5 +240,6 @@ class Orders extends Controller{
 
 }
 
+?>
 
 

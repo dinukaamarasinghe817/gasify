@@ -130,9 +130,9 @@
     /* margin: 20px; */
     /* border-radius: 10px; */
     max-height: 87%;
-    overflow-y: scroll;
+    /* overflow-y: scroll;
     scroll-behavior: smooth;
-    scrollbar-width: none;
+    scrollbar-width: none; */
     
 }
 
