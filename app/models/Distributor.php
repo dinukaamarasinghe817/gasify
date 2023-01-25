@@ -110,6 +110,7 @@ class Distributor extends Model
         return $vehicles;     
     }
 
+
     public function updatevehicle($user_id) {
         $vehiclelist = array();
 
@@ -125,6 +126,20 @@ class Distributor extends Model
         return $vehiclelist;
     }
 
+    public function updatevehiclePage($user_id) {
+        $products = array();
+
+        $query1 = $this-> Query("SELECT DISTINCT d.capacity as capacity, p.name as name from distributor_vehicle_capacity d INNER JOIN product p on d.product_id=p.product_id where distirubutor_id = '{$user_id}'");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1=mysqli_fetch_assoc($query1)) {
+                $name = $row1['name'];
+                $capacity = $row1['capacity'];
+
+                array_push($products, ['productinfo'=> $row1]);
+            }
+        }
+        return $products;
+    }
 
 
     public function viewdealers($user_id) {
