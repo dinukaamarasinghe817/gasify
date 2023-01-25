@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer_dashboard");
+$header = new Header("customer/customer_dashboard");
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 

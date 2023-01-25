@@ -14,14 +14,11 @@ a,button{
 
 .subtitle{
     display: flex;
-    /* height: 10%; */
     align-items: center;
     padding-bottom: 20px;
     margin-left: 40px;
     font-size: var(--larger);
     font-weight:900;
-    /* overflow-y: scroll;
-    scrollbar-width: none; */
     color: var(--button-orange);
 }
 
@@ -29,7 +26,6 @@ a,button{
 .wrapper{
     background-color: #fff;
     width: 650px;
-    /* border-radius: 16px; */
     margin-left: 100px;
     box-shadow: 0 0 1px 0 rgba(0, 0, 0, 1),
                  0 32px 64px -48px rgba(0, 0, 0, 5);
