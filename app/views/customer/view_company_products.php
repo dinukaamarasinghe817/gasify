@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer_viewproducts");
+$header = new Header("customer/customer_viewproducts");
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 

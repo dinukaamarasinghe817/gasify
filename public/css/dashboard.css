@@ -40,6 +40,8 @@ table td{
     --shadow-wide: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     --shadow-3d: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     --input-border: rgb(201, 201, 201) solid 1px;
+    --currency: rgb(2, 146, 60);
+
 
 
     /* font sizes */

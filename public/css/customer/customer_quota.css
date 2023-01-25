@@ -23,25 +23,7 @@ a,button{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* quota details */
 .one_company{
     display: flex;
     flex-direction: column;
@@ -57,7 +39,7 @@ a,button{
 }
   
 .company_details .name{
-    font-size: var(--medium);
+    font-size: var(--large);
     font-weight: 800;
     padding-bottom: 20px; ;
 }
@@ -90,8 +72,7 @@ a,button{
     height: 80px;
    
 }
-  
-  
+
 .quota-bars{
     padding: 5px 25px 5px;
     width:80% ;
@@ -105,7 +86,7 @@ a,button{
     flex-direction: column;
    
 }
-  
+
 .bar .total{
     display: flex;
     align-items: right;
@@ -126,15 +107,7 @@ a,button{
 } 
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  /* progress bar css */
 .quota-bars .bar .info span{
     font-weight: 500;
     font-size: 17px;
@@ -169,7 +142,7 @@ a,button{
     border-radius: 10px;
     transform: scaleX(0);
     transform-origin: left;
-    background:var(--button-orange);
+    background:var(--navmenu-orange-dark);
     animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
 }
 .bar .progress-line.litro span{
