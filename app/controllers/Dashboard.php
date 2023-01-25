@@ -48,6 +48,8 @@
             $data['navigation'] = 'dashboard';
 
             //echo $data['image'];
+            // $this->view('dashboard/dealer', $data);
+            $data['option'] = $option;
             $this->view('dashboard/dealer', $data);
         }
         public function company($error=null){
@@ -77,9 +79,7 @@
         }
    
 
-            $data['option'] = $option;
-            $this->view('dashboard/dealer', $data);
-        }
+        
 
         //customer dashboard 
         public function customer($error = null){

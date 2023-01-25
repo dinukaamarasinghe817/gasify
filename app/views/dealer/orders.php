@@ -8,7 +8,7 @@ $sidebar = new Navigation('dealer',$data['navigation']);
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
-        $bodycontent = new OrdersHTML('pending',null,$data);
+        $bodycontent = new OrdersHTML($data['tab1'],$data['tab2'],$data);
     ?>
     <!-- <section class="body-content">
         <div class="top-panel">

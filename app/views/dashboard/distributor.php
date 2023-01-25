@@ -9,7 +9,6 @@ $user_id = $_SESSION['user_id'];
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-
         // call whatever the component you need to show
         $bodycontent = new Body('distributordashboard', $data);
        

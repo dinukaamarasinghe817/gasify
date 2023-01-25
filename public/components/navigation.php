@@ -671,11 +671,11 @@ class Navigation {
 
                         echo '
                         <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.6667 1H1V19.7778H22.6667V1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22.6665 8.22241H28.4443L32.7776 12.5557V19.778H22.6665V8.22241Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.50027 26.9998C9.49463 26.9998 11.1114 25.3831 11.1114 23.3887C11.1114 21.3943 9.49463 19.7776 7.50027 19.7776C5.50591 19.7776 3.88916 21.3943 3.88916 23.3887C3.88916 25.3831 5.50591 26.9998 7.50027 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M26.2776 26.9998C28.272 26.9998 29.8887 25.3831 29.8887 23.3887C29.8887 21.3943 28.272 19.7776 26.2776 19.7776C24.2833 19.7776 22.6665 21.3943 22.6665 23.3887C22.6665 25.3831 24.2833 26.9998 26.2776 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+                        <path d="M22.6667 1H1V19.7778H22.6667V1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22.6665 8.22241H28.4443L32.7776 12.5557V19.778H22.6665V8.22241Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.50027 26.9998C9.49463 26.9998 11.1114 25.3831 11.1114 23.3887C11.1114 21.3943 9.49463 19.7776 7.50027 19.7776C5.50591 19.7776 3.88916 21.3943 3.88916 23.3887C3.88916 25.3831 5.50591 26.9998 7.50027 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M26.2776 26.9998C28.272 26.9998 29.8887 25.3831 29.8887 23.3887C29.8887 21.3943 28.272 19.7776 26.2776 19.7776C24.2833 19.7776 22.6665 21.3943 22.6665 23.3887C22.6665 25.3831 24.2833 26.9998 26.2776 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
 
                             <h3>Gas Deliveries</h3>
                         </a>

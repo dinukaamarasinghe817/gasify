@@ -38,4 +38,11 @@ class Stock extends Controller{
             $this->view("/dealer/reports/purchaseorder", $data);
         }
     }
+
+    public function dealerpoinfo($poid=null){
+        if($poid!= null){
+            $data = $this->model('Dealer')->dealerpoinfo($poid);
+            return $this->view("dealer/poinfo", $data);
+        }
+    }
 }

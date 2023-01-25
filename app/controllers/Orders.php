@@ -19,11 +19,11 @@ class Orders extends Controller{
         $data['orders'] = $this->model('Dealer')->dealerOrders($dealer_id,$tab1,$tab2);
         // var_dump($data);
         $data['verification'] = '';
+        $data['tab1'] = $tab1;
+        $data['tab2'] = $tab2;
         $this->view('dealer/orders', $data);
     }
 
-}
-?>
 
 
     /*.................Customer my reservation...............*/
@@ -240,6 +240,6 @@ class Orders extends Controller{
 
 }
 
-
+?>
 
 
