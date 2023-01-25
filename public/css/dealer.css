@@ -23,9 +23,9 @@
     --navmenu-orange-dark: #6bb9f9;
     --button-orange-hover: #82c3f9; */
 
-    --navmenu-orange: #fdeee8;
-    --navmenu-orange-dark: #fc7949;
-    --button-orange-hover: #fc7949;
+    --navmenu-orange: #fdf6f1;
+    --navmenu-orange-dark: #fbaa3a;
+    --button-orange-hover: #fab95f;
 
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
@@ -305,3 +305,47 @@
     border-radius: 5px;
 } */
 
+.poitem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    margin: 5px 120px;
+}
+.poitem img{
+    height: 120px;
+    width: auto;
+    background-color: #8a8b9f45;
+    border-radius: 10px;
+}
+.poitem div p{
+    color: var(--navmenu-gray-dark);
+    font-weight: 600;
+}
+.poitem p{
+    font-weight: 600;
+}
+.poitem h2:last-child{
+    color: var(--button-blue);
+    font-size: var(--medium);
+}
+.poitem .total h2{
+    color: black;
+    font-size: var(--medium);
+    font-size: 12px;
+}
+.poitem button{
+    min-width: 100px;
+    font-size: var(--mediums);
+    transition: 0.3s;
+    color: black;
+    border: solid 2px var(--navmenu-gray-dark);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px 50px;
+}
+.poitem button:hover{
+    background-color: var(--navmenu-gray-dark);
+    color: white;
+}

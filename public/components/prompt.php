@@ -25,6 +25,14 @@ class Prompt{
             </div>';
     }
 
+    // public function moreinfo($data){
+    //     echo '<div class="verification">
+    //             <h1>Purchase Order Includes</h1>'
+    //                 .$data.
+    //             '<button onclick="viewinfo(); return false;">OK</button>
+    //         </div>';
+    // }
+
     public function toast($toast){
         echo '<div id="toast" class="'.$toast['type'].'">
                 <div class="container-1">';

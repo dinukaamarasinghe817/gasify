@@ -117,10 +117,10 @@ class StockHTML{
                         <thead>
                             <tr>
                                 <th>Purchase Order ID</th>
-                                <th>Includes</th>
                                 <th>Purchase Order State</th>
                                 <th>Place Date</th>
                                 <th>Place Time</th>
+                                <th>Products</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -128,32 +128,16 @@ class StockHTML{
             foreach($results as $result){
                 $row2 = $result['purchase_order'];
                 $poitems = $result['products'];
-                $output .= '<tr>
-                                <td>'.$row2['po_id'].'</td>
-                                <td>';
-                
-                $output .= '<table class = "innertable styled-table">
-                                <thead>
-                                <tr>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                ';
-                foreach($poitems as $row3){
-                    $output .= '<tr>
-                                    <td>'.$row3['name'].'</td>
-                                    <td>'.$row3['quantity'].'</td>  
-                                </tr>';
-                }
+                $poid = $row2['po_id'];
                 $time = $row2['place_time']; 
-                $time = date('h:i a', strtotime($time));                
-                $output .=      '</tbody></table></td>
-                                <td>'.$row2['po_state'].'</td>
-                                <td>'.$row2['place_date'].'</td>
-                                <td>'.$time.'</td>
-                            </tr>';
+                $time = date('h:i a', strtotime($time)); 
+                $output .= "<tr>
+                                <td>".$row2['po_id']."</td>
+                                <td>".$row2['po_state']."</td>
+                                <td>".$row2['place_date']."</td>
+                                <td>".$time."</td>
+                                <td><button onclick='poinfo($poid); return false;'>View</button></td>
+                            </tr>";
                 
             }
             $output .= '</tbody></table>';

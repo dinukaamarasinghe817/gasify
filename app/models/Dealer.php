@@ -301,9 +301,11 @@ class Dealer extends Model
         $orders = array();
         $result;
         if($tab2 == null){
-            $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1'","order_id ASC");
+            $result = $this->Query("SELECT * FROM reservation r INNER JOIN users u ON r.customer_id = u.user_id WHERE r.dealer_id = $dealer_id and r.order_state = '$tab1' ORDER BY r.order_id ASC");
+            // $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1'","order_id ASC");
         }else{
-            $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
+            $result = $this->Query("SELECT * FROM reservation r INNER JOIN users u ON r.customer_id = u.user_id WHERE r.dealer_id = $dealer_id  and r.collecting_method = '$tab2' and r.order_state = '$tab1' ORDER BY r.order_id ASC");
+            // $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
         }
         while($order = mysqli_fetch_assoc($result)){
             $total_amount = 0;
@@ -319,4 +321,24 @@ class Dealer extends Model
         }
         return $orders;
     }//
+
+    public function dealerpoinfo($poid){
+        $sql = "SELECT pi.product_id AS product_id, pi.quantity AS quantity, pr.name AS name ,pi.unit_price AS unit_price,pr.weight AS weight,pr.image AS image
+                    FROM purchase_include pi 
+                    INNER JOIN product pr 
+                    ON pi.product_id = pr.product_id 
+                    WHERE pi.po_id = $poid";
+        $result = $this->Query($sql);
+        $total = 0;
+        $products = array();
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($products, $row);
+                $total += $row['quantity']*$row['unit_price'];
+            }
+        }
+        $data['products'] = $products;
+        $data['total'] = $total;
+        return $data;
+    }
 }

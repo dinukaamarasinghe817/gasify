@@ -83,9 +83,8 @@
             $data['image'] = $row['image'];
     
             $data['navigation'] = 'dashboard';
-            $this->view('dashboard/distributor', $data);
 
-            $data['currentstock']= $this->model("Distributor")->currentstock($distributor_id);
+            $data['currentstock'] = $this->model("Distributor")->currentstock($distributor_id);
             $this->view('dashboard/distributor',$data);
 
 
