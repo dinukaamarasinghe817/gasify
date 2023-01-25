@@ -26,8 +26,34 @@ $user_id = $_SESSION['user_id'];
 
             <form>
                 <div class="part1">
-                    <label>Wegith Limit</label>                    
-                    <input type="number" name="capacity" required>
+                    <label>Weight Limit</label>                    
+                    <!-- <input type="number" name="capacity" required> -->
+                    <?php 
+                    $output = '
+                        <table>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Capacity</th>
+                            </tr>';
+
+                            $products = $data['product'];
+                            echo(count($products));
+
+                            foreach($products as $product) {
+                               
+
+                                $row1 = $product['productinfo'];
+                                $output .= '
+                                    <tr>
+                                        <td>'.$row1['name'].'</td>
+                                        <td>'.$row1['capacity'].'</td> 
+                                    </tr>';         
+                            }
+                            $output .= '</table>';
+                            echo $output;
+                           
+                    ?>
+
                 </div>
 
                 <div class="part1">
