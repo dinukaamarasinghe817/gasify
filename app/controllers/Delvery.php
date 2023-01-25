@@ -26,6 +26,10 @@ class Delvery extends Controller{
             //$data=[];
         $this->view('dashboard/delivery', $data);
     }
+    function acceptDelivery(){
+        
+
+    }
 
     
 }

@@ -470,14 +470,14 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
             <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
-            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
+            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Dealer</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
             <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
             <div class="dealer_location" id="dealer_col"style="width:15%">Location</div>
             <div class="dealer_contactno" id="dealer_col"style="width:18%">Contact no</div>
-            <div class="dealer_email" id="dealer_col" style="font-size: 12pt"style="width:28%">Email</div>
-            <div class="dealer_capacity" id="dealer_col"style="width:30%">Hold time</div>
+            <div class="dealer_email" id="dealer_col" style="width:15%">Bank account</div>
+            <div class="dealer_capacity" id="dealer_col"style="width:30%">Bank</div>
             </div>
             <div class="DealerTables" id="DealerTables">';
                 if(isset($data["dealer"])){
@@ -524,13 +524,13 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                 <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%">Registered Distributors</div></a>
-                <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
+                <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%;background-color:#cda6e4">Register New Distributor</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
                 <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
-                <div class="dealer_location" id="dealer_col"style="width:15%">Location</div>
-                <div class="dealer_contactno" id="dealer_col"style="width:18%">Contact no</div>
-                <div class="dealer_email" id="dealer_col" style="font-size: 12pt"style="width:28%">Email</div>
+                <div class="dealer_location" id="dealer_col"style="width:15%">Town</div>
+                <div class="dealer_contactno" id="dealer_col"style="width:18%">Street</div>
+                <div class="dealer_email" id="dealer_col" style="width:15%">Contact no</div>
                 <div class="dealer_capacity" id="dealer_col"style="width:30%">Hold time</div>
             </div>
             <div class="DealerTables" id="DealerTables">';
@@ -750,7 +750,7 @@ class Body{
                 <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['contact_no'].'</div>
                 <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_date'].'</div>
                 <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_time'].'</div>
-                <div class="accept_btn" id="col" onClick="takeJob(this)" style="width:10%;margin:auto" key="data[index].order_id ">Accept</div>
+                <div class="accept_btn" id="col" onClick="takeJob(this)" style="width:10%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a href="../Delvery/acceptDelivery" >Accept</a></div>
                 </div>';
             }
         }
@@ -797,7 +797,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                  <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
-                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
+                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Dealer</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:90%">
@@ -848,7 +848,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                  <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Distributors</div></a>
-                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Distributor</div></a>
+                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Distributor</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">

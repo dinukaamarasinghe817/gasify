@@ -63,7 +63,7 @@ class Model extends Database
         }
         $sql = substr($sql, 0, -2);
         $sql.=")";*/
-        print_r($sql);
+        //print_r($sql);
         $result = $this->Query($sql);
         return $result;
     }
@@ -88,7 +88,7 @@ class Model extends Database
         }
         $sql = substr($sql, 0, -2);
         $sql .= " WHERE $where";
-        print_r($sql);
+        //print_r($sql);
         $result = $this->Query($sql);
         //return $result;
     }
@@ -110,6 +110,15 @@ class Model extends Database
         $result = $this->Query($sql);
         return $result;
     
+    }
+    public function loadDealers(){
+        $sql="SELECT dealer.name,dealer.city,dealer.street,dealer.contact_no,dealer.email,dealer.capacity FROM dealer JOIN dealer_keep ON dealer.dealer_id=dealer_keep.dealer_id AND dealer_keep.company_id='{$_SESSION['userID']}'";
+        $result=$this->Query($sql);
+    }
+    public function loadDistributors(){
+        $sql="SELECT distributor.contact_no,distributor.city,distributor.street,distributor.hold_time,users.first_name,users.last_name,users.email FROM distributor INNER JOIN users WHERE distributor.distributor_id=users.user_id AND distributor.company_id='{$_SESSION['user_id']}'";
+        $result=$this->Query($sql);
+        return $result;
     }
 
     
