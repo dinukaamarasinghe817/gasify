@@ -22,6 +22,10 @@ class Orders extends Controller{
         $this->view('dealer/orders', $data);
     }
 
+}
+?>
+
+
     /*.................Customer my reservation...............*/
     //customer all past reservtions
     function customer_allreservations(){
@@ -235,6 +239,7 @@ class Orders extends Controller{
     }
 
 }
+
 
 
 

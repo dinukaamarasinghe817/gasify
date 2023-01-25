@@ -46,6 +46,37 @@
             $data['image'] = $row['image'];
             $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
+
+            //echo $data['image'];
+            $this->view('dashboard/dealer', $data);
+        }
+        public function company($error=null){
+            $company_id=$_SESSION['user_id'];
+            $company_details = $this->model('Company')->getCompanyImage($company_id);
+            $product_details = $this->model('Company')->getProductDetails($company_id);
+            $data['products']=$product_details;
+            $row = mysqli_fetch_assoc($company_details);
+            $data['navigation'] = 'dashboard';
+            $data['image'] = $row['logo'];
+            //$data=[];
+            $this->view('dashboard/company', $data);
+        }
+        public function delivery($error=null){
+            $data=[];
+            $delivery_id=$_SESSION['user_id'];
+            $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+            $row = mysqli_fetch_assoc($delivery_details);
+            $data['navigation'] = 'dashboard';
+            $data['image'] = $row['image'];
+            $data['vehicle_no']=$row['vehicle_no'];
+            $data['vehicle_type']=$row['vehicle_type'];
+            $data['weight_limit']=$row['weight_limit'];
+            $data['cost_per_km']=$row['cost_per_km'];
+            //$data=[];
+            $this->view('dashboard/delivery', $data);
+        }
+   
+
             $data['option'] = $option;
             $this->view('dashboard/dealer', $data);
         }
@@ -98,5 +129,6 @@
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/admin', $data);
         }
+
     }
 ?>
