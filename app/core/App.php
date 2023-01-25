@@ -31,8 +31,13 @@
 
             $this->params = $url ? array_values($url) : [];
             unset($url);
+
             
             call_user_func_array([$this->controller,$this->method], $this->params);
+
+
+            return call_user_func_array([$this->controller,$this->method], $this->params);
+
         }
 
         private function getURL(){
@@ -42,7 +47,6 @@
 
                 $url = filter_var($url, FILTER_SANITIZE_URL);
                 $url = explode('/',$url);
-
                 return $url;
             }
         }
