@@ -337,6 +337,7 @@ body.blur > *::before{
 } */
 
 
+
 .accordion .box{
     box-sizing: border-box;
     position: relative;
@@ -431,6 +432,19 @@ body.blur > *::before{
 
 .accordion .box.active .content table tbody tr:nth-child(odd){
     background-color: var(--table-gray);
+}
+
+a,button,input[type="button"],input[type="file"]{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+select, input{
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
 }
 
 

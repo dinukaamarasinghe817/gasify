@@ -186,6 +186,24 @@ class Distributor extends Model
         return $stock;
     }
 
+    public function phurchaseOrders($user_id) {
+        $stock = array();
+
+        $query1 = $this->Query("SELECT DISTINCT  p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                // $product_id = $row1['product_id'];
+                $product_name = $row1['name'];
+                $quantity = $row1['quantity'];
+
+                array_push($stock, ['stockinfo'=> $row1]);
+            }
+        }
+        return $stock;
+    }
+
+
+
     public function updateprofile($user_id) {
         $stock = array();
 

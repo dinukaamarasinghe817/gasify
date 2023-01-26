@@ -149,6 +149,7 @@ class Orders extends Controller{
         // phurchase order  view
         // create the model
         // $this->view('distributor/reports',$data);
+        $data['currentstock'] = $this->model("Distributor")->phurchaseOrders($user_id);
         $this->view('distributor/phurchase_orders',$data);
 
     }
