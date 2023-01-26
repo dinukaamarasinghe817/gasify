@@ -39,50 +39,51 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
         <div>
             <div class="middle">
-                <p>Order ID : 03</p> <br>
+                <p>Order ID : </p> <br>
 
                 <table>
                     <tr>
-                        <th>Item ID</th>
                         <th>Item Name</th>
-                        <th>Unit Price (Rs.)</th>
+                        <th>Current Stock</th>
                         <th>Quantity</th>
-                        <th>Price (Rs. )</th>
                     </tr>
 
                     <tr>
-                        <td>1</td>
-                        <td>Buddy</td>
-                        <td>815.00</td>
-                        <td>1000</td>
-                        <td>815000.00</td>
+                      
+                        <?php
+                        $output = '';
+
+                        $stocks = $data['currentstock'];
+                        foreach($stocks as $stock) {
+                            $row1 = $stock['stockinfo'];
+
+                            $output .= '
+                                <tr>
+                                    <td>
+                                        <select id="period" onchange="updatechart()" class="dropdowndate">
+                                            <option value="product">'.$row1['name'].'</option>
+                                        </select>
+                                    </td>
+
+                                    <td>'.$row1['quantity'].'</td>
+
+                                    <td><input type="number" name="capacity" min="0" required></td>
+                                </tr>';
+                        }
+                        $output .= '</table>';
+                        echo $output;
+
+                        ?>
+                       
                     </tr>
 
-                    <tr>
-                        <td>2</td>
-                        <td>Budget</td>
-                        <td>1750.00</td>
-                        <td>500</td>
-                        <td>875000.00</td>
-                    </tr>
-
-                    <tr>
-                        <td>3</td>
-                        <td>Regular</td>
-                        <td>4360.00</td>
-                        <td>100</td>
-                        <td>436000.00</td>
-                    </tr>
                 </table>
 
-                <div class="total">
-                    <p>Total Price : Rs.2126000.00</p>
-                </div>
-
                 <div class="btnclz">
-                    <button class="btn2-1">Submit</button>
-                    <button class="btn2-2">Back</button>
+                    <button class="btn2-1">Place the order</button>
+                    <button class="btn2-2">Cancel</button>
                 </div>
+                
             </div>
         </div>
     </div>
