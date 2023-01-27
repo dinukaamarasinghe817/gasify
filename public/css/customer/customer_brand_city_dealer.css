@@ -29,7 +29,7 @@ a,button{
     justify-content: center;
     margin-left: 40px;
     margin-right: 90px;
-    padding: 30px;
+    /* padding: 30px; */
     column-gap: 150px; 
 }
 
@@ -122,15 +122,21 @@ a,button{
 }
 
 .bottom{
-    padding: 20px;
+    padding-top: 100px;
     display: flex;
     justify-content: right;
+    margin-right: 80px;
 }
 
-.bottom .btn{
-    
+.bottom .btn{ 
+    display: flex;
     width: 200px;
     padding: 10px;
     background-color: var(--navmenu-orange-dark);
     border-radius: 5px;
+    font-size: var(--mediums);
+    font-weight: 700;
+    color: black;
+    align-items: center;
+    justify-content: center;
 }

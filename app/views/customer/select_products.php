@@ -37,7 +37,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>
                                 <div class="increment_box">
                                     <div class="minus">-</div>
-                                    <input type="text" name="qty" id="qty" value="0" class="num">
+                                    <input type="text" name="qty" id="qty" value="0" class="num" onchange="changeqty('.$product['p_id'].','.$product['unit_price'].');>
                                     <div class="plus">+</div>
                                 </div>
                             </div>
@@ -75,6 +75,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
             echo '</div>
             </div>';      
         ?>
+            <div class="total_amount">
+                <span>Total Amount : </span><span class="total"></span>
+            </div>
         </div>
     </div>
 
@@ -135,6 +138,35 @@ $sidebar = new Navigation('customer',$data['navigation']);
         })
 
     }
+
+
+    function changeqty(id, unitprice) {
+    id = parseInt(id);
+    unitprice = parseFloat(unitprice);
+    let inputstring = `.data${id} input .num`;
+    let input = document.querySelector(inputstring);
+    let inputvalue = input.value;
+    // let subtotaltring = `.data${id} .subtotal`;
+    let subtotal = document.querySelector('.total');
+    subtotal.innerHTML = "Rs. "+(unitprice* inputvalue).toLocaleString('en-US');
+    // let total = document.querySelector('.total .amount');
+
+    // let totalvalue = gettotal();
+    // total.innerHTML = "Rs. "+totalvalue;
+ }
+
+ function gettotal() {
+    let total = 0.00;
+    let subtotals = document.querySelectorAll('.total');
+    for(let i = 0; i < subtotals.length; i++) {
+        let sub = subtotals[i].innerHTML;
+        sub = sub.substring(4);
+        sub = parseFloat(sub.replace(/,/g, ''));
+        total += sub;
+    }
+    // parseFloat("2,299.00".replace(/,/g, ''))
+    return total.toLocaleString('en-US');
+}
 
     
 

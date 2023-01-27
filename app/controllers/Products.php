@@ -9,7 +9,7 @@ class Products extends Controller{
         parent::__construct();
     }
 
-
+    // customer view company products in dashboard
     function view_company_products($company_id){
 
         $customer_id = $_SESSION['user_id'];
@@ -26,6 +26,7 @@ class Products extends Controller{
         $this->view('customer/view_company_products',$data);
     }
 
+    // customer select product quantity in place reservation tab
     function select_products($company_id){
     
         $customer_id = $_SESSION['user_id'];

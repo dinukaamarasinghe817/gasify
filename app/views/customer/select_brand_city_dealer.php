@@ -25,7 +25,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 </div>
                 <div class="title">Brand</div>
                 <div class="drop-down">
-                    <select id="brand" name="brand" class="brand_dropdown">
+                    <select id="brand" name="brand" class="brand_dropdown dropdowndate" >
                         <option value="-1" selected disabled hidden>Select Gas Brand</option>
                         <option value="0">Litro</option>
                         <option value="1">Laugfs</option>
@@ -70,7 +70,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
         </div>
 
         <div class="bottom">
-            <button class="btn" type="submit">Next</button>
+            <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
+            <!-- <button class="btn" type="submit" onclick="Orders/select_brand_city_dealer">Next</button> -->
         </div>
 
 </section>

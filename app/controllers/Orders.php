@@ -117,6 +117,7 @@ class Orders extends Controller{
     }
 
 
+
     /*..........................Customer quota......................... */
     //display active quotas for customers according to their types
     function customer_quota(){
