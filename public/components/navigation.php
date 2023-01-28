@@ -238,9 +238,9 @@ class Navigation {
             </li>
             <li class="nav-tile">';
             if($active=="dealers"){
-                echo ' <a href="#" class="panel-tile active dealers">';
+                echo ' <a href="'.BASEURL.'/Dealers/customer_dealers" class="panel-tile active dealers">';
             }else{
-                echo '<a href="#" class="panel-tile dealers">';
+                echo '<a href="'.BASEURL.'/Dealers/customer_dealers" class="panel-tile dealers">';
             }
                 
                

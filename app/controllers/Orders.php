@@ -40,7 +40,7 @@ class Orders extends Controller{
 
         $data['allmyreservations'] = $this->model('Customer')->getAllmyreservations($customer_id);
        
-        $this->view('customer/allmyreservation', $data);
+        $this->view('customer/my_reservation/allmyreservation', $data);
     }
 
     //customer selected one reservation details from all past reservations
@@ -56,7 +56,7 @@ class Orders extends Controller{
 
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
         
-        $this->view('customer/viewmyreservation', $data);
+        $this->view('customer/my_reservation/viewmyreservation', $data);
     }
 
     //get collecting method for display review type in review form
@@ -78,7 +78,7 @@ class Orders extends Controller{
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
        
-        $this->view('customer/addreview', $data);
+        $this->view('customer/my_reservation/addreview', $data);
     }
 
     //add review for the selected past reservstion
@@ -112,7 +112,7 @@ class Orders extends Controller{
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
 
-        $this->view('customer/select_brand_city_dealer',$data);
+        $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 
     }
 
@@ -130,7 +130,7 @@ class Orders extends Controller{
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
 
-        $this->view('customer/quota',$data);
+        $this->view('customer/quota/quota',$data);
     }
 
 
