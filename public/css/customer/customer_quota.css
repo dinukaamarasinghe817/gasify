@@ -15,7 +15,7 @@ a,button{
 .subtitle{
     display: flex;
     align-items: center;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
     margin-left: 40px;
     font-size: var(--larger);
     font-weight:900;
@@ -35,13 +35,14 @@ a,button{
 .company_details{
     display: flex;
     flex-direction: column;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
   
 .company_details .name{
     font-size: var(--large);
+    color: var(--navmenu-orange-dark);
     font-weight: 800;
-    padding-bottom: 20px; ;
+    
 }
   
 .company_details .date{

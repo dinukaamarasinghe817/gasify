@@ -1,0 +1,158 @@
+/* under topbar css */
+
+a,button{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.under_topbar{
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    
+}
+.subtitle{
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-left: 40px;
+    font-size: var(--larger);
+    font-weight:900;
+    color: var(--navmenu-orange-dark);
+}
+
+
+.drop_down{
+    display: flex;
+    flex-direction: row;
+    column-gap: 90px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-left: 40px;
+
+}
+
+.branddropdown,.citydropdown{
+    width: 300px;
+    font-size: var(--medium);
+    
+    
+}
+
+
+
+
+
+/* table css */
+
+.table{  
+    position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding-bottom: 20px;
+    margin: 20px 90px 40px 40px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    height: 75%;
+}
+
+.table table{
+    box-sizing: border-box;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    text-align: center;
+    
+}
+.table::-webkit-scrollbar{
+    display:none;
+}
+
+.table table th{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: none;
+    height: 50px;
+    color: white;
+    font-size: var(--mediums);
+    text-align: right;
+    background-color: var(--navmenu-gray-dark);
+    
+}
+.table table td{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    text-align:right;
+    
+}
+.table table tr:nth-child(odd):hover{
+    background-color: rgb(204, 204, 204);
+}
+.table table td:not(:nth-child(3)){
+    padding: 10px 5px 10px 0;
+}
+.table table tr:nth-last-child(2) td:nth-child(3){
+    padding: 10px 5px 10px 0;
+}
+.table table tr:nth-child(odd){
+    background-color: var(--table-gray);
+}
+.table .po tr:nth-last-child(1){
+    background-color: transparent;
+}
+.table table tr:nth-last-child(1) td:nth-child(4){
+    padding: 0;
+}
+
+/* po tab css */
+td button{
+    width: 100%;
+    height: 100%;
+    background-color: var(--button-blue);
+    border-radius: 5px;
+    color: var(--white);
+    font-size: var(--mediums);
+    border: none;
+}
+td button:hover{
+    background-color: var(--button-blue-hover);
+}
+
+
+
+.table .more_details{
+    background-color: var(--accept-blue);
+    width: 120px;
+    height: 30px;
+}
+
+.table button{
+    border: none;
+    border-radius: 5px;
+    color: var(--white);
+    width: 120px;
+    height: 50px;
+}
+
+.btn{
+    display: flex;
+    justify-content: right;
+    padding: 10px 150px 10px 0px  ;
+}
+
+.btn button a{
+    width: 120px;
+    padding: 5px;
+    color: var(--white);
+    background-color: var(--button-orange);
+    border-radius: 5px;
+    border: none;
+}
+
+
