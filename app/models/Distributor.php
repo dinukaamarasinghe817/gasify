@@ -141,6 +141,17 @@ class Distributor extends Model
         return $products;
     }
 
+    // public function removeVehicle($user_id) {
+    //     $vehicles = array();
+
+    //     $query1 = $this->Query("DELETE from distributor_vehicle where distributor_id='{$user_id}'");
+    //     if(mysqli_num_rows($query1)>0) {
+    //         while($row1=mysqli_fetch_assoc($query1)) {
+    //             echo "Delete successfully!";
+    //         }
+    //     }
+    // }
+
 
     public function viewdealers($user_id) {
         $dealers = array();

@@ -64,9 +64,10 @@ $user_id = $_SESSION['user_id'];
                                             <td>'.$row2['availability'].'</td>
                                             ';
                                 if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
-                                    $output .= '<td><button class="btn4" style="background-color: B4AAFF;"><b>Release</b></button></td>';
+                                    $output .= '<td><button type="button" class="btn4" style="background-color: B4AAFF;"><b>Release</b></button></td>';
                                 }else{
-                                    $output .= '<td><button type="button" class="btn4" onclick="deleteVehicle('.$row2['vehicle_no'].')" style="background-color: red;"><b>Remove</b></button></td>';
+                                    $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="deleteVehicle('.$row2['vehicle_no'].')";"><b>Remove</b></button></td>';
+                                    // $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="document.location.href='../vehicles/removeVehicle';"><b>Remove</b></button></td>';
                                 }
                                 $output .=  '
                                         </tr>';
