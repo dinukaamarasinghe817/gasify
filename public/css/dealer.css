@@ -90,7 +90,6 @@
     overflow-y: scroll;
     scroll-behavior: smooth;
     transition: transtionIn 2.5s;
-    
 }
 .content-data .top-panel ul:last-child{
     border-top: white solid 2px;

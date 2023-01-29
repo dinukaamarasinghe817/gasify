@@ -172,11 +172,10 @@
                     header("Location: ./dealer/$error");
                 }
 
-
+            
                 header("Location: ".BASEURL."/signup/dealer/$error");
             }else{
                 header("Location: ".BASEURL."/signin/user");
-
             }
 
             // header("Location: ../signin/dealer");
