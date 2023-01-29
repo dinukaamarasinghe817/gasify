@@ -311,11 +311,13 @@ form .name-details .field:last-child{
 
 .chat-box .outgoing{
     display: flex;
+    align-items: flex-end;
    
 }
 
 .outgoing .details{
     margin-left: auto;
+    margin-right: 10px;
     max-width: calc(100% -130px);
 }
 
@@ -326,6 +328,11 @@ form .name-details .field:last-child{
 }
 
 .chat-box .incoming img{
+    height: 35px;
+    width: 35px;
+}
+
+.chat-box .outgoing img{
     height: 35px;
     width: 35px;
 }
