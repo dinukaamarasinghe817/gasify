@@ -33,6 +33,9 @@ class GasDistributions extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
+        $data['completed_distributions']= $this->model("Distributor")->completedistributions($user_id);
+
+
         $this->view('distributor/completed_distributions', $data);
 
     }

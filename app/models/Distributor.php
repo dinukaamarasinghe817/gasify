@@ -205,6 +205,30 @@ class Distributor extends Model
         return $pending;
     }
 
+    // Distributor - gas distributions -completed
+    public function completedistributions($user_id) {
+        $completed = array();
+
+        $query1 = $this->Query("SELECT po_id, dealer_id, place_date from purchase_order where distributor_id = '{$user_id}' and po_state='completed'; ");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                $order_id = $row1['po_id'];
+                $dealer_id = $row1['dealer_id'];
+                $date = $row1['place_date'];
+
+                $capacities = array();
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as qunatity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}'; ") ;
+                if(mysqli_num_rows($query2)>0) {
+                    while($row2= mysqli_fetch_assoc($query2)) {
+                        array_push($capacities, $row2);
+                    }
+                }
+                array_push($completed, ['completedinfo'=>$row1, 'capacities'=>$capacities]);
+            }
+        }
+        return $completed;
+    }
+
 
 
 
