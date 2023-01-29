@@ -200,9 +200,8 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // phurchase order  view
-        // create the model
-        // $this->view('distributor/reports',$data);
+        $data['pendingorders']= $this->model("Distributor")->pendingGasOrders($user_id);
+
         $this->view('distributor/placed_pending',$data);
 
     }
@@ -216,9 +215,8 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // phurchase order  view
-        // create the model
-        // $this->view('distributor/reports',$data);
+        $data['acceptedorders']= $this->model("Distributor")->acceptedGasOrders($user_id);
+        
         $this->view('distributor/placed_accepted',$data);
 
     }
@@ -233,9 +231,8 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // phurchase order  view
-        // create the model
-        // $this->view('distributor/reports',$data);
+        $data['completedorders']= $this->model("Distributor")->completedGasOrders($user_id);
+        
         $this->view('distributor/placed_completed',$data);
 
     }
