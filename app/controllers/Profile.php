@@ -73,9 +73,9 @@
         public function update($tab){
             $func = 'update'.$_SESSION['role'];
             $user_id = $_SESSION['user_id'];
-            // echo "update controller\n";
+            echo "update controller\n";
             $data = $this->$func($tab);
-            // header("Location: ".BASEURL."/profile/edit/".$_SESSION['role']."/".$user_id."/".$tab."/".$_SESSION['role']."/profile/".$data['toast']);
+            header("Location: ".BASEURL."/profile/edit/".$_SESSION['role']."/".$user_id."/".$tab."/".$_SESSION['role']."/profile/".$data['toast']);
             // $this->edit($_SESSION['role'],$_SESSION['user_id'],$tab,$_SESSION['role'],'profile',$data['toast']);
         }
 

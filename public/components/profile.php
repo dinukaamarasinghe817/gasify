@@ -92,7 +92,7 @@ class ProfileHTML{
                                 <div class="input"><label>Distributor</label><input type="text" name="distributor" placeholder="distributor" value="'.$row['distributor'].'" readonly></div>
                                 <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'"></div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
-                                <button class="button">Done</button>
+                                <button class="button" type="submit">Done</button>
                             </form>';
                         }else if($data['tab']=='security'){
                             echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
@@ -116,15 +116,16 @@ class ProfileHTML{
                     </div>
             </section>';
             
-            // echo '<script>
-            //     const form = document.querySelector(".prof-info form");
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
             //     form.onsubmit = (e)=>{
             //         e.preventDefault();
-            //     }
-            //     document.querySelector(".file input").onchange = function(){
-            //         document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
-            //     }
-            // </script>';
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
     }
 }
 ?>
