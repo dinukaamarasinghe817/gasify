@@ -402,13 +402,13 @@ class User extends Model
                 $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
                 echo $data['image']."\n";
                 if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
-                    echo "hello\n";
+                    echo "image uploaded\n";
                     $result2 = $this->update('dealer',array('name'=>$data['name'],'city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image']),"dealer_id = $user_id");
                     // echo "hello\n";
                 }else{
                     // $data['toast'] = '2';
                     // return $data;
-                    echo "bllo\n";
+                    echo "image not uploaded\n";
                 }
             }else{
                 $result2 = $this->update('dealer',array('name'=>$data['name'],'city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no']),"dealer_id = $user_id");

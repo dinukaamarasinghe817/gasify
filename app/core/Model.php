@@ -36,14 +36,12 @@ class Model extends Database
 
     public function update($table, $data, $where)
     {
-        //print_r($data) ;
         $sql = "UPDATE $table SET ";
         foreach ($data as $key => $value) {
             $sql .= "$key = '$value', ";
         }
         $sql = substr($sql, 0, -2);
         $sql .= " WHERE $where";
-        // print_r($sql);
         $result = $this->Query($sql);
         return $result;
     }
