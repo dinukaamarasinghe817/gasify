@@ -266,11 +266,18 @@ class Customer extends Model{
             }
         }
 
-
         return $company_products;
     }
 
-    
+
+
+    /*.........................Customer dealers tab ....................*/
+
+    //get all dealers details and display in view dealers tab
+    public function getAlldealers() {
+        $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,CONCAT(d.street,d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+        return $result1;
+    }
 
         
 

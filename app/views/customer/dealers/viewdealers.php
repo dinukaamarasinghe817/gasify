@@ -23,10 +23,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <select name="brand" id="brand" class="branddropdown dropdowndate" >
                     <option value="-1" selected disabled hidden>Select Gas Brand</option>
                     <?php 
-                        $brands = ['Litro', 'Laugfs'];
-                        sort($brands);            
-                        foreach ($brands as $brand){
-                            echo "<option value=$brand>$brand</option>";
+
+                        if(isset($data["brands"])){
+                            $result1 = $data["brands"];
+                            while($brands = mysqli_fetch_assoc($result1)){           
+                                $name = $brands["name"];
+                                echo "<option value = $name> $name </option>";
+                            }
                         }
                     ?>
             
@@ -52,21 +55,20 @@ $sidebar = new Navigation('customer',$data['navigation']);
         
          <!-- table -->
          <div class="table">
-                   
-                      <table>
-                        <tr id="first_row"><th>Dealer</th><th>Street</th><th>Contact No</th><th></th></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        <tr><td>xxxxxxxx</td><td>xxxxxxxx</td><td>xxxxxxxx</td><td><button type="submit" class="More_details" onclick = "document.location.href = '../Dealers/customer_selectdealer';">More Details</button></td></tr>
-                        
+                <table>
+                    <tr id="first_row"><th>Dealer</th><th>Brand</th><th>Street</th><th>Contact No</th><th></th></tr>
+                    <?php
 
+                        if(isset($data["dealers"])){
+                            $result = $data["dealers"];
+                            while($dealer = mysqli_fetch_assoc($result)){
+                                    $url = BASEURL.'/Dealers/customer_selectdealer/'.$dealer['dealer_id'];
+                                    echo ' <tr><td>'.$dealer["d_name"].'</td><td>'.$dealer["c_name"].'</td><td>'.$dealer["address"].'</td><td>'.$dealer["contact_no"].'</td><td><button type="submit" class="More_details" onclick = "location.href=\''.$url.'\'">More Details</button></td></tr>';
+                            }
+                       
+                        }
+                    ?>
+                   
                     </table>
                     
                 </div>

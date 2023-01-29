@@ -31,12 +31,13 @@ class Dealers extends Controller {
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        // $data['dealers']= $this->model("Customer")->viewdealers($user_id);
+        $data['dealers']= $this->model("Customer")->getAlldealers();
+        $data['brands']= $this->model("Customer")->getCompanyBrand();
 
         $this->view('customer/dealers/viewdealers',$data);
     }
 
-    public function customer_selectdealer() {
+    public function customer_selectdealer($dealer_id) {
         $customer_id  = $_SESSION['user_id'];
         $data['navigation'] = 'dealers';
 
