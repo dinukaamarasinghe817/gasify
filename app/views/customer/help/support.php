@@ -7,6 +7,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
+        $profile_image = BASEURL.'/public/img/profile/'.$data['image'];
         // call whatever the component you need to show
         // $bodycontent = new Body('addreview', $data);
         
@@ -27,10 +28,27 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     <div class="details">
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
                     </div>
+                    <img src="'.$profile_image.'" alt="">
                 </div>
 
                 <div class="chat incoming">
-                    <img src="Asset 7@4x.png" alt="">
+                    <img src="'.BASEURL.'/public/img/people/company.png" alt="">
+                    <div class="details">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                    </div>
+                </div>
+
+
+                <div class="chat outgoing">
+                    
+                    <div class="details">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                    </div>
+                    <img src="'.$profile_image.'" alt="">
+                </div>
+
+                <div class="chat incoming">
+                    <img src="'.BASEURL.'/public/img/people/company.png" alt="">
                     <div class="details">
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
                     </div>
@@ -41,24 +59,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     <div class="details">
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
                     </div>
+                    <img src="'.$profile_image.'" alt="">
                 </div>
 
                 <div class="chat incoming">
-                    <img src="Asset 7@4x.png" alt="">
-                    <div class="details">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-
-
-                <div class="chat outgoing">
-                    <div class="details">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-
-                <div class="chat incoming">
-                    <img src="Asset 7@4x.png" alt="">
+                    <img src="'.BASEURL.'/public/img/people/company.png" alt="">
                     <div class="details">
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
                     </div>
