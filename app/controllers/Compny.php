@@ -180,5 +180,35 @@ class Compny extends Controller{
         $this->products();
 
     }
+    function orders(){
+        $data['navigation'] = 'orders';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        //$row = mysqli_fetch_assoc($dealer_details);
+        $data['dealer']=$dealer_details;
+        //$data['cc']=$row['account_no'];
+        //echo $data['cc'];
+            //$data=[];
+        $this->view('dashboard/company', $data);
+
+    }
+    function limitquota(){
+        $data['navigation'] = 'limitquota';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        //$row = mysqli_fetch_assoc($dealer_details);
+        $data['dealer']=$dealer_details;
+        //$data['cc']=$row['account_no'];
+        //echo $data['cc'];
+            //$data=[];
+        $this->view('dashboard/company', $data);
+
+    }
 }
 ?>

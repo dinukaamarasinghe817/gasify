@@ -1497,4 +1497,98 @@ class Body{
             </div>
         </section>';
     }
+    function companyOrders($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
+            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#cda6e4">Limit Quota</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
+            <div class="orderCard" >
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
+                </div>
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
+                </div>
+                <div class="orderTbl">
+                    <table class="orderTable">
+                        <thead>
+                            <tr>
+                                <th>Product name</th>
+                                <th>Unit price (Rs.)</th>
+                                <th>Quantity</th>
+                                <th>Total (Rs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-y:auto;height:100px">
+                            <tr>
+                                <td class="tdCenter">Buddy</td>
+                                <td class="tdRight">1,450.00</td>
+                                <td class="tdRight">12</td>
+                                <td class="tdRight">17,400</td>
+                            </tr>
+                            <tr>
+                                <td class="tdCenter">Regular</td>
+                                <td class="tdRight">3,220.00</td>
+                                <td class="tdRight">30</td>
+                                <td class="tdRight">96,600</td>
+                            </tr>
+                            <tr>
+                                <td class="tdCenter">Commercial</td>
+                                <td class="tdRight">5,150.00</td>
+                                <td class="tdRight">15</td>
+                                <td class="tdRight">77,250</td>
+                            </tr>
+                            <tr>
+                                <td class="tdCenter"></td>
+                                <td class="tdRight"></td>
+                                <td class="tdRight"></td>
+                                <td class="tdRight">191,250</td>
+                            </tr>
+                         
+                        </tbody>      
+                    </table>
+                </div>
+                <div class="orderRow">
+                    <div class="orderButtons"><label>Issue</label></div>
+                    <div class="orderButtons"><label>Delay</label></div>
+                </div>
+            </div>
+            </div>';
+            echo ' 
+        </section>';
+    }
+    function companyLimitQuota($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
+            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#cda6e4">Limit Quota</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
+            <div class="poductQuota">
+                <div class="productQuotaName" style="font-size: x-large"><lable>Buddy (Refill)</lable></div>
+                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>2 Cylinder</label></div>
+                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota"></div>
+                <div class="productQuotaResetCurrent"><div class="quotaButtons"><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew"><div class="quotaButtons_2"><label>Reset Quota</label></div></div>    
+            </div>
+            <div class="poductQuota">
+                <div class="productQuotaName" style="font-size: x-large"><lable>Regular (Refill)</lable></div>
+                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>1 Cylinder</label></div>
+                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota"></div>
+                <div class="productQuotaResetCurrent"><div class="quotaButtons"><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew"><div class="quotaButtons_2"><label>Reset Quota</label></div></div>    
+            </div>
+            </div>
+            
+            
+            ';     
+        echo ' 
+        </section>';
+    }
 }

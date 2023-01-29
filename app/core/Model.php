@@ -19,8 +19,6 @@ class Model extends Database
         if ($limit != null) {
             $sql .= " LIMIT $limit";
         }
-        //print_r($sql);
-        //echo $sql;
         $result = $this->Query($sql);
         return $result;
     }
@@ -36,10 +34,7 @@ class Model extends Database
         if ($limit != null) {
             $sql .= " LIMIT $limit";
         }
-        //print_r($sql);
-        //echo $sql;
         $result = $this->Query($sql);
-        //print_r($result);
         return $result;
     }
     public function readJoin($company_id){
