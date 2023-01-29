@@ -1,37 +1,27 @@
-/* Right middle */
-/* .under_topbar{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    
-    
-} */
+a,button{
+    cursor: pointer;
+    text-decoration: none;
+}
 
 /* subtitle "Add review for dealer" */
 .subtitle{
     display: flex;
-    /* height: 10%; */
     align-items: center;
     padding-bottom: 20px;
     margin-left: 40px;
     font-size: var(--larger);
     font-weight:900;
-    /* overflow-y: scroll;
-    scrollbar-width: none; */
-    color: var(--button-orange);
+    color: var(--navmenu-orange-dark);
 }
 
 
-/* Reservation details */
+/* Reservation details to select review type */
 .order_detail{
     display: flex;
     flex-direction: column;
     background-color:var(--cancel-lightred);
     width: 80%;
     border-radius: 5px;
-    /* padding: 10px; */
-   
     box-shadow: var(--card_shadow);
 }
 .order_detail h3{
@@ -67,12 +57,10 @@
     justify-content: center;
     align-items: center;
     width: 99%;
-    /* height: 120px; */
     border-radius: 5px;
     box-shadow:var(--card_shadow) ;
     border: none;
     resize: none;
-    /* margin:0px 40px 10px 0px; */
     padding-left: 10px;
     padding-top: 10px;
     font-size: var(--mediums);
@@ -87,9 +75,7 @@
     width: 100%;
     justify-content: right;
     align-items: center;
-    padding-top: 10px;
-    /* padding-left: 10px; */
-   
+    padding-top: 10px;   
 }
 .btn button{
     border: none;
@@ -97,16 +83,14 @@
     font-size: var(--mediums);
     color: var(--white);
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     cursor: pointer;
     align-items: center;
-    
     
 }
 
 #cancel{
-    background-color: var(--error-red);
-   
+    background-color: var(--error-red); 
 }
 
 #cancel:hover{
@@ -121,7 +105,7 @@
 }
 
 /* error message */
-form .error-txt{
+/* form .error-txt{
     color: #721c24;
     background-color: #f8d7da;
     padding: 8px 10px;
@@ -130,6 +114,6 @@ form .error-txt{
     margin-bottom: 10px;
     border: 1px solid #f5c6cb;
     display: none;
-}
+} */
 
 

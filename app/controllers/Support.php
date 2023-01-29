@@ -21,7 +21,7 @@ class Support extends Controller{
         $data['image'] = $row['image'];
 
         // $data['products']= $this ->model('Customer')->getCompanyProducts($company_id);
-        $this->view('customer/support',$data);
+        $this->view('customer/help/support',$data);
     }
 
 

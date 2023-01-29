@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer_addreview",$data);
+$header = new Header("customer/customer_addreview",$data);
 $sidebar = new Navigation('customer',$data['navigation']);
 // if(isset($data['error'])){
 //     $error = new Prompt('error',$data);

@@ -15,11 +15,11 @@ a,button{
 .subtitle{
     display: flex;
     align-items: center;
-    padding-bottom: 70px;
+    padding-bottom: 30px;
     margin-left: 40px;
     font-size: var(--larger);
     font-weight:900;
-    color: var(--button-orange);
+    color: var(--navmenu-orange-dark);
 }
 
 .middle{
@@ -29,11 +29,8 @@ a,button{
     justify-content: center;
     margin-left: 40px;
     margin-right: 90px;
-    padding: 30px;
-    column-gap: 150px;
-
-   
-   
+    /* padding: 30px; */
+    column-gap: 150px; 
 }
 
 .brand{
@@ -44,13 +41,9 @@ a,button{
     width: 25%;
     padding: 30px;
     column-gap: 30px;
-
-
     background-color: var(--table-gray);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     border-radius: 5px;
-   
-  
 }
 
 .city{
@@ -61,8 +54,6 @@ a,button{
     width: 25%;
     padding: 30px;
     column-gap: 30px;
-
-
     background-color: var(--table-gray);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     border-radius: 5px;
@@ -76,7 +67,6 @@ a,button{
     width: 25%;
     padding: 30px;
     column-gap: 30px;
-
     background-color: var(--table-gray);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     border-radius: 5px;
@@ -90,18 +80,17 @@ a,button{
 }
 
 .drop_down{
-   
     margin-top: 80px;
-
 }
 
 .img svg{
-    fill: var(--button-orange);
+    fill: var(--navmenu-orange-dark);
 }
+
 
 .brand_dropdown{
     margin-top: 20px;
-    width: 200px;
+    width: 250px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -112,7 +101,7 @@ a,button{
 
 .city_dropdown{
     margin-top: 20px;
-    width: 200px;
+    width: 250px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -123,11 +112,31 @@ a,button{
 
 .dealer_dropdown{
     margin-top: 20px;
-    width: 200px;
+    width: 250px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     background-color: var(--button-orange);
     padding: 10px;
     font-size: var(--small);
+}
+
+.bottom{
+    padding-top: 100px;
+    display: flex;
+    justify-content: right;
+    margin-right: 80px;
+}
+
+.bottom .btn{ 
+    display: flex;
+    width: 200px;
+    padding: 10px;
+    background-color: var(--navmenu-orange-dark);
+    border-radius: 5px;
+    font-size: var(--mediums);
+    font-weight: 700;
+    color: black;
+    align-items: center;
+    justify-content: center;
 }

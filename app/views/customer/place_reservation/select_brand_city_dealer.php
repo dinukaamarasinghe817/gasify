@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer_brand_city_dealer");
+$header = new Header("customer/customer_brand_city_dealer");
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 
@@ -25,8 +25,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 </div>
                 <div class="title">Brand</div>
                 <div class="drop-down">
-                    <select id="brand" name="brand" class="brand_dropdown">
+                    <select id="brand" name="brand" class="brand_dropdown dropdowndate" >
                         <option value="-1" selected disabled hidden>Select Gas Brand</option>
+                        <option value="0">Litro</option>
+                        <option value="1">Laugfs</option>
                     </select>
                 </div>
             </div>
@@ -41,6 +43,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <div class="drop-down">
                     <select id="brand" name="brand" class="city_dropdown">
                         <option value="-1" selected disabled hidden>Select City</option>
+                        <option value="0">Maharagama</option>
+                        <option value="1">Ampara</option>
+                        <option value="2">Boralesgamuwa</option>
                     </select>
                 </div>
             </div>
@@ -55,10 +60,18 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <div class="drop-down">
                     <select id="brand" name="brand" class="dealer_dropdown">
                         <option value="-1" selected disabled hidden>Select Dealer</option>
+                        <option value="0">Gamunu Stores</option>
+                        <option value="1">Randinu Gas Stores</option>
+                        <option value="2">Kavindu Stores</option>
                     </select>
                 </div>
             </div>
 
+        </div>
+
+        <div class="bottom">
+            <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
+            <!-- <button class="btn" type="submit" onclick="Orders/select_brand_city_dealer">Next</button> -->
         </div>
 
 </section>
