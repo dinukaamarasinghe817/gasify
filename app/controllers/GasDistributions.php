@@ -17,6 +17,9 @@ class GasDistributions extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
+        $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
+
+
         $this->view('distributor/pending_distributions', $data);
 
         
