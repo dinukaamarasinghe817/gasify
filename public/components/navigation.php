@@ -683,9 +683,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'notifications'){
-                    echo '<a href="../Compny/products" class="panel-tile active notifications">';
+                    echo '<a href="../Delvery/reviews" class="panel-tile active notifications">';
                 }else{
-                    echo '<a href="../Compny/products" class="panel-tile notifications">';
+                    echo '<a href="../Delvery/reviews" class="panel-tile notifications">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">

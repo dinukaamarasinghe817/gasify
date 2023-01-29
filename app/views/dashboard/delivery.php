@@ -26,9 +26,9 @@
             $bodycontent = new Body('gasdeliveries', $data);
         }elseif($data['navigation']=='currentgasdeliveries'){
             $bodycontent = new Body('currentgasdeliveries', $data);
-        }/*elseif($data['navigation']=='products'){
-            $bodycontent = new Body('companyProducts', $data);
-        }elseif($data['navigation']=='regproducts'){
+        }elseif($data['navigation']=='reviews'){
+            $bodycontent = new Body('viewReviews', $data);
+        }/*elseif($data['navigation']=='regproducts'){
             $bodycontent = new Body('companyRegProducts', $data);
         }*/
         

@@ -1591,4 +1591,35 @@ class Body{
         echo ' 
         </section>';
     }
+    function viewReviews($data){
+        echo
+        '<section class="body-content">
+         <div class="Distributor_table_name" id="Distributor_table_name">
+         <a href="../Delvery/reviews" style="width:97%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%">Reviews</div></a>
+         </div>
+        <div class="DealerTables" id="DealerTables" style="height:80%">';
+        echo '
+        <div class="reviewRow">
+        <div class="orderIDRow"><div>GS014</div></div>
+        <div class="messageRow">Delivered fast!.Great service.Thumbs up</div>
+        <div class="dateTimeRow">
+        <div class="reviewTime">04:23PM</div>
+        <div class="reviewDate">2023/01/18</div>
+        
+        
+        </div>        
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        ';
+
+        echo
+        '</div>
+        </section>';
+    }
 }

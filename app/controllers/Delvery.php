@@ -30,6 +30,17 @@ class Delvery extends Controller{
         
 
     }
+    function reviews(){
+        $data['navigation'] = 'reviews';
+        $delivery_id=$_SESSION['user_id'];
+        $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+        //$current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
+        $row = mysqli_fetch_assoc($delivery_details);
+        //$data['current']=$current_reliveries;
+        $data['image'] = $row['image'];
+            //$data=[];
+        $this->view('dashboard/delivery', $data);
+    }
 
     
 }
