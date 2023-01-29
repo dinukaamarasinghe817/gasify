@@ -40,7 +40,14 @@ a,button{
 
 
 
-
+/* .gas_cylinder .product_list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 40px;
+    padding-bottom: 20px;
+    background-color: aqua;
+} */
 
 
 

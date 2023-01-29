@@ -111,6 +111,8 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
+        $data['brands'] = $this->model('Customer')->getCompanyBrand();
+        $data['dealers'] = $this->model('Customer')->getAlldealers();
 
         $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 

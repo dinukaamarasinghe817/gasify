@@ -13,6 +13,7 @@ a,button{
 
 }
 
+
 .subtitle{
     display: flex;
     align-items: center;
@@ -26,18 +27,25 @@ a,button{
 .middle{
     display: flex;
     flex-direction: row;
+    margin-left: 40px;
+    
 }
 
 /* chat box side */
+.msg_box{
+    padding-bottom: 20px;
+}
+
+
 .wrapper{
     background-color:var(--navmenu-orange);
     width: 550px;
-    margin: 20px 0 30px 40px;
+    margin: 0px 0 20px 0px;
     box-shadow: 0 0 1px 0 rgba(0, 0, 0, 1),
                  0 32px 64px -48px rgba(0, 0, 0, 5);
     border-radius:  10px;
+    
 }
-
 .chat-box{
     display: flex;
     flex-direction: column;
@@ -149,38 +157,52 @@ a,button{
 /* right side help options css */
 .help_options{
     width: 45%;
-    margin: 0px 90px 10px 100px;
-    padding: 10px;
-    /* border: 2px solid var(--navmenu-orange-dark); */
-}
-
-.help_options .title{
-    font-size: var(--large);
-    font-weight: 800;
-    color: var(--navmenu-orange-dark);
-    padding-bottom: 50px;
-
+    margin: 0px 90px 20px 110px;
 }
 
 .help_options img{
-    width: auto;
-    height: 200px;
+    width: 500px;
+    height: 300px;
+    display: flex;
     align-items: center;
+   justify-content: center;
+   margin-left: 50px;
+  
 }
 .options{
-    margin: 0px 20px 20px 50px;;
+    margin: 0px 20px 20px 50px;
     width: 80%;
-    /* background-color: #ccc; */
    
 }
 
 .help_options svg{
     width: 60px;
     height: 60px;
+    
+}
+
+.icon{
+    display: flex;
+    justify-content: left;
+}
+
+.option_details{
+    display: flex;
+    flex-direction: column;
+    justify-content:left;
+    width: 100%;
+
+}
+
+.option_details p{
+    font-size: var(--mediums);
+}
+
+.option_details h3{
+    color: var(--navmenu-orange-dark);
 }
 
 .chat_us , .call_us , .mail_us{
-    /* background-color:aqua; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -193,6 +215,7 @@ a,button{
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s ease;
+    column-gap: 60px;
 }
 
 .chat_us:hover , .call_us:hover , .mail_us:hover{
