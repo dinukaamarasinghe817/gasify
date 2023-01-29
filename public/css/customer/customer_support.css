@@ -1,3 +1,4 @@
+/* under_topbar css */
 a,button{
     cursor: pointer;
     text-decoration: none;
@@ -19,271 +20,22 @@ a,button{
     margin-left: 40px;
     font-size: var(--larger);
     font-weight:900;
-    color: var(--button-orange);
+    color: var(--navmenu-orange-dark);
 }
 
+.middle{
+    display: flex;
+    flex-direction: row;
+}
 
+/* chat box side */
 .wrapper{
-    background-color: #fff;
-    width: 650px;
-    margin-left: 100px;
+    background-color:var(--navmenu-orange);
+    width: 550px;
+    margin: 20px 0 30px 40px;
     box-shadow: 0 0 1px 0 rgba(0, 0, 0, 1),
                  0 32px 64px -48px rgba(0, 0, 0, 5);
-}
-
-/* sign up form */
-.form{
-    padding: 25px 30px;
-}
-
-.form header{
-    font-size: 25px;
-    font-weight: 600;
-    border-bottom: 1px solid #e6e6e6;
-}
-
-.form form{
-    margin: 20px 0;
-}
-
-.form form .error-txt{
-    color: #721c24;
-    background-color: #f8d7da;
-    padding: 8px 10px;
-    text-align: center;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #f5c6cb;
-    display: none;
-}
-
-.form form .name-details{
-    display: flex;
-}
-form .name-details .field:first-child{
-    margin-right: 10px;
-}
-form .name-details .field:last-child{
-    margin-left: 10px;
-}
-
-
-
-.form form .field{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-.form form .field label{
-    margin-bottom: 2px;
-}
-.form form .field input{
-    outline: none;
-}
-
-.form form .input input{
-    height: 40px;
-    width: 100%;
-    font-size: 16px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.form form .image input{
-    font-size: 17px;
-}
-
-.form form .button input{
-    margin-top: 13px;
-    height:45px;
-    border: none;
-    font-size: 17px;
-    font-weight: 400;
-    background-color: #333;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.form form .field i{
-    position: absolute;
-    right: 15px;
-    color: #ccc;
-    top: 70%;
-    transform:translateY(-50%);
-    cursor: pointer;
-}
-
-.form form .field i.active::before{
-    content: "\f070";
-    color: #333;
-}
-
-.form .link{
-    text-align: center;
-    margin: 10px 0;
-    font-size: 17px;
-}
-
-.form .link a{
-    color: #333;
-}
-
-.form .link a:hover{
-    text-decoration: underline;
-}
-
-
-/* user area */
-
-.users{
-    padding: 25px 30px;
-}
-
-.users header,.users-list a{
-    display: flex;
-    align-items: center;
-    padding-bottom: 20px;
-    justify-content: space-between;
-    border-bottom: 1px solid #e6e6e6;
-}
-
-.wrapper img{
-    object-fit: cover;
-    border-radius: 50%;
-   
-}
-:is(.users,.users-list a) .content {
-    display: flex;
-    align-items: center;
-
-    /* flex-direction: row;
-    border: none; */
-}
-
-.users header .content img{
-     height: 50px;
-    width: 50px;
-}
-
-:is(.users,.users-list) .details{
-    margin-left:15px ;
-    color: #000;
-}
-
-:is(.users,.users-list) .details span{
-    font-size: 18px;
-    font-weight:600;
-}
-
-.users header .logout{
-    color: #fff;
-    font-size: 17px;
-    padding: 7px 15px;
-    background-color: #333;
-    border-radius: 5px;
-
-}
-
-.users .search{
-    margin: 20px 0;
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.users .search .text{
-    font-size: 18px;
-}
-
-.users .search input{
-    position: absolute;
-    height: 42px;
-    width:calc(100% -50px);
-    border: 1px solid #ccc;
-    padding: 0 13px;
-    font-size: 16px;
-    border-radius: 5px 0 0 5px;
-    outline: none;
-}
-
-.users .search button{
-    width: 47px;
-    height: 42px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background-color: #333;
-    font-size: 17px;
-    cursor: pointer;
-    border-radius: 0 5px 5px 0;
-}
-
-.users-list{
-    max-height: 350px;
-    overflow-y:auto;
-}
-
-:is(.users-list,.chat-box)::-webkit-scrollbar{
-    width: 0px;
-}
-
-.users-list a{
-    margin-bottom: 15px;
-    padding-right: 15px;
-    page-break-after:10px ;
-    border-bottom-color: #f1f1f1;
-}
-.users-list a:last-child{
-    border: none;
-    margin-bottom: 0px;
-}
-
-.users-list a .content img{
-    height: 40px;
-    width: 40px;
-}
-.users-list a .content p{
-    color:#67676a ;
-}
-.users-list a .status-dot{
-    font-size: 12px;
-    color: #468449;
-}
-/* use php to show offline */
-.users-list a .status-dot .offline{
-    color: #ccc;
-}
-
-
-
-/* chat area */
-/* .chat-area header{
-    display: flex;
-    align-items:center;
-    padding: 18px 30px;
-    
-}
-.chat-area header .back-icon{
-    font-size: 18px;
-    color: #333;
-}
-
-.chat-area header img{
-    height: 45px;
-    width: 45px;
-    margin: 0 15px;
-}
-
-.chat-area header span{
-    font-size: 17px;
-    font-weight: 500;
-} */
-
-.chat-area{
-    /* border-radius: 16px; */
+    border-radius:  10px;
 }
 
 .chat-box{
@@ -295,8 +47,10 @@ form .name-details .field:last-child{
                 inset  0 32px 32px -32px rgb(0, 0, 0/5%) ;
 
     overflow-y: scroll;
-    background-color: #ccc;
-    /* border-radius: 16px; */
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    background-color: var(--white);
+    border-radius: 10px 10px 0 0;
 }
 .chat-box .chat{
     margin: 15px 0;
@@ -309,6 +63,8 @@ form .name-details .field:last-child{
                 inset  0 32px 32px -32px rgb(0, 0, 0/10%) ;
 }
 
+
+/* outgoing css */
 .chat-box .outgoing{
     display: flex;
     align-items: flex-end;
@@ -322,36 +78,43 @@ form .name-details .field:last-child{
 }
 
 .outgoing .details p{
-    background-color:var(--button-orange);
+    background-color:var(--navmenu-orange-dark);
     color:black;
     border-radius: 18px 18px 0 18px;
-}
-
-.chat-box .incoming img{
-    height: 35px;
-    width: 35px;
 }
 
 .chat-box .outgoing img{
     height: 35px;
     width: 35px;
+    border-radius: 50%;
+}
+
+
+/* incoming css */
+.chat-box .incoming img{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
 }
 
 .chat-box .incoming {
     display: flex;
     align-items: flex-end;
 }
+
 .incoming .details{
     margin-left: 10px;
     margin-right: auto;
     max-width: calc(100% -130px);
 }
+
 .incoming .details p{
-    background-color:#f7f7f7;
+    background-color:var(--navmenu-orange);
     color: #333;
     border-radius: 18px 18px 18px 0;
 }
 
+/* message typing area */
 .chat-area .typing-area{
     padding: 18px 30px;
     display: flex;
@@ -369,12 +132,69 @@ form .name-details .field:last-child{
 }
 
 .typing-area button{
-    width: 55px;
+    width: 50px;
+    height: 45px;
     border: none;
     outline: none;
-    background-color: #333;
+    background-color:var(--navmenu-orange-dark);
     color: #fff;
     font-size: 19px;
     cursor: pointer;
     border-radius: 0 5px 5px 0;
+}
+
+
+
+
+/* right side help options css */
+.help_options{
+    width: 45%;
+    margin: 0px 90px 10px 100px;
+    padding: 10px;
+    /* border: 2px solid var(--navmenu-orange-dark); */
+}
+
+.help_options .title{
+    font-size: var(--large);
+    font-weight: 800;
+    color: var(--navmenu-orange-dark);
+    padding-bottom: 50px;
+
+}
+
+.help_options img{
+    width: auto;
+    height: 200px;
+    align-items: center;
+}
+.options{
+    margin: 0px 20px 20px 50px;;
+    width: 80%;
+    /* background-color: #ccc; */
+   
+}
+
+.help_options svg{
+    width: 60px;
+    height: 60px;
+}
+
+.chat_us , .call_us , .mail_us{
+    /* background-color:aqua; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    border: 2px solid var(--navmenu-orange-dark);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.chat_us:hover , .call_us:hover , .mail_us:hover{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px -1px, rgba(0, 0, 0, 0.15) 0px 2px 12px -1px;
 }
