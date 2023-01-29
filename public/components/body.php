@@ -1571,18 +1571,18 @@ class Body{
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
             <div class="poductQuota">
-                <div class="productQuotaName" style="font-size: x-large"><lable>Buddy (Refill)</lable></div>
+                <div class="productQuotaName" style="font-size: large"><lable>Domestic customer</lable></div>
                 <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>2 Cylinder</label></div>
-                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota"></div>
-                <div class="productQuotaResetCurrent"><div class="quotaButtons"><label>Set Quota</label></div></div>
-                <div class="productQuotaSetNew"><div class="quotaButtons_2"><label>Reset Quota</label></div></div>    
+                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="domestic"></div>
+                <div class="productQuotaResetCurrent" onClick="setQuota()" key="domestic"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew" onClick="resetQuota()" key="domestic"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>     
             </div>
             <div class="poductQuota">
-                <div class="productQuotaName" style="font-size: x-large"><lable>Regular (Refill)</lable></div>
+                <div class="productQuotaName" style="font-size: large"><lable>Commercial customer</lable></div>
                 <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>1 Cylinder</label></div>
-                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota"></div>
-                <div class="productQuotaResetCurrent"><div class="quotaButtons"><label>Set Quota</label></div></div>
-                <div class="productQuotaSetNew"><div class="quotaButtons_2"><label>Reset Quota</label></div></div>    
+                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="commercial"></div>
+                <div class="productQuotaResetCurrent" onClick="setQuota()"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew" onClick="resetQuota()"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>    
             </div>
             </div>
             

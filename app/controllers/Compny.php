@@ -210,5 +210,13 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);
 
     }
+    function setQuota(){
+        echo "hello";
+        die();
+    }
+    function resetQuota(){
+        echo "hello";
+        die();
+    }
 }
 ?>
