@@ -74,7 +74,7 @@ class BodyHeader{
                                     <path d="M18 20.125V18C18 16.8728 17.5522 15.7918 16.7552 14.9948C15.9582 14.1978 14.8772 13.75 13.75 13.75H5.25C4.12283 13.75 3.04183 14.1978 2.2448 14.9948C1.44777 15.7918 1 16.8728 1 18V20.125" stroke="#8A8B9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M9.5 9.5C11.8472 9.5 13.75 7.59721 13.75 5.25C13.75 2.90279 11.8472 1 9.5 1C7.15279 1 5.25 2.90279 5.25 5.25C5.25 7.59721 7.15279 9.5 9.5 9.5Z" stroke="#8A8B9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                                <a href="'.BASEURL.'/profile/edit/'.$_SESSION['role'].'/'.$_SESSION['user_id'].'/profile/dealer/profile">Profile</a>
+                                <a href="'.BASEURL.'/profile/preview/dealer/6/profile/customer/profile">Profile</a>
                             </li>
                             <li>
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
