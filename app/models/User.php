@@ -375,5 +375,167 @@ class User extends Model
         }
     }
 
+    public function getprofile($role,$user_id,$tab,$mode){
+        // role is the type of user
+        // tab is which tab we want
+        // mode is either 'view' or 'edit'
+        $func = 'get'.$role.'profile';
+        return $this->$func($user_id,$tab,$mode);
+    }
+
+    public function setprofile($role,$user_id,$tab,$data){
+        $func = 'set'.$role.'profile';
+        return $this->$func($user_id,$tab,$data);
+    }
+
+    public function setdealerprofile($user_id,$tab,$data){
+        if($tab == 'profile'){
+            $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            // image type validity jpg png jpeg
+            if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
+                $data['toast'] = '1';
+                return $data;
+            }
+
+            if(isset($data['image_name'])){
+                $data['image'] = getImageRename($data['image_name'],$data['tmp_name']);
+                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+                echo $data['image']."\n";
+                if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
+                    echo "hello\n";
+                    $result2 = $this->update('dealer',array('name'=>$data['name'],'city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image']),"dealer_id = $user_id");
+                    // echo "hello\n";
+                }else{
+                    // $data['toast'] = '2';
+                    // return $data;
+                    echo "bllo\n";
+                }
+            }else{
+                $result2 = $this->update('dealer',array('name'=>$data['name'],'city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no']),"dealer_id = $user_id");
+            }
+            if($result1 && $result2){
+                $data['toast'] = '3';
+            }else{
+                $data['toast'] = '4';
+            }
+
+        }else if($tab == 'bank'){
+            $result = $this->update('dealer',array('bank'=>$data['bank'],'account_no'=>$data['account_no'],'merchant_id'=>$data['merchant_id']),"dealer_id = $user_id");
+            if($result){
+                $data['toast'] = '3';
+            }else{
+                $data['toast'] = '4';
+            }
+
+        }else if($tab == 'security'){
+            $data['toast'] = $this->updatepassword($user_id,$data);
+
+        }else if($tab == 'capacity'){
+            $row = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $user_id"));
+            $result = $this->read('product',"company_id = ".$row['company_id']);
+            $capacity = array();
+            while($row = mysqli_fetch_assoc($result)){
+                if(isset($_POST[$row['product_id']])){
+                    $quantity = $_POST[$row['product_id']];
+                    array_push($capacity,['product_id' => $row['product_id'], 'quantity' => $quantity]);
+                }
+            }
+            foreach($capacity as $cap){
+                $this->update('dealer_capacity',array('capacity'=>$cap['quantity']),"dealer_id = $user_id AND product_id = ".$cap['product_id']);
+            }
+            $data['toast'] = '3';
+        }
+        return $data;
+    }
+
+    public function updatepassword($user_id,$data){
+        $chashed_password = '';
+        // is it current password
+        $query = $this->read('users',"user_id = $user_id");
+        if(mysqli_num_rows($query) > 0){
+            $row = mysqli_fetch_assoc($query);
+            $chashed_password = $row['password'];
+            if(!password_verify($data['current_password'], $row['password'])){
+                return '5';
+            }else if(password_verify($data['new_password'], $row['password'])){
+                return '6';
+            }
+        }
+
+        // is it an old password
+        $query = $this->read('old_passwords',"user_id = $user_id");
+        if(mysqli_num_rows($query) > 0){
+            while($row = mysqli_fetch_assoc($query)){
+                if(password_verify($data['current_password'], $row['old_password'])){
+                    return '9';
+                }
+            }
+        }
+
+        // password confirmed
+        if(isNotConfirmedpwd($data['new_password'], $data['confirm_password'])){
+            return '7';
+        }
+
+        // password strength
+        if(isPasswordNotStrength($data['new_password'])){
+            return '8';
+        }
+        $data['new_password'] = password_hash($data['new_password'],PASSWORD_DEFAULT);
+        $result1 = $this->insert('old_passwords',array('user_id' => $user_id, 'old_password' => $chashed_password));
+        $result2 = $this->update('users',array('password'=>$data['new_password']),"user_id = $user_id");
+        if($result1 && $result2){
+            return '3';
+        }else{
+            return '4';
+        }
+    }
+
+    public function getdealerprofile($user_id,$tab,$mode){
+        $data = [];
+        if($mode == 'edit'){
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                d.city AS city,
+                d.street AS street,
+                d.name AS store_name,
+                c.name AS company,
+                CONCAT(di.first_name,' ',di.last_name) AS distributor,
+                d.contact_no AS contact_no,
+                d.image AS image FROM users u INNER JOIN dealer d
+                ON u.user_id = d.dealer_id
+                INNER JOIN company c
+                ON d.company_id = c.company_id
+                INNER JOIN users di
+                ON d.distributor_id = di.user_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'bank'){
+                $sql = "SELECT * FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE d.dealer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'security'){
+                $sql = "SELECT * FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE d.dealer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'capacity'){
+                $sql = "SELECT dc.capacity AS capacity,
+                p.name AS product_name,
+                p.product_id AS product_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                p.image AS product_image,
+                u.email AS email,
+                u.user_id AS user_id,
+                d.image AS image FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id INNER JOIN company c ON d.company_id = c.company_id INNER JOIN product p ON c.company_id = p.company_id RIGHT JOIN dealer_capacity dc ON d.dealer_id = dc.dealer_id AND p.product_id = dc.product_id WHERE d.dealer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }else{
+            $data['query'] = "hello";
+        }
+        return $data;
+    }
+
 }
 ?>
