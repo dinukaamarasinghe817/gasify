@@ -5,6 +5,106 @@ class ProfileHTML{
         $this->$profilemode($data);
     }
 
+    function previewdealer($data){
+        $row = mysqli_fetch_assoc($data['query']);
+        echo '<section class="body-content">
+                    <div class="content-data profile">
+                        <div class="prof-nav">
+                            <img src="'.BASEURL.'/public/img/profile/'.$row['image'].'" alt="">
+                            <h3>'.$row['first_name'].' '.$row['last_name'].'</h3>
+                            <p class="gray">'.$row['email'].'</p>
+                            <ul>
+                                <li>';
+                                if($data['tab']=='profile'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/dealer/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
+                                }else{
+                                    echo '<a class="" href="'.BASEURL.'/profile/preview/dealer/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
+                                }
+                                echo '</li>
+                                <li>';
+                                if($data['tab'] == 'bank'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/dealer/'.$row['user_id'].'/bank/'.$data['viewfolder'].'/'.$data['viewfile'].'">Bank Details</a>';
+                                }else{
+                                    echo '<a href="'.BASEURL.'/profile/preview/dealer/'.$row['user_id'].'/bank/'.$data['viewfolder'].'/'.$data['viewfile'].'">Bank Details</a>';
+                                }
+                                echo '</li>
+                                <li>';
+                                if($data['tab'] == 'stock'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/dealer/'.$row['user_id'].'/stock/'.$data['viewfolder'].'/'.$data['viewfile'].'">Stock</a>';
+                                }else{
+                                    echo '<a href="'.BASEURL.'/profile/preview/dealer/'.$row['user_id'].'/stock/'.$data['viewfolder'].'/'.$data['viewfile'].'">Stock</a>';
+                                }
+                                echo '</li>
+                            </ul>
+                        </div>
+                        <div class="prof-info">
+                            <h2>Profile Information</h2>';
+                        if($data['tab']== 'bank'){
+                            echo '<form class="bank" action="#" method="post">
+                                <div>
+                                    <div class="input half"><label>Bank</label>
+                                    <select id="city" class="dropdowndate" name="bank" class="half" disabled>';
+                                        $banks = BANKS;
+                                        foreach($banks as $bank){
+                                            if($bank == $row['bank']){
+                                                echo '<option value="'.$bank.'" selected >'.$bank.'</option>';
+                                            }else{
+                                                echo '<option value="'.$bank.'">'.$bank.'</option>';
+                                            }
+                                        }
+                                echo '</select>
+                                    </div>
+                                    <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'" readonly></div>
+                                </div>
+                            </form>';
+                        }else if($data['tab']=='profile'){
+                            echo '<form class="profile" action="#" enctype="multipart/form-data" method="post">
+                                
+                                <div class="input half"><label>Dealer Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['first_name'].' '.$row['last_name'].'" readonly></div>
+                                <div>
+                                    <div class="input half"><label>City</label>
+                                    <select id="city" class="dropdowndate" name="city" class="half" disabled>';
+                                        $cities = CITIES;
+                                        foreach($cities as $city){
+                                            if($city == $row['city']){
+                                                echo '<option value="'.$city.'" selected >'.$city.'</option>';
+                                            }else{
+                                                echo '<option value="'.$city.'">'.$city.'</option>';
+                                            }
+                                        }
+                                echo '</select>
+                                    </div>
+                                    <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'" readonly></div>
+                                </div>
+                                <div class="input"><label>Store Name</label><input type="text" name="name" placeholder="store name" value="'.$row['store_name'].'" readonly></div>
+                                <div class="input"><label>Company Working</label><input type="text" name="company" placeholder="company" value="'.$row['company'].'" readonly></div>
+                                <div class="input"><label>Distributor Assigned</label><input type="text" name="distributor" placeholder="distributor" value="'.$row['distributor'].'" readonly></div>
+                                <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'" readonly></div>
+                            </form>';
+                        }else if($data['tab']=='stock'){
+                            echo '<form class="business" action="#" method="post">';
+                                do{
+                                    echo '<div class="pcap"><img src="'.BASEURL.'/public/img/products/'.$row['product_image'].'" alt="">
+                                    <div class="input half"><label><strong>Product Name : </strong>'.$row['product_name'].'</label><label><strong>Number of cylinders</strong></label><input type="text" name="'.$row['product_id'].'" value="'.$row['quantity'].'" readonly></div></div>';
+                                }while($row = mysqli_fetch_assoc($data['query']));
+                                echo '</form>';
+                        }
+                        echo '</div>
+                    </div>
+            </section>';
+            
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
+            //     form.onsubmit = (e)=>{
+            //         e.preventDefault();
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
+    }
+
     function editdealer($data){
         $row = mysqli_fetch_assoc($data['query']);
         echo '<section class="body-content">

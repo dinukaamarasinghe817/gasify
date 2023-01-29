@@ -532,7 +532,40 @@ class User extends Model
                 $data['query'] = $this->Query($sql);
             }
         }else{
-            $data['query'] = "hello";
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                d.city AS city,
+                d.street AS street,
+                d.name AS store_name,
+                c.name AS company,
+                CONCAT(di.first_name,' ',di.last_name) AS distributor,
+                d.contact_no AS contact_no,
+                d.image AS image FROM users u INNER JOIN dealer d
+                ON u.user_id = d.dealer_id
+                INNER JOIN company c
+                ON d.company_id = c.company_id
+                INNER JOIN users di
+                ON d.distributor_id = di.user_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'bank'){
+                $sql = "SELECT * FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE d.dealer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'stock'){
+                $sql = "SELECT dk.quantity AS quantity,
+                p.name AS product_name,
+                p.product_id AS product_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                p.image AS product_image,
+                u.email AS email,
+                u.user_id AS user_id,
+                d.image AS image FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id INNER JOIN company c ON d.company_id = c.company_id INNER JOIN product p ON c.company_id = p.company_id RIGHT JOIN dealer_keep dk ON d.dealer_id = dk.dealer_id AND p.product_id = dk.product_id WHERE d.dealer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
         }
         return $data;
     }

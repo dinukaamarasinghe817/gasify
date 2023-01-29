@@ -79,6 +79,38 @@
             // $this->edit($_SESSION['role'],$_SESSION['user_id'],$tab,$_SESSION['role'],'profile',$data['toast']);
         }
 
+        public function preview($role,$user_id,$tab,$viewfolder,$viewfile){
+            $data = $this->model("User")->getprofile($role,$user_id,$tab,'preview');
+            $data['tab'] = $tab;
+            $model = ""; $func = "";
+
+            // for the profile component at the front end
+            $data['mode'] = 'preview';
+            $data['user'] = $role;
+            
+            // for body header details of the accessor
+            switch($_SESSION['role']){
+                case 'dealer':
+                    $model = "Dealer";
+                    $func = "getDealer";
+                    break;
+                case 'customer':
+                    $model = "Customer";
+                    $func = "getCustomerImage";
+                    break;
+            }
+            $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
+            $data['image'] = $row['image'];
+            $data['name'] = $row['first_name'].' '.$row['last_name'];
+            $data['navigation'] = 'dashboard';
+            // if($toast != null){
+            //     $data['toast'] = $toast;
+            // }
+            $data['viewfolder'] = $viewfolder;
+            $data['viewfile'] = $viewfile;
+            $this->view($viewfolder.'/'.$viewfile,$data);
+        }
+
         public function updatedealer($tab){
             $user_id = $_SESSION['user_id'];
             $role = $_SESSION['role'];
