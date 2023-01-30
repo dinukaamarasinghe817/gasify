@@ -42,18 +42,7 @@ class ProfileHTML{
                         if($data['tab']== 'bank'){
                             echo '<form class="bank" action="#" method="post">
                                 <div>
-                                    <div class="input half"><label>Bank</label>
-                                    <select id="city" class="dropdowndate" name="bank" class="half" disabled>';
-                                        $banks = BANKS;
-                                        foreach($banks as $bank){
-                                            if($bank == $row['bank']){
-                                                echo '<option value="'.$bank.'" selected >'.$bank.'</option>';
-                                            }else{
-                                                echo '<option value="'.$bank.'">'.$bank.'</option>';
-                                            }
-                                        }
-                                echo '</select>
-                                    </div>
+                                    <div class="input half"><label>Bank</label><input type="text" name="bank" placeholder="bank" value="'.$row['bank'].'" readonly></div>
                                     <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'" readonly></div>
                                 </div>
                             </form>';
@@ -307,7 +296,7 @@ class ProfileHTML{
                                     <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
                                 </div>
                                 <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'"></div>
-                                <div class="input"><label>User Type</label><input type="text" name="type" placeholder="user type" value="'.$row['type'].'"></div>
+                                <div class="input"><label>User Type</label><input type="text" name="type" placeholder="user type" value="'.$row['type'].'" readonly></div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
                                 <button class="button" type="submit">Done</button>
                             </form>';
