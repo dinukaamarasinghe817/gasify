@@ -448,6 +448,58 @@ class User extends Model
         return $data;
     }
 
+    public function setdistributorprofile($user_id,$tab,$data){
+        if($tab == 'profile'){
+            $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            // image type validity jpg png jpeg
+            if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
+                $data['toast'] = '1';
+                return $data;
+            }
+
+            if(isset($data['image_name'])){
+                $data['image'] = getImageRename($data['image_name'],$data['tmp_name']);
+                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+                echo $data['image']."\n";
+                if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
+                    // echo "image uploaded\n";
+                    $result2 = $this->update('distributor',array('city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image'],'hold_time'=>$data['hold_time']),"distributor_id = $user_id");
+                    // echo "hello\n";
+                }else{
+                    $data['toast'] = '2';
+                    return $data;
+                    // echo "image not uploaded\n";
+                }
+            }else{
+                $result2 = $this->update('distributor',array('city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'hold_time'=>$data['hold_time']),"distributor_id = $user_id");
+            }
+            if($result1 && $result2){
+                $data['toast'] = '3';
+            }else{
+                $data['toast'] = '4';
+            }
+
+        }else if($tab == 'security'){
+            $data['toast'] = $this->updatepassword($user_id,$data);
+
+        }else if($tab == 'capacity'){
+            $row = mysqli_fetch_assoc($this->read('distributor',"distributor_id = $user_id"));
+            $result = $this->read('product',"company_id = ".$row['company_id']);
+            $capacity = array();
+            while($row = mysqli_fetch_assoc($result)){
+                if(isset($_POST[$row['product_id']])){
+                    $quantity = $_POST[$row['product_id']];
+                    array_push($capacity,['product_id' => $row['product_id'], 'quantity' => $quantity]);
+                }
+            }
+            foreach($capacity as $cap){
+                $this->update('distributor_capacity',array('capacity'=>$cap['quantity']),"distributor_id = $user_id AND product_id = ".$cap['product_id']);
+            }
+            $data['toast'] = '3';
+        }
+        return $data;
+    }
+
     public function setcustomerprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
@@ -601,7 +653,86 @@ class User extends Model
                 p.image AS product_image,
                 u.email AS email,
                 u.user_id AS user_id,
-                d.image AS image FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id INNER JOIN company c ON d.company_id = c.company_id INNER JOIN product p ON c.company_id = p.company_id RIGHT JOIN dealer_keep dk ON d.dealer_id = dk.dealer_id AND p.product_id = dk.product_id WHERE d.dealer_id = $user_id";
+                d.image AS image FROM users u INNER JOIN dealer d 
+                ON u.user_id = d.dealer_id INNER JOIN company c 
+                ON d.company_id = c.company_id INNER JOIN product p 
+                ON c.company_id = p.company_id RIGHT JOIN dealer_keep dk 
+                ON d.dealer_id = dk.dealer_id AND p.product_id = dk.product_id WHERE d.dealer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }
+        return $data;
+    }
+
+    public function getdistributorprofile($user_id,$tab,$mode){
+        $data = [];
+        if($mode == 'edit'){
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                d.city AS city,
+                d.street AS street,
+                c.name AS company,
+                d.contact_no AS contact_no,
+                d.hold_time AS hold_time,
+                d.image AS image FROM users u INNER JOIN distributor d
+                ON u.user_id = d.distributor_id
+                INNER JOIN company c
+                ON d.company_id = c.company_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'security'){
+                $sql = "SELECT * FROM distributor d INNER JOIN users u ON d.distributor_id = u.user_id WHERE d.distributor_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'capacity'){
+                $sql = "SELECT dc.capacity AS capacity,
+                p.name AS product_name,
+                p.product_id AS product_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                p.image AS product_image,
+                u.email AS email,
+                u.user_id AS user_id,
+                d.image AS image FROM users u INNER JOIN distributor d 
+                ON u.user_id = d.distributor_id INNER JOIN company c 
+                ON d.company_id = c.company_id INNER JOIN product p 
+                ON c.company_id = p.company_id RIGHT JOIN distributor_capacity dc 
+                ON d.distributor_id = dc.distributor_id AND p.product_id = dc.product_id WHERE d.distributor_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }else{
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                d.city AS city,
+                d.street AS street,
+                c.name AS company,
+                d.hold_time AS hold_time,
+                d.contact_no AS contact_no,
+                d.image AS image FROM users u INNER JOIN distributor d
+                ON u.user_id = d.distributor_id
+                INNER JOIN company c
+                ON d.company_id = c.company_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'stock'){
+                $sql = "SELECT dk.quantity AS quantity,
+                p.name AS product_name,
+                p.product_id AS product_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                p.image AS product_image,
+                u.email AS email,
+                u.user_id AS user_id,
+                d.image AS image FROM users u INNER JOIN distributor d 
+                ON u.user_id = d.distributor_id INNER JOIN company c 
+                ON d.company_id = c.company_id INNER JOIN product p 
+                ON c.company_id = p.company_id RIGHT JOIN distributor_keep dk 
+                ON d.distributor_id = dk.distributor_id AND p.product_id = dk.product_id WHERE d.distributor_id = $user_id";
                 $data['query'] = $this->Query($sql);
             }
         }

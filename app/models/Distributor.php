@@ -22,7 +22,8 @@ class Distributor extends Model
     }
 
     public function getDistributorImage($distributor_id){
-        $result = $this->read('distributor', "distributor_id = $distributor_id");
+        // $result = $this->read('distributor', "distributor_id = $distributor_id");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN distributor d ON u.user_id = d.distributor_id WHERE u.user_id = $distributor_id");
         return $result;
     }
 
