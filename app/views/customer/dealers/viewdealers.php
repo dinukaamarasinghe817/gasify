@@ -62,7 +62,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         if(isset($data["dealers"])){
                             $result = $data["dealers"];
                             while($dealer = mysqli_fetch_assoc($result)){
-                                    $url = BASEURL.'/Dealers/customer_selectdealer/'.$dealer['dealer_id'];
+                                    $url = BASEURL.'/profile/preview/dealer/'.$dealer['dealer_id'].'/profile/customer/viewdealerprofile';
                                     echo ' <tr><td>'.$dealer["d_name"].'</td><td>'.$dealer["c_name"].'</td><td>'.$dealer["address"].'</td><td>'.$dealer["contact_no"].'</td><td><button type="submit" class="More_details" onclick = "location.href=\''.$url.'\'">More Details</button></td></tr>';
                             }
                        
