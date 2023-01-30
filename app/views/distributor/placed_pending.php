@@ -55,9 +55,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                                 $output = '
                                 <div class="labelbgn">';
-                                $order_id = $row1['stock_req_id'];
-                                $output .='
-                                    <div class="label">Purchase Order ID : .'{$order_id}'. </div>
+                                    $order_id = $row1['stock_req_id'];
+                                    $output .='
+                                    <div class="label">Purchase Order ID :  '.$order_id.'  </div>
                                     <div class="label">Total Amount : </div>
                                     <div class="label">
                                         <button class="inside">Assign Vehicle</button>
@@ -68,12 +68,11 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                     </svg>
                                 </div>';
                                 
-
                                 $output .= '
                                 <div class="content">';
                                     $date = $row1['place_date'];
                                     $output .='
-                                    <span><strong>Placed Time : .'{$date}'. </strong></span>
+                                    <span><strong>Placed Date : '.$date.' </strong></span><br><br>
                                     <span><strong>Pending Phurchase Order Details :</strong></span>
                                     <hr>
                                     <table>
@@ -85,13 +84,19 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             </tr>
                                         </thead>
 
-                                        <tbody>
+                                        <tbody>';
+                                        foreach($capacities as $capacity) {
+                                            $row2 = $capacity;
+                                        
+                                            $output .= '
                                             <tr>
-                                                <tr>'.$row2['product_id'].'</tr>
-                                                <tr>'.$row2['quantity'].'</tr>
-                                                <tr>'.$row2['unit_price'].'</tr>
+                                                <td>'.$row2['product_id'].'</td>
+                                                <td>'.$row2['quantity'].'</td>
+                                                <td>'.$row2['unit_price'].'</td>
                                             
-                                            </tr>
+                                            </tr>';
+                                        }
+                                        $output .='
                                         </tbody>
                                     </table>
                                 </div>'; 
