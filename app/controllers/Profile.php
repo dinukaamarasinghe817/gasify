@@ -81,7 +81,10 @@
                     break;
             }
             $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
-            $data['image'] = $row['image'];
+            // $data['image'] = $row['image'];
+            if(isset($row['image'])){$data['image'] = $row['image'];}
+            else if(isset($row['logo'])){$data['image'] = $row['logo'];}
+            else{}
             $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
             // if($toast != null){
@@ -135,7 +138,10 @@
                     break;
             }
             $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
-            $data['image'] = $row['image'];
+            // $data['image'] = $row['image'];
+            if(isset($row['image'])){$data['image'] = $row['image'];}
+            else if(isset($row['logo'])){$data['image'] = $row['logo'];}
+            else{}
             $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
             // if($toast != null){
@@ -198,6 +204,30 @@
                 $data['confirm_password'] = $_POST['confirm_password'];
             }else if($tab == 'capacity'){
                 $data = [];
+            }
+            $data = $this->model("User")->setprofile($role,$user_id,$tab,$data);
+            return $data;
+            
+        }
+
+        public function updatecompany($tab){
+            $user_id = $_SESSION['user_id'];
+            $role = $_SESSION['role'];
+            if($tab == 'profile'){
+                $data['first_name'] = $_POST['first_name'];
+                $data['last_name'] = $_POST['last_name'];
+                $data['city'] = $_POST['city'];
+                $data['street'] = $_POST['street'];
+                $data['company_name'] = $_POST['company_name'];
+                if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                    $data['image_name'] = $_FILES['image']['name'];
+                    $data['tmp_name'] = $_FILES['image']['tmp_name'];
+                }
+                // echo "controller";
+            }else if($tab == 'security'){
+                $data['current_password'] = $_POST['current_password'];
+                $data['new_password'] = $_POST['new_password'];
+                $data['confirm_password'] = $_POST['confirm_password'];
             }
             $data = $this->model("User")->setprofile($role,$user_id,$tab,$data);
             return $data;

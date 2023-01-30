@@ -500,6 +500,44 @@ class User extends Model
         return $data;
     }
 
+    public function setcompanyprofile($user_id,$tab,$data){
+        if($tab == 'profile'){
+            $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            // image type validity jpg png jpeg
+            if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
+                $data['toast'] = '1';
+                return $data;
+            }
+
+            if(isset($data['image_name'])){
+                $data['image'] = getImageRename($data['image_name'],$data['tmp_name']);
+                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+                echo $data['image']."\n";
+                if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
+                    // echo "image uploaded\n";
+                    $result2 = $this->update('company',array('city'=>$data['city'],'street'=>$data['street'],'logo'=>$data['image'],'name'=>$data['company_name']),"company_id = $user_id");
+                    // echo "hello\n";
+                }else{
+                    $data['toast'] = '2';
+                    return $data;
+                    // echo "image not uploaded\n";
+                }
+            }else{
+                $result2 = $this->update('company',array('city'=>$data['city'],'street'=>$data['street'],'name'=>$data['company_name']),"company_id = $user_id");
+            }
+            if($result1 && $result2){
+                $data['toast'] = '3';
+            }else{
+                $data['toast'] = '4';
+            }
+
+        }else if($tab == 'security'){
+            $data['toast'] = $this->updatepassword($user_id,$data);
+
+        }
+        return $data;
+    }
+
     public function setcustomerprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
@@ -733,6 +771,45 @@ class User extends Model
                 ON d.company_id = c.company_id INNER JOIN product p 
                 ON c.company_id = p.company_id RIGHT JOIN distributor_keep dk 
                 ON d.distributor_id = dk.distributor_id AND p.product_id = dk.product_id WHERE d.distributor_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }
+        return $data;
+    }
+
+    public function getcompanyprofile($user_id,$tab,$mode){
+        $data = [];
+        if($mode == 'edit'){
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                c.city AS city,
+                c.street AS street,
+                c.name AS name,
+                c.logo AS logo
+                FROM users u INNER JOIN company c
+                ON u.user_id = c.company_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'security'){
+                $sql = "SELECT * FROM company c INNER JOIN users u ON c.company_id = u.user_id WHERE c.company_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }else{
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                c.city AS city,
+                c.street AS street,
+                c.name AS name,
+                c.logo AS logo
+                FROM users u INNER JOIN company c
+                ON u.user_id = c.company_id
+                WHERE u.user_id = $user_id";
                 $data['query'] = $this->Query($sql);
             }
         }

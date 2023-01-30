@@ -140,6 +140,55 @@ class ProfileHTML{
             </script>';
     }
 
+    function previewcompany($data){
+        $row = mysqli_fetch_assoc($data['query']);
+        echo '<section class="body-content">
+                    <div class="content-data profile">
+                        <div class="prof-nav">
+                            <img src="'.BASEURL.'/public/img/profile/'.$row['logo'].'" alt="">
+                            <h3>'.$row['company_name'].'</h3>
+                            <p class="gray">'.$row['email'].'</p>
+                            <ul>
+                                <li>';
+                                if($data['tab']=='profile'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                }else{
+                                    echo '<a class="" href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                }
+                                echo '</li>
+                            </ul>
+                        </div>
+                        <div class="prof-info">
+                            <h2>Profile Settings</h2>';
+                        if($data['tab']=='profile'){
+                            echo '<form class="profile" action="#" enctype="multipart/form-data" method="post">
+                                <div class="input"><label>Company Name</label><input type="text" name="company" placeholder="company" value="'.$row['name'].'" readonly></div>
+                                <div>
+                                    <div class="input half"><label>First Name</label><input type="text" name="first_name" placeholder="first name" value="'.$row['first_name'].'" readonly></div>
+                                    <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'" readonly></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'" readonly></div>
+                                    <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'" readonly></div>
+                                </div>
+                            </form>';
+                        }
+                        echo '</div>
+                    </div>
+            </section>';
+            
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
+            //     form.onsubmit = (e)=>{
+            //         e.preventDefault();
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
+    }
+
     function previewcustomer($data){
         $row = mysqli_fetch_assoc($data['query']);
         echo '<section class="body-content">
@@ -252,18 +301,7 @@ class ProfileHTML{
                                     <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'"></div>
                                 </div>
                                 <div>
-                                    <div class="input half"><label>City</label>
-                                    <select id="city" class="dropdowndate" name="city" class="half">';
-                                        $cities = CITIES;
-                                        foreach($cities as $city){
-                                            if($city == $row['city']){
-                                                echo '<option value="'.$city.'" selected >'.$city.'</option>';
-                                            }else{
-                                                echo '<option value="'.$city.'">'.$city.'</option>';
-                                            }
-                                        }
-                                echo '</select>
-                                    </div>
+                                    <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'"></div>
                                     <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
                                 </div>
                                 <div class="input"><label>Store Name</label><input type="text" name="name" placeholder="store name" value="'.$row['store_name'].'"></div>
@@ -373,6 +411,84 @@ class ProfileHTML{
                                     <div class="input half"><label>'.$row['product_name'].'</label><input type="number" name="'.$row['product_id'].'" min='.$row['capacity'].' step=1 value="'.$row['capacity'].'"></div></div>';
                                 }while($row = mysqli_fetch_assoc($data['query']));
                                 echo '<button class="button" type="submit">Done</button>
+                            </form>';
+                        }
+                        echo '</div>
+                    </div>
+            </section>';
+            
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
+            //     form.onsubmit = (e)=>{
+            //         e.preventDefault();
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
+    }
+
+    function editcompany($data){
+        $row = mysqli_fetch_assoc($data['query']);
+        echo '<section class="body-content">
+                    <div class="content-data profile">
+                        <div class="prof-nav">
+                            <img src="'.BASEURL.'/public/img/profile/'.$row['logo'].'" alt="">
+                            <h3>'.$row['name'].'</h3>
+                            <p class="gray">'.$row['email'].'</p>
+                            <ul>
+                                <li>';
+                                if($data['tab']=='profile'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                }else{
+                                    echo '<a class="" href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                }
+                                echo '</li>
+                                <li>';
+                                if($data['tab'] == 'security'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/security/company/profile">Security</a>';
+                                }else{
+                                    echo '<a href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/security/company/profile">Security</a>';
+                                }
+                                echo '</li>
+                            </ul>
+                        </div>
+                        <div class="prof-info">
+                            <h2>Profile Settings</h2>';
+                        if($data['tab']=='profile'){
+                            echo '<form class="profile" action="'.BASEURL.'/profile/update/profile" enctype="multipart/form-data" method="post">
+                                <div class="input"><label>Company Name</label><input type="text" name="company_name" placeholder="company name" value="'.$row['name'].'"></div>
+                                <div>
+                                    <div class="input half"><label>First Name</label><input type="text" name="first_name" placeholder="first name" value="'.$row['first_name'].'"></div>
+                                    <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'"></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>City</label>
+                                    <select id="city" class="dropdowndate" name="city" class="half">';
+                                        $cities = CITIES;
+                                        foreach($cities as $city){
+                                            if($city == $row['city']){
+                                                echo '<option value="'.$city.'" selected >'.$city.'</option>';
+                                            }else{
+                                                echo '<option value="'.$city.'">'.$city.'</option>';
+                                            }
+                                        }
+                                echo '</select>
+                                    </div>
+                                    <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
+                                </div>
+                                <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
+                                <button class="button" type="submit">Done</button>
+                            </form>';
+                        }else if($data['tab']=='security'){
+                            echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
+                                <div class="input"><label>Current Password</label><input type="password" name="current_password" placeholder="Enter current password"></div>
+                                <div>
+                                    <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
+                                    <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
+                                </div>
+                                <button class="button">Done</button>
                             </form>';
                         }
                         echo '</div>

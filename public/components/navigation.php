@@ -523,9 +523,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'dashboard'){
-                    echo '<a href="../dashboard/company" class="panel-tile active dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/company" class="panel-tile active dashboard">';
                 }else{
-                    echo '<a href="../dashboard/company" class="panel-tile dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/company" class="panel-tile dashboard">';
                 }
         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -538,9 +538,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'orders'){
-                    echo '<a href="../Compny/dealer" class="panel-tile active orders">';
+                    echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile active orders">';
                 }else{
-                    echo '<a href="../Compny/dealer" class="panel-tile orders">';
+                    echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile orders">';
                 }
 
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -556,9 +556,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'delivery'){
-                    echo '<a href="../Compny/distributor" class="panel-tile active delivery">';
+                    echo '<a href="'.BASEURL.'../Compny/distributor" class="panel-tile active delivery">';
                 }else{
-                    echo '<a href="../Compny/distributor" class="panel-tile delivery">';
+                    echo '<a href="'.BASEURL.'/Compny/distributor" class="panel-tile delivery">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -580,9 +580,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'stock'){
-                    echo '<a href="#" class="panel-tile active stock">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile active stock">';
                 }else{
-                    echo '<a href="#" class="panel-tile stock">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile stock">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -596,9 +596,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'notifications'){
-                    echo '<a href="../Compny/products" class="panel-tile active notifications">';
+                    echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile active notifications">';
                 }else{
-                    echo '<a href="../Compny/products" class="panel-tile notifications">';
+                    echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile notifications">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -610,9 +610,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'analysis'){
-                    echo '<a href="#" class="panel-tile active analysis">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile active analysis">';
                 }else{
-                    echo '<a href="#" class="panel-tile analysis">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile analysis">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -625,9 +625,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'reports'){
-                    echo '<a href="#" class="panel-tile active reports">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile active reports">';
                 }else{
-                    echo '<a href="#" class="panel-tile reports">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile reports">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
