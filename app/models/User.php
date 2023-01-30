@@ -378,7 +378,7 @@ class User extends Model
     public function getprofile($role,$user_id,$tab,$mode){
         // role is the type of user
         // tab is which tab we want
-        // mode is either 'view' or 'edit'
+        // mode is either 'preview' or 'edit'
         $func = 'get'.$role.'profile';
         return $this->$func($user_id,$tab,$mode);
     }
@@ -406,9 +406,9 @@ class User extends Model
                     $result2 = $this->update('dealer',array('name'=>$data['name'],'city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image']),"dealer_id = $user_id");
                     // echo "hello\n";
                 }else{
-                    // $data['toast'] = '2';
-                    // return $data;
-                    echo "image not uploaded\n";
+                    $data['toast'] = '2';
+                    return $data;
+                    // echo "image not uploaded\n";
                 }
             }else{
                 $result2 = $this->update('dealer',array('name'=>$data['name'],'city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no']),"dealer_id = $user_id");
@@ -444,6 +444,44 @@ class User extends Model
                 $this->update('dealer_capacity',array('capacity'=>$cap['quantity']),"dealer_id = $user_id AND product_id = ".$cap['product_id']);
             }
             $data['toast'] = '3';
+        }
+        return $data;
+    }
+
+    public function setcustomerprofile($user_id,$tab,$data){
+        if($tab == 'profile'){
+            $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            // image type validity jpg png jpeg
+            if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
+                $data['toast'] = '1';
+                return $data;
+            }
+
+            if(isset($data['image_name'])){
+                $data['image'] = getImageRename($data['image_name'],$data['tmp_name']);
+                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+                echo $data['image']."\n";
+                if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
+                    echo "image uploaded\n";
+                    $result2 = $this->update('customer',array('city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image'],'type'=>$data['type']),"customer_id = $user_id");
+                    // echo "hello\n";
+                }else{
+                    $data['toast'] = '2';
+                    return $data;
+                    // echo "image not uploaded\n";
+                }
+            }else{
+                $result2 = $this->update('customer',array('city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'type'=>$data['type']),"customer_id = $user_id");
+            }
+            if($result1 && $result2){
+                $data['toast'] = '3';
+            }else{
+                $data['toast'] = '4';
+            }
+
+        }else if($tab == 'security'){
+            $data['toast'] = $this->updatepassword($user_id,$data);
+
         }
         return $data;
     }
@@ -564,6 +602,46 @@ class User extends Model
                 u.email AS email,
                 u.user_id AS user_id,
                 d.image AS image FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id INNER JOIN company c ON d.company_id = c.company_id INNER JOIN product p ON c.company_id = p.company_id RIGHT JOIN dealer_keep dk ON d.dealer_id = dk.dealer_id AND p.product_id = dk.product_id WHERE d.dealer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }
+        return $data;
+    }
+
+    public function getcustomerprofile($user_id,$tab,$mode){
+        $data = [];
+        if($mode == 'edit'){
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                c.city AS city,
+                c.street AS street,
+                c.contact_no AS contact_no,
+                c.type AS type,
+                c.image AS image FROM users u INNER JOIN customer c
+                ON u.user_id = c.customer_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'security'){
+                $sql = "SELECT * FROM customer c INNER JOIN users u ON c.customer_id = u.user_id WHERE c.customer_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }else{
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                c.city AS city,
+                c.street AS street,
+                c.name AS company,
+                c.contact_no AS contact_no,
+                c.type AS type,
+                c.image AS image FROM users u INNER JOIN customer c
+                ON u.user_id = c.customer_id
+                WHERE u.user_id = $user_id";
                 $data['query'] = $this->Query($sql);
             }
         }

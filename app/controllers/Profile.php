@@ -59,6 +59,26 @@
                     $model = "Dealer";
                     $func = "getDealer";
                     break;
+                case 'customer':
+                    $model = "Customer";
+                    $func = "getCustomerImage";
+                    break;
+                case 'dealer':
+                    $model = "Distributor";
+                    $func = "getDistributorImage";
+                    break;
+                case 'dealer':
+                    $model = "Delivery";
+                    $func = "getDeliveryImage";
+                    break;
+                case 'dealer':
+                    $model = "Company";
+                    $func = "getCompanyImage";
+                    break;
+                case 'dealer':
+                    $model = "Admin";
+                    $func = "getAdminImage";
+                    break;
             }
             $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
             $data['image'] = $row['image'];
@@ -73,7 +93,6 @@
         public function update($tab){
             $func = 'update'.$_SESSION['role'];
             $user_id = $_SESSION['user_id'];
-            echo "update controller\n";
             $data = $this->$func($tab);
             header("Location: ".BASEURL."/profile/edit/".$_SESSION['role']."/".$user_id."/".$tab."/".$_SESSION['role']."/profile/".$data['toast']);
             // $this->edit($_SESSION['role'],$_SESSION['user_id'],$tab,$_SESSION['role'],'profile',$data['toast']);
@@ -136,6 +155,31 @@
                 $data['confirm_password'] = $_POST['confirm_password'];
             }else if($tab == 'capacity'){
                 $data = [];
+            }
+            $data = $this->model("User")->setprofile($role,$user_id,$tab,$data);
+            return $data;
+            
+        }
+
+        public function updatecustomer($tab){
+            $user_id = $_SESSION['user_id'];
+            $role = $_SESSION['role'];
+            if($tab == 'profile'){
+                $data['first_name'] = $_POST['first_name'];
+                $data['last_name'] = $_POST['last_name'];
+                $data['name'] = $_POST['name'];
+                $data['city'] = $_POST['city'];
+                $data['street'] = $_POST['street'];
+                $data['contact_no'] = $_POST['contact_no'];
+                $data['type'] = $_POST['type'];
+                if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                    $data['image_name'] = $_FILES['image']['name'];
+                    $data['tmp_name'] = $_FILES['image']['tmp_name'];
+                }
+            }else if($tab == 'security'){
+                $data['current_password'] = $_POST['current_password'];
+                $data['new_password'] = $_POST['new_password'];
+                $data['confirm_password'] = $_POST['confirm_password'];
             }
             $data = $this->model("User")->setprofile($role,$user_id,$tab,$data);
             return $data;

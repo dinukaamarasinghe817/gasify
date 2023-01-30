@@ -348,3 +348,41 @@
     background-color: var(--navmenu-gray-dark);
     color: white;
 }
+
+/* delivery css */
+.person{
+    border: 2px solid rgba(128, 128, 128, 0.187);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+}
+
+.person img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+.person div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* notification css */
+.notification{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(243, 243, 243);
+    padding: 10px;
+    border-radius: 10px;
+}
+.notification h2{
+    font-size: var(--mediums);
+}

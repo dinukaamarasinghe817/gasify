@@ -87,9 +87,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'delivery'){
-                    echo '<a href="'.BASEURL.'/" class="panel-tile active delivery">';
+                    echo '<a href="'.BASEURL.'/delvery/getdeliverypeople/all" class="panel-tile active delivery">';
                 }else{
-                    echo '<a href="'.BASEURL.'/" class="panel-tile delivery">';
+                    echo '<a href="'.BASEURL.'/delvery/getdeliverypeople/all" class="panel-tile delivery">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
