@@ -870,6 +870,7 @@ td button:hover{
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
+    border: 5px solid var(--table-gray);
 }
 .prof-nav ul{
     width: 100%;
