@@ -30,7 +30,7 @@ class Products extends Controller{
     function select_products($company_id){
     
         $customer_id = $_SESSION['user_id'];
-        $data['navigation'] = 'dashboard';
+        $data['navigation'] = 'placereservation';
         $data['company_id'] = $company_id;
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);

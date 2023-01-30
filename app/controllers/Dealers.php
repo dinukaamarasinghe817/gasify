@@ -31,24 +31,25 @@ class Dealers extends Controller {
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        // $data['dealers']= $this->model("Customer")->viewdealers($user_id);
+        $data['dealers']= $this->model("Customer")->getAlldealers();
+        $data['brands']= $this->model("Customer")->getCompanyBrand();
 
         $this->view('customer/dealers/viewdealers',$data);
     }
 
-    public function customer_selectdealer() {
-        $customer_id  = $_SESSION['user_id'];
-        $data['navigation'] = 'dealers';
+    // public function customer_selectdealer($dealer_id) {
+    //     $customer_id  = $_SESSION['user_id'];
+    //     $data['navigation'] = 'dealers';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+    //     $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+    //     $row1 = mysqli_fetch_assoc($customer_details);
+    //     $data['image'] = $row1['image'];
+    //     $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        // $data['dealers']= $this->model("Customer")->viewdealers($user_id);
+    //     // $data['dealers']= $this->model("Customer")->viewdealers($user_id);
 
-        $this->view('customer/dealers/selectdealer',$data);
-    }
+    //     $this->view('customer/dealers/selectdealer',$data);
+    // }
    
 }
 

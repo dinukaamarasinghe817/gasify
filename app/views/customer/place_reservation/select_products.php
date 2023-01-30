@@ -16,11 +16,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="title">
            <h3>Products</h3>
         </div>
-        <div class="middle">
+        <!-- <div class="middle"> -->
         <?php
 
             $products = $data['products'];
-            echo '<div class="gas_cylinder">
+            echo '
+                <div class="gas_cylinder">
                     <div class="subtitle">
                         <h4>Re-Fill Cylinders</h4>
                     </div>
@@ -37,16 +38,18 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>
                                 <div class="increment_box">
                                     <div class="minus">-</div>
-                                    <input type="text" name="qty" id="qty" value="0" class="num" onchange="changeqty('.$product['p_id'].','.$product['unit_price'].');>
-                                    <div class="plus">+</div>
+                                    <input type="text" name="qty" id="qty" value="0" class="num" onchange="changeqty('.$product['p_id'].','.$product['unit_price'].');">
+                                    <div class = "plus">+</div>
                                 </div>
+                                
                             </div>
                         ';
                 }
             }
-            echo '</div>
-            </div>';
 
+            echo '</div>';
+            
+           
             echo '<div class="accessories">
                     <div class="subtitle">
                         <h4>Accessories</h4>
@@ -75,11 +78,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
             echo '</div>
             </div>';      
         ?>
-            <div class="total_amount">
+            <!-- <div class="total_amount">
                 <span>Total Amount : </span><span class="total"></span>
-            </div>
-        </div>
+            </div> -->
+        
     </div>
+    
 
 
 </section>

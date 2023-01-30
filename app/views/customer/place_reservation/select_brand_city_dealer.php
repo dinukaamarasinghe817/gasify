@@ -7,8 +7,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
         
     ?>
 
@@ -25,11 +23,22 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 </div>
                 <div class="title">Brand</div>
                 <div class="drop-down">
-                    <select id="brand" name="brand" class="brand_dropdown dropdowndate" >
-                        <option value="-1" selected disabled hidden>Select Gas Brand</option>
-                        <option value="0">Litro</option>
-                        <option value="1">Laugfs</option>
-                    </select>
+                    <div class="brand_dropdown">
+                        <select name="brand" id="brand" class="branddropdown dropdowndate" >
+                            <option value="-1" selected disabled hidden>Select Gas Brand</option>
+                            <?php 
+
+                                if(isset($data["brands"])){
+                                    $result1 = $data["brands"];
+                                    while($brands = mysqli_fetch_assoc($result1)){           
+                                        $name = $brands["name"];
+                                        echo "<option value = $name> $name </option>";
+                                    }
+                                }
+                            ?>
+                    
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -41,12 +50,19 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 </div>
                 <div class="title">City</div>
                 <div class="drop-down">
-                    <select id="brand" name="brand" class="city_dropdown">
-                        <option value="-1" selected disabled hidden>Select City</option>
-                        <option value="0">Maharagama</option>
-                        <option value="1">Ampara</option>
-                        <option value="2">Boralesgamuwa</option>
-                    </select>
+                    <div class="city_drapdown">
+                        <select name="brand" id="brand" class="citydropdown dropdowndate" >
+                            <option value="-1" selected disabled hidden>Select City</option>
+                            <?php 
+                                $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
+                                sort($cities);              
+                                foreach (CITIES as $city){
+                                    echo "<option value=$city>$city</option>";
+                                }
+                            ?>
+                        
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -58,12 +74,22 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 </div>
                 <div class="title">Dealer</div>
                 <div class="drop-down">
-                    <select id="brand" name="brand" class="dealer_dropdown">
-                        <option value="-1" selected disabled hidden>Select Dealer</option>
-                        <option value="0">Gamunu Stores</option>
-                        <option value="1">Randinu Gas Stores</option>
-                        <option value="2">Kavindu Stores</option>
-                    </select>
+                    <div class="dealer_dropdown">
+                        <select name="brand" id="brand" class="dealerdropdown dropdowndate" >
+                            <option value="-1" selected disabled hidden>Select Dealer</option>
+                            <?php 
+
+                                if(isset($data["dealers"])){
+                                    $result1 = $data["dealers"];
+                                    while($dealers = mysqli_fetch_assoc($result1)){           
+                                        $name = $dealers["d_name"];
+                                        echo "<option value = $name> $name </option>";
+                                    }
+                                }
+                            ?>
+                    
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -71,7 +97,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
         <div class="bottom">
             <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
-            <!-- <button class="btn" type="submit" onclick="Orders/select_brand_city_dealer">Next</button> -->
         </div>
 
 </section>

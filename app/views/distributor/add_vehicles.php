@@ -49,7 +49,8 @@ $user_id = $_SESSION['user_id'];
                     <label>Vehicle Type  </label>
                     <!-- <option value="-1" selected disabled hidden>Select vehicle type</option> -->
                     <!-- <input type="text" name="type" placeholder="Vehicle Type" required> -->
-                    <select>
+                    <select name="type">
+                        <!-- <option value="-1" selected disabled hidden class="optiontxt" name="type">Select vehicle type</option> -->
                         <option value="-1" selected disabled hidden class="optiontxt">Select vehicle type</option>
 
                         <?php
