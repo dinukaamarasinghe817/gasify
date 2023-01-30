@@ -781,39 +781,62 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Top" id="Top">
-            <div class="Col_1" id="Col_1">
-                <div class="Title_1">
-                <div class="ChartTitle">Revenue(LKR Millions)</div><br>
-                <div class="ChartTitle">Last five months</div>
+                <div class="card">
+                    <div class="cmValue">5</div>
+                    <div class="cmTitle">Pending Requests</div>
                 </div>
-                <div class="Content_1"></div>
-            </div>
-            <div class="Col_2" id="Col_2">
-                <div class="Title_2">
-                <div class="ChartTitle">Today</div>
+                <div class="card">
+                    <div class="cmValue">4</div>
+                    <div class="cmTitle">Products</div>
                 </div>
-                <div class="Content_2" id="Content_2"></div>
-            
-            </div>
-            <div class="Col_3" id="Col_3">
-                <div class="Title_3">
-                <div class="ChartTitle">Current stock</div>
+                <div class="card">
+                    <div class="cmValue">14</div>
+                    <div class="cmTitle">Distributors</div>
                 </div>
-                <div class="Content_3" id="Content_3">
-                <div class="Content_3_tableHead_row" id="Content_3_tableHead_row"><div class="product_type" style="margin-left: 4%;margin-top:3.5%">Product</div><div class="product_stock" style="margin-top:3.5%">Stock</div></div>';
-               $result=$data['products'];
-                //echo $result;
-                foreach($result as $results){
-                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">'.$results['name'].'</div><div class="data_value" style="margin-right: 10%;">'.$results['quantity'].'</div></div>';
-                }
-                
-                
-                
-                
-                
-                echo'</div>
+                <div class="card">
+                    <div class="cmValue">78</div>
+                    <div class="cmTitle">Dealers</div>
                 </div>
+                
+
+
             </div>';
+            /*echo 
+            '<section class="body-content">
+                <div class="Top" id="Top">
+                <div class="Col_1" id="Col_1">
+                    <div class="Title_1">
+                    <div class="ChartTitle">Revenue(LKR Millions)</div><br>
+                    <div class="ChartTitle">Last five months</div>
+                    </div>
+                    <div class="Content_1"></div>
+                </div>
+                <div class="Col_2" id="Col_2">
+                    <div class="Title_2">
+                    <div class="ChartTitle">Today</div>
+                    </div>
+                    <div class="Content_2" id="Content_2"></div>
+                
+                </div>
+                <div class="Col_3" id="Col_3">
+                    <div class="Title_3">
+                    <div class="ChartTitle">Current stock</div>
+                    </div>
+                    <div class="Content_3" id="Content_3">
+                    <div class="Content_3_tableHead_row" id="Content_3_tableHead_row"><div class="product_type" style="margin-left: 4%;margin-top:3.5%">Product</div><div class="product_stock" style="margin-top:3.5%">Stock</div></div>';
+                   $result=$data['products'];
+                    //echo $result;
+                    foreach($result as $results){
+                        echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">'.$results['name'].'</div><div class="data_value" style="margin-right: 10%;">'.$results['quantity'].'</div></div>';
+                    }
+                    
+                    
+                    
+                    
+                    
+                    echo'</div>
+                    </div>
+                </div>';*/
             /*'<div class="DistributorTableHeadings" id="DistributorTableHeadings">
                 <div class="Distributor_table_name" id="Distributor_table_name">
                     <div class="distibutor_title">Distributor</div>

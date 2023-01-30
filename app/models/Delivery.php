@@ -34,11 +34,11 @@ class Delivery extends Model
         return $result;
     }
     public function getPoolDetails(){
-        $result = $this->loadPool();
+        $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name FROM reservation INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='pending' AND reservation.collecting_method='delivery' INNER JOIN users ON users.user_id=customer.customer_id");
         return $result;
     }
     public function getCurrentDeliveries(){
-        $result=$this->loadCurrenGasDeliveies();
+        $result=$this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name FROM reservation INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='ongoing' AND reservation.collecting_method='delivery' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN users ON users.user_id=customer.customer_id");
         return $result;
     }
     
