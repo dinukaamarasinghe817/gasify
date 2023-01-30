@@ -80,6 +80,66 @@ class ProfileHTML{
             </script>';
     }
 
+    function previewdistributor($data){
+        $row = mysqli_fetch_assoc($data['query']);
+        echo '<section class="body-content">
+                    <div class="content-data profile">
+                        <div class="prof-nav">
+                            <img src="'.BASEURL.'/public/img/profile/'.$row['image'].'" alt="">
+                            <h3>'.$row['first_name'].' '.$row['last_name'].'</h3>
+                            <p class="gray">'.$row['email'].'</p>
+                            <ul>
+                                <li>';
+                                if($data['tab']=='profile'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/distributor/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
+                                }else{
+                                    echo '<a class="" href="'.BASEURL.'/profile/preview/distributor/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
+                                }
+                                echo '</li>
+                                <li>';
+                                if($data['tab'] == 'stock'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/distributor/'.$row['user_id'].'/stock/'.$data['viewfolder'].'/'.$data['viewfile'].'">Stock</a>';
+                                }else{
+                                    echo '<a href="'.BASEURL.'/profile/preview/distributor/'.$row['user_id'].'/stock/'.$data['viewfolder'].'/'.$data['viewfile'].'">Stock</a>';
+                                }
+                                echo '</li>
+                            </ul>
+                        </div>
+                        <div class="prof-info">
+                            <h2>Profile Information</h2>';
+                        if($data['tab']=='profile'){
+                            echo '<form class="profile" action="#" enctype="multipart/form-data" method="post">
+                                
+                                <div class="input"><label>Distributor Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['first_name'].' '.$row['last_name'].'" readonly></div>
+                                <div class="input"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].', '.$row['city'].'" readonly></div>
+                                <div class="input"><label>Company Working</label><input type="text" name="company" placeholder="company" value="'.$row['company'].'" readonly></div>
+                                <div class="input"><label>Average distribute time (days)</label><input type="text" name="hold_time" placeholder="hold_time" value="'.$row['hold_time'].'" readonly></div>
+                                <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'" readonly></div>
+                            </form>';
+                        }else if($data['tab']=='stock'){
+                            echo '<form class="business" action="#" method="post">';
+                                do{
+                                    echo '<div class="pcap"><img src="'.BASEURL.'/public/img/products/'.$row['product_image'].'" alt="">
+                                    <div class="input half"><label><strong>Product Name : </strong>'.$row['product_name'].'</label><label><strong>Number of cylinders</strong></label><input type="text" name="'.$row['product_id'].'" value="'.$row['quantity'].'" readonly></div></div>';
+                                }while($row = mysqli_fetch_assoc($data['query']));
+                                echo '</form>';
+                        }
+                        echo '</div>
+                    </div>
+            </section>';
+            
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
+            //     form.onsubmit = (e)=>{
+            //         e.preventDefault();
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
+    }
+
     function previewcustomer($data){
         $row = mysqli_fetch_assoc($data['query']);
         echo '<section class="body-content">
@@ -210,6 +270,90 @@ class ProfileHTML{
                                 <div class="input"><label>Company</label><input type="text" name="company" placeholder="company" value="'.$row['company'].'" readonly></div>
                                 <div class="input"><label>Distributor</label><input type="text" name="distributor" placeholder="distributor" value="'.$row['distributor'].'" readonly></div>
                                 <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'"></div>
+                                <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
+                                <button class="button" type="submit">Done</button>
+                            </form>';
+                        }else if($data['tab']=='security'){
+                            echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
+                                <div class="input"><label>Current Password</label><input type="password" name="current_password" placeholder="Enter current password"></div>
+                                <div>
+                                    <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
+                                    <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
+                                </div>
+                                <button class="button">Done</button>
+                            </form>';
+                        }else if($data['tab']=='capacity'){
+                            echo '<form class="business" action="'.BASEURL.'/profile/update/capacity" method="post">';
+                                do{
+                                    echo '<div class="pcap"><img src="'.BASEURL.'/public/img/products/'.$row['product_image'].'" alt="">
+                                    <div class="input half"><label>'.$row['product_name'].'</label><input type="number" name="'.$row['product_id'].'" min='.$row['capacity'].' step=1 value="'.$row['capacity'].'"></div></div>';
+                                }while($row = mysqli_fetch_assoc($data['query']));
+                                echo '<button class="button" type="submit">Done</button>
+                            </form>';
+                        }
+                        echo '</div>
+                    </div>
+            </section>';
+            
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
+            //     form.onsubmit = (e)=>{
+            //         e.preventDefault();
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
+    }
+
+    function editdistributor($data){
+        $row = mysqli_fetch_assoc($data['query']);
+        echo '<section class="body-content">
+                    <div class="content-data profile">
+                        <div class="prof-nav">
+                            <img src="'.BASEURL.'/public/img/profile/'.$row['image'].'" alt="">
+                            <h3>'.$row['first_name'].' '.$row['last_name'].'</h3>
+                            <p class="gray">'.$row['email'].'</p>
+                            <ul>
+                                <li>';
+                                if($data['tab']=='profile'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/distributor/'.$row['user_id'].'/profile/distributor/profile" onclick="profile()">Profile</a>';
+                                }else{
+                                    echo '<a class="" href="'.BASEURL.'/profile/edit/distributor/'.$row['user_id'].'/profile/distributor/profile" onclick="profile()">Profile</a>';
+                                }
+                                echo '</li>
+                                <li>';
+                                if($data['tab'] == 'capacity'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/distributor/'.$row['user_id'].'/capacity/distributor/profile">Capacity</a>';
+                                }else{
+                                    echo '<a href="'.BASEURL.'/profile/edit/distributor/'.$row['user_id'].'/capacity/distributor/profile">Capacity</a>';
+                                }
+                                echo '</li>
+                                <li>';
+                                if($data['tab'] == 'security'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/distributor/'.$row['user_id'].'/security/distributor/profile">Security</a>';
+                                }else{
+                                    echo '<a href="'.BASEURL.'/profile/edit/distributor/'.$row['user_id'].'/security/distributor/profile">Security</a>';
+                                }
+                                echo '</li>
+                            </ul>
+                        </div>
+                        <div class="prof-info">
+                            <h2>Profile Settings</h2>';
+                        if($data['tab']=='profile'){
+                            echo '<form class="profile" action="'.BASEURL.'/profile/update/profile" enctype="multipart/form-data" method="post">
+                                <div>
+                                    <div class="input half"><label>First Name</label><input type="text" name="first_name" placeholder="first name" value="'.$row['first_name'].'"></div>
+                                    <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'"></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'" readonly></div>
+                                    <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
+                                </div>
+                                <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'"></div>
+                                <div class="input"><label>Company</label><input type="text" name="company" placeholder="company" value="'.$row['company'].'" readonly></div>
+                                <div class="input"><label>Average Distribute time (days)</label><input type="number" name="hold_time" placeholder="average distribute time" value="'.$row['hold_time'].'" readonly></div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
                                 <button class="button" type="submit">Done</button>
                             </form>';

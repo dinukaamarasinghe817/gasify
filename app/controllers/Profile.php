@@ -63,19 +63,19 @@
                     $model = "Customer";
                     $func = "getCustomerImage";
                     break;
-                case 'dealer':
+                case 'distributor':
                     $model = "Distributor";
                     $func = "getDistributorImage";
                     break;
-                case 'dealer':
+                case 'delivery':
                     $model = "Delivery";
                     $func = "getDeliveryImage";
                     break;
-                case 'dealer':
+                case 'company':
                     $model = "Company";
                     $func = "getCompanyImage";
                     break;
-                case 'dealer':
+                case 'admin':
                     $model = "Admin";
                     $func = "getAdminImage";
                     break;
@@ -117,6 +117,22 @@
                     $model = "Customer";
                     $func = "getCustomerImage";
                     break;
+                case 'distributor':
+                    $model = "Distributor";
+                    $func = "getDistributorImage";
+                    break;
+                case 'delivery':
+                    $model = "Delivery";
+                    $func = "getDeliveryImage";
+                    break;
+                case 'company':
+                    $model = "Company";
+                    $func = "getCompanyImage";
+                    break;
+                case 'admin':
+                    $model = "Admin";
+                    $func = "getAdminImage";
+                    break;
             }
             $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
             $data['image'] = $row['image'];
@@ -149,6 +165,33 @@
                 $data['bank'] = $_POST['bank'];
                 $data['account_no'] = $_POST['account_no'];
                 $data['merchant_id'] = $_POST['merchant_id'];
+            }else if($tab == 'security'){
+                $data['current_password'] = $_POST['current_password'];
+                $data['new_password'] = $_POST['new_password'];
+                $data['confirm_password'] = $_POST['confirm_password'];
+            }else if($tab == 'capacity'){
+                $data = [];
+            }
+            $data = $this->model("User")->setprofile($role,$user_id,$tab,$data);
+            return $data;
+            
+        }
+
+        public function updatedistributor($tab){
+            $user_id = $_SESSION['user_id'];
+            $role = $_SESSION['role'];
+            if($tab == 'profile'){
+                $data['first_name'] = $_POST['first_name'];
+                $data['last_name'] = $_POST['last_name'];
+                $data['city'] = $_POST['city'];
+                $data['street'] = $_POST['street'];
+                $data['contact_no'] = $_POST['contact_no'];
+                $data['hold_time'] = $_POST['hold_time'];
+                if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                    $data['image_name'] = $_FILES['image']['name'];
+                    $data['tmp_name'] = $_FILES['image']['tmp_name'];
+                }
+                // echo "controller";
             }else if($tab == 'security'){
                 $data['current_password'] = $_POST['current_password'];
                 $data['new_password'] = $_POST['new_password'];
