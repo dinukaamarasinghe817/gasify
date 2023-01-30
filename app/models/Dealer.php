@@ -341,4 +341,32 @@ class Dealer extends Model
         $data['total'] = $total;
         return $data;
     }
+
+    public function getdeliverypeople($option,$user_id){
+        $row = mysqli_fetch_assoc($this->read('dealer','dealer_id = '.$user_id));
+        $city = $row['city'];
+        if($option = 'all'){
+            $sql = "SELECT u.first_name AS first_name,
+            u.last_name AS last_name,
+            de.image AS image,
+            u.user_id AS user_id,
+            de.contact_no AS contact_no
+            FROM delivery_person de INNER JOIN users u
+            ON de.delivery_id = u.user_id
+            WHERE de.city = '$city'";
+        }else{
+            // $row = mysqli_fetch_assoc($this->read('reservation','dealer_id = '.$user_id.' AND ));
+            $sql = "SELECT u.first_name AS first_name,
+            u.last_name AS last_name,
+            de.image AS image,
+            u.user_id AS user_id,
+            de.contact_no AS contact_no
+            FROM delivery_person de INNER JOIN users u
+            ON de.delivery_id = u.user_id
+            WHERE de.delivery_id IN 
+            (SELECT delivery_id FROM reservation WHERE dealer_id = $user_id AND order_state = 'Dispatched')";
+        }
+        $data['query'] = $this->Query($sql);
+        return $data;
+    }
 }

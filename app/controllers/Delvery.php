@@ -1,8 +1,9 @@
 <?php
     session_start();
 class Delvery extends Controller{
+    public $user_id;
     function __construct(){
-        
+        $this->user_id = $_SESSION['user_id'];
     }
     function deliveries(){
         $data['navigation'] = 'deliveries';
@@ -27,6 +28,15 @@ class Delvery extends Controller{
         $this->view('dashboard/delivery', $data);
     }
 
+    public function getdeliverypeople($option){
+        $data = $this->model("Dealer")->getdeliverypeople($option,$this->user_id);
+        $row = mysqli_fetch_assoc($this->model('Dealer')->getDealer($this->user_id));
+        $data['image'] = $row['image'];
+        $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $data['navigation'] = 'delivery';
+        $data['option'] = $option;
+        $this->view('dealer/deliverpeople',$data);
+    }
     
 }
 ?>

@@ -145,6 +145,9 @@ class Vehicles extends Controller{
         
     }
 
-
+    public function updatesinglevehicle($number){
+        $data = $this->model('Distributor')->updatesinglevehicle($number);
+        $this->view('',$data);
+    }
 
 }
