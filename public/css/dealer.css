@@ -23,9 +23,9 @@
     --navmenu-orange-dark: #6bb9f9;
     --button-orange-hover: #82c3f9; */
 
-    --navmenu-orange: #fdeee8;
-    --navmenu-orange-dark: #fc7949;
-    --button-orange-hover: #fc7949;
+    --navmenu-orange: #fdf6f1;
+    --navmenu-orange-dark: #fbaa3a;
+    --button-orange-hover: #fab95f;
 
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
@@ -87,10 +87,9 @@
     box-sizing: border-box;
     padding: 15px;
     height: 600px;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    /* overflow-y: scroll; */
+    /* scroll-behavior: smooth; */
     transition: transtionIn 2.5s;
-    
 }
 .content-data .top-panel ul:last-child{
     border-top: white solid 2px;
@@ -122,6 +121,16 @@
 .content-data ul li .order .head .details div{
     width: 50%;
 }
+
+/* stock css */
+.littleproduct{
+    height: 120px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: var(--table-gray);
+}
+
+/* order css */
 .order .btn{
     min-width: 100px;
     background-color: var(--button-blue);
@@ -192,6 +201,9 @@
     text-align: left;
     border: none;
 }
+
+
+
 .verification{
     display: none;
     flex-direction: column;
@@ -305,3 +317,85 @@
     border-radius: 5px;
 } */
 
+.poitem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    margin: 5px 120px;
+}
+.poitem img{
+    height: 120px;
+    width: auto;
+    background-color: #8a8b9f45;
+    border-radius: 10px;
+}
+.poitem div p{
+    color: var(--navmenu-gray-dark);
+    font-weight: 600;
+}
+.poitem p{
+    font-weight: 600;
+}
+.poitem h2:last-child{
+    color: var(--button-blue);
+    font-size: var(--medium);
+}
+.poitem .total h2{
+    color: black;
+    font-size: var(--medium);
+    font-size: 12px;
+}
+.poitem button{
+    min-width: 100px;
+    font-size: var(--mediums);
+    transition: 0.3s;
+    color: black;
+    border: solid 2px var(--navmenu-gray-dark);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px 50px;
+}
+.poitem button:hover{
+    background-color: var(--navmenu-gray-dark);
+    color: white;
+}
+
+/* delivery css */
+.person{
+    border: 2px solid rgba(128, 128, 128, 0.187);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+}
+
+.person img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+.person div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* notification css */
+.notification{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(243, 243, 243);
+    padding: 10px;
+    border-radius: 10px;
+}
+.notification h2{
+    font-size: var(--mediums);
+}

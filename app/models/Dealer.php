@@ -138,11 +138,16 @@ class Dealer extends Model
     public function dealerpoplace($user_id,$productid, $postproducts){
         $data = [];
         $flag = false;
+        $notvalidquantity = true;
         for($i=0; $i<count($productid); $i++){
-            if($postproducts[$productid[$i]] == null){ // check this.
-                $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
-                return $data;
+            if($postproducts[$productid[$i]] != 0){ // check this.
+                $notvalidquantity = false;
             };
+        }
+        // var_dump($postproducts);
+        if($notvalidquantity){
+            $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
+            return $data;
         }
         for($i=0; $i<count($productid); $i++){
             $product = $productid[$i];
@@ -256,13 +261,13 @@ class Dealer extends Model
     public function dealerStock($dealer_id,$tab){
         switch($tab){
             case "currentstock":
-                $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,
+                $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
                 p.weight as product_weight,p.unit_price as unit_price,p.quantity as quantity
                 FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
                 return $result;
                 break;
             case "purchaseorder":
-                $result = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price
+                $result = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price, p.image as image
                 FROM dealer_capacity d INNER JOIN product p
                 ON d.product_id = p.product_id 
                 WHERE dealer_id = '$dealer_id'");
@@ -301,9 +306,11 @@ class Dealer extends Model
         $orders = array();
         $result;
         if($tab2 == null){
-            $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1'","order_id ASC");
+            $result = $this->Query("SELECT * FROM reservation r INNER JOIN users u ON r.customer_id = u.user_id WHERE r.dealer_id = $dealer_id and r.order_state = '$tab1' ORDER BY r.order_id ASC");
+            // $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1'","order_id ASC");
         }else{
-            $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
+            $result = $this->Query("SELECT * FROM reservation r INNER JOIN users u ON r.customer_id = u.user_id WHERE r.dealer_id = $dealer_id  and r.collecting_method = '$tab2' and r.order_state = '$tab1' ORDER BY r.order_id ASC");
+            // $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
         }
         while($order = mysqli_fetch_assoc($result)){
             $total_amount = 0;
@@ -319,4 +326,52 @@ class Dealer extends Model
         }
         return $orders;
     }//
+
+    public function dealerpoinfo($poid){
+        $sql = "SELECT pi.product_id AS product_id, pi.quantity AS quantity, pr.name AS name ,pi.unit_price AS unit_price,pr.weight AS weight,pr.image AS image
+                    FROM purchase_include pi 
+                    INNER JOIN product pr 
+                    ON pi.product_id = pr.product_id 
+                    WHERE pi.po_id = $poid";
+        $result = $this->Query($sql);
+        $total = 0;
+        $products = array();
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($products, $row);
+                $total += $row['quantity']*$row['unit_price'];
+            }
+        }
+        $data['products'] = $products;
+        $data['total'] = $total;
+        return $data;
+    }
+
+    public function getdeliverypeople($option,$user_id){
+        $row = mysqli_fetch_assoc($this->read('dealer','dealer_id = '.$user_id));
+        $city = $row['city'];
+        if($option = 'all'){
+            $sql = "SELECT u.first_name AS first_name,
+            u.last_name AS last_name,
+            de.image AS image,
+            u.user_id AS user_id,
+            de.contact_no AS contact_no
+            FROM delivery_person de INNER JOIN users u
+            ON de.delivery_id = u.user_id
+            WHERE de.city = '$city'";
+        }else{
+            // $row = mysqli_fetch_assoc($this->read('reservation','dealer_id = '.$user_id.' AND ));
+            $sql = "SELECT u.first_name AS first_name,
+            u.last_name AS last_name,
+            de.image AS image,
+            u.user_id AS user_id,
+            de.contact_no AS contact_no
+            FROM delivery_person de INNER JOIN users u
+            ON de.delivery_id = u.user_id
+            WHERE de.delivery_id IN 
+            (SELECT delivery_id FROM reservation WHERE dealer_id = $user_id AND order_state = 'Dispatched')";
+        }
+        $data['query'] = $this->Query($sql);
+        return $data;
+    }
 }

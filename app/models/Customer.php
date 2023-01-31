@@ -22,23 +22,6 @@ class Customer extends Model{
         $result = $this->Query("SELECT company_id,name,logo FROM company");
         return $result;
     }
-
-    public function getCompanyProducts($company_id){
-
-        $company_products = array();
-        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.type,p.weight,p.image,p.unit_price FROM company c 
-        INNER JOIN product p ON c.company_id = p.company_id 
-        WHERE c.company_id = '{$company_id}'");
-
-        if(mysqli_num_rows($result1)>0){
-            while($row1=mysqli_fetch_assoc($result1)){
-                array_push($company_products,$row1);
-            }
-        }
-
-
-        return $company_products;
-    }
     
     //display most recent 3 reservations in dashboard
     public function getRecentorders($customer_id){
@@ -264,7 +247,37 @@ class Customer extends Model{
         return $error;
 
     }
-    
+
+
+
+    /*..................customer place reservation..................*/
+
+    //get company products for select quantity to customer
+    public function getCompanyProducts($company_id){
+
+        $company_products = array();
+        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price FROM company c 
+        INNER JOIN product p ON c.company_id = p.company_id 
+        WHERE c.company_id = '{$company_id}'");
+
+        if(mysqli_num_rows($result1)>0){
+            while($row1=mysqli_fetch_assoc($result1)){
+                array_push($company_products,$row1);
+            }
+        }
+
+        return $company_products;
+    }
+
+
+
+    /*.........................Customer dealers tab ....................*/
+
+    //get all dealers details and display in view dealers tab
+    public function getAlldealers() {
+        $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,CONCAT(d.street,d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+        return $result1;
+    }
 
         
 

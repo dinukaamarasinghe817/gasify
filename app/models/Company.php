@@ -26,7 +26,8 @@ class Company extends Model
         return $data['company'];
     }
     public function getCompanyImage($company_id){
-        $result = $this->read('company', "company_id = $company_id");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN company c ON u.user_id = c.company_id WHERE u.user_id = '$company_id' ");
+        // $result = $this->read('company', "company_id = $company_id");
         return $result;
     }
     public function getRegisteredDealers($company_id){

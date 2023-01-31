@@ -25,3 +25,19 @@ function gettotal() {
     // parseFloat("2,299.00".replace(/,/g, ''))
     return total.toLocaleString('en-US');
 }
+
+function poinfo(poid) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/mvc/stock/dealerpoinfo/'+poid, true);
+    xhr.onload = ()=>{
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+            let data = xhr.response;
+            if(data){
+                console.log(data);
+                let bodycontent = document.querySelector('.content-data');
+                bodycontent.innerHTML = data;
+            }
+        }
+    }
+    xhr.send();
+}

@@ -125,11 +125,29 @@ class Vehicles extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        
+        $data['product'] = $this->model("Distributor")->updatevehiclePage($user_id);
+             
 
         $this->view('distributor/updateVehiclePage', $data);
     }
 
+    public function removeVehicle() {
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'vehicles';
 
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        
+
+        $this->view('distributor/removeVehicle', $data);
+        
+    }
+
+    public function updatesinglevehicle($number){
+        $data = $this->model('Distributor')->updatesinglevehicle($number);
+        $this->view('',$data);
+    }
 
 }

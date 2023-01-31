@@ -87,9 +87,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'delivery'){
-                    echo '<a href="'.BASEURL.'/" class="panel-tile active delivery">';
+                    echo '<a href="'.BASEURL.'/delvery/getdeliverypeople/all" class="panel-tile active delivery">';
                 }else{
-                    echo '<a href="'.BASEURL.'/" class="panel-tile delivery">';
+                    echo '<a href="'.BASEURL.'/delvery/getdeliverypeople/all" class="panel-tile delivery">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -238,9 +238,9 @@ class Navigation {
             </li>
             <li class="nav-tile">';
             if($active=="dealers"){
-                echo ' <a href="#" class="panel-tile active dealers">';
+                echo ' <a href="'.BASEURL.'/Dealers/customer_dealers" class="panel-tile active dealers">';
             }else{
-                echo '<a href="#" class="panel-tile dealers">';
+                echo '<a href="'.BASEURL.'/Dealers/customer_dealers" class="panel-tile dealers">';
             }
                 
                
@@ -523,9 +523,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'dashboard'){
-                    echo '<a href="../dashboard/company" class="panel-tile active dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/company" class="panel-tile active dashboard">';
                 }else{
-                    echo '<a href="../dashboard/company" class="panel-tile dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/company" class="panel-tile dashboard">';
                 }
         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -540,7 +540,7 @@ class Navigation {
                 if($active == 'dealer'|| $active == 'companyRegDealer'){
                     echo '<a href="../Compny/dealer" class="panel-tile active orders">';
                 }else{
-                    echo '<a href="../Compny/dealer" class="panel-tile orders">';
+                    echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile orders">';
                 }
 
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -558,7 +558,7 @@ class Navigation {
                 if($active == 'distributor' || $active == 'companyRegDistributor'){
                     echo '<a href="../Compny/distributor" class="panel-tile active delivery">';
                 }else{
-                    echo '<a href="../Compny/distributor" class="panel-tile delivery">';
+                    echo '<a href="'.BASEURL.'/Compny/distributor" class="panel-tile delivery">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -583,6 +583,7 @@ class Navigation {
                     echo '<a href="../Compny/orders" class="panel-tile active stock">';
                 }else{
                     echo '<a href="../Compny/orders" class="panel-tile stock">';
+
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -595,10 +596,11 @@ class Navigation {
                     </li>
                     <li class="nav-tile">';
 
+
                 if($active == 'companyProducts'){
                     echo '<a href="../Compny/products" class="panel-tile active notifications">';
                 }else{
-                    echo '<a href="../Compny/products" class="panel-tile notifications">';
+                    echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile notifications">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -610,9 +612,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'analysis'){
-                    echo '<a href="#" class="panel-tile active analysis">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile active analysis">';
                 }else{
-                    echo '<a href="#" class="panel-tile analysis">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile analysis">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -625,9 +627,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'reports'){
-                    echo '<a href="#" class="panel-tile active reports">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile active reports">';
                 }else{
-                    echo '<a href="#" class="panel-tile reports">';
+                    echo '<a href="'.BASEURL.'" class="panel-tile reports">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -671,11 +673,11 @@ class Navigation {
 
                         echo '
                         <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.6667 1H1V19.7778H22.6667V1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22.6665 8.22241H28.4443L32.7776 12.5557V19.778H22.6665V8.22241Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.50027 26.9998C9.49463 26.9998 11.1114 25.3831 11.1114 23.3887C11.1114 21.3943 9.49463 19.7776 7.50027 19.7776C5.50591 19.7776 3.88916 21.3943 3.88916 23.3887C3.88916 25.3831 5.50591 26.9998 7.50027 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M26.2776 26.9998C28.272 26.9998 29.8887 25.3831 29.8887 23.3887C29.8887 21.3943 28.272 19.7776 26.2776 19.7776C24.2833 19.7776 22.6665 21.3943 22.6665 23.3887C22.6665 25.3831 24.2833 26.9998 26.2776 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+                        <path d="M22.6667 1H1V19.7778H22.6667V1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22.6665 8.22241H28.4443L32.7776 12.5557V19.778H22.6665V8.22241Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.50027 26.9998C9.49463 26.9998 11.1114 25.3831 11.1114 23.3887C11.1114 21.3943 9.49463 19.7776 7.50027 19.7776C5.50591 19.7776 3.88916 21.3943 3.88916 23.3887C3.88916 25.3831 5.50591 26.9998 7.50027 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M26.2776 26.9998C28.272 26.9998 29.8887 25.3831 29.8887 23.3887C29.8887 21.3943 28.272 19.7776 26.2776 19.7776C24.2833 19.7776 22.6665 21.3943 22.6665 23.3887C22.6665 25.3831 24.2833 26.9998 26.2776 26.9998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
 
                             <h3>Gas Deliveries</h3>
                         </a>

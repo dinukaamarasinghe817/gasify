@@ -11,7 +11,7 @@ class StockHTML{
                                 <table class="styled-table">
                                 <thead>
                                     <tr>
-                                        <th>Product ID</th>
+                                        <th>Product</th>
                                         <th>Name</th>
                                         <th>Weight</th>
                                         <th>Unit Price</th>
@@ -26,7 +26,7 @@ class StockHTML{
                 while($row = mysqli_fetch_assoc($data['currentstock'])){
                     // dynamic html
                     $output .= '<tr>
-                                    <td>'.$row['product_id'].'</td>
+                                    <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                     <td>'.$row['product_name'].'</td>
                                     <td>'.$row['product_weight'].' Kg</td>
                                     <td>Rs. '.$row['unit_price'].'</td>
@@ -59,7 +59,7 @@ class StockHTML{
                     <table class="po styled-table">
                     <thead>
                         <tr>
-                            <th>Product ID</th>
+                            <th>Product</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Subtotal</th>
@@ -79,7 +79,7 @@ class StockHTML{
                                 $j++;
                                 // dynamic html
                                 $output .= '<tr class="data'.$row['product_id'].'">
-                                                <td>'.$row['product_id'].'</td>
+                                                <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                                 <td>'.$row['name'].'</td>
                                                 <td><input type="number" step="1" value=0 name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
                                                 <td class="subtotal">Rs. 0</td>
@@ -117,10 +117,10 @@ class StockHTML{
                         <thead>
                             <tr>
                                 <th>Purchase Order ID</th>
-                                <th>Includes</th>
                                 <th>Purchase Order State</th>
                                 <th>Place Date</th>
                                 <th>Place Time</th>
+                                <th>Products</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -128,32 +128,16 @@ class StockHTML{
             foreach($results as $result){
                 $row2 = $result['purchase_order'];
                 $poitems = $result['products'];
-                $output .= '<tr>
-                                <td>'.$row2['po_id'].'</td>
-                                <td>';
-                
-                $output .= '<table class = "innertable styled-table">
-                                <thead>
-                                <tr>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                ';
-                foreach($poitems as $row3){
-                    $output .= '<tr>
-                                    <td>'.$row3['name'].'</td>
-                                    <td>'.$row3['quantity'].'</td>  
-                                </tr>';
-                }
+                $poid = $row2['po_id'];
                 $time = $row2['place_time']; 
-                $time = date('h:i a', strtotime($time));                
-                $output .=      '</tbody></table></td>
-                                <td>'.$row2['po_state'].'</td>
-                                <td>'.$row2['place_date'].'</td>
-                                <td>'.$time.'</td>
-                            </tr>';
+                $time = date('h:i a', strtotime($time)); 
+                $output .= "<tr>
+                                <td>".$row2['po_id']."</td>
+                                <td>".$row2['po_state']."</td>
+                                <td>".$row2['place_date']."</td>
+                                <td>".$time."</td>
+                                <td><button onclick='poinfo($poid); return false;'>View</button></td>
+                            </tr>";
                 
             }
             $output .= '</tbody></table>';

@@ -1,24 +1,40 @@
 <?php
 
 class Order{
-    function __construct($order,$products,$totalamount){
+    function __construct($order,$products,$totalamount,$active1,$active2){
         echo '<li>
                 <div class="order">
                     <div class="head">
                         <div class="details">
                             <div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Total amount : </strong>Rs.'.$totalamount.'</div>
                             <div><strong>Date : </strong>'.$order['place_date'].'<br><strong>Time : </strong>'.$order['place_time'].'</div>
-                        </div>
-                        <button onclick="viewinfo(); return false;" class="btn">Issue</button>
-                        <button class="arrow">
+                        </div>';
+                        $payments = true;
+                        $stock = true;
+                        $refunded = true;
+                        if($active1 == 'pending' && $payments && $stock){
+                            echo '<button onclick="viewinfo(); return false;" class="btn">Accept</button>';
+                        }else if($active1 == 'pending'){
+                            echo '<button onclick="viewinfo(); return false;" class="btn">Info</button>';
+                        }else if($active1 == 'accepted' && $active2 == 'pickup'){
+                            echo '<button onclick="issueorder(); return false;" class="btn">Issue</button>';
+                        }else if($active1 == 'canceled' && !$refunded){
+                            echo '<button onclick="refundorder(); return false;" class="btn">Refund</button>';
+                        }else if($active1 == 'canceled'){
+                            echo '<button class="btn">Refunded</button>';
+                        }
+                        echo '<button class="arrow">
                             <svg width="22" height="22" viewBox="0 0 36 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 3L17.9551 17.9551L32.9102 3" stroke="#FCFCFC" stroke-opacity="0.97" stroke-width="6.98504" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </button>
                     </div>
                     <div class="info">
-                        <div><p><strong>Customer ID : </strong>'.$order['customer_id'].'</p><p><strong>Customer Name : </strong>'.$order['customer_id'].'</p></div><br>
-                        <table class="styled-table">
+                        <div><p><strong>Customer ID : </strong>'.$order['customer_id'].'</p><p><strong>Customer Name : </strong>'.$order['first_name'].' '.$order['last_name'].'</p></div><br>';
+                        if($active2 != 'delivery' && ($active1 == 'dispatched' || $active1 == 'delivered' || $active1 == 'completed')){
+                            echo '<div><p><strong>Delivery ID : </strong>'.$order['customer_id'].'</p><p><strong>Delivery Name : </strong>'.$order['first_name'].' '.$order['last_name'].'</p></div><br>';
+                        }
+                    echo '<table class="styled-table">
                             <thead>
                             <tr>
                                 <th>Product ID</th>
@@ -61,47 +77,47 @@ class OrdersHTML{
                 <div class="top-panel">
                     <ul>';
                     if($active1 == 'pending'){
-                        echo '<li><a href="#" class="current active">Pending</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/pending" class="current active">Pending</a></li>';
                     }else{
-                        echo '<li><a href="#" class="current">Pending</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/pending" class="current">Pending</a></li>';
                     }
                     if($active1 == 'accepted'){
-                        echo '<li><a href="#" class="current active">Accepted</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/accepted/pickup" class="current active">Accepted</a></li>';
                     }else{
-                        echo '<li><a href="#" class="current">Accepted</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/accepted/pickup" class="current">Accepted</a></li>';
                     }
                     if($active1 == 'dispatched'){
-                        echo '<li><a href="#" class="current active">Dispatched</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/dispatched" class="current active">Dispatched</a></li>';
                     }else{
-                        echo '<li><a href="#" class="current">Dispatched</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/dispatched" class="current">Dispatched</a></li>';
                     }
                     if($active1 == 'delivered'){
-                        echo '<li><a href="#" class="current active">Delivered</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/delivered" class="current active">Delivered</a></li>';
                     }else{
-                        echo '<li><a href="#" class="current">Delivered</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/delivered" class="current">Delivered</a></li>';
                     }
                     if($active1 == 'completed'){
-                        echo '<li><a href="#" class="current active">Completed</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/completed" class="current active">Completed</a></li>';
                     }else{
-                        echo '<li><a href="#" class="current">Completed</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/completed" class="current">Completed</a></li>';
                     }
                     if($active1 == 'canceled'){
-                        echo '<li><a href="#" class="current active">Canceled</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/canceled" class="current active">Canceled</a></li>';
                     }else{
-                        echo '<li><a href="#" class="current">Canceled</a></li>';
+                        echo '<li><a href="'.BASEURL.'/orders/dealer/canceled" class="current">Canceled</a></li>';
                     }
                     echo '</ul>';
         if($active2 != null){
                 echo '<ul>';
-                        if($active1 == 'completed'){
-                            echo '<li><a href="#" class="current sub1 active">Pickup</a></li>';
+                        if($active2 == 'pickup'){
+                            echo '<li><a href="'.BASEURL.'/orders/dealer/'.$active1.'/pickup" class="current sub1 active">Pickup</a></li>';
                         }else{
-                            echo '<li><a href="#" class="current sub1">Pickup</a></li>';
+                            echo '<li><a href="'.BASEURL.'/orders/dealer/'.$active1.'/pickup" class="current sub1">Pickup</a></li>';
                         }
-                        if($active1 == 'canceled'){
-                            echo '<li><a href="#" class="current sub1 active">Delivery</a></li>';
+                        if($active2 == 'delivery'){
+                            echo '<li><a href="'.BASEURL.'/orders/dealer/'.$active1.'/delivery" class="current sub1 active">Delivery</a></li>';
                         }else{
-                            echo '<li><a href="#" class="current sub1">Delivery</a></li>';
+                            echo '<li><a href="'.BASEURL.'/orders/dealer/'.$active1.'/delivery" class="current sub1">Delivery</a></li>';
                         }
                 echo '</ul>';
         }
@@ -125,7 +141,7 @@ class OrdersHTML{
                     <ul>';
                         $orders = $data['orders'];
                         foreach($orders as $tuple){
-                            $o = new Order($tuple['order'], $tuple['products'], $tuple['total_amount']);
+                            $o = new Order($tuple['order'], $tuple['products'], $tuple['total_amount'],$active1,$active2);
                         }
                 echo '</ul>
                 </div>';

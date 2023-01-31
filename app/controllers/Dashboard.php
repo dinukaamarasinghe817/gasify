@@ -48,6 +48,8 @@
             $data['navigation'] = 'dashboard';
 
             //echo $data['image'];
+            // $this->view('dashboard/dealer', $data);
+            $data['option'] = $option;
             $this->view('dashboard/dealer', $data);
         }
         public function company($error=null){
@@ -76,6 +78,11 @@
             $this->view('dashboard/delivery', $data);
         }
    
+
+
+        
+
+
         //customer dashboard 
         public function customer($error = null){
             $customer_id = $_SESSION['user_id'];

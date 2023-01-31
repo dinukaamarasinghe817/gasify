@@ -1,0 +1,96 @@
+a,button{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.under_topbar{
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.subtitle{
+    display: flex;
+    align-items: center;
+    padding-bottom: 30px;
+    margin-left: 40px;
+    font-size: var(--larger);
+    font-weight:900;
+    color: var(--navmenu-orange-dark);
+}
+
+.middle{
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-right: 90px;
+}
+
+/* three cards brand,city,dealer  css*/
+.brand , .city , .dealer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    padding: 30px;
+    column-gap: 30px;
+    background-color: var(--navmenu-orange);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    border-radius: 5px;
+}
+
+.title{
+    font-size: var(--medium);
+    font-weight: 800;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.img svg{
+    fill: var(--navmenu-orange-dark);
+}
+
+.drop_down{
+    display: flex;
+    flex-direction: row;
+    column-gap: 90px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-left: 40px;
+}
+
+.branddropdown,.citydropdown,.dealerdropdown{
+    width: 300px;
+    font-size: var(--medium);  
+}
+
+/* bottom next button css */
+.bottom{
+    padding-top: 100px;
+    display: flex;
+    justify-content: right;
+    margin-right: 80px;
+}
+
+.bottom .btn{ 
+    display: flex;
+    width: 200px;
+    padding: 10px;
+    background-color: var(--button-orange);
+    border-radius: 5px;
+    font-size: var(--mediums);
+    font-weight: 700;
+    color: black;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover{
+    background-color: var(--button-orange-hover);
+}
