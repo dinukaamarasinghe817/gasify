@@ -11,7 +11,7 @@ class StockHTML{
                                 <table class="styled-table">
                                 <thead>
                                     <tr>
-                                        <th>Product ID</th>
+                                        <th>Product</th>
                                         <th>Name</th>
                                         <th>Weight</th>
                                         <th>Unit Price</th>
@@ -26,7 +26,7 @@ class StockHTML{
                 while($row = mysqli_fetch_assoc($data['currentstock'])){
                     // dynamic html
                     $output .= '<tr>
-                                    <td>'.$row['product_id'].'</td>
+                                    <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                     <td>'.$row['product_name'].'</td>
                                     <td>'.$row['product_weight'].' Kg</td>
                                     <td>Rs. '.$row['unit_price'].'</td>
@@ -59,7 +59,7 @@ class StockHTML{
                     <table class="po styled-table">
                     <thead>
                         <tr>
-                            <th>Product ID</th>
+                            <th>Product</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Subtotal</th>
@@ -79,7 +79,7 @@ class StockHTML{
                                 $j++;
                                 // dynamic html
                                 $output .= '<tr class="data'.$row['product_id'].'">
-                                                <td>'.$row['product_id'].'</td>
+                                                <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                                 <td>'.$row['name'].'</td>
                                                 <td><input type="number" step="1" value=0 name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
                                                 <td class="subtotal">Rs. 0</td>

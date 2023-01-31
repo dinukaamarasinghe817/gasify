@@ -273,8 +273,8 @@ body.blur::before{
     height: 85%;
     width: 100%;
     /* padding-bottom: 50px; */
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    /* overflow-y: scroll; */
+    /* scroll-behavior: smooth; */
     transition: 0.5s ease-in-out;
     /* background-color: var(--navmenu-gray-dark); */
 }
@@ -362,8 +362,8 @@ body.blur::before{
     border-right: 2px solid var(--button-orange-hover);
     border-left: 2px solid var(--button-orange-hover);
     padding-bottom: 20px;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    /* overflow-y: scroll; */
+    /* scroll-behavior: smooth; */
     scrollbar-width: thin;
 }
 .content-data::-webkit-scrollbar{

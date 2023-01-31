@@ -17,7 +17,7 @@
 <script src="<?php echo BASEURL; ?>/public/js/Company/company.js"></script>
 
 <body id="Body">
-    <?php 
+    <?php
         $sidebar = new Navigation('company',$data['navigation']);
     ?>
     <section class="body">

@@ -138,11 +138,16 @@ class Dealer extends Model
     public function dealerpoplace($user_id,$productid, $postproducts){
         $data = [];
         $flag = false;
+        $notvalidquantity = true;
         for($i=0; $i<count($productid); $i++){
-            if($postproducts[$productid[$i]] == null){ // check this.
-                $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
-                return $data;
+            if($postproducts[$productid[$i]] != 0){ // check this.
+                $notvalidquantity = false;
             };
+        }
+        // var_dump($postproducts);
+        if($notvalidquantity){
+            $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
+            return $data;
         }
         for($i=0; $i<count($productid); $i++){
             $product = $productid[$i];
@@ -256,13 +261,13 @@ class Dealer extends Model
     public function dealerStock($dealer_id,$tab){
         switch($tab){
             case "currentstock":
-                $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,
+                $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
                 p.weight as product_weight,p.unit_price as unit_price,p.quantity as quantity
                 FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
                 return $result;
                 break;
             case "purchaseorder":
-                $result = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price
+                $result = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price, p.image as image
                 FROM dealer_capacity d INNER JOIN product p
                 ON d.product_id = p.product_id 
                 WHERE dealer_id = '$dealer_id'");

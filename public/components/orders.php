@@ -13,7 +13,7 @@ class Order{
                         $stock = true;
                         $refunded = true;
                         if($active1 == 'pending' && $payments && $stock){
-                            echo '<button onclick="acceptorder(); return false;" class="btn">Accept</button>';
+                            echo '<button onclick="viewinfo(); return false;" class="btn">Accept</button>';
                         }else if($active1 == 'pending'){
                             echo '<button onclick="viewinfo(); return false;" class="btn">Info</button>';
                         }else if($active1 == 'accepted' && $active2 == 'pickup'){

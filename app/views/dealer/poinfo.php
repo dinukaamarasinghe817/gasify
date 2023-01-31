@@ -3,17 +3,19 @@ $products = $data['products'];
 $total = $data['total'];
 echo '<ul>';
 foreach ($products as $product){
-    echo '<li>
-            <div class="poitem">
-                <img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt="">
-                <div>
-                    <h3>'.$product['name'].'</h3>
-                    <p>'.$product['weight'].' Kg</p>
+    if($product['quantity'] != 0){
+        echo '<li>
+                <div class="poitem">
+                    <img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt="">
+                    <div>
+                        <h3>'.$product['name'].'</h3>
+                        <p>'.$product['weight'].' Kg</p>
+                    </div>
+                    <p>Unit Price<br>Rs . '.$product['unit_price'].'.00</p>
+                    <div><p>Quntity</p><h2>x '.$product['quantity'].'</h2></div>
                 </div>
-                <p>Unit Price<br>Rs . '.$product['unit_price'].'.00</p>
-                <div><p>Quntity</p><h2>x '.$product['quantity'].'</h2></div>
-            </div>
-        </li>';
+            </li>';
+    }
 }
 echo '<li>
     <div class="poitem">

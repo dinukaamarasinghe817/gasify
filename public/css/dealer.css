@@ -87,8 +87,8 @@
     box-sizing: border-box;
     padding: 15px;
     height: 600px;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    /* overflow-y: scroll; */
+    /* scroll-behavior: smooth; */
     transition: transtionIn 2.5s;
 }
 .content-data .top-panel ul:last-child{
@@ -121,6 +121,16 @@
 .content-data ul li .order .head .details div{
     width: 50%;
 }
+
+/* stock css */
+.littleproduct{
+    height: 120px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: var(--table-gray);
+}
+
+/* order css */
 .order .btn{
     min-width: 100px;
     background-color: var(--button-blue);
@@ -191,6 +201,9 @@
     text-align: left;
     border: none;
 }
+
+
+
 .verification{
     display: none;
     flex-direction: column;
