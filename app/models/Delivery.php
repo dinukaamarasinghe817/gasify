@@ -26,7 +26,8 @@ class Delivery extends Model
         return $data['company'];
     }
     public function getDeliveryImage($delivery_id){
-        $result = $this->read('delivery_person', "delivery_id = $delivery_id");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN delivery_person d ON u.user_id = d.delivery_id WHERE u.user_id = '$delivery_id' ");
+        // $result = $this->read('delivery_person', "delivery_id = $delivery_id");
         return $result;
     }
     public function getDeliveryVehicle($delivery_id){

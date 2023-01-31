@@ -234,6 +234,34 @@
             
         }
 
+        public function updatedelivery($tab){
+            $user_id = $_SESSION['user_id'];
+            $role = $_SESSION['role'];
+            if($tab == 'profile'){
+                $data['first_name'] = $_POST['first_name'];
+                $data['last_name'] = $_POST['last_name'];
+                $data['city'] = $_POST['city'];
+                $data['street'] = $_POST['street'];
+                $data['vehicle_type'] = $_POST['vehicle_type'];
+                $data['vehicle_no'] = $_POST['vehicle_no'];
+                $data['vehicle_no'] = $_POST['vehicle_no'];
+                $data['weight_limit'] = $_POST['weight_limit'];
+                $data['cost_per_km'] = $_POST['cost_per_km'];
+                if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                    $data['image_name'] = $_FILES['image']['name'];
+                    $data['tmp_name'] = $_FILES['image']['tmp_name'];
+                }
+                // echo "controller";
+            }else if($tab == 'security'){
+                $data['current_password'] = $_POST['current_password'];
+                $data['new_password'] = $_POST['new_password'];
+                $data['confirm_password'] = $_POST['confirm_password'];
+            }
+            $data = $this->model("User")->setprofile($role,$user_id,$tab,$data);
+            return $data;
+            
+        }
+
         public function updatecustomer($tab){
             $user_id = $_SESSION['user_id'];
             $role = $_SESSION['role'];
