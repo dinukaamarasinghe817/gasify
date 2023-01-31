@@ -3,8 +3,11 @@ $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Bi
 sort($cities);
 $banks = ['Bank Of Ceylon', 'Commercial Bank', 'DFCC Bank', 'Hatton National Bank', 'Nation Trus Bank', 'Peoples Bank', 'Sampath Bank', 'Seylan Bank', 'National Saving Bank'];
 sort($banks);
+$vehicles = ['Car','Van','Mini Truck','Bike','Bicycle','Three Wheel'];
+sort($vehicles);
 define('CITIES',$cities);
 define('BANKS',$banks);
+define('VEHICLES',$vehicles);
 function createSession($conn, $email, $user){
     $sql = "SELECT * FROM {$user} WHERE email = '{$email}'";
     $query = mysqli_query($conn, $sql);

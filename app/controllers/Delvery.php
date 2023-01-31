@@ -50,7 +50,7 @@ class Delvery extends Controller{
         $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['navigation'] = 'delivery';
         $data['option'] = $option;
-        $this->view('dealer/deliverpeople',$data);
+        $this->view('dealer/deliverypeople',$data);
     }
     
 }

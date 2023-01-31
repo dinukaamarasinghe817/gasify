@@ -151,9 +151,9 @@ class ProfileHTML{
                             <ul>
                                 <li>';
                                 if($data['tab']=='profile'){
-                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
                                 }else{
-                                    echo '<a class="" href="'.BASEURL.'/profile/edit/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                    echo '<a class="" href="'.BASEURL.'/profile/preview/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
                                 }
                                 echo '</li>
                             </ul>
@@ -170,6 +170,62 @@ class ProfileHTML{
                                 <div>
                                     <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'" readonly></div>
                                     <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'" readonly></div>
+                                </div>
+                            </form>';
+                        }
+                        echo '</div>
+                    </div>
+            </section>';
+            
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
+            //     form.onsubmit = (e)=>{
+            //         e.preventDefault();
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
+    }
+
+    function previewdelivery($data){
+        $row = mysqli_fetch_assoc($data['query']);
+        echo '<section class="body-content">
+                    <div class="content-data profile">
+                        <div class="prof-nav">
+                            <img src="'.BASEURL.'/public/img/profile/'.$row['image'].'" alt="">
+                            <h3>'.$row['first_name'].' '.$row['last_name'].'</h3>
+                            <p class="gray">'.$row['email'].'</p>
+                            <ul>
+                                <li>';
+                                if($data['tab']=='profile'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/delivery/profile" onclick="profile()">Profile</a>';
+                                }else{
+                                    echo '<a class="" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/delivery/profile" onclick="profile()">Profile</a>';
+                                }
+                                echo '</li>
+                            </ul>
+                        </div>
+                        <div class="prof-info">
+                            <h2>Profile Settings</h2>';
+                        if($data['tab']=='profile'){
+                            echo '<form class="profile" action="#" enctype="multipart/form-data" method="post">
+                                <div>
+                                    <div class="input half"><label>First Name</label><input type="text" name="first_name" placeholder="first name" value="'.$row['first_name'].'" readonly></div>
+                                    <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'" readonly></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'" readonly></div>
+                                    <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'" readonly></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>Vehicle Type</label><input type="text" name="vehicle_type" placeholder="vehicle type" value="'.$row['vehicle_type'].'" readonly></div>
+                                    <div class="input half"><label>Vehicle Number</label><input type="text" name="vehicle_no" placeholder="vehicle number" value="'.$row['vehicle_no'].'" readonly></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>Weight Limit</label><input type="number" name="weight_limit" placeholder="weight limit" min=0 step=1 value="'.$row['weight_limit'].'" readonly></div>
+                                    <div class="input half"><label>Cost per km</label><input type="number" name="cost_per_km" placeholder="cost per km" min=0 step=1 value="'.$row['cost_per_km'].'" readonly></div>
                                 </div>
                             </form>';
                         }
@@ -477,6 +533,102 @@ class ProfileHTML{
                                 echo '</select>
                                     </div>
                                     <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
+                                </div>
+                                <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
+                                <button class="button" type="submit">Done</button>
+                            </form>';
+                        }else if($data['tab']=='security'){
+                            echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
+                                <div class="input"><label>Current Password</label><input type="password" name="current_password" placeholder="Enter current password"></div>
+                                <div>
+                                    <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
+                                    <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
+                                </div>
+                                <button class="button">Done</button>
+                            </form>';
+                        }
+                        echo '</div>
+                    </div>
+            </section>';
+            
+            echo '<script>';
+            // echo 'const form = document.querySelector(".prof-info form");
+            //     form.onsubmit = (e)=>{
+            //         e.preventDefault();
+            //     }';
+            echo '
+                document.querySelector(".file input").onchange = function(){
+                    document.querySelector(".prof-nav img").src = URL.createObjectURL(this.files[0]);
+                }
+            </script>';
+    }
+
+    function editdelivery($data){
+        $row = mysqli_fetch_assoc($data['query']);
+        echo '<section class="body-content">
+                    <div class="content-data profile">
+                        <div class="prof-nav">
+                            <img src="'.BASEURL.'/public/img/profile/'.$row['image'].'" alt="">
+                            <h3>'.$row['first_name'].' '.$row['last_name'].'</h3>
+                            <p class="gray">'.$row['email'].'</p>
+                            <ul>
+                                <li>';
+                                if($data['tab']=='profile'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/delivery/'.$row['user_id'].'/profile/delivery/profile" onclick="profile()">Profile</a>';
+                                }else{
+                                    echo '<a class="" href="'.BASEURL.'/profile/edit/delivery/'.$row['user_id'].'/profile/delivery/profile" onclick="profile()">Profile</a>';
+                                }
+                                echo '</li>
+                                <li>';
+                                if($data['tab'] == 'security'){
+                                    echo '<a class="active" href="'.BASEURL.'/profile/edit/delivery/'.$row['user_id'].'/security/delivery/profile">Security</a>';
+                                }else{
+                                    echo '<a href="'.BASEURL.'/profile/edit/delivery/'.$row['user_id'].'/security/delivery/profile">Security</a>';
+                                }
+                                echo '</li>
+                            </ul>
+                        </div>
+                        <div class="prof-info">
+                            <h2>Profile Settings</h2>';
+                        if($data['tab']=='profile'){
+                            echo '<form class="profile" action="'.BASEURL.'/profile/update/profile" enctype="multipart/form-data" method="post">
+                                <div>
+                                    <div class="input half"><label>First Name</label><input type="text" name="first_name" placeholder="first name" value="'.$row['first_name'].'"></div>
+                                    <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'"></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>City</label>
+                                    <select id="city" class="dropdowndate" name="city" class="half">';
+                                        $cities = CITIES;
+                                        foreach($cities as $city){
+                                            if($city == $row['city']){
+                                                echo '<option value="'.$city.'" selected >'.$city.'</option>';
+                                            }else{
+                                                echo '<option value="'.$city.'">'.$city.'</option>';
+                                            }
+                                        }
+                                echo '</select>
+                                    </div>
+                                    <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>Vehicle Type</label>
+                                    <select id="city" class="dropdowndate" name="vehicle_type" class="half">';
+                                        $vehicles = VEHICLES;
+                                        foreach($vehicles as $vehicle){
+                                            if($vehicle == $row['vehicle_type']){
+                                                echo '<option value="'.$vehicle.'" selected >'.$vehicle.'</option>';
+                                            }else{
+                                                echo '<option value="'.$vehicle.'">'.$vehicle.'</option>';
+                                            }
+                                        }
+                                echo '</select>
+                                    </div>
+                                    <div class="input half"><label>Vehicle Number</label><input type="text" name="vehicle_no" placeholder="vehicle number" value="'.$row['vehicle_no'].'"></div>
+                                </div>
+                                <div>
+                                    <div class="input half"><label>Weight Limit</label><input type="number" name="weight_limit" placeholder="weight limit" min=0 step=1 value="'.$row['weight_limit'].'"></div>
+                                    <div class="input half"><label>Cost per km</label><input type="number" name="cost_per_km" placeholder="cost per km" min=0 step=1 value="'.$row['cost_per_km'].'"></div>
                                 </div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
                                 <button class="button" type="submit">Done</button>
