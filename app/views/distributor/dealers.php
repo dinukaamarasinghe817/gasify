@@ -35,8 +35,13 @@ $user_id = $_SESSION['user_id'];
 
                         $output = '<div class="labelbgn">';
 
+                        $image = BASEURL.'/public/img/profile/'.$data['image'];
+                        $output1 = '
+                                <img src="'.$image.'" alt="" class="dealerimg"> ';
+                                echo $output1;
+
                         $dealer_id = $row1['dealer_id'];
-                        echo "Dealer User ID - $dealer_id".'<br>'; 
+                        echo '<br>'."Dealer User ID - $dealer_id".'<br>'; 
                        
                         $dealer_name = $row1['name'];
                         echo "Dealer Name - $dealer_name".'<br>';
