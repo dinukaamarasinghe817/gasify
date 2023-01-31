@@ -547,39 +547,62 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Top" id="Top">
-            <div class="Col_1" id="Col_1">
-                <div class="Title_1">
-                <div class="ChartTitle">Revenue(LKR Millions)</div><br>
-                <div class="ChartTitle">Last five months</div>
+                <div class="card">
+                    <div class="cmValue">5</div>
+                    <div class="cmTitle">Pending Requests</div>
                 </div>
-                <div class="Content_1"></div>
-            </div>
-            <div class="Col_2" id="Col_2">
-                <div class="Title_2">
-                <div class="ChartTitle">Today</div>
+                <div class="card">
+                    <div class="cmValue">4</div>
+                    <div class="cmTitle">Products</div>
                 </div>
-                <div class="Content_2" id="Content_2"></div>
-            
-            </div>
-            <div class="Col_3" id="Col_3">
-                <div class="Title_3">
-                <div class="ChartTitle">Current stock</div>
+                <div class="card">
+                    <div class="cmValue">14</div>
+                    <div class="cmTitle">Distributors</div>
                 </div>
-                <div class="Content_3" id="Content_3">
-                <div class="Content_3_tableHead_row" id="Content_3_tableHead_row"><div class="product_type" style="margin-left: 4%;margin-top:3.5%">Product</div><div class="product_stock" style="margin-top:3.5%">Stock</div></div>';
-               $result=$data['products'];
-                //echo $result;
-                foreach($result as $results){
-                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">'.$results['name'].'</div><div class="data_value" style="margin-right: 10%;">'.$results['quantity'].'</div></div>';
-                }
-                
-                
-                
-                
-                
-                echo'</div>
+                <div class="card">
+                    <div class="cmValue">78</div>
+                    <div class="cmTitle">Dealers</div>
                 </div>
+                
+
+
             </div>';
+            /*echo 
+            '<section class="body-content">
+                <div class="Top" id="Top">
+                <div class="Col_1" id="Col_1">
+                    <div class="Title_1">
+                    <div class="ChartTitle">Revenue(LKR Millions)</div><br>
+                    <div class="ChartTitle">Last five months</div>
+                    </div>
+                    <div class="Content_1"></div>
+                </div>
+                <div class="Col_2" id="Col_2">
+                    <div class="Title_2">
+                    <div class="ChartTitle">Today</div>
+                    </div>
+                    <div class="Content_2" id="Content_2"></div>
+                
+                </div>
+                <div class="Col_3" id="Col_3">
+                    <div class="Title_3">
+                    <div class="ChartTitle">Current stock</div>
+                    </div>
+                    <div class="Content_3" id="Content_3">
+                    <div class="Content_3_tableHead_row" id="Content_3_tableHead_row"><div class="product_type" style="margin-left: 4%;margin-top:3.5%">Product</div><div class="product_stock" style="margin-top:3.5%">Stock</div></div>';
+                   $result=$data['products'];
+                    //echo $result;
+                    foreach($result as $results){
+                        echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">'.$results['name'].'</div><div class="data_value" style="margin-right: 10%;">'.$results['quantity'].'</div></div>';
+                    }
+                    
+                    
+                    
+                    
+                    
+                    echo'</div>
+                    </div>
+                </div>';*/
             /*'<div class="DistributorTableHeadings" id="DistributorTableHeadings">
                 <div class="Distributor_table_name" id="Distributor_table_name">
                     <div class="distibutor_title">Distributor</div>
@@ -810,14 +833,14 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
             <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
-            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
+            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Dealer</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
             <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
             <div class="dealer_location" id="dealer_col"style="width:15%">Location</div>
             <div class="dealer_contactno" id="dealer_col"style="width:18%">Contact no</div>
-            <div class="dealer_email" id="dealer_col" style="font-size: 12pt"style="width:28%">Email</div>
-            <div class="dealer_capacity" id="dealer_col"style="width:30%">Hold time</div>
+            <div class="dealer_email" id="dealer_col" style="width:15%">Bank account</div>
+            <div class="dealer_capacity" id="dealer_col"style="width:30%">Bank</div>
             </div>
             <div class="DealerTables" id="DealerTables">';
                 if(isset($data["dealer"])){
@@ -864,13 +887,13 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                 <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%">Registered Distributors</div></a>
-                <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
+                <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%;background-color:#cda6e4">Register New Distributor</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
                 <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
-                <div class="dealer_location" id="dealer_col"style="width:15%">Location</div>
-                <div class="dealer_contactno" id="dealer_col"style="width:18%">Contact no</div>
-                <div class="dealer_email" id="dealer_col" style="font-size: 12pt"style="width:28%">Email</div>
+                <div class="dealer_location" id="dealer_col"style="width:15%">Town</div>
+                <div class="dealer_contactno" id="dealer_col"style="width:18%">Street</div>
+                <div class="dealer_email" id="dealer_col" style="width:15%">Contact no</div>
                 <div class="dealer_capacity" id="dealer_col"style="width:30%">Hold time</div>
             </div>
             <div class="DealerTables" id="DealerTables">';
@@ -1090,7 +1113,7 @@ class Body{
                 <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['contact_no'].'</div>
                 <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_date'].'</div>
                 <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_time'].'</div>
-                <div class="accept_btn" id="col" onClick="takeJob(this)" style="width:10%;margin:auto" key="data[index].order_id ">Accept</div>
+                <div class="accept_btn" id="col" onClick="takeJob(this)" style="width:10%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a href="../Delvery/acceptDelivery" >Accept</a></div>
                 </div>';
             }
         }
@@ -1137,7 +1160,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                  <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
-                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
+                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Dealer</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:90%">
@@ -1188,7 +1211,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                  <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Distributors</div></a>
-                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Distributor</div></a>
+                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Distributor</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">
@@ -1261,6 +1284,131 @@ class Body{
                 <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
                 </div></div>
             </div>
+        </section>';
+    }
+    function companyOrders($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
+            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#cda6e4">Limit Quota</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
+            <div class="orderCard" >
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
+                </div>
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
+                </div>
+                <div class="orderTbl">
+                    <table class="orderTable">
+                        <thead>
+                            <tr>
+                                <th>Product name</th>
+                                <th>Unit price (Rs.)</th>
+                                <th>Quantity</th>
+                                <th>Total (Rs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-y:auto;height:100px">
+                            <tr>
+                                <td class="tdCenter">Buddy</td>
+                                <td class="tdRight">1,450.00</td>
+                                <td class="tdRight">12</td>
+                                <td class="tdRight">17,400</td>
+                            </tr>
+                            <tr>
+                                <td class="tdCenter">Regular</td>
+                                <td class="tdRight">3,220.00</td>
+                                <td class="tdRight">30</td>
+                                <td class="tdRight">96,600</td>
+                            </tr>
+                            <tr>
+                                <td class="tdCenter">Commercial</td>
+                                <td class="tdRight">5,150.00</td>
+                                <td class="tdRight">15</td>
+                                <td class="tdRight">77,250</td>
+                            </tr>
+                            <tr>
+                                <td class="tdCenter"></td>
+                                <td class="tdRight"></td>
+                                <td class="tdRight"></td>
+                                <td class="tdRight">191,250</td>
+                            </tr>
+                         
+                        </tbody>      
+                    </table>
+                </div>
+                <div class="orderRow">
+                    <div class="orderButtons"><label>Issue</label></div>
+                    <div class="orderButtons"><label>Delay</label></div>
+                </div>
+            </div>
+            </div>';
+            echo ' 
+        </section>';
+    }
+    function companyLimitQuota($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name">
+            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
+            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#cda6e4">Limit Quota</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
+            <div class="poductQuota">
+                <div class="productQuotaName" style="font-size: large"><lable>Domestic customer</lable></div>
+                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>2 Cylinder</label></div>
+                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="domestic"></div>
+                <div class="productQuotaResetCurrent" onClick="setQuota()" key="domestic"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew" onClick="resetQuota()" key="domestic"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>     
+            </div>
+            <div class="poductQuota">
+                <div class="productQuotaName" style="font-size: large"><lable>Commercial customer</lable></div>
+                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>1 Cylinder</label></div>
+                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="commercial"></div>
+                <div class="productQuotaResetCurrent" onClick="setQuota()"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew" onClick="resetQuota()"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>    
+            </div>
+            </div>
+            
+            
+            ';     
+        echo ' 
+        </section>';
+    }
+    function viewReviews($data){
+        echo
+        '<section class="body-content">
+         <div class="Distributor_table_name" id="Distributor_table_name">
+         <a href="../Delvery/reviews" style="width:97%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%">Reviews</div></a>
+         </div>
+        <div class="DealerTables" id="DealerTables" style="height:80%">';
+        echo '
+        <div class="reviewRow">
+        <div class="orderIDRow"><div>GS014</div></div>
+        <div class="messageRow">Delivered fast!.Great service.Thumbs up</div>
+        <div class="dateTimeRow">
+        <div class="reviewTime">04:23PM</div>
+        <div class="reviewDate">2023/01/18</div>
+        
+        
+        </div>        
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        ';
+
+        echo
+        '</div>
         </section>';
     }
 }

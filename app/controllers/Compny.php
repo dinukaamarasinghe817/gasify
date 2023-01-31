@@ -88,6 +88,7 @@ class Compny extends Controller{
         move_uploaded_file($_FILES['productImage']['tmp_name'],$_SERVER["DOCUMENT_ROOT"]."/mvc/public/img/products/".$img_name);
         $data=array('company_id'=>$_SESSION['user_id'],'name'=>$_POST['Productname'],'type'=>$_POST['Producttype'],'unit_price'=>$_POST['unitprice'],'weight'=>$_POST['weight'],'image'=>$img_name,'production_time'=>$_POST['productiontime'],'last_updated_date'=>$lastUpdatedDate,'quantity'=>$_POST['quantity']);
         $this->model('Company')->registerNewProduct($data);
+        $this->products();
     }
     function registerDealer(){
         $img_name = $_FILES['productImage']['name'];
@@ -115,6 +116,7 @@ class Compny extends Controller{
             
             //print_r($_POST['distributor_id']);
         }
+        $this->dealer();
         
         //move_uploaded_file($_FILES['productImage']['tmp_name'],$_SERVER["DOCUMENT_ROOT"]."/mvc/public/img/products/".$img_name);
         //$data=array('company_id'=>$_SESSION['user_id'],'name'=>$_POST['Productname'],'type'=>$_POST['Producttype'],'unit_price'=>$_POST['unitprice'],'weight'=>$_POST['weight'],'image'=>$img_name,'production_time'=>$_POST['productiontime'],'last_updated_date'=>$lastUpdatedDate,'quantity'=>$_POST['quantity']);
@@ -147,6 +149,7 @@ class Compny extends Controller{
             
             //print_r($_POST['distributor_id']);
         }
+        $this->distributor();
     }
     function updateProduct(){
         $lastUpdatedDate = date("Y-m-d");
@@ -174,6 +177,46 @@ class Compny extends Controller{
             $this->model('Company')->updateProduct($data,$_POST['Producttype'],$_SESSION['user_id']);
         }
 
+        $this->products();
+
+    }
+    function orders(){
+        $data['navigation'] = 'orders';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        //$row = mysqli_fetch_assoc($dealer_details);
+        $data['dealer']=$dealer_details;
+        //$data['cc']=$row['account_no'];
+        //echo $data['cc'];
+            //$data=[];
+        $this->view('dashboard/company', $data);
+
+    }
+    function limitquota(){
+        $data['navigation'] = 'limitquota';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        //$row = mysqli_fetch_assoc($dealer_details);
+        $data['dealer']=$dealer_details;
+        //$data['cc']=$row['account_no'];
+        //echo $data['cc'];
+            //$data=[];
+        $this->view('dashboard/company', $data);
+
+    }
+    function setQuota(){
+        echo "hello";
+        die();
+    }
+    function resetQuota(){
+        echo "hello";
+        die();
     }
 }
 ?>

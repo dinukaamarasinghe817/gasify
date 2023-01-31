@@ -32,7 +32,7 @@ class Company extends Model
     }
     public function getRegisteredDealers($company_id){
         //$result = $this->read('dealer',"company_id=$company_id");
-        $result = $this->readJoin("company_id = $company_id");
+        $result = $this->read('dealer',"company_id = $company_id");
         //$data=[];
         if(mysqli_num_rows($result)>0){
             $info = array();
@@ -76,7 +76,7 @@ class Company extends Model
 
     }
     public function getDealerID($data){
-        $result=$this->readi('users','email =\''.$data.'\'');
+        $result=$this->read('users','email =\''.$data.'\'');
         $row=mysqli_fetch_assoc($result);
         return $row['user_id'];
 

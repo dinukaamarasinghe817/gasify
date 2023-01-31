@@ -6,12 +6,10 @@
 
         public function __construct(){
             $url =$this->getURL();
-            //print_r($url);
             if(isset($url[0])){
                 if(file_exists('../app/controllers/'.ucwords($url[0]).'.php')){
                     // if controller exists
                     $this->controller = ucwords($url[0]);
-                    //print_r($this->controller."->") ;
                     unset($url[0]);
 
                 }
@@ -24,7 +22,6 @@
                 if(method_exists($this->controller,$url[1])){
                     
                     $this->method = $url[1];
-                    //print_r($this->method) ;
                     unset($url[1]);
                 }
             }
