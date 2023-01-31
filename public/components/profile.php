@@ -348,7 +348,7 @@ class ProfileHTML{
                                     <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'"></div>
                                 </div>
                                 <div class="input"><label>Payhere merchant ID</label><input type="text" name="merchant_id" placeholder="merchant id" value="'.$row['merchant_id'].'"></div>
-                                <button class="button" type="submit">Done</button>
+                                <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='profile'){
                             echo '<form class="profile" action="'.BASEURL.'/profile/update/profile" enctype="multipart/form-data" method="post">
@@ -365,7 +365,7 @@ class ProfileHTML{
                                 <div class="input"><label>Distributor</label><input type="text" name="distributor" placeholder="distributor" value="'.$row['distributor'].'" readonly></div>
                                 <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'"></div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
-                                <button class="button" type="submit">Done</button>
+                                <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='security'){
                             echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
@@ -374,7 +374,7 @@ class ProfileHTML{
                                     <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
                                     <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
                                 </div>
-                                <button class="button">Done</button>
+                                <button class="button">Save</button>
                             </form>';
                         }else if($data['tab']=='capacity'){
                             echo '<form class="business" action="'.BASEURL.'/profile/update/capacity" method="post">';
@@ -382,7 +382,7 @@ class ProfileHTML{
                                     echo '<div class="pcap"><img src="'.BASEURL.'/public/img/products/'.$row['product_image'].'" alt="">
                                     <div class="input half"><label>'.$row['product_name'].'</label><input type="number" name="'.$row['product_id'].'" min='.$row['capacity'].' step=1 value="'.$row['capacity'].'"></div></div>';
                                 }while($row = mysqli_fetch_assoc($data['query']));
-                                echo '<button class="button" type="submit">Done</button>
+                                echo '<button class="button" type="submit">Save</button>
                             </form>';
                         }
                         echo '</div>
@@ -449,7 +449,7 @@ class ProfileHTML{
                                 <div class="input"><label>Company</label><input type="text" name="company" placeholder="company" value="'.$row['company'].'" readonly></div>
                                 <div class="input"><label>Average Distribute time (days)</label><input type="number" name="hold_time" placeholder="average distribute time" value="'.$row['hold_time'].'" readonly></div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
-                                <button class="button" type="submit">Done</button>
+                                <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='security'){
                             echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
@@ -458,7 +458,7 @@ class ProfileHTML{
                                     <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
                                     <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
                                 </div>
-                                <button class="button">Done</button>
+                                <button class="button">Save</button>
                             </form>';
                         }else if($data['tab']=='capacity'){
                             echo '<form class="business" action="'.BASEURL.'/profile/update/capacity" method="post">';
@@ -466,7 +466,7 @@ class ProfileHTML{
                                     echo '<div class="pcap"><img src="'.BASEURL.'/public/img/products/'.$row['product_image'].'" alt="">
                                     <div class="input half"><label>'.$row['product_name'].'</label><input type="number" name="'.$row['product_id'].'" min='.$row['capacity'].' step=1 value="'.$row['capacity'].'"></div></div>';
                                 }while($row = mysqli_fetch_assoc($data['query']));
-                                echo '<button class="button" type="submit">Done</button>
+                                echo '<button class="button" type="submit">Save</button>
                             </form>';
                         }
                         echo '</div>
@@ -535,7 +535,7 @@ class ProfileHTML{
                                     <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
                                 </div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
-                                <button class="button" type="submit">Done</button>
+                                <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='security'){
                             echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
@@ -544,7 +544,7 @@ class ProfileHTML{
                                     <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
                                     <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
                                 </div>
-                                <button class="button">Done</button>
+                                <button class="button">Save</button>
                             </form>';
                         }
                         echo '</div>
@@ -631,7 +631,7 @@ class ProfileHTML{
                                     <div class="input half"><label>Cost per km</label><input type="number" name="cost_per_km" placeholder="cost per km" min=0 step=1 value="'.$row['cost_per_km'].'"></div>
                                 </div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
-                                <button class="button" type="submit">Done</button>
+                                <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='security'){
                             echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
@@ -640,7 +640,7 @@ class ProfileHTML{
                                     <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
                                     <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
                                 </div>
-                                <button class="button">Done</button>
+                                <button class="button">Save</button>
                             </form>';
                         }
                         echo '</div>
@@ -710,7 +710,7 @@ class ProfileHTML{
                                 <div class="input"><label>Contact Number</label><input type="text" name="contact_no" placeholder="contact number" value="'.$row['contact_no'].'"></div>
                                 <div class="input"><label>User Type</label><input type="text" name="type" placeholder="user type" value="'.$row['type'].'" readonly></div>
                                 <div class="input file"><label>Profile Image</label><input type="file" name="image" accept=".png, .jpg, .jpeg"></div>
-                                <button class="button" type="submit">Done</button>
+                                <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='security'){
                             echo '<form class="passwords" action="'.BASEURL.'/profile/update/security" method="post">
@@ -719,7 +719,7 @@ class ProfileHTML{
                                     <div class="input half"><label>New Password</label><input type="password" name="new_password" placeholder="Enter new password"></div>
                                     <div class="input half"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Confirm new password" ></div>
                                 </div>
-                                <button class="button">Done</button>
+                                <button class="button">Save</button>
                             </form>';
                         }
                         echo '</div>

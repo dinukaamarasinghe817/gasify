@@ -126,19 +126,19 @@ class Navigation {
                     </li>
                     <li class="nav-tile">';
 
-                if($active == 'notifications'){
-                    echo '<a href="'.BASEURL.'/" class="panel-tile active notifications">';
-                }else{
-                    echo '<a href="'.BASEURL.'/" class="panel-tile notifications">';
-                }
+                // if($active == 'notifications'){
+                //     echo '<a href="'.BASEURL.'/" class="panel-tile active notifications">';
+                // }else{
+                //     echo '<a href="'.BASEURL.'/" class="panel-tile notifications">';
+                // }
                         
-                        echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.2083 14.4402V9.27352M20.6667 14.4402V9.27352M27.125 2.81519H3.875V23.4819H10.3333V28.6485L15.5 23.4819H21.9583L27.125 18.3152V2.81519Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <h3>Notifications</h3>
-                        </a>
-                    </li>
-                    <li class="nav-tile">';
+                //         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                //                 <path d="M14.2083 14.4402V9.27352M20.6667 14.4402V9.27352M27.125 2.81519H3.875V23.4819H10.3333V28.6485L15.5 23.4819H21.9583L27.125 18.3152V2.81519Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                //             </svg>
+                //             <h3>Notifications</h3>
+                //         </a>
+                //     </li>
+                //     <li class="nav-tile">';
 
                 if($active == 'analysis'){
                     echo '<a href="'.BASEURL.'/" class="panel-tile active analysis">';
