@@ -9,6 +9,8 @@ class Chart{
     public function dealerdashboard($data){
         $products = $data['sold_count'];
         $pname = array(); $pqty = array();
+        $color = 'rgba(255, 159, 64, 0.5)';
+        $main = 'Sold Quantity';
         foreach($products as $product){
             array_push($pname,$product['name']);
             array_push($pqty,$product['quantity']);
@@ -20,15 +22,21 @@ class Chart{
         <script>
         let ctx = document.getElementById("bargraph");
 
-        new Chart(ctx, {
+        '.$this->barchart($main,$pname,$pqty,$color).'
+        </script>';
+        
+    }
+
+    public function barchart($main,$labels,$vector,$color){
+        return 'new Chart(ctx, {
             type: "bar",
             data: {
                 
-            labels: '.phpArrtoJs($pname).',
+            labels: '.phpArrtoJs($labels).',
             datasets: [{
-                label: "Sold Quantity",
-                data: '.phpArrtoJs($pqty).',
-                backgroundColor: "rgba(255, 159, 64, 0.5)",
+                label: "'.$main.'",
+                data: '.phpArrtoJs($vector).',
+                backgroundColor: "'.$color.'",
                 borderWidth: 1
             }]
             },
@@ -39,9 +47,7 @@ class Chart{
                 }
             }
             }
-        });
-        </script>';
-        
+        });';
     }
 }
 
