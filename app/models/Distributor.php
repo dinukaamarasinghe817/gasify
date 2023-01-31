@@ -157,7 +157,7 @@ class Distributor extends Model
     public function viewdealers($user_id) {
         $dealers = array();
 
-        $query1 = $this->Query("SELECT DISTINCT d.dealer_id as dealer_id, d.name as name,  u.email as email, d.contact_no as contact_no, d.city as city, d.account_no as account_no, d.bank as bank FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.distributor_id='{$user_id}' AND u.type='dealer' ");
+        $query1 = $this->Query("SELECT DISTINCT d.dealer_id as dealer_id, d.name as name, d.image as image,  u.email as email, d.contact_no as contact_no, d.city as city, d.account_no as account_no, d.bank as bank FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.distributor_id='{$user_id}' AND u.type='dealer' ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $dealer_id = $row1['dealer_id'];
@@ -167,6 +167,7 @@ class Distributor extends Model
                 $city = $row1['city'];
                 $account_num = $row1['account_no'];
                 $bank = $row1['bank'];
+                $image = $row1['image'];
 
                 $capacities = array();
                 $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM dealer_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.dealer_id = '{$dealer_id}' ");
