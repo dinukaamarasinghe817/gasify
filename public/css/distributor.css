@@ -707,8 +707,24 @@ table td {
 }
 
 .dealerimg {
-    width: 100px;
+    width:60px;
     height: auto;
+}
+
+
+/* accordion new box new css */
+.bigbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.smallbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
 }
 
 
