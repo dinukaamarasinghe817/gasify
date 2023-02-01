@@ -78,9 +78,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
             echo '</div>
             </div>';      
         ?>
-            <!-- <div class="total_amount">
-                <span>Total Amount : </span><span class="total"></span>
-            </div> -->
+            <div class="total_amount">
+                <p>Total Amount : </p><h3 class="total">4500.00</h3>
+            </div>
+
+            <div class="bottom">
+            <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn">Next</a>
+        </div>
         
     </div>
     
@@ -145,18 +149,20 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 
     function changeqty(id, unitprice) {
-    id = parseInt(id);
-    unitprice = parseFloat(unitprice);
-    let inputstring = `.data${id} input .num`;
-    let input = document.querySelector(inputstring);
-    let inputvalue = input.value;
-    // let subtotaltring = `.data${id} .subtotal`;
-    let subtotal = document.querySelector('.total');
-    subtotal.innerHTML = "Rs. "+(unitprice* inputvalue).toLocaleString('en-US');
-    // let total = document.querySelector('.total .amount');
+        id = parseInt(id);
+        unitprice = parseFloat(unitprice);
+        let inputstring = `.data${id} input .num`;
+        let input = document.querySelector(inputstring);
+        let inputvalue = input.value;
+        // let subtotaltring = `.data${id} .subtotal`;
+        // let subtotal = document.querySelector('.total');
+        console.log(inputvalue);
+        console.log("hi");
+        subtotal.innerHTML = "Rs. "+(unitprice* inputvalue).toLocaleString('en-US');
+        // let total = document.querySelector('.total .amount');
 
-    // let totalvalue = gettotal();
-    // total.innerHTML = "Rs. "+totalvalue;
+        // let totalvalue = gettotal();
+        // total.innerHTML = "Rs. "+totalvalue;
  }
 
  function gettotal() {
