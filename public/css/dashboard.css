@@ -363,7 +363,6 @@ body.blur::before{
 .top-panel ul:nth-child(2) li a:hover{
     border-top: none;
 }
-
 .body-content .content-data{
     position: relative;
     box-sizing: border-box;
@@ -377,6 +376,9 @@ body.blur::before{
     /* overflow-y: scroll; */
     /* scroll-behavior: smooth; */
     scrollbar-width: thin;
+}
+.content-data.notifications{
+    border: 2px solid var(--button-orange-hover);
 }
 .content-data::-webkit-scrollbar{
     display: none;
@@ -1027,7 +1029,7 @@ label{
 
 .body-content .content-data{
     border: var(--button-orange-hover) solid 2px;
-    border-top: transparent solid 0px;
+    border-top: 2px solid var(--button-orange-hover);
     box-sizing: border-box;
     padding: 15px;
     height: 600px;
@@ -1035,7 +1037,18 @@ label{
     scroll-behavior: smooth;
     transition: transtionIn 2.5s;
 }
-
-.body-content .content-data.profile{
-    border-top: var(--button-orange-hover) solid 2px;
+.body-content .content-data:not(.notifications),
+.body-content .content-data:not(.profile){
+    border: var(--button-orange-hover) solid 2px;
+    border-top: transparent solid 0px;
+    box-sizing: border-box;
+    padding: 15px;
+    height: 600px;
+    /* overflow-y: scroll; */
+    /* scroll-behavior: smooth; */
+    transition: transtionIn 2.5s;
+}
+.body-content .content-data.profile,
+.body-content .content-data.notifications{
+    border: var(--button-orange-hover) solid 2px;
 }
