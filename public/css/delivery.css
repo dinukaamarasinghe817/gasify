@@ -128,7 +128,7 @@ body{
 }
 
 /* body header section css */
-.body .body-header{
+/* .body .body-header{
     display: flex;
     flex-direction: row;
     height: 15%;
@@ -182,7 +182,6 @@ body{
 .logout-menu ul li{
     display: flex;;
     flex-direction: row;
-    /* justify-content: center;; */
     padding: 8px 10px;
 }
 .logout-menu ul li a{
@@ -200,10 +199,9 @@ body{
 .body-header-right svg path{
     stroke: var(--navmenu-orange-dark);
 }
-/* onclick set this to fill */
 .body-header-right svg:hover{
     fill: var(--navmenu-orange-dark);
-}
+} */
 
 
 /* body content css */

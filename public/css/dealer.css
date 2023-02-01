@@ -391,3 +391,24 @@
 .notification h2{
     font-size: var(--mediums);
 }
+
+
+/* analysis css */
+.content-data.analysis{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 2px solid transparent;
+}
+.content-data.analysis .chart{
+    padding: 10px;
+    border: 2px solid var(--button-blue);
+    border-radius: 5px;
+}
+.content-data .chart{
+    width: 47%;
+    height: 45%;
+    align-items: center;
+    justify-content: center;
+}

@@ -10,14 +10,22 @@ $sidebar = new Navigation('dealer','analysis');
         // call whatever the component you need to show
         // $bodycontent = new ProfileHTML($data);
     ?>
-    <div class="content-data">
-        <?php
-        $charts = $data['charts'];
-        for($i=0; $i<count($charts); $i++){
-            $chart = $charts[i];
-            $ch = new Chart($chart['type'],$chart['chart'],$i);
-        }
-        ?>
+    <div class="body-content">
+        <form action="">
+            <div class="input half"><label>From</label><input type="date" name="start_date" value="'.$row['street'].'"></div>
+            <div class="input half"><label>To</label><input type="date" name="end_date" value="'.$row['street'].'"></div>
+        </form>
+        <div class="content-data analysis">
+            <?php
+            $charts = $data['charts'];
+            for($i=0; $i<count($charts); $i++){
+                $chart = $charts[$i];
+                echo "<div class='chart'>";
+                $ch = new Chart($chart['type'],$chart,$i);
+                echo "</div>";
+            }
+            ?>
+        </div>
     </div>
 </section>
 
