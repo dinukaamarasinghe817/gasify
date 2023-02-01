@@ -564,10 +564,52 @@ class Body{
                     <div class="cmValue">78</div>
                     <div class="cmTitle">Dealers</div>
                 </div>
-                
-
-
             </div>';
+            echo'
+            <div class="tabletitles">
+            <div class="productTableTitle">Products (Low stock)</div>
+            <div class="recentRequestTableTitle">Recent Orders</div>
+            </div>
+            <div class="tables">
+            <table class="lowStockTable">
+                <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody style="overflow-y:auto;height:100px">
+                    <tr>
+                        <td class="tdCenter">Buddy</td>
+                        <td class="tdRight">130</td>
+                    </tr>
+                    <tr>
+                        <td class="tdCenter">Regular</td>
+                        <td class="tdRight">30</td>
+                    </tr>                
+                </tbody>      
+            </table>
+            <table class="pendingReqTable">
+                <thead>
+                    <tr>
+                        <th>Dsitributor name</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody style="overflow-y:auto;height:100px">
+                    <tr>
+                        <td class="tdCenter">Buddy</td>
+                        <td class="tdRight">130</td>
+                    </tr>
+                    <tr>
+                        <td class="tdCenter">Regular</td>
+                        <td class="tdRight">30</td>
+                    </tr>                
+                </tbody>      
+            </table>
+            </div>
+            
+            ';
             /*echo 
             '<section class="body-content">
                 <div class="Top" id="Top">
