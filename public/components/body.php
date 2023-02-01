@@ -572,7 +572,7 @@ class Body{
             </div>
             <div class="tables">
             <table class="lowStockTable">
-                <thead>
+                <thead style="background-color:#dbb1f9">
                     <tr>
                         <th>Product name</th>
                         <th>Quantity</th>
@@ -590,21 +590,37 @@ class Body{
                 </tbody>      
             </table>
             <table class="pendingReqTable">
-                <thead>
+                <thead style="background-color:#dbb1f9">
                     <tr>
                         <th>Dsitributor name</th>
-                        <th>Quantity</th>
+                        <th>Products</th>
                     </tr>
                 </thead>
                 <tbody style="overflow-y:auto;height:100px">
                     <tr>
-                        <td class="tdCenter">Buddy</td>
-                        <td class="tdRight">130</td>
+                        <td class="tdCenter">AJ Agencies</td>
+                        <td class="tdCenter">
+                            <table class="requestProducts" style="width:100%">
+                                <thead style="background-color:#dbb1f9">
+                                    <tr>
+                                        <th>Product name</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="overflow-y:auto;height:100px">
+                                    <tr>
+                                        <td class="tdCenter">Buddy</td>
+                                        <td class="tdRight">130</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tdCenter">Regular</td>
+                                        <td class="tdRight">30</td>
+                                    </tr>                
+                                </tbody>      
+                            </table>
+                        </td>
                     </tr>
-                    <tr>
-                        <td class="tdCenter">Regular</td>
-                        <td class="tdRight">30</td>
-                    </tr>                
+                    
                 </tbody>      
             </table>
             </div>
