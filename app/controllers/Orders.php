@@ -136,6 +136,19 @@ class Orders extends Controller{
     }
 
 
+    //display bank slip uploader
+    function bank_slip_upload(){
+    
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $this->view('customer/place_reservation/bank_slip_upload',$data);
+    }
 
 
     /*..........................Customer quota......................... */
