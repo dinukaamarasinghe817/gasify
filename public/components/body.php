@@ -563,10 +563,16 @@ class Body{
                     <div class="cmValue">78</div>
                     <div class="cmTitle">Dealers</div>
                 </div>
-                
-
-
             </div>';
+            echo'
+            <div class="tabletitles">
+            <div class="productTableTitle">Products (Low stock)</div>
+            <div class="recentRequestTableTitle">asdas</div>
+            </div>
+            
+            
+            
+            ';
             /*echo 
             '<section class="body-content">
                 <div class="Top" id="Top">
