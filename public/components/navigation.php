@@ -141,9 +141,9 @@ class Navigation {
                 //     <li class="nav-tile">';
 
                 if($active == 'analysis'){
-                    echo '<a href="'.BASEURL.'/" class="panel-tile active analysis">';
+                    echo '<a href="'.BASEURL.'/analysis/dealer" class="panel-tile active analysis">';
                 }else{
-                    echo '<a href="'.BASEURL.'/" class="panel-tile analysis">';
+                    echo '<a href="'.BASEURL.'/analysis/dealer" class="panel-tile analysis">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -156,9 +156,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'reports'){
-                    echo '<a href="'.BASEURL.'/" class="panel-tile active reports">';
+                    echo '<a href="'.BASEURL.'/reports/dealer" class="panel-tile active reports">';
                 }else{
-                    echo '<a href="'.BASEURL.'/" class="panel-tile reports">';
+                    echo '<a href="'.BASEURL.'/reports/dealer" class="panel-tile reports">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">

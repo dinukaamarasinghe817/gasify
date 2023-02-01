@@ -14,7 +14,19 @@ $sidebar = new Navigation('dealer',$data['navigation']);
                 <div class="content-data notifications">
                     <h2>Notifications</h2>
                     <ul>
-                        <li>
+                        <?php
+                            if(mysqli_num_rows($data['notifications']) > 0){
+                                while($notification = mysqli_fetch_assoc($data['notifications'])){
+                                    echo '<li>
+                                            <div class="notification">
+                                                <h2>'.$notification['type'].'</h2>
+                                                <p>'.$notification['message'].'</p>
+                                            </div>
+                                        </li>';
+                                }
+                            }
+                        ?>
+                        <!-- <li>
                             <div class="notification">
                                 <h2>Re-Order level alert</h2>
                                 <p>You're runnig low stock on the following products. Hurry up and place a new purchase order. Products : (Buddy, Budget)</p>
@@ -25,7 +37,7 @@ $sidebar = new Navigation('dealer',$data['navigation']);
                                 <h2>Re-Order level alert</h2>
                                 <p>You're runnig low stock on the following products. Hurry up and place a new purchase order. Products : (Buddy, Budget)</p>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
         </section>

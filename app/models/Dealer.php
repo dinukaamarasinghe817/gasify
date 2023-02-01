@@ -130,7 +130,23 @@ class Dealer extends Model
             (SELECT order_id FROM reservation 
             WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND dealer_id = 6 AND order_state = 'Completed') 
         GROUP BY product_id";
-        $data['sold_count'] = $this->Query($sql);
+
+        // chart details
+        $products = $this->Query($sql);
+        $chart['main'] = 'Sold Quantity';;
+        $chart['color'] = 'rgba(255, 159, 64, 0.5)';
+        // $chart['color'] = '[
+        //     "rgb(255, 99, 132)",
+        //     "rgb(54, 162, 235)",
+        //     "rgb(54, 122, 15)"
+        //   ]';
+        $chart['labels'] = array();$chart['vector'] = array();
+        $products = $this->Query($sql);
+        foreach($products as $product){
+            array_push($chart['labels'],$product['name']);
+            array_push($chart['vector'],$product['quantity']);
+        }
+        $data['chart'] = $chart;
 
         return $data;
     }//

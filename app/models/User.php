@@ -14,6 +14,10 @@ class User extends Model
         $result = $this->read('users', "email = '$email'");
         return $result;
     }
+    public function getnotifications($user_id){
+        $data['notifications'] = $this->read('notifications', "user_id = '$user_id'",'date AND time DESC');
+        return $data;
+    }
     public function resetPassword($email){
         if(empty($email)){
             $data['toast'] = ['type'=>'error', 'message'=>'Email field empty'];

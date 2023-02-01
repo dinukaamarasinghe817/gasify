@@ -389,6 +389,9 @@
 }
 
 /* notification css */
+.content-data.notifications{
+    border: 2px solid var(--button-orange-hover);
+}
 .notification{
     display: flex;
     flex-direction: column;
