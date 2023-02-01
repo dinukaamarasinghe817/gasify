@@ -119,6 +119,24 @@ class Orders extends Controller{
     }
 
 
+    //select payment method
+    function select_payment_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        // $data['brands'] = $this->model('Customer')->getCompanyBrand();
+        // $data['dealers'] = $this->model('Customer')->getAlldealers();
+
+        $this->view('customer/place_reservation/select_payment_method',$data);
+    }
+
+
+
 
     /*..........................Customer quota......................... */
     //display active quotas for customers according to their types
