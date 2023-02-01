@@ -118,7 +118,7 @@ a,button{
     font-size: var(--medium);
     font-size: 12px;
 }
-.order_item button{
+/* .order_item button{
     min-width: 100px;
     font-size: var(--mediums);
     transition: 0.3s;
@@ -131,7 +131,7 @@ a,button{
 .order_item button:hover{
     background-color: var(--navmenu-gray-dark);
     color: white;
-}
+} */
 
 
 .total{
@@ -157,14 +157,20 @@ a,button{
 
 
 .bottom{
-    padding-top: 20px;
+    padding-top: 50px;
 }
 
-.bottom h3{
+.bottom h2{
     color: var(--navmenu-orange-dark);
 }
 
 
+.p_methods{
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    padding-top: 20px;
+}
 
 
 
@@ -178,8 +184,7 @@ a,button{
 
 
 
-
-.btn{
+.p_methods .btn{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -187,32 +192,34 @@ a,button{
     
 }
 
-.btn:hover button svg{
+.p_methods .btn:hover button svg{
     fill: var(--button-orange-hover);
 }
-.btn:hover button a{
+.p_methods .btn:hover button a{
     color: var(--button-orange-hover);
 }
 
-.btn a{
+.p_methods .btn a{
     color: var(--black);
     display: flex;
     align-items: center;
     justify-content: center;
+    column-gap: 20px;
 
 }
 
-.btn button{
+.p_methods .btn button{
     display: flex;
     column-gap: 20px;
     width: 300px;
-    padding: 10px;
+    padding: 40px;
     /* height: 50px; */
-    background-color: var(--navmenu-orange);
+    /* background-color: var(--navmenu-orange); */
+    border: 2px solid var(--navmenu-orange-dark);
     border-radius: 5px;
     justify-content: center;
     align-items: center;
-    border: none;
+    
     font-size: var(--mediums);
     font-weight: 600;
     cursor: pointer;
