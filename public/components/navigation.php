@@ -538,7 +538,7 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'dealer'|| $active == 'companyRegDealer'){
-                    echo '<a href="../Compny/dealer" class="panel-tile active orders">';
+                    echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile active orders">';
                 }else{
                     echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile orders">';
                 }
@@ -556,7 +556,7 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'distributor' || $active == 'companyRegDistributor'){
-                    echo '<a href="../Compny/distributor" class="panel-tile active delivery">';
+                    echo '<a href="'.BASEURL.'/Compny/distributor" class="panel-tile active delivery">';
                 }else{
                     echo '<a href="'.BASEURL.'/Compny/distributor" class="panel-tile delivery">';
                 }
@@ -580,9 +580,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'orders' || $active == 'companyLimitQuota'){
-                    echo '<a href="../Compny/orders" class="panel-tile active stock">';
+                    echo '<a href="'.BASEURL.'/Compny/orders" class="panel-tile active stock">';
                 }else{
-                    echo '<a href="../Compny/orders" class="panel-tile stock">';
+                    echo '<a href="'.BASEURL.'/Compny/orders" class="panel-tile stock">';
 
                 }
                         
@@ -598,7 +598,7 @@ class Navigation {
 
 
                 if($active == 'companyProducts'){
-                    echo '<a href="../Compny/products" class="panel-tile active notifications">';
+                    echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile active notifications">';
                 }else{
                     echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile notifications">';
                 }
@@ -651,9 +651,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'dashboard'){
-                    echo '<a href="../dashboard/delivery" class="panel-tile active dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/delivery" class="panel-tile active dashboard">';
                 }else{
-                    echo '<a href="../dashboard/delivery" class="panel-tile dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/delivery" class="panel-tile dashboard">';
                 }
         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -666,9 +666,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'orders'){
-                    echo '<a href="../Delvery/deliveries" class="panel-tile active orders">';
+                    echo '<a href="'.BASEURL.'/Delvery/deliveries" class="panel-tile active orders">';
                 }else{
-                    echo '<a href="../Delvery/deliveries" class="panel-tile orders">';
+                    echo '<a href="'.BASEURL.'/Delvery/deliveries" class="panel-tile orders">';
                 }
 
                         echo '
@@ -685,9 +685,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'notifications'){
-                    echo '<a href="../Delvery/reviews" class="panel-tile active notifications">';
+                    echo '<a href="'.BASEURL.'/Delvery/reviews" class="panel-tile active notifications">';
                 }else{
-                    echo '<a href="../Delvery/reviews" class="panel-tile notifications">';
+                    echo '<a href="'.BASEURL.'/Delvery/reviews" class="panel-tile notifications">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">

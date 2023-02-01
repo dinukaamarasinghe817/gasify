@@ -1,5 +1,5 @@
     <?php 
-        $header = new Header("company");
+        $header = new Header("delivery");
         $sidebar = new Navigation('delivery',$data['navigation']);
     ?>
     <section class="body">
