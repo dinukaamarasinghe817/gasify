@@ -41,8 +41,9 @@ class Body{
                             </div>
                             <div class="topic"><h3>Product Sale</h3></div>
                             <div class="chart">';
-                                if(mysqli_num_rows($data['sold_count']) > 0){
-                                    $chart = new Chart("dealerdashboard",$data);
+                                $chart = $data['chart'];
+                                if(count($chart['labels']) > 0){
+                                    $chart = new Chart('bar',$chart,1);
                                 }else{
                                     echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
                                 }

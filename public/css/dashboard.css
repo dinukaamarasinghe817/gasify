@@ -181,6 +181,18 @@ body{
     border: none;
     margin-right: 20px;
     height: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.body-header-right .bell p{
+    position: absolute;
+    background-color: rgb(101, 100, 100);
+    border-radius: 50px;
+    padding: 3px;
+    color: white;
+    min-width: 15px;
+    transform: translateX(-35px);
+    transform: translateY(-15px);
 }
 .body-header-right .profile,
 .body-header-right .profile img{
