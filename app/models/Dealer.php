@@ -402,11 +402,11 @@ class Dealer extends Model
         array_push($data['charts'],$chart);
 
         //chart 2
-        $chart['type'] = 'bar';
-        $chart['labels'] = array('Domestic','LargeScale','SmallScale');
-        $chart['vector'] = array(22,65,45);
+        $chart['type'] = 'line';
+        $chart['labels'] = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+        $chart['vector'] = array(7,10,12,5,7,8,3);
         $chart['main'] = 'Number of Orders';
-        $chart['color'] = 'rgba(48, 39, 245, 0.8)';
+        $chart['color'] = 'rgba(242, 71, 235, 0.8)';
         array_push($data['charts'],$chart);
 
         //chart 3
@@ -423,10 +423,10 @@ class Dealer extends Model
 
         //chart 4
         $chart['type'] = 'bar';
-        $chart['labels'] = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
-        $chart['vector'] = array(7,10,12,5,7,8,3);
+        $chart['labels'] = array('Domestic','LargeScale','SmallScale');
+        $chart['vector'] = array(22,65,45);
         $chart['main'] = 'Number of Orders';
-        $chart['color'] = 'rgba(242, 71, 235, 0.8)';
+        $chart['color'] = 'rgba(48, 39, 245, 0.8)';
         array_push($data['charts'],$chart);
         
         return $data;

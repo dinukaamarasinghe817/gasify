@@ -19,8 +19,7 @@ class Chart{
             datasets: [{
                 label: "'.$data['main'].'",
                 data: '.phpArrtoJs($data['vector']).',
-                backgroundColor: "'.$data['color'].'",
-                borderWidth: 1
+                backgroundColor: "'.$data['color'].'"
             }]
             },
             options: {
@@ -29,6 +28,39 @@ class Chart{
                 beginAtZero: true
                 }
             }
+            }
+        });
+        </script>';
+    }
+
+    public function line($data,$index){
+        echo '<canvas id="bargraph'.$index.'" ></canvas>
+        <script>
+        let ctx'.$index.' = document.getElementById("bargraph'.$index.'")
+        new Chart(ctx'.$index.', {
+            type: "line",
+            data: {
+                
+            labels: '.phpArrtoJs($data['labels']).',
+            datasets: [{
+                label: "'.$data['main'].'",
+                data: '.phpArrtoJs($data['vector']).',
+                backgroundColor: "'.$data['color'].'",
+                borderWidth: 1,
+                pointRadius: 5,
+                borderColor: "'.$data['color'].'",
+            }]
+            },
+            options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                },
+                legend: {
+                    display: true,
+                    position: "right"
+                }
             }
         });
         </script>';
@@ -49,6 +81,14 @@ class Chart{
                 backgroundColor: '.$data['color'].',
                 borderWidth: 1
             }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "right"
+                    }
+                }
             }
         });
         </script>';
