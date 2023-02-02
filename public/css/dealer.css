@@ -406,7 +406,8 @@
 }
 .content-data.analysis .chart{
     padding: 10px;
-    border: 3px solid var(--navmenu-orange-dark);
+    /* border: 3px solid var(--navmenu-orange-dark); */
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
     border-radius: 5px;
     padding: 10px;
 }
@@ -420,6 +421,7 @@
 .content-data .chart{
     width: 47%;
     height: 70%;
+    max-height: 350px;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -448,4 +450,5 @@
     border: 2px solid transparent;
     padding: 0px 0px;
     margin: 0px;
+    padding: 5px;
 }
