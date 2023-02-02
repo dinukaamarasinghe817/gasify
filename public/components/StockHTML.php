@@ -106,6 +106,7 @@ class StockHTML{
                     $output .= '</tbody></table>
                                 </form>';
                     echo $output;
+
     }
 
     public function dealerpohistory($data){
