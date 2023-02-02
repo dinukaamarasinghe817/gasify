@@ -46,14 +46,14 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                 <div class="accordion new">
 
-                    <div class="box">
+                    <!-- <div class="box"> -->
                         <?php
                             $pendingorders = $data['pendingorders'];
                             foreach($pendingorders as $pendingorder) {
                                 $row1 = $pendingorder['pendinginfo'];
                                 $capacities = $pendingorder['capacities'];
 
-                                $output = '
+                                $output = '<div class="box">
                                 <div class="labelbgn">';
                                     $order_id = $row1['stock_req_id'];
                                     $output .='
@@ -87,23 +87,24 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         <tbody>';
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
-                                        
                                             $output .= '
-                                            <tr>
-                                                <td>'.$row2['product_id'].'</td>
-                                                <td>'.$row2['quantity'].'</td>
-                                                <td>'.$row2['unit_price'].'</td>
-                                            
-                                            </tr>';
+                                                <tr>
+                                                    <td>'.$row2['product_id'].'</td>
+                                                    <td>'.$row2['unit_price'].'</td>
+                                                    <td>'.$row2['quantity'].'</td>
+                                                </tr>';
                                         }
                                         $output .='
                                         </tbody>
                                     </table>
-                                </div>'; 
-                            }
+                                </div> 
+                            </div>';
                             echo $output;
+
+                            }
+                            // echo $output;
                         ?>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

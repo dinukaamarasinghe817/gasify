@@ -685,7 +685,6 @@ table td {
 }
 
 .toptable {
-    /* border-collapse: collapse; */
     width:50%;
 
 }
@@ -695,36 +694,17 @@ table td {
     padding-bottom: 12px;
     padding-left: 5px;
     text-align: left;
-    /* background-color:white; */
     color: black;
     width: 800px;
-    /* border: 1px solid black; */
 }
 
 .toptable td {
     padding: 8px;
-    /* border: 1px solid black; */
 }
 
 .dealerimg {
-    width:60px;
+    width:50px;
     height: auto;
+    border-radius: 50%;
 }
-
-
-/* accordion new box new css */
-.bigbox {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-}
-
-.smallbox {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    
-}
-
 
