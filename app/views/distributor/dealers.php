@@ -33,15 +33,16 @@ $user_id = $_SESSION['user_id'];
                         $row1 = $dealer['dealerinfo'];
                         $capacities = $dealer['capacities'];
 
-                        $output = '<div class="labelbgn">
-                        <div class="bigbox">
+                        $output = '
+                        <div class="labelbgn">
+                            <div class="bigbox">
 
-                            <div class="smallbox">';
+                                <div class="smallbox">';
 
-                                $image = BASEURL.'/public/img/profile/'.$data['image'];
-                                $output1 = '
-                                        <img src="'.$image.'" alt="" class="dealerimg"> ';
-                                        echo $output1;
+                                    $image = BASEURL.'/public/img/profile/'.$data['image'];
+                                    $output1 = '
+                                            <img src="'.$image.'" alt="" class="dealerimg"> ';
+                                            echo $output1;
 
                             $output .= '</div>
 
@@ -62,7 +63,8 @@ $user_id = $_SESSION['user_id'];
                         </div>';
 
 
-                        $output .= '<div class="content">
+                        $output .= '
+                        <div class="content">
                         Dealer Details : ';
 
                         $output .= '
@@ -118,6 +120,8 @@ $user_id = $_SESSION['user_id'];
                     echo $output;
                     ?>
                 </div>
+
+
             </div>
         </div>
     </div>
