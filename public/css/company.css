@@ -971,22 +971,19 @@ label{
 .DealerTableTopics{
     width: 48.5%;
     color: black;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-top-style: solid;
+    border: 3px solid;
     box-sizing: border-box;
     border-color: #deb4f8;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .DealerTableTopics:focus{
-    background-color: #deb4f8;
+    background-color: #7b15ba;
 }
-.DealerTableTopics:first-child{
-    background-color: #deb4f8;
+.DealerTableTopics{
+    background-color: #ffffff;
 }
 .dealerTableTitles{
     font-family: poppins;
