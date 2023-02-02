@@ -44,14 +44,14 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                 <div class="accordion new">
 
-                    <div class="box">
+                    <!-- <div class="box"> -->
                         <?php
                             $completedorders = $data['completedorders'];
                             foreach($completedorders as $completedorder) {
                                 $row1 = $completedorder['completedinfo'];
                                 $capacities = $completedorder['capacities'];
 
-                                $output = '
+                                $output = '  <div class="box">
                                 <div class="labelbgn">';
                                 $order_id = $row1['stock_req_id'];
                                 $output .='
@@ -87,19 +87,22 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             $output .= '
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
-                                                <td>'.$row2['quantity'].'</td>
                                                 <td>'.$row2['unit_price'].'</td>
+                                                <td>'.$row2['quantity'].'</td>
                                             </tr>';                                            
                                         }
                                         $output .= '
                                            
                                         </tbody>
                                     </table>
-                                </div>'; 
-                            }
+                                </div> 
+                            </div>';
                             echo $output;
+
+                            }
+                            // echo $output;
                         ?>                        
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

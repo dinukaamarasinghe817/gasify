@@ -313,7 +313,7 @@ class Body{
                                         </tr>';
                                 
                                 $stocks = $data['currentstock'];
-                                $output="";
+                                // $output="";
                                 foreach($stocks as $stock) {
                                     $row1 = $stock['stockinfo'];
 
@@ -323,10 +323,13 @@ class Body{
                                         <td>'.$row1['quantity'].'</td> 
                                     </tr>';
                                 }
-                                    echo '</table>';
+                                    echo '</table>
+                                </div>
+                                    
+                                    ';
                                     echo $output;
                                     echo '
-                                </div>
+                               
                         </div>
                     </div>';
 

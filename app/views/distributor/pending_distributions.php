@@ -32,9 +32,8 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                         foreach($pendings as $pending) {
                             $row1 = $pending['pendinginfo'];
                             $capacities = $pending['capacities'];
-
                    
-                        $output = '<div class="box">
+                            $output = '<div class="box">
                                 <div class="labelbgn">';
                                 $distribution_id = $row1['po_id'];
                             $output .= ' 
@@ -82,7 +81,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         </tbody>
                                     </table>
                                 </div>
-                                </div>';
+                            </div>';
 
                                    
                                         echo $output;
