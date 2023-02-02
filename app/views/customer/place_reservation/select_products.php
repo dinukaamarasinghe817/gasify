@@ -38,10 +38,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>
                                 <div class="increment_box">
                                     <div class="minus">-</div>
-                                    <input type="text" name="qty" id="qty" value="0" class="num" onchange="changeqty('.$product['p_id'].','.$product['unit_price'].');">
-                                    <div class = "plus">+</div>
+                                    <input type="text" name="qty" id="qty" value="0" class="num" onchange="changeqty('.$product['p_id'].','.$product['unit_price'].'); return false;">
+                                    <div class = "plus" onclick = "changeqty('.$product['p_id'].','.$product['unit_price'].')">+</div>
                                 </div>
-                                
+                                <p>sub totals : </p><h3 class="subtotal">" "</h3>
                             </div>
                         ';
                 }
@@ -71,6 +71,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     <input type="text" name="qty" id="qty" value="0" class="num">
                                     <div class="plus">+</div>
                                 </div>
+                               
                             </div>
                         ';
                 }
@@ -78,8 +79,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
             echo '</div>
             </div>';      
         ?>
-            <div class="total_amount">
-                <p>Total Amount : </p><h3 class="total">4500.00</h3>
+            <!-- <div class="total"> -->
+                <p>sub totals : </p><h3 class="total">" "</h3>
+            <!-- </div> -->
+            <div class="total"> 
+                <p>Total Amount : </p><h3 class="amount">" "</h3>
             </div>
 
             <div class="bottom">
@@ -102,15 +106,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
         button.addEventListener('click',function(event){
             
             var buttonClicked = event.target;
-            console.log(buttonClicked);
+            // console.log(buttonClicked);
             var input = buttonClicked.parentElement.children[1];
-            console.log(input);
+            // console.log(input);
             
             var inputValue = input.value;
-            console.log(inputValue);
+            // console.log(inputValue);
             
             var newValue = parseInt(inputValue) + 1;
-            console.log(newValue);
+            // console.log(newValue);
             
             input.value = newValue;
             
@@ -123,14 +127,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
         button.addEventListener('click',function(event){
             
             var buttonClicked = event.target;
-            console.log(buttonClicked);
+            // console.log(buttonClicked);
             var input = buttonClicked.parentElement.children[1];
-            console.log(input);
+            // console.log(input);
             
             var inputValue = input.value;
-            console.log(inputValue);
+            // console.log(inputValue);
             var newValue = parseInt(inputValue) - 1;
-            console.log(newValue);
+            // console.log(newValue);
             
             input.value = newValue;
 
@@ -151,19 +155,24 @@ $sidebar = new Navigation('customer',$data['navigation']);
     function changeqty(id, unitprice) {
         id = parseInt(id);
         unitprice = parseFloat(unitprice);
+        console.log(unitprice);
+        console.log(id);
+        
         let inputstring = `.data${id} input .num`;
         let input = document.querySelector(inputstring);
         let inputvalue = input.value;
-        // let subtotaltring = `.data${id} .subtotal`;
-        // let subtotal = document.querySelector('.total');
-        console.log(inputvalue);
-        console.log("hi");
-        subtotal.innerHTML = "Rs. "+(unitprice* inputvalue).toLocaleString('en-US');
-        // let total = document.querySelector('.total .amount');
 
-        // let totalvalue = gettotal();
-        // total.innerHTML = "Rs. "+totalvalue;
- }
+        console.log(inputvalue);
+        
+
+        let subtotaltring = `.data${id} .subtotal`;
+        let subtotal = document.querySelector('.total');
+        subtotal.innerHTML = "Rs. "+(unitprice* inputvalue).toLocaleString('en-US');
+        let total = document.querySelector('.total .amount');
+
+        let totalvalue = gettotal();
+        total.innerHTML = "Rs. "+totalvalue;
+    }
 
  function gettotal() {
     let total = 0.00;
@@ -177,6 +186,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
     // parseFloat("2,299.00".replace(/,/g, ''))
     return total.toLocaleString('en-US');
 }
+
+   
 
     
 
