@@ -397,7 +397,8 @@ class Dealer extends Model
         $chart['type'] = 'bar';
         $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
         $chart['vector'] = array(7,10,2,5);
-        $chart['main'] = 'Product Based Sale';
+        $chart['main'] = 'Based on Product';
+        $chart['y'] = 'Number of sold items';
         $chart['color'] = 'rgba(245, 215, 39, 0.8)';
         array_push($data['charts'],$chart);
 
@@ -405,7 +406,8 @@ class Dealer extends Model
         $chart['type'] = 'line';
         $chart['labels'] = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
         $chart['vector'] = array(7,10,12,5,7,8,3);
-        $chart['main'] = 'Number of Orders';
+        $chart['main'] = 'Based on the day';
+        $chart['y'] = 'Number of Orders';
         $chart['color'] = 'rgba(242, 71, 235, 0.8)';
         array_push($data['charts'],$chart);
 
@@ -413,7 +415,8 @@ class Dealer extends Model
         $chart['type'] = 'doughnut';
         $chart['labels'] = array('Delivery','Pickup');
         $chart['vector'] = array(60,40);
-        $chart['main'] = 'Collecting Method Based Orders';
+        $chart['main'] = 'Based on Collecting Method';
+        $chart['y'] = 'Number of orders';
         $chart['color'] = '[
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
@@ -425,10 +428,15 @@ class Dealer extends Model
         $chart['type'] = 'bar';
         $chart['labels'] = array('Domestic','LargeScale','SmallScale');
         $chart['vector'] = array(22,65,45);
-        $chart['main'] = 'Number of Orders';
+        $chart['main'] = 'Based on Customer Type';
+        $chart['y'] = 'Number of Orders';
         $chart['color'] = 'rgba(48, 39, 245, 0.8)';
         array_push($data['charts'],$chart);
         
         return $data;
+    }
+
+    public function getReportInfo($start_date,$to_date,$order_by){
+
     }
 }

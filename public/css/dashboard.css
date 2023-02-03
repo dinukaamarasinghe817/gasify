@@ -1019,10 +1019,17 @@ label{
     transition: 0.3s;
 }
 
-.btn-blue:hover{
+.btn-blue:hover,
+.anchor-button:hover{
     background-color: var(--button-blue-hover);
 }
-
+.anchor-button{
+    background-color: var(--button-blue);
+    padding: 10px;
+    color: white;
+    transition: 0.3s;
+    border-radius: 10px;
+}
 .gray{
     color: var(--navmenu-gray-dark);
 }
