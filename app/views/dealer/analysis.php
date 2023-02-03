@@ -11,6 +11,7 @@ $sidebar = new Navigation('dealer','analysis');
         // $bodycontent = new ProfileHTML($data);
     ?>
     <div class="body-content">
+        <h2>Sales Analysis</h2>
         <form action="" class="filters">
                 <div class="input half"><label>From</label><input type="date" name="start_date" value="'.$row['street'].'"></div>
                 <div class="input half"><label>To</label><input type="date" name="end_date" value="'.$row['street'].'"></div>

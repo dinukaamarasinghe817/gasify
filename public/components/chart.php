@@ -17,17 +17,19 @@ class Chart{
                 
             labels: '.phpArrtoJs($data['labels']).',
             datasets: [{
-                label: "'.$data['main'].'",
+                label: "'.$data['y'].'",
                 data: '.phpArrtoJs($data['vector']).',
                 backgroundColor: "'.$data['color'].'"
             }]
             },
             options: {
-            scales: {
-                y: {
-                beginAtZero: true
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }]
                 }
-            }
             }
         });
         </script>';
@@ -43,7 +45,7 @@ class Chart{
                 
             labels: '.phpArrtoJs($data['labels']).',
             datasets: [{
-                label: "'.$data['main'].'",
+                label: "'.$data['y'].'",
                 data: '.phpArrtoJs($data['vector']).',
                 backgroundColor: "'.$data['color'].'",
                 borderWidth: 1,
@@ -53,9 +55,11 @@ class Chart{
             },
             options: {
                 scales: {
-                    y: {
-                    beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }]
                 },
                 legend: {
                     display: true,
@@ -76,7 +80,7 @@ class Chart{
                 
             labels: '.phpArrtoJs($data['labels']).',
             datasets: [{
-                label: "'.$data['main'].'",
+                label: "'.$data['y'].'",
                 data: '.phpArrtoJs($data['vector']).',
                 backgroundColor: '.$data['color'].',
                 borderWidth: 1
