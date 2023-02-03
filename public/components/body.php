@@ -896,87 +896,86 @@ class Body{
     function companyDealers($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#deb4f8">Registered Dealers</div></a>
             <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
             </div>
-            <div class="dealerTableTitles" id="dealerTableTitles">
-            <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
-            <div class="dealer_location" id="dealer_col"style="width:15%">Location</div>
-            <div class="dealer_contactno" id="dealer_col"style="width:18%">Contact no</div>
-            <div class="dealer_email" id="dealer_col" style="width:15%">Bank account</div>
-            <div class="dealer_capacity" id="dealer_col"style="width:30%">Bank</div>
-            </div>
-            <div class="DealerTables" id="DealerTables">';
-                if(isset($data["dealer"])){
-                    $result = $data["dealer"];
-                    $dealer = "";
-                    /*while($row){
-                        $dealer.='';
-                        //$name = $row["name"];
-                        //$qty = $row["quantity"];
-                        $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #85B6E2;height:10%">
-                                        <div class="dealer_name" id="col">'.$row['name']. '</div>
-                                        <div class="dealer_location" id="col">'.$row['city'].$row['street'].'</div>
-                                        <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
-                                        <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
-                                        <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
-                                        </div>';                    
-                    }*/
-                    foreach($result as $row){
-                        //print_r($data) ;
-                        $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #deb4f8;height:10%">
-                                        <div class="dealer_name" id="col" style="margin-top:1%">'.$row['name']. '</div>
-                                        <div class="dealer_location" id="col" style="margin-top:1%">'.$row['city'].'</div>
-                                        <div class="dealer_contactno" id="col" style="margin-top:1%">'.$row['contact_no'].'</div>
-                                        <div class="dealer_accountno" id="col" style="margin-top:1%">'.$row['account_no'].'</div>
-                                        <div class="dealer_capacity" id="col" style="margin-top:1%">'.$row['bank'].'</div>
-                                        </div>';             
-                    }
-                    echo $dealer;
-
-
-                    
-
-                }
-            
-            
-            
-            
-            
-            echo ' 
-        </section>';
+            <div class="DealerTables" id="DealerTables" style="margin:0">';
+                echo '<table class="dealerInfoTable">
+                    <thead style="background-color:#dbb1f9">
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Contact no</th>
+                            <th>Bank account</th>
+                            <th>Bank</th>
+                        </tr>
+                    </thead>
+                    <tbody style="overflow-y:auto;height:100px">';
+                        if (isset($data["dealer"])) {
+                            $result = $data["dealer"];
+                            $dealer = "";
+                            foreach ($result as $row) {
+                                $dealer .=  '<tr>
+                                                <td class="tdCenter">'.$row['name']. '</td>
+                                                <td class="tdCenter">'.$row['city'].'</td>
+                                                <td class="tdCenter">'.$row['contact_no'].'</td>
+                                                <td class="tdCenter">'.$row['account_no'].'</td>
+                                                <td class="tdCenter">'.$row['bank'].'</td>
+                                            </tr>';
+                            }
+                            echo $dealer;
+}       
+                    echo '</tbody>      
+                </table>';
     }
     function companyDistributors($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
                 <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%;background-color:#deb4f8">Registered Distributors</div></a>
                 <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
             </div>
-            <div class="dealerTableTitles" id="dealerTableTitles">
-                <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
-                <div class="dealer_location" id="dealer_col"style="width:15%">Town</div>
-                <div class="dealer_contactno" id="dealer_col"style="width:18%">Street</div>
-                <div class="dealer_email" id="dealer_col" style="width:15%">Contact no</div>
-                <div class="dealer_capacity" id="dealer_col"style="width:30%">Hold time</div>
-            </div>
-            <div class="DealerTables" id="DealerTables">';
-            if(isset($data["distributor"])){
+            <div class="DealerTables" id="DealerTables" style="margin:0">';
+                echo '<table class="distributorInfoTable">
+                <thead style="background-color:#dbb1f9">
+                    <tr>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Street</th>
+                        <th>Contact no</th>
+                        <th>Hold time</th>
+                    </tr>
+                </thead>
+                <tbody style="overflow-y:auto;height:100px">';
+                    if (isset($data["distributor"])) {
+                        $result = $data["distributor"];
+                        $distributor = "";
+                        foreach ($result as $row) {
+                            $distributor .=  '<tr>
+                                            <td class="tdCenter">'.'Distributor'. '</td>
+                                            <td class="tdCenter">'.$row['city'].'</td>
+                                            <td class="tdCenter">'.$row['street'].'</td>
+                                            <td class="tdCenter">'.$row['contact_no'].'</td>
+                                            <td class="tdCenter">'.$row['hold_time'].'</td>
+                                        </tr>';
+                        }
+                        echo $distributor;
+                    }       
+                echo '</tbody>      
+            </table>';
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            /*if(isset($data["distributor"])){
                 $result = $data["distributor"];
                 $distributor = "";
-                /*while($row){
-                    $dealer.='';
-                    //$name = $row["name"];
-                    //$qty = $row["quantity"];
-                    $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #85B6E2;height:10%">
-                                    <div class="dealer_name" id="col">'.$row['name']. '</div>
-                                    <div class="dealer_location" id="col">'.$row['city'].$row['street'].'</div>
-                                    <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
-                                    <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
-                                    <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
-                                    </div>';                    
-                }*/
                 foreach($result as $row){
                     //print_r($data) ;
                     $distributor .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #deb4f8;height:10%">
@@ -988,75 +987,64 @@ class Body{
                                     </div>';             
                 }
                 echo $distributor;
-            } 
+            }*/
             echo '</div>
         </section>';
     }
     function companyProducts($data){
         echo 
         '<section class="body-content">
-             <div class="Distributor_table_name" id="Distributor_table_name">
-                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
-                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#cda6e4">Register New Product</div></a>
-                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
+             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.3%">
+                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#deb4f8">Current Products</div></a>
+                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#fff">Register New Product</div></a>
+                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#fff">Update Product</div></a>
              </div>
-             <div class="productTableTitles" id="productTableTitles">
-                 <div class="product_id" id="product_col">Product ID</div>
-                 <div class="product_name" id="product_col">Name</div>
-                 <div class="product_type" id="product_col">Type</div>
-                 <div class="product_unit_price" id="product_col" style="font-size: 12pt">Unit price</div>
-                 <div class="product_weight" id="product_col" style="width:20%">Weight</div>
-                 <div class="product_prod_time" id="product_col" style="width:20%">Prod.time</div>
-                 <div class="product_lastUpdated" id="product_col">Last updated</div>
-                 <div class="product_lastUpdated" id="product_col">Qty</div>
-             </div>
-             <div class="DealerTables" id="DealerTables">';
-             if(isset($data["products"])){
-                $result = $data["products"];
-                $products = "";
-                /*while($row){
-                    $dealer.='';
-                    //$name = $row["name"];
-                    //$qty = $row["quantity"];
-                    $dealer .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #85B6E2;height:10%">
-                                    <div class="dealer_name" id="col">'.$row['name']. '</div>
-                                    <div class="dealer_location" id="col">'.$row['city'].$row['street'].'</div>
-                                    <div class="dealer_contactno" id="col">'.$row['contact_no'].'</div>
-                                    <div class="dealer_accountno" id="col">'.$row['account_no'].'</div>
-                                    <div class="dealer_capacity" id="col">'.$row['bank'].'</div>
-                                    </div>';                    
-                }*/
-                foreach($result as $row){
-                    //print_r($data) ;
-                    $products .=  '<div class="Products_tableHead_row" id="Products_tableHead_row" style="background-color: #deb4f8;height:10%">
-                                    <div class="product_id\" id="product_col" style="margin-top:1%">' .$row['product_id']. '</div>
-                                    <div class="product_name" id="product_col" style="margin-top:1%;width:27%">' .$row['name']. '</div>
-                                    <div class="product_type" id="product_col" style="margin-top:1%;width:25%">'.$row['type'].'</div>
-                                    <div class="product_unit_price" id="product_col" style="margin-top:1%;width:25%">' .$row['unit_price']. '</div>
-                                    <div class="product_weight" id="product_col" style="margin-top:1%;width:25%">' .$row['weight'].'</div>
-                                    <div class="product_prod_time" id="product_col" style="margin-top:1%">' .$row['production_time']. '</div>
-                                    <div class="product_lastUpdated" id="product_col" style=\"margin-top:1%">' .$row['last_updated_date']. '</div>
-                                    <div class="product_quantity" id="product_col" style=\"margin-top:1%">' .$row['quantity'].'</div>
-                                </div>';             
-                }
-                echo $products;
-
-
-                
-
-            }          
+             <div class="DealerTables" id="DealerTables" style="margin:0;width: 97.4%;height:80%"">';
+                echo '<table class="productInfoTable" style="margin-top:0.3%">
+                        <thead style="background-color:#dbb1f9">
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Unit Price</th>
+                                <th>Weight</th>
+                                <th>Production Time</th>
+                                <th>Last Updated</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-y:auto;height:100px">';
+                            if (isset($data["products"])) {
+                                $result = $data["products"];
+                                $products = "";
+                                foreach ($result as $row) {
+                                    $products .=  '<tr>
+                                                    <td class="tdCenter">'.$row['product_id']. '</td>
+                                                    <td class="tdCenter">'.$row['name'].'</td>
+                                                    <td class="tdCenter">'.$row['type'].'</td>
+                                                    <td class="tdCenter">'.$row['unit_price'].'</td>
+                                                    <td class="tdCenter">'.$row['weight'].'</td>
+                                                    <td class="tdCenter">'.$row['production_time']. '</td>
+                                                    <td class="tdCenter">'.$row['last_updated_date'].'</td>
+                                                    <td class="tdCenter">'.$row['quantity'].'</td>
+                                                </tr>';
+                                }
+                                echo $products;
+    }       
+                        echo '</tbody>      
+                    </table>';   
             echo '</div>
         </section>';
     }
     function companyRegProducts($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
-                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
-                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#cda6e4">Register New Product</div></a>
-                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
+            <div class="Distributor_table_name" id="Distributor_table_name"  style="margin:0;margin-left:-1.3%">
+                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#fff">Current Products</div></a>
+                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#deb4f8">Register New Product</div></a>
+                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#fff">Update Product</div></a>
              </div>
-            <div class="DealerTables" id="DealerTables" style="display:flex">
+            <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%"">
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/registerProducts" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
@@ -1223,12 +1211,12 @@ class Body{
     function companyRegDealer($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
                  <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
                  <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#deb4f8">Register New Dealer</div></a>
                  
              </div>
-            <div class="DealerTables" id="DealerTables" style="display:flex;height:90%">
+            <div class="DealerTables" id="DealerTables" style="display:flex;height:90%;margin:0">
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/registerDealer" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
@@ -1274,12 +1262,12 @@ class Body{
     function companyRegDistributor($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
                  <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Distributors</div></a>
                  <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#deb4f8">Register New Distributor</div></a>
                  
              </div>
-            <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">
+            <div class="DealerTables" id="DealerTables" style="display:flex;height:80%;margin:0">
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/registerDistributor" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
@@ -1315,12 +1303,12 @@ class Body{
     function companyUpdateProducts($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
-                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer"">Current Products</div></a>
-                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#cda6e4">Register New Product</div></a>
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.3%">
+                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#fff">Current Products</div></a>
+                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#fff">Register New Product</div></a>
                  <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#deb4f8">Update Product</div></a>
              </div>
-            <div class="DealerTables" id="DealerTables" style="display:flex">
+            <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%">
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
@@ -1354,11 +1342,11 @@ class Body{
     function companyOrders($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#deb4f8">Gas Orders</div></a>
             <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
             <div class="orderCard" >
                 <div class="orderRow">
                     <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
@@ -1419,11 +1407,11 @@ class Body{
     function companyLimitQuota($data){
         echo 
         '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
             <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#deb4f8">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
             <div class="poductQuota">
                 <div class="productQuotaName" style="font-size: large"><lable>Domestic customer</lable></div>
                 <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>2 Cylinder</label></div>
