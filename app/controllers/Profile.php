@@ -77,7 +77,7 @@
                     break;
                 case 'admin':
                     $model = "Admin";
-                    $func = "getAdminImage";
+                    $func = "getAdmin";
                     break;
             }
             $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
@@ -134,7 +134,7 @@
                     break;
                 case 'admin':
                     $model = "Admin";
-                    $func = "getAdminImage";
+                    $func = "getAdmin";
                     break;
             }
             $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));

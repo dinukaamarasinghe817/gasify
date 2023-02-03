@@ -218,5 +218,6 @@ class Compny extends Controller{
         echo "hello";
         die();
     }
+
 }
 ?>

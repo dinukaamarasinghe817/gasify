@@ -100,9 +100,10 @@
 }
 
 .review img{
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     margin-right: 10px;
+    border-radius: 50px;
 }
 
 .review .review-info{
@@ -163,4 +164,111 @@
     height: 400px;
     margin-top: 10px;
     border-radius: 10px;
+}
+
+
+/* companies tab */
+.smallerimg{
+    height: 70px;
+    width: 70px;
+    border-radius: 50px;
+}
+.input.half{
+    width: 48%;
+    display: flex;
+    /* flex-direction: row; */
+    gap: 10px;
+    /* align-items: center; */
+    /* justify-content: left; */
+}
+.body-content .content-data{
+    border: solid 2px transparent;
+}
+.input.half{
+    align-items: left;
+}
+.input.half.select{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+}
+.select select{
+    border: 2px solid var(--navmenu-gray-dark);
+}
+.filters{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.styled-table th,
+.styled-table td{
+    padding: 20px;
+}
+
+
+/* customers css */
+.person{
+    border: 2px solid rgba(128, 128, 128, 0.187);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: left; */
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+}
+
+.person img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+.person div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.person div.buttons{
+    margin-left: auto;
+    flex-direction: row;
+}
+.person button{
+    margin-left: auto;
+}
+.btn-blue.red{
+    background-color: var(--cancel-red);
+}
+.btn-blue.red:hover{
+    background-color: rgb(250, 44, 44);
+}
+
+.payment{
+    display: flex;
+    flex-direction: column;
+}
+.payment .payment-header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.payment .payment-header div{
+    flex-direction: column;
+}
+.payment .payment-body{
+    flex-direction: column;
+    width: 100%;
+}
+.payment .payment-body > div{
+    flex-direction: row;
+    width: 100%;
+}
+.payment-body button:nth-child(0){
+    width: 50%;
+    background-color: var(--logo-background);
 }

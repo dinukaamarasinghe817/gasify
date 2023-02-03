@@ -121,6 +121,12 @@
     border-radius: 10px;
     background-color: var(--table-gray);
 }
+.smallerimg{
+    height: 70px;
+    width: 70px;
+    border-radius: 50px;
+    background-color: var(--table-gray);
+}
 
 /* order css */
 .order .btn{

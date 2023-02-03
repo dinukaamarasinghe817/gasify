@@ -146,7 +146,7 @@ class ProfileHTML{
                     <div class="content-data profile">
                         <div class="prof-nav">
                             <img src="'.BASEURL.'/public/img/profile/'.$row['logo'].'" alt="">
-                            <h3>'.$row['company_name'].'</h3>
+                            <h3>'.$row['name'].'</h3>
                             <p class="gray">'.$row['email'].'</p>
                             <ul>
                                 <li>';
@@ -164,8 +164,8 @@ class ProfileHTML{
                             echo '<form class="profile" action="#" enctype="multipart/form-data" method="post">
                                 <div class="input"><label>Company Name</label><input type="text" name="company" placeholder="company" value="'.$row['name'].'" readonly></div>
                                 <div>
-                                    <div class="input half"><label>First Name</label><input type="text" name="first_name" placeholder="first name" value="'.$row['first_name'].'" readonly></div>
-                                    <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'" readonly></div>
+                                    <div class="input half"><label>Owner\'s First Name</label><input type="text" name="first_name" placeholder="first name" value="'.$row['first_name'].'" readonly></div>
+                                    <div class="input half"><label>Owner\'s Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'" readonly></div>
                                 </div>
                                 <div>
                                     <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'" readonly></div>
