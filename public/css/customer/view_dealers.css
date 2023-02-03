@@ -75,7 +75,7 @@ a,button{
     height: 50px;
     color: white;
     font-size: var(--mediums);
-    text-align: right;
+    /* text-align: right; */
     background-color: var(--navmenu-gray-dark);
     
 }
@@ -83,7 +83,7 @@ a,button{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    text-align:right;
+    /* text-align:right; */
     
 }
 .table table tr:nth-child(odd):hover{

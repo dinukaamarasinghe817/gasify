@@ -51,7 +51,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <div class="title">City</div>
                 <div class="drop-down">
                     <div class="city_drapdown">
-                        <select name="brand" id="brand" class="citydropdown dropdowndate" >
+                        <select name="city" id="city" class="citydropdown dropdowndate" >
                             <option value="-1" selected disabled hidden>Select City</option>
                             <?php 
                                 $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];

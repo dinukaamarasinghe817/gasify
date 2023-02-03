@@ -28,6 +28,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             <div class="chat outgoing">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                                    <h6>22:43</h6>
                                 </div>
                                 <img src="<?php echo $profile_image ?>" alt="">
                             </div>
@@ -36,6 +37,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <img src="<?php echo BASEURL; ?>/public/img/people/company.png" alt="">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                                    <h6>22:45</h6>
                                 </div>
                             </div>
 
@@ -44,6 +46,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                                    <h6>22:50</h6>
                                 </div>
                                 <img src="<?php echo $profile_image ?>" alt="">
                             </div>
@@ -52,13 +55,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <img src="<?php echo BASEURL; ?>/public/img/people/company.png" alt="">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                                    <h6>23:00</h6>
                                 </div>
                             </div>
-
 
                             <div class="chat outgoing">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                                    <h6>23:15</h6>
                                 </div>
                                 <img src="<?php echo $profile_image ?>" alt="">
                             </div>
@@ -67,6 +71,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <img src="<?php echo BASEURL; ?>/public/img/people/company.png" alt="">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                                    <h6>23:18</h6>
                                 </div>
                             </div>
 
