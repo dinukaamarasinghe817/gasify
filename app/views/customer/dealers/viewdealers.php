@@ -20,7 +20,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
          <!-- drop down -->
         <div class="drop_down">
             <div class="brand_dropdown">
-                <select name="brand" id="brand" class="branddropdown dropdowndate" onchange="get_select_value('brand');">
+                <select name="brand" id="brand" class="branddropdown dropdowndate" onchange="get_select_value('brand','city');">
                     <option value="-1" selected disabled hidden >Select Gas Brand</option>
                     <?php 
 
@@ -38,7 +38,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             </div>
             <div class="city_drapdown">
                 
-                <select name="city" id="city" class="citydropdown dropdowndate" onchange="get_select_value('city');">
+                <select name="city" id="city" class="citydropdown dropdowndate" onchange="get_select_value('brand','city');">
                     <option value="-1" selected disabled hidden >Select City</option>
                     <?php 
                         $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
@@ -81,14 +81,27 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <script>
         const page = document.querySelector('.table table');
        
-        function get_select_value(dropdown_id){
-            var selected_value = document.getElementById(dropdown_id).value;
-            console.log(selected_value);
+        function get_select_value(branddropdown_id=null,citydropdown_id=null){
+            var brand_selected_value = document.getElementById(branddropdown_id).value;
+            var city_selected_value = document.getElementById(citydropdown_id).value;
+           
+
+            if (city_selected_value == -1){
+                city_selected_value = null;
+                
+            }
+            if (brand_selected_value == -1){
+                brand_selected_value = null;
+
+            }
+
+            console.log(brand_selected_value);
+            console.log(city_selected_value);
             
             event.preventDefault();
             var formData = new FormData();
             let xhr = new XMLHttpRequest(); //new xml object
-            xhr.open('POST', 'http://localhost/mvc/Dealers/selected_brand_dealers/'+ selected_value , true);
+            xhr.open('POST', 'http://localhost/mvc/Dealers/selected_brand_dealers/'+ brand_selected_value, city_selected_value, true);
             xhr.onload = ()=>{
                 if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
                      let data = xhr.response;
