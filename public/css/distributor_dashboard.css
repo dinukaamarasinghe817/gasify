@@ -538,3 +538,37 @@ td:nth-child(4) {
 .tab2 p svg {
     margin-left: 420px;
 }
+
+.dboard1, .dboard2 {
+    width: 50%;
+    padding: 5px;
+}
+
+.dboard1, .dboard2 th {
+    text-align: left;
+    padding: 5px;
+}
+
+.dboard1 tr {
+    background-color: #f2f2f2;
+}
+
+.dboard1 tr:hover{
+    background-color: #ddd;
+}
+
+.dboard1 td {
+    padding: 5%;
+}
+
+.dboard2 tr {
+    background-color: white;
+}
+
+.dboard2 td {
+    background-color: white;
+
+}
+.dboard2 th {
+    background-color: #b2b3c0;
+}
