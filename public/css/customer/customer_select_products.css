@@ -132,8 +132,12 @@ a,button{
     padding: 25px 10px 25px 10px;
 }
 
-
-
+.subtotal_part{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    padding-top: 10px;
+}
 
 
 
