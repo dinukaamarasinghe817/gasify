@@ -5,8 +5,10 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 }
 
 class Orders extends Controller{
+    public $user_id;
     function __construct(){
         parent::__construct();
+        $this->user_id = $_SESSION['user_id'];
     }
 
     function dealer($tab1, $tab2=null){
@@ -268,6 +270,13 @@ class Orders extends Controller{
         
         $this->view('distributor/placed_completed',$data);
 
+    }
+
+    public function payments(){
+        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
+        $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $data['image'] = $row['image'];
+        $this->view('admin/payments',$data);
     }
 
 }

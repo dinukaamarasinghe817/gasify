@@ -931,7 +931,6 @@ class User extends Model
                 u.last_name AS last_name,
                 c.city AS city,
                 c.street AS street,
-                c.name AS company,
                 c.contact_no AS contact_no,
                 c.type AS type,
                 c.image AS image FROM users u INNER JOIN customer c

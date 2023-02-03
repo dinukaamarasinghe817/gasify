@@ -487,7 +487,7 @@ class Body{
                 <h2>Recent Reviews</h2>
                 <div class="contents">
                     <div class="review">
-                        <img src="css/admin.png" alt="">
+                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
                         <div class="review-info">
                             <div class="name-time">
                                 <h3>Dinuka Ashan</h3>
@@ -501,7 +501,7 @@ class Body{
                         </div>
                     </div>
                     <div class="review">
-                        <img src="css/admin.png" alt="">
+                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
                         <div class="review-info">
                             <div class="name-time">
                                 <h3>Dinuka Ashan</h3>
@@ -515,7 +515,7 @@ class Body{
                         </div>
                     </div>
                     <div class="review">
-                        <img src="css/admin.png" alt="">
+                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
                         <div class="review-info">
                             <div class="name-time">
                                 <h3>Dinuka Ashan</h3>
@@ -529,7 +529,7 @@ class Body{
                         </div>
                     </div>
                     <div class="review">
-                        <img src="css/admin.png" alt="">
+                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
                         <div class="review-info">
                             <div class="name-time">
                                 <h3>Dinuka Ashan</h3>

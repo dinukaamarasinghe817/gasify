@@ -126,8 +126,9 @@
         }
 
         public function admin($error = null){
-            $data['image'] = 'user.png';
-            // get new pending orders
+            $row = mysqli_fetch_assoc($this->model('Admin')->getAdmin($this->user_id));
+            $data['name'] = $row['first_name'].' '.$row['last_name'];
+            $data['image'] = $row['image'];
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/admin', $data);
         }
