@@ -9,7 +9,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
         // $bodycontent = new Body('viewmyreservation', $data);
-        // $prompt = new Prompt('verification',$data);
+        // if(isset($data['verification'])){
+        //     $prompt = new Prompt('verification',$data);
+        // }
     ?>
 
      <div class="under_topbar">
