@@ -313,7 +313,7 @@ class Body{
                                         </tr>';
                                 
                                 $stocks = $data['currentstock'];
-                                $output="";
+                                // $output="";
                                 foreach($stocks as $stock) {
                                     $row1 = $stock['stockinfo'];
 
@@ -323,10 +323,13 @@ class Body{
                                         <td>'.$row1['quantity'].'</td> 
                                     </tr>';
                                 }
-                                    echo '</table>';
+                                    echo '</table>
+                                </div>
+                                    
+                                    ';
                                     echo $output;
                                     echo '
-                                </div>
+                               
                         </div>
                     </div>';
 
@@ -891,8 +894,8 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
-            <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
-            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Dealer</div></a>
+            <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#deb4f8">Registered Dealers</div></a>
+            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
             <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
@@ -945,8 +948,8 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
-                <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%">Registered Distributors</div></a>
-                <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%;background-color:#cda6e4">Register New Distributor</div></a>
+                <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%;background-color:#deb4f8">Registered Distributors</div></a>
+                <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
             </div>
             <div class="dealerTableTitles" id="dealerTableTitles">
                 <div class="dealer_name" id="dealer_col" style="width:15%">Name</div>
@@ -1219,7 +1222,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                  <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
-                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Dealer</div></a>
+                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#deb4f8">Register New Dealer</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:90%">
@@ -1270,7 +1273,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
                  <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Distributors</div></a>
-                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#cda6e4">Register New Distributor</div></a>
+                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#deb4f8">Register New Distributor</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:80%">
@@ -1349,8 +1352,8 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
-            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
-            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#cda6e4">Limit Quota</div></a>
+            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#deb4f8">Gas Orders</div></a>
+            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
             <div class="orderCard" >
@@ -1415,7 +1418,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name">
             <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
-            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#cda6e4">Limit Quota</div></a>
+            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#deb4f8">Limit Quota</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;">
             <div class="poductQuota">

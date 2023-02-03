@@ -265,7 +265,7 @@ class Distributor extends Model
                 $date = $row1['place_date'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.dealer_id = '{$dealer_id}'; ") ;
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
                 if(mysqli_num_rows($query2)>0) {
                     while($row2= mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -289,7 +289,7 @@ class Distributor extends Model
                 $date = $row1['place_date'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}'; ") ;
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
                 if(mysqli_num_rows($query2)>0) {
                     while($row2= mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
