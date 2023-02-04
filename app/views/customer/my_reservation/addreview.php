@@ -1,12 +1,7 @@
 <?php
 $header = new Header("customer/customer_addreview",$data);
 $sidebar = new Navigation('customer',$data['navigation']);
-// if(isset($data['error'])){
-//     $error = new Prompt('error',$data);
-//     echo '<script>
-//         showToast();
-//     </script>';
-// }
+
 ?>
 
 <section class="body">
@@ -46,21 +41,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         </div>';
 
             }
-            // $errors = $data['error'];
-            $url =  BASEURL.'/Orders/customer_myreservation/'.$data['order_id'];
-            // if(isset($errors)){
-            //     foreach ($errors as $error) {
-            //         echo '<div class="error-txt">'.$error.'</div>';
-            //     }   
-            // }
             
-
+            $url =  BASEURL.'/Orders/customer_myreservation/'.$data['order_id'];
+           
             echo'<div class="write_box">
                     <textarea name="review" placeholder="Write your review here....." cols="30" rows="10"></textarea>
                 </div>
                 <div class="btn">
                     <button id="send" class="send" type="submit"  >Submit</button>
-                    <button id="cancel" class="cancel"><a href="'.$url.'">Cancel</a></button>
+                    <button id="cancel" class="cancel" onclick = "location.href = '.$url.'">Cancel</button>
                     
                 </div>
             </form>

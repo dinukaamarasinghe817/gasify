@@ -114,7 +114,7 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        // $data['verification'] = '';
+        $data['confirmation'] = '';
         $this->view('customer/my_reservation/cancel_reservation', $data);
 
 
