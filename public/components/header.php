@@ -8,10 +8,16 @@ class Header{
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> 
+            <link rel="icon" href="'.BASEURL.'/public/icons/favicon.ico">
             <link rel="stylesheet" href="'.BASEURL.'/public/css/dashboard.css">
-            <link rel="stylesheet" href="'.BASEURL.'/public/css/'.$user.'.css">
-            <title>'.$user.'</title>
-        </head>
+            <link rel="stylesheet" href="'.BASEURL.'/public/css/'.$user.'.css">';
+            if(isset($_SESSION['role'])){
+                echo '<title>Gasify - '.ucwords($_SESSION['role']).'</title>';
+            }else{
+                echo '<title>Gasify</title>';
+            }
+            
+        echo '</head>
         <body>';
 
         if(isset($data['toast'])){
