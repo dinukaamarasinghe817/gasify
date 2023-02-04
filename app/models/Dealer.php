@@ -133,7 +133,7 @@ class Dealer extends Model
 
         // chart details
         $products = $this->Query($sql);
-        $chart['main'] = 'Sold Quantity';;
+        $chart['y'] = 'Sold Quantity';
         $chart['color'] = 'rgba(255, 159, 64, 0.5)';
         // $chart['color'] = '[
         //     "rgb(255, 99, 132)",

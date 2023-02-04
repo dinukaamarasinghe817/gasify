@@ -49,7 +49,6 @@ class Prompt{
             </script>';
     }
 
-
     public function confirmation($data){
         echo '<div class="confirmation">
             </div>';
