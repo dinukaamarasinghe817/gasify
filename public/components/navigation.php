@@ -280,9 +280,9 @@ class Navigation {
 
 
                 if($active == 'dashboard'){
-                    echo '<a href="../dashboard/distributor" class="panel-tile active dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/distributor" class="panel-tile active dashboard">';
                 }else{
-                    echo '<a href="../dashboard/distributor" class="panel-tile dashboard">';
+                    echo '<a href="'.BASEURL.'/dashboard/distributor" class="panel-tile dashboard">';
                 }
         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -296,9 +296,9 @@ class Navigation {
 
 
                 if($active == 'distributions'){
-                    echo '<a href="../gasdistributions/pending_distributions" class="panel-tile active distributions">';
+                    echo '<a href="'.BASEURL.'/gasdistributions/pending_distributions" class="panel-tile active distributions">';
                 }else{
-                    echo '<a href="../gasdistributions/pending_distributions" class="panel-tile distributions">';
+                    echo '<a href="'.BASEURL.'/gasdistributions/pending_distributions" class="panel-tile distributions">';
                 }
 
                         echo '<svg width="29" height="22" viewBox="0 0 29 22" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -311,9 +311,9 @@ class Navigation {
 
 
                 if($active == 'orders'){
-                    echo '<a href="../orders/distributor" class="panel-tile active orders">';
+                    echo '<a href="'.BASEURL.'/orders/distributor" class="panel-tile active orders">';
                 }else{
-                    echo '<a href="../orders/distributor" class="panel-tile orders">';
+                    echo '<a href="'.BASEURL.'/orders/distributor" class="panel-tile orders">';
                 }
 
                         echo ' <svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -326,9 +326,9 @@ class Navigation {
 
 
                 if($active == 'vehicles'){
-                    echo '<a href="../vehicles/distributor" class="panel-tile active delivery">';
+                    echo '<a href="'.BASEURL.'/vehicles/distributor" class="panel-tile active delivery">';
                 }else{
-                    echo '<a href="../vehicles/distributor" class="panel-tile delivery">';
+                    echo '<a href="'.BASEURL.'/vehicles/distributor" class="panel-tile delivery">';
                 }
                         
                         echo ' <svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -341,9 +341,9 @@ class Navigation {
 
 
                 if($active == 'dealers'){
-                    echo '<a href="../dealers/distributor_dealers" class="panel-tile active dealers">';
+                    echo '<a href="'.BASEURL.'/dealers/distributor_dealers" class="panel-tile active dealers">';
                 }else{
-                    echo '<a href="../dealers/distributor_dealers" class="panel-tile dealers">';
+                    echo '<a href="'.BASEURL.'/dealers/distributor_dealers" class="panel-tile dealers">';
                 }
                         
                         echo ' <svg width="34" height="31" viewBox="0 0 34 31" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -356,9 +356,9 @@ class Navigation {
 
 
                 if($active == 'reports'){
-                    echo '<a href="../reports/distributor" class="panel-tile active reports">';
+                    echo '<a href="'.BASEURL.'/reports/distributor" class="panel-tile active reports">';
                 }else{
-                    echo '<a href="../reports/distributor" class="panel-tile reports">';
+                    echo '<a href="'.BASEURL.'/reports/distributor" class="panel-tile reports">';
                 }
                         
                         echo '<svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -371,9 +371,9 @@ class Navigation {
 
 
                 if($active == 'settings'){
-                    echo '<a href="../settings/distributor" class="panel-tile active settings">';
+                    echo '<a href="'.BASEURL.'/settings/distributor" class="panel-tile active settings">';
                 }else{
-                    echo '<a href="../settings/distributor" class="panel-tile settings">';
+                    echo '<a href="'.BASEURL.'/settings/distributor" class="panel-tile settings">';
                 }
                         
                         echo ' <svg width="33" height="30" viewBox="0 0 33 30" fill="" xmlns="http://www.w3.org/2000/svg">

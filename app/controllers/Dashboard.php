@@ -118,6 +118,10 @@
             $data['navigation'] = 'dashboard';
 
             $data['currentstock']= $this->model("Distributor")->currentstock($distributor_id);
+
+            // $data['pendingorders']= $this->model("Distributor")->pendingGasOrders($distributor_id);
+            $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($distributor_id);
+
             
             $this->view('dashboard/distributor',$data);
 

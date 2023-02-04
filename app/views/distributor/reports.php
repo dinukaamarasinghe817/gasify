@@ -36,7 +36,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             <th>Distribution ID</th>
                             <th>Dealer ID</th>
                             <th>Total Price (Rs. )</th>
-                            <th></th>
+                            <!-- <th></th> -->
                         </tr>
 
                         <tr>
@@ -44,7 +44,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             <td>4</td>
                             <td>5</td>
                             <td>50000.00</td>
-                            <td><button class="inside">Select</button></td>
+                            <!-- <td><button class="inside">Select</button></td> -->
                         </tr>
 
                         <tr>
@@ -52,7 +52,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             <td>3</td>
                             <td>6</td>
                             <td>25000.00</td>
-                            <td><button class="inside">Select</button></td>
+                            <!-- <td><button class="inside">Select</button></td> -->
                         </tr>
 
                         <tr>
@@ -60,7 +60,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             <td>2</td>
                             <td>5</td>
                             <td>53000.00</td>
-                            <td><button class="inside">Select</button></td>
+                            <!-- <td><button class="inside">Select</button></td> -->
                         </tr>
 
                         <tr>
@@ -68,7 +68,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             <td>1</td>
                             <td>9</td>
                             <td>20000.00</td>
-                            <td><button class="inside">Select</button></td>
+                            <!-- <td><button class="inside">Select</button></td> -->
                         </tr> 
 
                     </table>
