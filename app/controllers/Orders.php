@@ -54,10 +54,11 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
+        
 
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
-        
+        $data['confirmation'] = '';
+
         $this->view('customer/my_reservation/viewmyreservation', $data);
     }
 
@@ -113,7 +114,7 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $data['verification'] = '';
+        // $data['verification'] = '';
         $this->view('customer/my_reservation/cancel_reservation', $data);
 
 
