@@ -1,7 +1,14 @@
 <?php
 
 class Order{
-    function __construct($order,$products,$totalamount,$active1,$active2){
+    function __construct($tuple,$active1,$active2){
+        $order = $tuple['order'];
+        $products = $tuple['products'];
+        if(isset($tuple['payment']) && isset($tuple['stock'])){
+            $payment = $tuple['payment'];
+            $stock = $tuple['stock'];
+        }
+        $totalamount = $tuple['total_amount'];
         echo '<li>
                 <div class="order">
                     <div class="head">
@@ -9,13 +16,11 @@ class Order{
                             <div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Total amount : </strong>Rs.'.$totalamount.'</div>
                             <div><strong>Date : </strong>'.$order['place_date'].'<br><strong>Time : </strong>'.$order['place_time'].'</div>
                         </div>';
-                        $payments = true;
-                        $stock = true;
                         $refunded = true;
-                        if($active1 == 'pending' && $payments && $stock){
-                            echo '<button onclick="viewinfo(); return false;" class="btn">Accept</button>';
+                        if($active1 == 'pending' && !($payment == 'verified' && $stock == 'available')){
+                            echo '<button onclick="orderverification(\''.$payment.'\',\''.$stock.'\'); return false;" class="btn">Info</button>';
                         }else if($active1 == 'pending'){
-                            echo '<button onclick="viewinfo(); return false;" class="btn">Info</button>';
+                            echo '<button onclick="orderverification(\''.$payment.'\',\''.$stock.'\'); return false;" class="btn">Accept</button>';
                         }else if($active1 == 'accepted' && $active2 == 'pickup'){
                             echo '<button onclick="issueorder(); return false;" class="btn">Issue</button>';
                         }else if($active1 == 'canceled' && !$refunded){
@@ -141,7 +146,7 @@ class OrdersHTML{
                     <ul>';
                         $orders = $data['orders'];
                         foreach($orders as $tuple){
-                            $o = new Order($tuple['order'], $tuple['products'], $tuple['total_amount'],$active1,$active2);
+                            $o = new Order($tuple,$active1,$active2);
                         }
                 echo '</ul>
                 </div>';
