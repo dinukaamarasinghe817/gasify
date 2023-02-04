@@ -26,6 +26,14 @@ class Reports extends Controller{
 
     }
 
+    public function pdf() {
+        // $user_id = $_SESSION['user_id'];
+        // $data['navigation'] = 'reports';
+        $data = [];
+
+        $this->view('distributor/pdffile',$data);
+    }
+
     public function dealer(){
         $start_date = '';
         $to_date = '';
