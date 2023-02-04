@@ -83,7 +83,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </table>
 
                 <div class="btnclz">
-                    <button class="btn2-1">Place the order</button>
+                    <button class="btn2-1" type="submit" name="submit">Place the order</button>
                     <button class="btn2-2">Cancel</button>
                 </div>
                 

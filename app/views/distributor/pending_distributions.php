@@ -15,8 +15,10 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                 <ul>
                     <li>
                         <a href="../gasdistributions/pending_distributions" class="pending"><b>Pending Gas Distributions</b></a>
+                        <!-- <a href="../gasdistributions/pending_distributions" class="pending">Pending Gas Distributions</a> -->
                     </li>
                     <li>
+                        <!-- <a href="../gasdistributions/completed_distributions" class="completed">Completed Gas Distributions</a> -->
                         <a href="../gasdistributions/completed_distributions" class="completed"><b>Completed Gas Distributions</b></a>
                     </li>
                 </ul>

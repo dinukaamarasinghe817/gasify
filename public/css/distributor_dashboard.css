@@ -492,6 +492,10 @@ td:nth-child(4) {
     text-align: center;
     padding: 30px;
     background-color: rgb(180, 145, 248);
+    width: 50%;
+    height: auto;
+    margin-right: 2%;
+    color: white;
 }
 
 .p1 {

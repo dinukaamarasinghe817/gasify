@@ -562,6 +562,8 @@ td:nth-child(4) {
     border-bottom: solid transparent;
     border-right: solid transparent;
     border-left: solid transparent;
+    color: white;
+
 }
 
 .middle ul {
@@ -632,7 +634,7 @@ table td {
     font-weight: bold;
     border-radius: 10px;
     margin-bottom: 10px;
-    margin-left: 85%;
+    margin-left: 88%;
 }
 
 .btn2-2 {
@@ -645,7 +647,7 @@ table td {
     font-weight: bold;
     border-radius: 10px;
     margin-bottom: 5px;
-    margin-left: 85%;
+    margin-left: 88%;
 }
 
 .btnclz {
