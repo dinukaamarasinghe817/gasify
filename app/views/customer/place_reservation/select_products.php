@@ -41,7 +41,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     <input type="text" name="qty" id="'.$product['p_id'].'" value="0" class="num" >
                                     <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
-                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
+                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
                             </div>
                         ';
                 }
@@ -71,7 +71,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     <input type="text" name="qty" id="'.$product['p_id'].'" value="0" class="num">
                                     <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
-                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
+                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
                             </div>
                         ';
                 }
@@ -83,7 +83,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
             <!-- </div> -->
             <div class="total"> 
-                <h3>Total Amount : </h3><h3 class="amount"> Rs.  0.00</h3>
+                <h3>Total Amount : </h3><h3 class="amount"> Rs. 0.00</h3>
             </div>
 
             <div class="bottom">
