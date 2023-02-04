@@ -358,7 +358,8 @@ class Body{
                                         <table class="dboard2">
                                             <thread>
                                                 <tr>
-                                                    <th>Item</th>
+                                                    <th>Item ID</th>
+                                                    
                                                     <th>Quantity</th>
                                                 </tr>
                                             </thread>

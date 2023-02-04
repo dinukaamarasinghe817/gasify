@@ -166,27 +166,56 @@ class Orders extends Controller{
         $this->view('customer/quota/quota',$data);
     }
 
-
-
-
+/*.........................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
      // distributor phurchase orders to company (Gas Orders)
+    //  public function distributor($error = null) {
+
+    //     $user_id = $_SESSION['user_id'];
+    //     $data['navigation'] = 'orders';
+
+    //     if($error != null) {
+    //         $data['toast'] = $error;
+    //     }
+
+    //     $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+    //     $row = mysqli_fetch_assoc($distributor_details);
+    //     $data['image'] = $row['image'];
+
+    //     $data['currentstock'] = $this->model("Distributor")->phurchaseOrders($user_id);
+    //     $this->view('distributor/phurchase_orders',$data);
+
+    // }
+
+    // public function distributorphurchaseorder ($param = null) {
+    //     $productid = $_SESSION['productarray'];
+    //     $postproducts = [];
+    //     for($i=0; $i<count($productid); $i++) {
+    //         $postproducts[$productid[$i]] = $_POST[$productid[$i]];
+    //     }
+    //     $data = $this ->model('Distributor')->phurchaseOrders($this->$user_id, $productid, $postproducts);
+    //     if(isset($data['toast'])) {
+    //         $this->distributor("purchaseorder", $data['toast']);
+    //     }else {
+
+    //     }
+    // }
+
+
+
      public function distributor() {
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
-        // profile picture
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // phurchase order  view
-        // create the model
-        // $this->view('distributor/reports',$data);
         $data['currentstock'] = $this->model("Distributor")->phurchaseOrders($user_id);
         $this->view('distributor/phurchase_orders',$data);
 
     }
+
 
     // distributor current stock (Gas Orders)
     public function distributor_currentstock() {
