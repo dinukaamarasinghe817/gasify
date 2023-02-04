@@ -72,5 +72,12 @@ class Prompt{
                 }
             </script>';
     }
+
+
+    public function customerconfirmation($data){
+
+        echo '<div class="confirmation">
+            </div>';
+    }
 }
 ?>
