@@ -1014,18 +1014,11 @@ label{
     width: 100%;
     height: 100%;
     color: black;
-    background-color: #DBD8FC;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    outline: 3px solid #deb4f8;
+    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.ProductTableTopics:first-child{
-    background-color: #deb4f8;
-}
-.ProductTableTopics:nth-child(3){
-    background-color: #FFE6CA;
 }
 .registerProduct{
     margin-left: 5%;
@@ -1366,6 +1359,27 @@ input[type="text"]::placeholder{
 .tables{
     display: flex;
     align-items: center;
+}
+.dealerInfoTable,.distributorInfoTable,.productInfoTable{
+    width: 100%;
+}
+.dealerInfoTable th,.distributorInfoTable th{
+    background-color: #be6bf9;
+    width: 20%;
+    height: 5vh;
+}
+.productInfoTable th{
+    background-color: #be6bf9;
+    width: 12.5%;
+    height: 5vh;
+}
+.dealerInfoTable tr:nth-child(even),.distributorInfoTable tr:nth-child(even),.productInfoTable tr:nth-child(even){
+    background-color: #deb4f8;
+    height: 5vh;
+}
+.dealerInfoTable tr:nth-child(odd),.distributorInfoTable tr:nth-child(odd),.productInfoTable tr:nth-child(odd){
+    background-color: #ae85cc;
+    height: 5vh;
 }
 
 

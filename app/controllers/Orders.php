@@ -102,6 +102,23 @@ class Orders extends Controller{
        
     }
 
+
+    //cancel the reservation
+    function customer_cancelreservation($order_id){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'myreservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $data['verification'] = '';
+        $this->view('customer/my_reservation/cancel_reservation', $data);
+
+
+    }
+
     /*.................Customer place reservation.................*/
     //select brand,city and dealer
     function select_brand_city_dealer(){
@@ -114,7 +131,7 @@ class Orders extends Controller{
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
         $data['brands'] = $this->model('Customer')->getCompanyBrand();
-        $data['dealers'] = $this->model('Customer')->getAlldealers();
+        $data['dealers'] = $this->model('Customer')->getdealers();
 
         $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 
