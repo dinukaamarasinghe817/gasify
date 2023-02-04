@@ -26,10 +26,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <option  value="3months">Last 3 months</option>
                     </select>
 
-                    <!-- <div class="beginbtn">
-                        <button class="btn"><b>Generate pdf file</b></button>
-                    </div> -->
-
                     <table>
                         <tr>
                             <th>Distributed Date</th>
@@ -74,7 +70,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     </table>
 
                     <div class="beginbtn">
-                        <button class="btn"><b>Generate pdf file</b></button>
+                        <!-- <button class="btn"><b>Generate pdf file</b></button> -->
+                        <a class="btn" href="<?php echo BASEURL ?>/reports/salesdealer">Generate PDF</a>
+
                     </div>
 
 

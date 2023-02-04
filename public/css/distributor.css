@@ -556,7 +556,7 @@ td:nth-child(4) {
     padding: 10px 10px;
     width: 100%;
     height: 100%;
-    color: var(--black);
+    /* color: var(--black); */
     background-color:#B4AAFF;
     border-top: solid transparent;
     border-bottom: solid transparent;
@@ -564,6 +564,14 @@ td:nth-child(4) {
     border-left: solid transparent;
     color: white;
 
+}
+
+.middle{
+    padding:20px;
+    /* background-color:#DBD8FC ; */
+    border: solid black 1.5px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 .middle ul {
@@ -578,9 +586,11 @@ td:nth-child(4) {
     width: 100%;
     font-size: var(--mediums);
     text-align: center;
-    background-color: white;
+    /* background-color: white; */
+    background-color: var(--navmenu-gray-dark);
     border-radius: 7px;
     padding: 3px;
+    color: white;
 }
 
 
@@ -594,15 +604,24 @@ table th {
     padding-bottom: 12px;
     padding-left: 5px;
     text-align: left;
-    background-color:white;
+    /* background-color:white; */
     color: black;
     width: 800px;
     border: 1px solid black;
+    background-color: var(--navmenu-gray-dark);
 }
 
 table td {
     padding: 8px;
     border: 1px solid black;
+}
+
+table tr:nth-child(even) {
+    background-color:#f2f2f2 ;
+}
+
+table tr:hover {
+    background-color: #ddd;
 }
 
 .main{
@@ -617,11 +636,6 @@ table td {
     margin-bottom: 10px;
     border-radius: 10px;
     text-align: center;
-}
-
-.middle{
-    padding:20px;
-    background-color:#DBD8FC ;
 }
 
 .btn2-1 {
