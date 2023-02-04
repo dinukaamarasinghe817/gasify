@@ -270,6 +270,11 @@ class Customer extends Model{
     }
 
 
+    //get dealer bank details for bank deposit payments
+    public function getDealerBankDetails($dealer_id){
+    
+    }
+
 
     /*.........................Customer dealers tab ....................*/
 

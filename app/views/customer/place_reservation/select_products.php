@@ -83,10 +83,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
             <!-- </div> -->
             <div class="total"> 
-                <p>Total Amount : </p><h3 class="amount"> Rs. 0.00</h3>
+                <h3>Total Amount : </h3><h3 class="amount"> Rs.  0.00</h3>
             </div>
 
             <div class="bottom">
+            <a href="<?php echo BASEURL; ?>/Orders/select_brand_city_dealer" class="btn">Back</a>
             <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn">Next</a>
         </div>
         
@@ -183,9 +184,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     subtotal.innerHTML = "Rs." + (inputvalue*unitprice).toLocaleString('en-US') + ".00";
 
                     let total = document.querySelector('.total .amount');
-
+                    
                      let totalvalue = get_total();
-                     total.innerHTML = "Rs. "+totalvalue +".00";
+                     total.innerHTML = "Rs. "+ totalvalue +".00";
                 }
                 
             }
@@ -203,6 +204,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 // console.log(sub);
                 sub = sub.substring(3);
                 sub = parseFloat(sub.replace(/,/g, ''));
+
                 console.log(sub);
                 total += sub;
             }

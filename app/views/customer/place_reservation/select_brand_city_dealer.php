@@ -1,4 +1,8 @@
 <?php
+
+session_start();
+
+
 $header = new Header("customer/customer_brand_city_dealer");
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
@@ -10,7 +14,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         
     ?>
 
-<div class="under_topbar">
+    <div class="under_topbar">
         <div class="subtitle">
            <h3>Place Reservation</h3>
         </div> 
@@ -24,7 +28,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <div class="title">Brand</div>
                 <div class="drop-down">
                     <div class="brand_dropdown">
-                        <select name="brand" id="brand" class="branddropdown dropdowndate" >
+                        <select name="brand" id="brand" class="branddropdown dropdowndate" onchange = "selected_values('brand')">
                             <option value="-1" selected disabled hidden>Select Gas Brand</option>
                             <?php 
 
@@ -32,7 +36,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     $result1 = $data["brands"];
                                     while($brands = mysqli_fetch_assoc($result1)){           
                                         $name = $brands["name"];
-                                        echo "<option value = $name> $name </option>";
+                                        $c_id = $brands["company_id"];
+
+                                        echo "<option value = $name id= $c_id> $name </option>";
                                     }
                                 }
                             ?>
@@ -57,7 +63,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
                                 sort($cities);              
                                 foreach (CITIES as $city){
-                                    echo "<option value=$city>$city</option>";
+                                    echo "<option value=$city id=$city >$city</option>";
                                 }
                             ?>
                         
@@ -98,5 +104,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="bottom">
             <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
         </div>
+    </div>
 
+
+    <script>
+
+        function selected_values(brand,city,dealer){
+
+        }
+
+    </script>
 </section>
