@@ -333,12 +333,30 @@ class Dealer extends Model
             $id = $order['order_id'];
             $products = array();
             // $result2 = $this->read("reservation_include","order_id = $id");
-            $result2 = $this->Query("SELECT * FROM reservation_include r INNER JOIN product p ON r.product_id = p.product_id WHERE r.order_id = $id");
+            // $result2 = $this->Query("SELECT * FROM reservation_include r INNER JOIN product p ON r.product_id = p.product_id WHERE r.order_id = $id");
+            $result2 = $this->Query("SELECT p.product_id AS product_id,
+            p.name AS name,
+            r.unit_price AS unit_price,
+            r.quantity AS quantity FROM reservation_include r INNER JOIN product p ON r.product_id = p.product_id WHERE r.order_id = $id");
+            $stockverification = 'available';
             while($product = mysqli_fetch_assoc($result2)){
+                // to check the stock availability
+                $productid = $product['product_id'];
+                // echo $productid;
+                // echo $dealer_id;
+                $result3 = $this->read('dealer_keep',"dealer_id = $dealer_id and product_id = $productid");
+                if($result3){
+                    $row = mysqli_fetch_assoc($result3);
+                    // var_dump($row);
+                    // echo $row['quantity'].'-'.$product['quantity'].'  ';
+                    if($row['quantity'] < $product['quantity']){
+                        $stockverification = 'notavailable';
+                    }
+                }
                 array_push($products, $product);
                 $total_amount += $product['unit_price']*$product['quantity'];
             }
-            array_push($orders, ['order'=>$order, 'products'=>$products, 'total_amount'=>$total_amount]);
+            array_push($orders, ['order'=>$order, 'products'=>$products, 'payment'=>$order['payment_verification'], 'stock'=>$stockverification, 'total_amount'=>$total_amount]);
         }
         return $orders;
     }//

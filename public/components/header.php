@@ -27,6 +27,8 @@ class Header{
             </script>';
         }else if(isset($data['verification'])){
             $prompt = new Prompt("verification",$data);
+        }else if(isset($data['confirmation'])){
+            $prompt = new Prompt("confirmation",$data);
         }
     }
 }
