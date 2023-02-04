@@ -168,14 +168,14 @@ a,button{
 
 
 
-.p_methods .btn a{
+/* .p_methods .btn {
     color: var(--navmenu-orange-dark);
     display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 20px;
 
-}
+} */
 
 .p_methods .btn button{
     display: flex;
@@ -183,6 +183,7 @@ a,button{
     width: 500px;
     padding: 20px;
     background-color: var(--white);
+    color: var(--navmenu-orange-dark);
     border: 2px solid var(--navmenu-orange-dark);
     border-radius: 5px;
     justify-content: center;
@@ -199,5 +200,5 @@ a,button{
 
 .bottom_img img{
     width: 600px;
-    height: 350px;
+    /* height: 350px; */
 }

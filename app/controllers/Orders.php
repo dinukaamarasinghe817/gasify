@@ -164,7 +164,24 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
+        $data['bank_details'] = $this->model('Customer')->getDealerBankDetails($customer_id);
+
+
         $this->view('customer/place_reservation/bank_slip_upload',$data);
+    }
+
+    //display payment gateway
+    function payment_gateway(){
+       
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $this->view('customer/place_reservation/payment_gateway',$data);
     }
 
 

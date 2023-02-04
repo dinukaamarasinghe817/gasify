@@ -97,7 +97,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         echo'<div class="cancel_card_bottom">
                                 <div class="cancel_item_side">
                                     '.$output.' 
-                                    <div class="cancel_btn"><a href="'.BASEURL.'/Orders/customer_cancelreservation/'.$row1['order_id'].'"><button>Cancel Reservation</button></a></div>
+                                    <div class="cancel_btn"><button >Cancel Reservation</button></div>
                                     <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
                                 </div>
                             </div>';
