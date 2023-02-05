@@ -270,16 +270,32 @@ class Customer extends Model{
     }
 
 
+    //get dealer bank details for bank deposit payments
+    public function getDealerBankDetails($dealer_id){
+    
+    }
+
 
     /*.........................Customer dealers tab ....................*/
 
-    //get all dealers details and display in view dealers tab
-    public function getAlldealers() {
-        $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,CONCAT(d.street,d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+    //get  dealers details and display in view dealers tab according to selected brand and city
+    public function getdealers($brand_name = null,$city_name = null) {
+        if($brand_name!= null && $city_name!= null){
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name' AND d.city = '$city_name'");
+        }else if($brand_name!= null && $city_name== null){
+
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name'");
+        }else if($city_name!= null && $brand_name== null){
+
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
+        
+        }else{
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id ");
+        }
+       
         return $result1;
     }
 
-        
 
     
 }

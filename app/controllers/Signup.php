@@ -1,17 +1,18 @@
 <?php
     session_start();
-    if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-        $role = $_SESSION['role'];
-        header('Location: ' . BASEURL . '/dashboard/'.$role);
-    }
+    // if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
+    //     $role = $_SESSION['role'];
+    //     header('Location: ' . BASEURL . '/dashboard/'.$role);
+    // }
     class Signup extends Controller{
+
         public function __construct(){
             // echo "this is the signin controller";
         }
 
         public function dealer($error=null){
 
-            $company_id = 2; // company_id should be taken from session
+            $company_id = $_SESSION['user_id']; // company_id should be taken from session
             // prduct breakdown
             $data = $this->model("Dealer")->dealerSignupForm($company_id);
 
@@ -45,6 +46,9 @@
                         break;
                     case '9':
                         $data['toast'] = ['type' => 'error', 'message' =>'Server Error, please try again'];
+                        break;
+                    case '10':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid image type'];
                         break;
                 }
             }
@@ -97,7 +101,6 @@
             $password,$confirmpassword,$image_name,$tmp_name,$capacity,$isvalidqty);
             if(isset($data['error'])){
                 $error = $data['error'];
-
                 header("Location: ./dealer/$error");
                 return;
             }
@@ -109,8 +112,9 @@
 
                 // image type validity jpg png jpeg
                 if(isNotValidImageFormat($image_name)){
-                    $data['error'] = "invalid image type";
-                    exit();
+                    $error = 10;
+                    header("Location: ./dealer/$error");
+                    return;
                 }
 
                 $image = getImageRename($image_name,$tmp_name);
@@ -171,22 +175,19 @@
                     $error = "9";
                     header("Location: ./dealer/$error");
                 }
+            }
 
-            
+            if($error){
                 header("Location: ".BASEURL."/signup/dealer/$error");
             }else{
                 header("Location: ".BASEURL."/signin/user");
             }
 
             // header("Location: ../signin/dealer");
-        }
-
-        public function companysignup(){
-            
-        }
-
-
         
 
+        // public function companysignup(){
+        // }
+        }
     }
 ?>

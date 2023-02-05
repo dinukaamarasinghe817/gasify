@@ -157,7 +157,7 @@ class Distributor extends Model
     public function viewdealers($user_id) {
         $dealers = array();
 
-        $query1 = $this->Query("SELECT DISTINCT d.dealer_id as dealer_id, d.name as name,  u.email as email, d.contact_no as contact_no, d.city as city, d.account_no as account_no, d.bank as bank FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.distributor_id='{$user_id}' AND u.type='dealer' ");
+        $query1 = $this->Query("SELECT DISTINCT d.dealer_id as dealer_id, d.name as name, d.image as image,  u.email as email, d.contact_no as contact_no, d.city as city, d.account_no as account_no, d.bank as bank FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.distributor_id='{$user_id}' AND u.type='dealer' ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $dealer_id = $row1['dealer_id'];
@@ -167,6 +167,7 @@ class Distributor extends Model
                 $city = $row1['city'];
                 $account_num = $row1['account_no'];
                 $bank = $row1['bank'];
+                $image = $row1['image'];
 
                 $capacities = array();
                 $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM dealer_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.dealer_id = '{$dealer_id}' ");
@@ -264,7 +265,7 @@ class Distributor extends Model
                 $date = $row1['place_date'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.dealer_id = '{$dealer_id}'; ") ;
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
                 if(mysqli_num_rows($query2)>0) {
                     while($row2= mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -288,7 +289,7 @@ class Distributor extends Model
                 $date = $row1['place_date'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}'; ") ;
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
                 if(mysqli_num_rows($query2)>0) {
                     while($row2= mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -316,15 +317,91 @@ class Distributor extends Model
         return $stock;
     }
 
+
+    // distributor - Gas Orders -  phurase order
+    // public function phurchaseOrders($user_id, $productid, $postproducts) {
+    //     $data = [];
+    //     $flag = false;
+    //     $notvalidquantity =  true;
+
+    //     for($i=0; $i<count($productid); $i++) {
+    //         if($postproducts[$productid[$i]] != 0) {
+    //             $notvalidquantity = false;
+    //         };
+    //     }
+
+    //     if($notvalidquantity) {
+    //         $data['toast'] = ['type'=> "error", 'message'=>"Please insert a valid amount of products"];
+    //         return $data;
+    //     }
+
+    //     for($i=0; $i<count($productid); $i++) {
+    //         $product = $productid[$i];
+    //         //take current stock 
+    //         $current_stock = 0;
+    //         $result = $this->Query("SELECT * FROM distributor_keep where distributor_id = '{$user_id}' and product_id = '{$product}'");
+    //         if(mysqli_num_rows($result)>0) {
+    //             $row = mysqli_fetch_assoc($result);
+    //             $current_stock = $row['quantity'];
+    //         }
+    //         // take previously ordered but still pending amount
+    //         $pending_stock = 0;
+    //         $result = $this->Query("SELECT * from stock_request where distributor_id = '{$user_id}' and stock_req_state='pending' ");
+    //         if(mysqli_num_rows($result)>0) {
+    //             while($row=mysqli_fetch_assoc($result)){
+    //                 $request_id = $row['stock_req_id'];
+    //                 $result = $this->Query("SELECT * FROM  stock_include where stock_req_id='{$request_id}' and product_id = '{$product}'");
+    //                 $row2 = mysqli_fetch_assoc($result);
+    //                 $pending_stock +=$row2['quantity'];
+    //             }
+    //         }
+
+            // take capacity
+            // $capacity = 0;
+            // $result = $this->Query("SELECT * FROM distributor_capacity where distributor_id = '{$user_id}' and product_id = '{$product}'");
+            // if(mysqli_num_rows($result)>0) {
+            //     $row = mysqli_fetch_assoc($result);
+            //     $capacity = $row['capacity'];
+            // }
+            // if($postproducts[$product] > ($capacity - $current_stock - $pending_stock)) {
+            //     $flag = true;
+            // }
+        // }
+        // return $data;
+
+        // if($flag) {
+        //     $data['toast'] = ['type'=> "error", 'message'=>"Insufficient storage"];
+        //     return $data;
+        // }
+
+
+
+
+        // $stock = array();
+
+        // $query1 = $this->Query("SELECT DISTINCT  p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
+        // if(mysqli_num_rows($query1)>0) {
+        //     while($row1 = mysqli_fetch_assoc($query1)) {
+        //         // $product_id = $row1['product_id'];
+        //         $product_name = $row1['name'];
+        //         $quantity = $row1['quantity'];
+
+        //         array_push($stock, ['stockinfo'=> $row1]);
+        //     }
+        // }
+        // return $stock;
+    // }
+
     public function phurchaseOrders($user_id) {
         $stock = array();
 
-        $query1 = $this->Query("SELECT DISTINCT  p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
+        // $query1 = $this->Query("SELECT DISTINCT  p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
+        $query1 = $this->Query("SELECT name FROM  product  where company_id = '2';");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 // $product_id = $row1['product_id'];
                 $product_name = $row1['name'];
-                $quantity = $row1['quantity'];
+                // $quantity = $row1['quantity'];
 
                 array_push($stock, ['stockinfo'=> $row1]);
             }
@@ -332,56 +409,46 @@ class Distributor extends Model
         return $stock;
     }
 
-    public function updateprofile($user_id) {
-        $stock = array();
+    // public function updateprofile($user_id) {
+    //     $stock = array();
 
-        // $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id='{$user_id}' ");
-        $query1 = $this->Query("SELECT p.name as name  FROM product p INNER JOIN distributor_keep d ON d.product_id=p.product_id  where distributor_id='{$user_id}' ");
-        if(mysqli_num_rows($query1)>0) {
-            while($row1 = mysqli_fetch_assoc($query1)) {
-                // $product_id = $row1['product_id'];
-                $product_name = $row1['name'];
-                // $quantity = $row1['quantity'];
+    //     // $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id='{$user_id}' ");
+    //     $query1 = $this->Query("SELECT p.name as name  FROM product p INNER JOIN distributor_keep d ON d.product_id=p.product_id  where distributor_id='{$user_id}' ");
+    //     if(mysqli_num_rows($query1)>0) {
+    //         while($row1 = mysqli_fetch_assoc($query1)) {
+    //             // $product_id = $row1['product_id'];
+    //             $product_name = $row1['name'];
+    //             // $quantity = $row1['quantity'];
 
-                array_push($stock, ['info'=> $row1]);
-            }
-        }
-        return $stock;
-    }
+    //             array_push($stock, ['info'=> $row1]);
+    //         }
+    //     }
+    //     return $stock;
+    // }
 
-    public function viewprofile($user_id) {
-        $profile = array();
+    // public function viewprofile($user_id) {
+    //     $profile = array();
 
-        // $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id='{$user_id}' ");
-        // $query1 = $this->Query("SELECT DISTINCT d.contact_no as contact_no, d.city as city, d.street as street, u.email as email, u.first_name as first, u.last_name as last FROM distributor d inner join users u on d.distributor_id = u.user_id where d.distributor_id='{$user_id}'");
+    //     $query1 = $this->Query("SELECT contact_no, CONCAT(street,' , ' , city) as address from distributor where distributor_id='{$user_id}'");
+
         
-        $query1 = $this->Query("SELECT contact_no, CONCAT(street,' , ' , city) as address from distributor where distributor_id='{$user_id}'");
-
-        // $query1 = $this->Query("SELECT DISTINCT d.contact_no as contact_no, d.CONCAT(street, ' , ', city) as address, u.email as email, u.first_name as name  FROM users u INNER JOIN distributor d ON u.user_id = d.distributor_id ");
-
-        // $query2 = $this->Query("SELECT email, CONCAT(last_name,' , ' , first_name) as name from user where user_id='{$user_id}'");
-        // $query1 = $this->Query("SELECT d.contact_no as contact_no, d.CONCAT(street,' , ' , city) as address, u.email as email, u.concat(first_name,' ', last_name) as name from users u inner join distributor d on  u.user_id = d.distributor_id where d.distributor_id='{$user_id}' ");
-        if(mysqli_num_rows($query1)>0) {
-        // if(mysqli_num_rows($query1 && $query2)>0) {
-            while($row1 = mysqli_fetch_assoc($query1)) {
-                $contact = $row1['contact_no'];
-                $address = $row1['address'];
-               
-                // $email = $row1['email'];
-                // $name = $row1['name'];
-
-                $capacities = array();
-                $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$user_id}' ");
-                if(mysqli_num_rows($query3)>0) {
-                    while($row3 = mysqli_fetch_assoc($query3)){
-                        array_push($capacities, $row3);
-                    }
-                }
-                array_push($profile, ['profileinfo' => $row1, 'capacities' => $capacities]);
-            }
-        }
-        return $profile;
-    }
+    //     if(mysqli_num_rows($query1)>0) {
+       
+    //         while($row1 = mysqli_fetch_assoc($query1)) {
+    //             $contact = $row1['contact_no'];
+    //             $address = $row1['address'];
+    //             $capacities = array();
+    //             $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM distributor_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.distributor_id = '{$user_id}' ");
+    //             if(mysqli_num_rows($query3)>0) {
+    //                 while($row3 = mysqli_fetch_assoc($query3)){
+    //                     array_push($capacities, $row3);
+    //                 }
+    //             }
+    //             array_push($profile, ['profileinfo' => $row1, 'capacities' => $capacities]);
+    //         }
+    //     }
+    //     return $profile;
+    // }
 
 
     

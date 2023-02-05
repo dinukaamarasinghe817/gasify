@@ -39,13 +39,14 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
         <div>
             <div class="middle">
-                <p>Order ID : </p> <br>
+                <p>Order ID : 27 </p> <br>
 
                 <table>
                     <tr>
                         <th>Item Name</th>
-                        <th>Current Stock</th>
+                        <!-- <th>Current Stock</th> -->
                         <th>Quantity</th>
+                        <th>Subtotal (Rs.)</th>
                     </tr>
 
                     <tr>
@@ -59,28 +60,30 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                             $output .= '
                                 <tr>
-                                    <td>
-                                        <select id="period" onchange="updatechart()" class="dropdowndate">
-                                            <option value="product">'.$row1['name'].'</option>
-                                        </select>
-                                    </td>
+                                    <td>'.$row1['name'].'</td>
+                                   
 
-                                    <td>'.$row1['quantity'].'</td>
+                                   
 
-                                    <td><input type="number" name="capacity" min="0" required></td>
+                                    <td><input type="number" name="capacity" min="0" value="5" required></td>
+                                    <td>3200.00</td>
                                 </tr>';
                         }
-                        $output .= '</table>';
+                        $output .= '</table>
+
+                        <table class="endtable">
+                            <tr>
+                                <td class="second1">Total Amount </td>
+                                <td class="second2">9400.00</td>
+                            </tr>
+                        </table>';
                         echo $output;
-
                         ?>
-                       
                     </tr>
-
                 </table>
 
                 <div class="btnclz">
-                    <button class="btn2-1">Place the order</button>
+                    <button class="btn2-1" type="submit" name="submit">Place the order</button>
                     <button class="btn2-2">Cancel</button>
                 </div>
                 

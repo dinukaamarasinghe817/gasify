@@ -118,6 +118,10 @@
             $data['navigation'] = 'dashboard';
 
             $data['currentstock']= $this->model("Distributor")->currentstock($distributor_id);
+
+            // $data['pendingorders']= $this->model("Distributor")->pendingGasOrders($distributor_id);
+            $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($distributor_id);
+
             
             $this->view('dashboard/distributor',$data);
 
@@ -126,8 +130,9 @@
         }
 
         public function admin($error = null){
-            $data['image'] = 'user.png';
-            // get new pending orders
+            $row = mysqli_fetch_assoc($this->model('Admin')->getAdmin($this->user_id));
+            $data['name'] = $row['first_name'].' '.$row['last_name'];
+            $data['image'] = $row['image'];
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/admin', $data);
         }

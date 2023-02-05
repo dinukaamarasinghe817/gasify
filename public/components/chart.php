@@ -2,46 +2,100 @@
 
 class Chart{
 
-    public function __construct($name, $data = null){
-        $this->$name($data);
+    public function __construct($type,$data = null,$index=null){
+        echo '<script src="'.BASEURL.'/public/js/chart.umd.js"></script>';
+        $this->$type($data,$index);
     }
 
-    public function dealerdashboard($data){
-        $products = $data['sold_count'];
-        $pname = array(); $pqty = array();
-        foreach($products as $product){
-            array_push($pname,$product['name']);
-            array_push($pqty,$product['quantity']);
-        }
-        echo '
-        <canvas id="bargraph"></canvas>
-        
-        <script src="'.BASEURL.'/public/js/chart.umd.js"></script>
+    public function bar($data,$index){
+        echo '<canvas id="bargraph'.$index.'" ></canvas>
         <script>
-        let ctx = document.getElementById("bargraph");
-
-        new Chart(ctx, {
+        let ctx'.$index.' = document.getElementById("bargraph'.$index.'")
+        new Chart(ctx'.$index.', {
             type: "bar",
             data: {
                 
-            labels: '.phpArrtoJs($pname).',
+            labels: '.phpArrtoJs($data['labels']).',
             datasets: [{
-                label: "Sold Quantity",
-                data: '.phpArrtoJs($pqty).',
-                backgroundColor: "rgba(255, 159, 64, 0.5)",
+                label: "'.$data['y'].'",
+                data: '.phpArrtoJs($data['vector']).',
+                backgroundColor: "'.$data['color'].'"
+            }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+        </script>';
+    }
+
+    public function line($data,$index){
+        echo '<canvas id="bargraph'.$index.'" ></canvas>
+        <script>
+        let ctx'.$index.' = document.getElementById("bargraph'.$index.'")
+        new Chart(ctx'.$index.', {
+            type: "line",
+            data: {
+                
+            labels: '.phpArrtoJs($data['labels']).',
+            datasets: [{
+                label: "'.$data['y'].'",
+                data: '.phpArrtoJs($data['vector']).',
+                backgroundColor: "'.$data['color'].'",
+                borderWidth: 1,
+                pointRadius: 5,
+                borderColor: "'.$data['color'].'",
+            }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }]
+                },
+                legend: {
+                    display: true,
+                    position: "right"
+                }
+            }
+        });
+        </script>';
+    }
+
+    public function doughnut($data,$index){
+        echo '<canvas id="bargraph'.$index.'"></canvas>
+        <script>
+        let ctx = document.getElementById("bargraph'.$index.'")
+        new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                
+            labels: '.phpArrtoJs($data['labels']).',
+            datasets: [{
+                label: "'.$data['y'].'",
+                data: '.phpArrtoJs($data['vector']).',
+                backgroundColor: '.$data['color'].',
                 borderWidth: 1
             }]
             },
             options: {
-            scales: {
-                y: {
-                beginAtZero: true
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "right"
+                    }
                 }
-            }
             }
         });
         </script>';
-        
     }
 }
 

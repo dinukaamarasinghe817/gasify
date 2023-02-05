@@ -15,10 +15,10 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             <div class="top">
                 <ul>
                     <li>
-                        <a href="../gasdistributions/pending_distributions" class="pending"><b>Pending Gas Distributions</b></a>
+                        <a href="<?php echo BASEURL ?>/gasdistributions/pending_distributions" class="pending"><b>Pending Gas Distributions</b></a>
                     </li>
                     <li>
-                        <a href="../gasdistributions/completed_distributions" class="completed"><b>Completed Gas Distributions</b></a>
+                        <a href="<?php echo BASEURL ?>/gasdistributions/completed_distributions" class="completed"><b>Completed Gas Distributions</b></a>
                     </li>
                 </ul>
             </div>
@@ -27,14 +27,14 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 
                 <div class="accordion new">
 
-                    <div class="box">
+                    <!-- <div class="box"> -->
                     <?php 
                         $completes = $data['completed_distributions'];
                         foreach($completes as $complete) {
                             $row1 = $complete['completedinfo'];
                             $capacities = $complete['capacities'];
 
-                            $output = '
+                            $output = '<div class="box">
                                 <div class="labelbgn">';
                                 $distribution_id = $row1['po_id'];
                             $output .= ' 
@@ -81,12 +81,16 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         }
                                         $output.='
 
-                                        </tbody>';
-                                    }
-                                    $output .='
+                                        </tbody>
                                     </table>
-                                </div>';
+                                </div>
+                            </div>';
                                 echo $output;        
+
+                                        
+                                    }
+                                    
+                                // echo $output;        
                     ?>
 
 
@@ -133,7 +137,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                     </tbody>
                                 </table>
                         </div>           -->
-                    </div>
+                    <!-- </div> -->
 
                     <!-- <div class="box">
                         <div class="labelbgn">

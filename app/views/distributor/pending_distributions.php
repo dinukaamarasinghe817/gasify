@@ -14,10 +14,10 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             <div class="top">
                 <ul>
                     <li>
-                        <a href="../gasdistributions/pending_distributions" class="pending"><b>Pending Gas Distributions</b></a>
+                        <a href="<?php echo BASEURL ?>/gasdistributions/pending_distributions" class="pending"><b>Pending Gas Distributions</b></a>
                     </li>
                     <li>
-                        <a href="../gasdistributions/completed_distributions" class="completed"><b>Completed Gas Distributions</b></a>
+                        <a href="<?php echo BASEURL ?>/gasdistributions/completed_distributions" class="completed"><b>Completed Gas Distributions</b></a>
                     </li>
                 </ul>
             </div>
@@ -26,14 +26,14 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 
                 <div class="accordion new">
 
-                    <div class="box">
+                    <!-- <div class="box"> -->
                     <?php 
                         $pendings = $data['pending_distributions'];
                         foreach($pendings as $pending) {
                             $row1 = $pending['pendinginfo'];
                             $capacities = $pending['capacities'];
-
-                            $output = '
+                   
+                            $output = '<div class="box">
                                 <div class="labelbgn">';
                                 $distribution_id = $row1['po_id'];
                             $output .= ' 
@@ -78,14 +78,20 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         }
                                         $output.='
 
-                                        </tbody>';
-                                    }
-                                    $output .='
+                                        </tbody>
                                     </table>
-                                </div>';
-                                echo $output;        
+                                </div>
+                            </div>';
+
+                                   
+                                        echo $output;
+                                    }
+                                   
+                                   
+                              
+                                      
                     ?>
-                    </div>
+                    <!-- </div> -->
                 </div>   
             </div>
         </div>

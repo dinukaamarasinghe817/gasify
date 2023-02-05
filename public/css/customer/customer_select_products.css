@@ -132,16 +132,59 @@ a,button{
     padding: 25px 10px 25px 10px;
 }
 
+.subtotal_part{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    padding-top: 10px;
+}
+
+
+.total{
+    display: flex;
+    flex-direction: row;
+    margin-left: 40px;
+    column-gap: 20px;
+    align-items: center;
+    margin-top: 10px;
+   
+}
+
+.total .amount{
+    display: flex;
+    background-color: var(--button-orange);
+    justify-content: right;
+    padding: 10px;
+    width: 400px;
+    border-radius: 5px;
+    box-shadow: var(--shadow-3d);
+}
 
 
 
+/* bottom next button css */
+.bottom{
+    padding-top: 30px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: right;
+    margin-right: 80px;
+    column-gap: 50px;
+}
 
-
-
-.total_amount{
+.bottom .btn{ 
+    display: flex;
+    width: 200px;
+    padding: 10px;
+    background-color: var(--button-orange);
+    border-radius: 5px;
     font-size: var(--mediums);
     font-weight: 700;
-    margin-left: 40px;
-    padding: 40px 0 30px 0;
+    color: black;
+    align-items: center;
+    justify-content: center;
+}
 
+.btn:hover{
+    background-color: var(--button-orange-hover);
 }

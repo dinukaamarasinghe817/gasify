@@ -41,3 +41,128 @@ function poinfo(poid) {
     }
     xhr.send();
 }
+
+function callthisfunc_onclick() {
+    let form = document.querySelector("div form");
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/mvc/controller/method/', true);
+    xhr.onload = ()=>{
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+            let data = xhr.response;
+            if(data){
+                // do what ever you want to do with the data
+            }
+        }
+    }
+    let formData = new FormData(form);
+    xhr.send(formData);
+}
+
+function orderverification(payments,stock){
+    console.log("hello");
+    let boxes = '';
+    if(payments == 'verified'){
+        if(stock == 'available'){
+            boxes = `<div class="box">
+                        <div>
+                            <h2>Stock</h2>
+                            <p>available</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/accept.png" alt="">
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Payment</h2>
+                            <p>verified</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/accept.png" alt="">
+                    </div>`;
+        }else{
+            boxes = `<div class="box">
+                        <div>
+                            <h2>Stock</h2>
+                            <p>not available</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/notavailable.png" alt="">
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Payment</h2>
+                            <p>verified</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/accept.png" alt="">
+                    </div>`;
+        }
+    }else if(payments == 'pending'){
+        if(stock == 'available'){
+            boxes = `<div class="box">
+                        <div>
+                            <h2>Stock</h2>
+                            <p>available</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/accept.png" alt="">
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Payment</h2>
+                            <p>pending</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/pending.png" alt="">
+                    </div>`;
+        }else{
+            boxes = `<div class="box">
+                        <div>
+                            <h2>Stock</h2>
+                            <p>not available</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/notavailable.png" alt="">
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Payment</h2>
+                            <p>pending</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/pending.png" alt="">
+                    </div>`;
+        }
+    }else{
+        if(stock == 'available'){
+            boxes = `<div class="box">
+                        <div>
+                            <h2>Stock</h2>
+                            <p>available</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/accept.png" alt="">
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Payment</h2>
+                            <p>rejected</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/rejected.png" alt="">
+                    </div>`;
+        }else{
+            boxes = `<div class="box">
+                        <div>
+                            <h2>Stock</h2>
+                            <p>not available</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/notavailable.png" alt="">
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Payment</h2>
+                            <p>rejected</p>
+                        </div>
+                        <img src="http://localhost/mvc/public/img/icons/rejected.png" alt="">
+                    </div>`;
+        }
+    }
+    let body = `<h1>Verification Status</h1>${boxes}
+    <button onclick="viewinfo(); return false;">OK</button>`;
+
+    let accorinfo = document.querySelector(".verification");
+    accorinfo.innerHTML = body;
+    accorinfo.classList.toggle("active");
+    document.querySelector("body").classList.toggle("blur");
+}

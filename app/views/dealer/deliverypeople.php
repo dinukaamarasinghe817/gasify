@@ -37,7 +37,7 @@ $sidebar = new Navigation('dealer',$data['navigation']);
                                                         <h3>'.$row['first_name'].' '.$row['last_name'].'</h3>
                                                         <p class="gray">contact : '.$row['contact_no'].'</p>
                                                     </div>
-                                                    <button onclick="location.href=\''.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/dealer/deliverypeople\'"class="btn-blue">View profile</button>
+                                                    <button onclick="location.href=\''.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/dealer/deliveryprofile\'"class="btn-blue">View profile</button>
                                                 </div>
                                             </li>';
                                 }

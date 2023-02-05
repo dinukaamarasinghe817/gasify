@@ -6,32 +6,8 @@ class Prompt{
 
     public function verification($data){
         echo '<div class="verification">
-                <h1>Verification Status</h1>
-                <div class="box">
-                    <div>
-                        <h2>Stock</h2>
-                        <p>pending</p>
-                    </div>
-                    <img src="'.BASEURL.'/public/img/icons/accept.png" alt="">
-                </div>
-                <div class="box">
-                    <div>
-                        <h2>Payment</h2>
-                        <p>pending</p>
-                    </div>
-                    <img src="'.BASEURL.'/public/img/icons/pending.png" alt="">
-                </div>
-                <button onclick="viewinfo(); return false;">OK</button>
             </div>';
     }
-
-    // public function moreinfo($data){
-    //     echo '<div class="verification">
-    //             <h1>Purchase Order Includes</h1>'
-    //                 .$data.
-    //             '<button onclick="viewinfo(); return false;">OK</button>
-    //         </div>';
-    // }
 
     public function toast($toast){
         echo '<div id="toast" class="'.$toast['type'].'">
@@ -71,6 +47,11 @@ class Prompt{
                     toast.style.transform = "translateX(600px)";
                 }
             </script>';
+    }
+
+    public function confirmation($data){
+        echo '<div class="confirmation">
+            </div>';
     }
 }
 ?>

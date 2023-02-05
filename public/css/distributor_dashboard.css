@@ -492,6 +492,10 @@ td:nth-child(4) {
     text-align: center;
     padding: 30px;
     background-color: rgb(180, 145, 248);
+    width: 50%;
+    height: auto;
+    margin-right: 2%;
+    color: white;
 }
 
 .p1 {
@@ -537,4 +541,38 @@ td:nth-child(4) {
 
 .tab2 p svg {
     margin-left: 420px;
+}
+
+.dboard1, .dboard2 {
+    width: 50%;
+    padding: 5px;
+}
+
+.dboard1, .dboard2 th {
+    text-align: left;
+    padding: 5px;
+}
+
+.dboard1 tr {
+    background-color: #f2f2f2;
+}
+
+.dboard1 tr:hover{
+    background-color: #ddd;
+}
+
+.dboard1 td {
+    padding: 5%;
+}
+
+.dboard2 tr {
+    background-color: white;
+}
+
+.dboard2 td {
+    background-color: white;
+
+}
+.dboard2 th {
+    background-color: #b2b3c0;
 }

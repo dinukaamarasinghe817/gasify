@@ -5,8 +5,10 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 }
 
 class Orders extends Controller{
+    public $user_id;
     function __construct(){
         parent::__construct();
+        $this->user_id = $_SESSION['user_id'];
     }
 
     function dealer($tab1, $tab2=null){
@@ -52,10 +54,11 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
+        
 
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
-        
+        $data['confirmation'] = '';
+
         $this->view('customer/my_reservation/viewmyreservation', $data);
     }
 
@@ -100,6 +103,23 @@ class Orders extends Controller{
        
     }
 
+
+    //cancel the reservation
+    function customer_cancelreservation($order_id){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'myreservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $data['confirmation'] = '';
+        $this->view('customer/my_reservation/cancel_reservation', $data);
+
+
+    }
+
     /*.................Customer place reservation.................*/
     //select brand,city and dealer
     function select_brand_city_dealer(){
@@ -112,12 +132,60 @@ class Orders extends Controller{
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
         $data['brands'] = $this->model('Customer')->getCompanyBrand();
-        $data['dealers'] = $this->model('Customer')->getAlldealers();
+        $data['dealers'] = $this->model('Customer')->getdealers();
 
         $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 
     }
 
+
+    //select payment method
+    function select_payment_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        // $data['brands'] = $this->model('Customer')->getCompanyBrand();
+        // $data['dealers'] = $this->model('Customer')->getAlldealers();
+
+        $this->view('customer/place_reservation/select_payment_method',$data);
+    }
+
+
+    //display bank slip uploader
+    function bank_slip_upload(){
+    
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $data['bank_details'] = $this->model('Customer')->getDealerBankDetails($customer_id);
+
+
+        $this->view('customer/place_reservation/bank_slip_upload',$data);
+    }
+
+    //display payment gateway
+    function payment_gateway(){
+       
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $this->view('customer/place_reservation/payment_gateway',$data);
+    }
 
 
     /*..........................Customer quota......................... */
@@ -135,27 +203,57 @@ class Orders extends Controller{
         $this->view('customer/quota/quota',$data);
     }
 
-
-
-
+/*.........................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
      // distributor phurchase orders to company (Gas Orders)
+    //  public function distributor($error = null) {
+
+    //     $user_id = $_SESSION['user_id'];
+    //     $data['navigation'] = 'orders';
+
+    //     if($error != null) {
+    //         $data['toast'] = $error;
+    //     }
+
+    //     $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+    //     $row = mysqli_fetch_assoc($distributor_details);
+    //     $data['image'] = $row['image'];
+
+    //     $data['currentstock'] = $this->model("Distributor")->phurchaseOrders($user_id);
+    //     $this->view('distributor/phurchase_orders',$data);
+
+    // }
+
+    // public function distributorphurchaseorder ($param = null) {
+    //     $productid = $_SESSION['productarray'];
+    //     $postproducts = [];
+    //     for($i=0; $i<count($productid); $i++) {
+    //         $postproducts[$productid[$i]] = $_POST[$productid[$i]];
+    //     }
+    //     $data = $this ->model('Distributor')->phurchaseOrders($this->$user_id, $productid, $postproducts);
+    //     if(isset($data['toast'])) {
+    //         $this->distributor("purchaseorder", $data['toast']);
+    //     }else {
+
+    //     }
+    // }
+
+
+
      public function distributor() {
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
-        // profile picture
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // phurchase order  view
-        // create the model
-        // $this->view('distributor/reports',$data);
         $data['currentstock'] = $this->model("Distributor")->phurchaseOrders($user_id);
         $this->view('distributor/phurchase_orders',$data);
+        
 
     }
+
 
     // distributor current stock (Gas Orders)
     public function distributor_currentstock() {
@@ -237,6 +335,13 @@ class Orders extends Controller{
         
         $this->view('distributor/placed_completed',$data);
 
+    }
+
+    public function payments(){
+        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
+        $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $data['image'] = $row['image'];
+        $this->view('admin/payments',$data);
     }
 
 }

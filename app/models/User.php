@@ -14,6 +14,10 @@ class User extends Model
         $result = $this->read('users', "email = '$email'");
         return $result;
     }
+    public function getnotifications($user_id){
+        $data['notifications'] = $this->read('notifications', "user_id = '$user_id'",'date AND time DESC');
+        return $data;
+    }
     public function resetPassword($email){
         if(empty($email)){
             $data['toast'] = ['type'=>'error', 'message'=>'Email field empty'];
@@ -538,6 +542,44 @@ class User extends Model
         return $data;
     }
 
+    public function setdeliveryprofile($user_id,$tab,$data){
+        if($tab == 'profile'){
+            $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            // image type validity jpg png jpeg
+            if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
+                $data['toast'] = '1';
+                return $data;
+            }
+
+            if(isset($data['image_name'])){
+                $data['image'] = getImageRename($data['image_name'],$data['tmp_name']);
+                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+                // echo $data['image']."\n";
+                if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
+                    // echo "image uploaded\n";
+                    $result2 = $this->update('delivery_person',array('city'=>$data['city'],'street'=>$data['street'],'image'=>$data['image'],'vehicle_type'=>$data['vehicle_type'],'vehicle_no'=>$data['vehicle_no'],'weight_limit'=>$data['weight_limit'],'cost_per_km'=>$data['cost_per_km']),"delivery_id = $user_id");
+                    // echo "hello\n";
+                }else{
+                    $data['toast'] = '2';
+                    return $data;
+                    // echo "image not uploaded\n";
+                }
+            }else{
+                $result2 = $this->update('delivery_person',array('city'=>$data['city'],'street'=>$data['street'],'vehicle_type'=>$data['vehicle_type'],'vehicle_no'=>$data['vehicle_no'],'weight_limit'=>$data['weight_limit'],'cost_per_km'=>$data['cost_per_km']),"delivery_id = $user_id");
+            }
+            if($result1 && $result2){
+                $data['toast'] = '3';
+            }else{
+                $data['toast'] = '4';
+            }
+
+        }else if($tab == 'security'){
+            $data['toast'] = $this->updatepassword($user_id,$data);
+
+        }
+        return $data;
+    }
+
     public function setcustomerprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
@@ -816,6 +858,51 @@ class User extends Model
         return $data;
     }
 
+    public function getdeliveryprofile($user_id,$tab,$mode){
+        $data = [];
+        if($mode == 'edit'){
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                d.city AS city,
+                d.street AS street,
+                d.image AS image,
+                d.vehicle_no AS vehicle_no,
+                d.vehicle_type AS vehicle_type,
+                d.weight_limit AS weight_limit,
+                d.cost_per_km AS cost_per_km
+                FROM users u INNER JOIN delivery_person d
+                ON u.user_id = d.delivery_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }else if($tab == 'security'){
+                $sql = "SELECT * FROM delivery_person d INNER JOIN users u ON d.delivery_id = u.user_id WHERE d.delivery_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }else{
+            if($tab == 'profile'){
+                $sql = "SELECT u.email AS email,
+                u.user_id AS user_id,
+                u.first_name AS first_name,
+                u.last_name AS last_name,
+                d.city AS city,
+                d.street AS street,
+                d.image AS image,
+                d.vehicle_no AS vehicle_no,
+                d.vehicle_type AS vehicle_type,
+                d.weight_limit AS weight_limit,
+                d.cost_per_km AS cost_per_km
+                FROM users u INNER JOIN delivery_person d
+                ON u.user_id = d.delivery_id
+                WHERE u.user_id = $user_id";
+                $data['query'] = $this->Query($sql);
+            }
+        }
+        return $data;
+    }
+
     public function getcustomerprofile($user_id,$tab,$mode){
         $data = [];
         if($mode == 'edit'){
@@ -844,7 +931,6 @@ class User extends Model
                 u.last_name AS last_name,
                 c.city AS city,
                 c.street AS street,
-                c.name AS company,
                 c.contact_no AS contact_no,
                 c.type AS type,
                 c.image AS image FROM users u INNER JOIN customer c

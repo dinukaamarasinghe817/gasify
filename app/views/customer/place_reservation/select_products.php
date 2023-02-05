@@ -37,11 +37,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
                                 </div>
                                 <div class="increment_box">
-                                    <div class="minus">-</div>
-                                    <input type="text" name="qty" id="qty" value="0" class="num" onchange="changeqty('.$product['p_id'].','.$product['unit_price'].');">
-                                    <div class = "plus">+</div>
+                                    <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                    <input type="text" name="qty" id="'.$product['p_id'].'" value="0" class="num" >
+                                    <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
-                                
+                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
                             </div>
                         ';
                 }
@@ -67,10 +67,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
                                 </div> 
                                 <div class="increment_box">
-                                    <div class="minus">-</div>
-                                    <input type="text" name="qty" id="qty" value="0" class="num">
-                                    <div class="plus">+</div>
+                                    <div class="minus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                    <input type="text" name="qty" id="'.$product['p_id'].'" value="0" class="num">
+                                    <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
+                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
                             </div>
                         ';
                 }
@@ -78,9 +79,17 @@ $sidebar = new Navigation('customer',$data['navigation']);
             echo '</div>
             </div>';      
         ?>
-            <!-- <div class="total_amount">
-                <span>Total Amount : </span><span class="total"></span>
-            </div> -->
+            <!-- <div class="total"> -->
+                <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
+            <!-- </div> -->
+            <div class="total"> 
+                <h3>Total Amount : </h3><h3 class="amount"> Rs. 0.00</h3>
+            </div>
+
+            <div class="bottom">
+            <a href="<?php echo BASEURL; ?>/Orders/select_brand_city_dealer" class="btn">Back</a>
+            <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn">Next</a>
+        </div>
         
     </div>
     
@@ -98,15 +107,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
         button.addEventListener('click',function(event){
             
             var buttonClicked = event.target;
-            console.log(buttonClicked);
+            // console.log(buttonClicked);
             var input = buttonClicked.parentElement.children[1];
-            console.log(input);
+            // console.log(input);
             
             var inputValue = input.value;
-            console.log(inputValue);
+            // console.log(inputValue);
             
             var newValue = parseInt(inputValue) + 1;
-            console.log(newValue);
+            // console.log(newValue);
             
             input.value = newValue;
             
@@ -119,14 +128,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
         button.addEventListener('click',function(event){
             
             var buttonClicked = event.target;
-            console.log(buttonClicked);
+            // console.log(buttonClicked);
             var input = buttonClicked.parentElement.children[1];
-            console.log(input);
+            // console.log(input);
             
             var inputValue = input.value;
-            console.log(inputValue);
+            // console.log(inputValue);
             var newValue = parseInt(inputValue) - 1;
-            console.log(newValue);
+            // console.log(newValue);
             
             input.value = newValue;
 
@@ -144,33 +153,63 @@ $sidebar = new Navigation('customer',$data['navigation']);
     }
 
 
-    function changeqty(id, unitprice) {
-    id = parseInt(id);
-    unitprice = parseFloat(unitprice);
-    let inputstring = `.data${id} input .num`;
-    let input = document.querySelector(inputstring);
-    let inputvalue = input.value;
-    // let subtotaltring = `.data${id} .subtotal`;
-    let subtotal = document.querySelector('.total');
-    subtotal.innerHTML = "Rs. "+(unitprice* inputvalue).toLocaleString('en-US');
-    // let total = document.querySelector('.total .amount');
+        function changeqty(id, unitprice,operation) {
+            id = parseInt(id);
+            unitprice = parseFloat(unitprice);
+            if (operation == plus) {
 
-    // let totalvalue = gettotal();
-    // total.innerHTML = "Rs. "+totalvalue;
- }
+                let inputstring = `${id}`;
+                let input = document.getElementById(inputstring);
+                let inputvalue = parseInt(input.value)+1;
+            
+                let substring = `sub${id}`;
+                let subtotal = document.getElementById(substring);
+        
+                subtotal.innerHTML = "Rs." + (inputvalue*unitprice).toLocaleString('en-US') + ".00";
 
- function gettotal() {
-    let total = 0.00;
-    let subtotals = document.querySelectorAll('.total');
-    for(let i = 0; i < subtotals.length; i++) {
-        let sub = subtotals[i].innerHTML;
-        sub = sub.substring(4);
-        sub = parseFloat(sub.replace(/,/g, ''));
-        total += sub;
-    }
-    // parseFloat("2,299.00".replace(/,/g, ''))
-    return total.toLocaleString('en-US');
-}
+                let total = document.querySelector('.total .amount');
+
+                 let totalvalue = get_total();
+                total.innerHTML = "Rs. "+totalvalue +".00";
+            }
+            if(operation == minus){
+                let inputstring = `${id}`;
+                let input = document.getElementById(inputstring);
+                if (input.value > 0) {
+                    let inputvalue = parseInt(input.value)- 1;
+
+                    let substring = `sub${id}`;
+                    let subtotal = document.getElementById(substring);
+            
+                    subtotal.innerHTML = "Rs." + (inputvalue*unitprice).toLocaleString('en-US') + ".00";
+
+                    let total = document.querySelector('.total .amount');
+                    
+                     let totalvalue = get_total();
+                     total.innerHTML = "Rs. "+ totalvalue +".00";
+                }
+                
+            }
+
+            
+            
+        }
+
+        function get_total(){
+            let total = 0.00;
+            let subtotals = document.querySelectorAll('.subtotal');
+            for(let i = 0; i < subtotals.length; i++){
+                // console.log(subtotals[i]);
+                let sub = subtotals[i].innerHTML;
+                // console.log(sub);
+                sub = sub.substring(3);
+                sub = parseFloat(sub.replace(/,/g, ''));
+
+                console.log(sub);
+                total += sub;
+            }
+            return total.toLocaleString('en-US');
+        }
 
     
 

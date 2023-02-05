@@ -17,8 +17,8 @@
                 <li><a href="#hero" class="active">Home</a></li>
                 <li><a href="#product">Shop</a></li>
                 <!-- <li><a href="blog.html">Blog</a></li> -->
-                <li><a href="#footer">About</a></li>
-                <li><a href="#footer">Contact</a></li>
+                <!-- <li><a href="#footer">About</a></li> -->
+                <li><a href="#footer">Contact Us</a></li>
             </ul>
         </div>
 

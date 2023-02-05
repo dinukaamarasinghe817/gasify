@@ -130,7 +130,23 @@ class Dealer extends Model
             (SELECT order_id FROM reservation 
             WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND dealer_id = 6 AND order_state = 'Completed') 
         GROUP BY product_id";
-        $data['sold_count'] = $this->Query($sql);
+
+        // chart details
+        $products = $this->Query($sql);
+        $chart['y'] = 'Sold Quantity';
+        $chart['color'] = 'rgba(255, 159, 64, 0.5)';
+        // $chart['color'] = '[
+        //     "rgb(255, 99, 132)",
+        //     "rgb(54, 162, 235)",
+        //     "rgb(54, 122, 15)"
+        //   ]';
+        $chart['labels'] = array();$chart['vector'] = array();
+        $products = $this->Query($sql);
+        foreach($products as $product){
+            array_push($chart['labels'],$product['name']);
+            array_push($chart['vector'],$product['quantity']);
+        }
+        $data['chart'] = $chart;
 
         return $data;
     }//
@@ -317,12 +333,30 @@ class Dealer extends Model
             $id = $order['order_id'];
             $products = array();
             // $result2 = $this->read("reservation_include","order_id = $id");
-            $result2 = $this->Query("SELECT * FROM reservation_include r INNER JOIN product p ON r.product_id = p.product_id WHERE r.order_id = $id");
+            // $result2 = $this->Query("SELECT * FROM reservation_include r INNER JOIN product p ON r.product_id = p.product_id WHERE r.order_id = $id");
+            $result2 = $this->Query("SELECT p.product_id AS product_id,
+            p.name AS name,
+            r.unit_price AS unit_price,
+            r.quantity AS quantity FROM reservation_include r INNER JOIN product p ON r.product_id = p.product_id WHERE r.order_id = $id");
+            $stockverification = 'available';
             while($product = mysqli_fetch_assoc($result2)){
+                // to check the stock availability
+                $productid = $product['product_id'];
+                // echo $productid;
+                // echo $dealer_id;
+                $result3 = $this->read('dealer_keep',"dealer_id = $dealer_id and product_id = $productid");
+                if($result3){
+                    $row = mysqli_fetch_assoc($result3);
+                    // var_dump($row);
+                    // echo $row['quantity'].'-'.$product['quantity'].'  ';
+                    if($row['quantity'] < $product['quantity']){
+                        $stockverification = 'notavailable';
+                    }
+                }
                 array_push($products, $product);
                 $total_amount += $product['unit_price']*$product['quantity'];
             }
-            array_push($orders, ['order'=>$order, 'products'=>$products, 'total_amount'=>$total_amount]);
+            array_push($orders, ['order'=>$order, 'products'=>$products, 'payment'=>$order['payment_verification'], 'stock'=>$stockverification, 'total_amount'=>$total_amount]);
         }
         return $orders;
     }//
@@ -373,5 +407,54 @@ class Dealer extends Model
         }
         $data['query'] = $this->Query($sql);
         return $data;
+    }
+
+    public function getanalysis($user_id,$start_date,$end_date){
+        //chart 1
+        $data['charts'] = array();
+        $chart['type'] = 'bar';
+        $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
+        $chart['vector'] = array(7,10,2,5);
+        $chart['main'] = 'Based on Product';
+        $chart['y'] = 'Number of sold items';
+        $chart['color'] = 'rgba(245, 215, 39, 0.8)';
+        array_push($data['charts'],$chart);
+
+        //chart 2
+        $chart['type'] = 'line';
+        $chart['labels'] = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+        $chart['vector'] = array(7,10,12,5,7,8,3);
+        $chart['main'] = 'Based on the day';
+        $chart['y'] = 'Number of Orders';
+        $chart['color'] = 'rgba(242, 71, 235, 0.8)';
+        array_push($data['charts'],$chart);
+
+        //chart 3
+        $chart['type'] = 'doughnut';
+        $chart['labels'] = array('Delivery','Pickup');
+        $chart['vector'] = array(60,40);
+        $chart['main'] = 'Based on Collecting Method';
+        $chart['y'] = 'Number of orders';
+        $chart['color'] = '[
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(54, 122, 15)"
+            ]';
+        array_push($data['charts'],$chart);
+
+        //chart 4
+        $chart['type'] = 'bar';
+        $chart['labels'] = array('Domestic','LargeScale','SmallScale');
+        $chart['vector'] = array(22,65,45);
+        $chart['main'] = 'Based on Customer Type';
+        $chart['y'] = 'Number of Orders';
+        $chart['color'] = 'rgba(48, 39, 245, 0.8)';
+        array_push($data['charts'],$chart);
+        
+        return $data;
+    }
+
+    public function getReportInfo($start_date,$to_date,$order_by){
+
     }
 }

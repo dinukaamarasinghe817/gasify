@@ -6,7 +6,7 @@
     border: none;
 }
 
-a,button,input[type="button"],input[type="file"]{
+a,svg,button,input[type="button"],input[type="file"]{
     cursor: pointer;
     text-decoration: none;
 }
@@ -32,7 +32,7 @@ table td{
     --navmenu-blue: #e8f6ff;
     --navmenu-orange: #fdeee8;
     --navmenu-orange-dark: #fc7949;
-    --button-orange-hover: #fc7949;
+    --button-orange-hover: #fb6833;
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
@@ -181,6 +181,18 @@ body{
     border: none;
     margin-right: 20px;
     height: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.body-header-right .bell p{
+    position: absolute;
+    background-color: rgb(101, 100, 100);
+    border-radius: 50px;
+    padding: 3px;
+    color: white;
+    min-width: 15px;
+    transform: translateX(-35px);
+    transform: translateY(-15px);
 }
 .body-header-right .profile,
 .body-header-right .profile img{
@@ -304,7 +316,7 @@ body.blur::before{
     width: 100%;
     height: 100%;
     color: var(--white);
-    background-color: var(--button-orange-hover);
+    background-color: var(--navmenu-orange-dark);
     transition: 0.3s;
     border-top: solid transparent;
     border-bottom: solid transparent;
@@ -315,9 +327,9 @@ body.blur::before{
     background-color: var(--button-orange);
 } */
 /* when hovering the bottom border should appear on innactive anchor tags */
-.top-panel ul li a:hover{
-    background-color: var(--white);
-    color: var(--button-orange-hover);
+.top-panel ul li a:not(.active):hover{
+    background-color: var(--button-orange-hover);
+    /* color: white; */
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -351,7 +363,6 @@ body.blur::before{
 .top-panel ul:nth-child(2) li a:hover{
     border-top: none;
 }
-
 .body-content .content-data{
     position: relative;
     box-sizing: border-box;
@@ -361,10 +372,13 @@ body.blur::before{
     border-bottom: 2px solid var(--button-orange-hover);
     border-right: 2px solid var(--button-orange-hover);
     border-left: 2px solid var(--button-orange-hover);
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
     /* overflow-y: scroll; */
     /* scroll-behavior: smooth; */
     scrollbar-width: thin;
+}
+.content-data.notifications{
+    border: 2px solid var(--button-orange-hover);
 }
 .content-data::-webkit-scrollbar{
     display: none;
@@ -1005,25 +1019,119 @@ label{
     transition: 0.3s;
 }
 
-.btn-blue:hover{
+.btn-blue:hover,
+.anchor-button:hover{
     background-color: var(--button-blue-hover);
 }
-
+.anchor-button{
+    background-color: var(--button-blue);
+    padding: 10px;
+    color: white;
+    transition: 0.3s;
+    border-radius: 10px;
+}
 .gray{
     color: var(--navmenu-gray-dark);
 }
 
 .body-content .content-data{
     border: var(--button-orange-hover) solid 2px;
-    border-top: transparent solid 0px;
+    border-top: 2px solid var(--button-orange-hover);
     box-sizing: border-box;
-    padding: 15px;
-    height: 600px;
+    /* padding: 15px; */
+    height: 700px;
     overflow-y: scroll;
     scroll-behavior: smooth;
     transition: transtionIn 2.5s;
 }
+.body-content .content-data:not(.notifications),
+.body-content .content-data:not(.profile){
+    /* border: var(--button-orange-hover) solid 2px; */
+    /* border-top: transparent solid 0px; */
+    box-sizing: border-box;
+    /* padding: 15px; */
+    height: 700px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    transition: transtionIn 2.5s;
+}
+.body-content{
+    overflow-y: scroll;
+}
+.body-content .content-data{
+    border: 2px solid transparent;
+}
+/* notification css */
+.notification{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(243, 243, 243);
+    padding: 10px;
+    border-radius: 10px;
+}
+.notification h2{
+    font-size: var(--mediums);
+}
+.no-notifications{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-.body-content .content-data.profile{
-    border-top: var(--button-orange-hover) solid 2px;
+/* customer-order-confirmations */
+.confirmation{
+    width: 450px;
+    height: fit-content;
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 30px;
+    gap: 10px;
+    position: absolute;
+    display: none;
+    z-index: 2;
+}
+.confirmation.active{
+    display: flex;
+}
+.confirmation h2{
+    /* padding: 10px; */
+    background-color: var(--navmenu-orange-dark);
+    width: 100%;
+    padding: 10px 0px;
+    text-align: center;
+    border-radius: 10px 10px 0px 0px;
+    color: white;
+}
+.confirmation img{
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 70px;
+}
+.confirmation p{
+    width: 90%;
+    text-align: center;
+    padding: 5px;
+}
+.confirmation .buttons{
+    display: flex;
+    flex-direction: row;
+    width: 55%;
+    justify-content: center;
+    gap: 20px;
+}
+.confirmation .buttons button{
+    padding: 10px;
+    background-color: var(--cancel-red);
+    min-width: 100px;
+    color: white;
+    border-radius: 10px;
+}
+.confirmation .buttons button:last-child{
+    background-color: var(--button-blue);
 }

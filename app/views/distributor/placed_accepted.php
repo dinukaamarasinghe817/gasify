@@ -17,15 +17,13 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             <div class="top">
                 <ul>
                     <li>
-                        <a href="../orders/distributor" class="place"><b>Place an Order</b></a>
-                        <!-- <a href="#" class="place"><b>Place an Order</b></a> -->
+                        <a href="<?php echo BASEURL ?>/orders/distributor" class="place"><b>Place an Order</b></a>
                     </li>
                     <li>
-                        <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
-                        <!-- <a href="#" class="stock"><b>Current Stock</b></a> -->
+                        <a href="<?php echo BASEURL ?>/orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
                     </li>
                     <li>
-                        <a href="../orders/dis_placed_pending" class="placedlist"><b>Placed Order List</b></a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_pending" class="placedlist"><b>Placed Order List</b></a>
                     </li>
                 </ul>
             </div>
@@ -33,13 +31,13 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             <div class="middle">
                 <ul>
                     <li>
-                        <a href="../orders/dis_placed_pending" class="pending"><b>Pending Gas Orders</b><a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_pending" class="pending"><b>Pending Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="../orders/dis_placed_accepted" class="accepted"><b>Accepted Gas Orders</b><a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted"><b>Accepted Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="../orders/dis_placed_completed" class="completed"><b>Completed Gas Orders</b><a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed"><b>Completed Gas Orders</b><a>
                     </li>
 
                 </ul>
@@ -47,14 +45,14 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                 <div class="accordion new">
 
-                    <div class="box">
+                    <!-- <div class="box"> -->
                         <?php
                             $acceptedorders = $data['acceptedorders'];
                             foreach($acceptedorders as $acceptedorder) {
                                 $row1 = $acceptedorder['acceptedinfo'];
                                 $capacities = $acceptedorder['capacities'];
 
-                                $output = '
+                                $output = ' <div class="box">
                                 <div class="labelbgn">';
                                 $order_id = $row1['stock_req_id'];
                                 $output .='
@@ -92,19 +90,21 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             $output .= '
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
-                                                <td>'.$row2['quantity'].'</td>
                                                 <td>'.$row2['unit_price'].'</td>
-                                            
+                                                <td>'.$row2['quantity'].'</td>
                                             </tr>';
                                         }
                                         $output .= '
                                         </tbody>
                                     </table>
-                                </div>'; 
-                            }
+                                </div>
+                            </div>'; 
                             echo $output;
+
+                            }
+                            // echo $output;
                         ?>
-                    </div>                
+                    <!-- </div>                 -->
                 </div>
             </div>
         </div>
