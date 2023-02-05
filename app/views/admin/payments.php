@@ -1,6 +1,6 @@
 <?php
 $header = new Header("admin",$data);
-$sidebar = new Navigation('admin','companies');
+$sidebar = new Navigation('admin','payments');
 ?>
 
 <section class="body">
@@ -47,7 +47,7 @@ $sidebar = new Navigation('admin','companies');
                                     </div>
                                     <p>Total amount : Rs.5000.00</p>
                                     <div>
-                                        <button class="btn-blue">Download pay slip</button>
+                                        <button class="btn-blue yellow"><a href="http://localhost/mvc/public/img/payslips/payslip.pdf" target="_top" Download>Download pay slip</a></button>
                                         <button class="btn-blue">Valid</button>
                                         <button class="btn-blue red">Invalid</button>
                                     </div>
@@ -58,6 +58,20 @@ $sidebar = new Navigation('admin','companies');
                 </div>
     </div>
 </section>
+<script>
+    let accordion = document.querySelectorAll(".payment-header .img");
+    let accordionbody = document.querySelectorAll(".payment-body");
+    for(i=0; i<accordion.length; i++) {
+        let j = i;
+        accordion[i].addEventListener("click", function(){
+            console.log(accordionbody[j]);
+            console.log(j);
+            accordionbody[j].classList.toggle("active");
+            this.classList.toggle("active");
+            console.log('rotated agian');
+        })
+    }
+</script>
 
 <?php
 $footer = new Footer("admin");

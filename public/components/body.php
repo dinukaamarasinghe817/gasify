@@ -1464,4 +1464,45 @@ class Body{
         '</div>
         </section>';
     }
+
+    function notifications($data){
+        echo '<section class="body-content">
+        <div class="content-data notifications">
+            <h2>Notifications</h2>
+            <ul>';
+                
+                    if(mysqli_num_rows($data['notifications']) > 0){
+                        while($notification = mysqli_fetch_assoc($data['notifications'])){
+                            echo '<li>
+                                    <div class="notification">
+                                        <h2>'.$notification['type'].'</h2>
+                                        <p>'.$notification['message'].'</p>
+                                    </div>
+                                </li>';
+                        }
+                    }else{
+                        echo '<div class="no-notifications">
+                            <img src="'.BASEURL.'/public/img/placeholders/nonotifications.png" alt="">
+                            <h3>No notifications yet</h3>
+                            <p class="gray">Stay tuned! notifications about your activity will show up here.</p>
+                        </div>';
+                    }
+                
+                // <li>
+                //     <div class="notification">
+                //         <h2>Re-Order level alert</h2>
+                //         <p>You're runnig low stock on the following products. Hurry up and place a new purchase order. Products : (Buddy, Budget)</p>
+                //     </div>
+                // </li>
+                // <li>
+                //     <div class="notification">
+                //         <h2>Re-Order level alert</h2>
+                //         <p>You're runnig low stock on the following products. Hurry up and place a new purchase order. Products : (Buddy, Budget)</p>
+                //     </div>
+                // </li>
+            echo '</ul>
+                </div>
+        </section>
+        </section>';
+    }
 }

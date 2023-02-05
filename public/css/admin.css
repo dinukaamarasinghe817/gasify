@@ -247,28 +247,61 @@
     background-color: rgb(250, 44, 44);
 }
 
+/* payments tab css */
 .payment{
     display: flex;
     flex-direction: column;
+    gap: 0px;
+    margin-top: 10px;
 }
 .payment .payment-header{
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 }
 .payment .payment-header div{
     flex-direction: column;
+    width: 40%;
 }
 .payment .payment-body{
     flex-direction: column;
     width: 100%;
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+}
+.payment .payment-body.active{
+    display: flex;
+    max-height: 150px;
+    transition: max-height 0.25s ease-in;
+}
+.payment .payment-header .img{
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(225, 224, 224);
+    border-radius: 10px;
+    padding: 5px;
+    transition: 0.3s ease;
+}
+.payment .payment-header .img.active{
+    transform: rotate(180deg);
 }
 .payment .payment-body > div{
     flex-direction: row;
     width: 100%;
 }
-.payment-body button:nth-child(0){
+.payment .payment-body > div > div{
+    width: 40%;
+}
+.payment-body button{
+    margin: 0px;
+    width: 25%;
+}
+.payment-body button.yellow{
     width: 50%;
     background-color: var(--logo-background);
+}
+.payment-body button.yellow a{
+    color: black;
 }
