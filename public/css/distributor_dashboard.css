@@ -349,6 +349,10 @@ body{
     border: 2px solid var(--navmenu-gray-dark);
 } */
 
+/* 
+.accordion {
+    border: var(--navmenu-orange-dark);
+} */
 
 .accordion .box{
     /* width: 100%; */
@@ -491,7 +495,7 @@ td:nth-child(4) {
     border-radius: 10px;
     text-align: center;
     padding: 30px;
-    background-color: rgb(180, 145, 248);
+    background-color: var(--navmenu-orange-dark);
     width: 50%;
     height: auto;
     margin-right: 2%;
