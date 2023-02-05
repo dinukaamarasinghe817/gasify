@@ -872,7 +872,7 @@ label{
 }
 .delete_btn{
     background-color: transparent;
-    border-radius: 10px;
+    border-radius: 5px;
     margin:auto;
     height: 80%;
     display: flex;
@@ -947,7 +947,7 @@ label{
     height: 50%;
     border-radius: 10px;
     overflow-y: auto;
-    border:3px solid #90CAFF;
+    border:3px solid #2d77bc;
     background-color: transparent;
 }
 .Dealer_name,.Dealer_location,.Dealer_contactno,.Dealer_email,.Dealer_accountno,.Dealer_capacity{
@@ -962,19 +962,17 @@ label{
     width: 48.5%;
     color: black;
     background-color: #DBD8FC;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .DealerTableTopics:first-child{
-    background-color: #90CAFF;
+    background-color: #2d77bc;
 }
 .deliveries_link:nth-child(2) div{
     background-color: #31B857;
     box-sizing: border-box;
-    border:3px solid #90CAFF;
+    border:3px solid #2d77bc;
     background-color: transparent;
 }
 .dealerTableTitles{
@@ -995,7 +993,10 @@ label{
     border-bottom-right-radius: 10px;
     overflow-y: auto;
     box-sizing: border-box;
-    border:3px solid #90CAFF;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-color: #2d77bc;
     background-color: transparent;
 }
 .DealerTables::-webkit-scrollbar-thumb{
@@ -1186,7 +1187,7 @@ select{
     height: 70%;
     margin: auto;
     color: black;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: dodgerblue;
 }
 .delivered_btn,.cancel_btn{
@@ -1216,12 +1217,13 @@ select{
     background-color: rgb(231, 56, 56);
 }
 .reviewRow{
+    color: white;
     border-radius: 5px;
     margin-left:1%;
     margin-top: 1%;
     width: 98%;
     height: 25%;
-    background-color: #90CAFF;
+    background-color: rgb(69, 154, 234);
 }
 .orderIDRow{
     display: flex;
@@ -1248,4 +1250,32 @@ select{
 .reviewTime,.reviewDate{
     margin-right: 1%;
 }
-
+.deliveryPool{
+    width: 100%;
+}
+.deliveryPool th{
+    background-color: #2d77bc;
+    border: 1px solid #ddd;
+    height: 5vh;
+}
+.tdCenter{
+    text-align: center;
+}
+.tdRight{
+    text-align: right;
+}
+.deliveryPool th:nth-child(6),.deliveryPool tr td:nth-child(6){
+    background-color: white;
+    border: none;
+}
+.deliveryPool td{
+    color: white;
+}
+.deliveryPool tr:nth-child(even){
+    background-color: #2d77bc;
+    height: 5vh;
+}
+.deliveryPool tr:nth-child(odd){
+    background-color: #3a8fe0;
+    height: 5vh;
+}
