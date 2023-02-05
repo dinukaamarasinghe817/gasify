@@ -6,7 +6,7 @@
     border: none;
 }
 
-a,button,input[type="button"],input[type="file"]{
+a,svg,button,input[type="button"],input[type="file"]{
     cursor: pointer;
     text-decoration: none;
 }
@@ -1057,6 +1057,24 @@ label{
 }
 .body-content{
     overflow-y: scroll;
+}
+
+/* notification css */
+.notification{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(243, 243, 243);
+    padding: 10px;
+    border-radius: 10px;
+}
+.notification h2{
+    font-size: var(--mediums);
+}
+.no-notifications{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* customer-order-confirmations */

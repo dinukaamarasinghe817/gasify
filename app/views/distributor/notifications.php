@@ -1,6 +1,6 @@
 <?php
-$header = new Header("customer",$data);
-$sidebar = new Navigation('customer',$data['navigation']);
+$header = new Header("distributor",$data);
+$sidebar = new Navigation('distributor',$data['navigation']);
 ?>
 
 <section class="body">
@@ -12,5 +12,5 @@ $sidebar = new Navigation('customer',$data['navigation']);
     ?>
 
 <?php
-$footer = new Footer("customer");
+$footer = new Footer("distributor");
 ?>

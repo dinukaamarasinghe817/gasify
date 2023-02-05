@@ -24,10 +24,11 @@ table td{
     --error-red: #c91919;
     --accept-blue: #80B3FF;
     --table-gray: #EBEBEB;
-    --navmenu-orange: #d5e8fa;
+    /* --navmenu-orange: #d5e8fa; */
     --navmenu-blue: #e8f6ff;
-    --navmenu-orange-dark: #2f8ee7;
-    --button-orange-hover: #90CAFF;
+    --navmenu-orange: #f1f1fd;
+    --navmenu-orange-dark: #2d77bc;
+    --button-orange-hover: #0f5ba3;
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
