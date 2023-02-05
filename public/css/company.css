@@ -27,8 +27,8 @@ table td{
     /* --navmenu-orange: #FFF8F3; */
     --navmenu-blue: #e8f6ff;
     --navmenu-orange: #fdfbf1;
-    --navmenu-orange-dark: #d8ca30;
-    --button-orange-hover: #bcb60d;
+    --navmenu-orange-dark: #be6bf9;
+    --button-orange-hover: #be6bf9;
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
@@ -69,7 +69,7 @@ body{
 .leftpanel{
     width: 20%;
     max-width: 220px;
-    background-color: var(--navmenu-orange);
+    background-color: #f7eaff;
     height: 100%;
     overflow-x: hidden;
 }
@@ -974,7 +974,7 @@ label{
     color: black;
     border: 3px solid;
     box-sizing: border-box;
-    border-color: #deb4f8;
+    border-color: #be6bf9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1006,7 +1006,7 @@ label{
     border-right-style: solid;
     border-bottom-style: solid;
     box-sizing: border-box;
-    border-color: #deb4f8;
+    border-color: #be6bf9;
 }
 .DealerTables::-webkit-scrollbar-thumb{
     background-color: #85B6E2;
@@ -1015,7 +1015,7 @@ label{
     width: 100%;
     height: 100%;
     color: black;
-    outline: 3px solid #deb4f8;
+    outline: 3px solid #be6bf9;
     background-color: #fff;
     display: flex;
     justify-content: center;
@@ -1207,10 +1207,11 @@ input[type="text"]::placeholder{
     margin-top: 1%;
     width: 96%;
     height: 90%;
-    background-color: #be6bf9;
+    background-color: #fdfdfd;
+    outline: 5px solid #be6bf9;
 }
 .orderTbl{
-    height: 70%;
+    height: 60%;
     overflow-y: auto;
 }
 .orderRow{
@@ -1228,13 +1229,16 @@ input[type="text"]::placeholder{
 .orderTable{
     width: 100%;
 }
+.orderTable th{
+    background-color: #be6bf9;
+}
 .orderTable td, .orderTable th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 .orderButtons{
     margin-left: 10%;
-    background-color:#80B3FF ;
+    background-color:var(--accept-blue) ;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -1248,6 +1252,7 @@ input[type="text"]::placeholder{
     background-color:#FF4D4D;
 }
 .orderButtons label{
+    color: white;
     font-size: larger;
     text-align: center;
 }
@@ -1274,9 +1279,14 @@ input[type="text"]::placeholder{
     align-content: center;
     width: 20%;
     height: 100%;
+    color: white;
+}
+.productQuotaCurrent label{
+    color: white;
 }
 .newQuota{
-    height: 40%;
+    margin-bottom: 0px;
+    height: 50%;
     width: 60%;
     border-radius: 10px;
 }
@@ -1303,10 +1313,14 @@ input[type="text"]::placeholder{
     background-color:#FF4D4D;
     border-radius: 10px;
 }
+.quotaButtons label,.quotaButtons_2 label{
+    color: white;
+}
 .card{
+    color: white;
     width: 20%;
     height: 20vh;
-    background-image: linear-gradient(135deg, #be6bf9, #dbb1f9);
+    background-image: linear-gradient(135deg, #be6bf9, #be6bf9);
     border-radius: 10px;
 }
 .Top{
@@ -1332,8 +1346,9 @@ input[type="text"]::placeholder{
     font-size: 1.3em;
 }
 .productTableTitle,.recentRequestTableTitle{
+    color: white;
     font-size: x-large;
-    background-image: linear-gradient(90deg, #be6bf9, #dbb1f9);
+    background-image: linear-gradient(90deg, #be6bf9, #be6bf9);
     border-radius: 10px;
     margin-top: 4%;
     display: flex;
