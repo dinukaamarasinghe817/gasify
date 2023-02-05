@@ -1058,7 +1058,9 @@ label{
 .body-content{
     overflow-y: scroll;
 }
-
+.body-content .content-data{
+    border: 2px solid transparent;
+}
 /* notification css */
 .notification{
     display: flex;
