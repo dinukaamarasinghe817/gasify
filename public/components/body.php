@@ -1075,7 +1075,7 @@ class Body{
             <div class="Top" id="Top">
             <div class="Col_1" id="Col_1">
                 <div class="Title_1">
-                <div class="ChartTitle">Previous week</div><br>
+                <div class="ChartTitle">Previous</div><br>
                 </div>
                 <div class="Content_1"></div>
             </div>
