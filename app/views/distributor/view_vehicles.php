@@ -70,7 +70,7 @@ $user_id = $_SESSION['user_id'];
                                     // $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="document.location.href='../vehicles/removeVehicle';"><b>Remove</b></button></td>';
                                 }
                                 // $output .= '<td><button type="button" class="btn4" style="background-color: #875899" onclick="document.location.href="../vehicles/updateVehiclePage";">Update</button></td>';
-                                $output .= '<td><button type="button" class="btn4" style="background-color: #875899";">Update</button></td>';
+                                $output .= '<td><button type="button" class="btn4" style="background-color: #9c6109";">Update</button></td>';
                                 
                                 $output .=  '
                                         </tr>';

@@ -26,10 +26,10 @@ table td{
     --error-background: #ffaeae;
     --accept-blue: #80B3FF;
     --table-gray: #EBEBEB;
-    --navmenu-orange: #f3e9ff;
+    --navmenu-orange: #fdf7f1;
     --navmenu-blue: #e8f6ff;
-    --navmenu-orange-dark: #a66bf9;
-    --button-orange-hover: #bf82f9;
+    --navmenu-orange-dark: #ba740c;
+    --button-orange-hover: #9c6109;
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
@@ -553,25 +553,18 @@ table tr:hover {
 
 .header {
     padding:3px;
-    /* background-color:#DBD8FC ; */
-    background-color: #B4AAFF;
+    background-color: var(--navmenu-orange-dark);
     margin-bottom: 10px;
-    /* border-radius: 10px; */
     text-align: center;
     padding: 5px;
     font-size: var(--exsmall);
-    /* font-size: var(--mediums); */
     color: white;
 
 }
 
 .middle{
-    padding-top: 20px;
-    padding-bottom: 30px;
-    padding-right: 30px;
-    padding-left: 30px;
-    /* background-color:#DBD8FC ; */
-    border-radius: 10px;
+    background-color:var(--navmenu-orange);
+    padding: 20px;
 }
 
 .beginbtn {
@@ -583,13 +576,11 @@ table tr:hover {
 
 .btn {
     padding: 15px;
-    background-color:#875899;
+    background-color:var(--button-orange-hover);
     color: white;
     border-radius: 10px;
     border: none;
-    /* margin-top: 50%; */
     margin-left: 15%;
-    /* width: 50%; */
 }
 
 .inside{

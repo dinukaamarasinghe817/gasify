@@ -32,10 +32,10 @@ table td{
     --error-background: #ffaeae;
     --accept-blue: #80B3FF;
     --table-gray: #EBEBEB;
-    --navmenu-orange: #f3e9ff;
     --navmenu-blue: #e8f6ff;
-    --navmenu-orange-dark: #a66bf9;
-    --button-orange-hover: #bf82f9;
+    --navmenu-orange: #fdf7f1;
+    --navmenu-orange-dark: #ba740c;
+    --button-orange-hover: #9c6109;
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
@@ -264,8 +264,11 @@ a,button,input[type="button"],input[type="file"]{
 
 .main2 {
     padding: 10px;
-    background-color: #DDD9FB;
+    background-color: var(--navmenu-orange);
     width: auto;
+    /* border: solid black 1px; */
+    /* border-radius: 10px; */
+    /* margin-top: 10px; */
 }
 
 .btn2 {
@@ -275,7 +278,7 @@ a,button,input[type="button"],input[type="file"]{
     border-radius: 10px;
     color: white;
     margin-left: 87.2%;
-    background-color: #875899;
+    background-color:var(--button-orange-hover);
     margin-top: 30px;
 }
 
@@ -293,7 +296,7 @@ a,button,input[type="button"],input[type="file"]{
     border-radius: 10px;
     color: white;
     /* margin-left: 87.2%; */
-    background-color: #875899;
+    background-color: var(--button-orange-hover);
     /* margin-top: 30px; */
 }
 
@@ -358,8 +361,8 @@ a,button,input[type="button"],input[type="file"]{
     padding-bottom: 12px;
     padding-left: 5px;
     text-align: center;
-    border: 1px solid rgb(8, 8, 8);
-    border-color: black;
+    /* border: 1px solid rgb(8, 8, 8); */
+    /* border-color: black; */
     padding: 8px;
     color: black;
     width: 800px;
@@ -368,7 +371,16 @@ a,button,input[type="button"],input[type="file"]{
 
 .table1 td {
     padding: 8px;
-    border: 1px solid black;
+    text-align: center;
+    /* border: 1px solid black; */
+}
+
+.table1 tr:nth-child(even) {
+    background-color:#f2f2f2 ;
+}
+
+.table1 tr:hover {
+    background-color: #ddd;
 }
 
 .table2 {
@@ -403,6 +415,16 @@ a,button,input[type="button"],input[type="file"]{
     color: white;
     margin-left: 5%;
 }
+/* 
+.btn5{
+    width: 120px;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    margin-left: 5%;
+    background-color: var(--button-orange-hover);
+} */
 
 .top ul {
     display: inline-flex;
@@ -424,8 +446,9 @@ a,button,input[type="button"],input[type="file"]{
     padding: 10px 10px;
     width: 100%;
     height: 100%;
-    color: var(--black);
-    background-color: #B4AAFF;
+    /* color: var(--black); */
+    color: white;
+    background-color: var(--navmenu-orange-dark);
     border-top: solid transparent;
     border-bottom: solid transparent;
     border-right: solid transparent;
