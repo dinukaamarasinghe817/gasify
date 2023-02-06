@@ -35,12 +35,16 @@ class Users extends Controller{
         $this->view('admin/dealers', $data);
     }
 
-    function deliveries(){
+    function deliveries($tab=null){
         $data = $this->model("Admin")->deliveries();
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
-        $this->view('admin/deliveries', $data);
+        if($tab != null){
+            $this->view('admin/deliverycharges', $data);
+        }else{
+            $this->view('admin/deliveries', $data);
+        }
     }
 
     function customers(){

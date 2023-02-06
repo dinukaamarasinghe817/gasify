@@ -28,11 +28,10 @@ class Order{
                         }else if($active1 == 'canceled'){
                             echo '<button class="btn">Refunded</button>';
                         }
-                        echo '<button class="arrow">
+                        echo '
                             <svg width="22" height="22" viewBox="0 0 36 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 3L17.9551 17.9551L32.9102 3" stroke="#FCFCFC" stroke-opacity="0.97" stroke-width="6.98504" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                        </button>
                     </div>
                     <div class="info">
                         <div><p><strong>Customer ID : </strong>'.$order['customer_id'].'</p><p><strong>Customer Name : </strong>'.$order['first_name'].' '.$order['last_name'].'</p></div><br>';

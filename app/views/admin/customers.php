@@ -11,8 +11,12 @@ $sidebar = new Navigation('admin','customers');
         // $bodycontent = new ProfileHTML($data);
     ?>
     <div class="body-content">
-                <div class="content-data">
-                <ul>
+                <div class="content-data customers">
+                    <div>
+                        <h2>Customer account verifications</h2>
+                        <button class="ceb" onclick="window.open('https://payment.ceb.lk/instantpay', '_blank')">Head Over To CEB</button>
+                    </div>
+                    <ul>
                         <?php
                             $query = $data['customers'];
                             if(mysqli_num_rows($query) > 0) {

@@ -227,7 +227,9 @@
     border-radius: 50px;
     object-fit: cover;
 }
-
+.person h3{
+    font-size: var(--mediums);
+}
 .person div{
     display: flex;
     flex-direction: column;
@@ -239,12 +241,40 @@
 }
 .person button{
     margin-left: auto;
+    padding: 12px;
+}
+.person button:nth-child(3){
+    background-color: var(--navmenu-gray-dark);
+}
+.person button:nth-child(3):hover{
+    background-color: grey;
 }
 .btn-blue.red{
     background-color: var(--cancel-red);
 }
 .btn-blue.red:hover{
     background-color: rgb(250, 44, 44);
+}
+.content-data.customers > div{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+.content-data.customers > div button{
+    margin-left: auto;
+}
+.content-data.customers h2{
+    font-size: var(--medium);
+    /* margin-bottom: 15px; */
+}
+.content-data.customers .ceb{
+    padding: 15px;
+    min-width: 200px;
+    color: white;
+    background-color: brown;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 /* payments tab css */
@@ -287,6 +317,9 @@
 .payment .payment-header .img.active{
     transform: rotate(180deg);
 }
+.payment .payment-header .img:hover{
+    background-color: rgb(197, 197, 197);
+}
 .payment .payment-body > div{
     flex-direction: row;
     width: 100%;
@@ -298,10 +331,19 @@
     margin: 0px;
     width: 25%;
 }
-.payment-body button.yellow{
+.payment-body a.yellow{
+    display: flex;
+    margin: 0px;
+    width: 25%;
     width: 50%;
     background-color: var(--logo-background);
-}
-.payment-body button.yellow a{
     color: black;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* deliveries panel */
+.body-content.deliveries .content-data table{
+    margin-top: 0px;
 }

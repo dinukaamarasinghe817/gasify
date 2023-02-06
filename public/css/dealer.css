@@ -112,7 +112,7 @@
     flex-direction: column;
     border: var(--button-orange-hover) solid 2px;
     border-radius: 10px;
-    gap: 10px;
+    /* gap: 10px; */
     margin-top: 5px;
 }
 
@@ -160,30 +160,42 @@
     background-color: var(--button-blue-hover);
 }
 .order .head .arrow{
-    border-radius:50%;
+    border-radius: 10px;
     width: 40px;
     height: 40px;
     align-items: center;
     justify-content: center;
-    background-color: rgb(193, 193, 193);
     margin-left: auto;
 }
-.order .head .arrow svg{
+.order .head svg{
     padding: 10px;
-    border-radius: 50%;
+    border-radius: 10px;
+    background-color: rgb(225, 224, 224);
+    transition: 0.3s ease;
+    margin-left: auto;
+}
+.order .head svg.active{
+    transform: rotate(180deg);
+}
+.order .head svg:hover{
+    background-color: rgb(197, 197, 197);
 }
 .order .info{
-    height: 0px;
+    max-height: 0px;
     overflow: hidden;
-    transition: 0.5s ease-in;
+    transition: max-height 0.2s ease-out;
 }
-.order.active .info{
+.order .info.active{
+    max-height: 1000px;
+    transition: max-height 0.3s ease-in;
+}
+/* .order.active .info{
     height: max-content;
     transition: 0.5s ease-in;
 }
 .order.active .head .arrow svg{
     rotate: 180deg;
-}
+} */
 .order .info div{
     width: 80%;
     display: flex;
@@ -321,7 +333,6 @@
     width: 100%;
     justify-content: space-between;
 }
-
 
 /* .body-content .po tr{
     background-color: var(--table-gray);

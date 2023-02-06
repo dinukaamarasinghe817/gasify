@@ -69,15 +69,17 @@ class BodyHeader{
                     </button>
                     <button class="profile" onclick="logoutmenu(); return false;"><img src="'.$image.'" alt=""></button>
                     <div class="logout-menu">
-                        <ul>
-                            <li>
+                        <ul>';
+                            if($_SESSION['role'] != 'admin'){
+                            echo '<li>
                                 <svg width="22" height="22" viewBox="0 0 19 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 20.125V18C18 16.8728 17.5522 15.7918 16.7552 14.9948C15.9582 14.1978 14.8772 13.75 13.75 13.75H5.25C4.12283 13.75 3.04183 14.1978 2.2448 14.9948C1.44777 15.7918 1 16.8728 1 18V20.125" stroke="#8A8B9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M9.5 9.5C11.8472 9.5 13.75 7.59721 13.75 5.25C13.75 2.90279 11.8472 1 9.5 1C7.15279 1 5.25 2.90279 5.25 5.25C5.25 7.59721 7.15279 9.5 9.5 9.5Z" stroke="#8A8B9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                                 <a href="'.BASEURL.'/profile/edit/'.$_SESSION['role'].'/'.$_SESSION['user_id'].'/profile/'.$_SESSION['role'].'/profile">Profile</a>
-                            </li>
-                            <li>
+                            </li>';
+                            }
+                            echo '<li>
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.43072 20.2922H3.14357C2.57506 20.2922 2.02984 20.0663 1.62784 19.6643C1.22584 19.2623 1 18.7171 1 18.1486V3.14357C1 2.57506 1.22584 2.02984 1.62784 1.62784C2.02984 1.22584 2.57506 1 3.14357 1H7.43072" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M14.9336 16.005L20.2925 10.646L14.9336 5.28711" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
