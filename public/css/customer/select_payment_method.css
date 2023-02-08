@@ -158,11 +158,12 @@ a,button{
 
 
 
-.p_methods .btn{
+.p_methods .p_btn{
     display: flex;
     justify-content: center;
     align-items: center;
      margin-bottom: 20px;
+     /* column-gap: 20px; */
     
 }
 
@@ -177,7 +178,7 @@ a,button{
 
 } */
 
-.p_methods .btn button{
+/* .p_methods .btn button{
     display: flex;
     column-gap: 20px;
     width: 500px;
@@ -201,4 +202,37 @@ a,button{
 .bottom_img img{
     width: 600px;
     /* height: 350px; */
+/* }  */
+
+
+.p_methods .p_btn button{
+    display: flex;
+    column-gap: 30px;
+    width: 500px;
+    padding: 20px;
+    background-color: var(--white);
+    color: var(--navmenu-orange-dark);
+    border: 2px solid var(--navmenu-orange-dark);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--mediums);
+    font-weight: 600;
+    cursor: pointer;
+   
+}
+
+
+.p_btn button:hover{
+    background-color: var(--navmenu-orange-dark);
+    color: var(--white);
+    fill: var(--white);
+}
+
+.p_btn button svg{
+    fill: var(--navmenu-orange-dark);
+}
+
+.p_btn button:hover svg{
+    fill: var(--white);
 }

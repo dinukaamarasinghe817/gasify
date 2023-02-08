@@ -1,0 +1,132 @@
+/* under_topbar css */
+a,button{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.under_topbar{
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.subtitle{
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-left: 40px;
+    font-size: var(--larger);
+    font-weight:900;
+    color: var(--navmenu-orange-dark);
+}
+
+.middle{
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.middle_content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 100px;
+    
+}
+
+
+.middle_img img{
+    width: 700px;
+}
+
+
+
+
+
+.c_methods .c_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     margin-bottom: 20px;
+     
+    
+}
+
+
+
+/* .p_methods .btn {
+    color: var(--navmenu-orange-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+
+} */
+
+.c_methods .c_btn button{
+    display: flex;
+    column-gap: 30px;
+    width: 500px;
+    padding: 20px;
+    background-color: var(--white);
+    color: var(--navmenu-orange-dark);
+    border: 2px solid var(--navmenu-orange-dark);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--mediums);
+    font-weight: 600;
+    cursor: pointer;
+   
+}
+
+
+.c_btn button:hover{
+    background-color: var(--navmenu-orange-dark);
+    color: var(--white);
+    fill: var(--white);
+}
+
+.c_btn button svg{
+    fill: var(--navmenu-orange-dark);
+}
+
+.c_btn button:hover svg{
+    fill: var(--white);
+}
+
+
+
+
+/* bottom back button css */
+.bottom{
+    padding-top: 100px;
+    padding-bottom: 20px;
+    display: flex;
+    margin-left: 40px;
+}
+
+.bottom .btn{ 
+    display: flex;
+    width: 150px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: var(--mediums);
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    color: black;
+}
+
+#back_btn{
+    border: 3px solid var(--navmenu-gray-dark);
+}
+
+#back_btn:hover{
+    color: var(--white);
+    background-color:var(--navmenu-gray-dark);
+}

@@ -19,7 +19,7 @@ a,button{
 }
 
 /* all reservations table css */
-.table{
+/* .table{
     position: relative;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -87,7 +87,7 @@ a,button{
 }
 .table table tr:nth-last-child(1) td:nth-child(4){
     padding: 0;
-}
+} */
 
 /* not found results image */
 .table img{
@@ -96,7 +96,7 @@ a,button{
 }
 
 /* more details column css */
-td button{
+/* td button{
     width: 100%;
     height: 100%;
     background-color: var(--button-blue);
@@ -136,7 +136,7 @@ td button:hover{
     background-color: var(--button-orange);
     border-radius: 5px;
     border: none;
-}
+} */
 
 
 

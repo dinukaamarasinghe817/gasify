@@ -7,6 +7,21 @@ class Customer extends Model{
         parent::__construct();
     }
 
+
+    // public function customerSignupForm(){
+    //     $data['productresult'] = $this->read('product', 'company_id = '.$company_id);
+    //     $data['distributorresult'] = $this->read('distributor', "company_id = $company_id", "city");
+    //     return $data;
+    // }//
+
+    public function getCustomer($customer_id){
+        // $result = $this->read('dealer', "dealer_id = $dealer_id");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.dealer_id = $customer_id");
+        return $result;
+    }//
+
+
+
     /*............Customer Dashboard...................*/
 
     //get customer profile image

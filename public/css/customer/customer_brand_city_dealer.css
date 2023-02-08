@@ -82,10 +82,11 @@ a,button{
 
 .bottom .btn{ 
     display: flex;
-    width: 200px;
+    width: 150px;
     padding: 10px;
-    background-color: var(--button-orange);
-    border-radius: 5px;
+    background-color: var(--white);
+    border: 3px solid var(--button-orange);
+    border-radius: 10px;
     font-size: var(--mediums);
     font-weight: 700;
     color: black;
@@ -95,4 +96,5 @@ a,button{
 
 .btn:hover{
     background-color: var(--button-orange-hover);
+    color: var(--white);
 }
