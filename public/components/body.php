@@ -1052,6 +1052,15 @@ class Body{
                             <div class="vehicleProp">Rs.45/KM</div>
                         </div>
                     </div>
+                    <div class="salesChart">';
+                        $chart['vector']=[12,45,76,34,47];
+                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart['color']="rgba(30, 105, 176, 1)";
+                        $chart['y']='Deliveries';
+                        $chart = new Chart('bar',$chart,1);
+                        
+                    echo '   
+                    </div>
                 </div>
         </section>';
         /*'<section class="body-content">
@@ -1513,6 +1522,36 @@ class Body{
             echo '</ul>
                 </div>
         </section>
+        </section>';
+    }
+    function companyAnalysis($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Compny/orders" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
+                <div class="analysis_top">
+                    <div class="graph" >';
+                        $chart['vector']=[12,45,76,34,47];
+                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart['color']="rgba(30, 105, 176, 1)";
+                        $chart['y']='Deliveries';
+                        $chart = new Chart('bar',$chart,1);                    
+                    echo'</div>
+                </div>
+                <div class="analysis_bottom">
+                    <div class="graph">';
+                        $chart_3['vector']=[12,45,76,34,47];
+                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart_3['color']="rgba(30, 105, 176, 1)";
+                        $chart_3['y']='Deliveries';
+                        $chart_3 = new Chart('line',$chart_3,4);   
+                    
+                    echo'</div>
+                </div>  
+            </div>';     
+        echo ' 
         </section>';
     }
 }

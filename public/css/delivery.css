@@ -1311,6 +1311,7 @@ select{
     font-size: 1.3em;
 }
 .bottom{
+    display: flex;
     margin-top: 4%;
     height: 60%;
 }
@@ -1336,4 +1337,11 @@ select{
 .vehicleTitle{
     font-size:2em;
     text-align: center;
+}
+.salesChart{
+    margin-left: 5%;
+    color: white;
+    width: 45%;
+    height: 80%;
+    border-radius: 10px;
 }
