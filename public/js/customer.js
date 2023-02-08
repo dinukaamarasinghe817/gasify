@@ -60,7 +60,29 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         <div class="buttons">
             <button onclick="location.href='${forwardlink}'">OK</button>
         </div>`;
-    }else{
+    }else if(variant == 'deliveryaddress'){
+        body = `<h2>Change Delivery Address</h2>
+        
+        <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
+        <p>Check your current delivery address is correct.If you need to change your delivery address,change it!</p>
+        <form>
+            <select name="city" id="city" class="citydropdown dropdowndate" >
+                <option value="-1" selected disabled hidden>Maharagama</option>
+                <?php 
+                    $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
+                    sort($cities);              
+                    foreach (CITIES as $city){
+                        echo "<option value=$city id=$city >$city</option>";
+                    }
+                ?>
+            </select>
+            <input name="new_address" placeholder="NO 22, Main Street" required >
+        </form>
+        <div class="buttons">
+            <button onclick="location.href='${forwardlink}'">OK</button>
+        </div>`;
+    }
+    else{
         body = ``;
     }
 

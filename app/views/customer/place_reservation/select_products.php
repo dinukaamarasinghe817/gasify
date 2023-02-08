@@ -87,8 +87,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
             </div>
 
             <div class="bottom">
-            <a href="<?php echo BASEURL; ?>/Orders/select_brand_city_dealer" class="btn">Back</a>
-            <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn">Next</a>
+            <a href="<?php echo BASEURL; ?>/Orders/select_brand_city_dealer" class="btn" id="back_btn">Back</a>
+            <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn" id="next_btn">Next</a>
         </div>
         
     </div>

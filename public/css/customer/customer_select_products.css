@@ -164,27 +164,42 @@ a,button{
 
 /* bottom next button css */
 .bottom{
-    padding-top: 30px;
+    padding-top: 80px;
     padding-bottom: 20px;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     margin-right: 80px;
-    column-gap: 50px;
+    /* column-gap: 50px; */
+    margin-left: 40px;
 }
 
 .bottom .btn{ 
     display: flex;
-    width: 200px;
+    width: 150px;
     padding: 10px;
-    background-color: var(--button-orange);
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: var(--mediums);
     font-weight: 700;
-    color: black;
     align-items: center;
     justify-content: center;
+    background-color: var(--white);
+    color: black;
 }
 
-.btn:hover{
+#back_btn{
+    border: 3px solid var(--navmenu-gray-dark);
+}
+
+#back_btn:hover{
+    color: var(--white);
+    background-color:var(--navmenu-gray-dark);
+}
+
+#next_btn{
+    border: 3px solid var(--button-orange);
+}
+
+#next_btn:hover{
     background-color: var(--button-orange-hover);
+    color: var(--white);
 }

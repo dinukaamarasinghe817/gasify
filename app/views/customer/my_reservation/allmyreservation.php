@@ -23,13 +23,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
             
                 if(count($allmyreservations)==0){
                     // echo '<table><tr id="first_row"><th><h3><center>No reservations Found!</center></h3></td></tr></table>';
-                    echo '<table><div class="table_header">
+                    echo '<table class="styled-table"><div class="table_header">
                         <tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></div>';
                         echo'<tr><td></td><td><img src="../img/placeholders/1.png"></td><td></td></tr></table>';
 
                 }else{
                     if(isset($data['allmyreservations'])){
-                        echo '<table><div class="table_header">
+                        echo '<table class="styled-table"><div class="table_header">
                         <tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></div>';
                         
                         foreach($allmyreservations as $order){

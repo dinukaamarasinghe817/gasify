@@ -187,6 +187,37 @@ class Orders extends Controller{
         $this->view('customer/place_reservation/payment_gateway',$data);
     }
 
+    //select collecting method of reservation
+    function select_collecting_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $data['confirmation'] = '';
+
+        $this->view('customer/place_reservation/collecting_method',$data);
+
+    }
+
+    //select delivery as collecting method
+    function select_delivery_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $data['confirmation'] = '';
+
+        $this->view('customer/place_reservation/delivery_collecting_method',$data);
+    }
+
 
     /*..........................Customer quota......................... */
     //display active quotas for customers according to their types
