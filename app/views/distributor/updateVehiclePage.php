@@ -83,6 +83,7 @@ $user_id = $_SESSION['user_id'];
             </form>
 
             <div class="beginbtn">
+                <!-- <button class="btn3" a href="<?php echo BASEURL?> /vehicles/viewvehicle"><b>Update</b></button> -->
                 <button class="btn3"><b>Update</b></button>
             </div>
                 

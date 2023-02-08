@@ -28,11 +28,8 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                     <?php
                     $records = $data['distributions'];
-                    foreach($records as $record) {
-                        $row1 = $record['completedinfo'];
-                        $capacities = $record['capacities'];
-
-                        $output = '<div class="repbox">
+                    // echo count($records);
+                    $output = '<div class="repbox">
                         <table class="table1">
                             <tr>
                                 <th>Distributed Date</th>
@@ -41,6 +38,19 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 <th>Total Amount</th>
                                 
                             </tr>';
+                    foreach($records as $record) {
+                        $row1 = $record['completedinfo'];
+                        $capacities = $record['capacities'];
+
+                        // $output = '<div class="repbox">
+                        // <table class="table1">
+                        //     <tr>
+                        //         <th>Distributed Date</th>
+                        //         <th>Distribution ID</th>
+                        //         <th>Dealer ID</th>
+                        //         <th>Total Amount</th>
+                                
+                        //     </tr>';
 
                             $date = $row1['place_date'];
                             $distribution_num = $row1['po_id'];
@@ -53,11 +63,12 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 <td>'.$dealer_id.'</td>
                                 <td>10 000.00</td>
                                
-                            </tr>
-                        </table>
-
-                        </div>';
+                            </tr>';
                     }
+                    $output .= '
+                    </table>
+                    </div>
+                    ';
                     echo $output;
                     ?>
 
