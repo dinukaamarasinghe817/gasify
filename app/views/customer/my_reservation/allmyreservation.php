@@ -24,13 +24,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 if(count($allmyreservations)==0){
                     // echo '<table><tr id="first_row"><th><h3><center>No reservations Found!</center></h3></td></tr></table>';
                     echo '<table class="styled-table"><div class="table_header">
-                        <tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></div>';
-                        echo'<tr><td></td><td><img src="../img/placeholders/1.png"></td><td></td></tr></table>';
+                        <thead><tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></thead></div>';
+                        echo'<tbody><tr><td></td><td><img src="../img/placeholders/1.png"></td><td></td></tr></tbody></table>';
 
                 }else{
                     if(isset($data['allmyreservations'])){
                         echo '<table class="styled-table"><div class="table_header">
-                        <tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></div>';
+                        <thead><tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></thead></div><tbody>';
                         
                         foreach($allmyreservations as $order){
                             $row1 = $order['order'];
@@ -38,6 +38,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td>'.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
 
                         }
+                        echo '</tbody></table>';
+
                     }
                 }
            

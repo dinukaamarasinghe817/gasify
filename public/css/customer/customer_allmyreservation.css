@@ -19,7 +19,10 @@ a,button{
 }
 
 /* all reservations table css */
-/* .table{
+
+
+
+.table{
     position: relative;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -33,7 +36,7 @@ a,button{
 
 }
 
-.table table{
+/*.table table{
     box-sizing: border-box;
     width: 100%;
     table-layout: fixed;
