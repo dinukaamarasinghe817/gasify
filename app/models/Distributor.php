@@ -112,20 +112,20 @@ class Distributor extends Model
     }
 
 
-    public function updatevehicle($user_id) {
-        $vehiclelist = array();
+    // public function updatevehicle($user_id) {
+    //     $vehiclelist = array();
 
-        // $query1 = $this->Query("SELECT vehicle_no FROM distributor_vehicle WHERE vehicle_no= '{$number}'");
-        $query1 = $this->Query("SELECT DISTINCT v.vehicle_no as number FROM distributor_vehicle v INNER JOIN distributor d on v.distributor_id=d.distributor_id WHERE d.distributor_id= '{$user_id}'");
-        if(mysqli_num_rows($query1)>0) {
-            while($row1 = mysqli_fetch_assoc($query1)) {
-                $number = $row1['number'];
+    //     // $query1 = $this->Query("SELECT vehicle_no FROM distributor_vehicle WHERE vehicle_no= '{$number}'");
+    //     $query1 = $this->Query("SELECT DISTINCT v.vehicle_no as number FROM distributor_vehicle v INNER JOIN distributor d on v.distributor_id=d.distributor_id WHERE d.distributor_id= '{$user_id}'");
+    //     if(mysqli_num_rows($query1)>0) {
+    //         while($row1 = mysqli_fetch_assoc($query1)) {
+    //             $number = $row1['number'];
 
-                array_push($vehiclelist,['listinfo'=>$row1]);
-            }
-        }
-        return $vehiclelist;
-    }
+    //             array_push($vehiclelist,['listinfo'=>$row1]);
+    //         }
+    //     }
+    //     return $vehiclelist;
+    // }
 
     // public function updatevehiclePage($user_id) {
     //     $products = array();
