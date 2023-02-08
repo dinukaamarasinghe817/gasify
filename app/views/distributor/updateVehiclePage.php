@@ -21,37 +21,57 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-                echo "Vehicle Number : ".'<br><br>';
+                echo "Vehicle Number : AA1111 ".'<br><br>';
             ?>
 
             <form>
                 <div class="part1">
                     <label>Weight Limit</label>                    
-                    <!-- <input type="number" name="capacity" required> -->
+                    <table class="table1">
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Capacity</th>
+                        </tr>
+                        <tr>
+                            <td>Buddy (Refill)</td>
+                            <td><input type="number" name="capacity" value=250 min=0 required></td>
+
+                        </tr>
+                        <tr>
+                            <td>Budget (Refill)</td>
+                            <td><input type="number" name="capacity" value=300 min=0 required></td>
+                        </tr>
+                        <tr>
+                            <td>Regular (Refill)</td>
+                            <td><input type="number" name="capacity" value=100 min=0 required></td>
+                        </tr>
+                    </table>
+
                     <?php 
-                    $output = '
-                        <table>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Capacity</th>
-                            </tr>';
+                    // $output = '
+                    //     <table>
+                    //         <tr>
+                    //             <th>Product Name</th>
+                    //             <th>Capacity</th>
+                    //         </tr>
 
-                            $products = $data['product'];
-                            echo(count($products));
+                    //         <tr>';
+                            
+                            // $products = $data['product'];
+                            // echo(count($products));
 
-                            foreach($products as $product) {
+                            // foreach($products as $product) {
                                
 
-                                $row1 = $product['productinfo'];
-                                $output .= '
-                                    <tr>
-                                        <td>'.$row1['name'].'</td>
-                                        <td>'.$row1['capacity'].'</td> 
-                                    </tr>';         
-                            }
-                            $output .= '</table>';
-                            echo $output;
-                           
+                            //     $row1 = $product['productinfo'];
+                            //     $output .= '
+                            //         <tr>
+                            //             <td>'.$row1['name'].'</td>
+                            //             <td>'.$row1['capacity'].'</td> 
+                            //         </tr>';         
+                            // }
+                            // $output .= '</table>';
+                            // echo $output;    
                     ?>
 
                 </div>
@@ -61,8 +81,6 @@ $user_id = $_SESSION['user_id'];
                     <input type="number" name="fuel" required>
                 </div>
             </form>
-
-           
 
             <div class="beginbtn">
                 <button class="btn3"><b>Update</b></button>
