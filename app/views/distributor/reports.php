@@ -26,56 +26,44 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <option  value="3months">Last 3 months</option>
                     </select>
 
-                    <table>
-                        <tr>
-                            <th>Distributed Date</th>
-                            <th>Distribution ID</th>
-                            <th>Dealer ID</th>
-                            <th>Total Price (Rs. )</th>
-                            <!-- <th></th> -->
-                        </tr>
+                    <?php
+                    $records = $data['distributions'];
+                    foreach($records as $record) {
+                        $row1 = $record['completedinfo'];
+                        $capacities = $record['capacities'];
 
-                        <tr>
-                            <td>2022.09.20</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>50000.00</td>
-                            <!-- <td><button class="inside">Select</button></td> -->
-                        </tr>
+                        $output = '<div class="repbox">
+                        <table class="table1">
+                            <tr>
+                                <th>Distributed Date</th>
+                                <th>Distribution ID</th>
+                                <th>Dealer ID</th>
+                                <th>Total Amount</th>
+                                
+                            </tr>';
 
-                        <tr>
-                            <td>2022.09.22</td>
-                            <td>3</td>
-                            <td>6</td>
-                            <td>25000.00</td>
-                            <!-- <td><button class="inside">Select</button></td> -->
-                        </tr>
+                            $date = $row1['place_date'];
+                            $distribution_num = $row1['po_id'];
+                            $dealer_id = $row1['dealer_id'];
 
-                        <tr>
-                            <td>2022.08.20</td>
-                            <td>2</td>
-                            <td>5</td>
-                            <td>53000.00</td>
-                            <!-- <td><button class="inside">Select</button></td> -->
-                        </tr>
+                        $output .= '
+                            <tr>
+                                <td>'. $date.'</td>
+                                <td>'.$distribution_num.'</td>
+                                <td>'.$dealer_id.'</td>
+                                <td>10 000.00</td>
+                               
+                            </tr>
+                        </table>
 
-                        <tr>
-                            <td>2022.08.02</td>
-                            <td>1</td>
-                            <td>9</td>
-                            <td>20000.00</td>
-                            <!-- <td><button class="inside">Select</button></td> -->
-                        </tr> 
-
-                    </table>
+                        </div>';
+                    }
+                    echo $output;
+                    ?>
 
                     <div class="beginbtn">
-                        <!-- <button class="btn"><b>Generate pdf file</b></button> -->
                         <a class="btn" href="<?php echo BASEURL ?>/reports/salesdealer">Generate PDF</a>
-
                     </div>
-
-
                 </div>
             </div>
         </div>

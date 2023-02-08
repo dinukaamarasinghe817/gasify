@@ -18,9 +18,8 @@ class Reports extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // report view
-        // create the model
-        // $this->view('distributor/reports',$data);
+        $data['distributions'] = $this->model("Distributor")-> completedistributions($user_id);
+
         $this->view('distributor/reports',$data);
 
 
