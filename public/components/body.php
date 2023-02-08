@@ -1024,7 +1024,27 @@ class Body{
     }
     function deliverydashboard($data){
         echo
-        '<section class="body-content">
+        ' <section class="body-content">
+                <div class="Top" id="Top">
+                    <div class="card">
+                        <div class="cmValue">5</div>
+                        <div class="cmTitle">Pending Deliveries</div>
+                    </div>
+                    <div class="card">
+                        <div class="cmValue">4</div>
+                        <div class="cmTitle">Orders Delivered</div>
+                    </div>
+                    <div class="card">
+                        <div class="cmValue">1</div>
+                        <div class="cmTitle">Review</div>
+                    </div>
+                    <div class="card">
+                        <div class="cmValue" style="font-size:3em">LKR.14350</div>
+                        <div class="cmTitle">Earned</div>
+                    </div>
+                </div>
+        </section>';
+        /*'<section class="body-content">
             <div class="Top" id="Top">
             <div class="Col_1" id="Col_1">
                 <div class="Title_1">
@@ -1057,7 +1077,7 @@ class Body{
                 
                 '</div>
                 </div>
-            </div>';
+            </div>'*/
             /*<div class="DistributorTableHeadings" id="DistributorTableHeadings">
                 <div class="Distributor_table_name" id="Distributor_table_name">
                     <div class="distibutor_title">Current Deliveries</div>
