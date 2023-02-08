@@ -655,9 +655,9 @@ class Navigation {
                     <li class="nav-tile">';
 
                 if($active == 'reports'){
-                    echo '<a href="'.BASEURL.'" class="panel-tile active reports">';
+                    echo '<a href="'.BASEURL.'/Compny/reports" class="panel-tile active reports">';
                 }else{
-                    echo '<a href="'.BASEURL.'" class="panel-tile reports">';
+                    echo '<a href="'.BASEURL.'/Compny/reports" class="panel-tile reports">';
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
