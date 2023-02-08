@@ -1043,6 +1043,16 @@ class Body{
                         <div class="cmTitle">Earned</div>
                     </div>
                 </div>
+                <div class="bottom">
+                    <div class="vehicleCard">
+                        <div class="vehicleTitle" style="width:100%;height:10%">My Vehicle</div>
+                        <div class="vehicleNo" style="width:100%;height:50%">PD-6547</div>
+                        <div class="btm" style="display:flex;justify-content: space-between">
+                            <div class="vehicleProp">500KG</div>
+                            <div class="vehicleProp">Rs.45/KM</div>
+                        </div>
+                    </div>
+                </div>
         </section>';
         /*'<section class="body-content">
             <div class="Top" id="Top">

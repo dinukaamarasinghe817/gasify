@@ -1282,11 +1282,13 @@ select{
 .card{
     color: white;
     width: 20%;
-    height: 20vh;
+    height: 100%;
     background-image: linear-gradient(135deg, #2d77bc,#0f5ba3);
     border-radius: 10px;
 }
 .Top{
+    width: 100%;
+    height: 30%;
     margin-top: 1%;
     display: flex;
     justify-content:space-between;
@@ -1307,4 +1309,31 @@ select{
     align-items: center;
     justify-content: center;
     font-size: 1.3em;
+}
+.bottom{
+    margin-top: 4%;
+    height: 60%;
+}
+.vehicleCard{
+    color: white;
+    width: 45%;
+    height: 80%;
+    background-image: linear-gradient(135deg, #2d77bc,#0f5ba3);
+    border-radius: 10px;
+}
+.vehicleNo{
+    margin-top: 2%;
+    height: 50%;
+    font-size:5em;
+    text-align: center;
+}
+.vehicleProp{
+    height: 30%;
+    width: 40%;
+    font-size: 3em;
+    text-align: center;
+}
+.vehicleTitle{
+    font-size:2em;
+    text-align: center;
 }
