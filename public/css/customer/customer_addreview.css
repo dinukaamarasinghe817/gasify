@@ -93,6 +93,10 @@ a,button{
     background-color: var(--error-red); 
 }
 
+#cancel a{
+    color: var(--white);
+}
+
 #cancel:hover{
     background-color: var(--cancel-red);
 }

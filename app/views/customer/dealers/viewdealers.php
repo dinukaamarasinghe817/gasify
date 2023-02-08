@@ -55,8 +55,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
         
          <!-- table -->
         <div class="table">
-            <table>
-                <tr id="first_row"><th>Dealer</th><th>Brand</th><th>Street</th><th>Contact No</th><th></th></tr>
+            <table class="styled-table">
+                <thead><tr id="first_row"><th>Dealer</th><th>Brand</th><th>Street</th><th>Contact No</th><th></th></tr></thead><tbody>
                 <?php
 
                     if(isset($data["dealers"])){
@@ -68,7 +68,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     
                     }
                 ?>
-                
+                </tbody>   
             </table>
         </div>
 

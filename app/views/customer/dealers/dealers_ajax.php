@@ -1,7 +1,7 @@
 <!-- changing part of dealers table -->
 <div class="table">
     <table>
-        <tr id="first_row"><th>Dealer</th><th>Brand</th><th>Street</th><th>Contact No</th><th></th></tr>
+        <thead><tr id="first_row"><th>Dealer</th><th>Brand</th><th>Street</th><th>Contact No</th><th></th></tr></thead><tbody>
         <?php
 
             if(isset($data["dealers"])){
@@ -13,6 +13,6 @@
             
             }
         ?>
-        
+       </tbody> 
     </table>
 </div>

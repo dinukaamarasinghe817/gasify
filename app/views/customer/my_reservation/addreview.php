@@ -49,7 +49,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 </div>
                 <div class="btn">
                     <button id="send" class="send" type="submit"  >Submit</button>
-                    <button id="cancel" class="cancel" onclick = "location.href = '.$url.'">Cancel</button>
+                    <button id="cancel" class="cancel"><a href ="'.$url.'">Cancel</a></button>
                     
                 </div>
             </form>
