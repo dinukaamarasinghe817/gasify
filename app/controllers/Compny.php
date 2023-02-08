@@ -218,6 +218,14 @@ class Compny extends Controller{
         echo "hello";
         die();
     }
+    function analysis(){
+        $data['navigation'] = 'analysis';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        $this->view('dashboard/company', $data);
+    }
 
 }
 ?>

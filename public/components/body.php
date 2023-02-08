@@ -1024,7 +1024,46 @@ class Body{
     }
     function deliverydashboard($data){
         echo
-        '<section class="body-content">
+        ' <section class="body-content">
+                <div class="Top" id="Top">
+                    <div class="card">
+                        <div class="cmValue">5</div>
+                        <div class="cmTitle">Pending Deliveries</div>
+                    </div>
+                    <div class="card">
+                        <div class="cmValue">4</div>
+                        <div class="cmTitle">Orders Delivered</div>
+                    </div>
+                    <div class="card">
+                        <div class="cmValue">1</div>
+                        <div class="cmTitle">Review</div>
+                    </div>
+                    <div class="card">
+                        <div class="cmValue" style="font-size:3em">LKR.14350</div>
+                        <div class="cmTitle">Earned</div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="vehicleCard">
+                        <div class="vehicleTitle" style="width:100%;height:10%">My Vehicle</div>
+                        <div class="vehicleNo" style="width:100%;height:50%">PD-6547</div>
+                        <div class="btm" style="display:flex;justify-content: space-between">
+                            <div class="vehicleProp">500KG</div>
+                            <div class="vehicleProp">Rs.45/KM</div>
+                        </div>
+                    </div>
+                    <div class="salesChart">';
+                        $chart['vector']=[12,45,76,34,47];
+                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart['color']="rgba(30, 105, 176, 1)";
+                        $chart['y']='Deliveries';
+                        $chart = new Chart('bar',$chart,1);
+                        
+                    echo '   
+                    </div>
+                </div>
+        </section>';
+        /*'<section class="body-content">
             <div class="Top" id="Top">
             <div class="Col_1" id="Col_1">
                 <div class="Title_1">
@@ -1057,7 +1096,7 @@ class Body{
                 
                 '</div>
                 </div>
-            </div>';
+            </div>'*/
             /*<div class="DistributorTableHeadings" id="DistributorTableHeadings">
                 <div class="Distributor_table_name" id="Distributor_table_name">
                     <div class="distibutor_title">Current Deliveries</div>
@@ -1483,6 +1522,36 @@ class Body{
             echo '</ul>
                 </div>
         </section>
+        </section>';
+    }
+    function companyAnalysis($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Compny/orders" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
+                <div class="analysis_top">
+                    <div class="graph" >';
+                        $chart['vector']=[12,45,76,34,47];
+                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart['color']="rgba(30, 105, 176, 1)";
+                        $chart['y']='Deliveries';
+                        $chart = new Chart('bar',$chart,1);                    
+                    echo'</div>
+                </div>
+                <div class="analysis_bottom">
+                    <div class="graph">';
+                        $chart_3['vector']=[12,45,76,34,47];
+                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart_3['color']="rgba(30, 105, 176, 1)";
+                        $chart_3['y']='Deliveries';
+                        $chart_3 = new Chart('line',$chart_3,4);   
+                    
+                    echo'</div>
+                </div>  
+            </div>';     
+        echo ' 
         </section>';
     }
 }
