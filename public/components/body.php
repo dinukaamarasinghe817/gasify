@@ -303,6 +303,17 @@ class Body{
                                     <p>received orders</p>
                                 </div>
                             </div> 
+
+                            <div class="chart">';
+                            $chart = $data['chart'];
+                            if(count($chart['labels']) > 0){
+                                $chart = new Chart('bar',$chart,1);
+                            }else{
+                                echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
+                            }
+                            echo  '</div>
+
+
                         </div>';
 
                         $output = '

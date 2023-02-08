@@ -485,6 +485,10 @@ td:nth-child(4) {
     margin-bottom: 30px;
 }
 
+.chart {
+    /* width: 100%; */
+}
+
 #period {
     padding: 10px;
     border-radius: 10px;
