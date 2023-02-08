@@ -51,7 +51,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     </div>
                     <div class="buttons">
                         <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button>
-                        <input id="default-btn" type="file" hidden>
+                        <input id="default-btn" type="file" hidden accept=".png, .jpg, .jpeg">
                         <button  id="next_btn" type="submit">Submit</button>
                         <button  id="back_btn" onclick= "document.location.href = '../Orders/select_payment_method';">Cancel</button>
                     </div>
