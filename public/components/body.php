@@ -1528,7 +1528,7 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/orders" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
                 <div class="analysis_top">
@@ -1553,5 +1553,164 @@ class Body{
             </div>';     
         echo ' 
         </section>';
+    }
+    function companyReports($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
+            <table class="orderTable">
+            <thead>
+                <tr>
+                    <th>Product name</th>
+                    <th>Unit price (Rs.)</th>
+                    <th>Quantity</th>
+                    <th>Total (Rs.)</th>
+                </tr>
+            </thead>
+            <tbody style="overflow-y:auto;height:100px">
+                <tr>
+                    <td class="tdCenter">Buddy</td>
+                    <td class="tdRight">1,450.00</td>
+                    <td class="tdRight">12</td>
+                    <td class="tdRight">17,400</td>
+                </tr>
+                <tr>
+                    <td class="tdCenter">Regular</td>
+                    <td class="tdRight">3,220.00</td>
+                    <td class="tdRight">30</td>
+                    <td class="tdRight">96,600</td>
+                </tr>
+                <tr>
+                    <td class="tdCenter">Commercial</td>
+                    <td class="tdRight">5,150.00</td>
+                    <td class="tdRight">15</td>
+                    <td class="tdRight">77,250</td>
+                </tr>
+                <tr>
+                    <td class="tdCenter"></td>
+                    <td class="tdRight"></td>
+                    <td class="tdRight"></td>
+                    <td class="tdRight">191,250</td>
+                </tr>
+             
+            </tbody>      
+        </table> 
+            </div>
+            
+            <a class="btn" href="';
+            echo BASEURL;
+            echo'/reports/salesdealer">Generate PDF</a>'; 
+                
+        echo ' 
+        </section>';
+    }
+    function reportsCompany(){
+        $pdf = new FPDF('P','mm','A4');
+        $pdf->SetAutoPageBreak(true,10);
+        $pdf->SetMargins(23,24,23);
+        $pdf->AddPage();
+        $pdf->SetFont('Times', '', 12);
+        $pdf->Cell(0,5,'Gasify (Pvt,Ltd)',0,1,'C');
+        $pdf->SetFont('Times', 'B', 16);
+        $pdf->Cell(0,5,'Sales Report',0,1,'C');
+        $pdf->Ln(20);
+        $pdf->SetFont('Times', 'B', 12);
+        $pdf->Cell(30,5,'Dealer ID',0,0,'l');
+        $pdf->SetFont('Times', '', 12);
+        $pdf->Cell(90,5,": {dealer_id}",0,0,'l');
+        $pdf->SetFont('Times', 'B', 12);
+        $pdf->Cell(20,5,'Time',0,0,'l');
+        $pdf->SetFont('Times', '', 12);
+        $pdf->Cell(0,5,": {time}",0,1,'l');
+        $pdf->SetFont('Times', 'B', 12);
+        $pdf->Cell(30,5,'Business Name',0,0,'l');
+        $pdf->SetFont('Times', '', 12);
+        $pdf->Cell(90,5,": {business_name}",0,0,'l');
+        $pdf->SetFont('Times', 'B', 12);
+        $pdf->Cell(20,5,'Date',0,0,'l');
+        $pdf->SetFont('Times', '', 12);
+        $pdf->Cell(0,5,": {date}",0,1,'l');
+        $pdf->Ln(10);
+        $pdf->SetFont('Times', 'B', 12);
+        $pdf->Cell(25,5,'Product ID',0,0,'L');
+        $pdf->Cell(30,5,'Product Name',0,0,'L');
+        $pdf->Cell(38,5,'Sold Quantity',0,0,'C');
+        $pdf->Cell(38,5,'Total Amount (Rs)',0,0,'R');
+        $pdf->Cell(33,5,'Percentage',0,0,'R');
+        $pdf->Ln();
+        $pdf->Ln();
+        $pdf->SetFont('Times', '', 12);
+        $x = $pdf->GetX();
+        $y = $pdf->GetY();
+        $pdf->Line($x, $y, $x+165, $y);
+        $pdf->Ln();
+        $pdf->Cell(60,5,'Total',0,0,'R');
+        $pdf->Ln();
+        $x = $pdf->GetX();
+        $y = $pdf->GetY();
+        $pdf->Line($x, $y, $x+165, $y);
+        $pdf->Ln(1);
+        $x = $pdf->GetX();
+        $y = $pdf->GetY();
+        $pdf->Line($x, $y, $x+165, $y);
+        $pdf->Output();
+
+    }
+    function deliveryReports($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
+            <table class="orderTable">
+            <thead>
+                <tr>
+                    <th>Product name</th>
+                    <th>Unit price (Rs.)</th>
+                    <th>Quantity</th>
+                    <th>Total (Rs.)</th>
+                </tr>
+            </thead>
+            <tbody style="overflow-y:auto;height:100px">
+                <tr>
+                    <td class="tdCenter">Buddy</td>
+                    <td class="tdRight">1,450.00</td>
+                    <td class="tdRight">12</td>
+                    <td class="tdRight">17,400</td>
+                </tr>
+                <tr>
+                    <td class="tdCenter">Regular</td>
+                    <td class="tdRight">3,220.00</td>
+                    <td class="tdRight">30</td>
+                    <td class="tdRight">96,600</td>
+                </tr>
+                <tr>
+                    <td class="tdCenter">Commercial</td>
+                    <td class="tdRight">5,150.00</td>
+                    <td class="tdRight">15</td>
+                    <td class="tdRight">77,250</td>
+                </tr>
+                <tr>
+                    <td class="tdCenter"></td>
+                    <td class="tdRight"></td>
+                    <td class="tdRight"></td>
+                    <td class="tdRight">191,250</td>
+                </tr>
+             
+            </tbody>      
+        </table> 
+            </div>
+            
+            <a class="btn" href="';
+            echo BASEURL;
+            echo'/reports/salesdealer">Generate PDF</a>'; 
+                
+        echo ' 
+        </section>';
+
     }
 }

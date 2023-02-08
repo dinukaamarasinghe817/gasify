@@ -34,6 +34,10 @@
             $bodycontent = new Body('companyLimitQuota', $data);
         }elseif($data['navigation']=='analysis'){
             $bodycontent = new Body('companyAnalysis', $data);
+        }elseif($data['navigation']=='reports'){
+            $bodycontent = new Body('companyReports', $data);
+        }elseif($data['navigation']=='reports'){
+            $bodycontent = new Body('reportsCompany', $data);
         }
         
         ?>
