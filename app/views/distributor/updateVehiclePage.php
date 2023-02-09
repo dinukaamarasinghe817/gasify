@@ -21,30 +21,33 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-                echo "Vehicle Number : AA1111 ".'<br><br>';
+                echo "Vehicle Number : AX2103 ".'<br><br>';
             ?>
 
             <form>
                 <div class="part1">
                     <label>Weight Limit</label>                    
-                    <table class="table1">
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Capacity</th>
-                        </tr>
-                        <tr>
-                            <td>Buddy (Refill)</td>
-                            <td><input type="number" name="capacity" value=250 min=0 required></td>
-
-                        </tr>
-                        <tr>
-                            <td>Budget (Refill)</td>
-                            <td><input type="number" name="capacity" value=300 min=0 required></td>
-                        </tr>
-                        <tr>
-                            <td>Regular (Refill)</td>
-                            <td><input type="number" name="capacity" value=100 min=0 required></td>
-                        </tr>
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Capacity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Buddy (Refill)</td>
+                                <td><input type="number" name="capacity" value=250 min=0 required></td>
+                            </tr>
+                            <tr>
+                                <td>Budget (Refill)</td>
+                                <td><input type="number" name="capacity" value=300 min=0 required></td>
+                            </tr>
+                            <tr>
+                                <td>Regular (Refill)</td>
+                                <td><input type="number" name="capacity" value=100 min=0 required></td>
+                            </tr>
+                        </tbody>
                     </table>
 
                     <?php 

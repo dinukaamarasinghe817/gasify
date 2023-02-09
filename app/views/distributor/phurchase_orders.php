@@ -41,45 +41,47 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             <div class="middle">
                 <p>Order ID : 27 </p> <br>
 
-                <table>
-                    <tr>
-                        <th>Item Name</th>
-                        <!-- <th>Current Stock</th> -->
-                        <th>Quantity</th>
-                        <th>Subtotal (Rs.)</th>
-                    </tr>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <!-- <th>Current Stock</th> -->
+                            <th>Quantity</th>
+                            <th>Subtotal (Rs.)</th>
+                        </tr>
+                    </thead>
 
-                    <tr>
-                      
-                        <?php
-                        $output = '';
+                    <tbody>
+                        <tr>
+                            <?php
+                            $output = '';
 
-                        $stocks = $data['currentstock'];
-                        foreach($stocks as $stock) {
-                            $row1 = $stock['stockinfo'];
+                            $stocks = $data['currentstock'];
+                            foreach($stocks as $stock) {
+                                $row1 = $stock['stockinfo'];
 
-                            $output .= '
-                                <tr>
-                                    <td>'.$row1['name'].'</td>
-                                   
+                                $output .= '
+                                    <tr>
+                                        <td>'.$row1['name'].'</td>
+                                    
+                                        <td><input type="number" name="capacity" min="0" value="5" required></td>
+                                        <td>3200.00</td>
+                                    </tr>';
+                            }
+                            $output .= '</table>
 
-                                   
-
-                                    <td><input type="number" name="capacity" min="0" value="5" required></td>
-                                    <td>3200.00</td>
-                                </tr>';
-                        }
-                        $output .= '</table>
-
-                        <table class="endtable">
-                            <tr>
-                                <td class="second1">Total Amount </td>
-                                <td class="second2">9400.00</td>
-                            </tr>
-                        </table>';
-                        echo $output;
-                        ?>
-                    </tr>
+                            <table class="styled-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="second1">Total Amount </td>
+                                        <td class="second2">9400.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>';
+                            echo $output;
+                            ?>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <div class="btnclz">

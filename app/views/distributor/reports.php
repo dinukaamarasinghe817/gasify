@@ -30,14 +30,16 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     $records = $data['distributions'];
                     // echo count($records);
                     $output = '<div class="repbox">
-                        <table class="table1">
+                        <table class="styled-table">
+                        <thead>
                             <tr>
                                 <th>Distributed Date</th>
                                 <th>Distribution ID</th>
                                 <th>Dealer ID</th>
-                                <th>Total Amount</th>
-                                
-                            </tr>';
+                                <th>Total Amount</th> 
+                            </tr>
+                        </thead>
+                        <tbody>';
                     foreach($records as $record) {
                         $row1 = $record['completedinfo'];
                         $capacities = $record['capacities'];
@@ -66,6 +68,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             </tr>';
                     }
                     $output .= '
+                    </tbody>
                     </table>
                     </div>
                     ';

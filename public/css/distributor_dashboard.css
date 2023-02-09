@@ -453,7 +453,7 @@ body{
 }
 
 
-table tr{
+/* table tr{
     border: 1px solid black;
 }
 
@@ -461,7 +461,7 @@ td:nth-child(3),
 td:nth-child(4) {
     max-width: 100px;
     padding: 10px;
-}
+} */
 
 .variable{
     border: 2px solid var(--navmenu-orange-dark);
@@ -551,12 +551,12 @@ td:nth-child(4) {
     margin-left: 420px;
 }
 
-.dboard1, .dboard2 {
+.dboard1 {
     width: 50%;
     padding: 5px;
 }
 
-.dboard1, .dboard2 th {
+.dboard1 th {
     text-align: left;
     padding: 5px;
 }
@@ -573,14 +573,3 @@ td:nth-child(4) {
     padding: 5%;
 }
 
-.dboard2 tr {
-    background-color: white;
-}
-
-.dboard2 td {
-    background-color: white;
-
-}
-.dboard2 th {
-    background-color: #b2b3c0;
-}
