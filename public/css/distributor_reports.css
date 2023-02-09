@@ -594,7 +594,7 @@ table tr:hover {
 
 }
 
-.table1 {
+/* .table1 {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 15px;
@@ -609,9 +609,9 @@ table tr:hover {
     color: black;
     width: 800px;
     background-color: var(--navmenu-gray-dark);
-}
+} */
 
-.table1 td {
+/* .table1 td {
     padding: 8px;
     text-align: center;
 }
@@ -622,7 +622,7 @@ table tr:hover {
 
 .table1 tr:hover {
     background-color: #ddd;
-}
+} */
 
 .repbox {
     padding: 2%;
