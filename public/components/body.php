@@ -1688,27 +1688,27 @@ class Body{
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
                 <div class="analysis_top">
                     <div class="graph" >';
-                        $chart['vector']=[12,45,76,34,47];
+                        $chart['vector']=[12,18,23,15,17];
                         $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
                         $chart['color']="rgba(30, 105, 176, 1)";
-                        $chart['y']='Deliveries';
+                        $chart['y']='Deliveries-Last week';
                         $chart = new Chart('bar',$chart,1);                    
                     echo'</div>
                 </div>
                 <div class="analysis_bottom">
                     <div class="graph">';
-                        $chart_3['vector']=[15,25,28,23,28];
+                        $chart_3['vector']=[5500,3250,4800,4130,3900];
                         $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
                         $chart_3['color']="rgba(30, 105, 176, 1)";
-                        $chart_3['y']='Deliveries-Last week';
+                        $chart_3['y']='Revenue-Last week(Rs)';
                         $chart_3 = new Chart('line',$chart_3,4);   
                     
                     echo'</div>
                     <div class="graph" >';
-                        $chart_4['vector']=[567,458,1453,758];
+                        $chart_4['vector']=[56,38,67,12];
                         $chart_4['labels']=['Buddy','Budget','Regular','Commercial'];
                         $chart_4['color']="rgba(30, 105, 176, 1)";
-                        $chart_4['y']='Last week sales-By product';
+                        $chart_4['y']='Deliveries(Last month)-By product';
                         $chart_4 = new Chart('bar',$chart_4,5);                    
                     echo'</div>
                 </div>  
