@@ -9,6 +9,7 @@
         $sidebar = new Navigation('company',$data['navigation']);
     ?>
     <section class="body">
+        <script src="http://localhost/mvc/public/js/Company/company.js"></script>
         <?php 
         //echo $data['navigation'];
         $bodyheader = new BodyHeader($data);
@@ -32,6 +33,12 @@
             $bodycontent = new Body('companyOrders', $data);
         }elseif($data['navigation']=='limitquota'){
             $bodycontent = new Body('companyLimitQuota', $data);
+        }elseif($data['navigation']=='analysis'){
+            $bodycontent = new Body('companyAnalysis', $data);
+        }elseif($data['navigation']=='reports'){
+            $bodycontent = new Body('companyReports', $data);
+        }elseif($data['navigation']=='reports'){
+            $bodycontent = new Body('reportsCompany', $data);
         }
         
         ?>

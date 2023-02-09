@@ -1135,3 +1135,8 @@ label{
 .confirmation .buttons button:last-child{
     background-color: var(--button-blue);
 }
+
+.confirmation form input{
+    border: 2px solid var(--navmenu-gray-dark);
+    width: 250px;
+}

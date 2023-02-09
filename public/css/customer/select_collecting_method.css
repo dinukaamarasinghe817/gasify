@@ -1,0 +1,295 @@
+/* under_topbar css */
+a,button{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.under_topbar{
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.subtitle{
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-left: 40px;
+    font-size: var(--larger);
+    font-weight:900;
+    color: var(--navmenu-orange-dark);
+}
+
+.middle{
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.middle_content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 100px;
+    
+}
+
+
+.middle_img img{
+    width: 700px;
+}
+
+
+
+
+
+.c_methods .c_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     margin-bottom: 20px;
+     
+    
+}
+
+
+
+/* .p_methods .btn {
+    color: var(--navmenu-orange-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+
+} */
+
+.c_methods .c_btn button{
+    display: flex;
+    column-gap: 30px;
+    width: 500px;
+    padding: 20px;
+    background-color: var(--white);
+    color: var(--navmenu-orange-dark);
+    border: 2px solid var(--navmenu-orange-dark);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--mediums);
+    font-weight: 600;
+    cursor: pointer;
+   
+}
+
+
+.c_btn button:hover{
+    background-color: var(--navmenu-orange-dark);
+    color: var(--white);
+    fill: var(--white);
+}
+
+.c_btn button svg{
+    fill: var(--navmenu-orange-dark);
+}
+
+.c_btn button:hover svg{
+    fill: var(--white);
+}
+
+
+
+
+/* bottom back button css */
+.bottom{
+    padding-top: 100px;
+    padding-bottom: 20px;
+    display: flex;
+    margin-left: 40px;
+}
+
+.bottom .btn{ 
+    display: flex;
+    width: 150px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: var(--mediums);
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    color: black;
+}
+
+#back_btn{
+    border: 3px solid var(--navmenu-gray-dark);
+}
+
+#back_btn:hover{
+    color: var(--white);
+    background-color:var(--navmenu-gray-dark);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ....................................delivery_collecting_method css .......................................... */
+.delivery_middle{
+    margin-left: 40px;
+    margin-right: 90px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 90px;
+}
+
+.delivery_middle_content{
+    /* border: 2px solid var(--navmenu-orange-dark); */
+    box-shadow: var(--shadow-wide);
+    width: 50%;
+    border-radius:5px ;
+    padding: 20px 10px 80px 20px;
+    
+}
+
+.delivery_middle_content label h4{
+    margin-bottom: 20px;
+}
+
+.deliver_address{
+    display: flex;
+    flex-direction: column;
+    /* column-gap: 80px; */
+    margin-bottom: 30px;
+    
+    
+}
+
+.deliver_address h3{
+     border: 2px solid var(--navmenu-orange-dark);
+     padding: 10px;
+     border-radius:5px ;
+     width: 600px;
+     display: flex;
+     justify-content: left;
+      margin-bottom: 20px;
+}
+
+.edit_btn{
+    background-color: var(--button-blue);
+    color: var(--white);
+    border-radius: 10px;
+    padding: 10px;
+    width: 100px;
+    font-size: var(--mediums);
+    font-weight: 800;
+    margin-left: 525px;
+}
+
+.edit_btn:hover{
+    background-color: var(--button-blue-hover);
+}
+
+
+.delivery_fee{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: center; */
+    column-gap: 7px;
+}
+
+.delivery_fee h3{
+    display: flex;
+    border: 2px solid var(--navmenu-orange-dark);
+    border-radius: 5px;
+    padding: 10px;
+    width: 500px;
+    justify-content: right;
+}
+
+
+.content_bottom{
+    display: flex;
+    flex-direction: column;
+    margin-top: 150px;
+}
+
+.content_bottom h4{
+    color: var(--currency);
+}
+
+.content_bottom .button_bottom{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    
+}
+
+.button_bottom .btn{ 
+    display: flex;
+    width: 150px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: var(--mediums);
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    color: black;
+}
+
+
+
+.delivery_image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+#cancel_btn{
+    border: 3px solid var(--cancel-red);
+    margin-left: 0px;
+}
+
+#cancel_btn:hover{
+    color: var(--white);
+    background-color:var(--cancel-red);
+}
+
+#confirm_btn{
+    border: 3px solid var(--button-blue);
+}
+
+#confirm_btn:hover{
+    color: var(--white);
+    background-color:var(--button-blue-hover);
+}
+

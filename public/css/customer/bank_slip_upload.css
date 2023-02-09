@@ -28,26 +28,30 @@ a,button{
     flex-direction: column;
     margin-left: 40px;
     margin-top: 20px;
-    padding: 20px;
+    padding: 20px 0 20px 20px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     background-color: var(--table-gray);
     width: 90%;
     font-size: var(--medium);
+    margin-right: 120px;
 }
 
 
 .upload_box{
-    width: 90%;
+    width: 91%;
     margin-left: 40px;
     margin-top: 50px;
     position: relative;
+    /* padding: 20px; */
     
   }
   .upload_box .box_area{
     position: relative;
     height: 300px;
-    width: 100%;
+    padding: 20px;
+    margin-right: 90px;
+    width: 97%;
     border-radius: 10px;
     background: #fff;
     border: 2px dashed var(--navmenu-gray-dark);
@@ -56,7 +60,7 @@ a,button{
     justify-content: center;
     overflow: hidden;
   }
-  .box_area.active{
+  .upload_box.active{
     border: none;
   }
   .box_area .image{
@@ -69,7 +73,7 @@ a,button{
     
   }
   .box_area img{
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
     object-fit: cover;
 
@@ -116,35 +120,52 @@ a,button{
   .box_area.active:hover .file-name{
     display: block;
   }
-  .buttons #custom_btn ,#next_btn , #back_btn{
-    margin-top: 30px;
-    display: block;
-    width: 20%;
-    /* height: 50px; */
-    padding: 15px;
-    border: none;
-    outline: none;
+
+
+
+
+  #custom_btn ,#next_btn , #back_btn{
+    display: flex;
+    width: 150px;
+    padding: 10px;
+    background-color: var(--white);
     border-radius: 10px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    /* background-color: var(--navmenu-orange-dark); */
-    /* background: linear-gradient(135deg,var(--button-orange) 0%,var(--cancel-red) 100%); */
+    font-size: var(--mediums);
+    font-weight: 700;
+    color: black;
+    align-items: center;
+    justify-content: center;
   }
 
   .buttons #custom_btn{
-    background-color: var(--button-orange);
+    border: 3px solid var(--button-blue);
+    
+  }
+  .buttons #custom_btn:hover{
+    background-color: var(--button-blue-hover);
+    color: var(--white);
   }
 
   .buttons #next_btn{
-    background-color: var(--button-blue);
+    border: 3px solid var(--button-orange);
+    
+  }
+
+  .buttons #next_btn:hover{
+    background-color: var(--button-orange-hover);
+    color: var(--white);
+    
   }
 
   .buttons #back_btn{
-    background-color: var(--cancel-red);
+    border: 3px solid var(--navmenu-gray-dark);
+    margin-right: 850px;
+  }
+
+  .buttons #back_btn:hover{
+    background-color: var(--navmenu-gray-dark);
+    color: var(--white);
+    
   }
 
 
@@ -153,4 +174,5 @@ a,button{
     flex-direction: row;
     justify-content: right;
     column-gap: 20px;
+    padding-top: 20px;
   }

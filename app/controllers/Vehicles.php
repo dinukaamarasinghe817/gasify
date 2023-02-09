@@ -104,18 +104,18 @@ class Vehicles extends Controller{
         $this->view('distributor/view_vehicles', $data);
     }
 
-    public function updatevehicle() {
-        $user_id = $_SESSION['user_id'];
-        $data['navigation'] = 'vehicles';
+    // public function updatevehicle() {
+    //     $user_id = $_SESSION['user_id'];
+    //     $data['navigation'] = 'vehicles';
 
-        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-        $row = mysqli_fetch_assoc($distributor_details);
-        $data['image'] = $row['image'];
+    //     $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+    //     $row = mysqli_fetch_assoc($distributor_details);
+    //     $data['image'] = $row['image'];
 
-        $data['vehicles'] = $this->model("Distributor")->updatevehicle($user_id);
+    //     $data['vehicles'] = $this->model("Distributor")->updatevehicle($user_id);
 
-        $this->view('distributor/updateVehicle', $data);
-    }
+    //     $this->view('distributor/updateVehicle', $data);
+    // }
 
     public function updateVehiclePage() {
         $user_id = $_SESSION['user_id'];
@@ -125,9 +125,8 @@ class Vehicles extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $data['product'] = $this->model("Distributor")->updatevehiclePage($user_id);
+        // $data['product'] = $this->model("Distributor")->updatevehiclePage($user_id);
              
-
         $this->view('distributor/updateVehiclePage', $data);
     }
 

@@ -31,28 +31,31 @@ $user_id = $_SESSION['user_id'];
             <div>
                 <div class="middle">
                     <?php
-                        // echo "Your Distributor ID : $user_id";
-
-                        $output = '<table>
-                                    <tr>
-                                        <th>Item ID</th>
-                                        <th>Item Name</th>
-                                        <th>Quantity</th>
-                                    </tr>';
-                        
+                        $output = '
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Item ID</th>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>';
                         $stocks = $data['currentstock'];
                         foreach($stocks as $stock) {
                             $row1 = $stock['stockinfo'];
                         
-                        $output .= '<tr>
-                                        <td>'.$row1['product_id'].'</td>
-                                        <td>'.$row1['name'].'</td>
-                                        <td>'.$row1['quantity'].'</td>                        
-                                    </tr>';
-
+                        $output .= '
+                            <tr>
+                                <td>'.$row1['product_id'].'</td>
+                                <td>'.$row1['name'].'</td>
+                                <td>'.$row1['quantity'].'</td>                        
+                            </tr>';
                         }
-
-                        $output .= '</table>';
+                        $output .= '
+                        </tbody>
+                        </table>';
                         echo $output;
                     ?>
                 </div>

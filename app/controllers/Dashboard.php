@@ -122,6 +122,15 @@
             // $data['pendingorders']= $this->model("Distributor")->pendingGasOrders($distributor_id);
             $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($distributor_id);
 
+            // $data['chart'] = array();
+            $chart['type'] = 'bar';
+            $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
+            $chart['vector'] = array(7,10,2,5);
+            $chart['main'] = 'Based on Product';
+            $chart['y'] = 'Number of sold items';
+            $chart['color'] = 'rgba(245, 215, 39, 0.8)';
+            // array_push($data['charts'],$chart);
+            $data['chart'] = $chart;
             
             $this->view('dashboard/distributor',$data);
 

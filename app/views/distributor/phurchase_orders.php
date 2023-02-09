@@ -23,13 +23,12 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 <li>
                     <a href="../orders/distributor" class="place"><b>Place an Order</b></a>
                 </li>
+                
                 <li>
                     <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
                     <!-- <a href="#" class="stock"><b>Current Stock</b></a> -->
                 </li>
-                <!-- <li>
-                    <a href="../orders/distributor" class="place"><b>Place an Order</b></a>
-                </li> -->
+               
                 <li>
                     <a href="../orders/dis_placed_pending" class="placedlist"><b>Placed Order List</b></a>
                     <!-- <a href="#" class="placedlist"><b>Placed Order List</b></a> -->
@@ -41,49 +40,52 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             <div class="middle">
                 <p>Order ID : 27 </p> <br>
 
-                <table>
-                    <tr>
-                        <th>Item Name</th>
-                        <!-- <th>Current Stock</th> -->
-                        <th>Quantity</th>
-                        <th>Subtotal (Rs.)</th>
-                    </tr>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <!-- <th>Current Stock</th> -->
+                            <th>Quantity</th>
+                            <th>Subtotal (Rs.)</th>
+                        </tr>
+                    </thead>
 
-                    <tr>
-                      
-                        <?php
-                        $output = '';
+                    <tbody>
+                        <tr>
+                            <?php
+                            $output = '';
 
-                        $stocks = $data['currentstock'];
-                        foreach($stocks as $stock) {
-                            $row1 = $stock['stockinfo'];
+                            $stocks = $data['currentstock'];
+                            foreach($stocks as $stock) {
+                                $row1 = $stock['stockinfo'];
 
-                            $output .= '
-                                <tr>
-                                    <td>'.$row1['name'].'</td>
-                                   
+                                $output .= '
+                                    <tr>
+                                        <td>'.$row1['name'].'</td>
+                                    
+                                        <td><input type="number" name="capacity" min="0" value="5" required></td>
+                                        <td>3200.00</td>
+                                    </tr>';
+                            }
+                            $output .= '</table>
 
-                                   
-
-                                    <td><input type="number" name="capacity" min="0" value="5" required></td>
-                                    <td>3200.00</td>
-                                </tr>';
-                        }
-                        $output .= '</table>
-
-                        <table class="endtable">
-                            <tr>
-                                <td class="second1">Total Amount </td>
-                                <td class="second2">9400.00</td>
-                            </tr>
-                        </table>';
-                        echo $output;
-                        ?>
-                    </tr>
+                            <table class="styled-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="second1">Total Amount </td>
+                                        <td class="second2">9400.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>';
+                            echo $output;
+                            ?>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <div class="btnclz">
-                    <button class="btn2-1" type="submit" name="submit">Place the order</button>
+                    <!-- <button class="btn2-1" type="submit" name="submit">Place the order</button> -->
+                    <a href="<?php echo BASEURL?>/orders/distributor"><button class="btn2-1" type="submit" name="submit"><b>Place the Order</b></button>
                     <button class="btn2-2">Cancel</button>
                 </div>
                 

@@ -7,6 +7,21 @@ class Customer extends Model{
         parent::__construct();
     }
 
+
+    // public function customerSignupForm(){
+    //     $data['productresult'] = $this->read('product', 'company_id = '.$company_id);
+    //     $data['distributorresult'] = $this->read('distributor', "company_id = $company_id", "city");
+    //     return $data;
+    // }//
+
+    public function getCustomer($customer_id){
+        // $result = $this->read('dealer', "dealer_id = $dealer_id");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.dealer_id = $customer_id");
+        return $result;
+    }//
+
+
+
     /*............Customer Dashboard...................*/
 
     //get customer profile image
@@ -143,40 +158,103 @@ class Customer extends Model{
             $myreservation = array();
 
           //take dealer name using dealer and reservation tables
-            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,dealer.name as dealer_name
+            // $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,concat(users.first_name,' ' ,users.last_name ) as delivery_name
+            // FROM reservation
+            // INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
+            // INNER JOIN users ON reservation.delivery_id = users.user_id
+            // WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
+
+            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,reservation.dealer_id,reservation.delivery_id
             FROM reservation
             INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
             WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
+
+            
+            // $delivery_id = $result1['deliver_id'];
+
+            //take delivery person name using delivery and reservation tables
+            // $result3 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,concat(users.fname,' ' ,users.lname ) as delivery_name
+            // FROM reservation
+            // INNER JOIN users ON reservation.delivery_id = users.user_id
+            // WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}' AND reservation.collecting_method = 'Delivery'");
+
+
  
             if(mysqli_num_rows($result1) > 0){
                 while($row1=mysqli_fetch_assoc($result1)){
+                       
+                    // if($row1['collecting_method'] == 'Delivery'){
+                        $result2 = $this->Query("SELECT p.name as product_name, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price,p.image as product_image,p.weight as product_weight 
+                        FROM reservation_include r 
+                        INNER JOIN product p ON r.product_id = p.product_id 
+                        INNER JOIN company c ON p.company_id = c.company_id 
+                        WHERE r.order_id = '{$order_id}'");
+
+
+                        $total_amount = 0;
+                        $products = array();
+                        while($row2 = mysqli_fetch_assoc($result2)){
+            
+                            $quantity = $row2['quantity'];
+                            $unit_price = $row2['unit_price'];
+                            $amount = $quantity * $unit_price;
+                            $total_amount = $total_amount + $amount;
+                            array_push($products,$row2);
                         
-                    $result2 = $this->Query("SELECT p.name as product_name, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price,p.image as product_image,p.weight as product_weight 
-                            FROM reservation_include r 
-                            INNER JOIN product p ON r.product_id = p.product_id 
-                            INNER JOIN company c ON p.company_id = c.company_id 
-                            WHERE r.order_id = '{$order_id}'");
+                            
+                        }
+                        $reviews = array();
+
+                        $result3 = $this->Query("SELECT * FROM review WHERE  order_id = '{$order_id}' ORDER BY date DESC LIMIT 3");
+                        while($row3 = mysqli_fetch_assoc($result3)){
+                            array_push($reviews,$row3);
+                        }
+
+                        $result4 =$this->Query("SELECT concat(users.first_name,' ' ,users.last_name ) as delivery_name
+                        FROM reservation
+                        INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
+                        INNER JOIN users ON reservation.delivery_id = users.user_id
+                        WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
+
+                        $delivery = array();
+                        while($row4 = mysqli_fetch_assoc($result4)){
+                            array_push($delivery,$row4);
+                        }
                     
-                    $total_amount = 0;
-                    $products = array();
-                    while($row2 = mysqli_fetch_assoc($result2)){
+
+
+
+                    // }
+                    // else{
+                    //     $result2 = $this->Query("SELECT p.name as product_name, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price,p.image as product_image,p.weight as product_weight 
+                    //         FROM reservation_include r 
+                    //         INNER JOIN product p ON r.product_id = p.product_id 
+                    //         INNER JOIN company c ON p.company_id = c.company_id 
+                    //         WHERE r.order_id = '{$order_id}'");
+                    
+                    //     $total_amount = 0;
+                    //     $products = array();
+                    //     while($row2 = mysqli_fetch_assoc($result2)){
         
-                        $quantity = $row2['quantity'];
-                        $unit_price = $row2['unit_price'];
-                        $amount = $quantity * $unit_price;
-                        $total_amount = $total_amount + $amount;
-                        array_push($products,$row2);
+                    //         $quantity = $row2['quantity'];
+                    //         $unit_price = $row2['unit_price'];
+                    //         $amount = $quantity * $unit_price;
+                    //         $total_amount = $total_amount + $amount;
+                    //         array_push($products,$row2);
                     
                         
-                    }
-                    $reviews = array();
+                    //     }
+                    //     $reviews = array();
 
-                    $result3 = $this->Query("SELECT * FROM review WHERE  order_id = '{$order_id}' ORDER BY date DESC LIMIT 3");
-                    while($row3 = mysqli_fetch_assoc($result3)){
-                        array_push($reviews,$row3);
-                    }
+                    //     $result3 = $this->Query("SELECT * FROM review WHERE  order_id = '{$order_id}' ORDER BY date DESC LIMIT 3");
+                    //     while($row3 = mysqli_fetch_assoc($result3)){
+                    //         array_push($reviews,$row3);
+                    //     }
 
-                    array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews]);
+
+                    // }
+                    
+                    array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews,'delivery'=>$delivery]);
                 }
            
             }

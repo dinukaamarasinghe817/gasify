@@ -40,8 +40,9 @@ a,button{
 
 .wrapper{
     background-color:var(--navmenu-orange);
-    width: 550px;
-    margin: 0px 0 0px 0px;
+    width: 600px;
+    /* height: 650px; */
+    /* margin: 0px 0 0px 0px; */
     /* box-shadow: 0 0 1px 0 rgba(0, 0, 0, 1),
                  0 32px 64px -48px rgba(0, 0, 0, 5); */
     box-shadow: var(--shadow-3d);
@@ -163,8 +164,8 @@ a,button{
 
 /* right side help options css */
 .help_options{
-    width: 45%;
-    margin: 0px 90px 0px 110px;
+    width: 100%;
+    margin: 0px 90px 0px 50px;
 }
 
 .help_options img{

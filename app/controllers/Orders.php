@@ -187,6 +187,37 @@ class Orders extends Controller{
         $this->view('customer/place_reservation/payment_gateway',$data);
     }
 
+    //select collecting method of reservation
+    function select_collecting_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $data['confirmation'] = '';
+
+        $this->view('customer/place_reservation/collecting_method',$data);
+
+    }
+
+    //select delivery as collecting method
+    function select_delivery_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $data['confirmation'] = '';
+
+        $this->view('customer/place_reservation/delivery_collecting_method',$data);
+    }
+
 
     /*..........................Customer quota......................... */
     //display active quotas for customers according to their types
@@ -326,7 +357,6 @@ class Orders extends Controller{
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
-        // profile picture
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
@@ -336,6 +366,22 @@ class Orders extends Controller{
         $this->view('distributor/placed_completed',$data);
 
     }
+    
+    // suitable vehicle list for pending , accepted gas orders
+    public function suitableVehicleList(){
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'orders';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
+
+        $this->view('distributor/suitableVehicleList', $data);
+    }
+
+
 
     public function validatepayments($tab){
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));

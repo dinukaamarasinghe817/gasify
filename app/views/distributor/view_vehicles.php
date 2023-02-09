@@ -2,7 +2,6 @@
 $header = new Header("vehicles");
 $sidebar = new Navigation('distributor',$data['navigation']);
 
-// session_start();
 $user_id = $_SESSION['user_id'];
  ?>
 
@@ -21,26 +20,29 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-            //  echo "Your Distributor ID - $user_id".'<br><br>';
              echo "Your Vehicles' Details : ".'<br><br>'; 
 
-                $output = '<table class="table1">
-                <tr>
-                    <th>Vehicle Number</th>
-                    <th>Vehicle Type</th>
-                    <th>Weight Limit</th>
-                    <th>Fuel Consumption</th>
-                    <th>Availability</th>
-                   
-                </tr>';
-                // $query = mysqli_query($conn,"SELECT * FROM distributor_vehicle WHERE distributor_id = '{$dis_id}'");
+                $output = '
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Vehicle Type</th>
+                            <th>Weight Limit</th>
+                            <th>Fuel Consumption</th>
+                            <th>Availability</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>';
                 
                 $vehicles = $data['vehicles'];
 
                 foreach($vehicles as $vehicle){
                     $row2 = $vehicle['vehicleinfo'];
                     $capacities = $vehicle['capacities'];
-                    $output .= '<tr>
+                    $output .= '
+                                <tr>
                                     <td>'.$row2['vehicle_no'].'</td>
                                     <td>'.$row2['type'].'</td>
                                     <td>
@@ -69,14 +71,13 @@ $user_id = $_SESSION['user_id'];
                                     $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="deleteVehicle('.$row2['vehicle_no'].')";">Remove</button></td>';
                                     // $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="document.location.href='../vehicles/removeVehicle';"><b>Remove</b></button></td>';
                                 }
-                                // $output .= '<td><button type="button" class="btn4" style="background-color: #875899" onclick="document.location.href="../vehicles/updateVehiclePage";">Update</button></td>';
-                                $output .= '<td><button type="button" class="btn4" style="background-color: #9c6109";">Update</button></td>';
-                                
+                                $output .= '<td><button type="button" class="btn4" style="background-color: #9c6109" onclick="document.location.href=\''.BASEURL .'/vehicles/updateVehiclePage\'">Update</button></td>';
+                                                               
                                 $output .=  '
                                         </tr>';
                 }
             
-                $output .= '</table>';
+                $output .= '</tbody></table>';
                 echo $output;
             ?>
         </div>

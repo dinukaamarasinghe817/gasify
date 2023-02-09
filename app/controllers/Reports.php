@@ -18,9 +18,8 @@ class Reports extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // report view
-        // create the model
-        // $this->view('distributor/reports',$data);
+        $data['distributions'] = $this->model("Distributor")-> completedistributions($user_id);
+
         $this->view('distributor/reports',$data);
 
 
@@ -48,6 +47,14 @@ class Reports extends Controller{
     public function salesdealer(){
         $data = [];
         $this->view('dealer/reports/salesreport',$data);
+    }
+    public function companySales(){
+        $data = [];
+        $this->view('company/reports/salesreport',$data);
+    }
+    public function deliverySales(){
+        $data = [];
+        $this->view('delivery/reports/salesreport',$data);
     }
 
     public function admin(){

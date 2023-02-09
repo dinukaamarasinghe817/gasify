@@ -44,7 +44,7 @@
                     
                     <div>
                         
-                    <div class="info">
+                        <div class="info">
                             <label for="" class="part">Personal Info</label>
                             <input name="name" type="text" placeholder="Business name" required><br>
                             <div class="address owner">
