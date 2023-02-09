@@ -55,7 +55,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 <td>'.$dealer_id.'</td>
                                 <td>10 000.00</td>
                                 <td>
-                                    <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/salesdealer\'">Generate PDF</button>
+                                    <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/ distributor_pdf\'">Generate PDF</button>
                                 </td>
                                
                             </tr>';
