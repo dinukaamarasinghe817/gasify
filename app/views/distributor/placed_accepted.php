@@ -59,7 +59,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                     <div class="label">Accepted Purchase Order ID : '.$order_id.'  </div>
                                     <div class="label">Total Amount : Rs. 230 000.00 </div>
                                     <div class="label">
-                                        <button class="inside">Assign Vehicle</button>
+                                        <button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button>
                                     </div>
 
                                     <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">

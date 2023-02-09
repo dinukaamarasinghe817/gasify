@@ -2,7 +2,6 @@
 $header = new Header("vehicles");
 $sidebar = new Navigation('distributor',$data['navigation']);
 
-// session_start();
 $user_id = $_SESSION['user_id'];
  ?>
 

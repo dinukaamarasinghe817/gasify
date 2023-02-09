@@ -345,9 +345,6 @@ class Body{
                     echo '
                     <div class="body-right">
                         <div class="accordion new">
-
-                        
-                            <div>
                                 <h3>New Purchase Orders</h3>';
 
                                 $pendingorders = $data['pending_distributions'];
@@ -399,7 +396,7 @@ class Body{
                             }
                             echo '
                             </div>
-                        </div>
+
                     </div>';
         echo '</section>';                         
     }

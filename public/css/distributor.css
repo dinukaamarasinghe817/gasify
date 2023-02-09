@@ -683,7 +683,7 @@ table tr:hover {
 }
 
 .inside{
-    padding: 7px;
+    padding: 12px;
     background-color: var(--button-orange-hover);
     color: white;
     border-radius: 10px;

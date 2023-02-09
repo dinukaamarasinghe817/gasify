@@ -9,26 +9,26 @@ $pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
 $pdf->Cell(0,5,'Gasify (Pvt,Ltd)',0,1,'C');
 $pdf->SetFont('Times', 'B', 16);
-$pdf->Cell(0,5,'Sales Report',0,1,'C');
+$pdf->Cell(0,5,'Past Distribution Report',0,1,'C');
 
 $pdf->Ln(20);
 
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(30,5,'Dealer ID',0,0,'l');
+$pdf->Cell(30,5,'Distribution ID',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": {dealer_id}",0,0,'l');
+$pdf->Cell(90,5,": 20",0,0,'l');
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(20,5,'Time',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(0,5,": {time}",0,1,'l');
+$pdf->Cell(0,5,": 13:30:20",0,1,'l');
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(30,5,'Business Name',0,0,'l');
+$pdf->Cell(30,5,'Dealer Name',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": {business_name}",0,0,'l');
+$pdf->Cell(90,5,": Randinu Stores",0,0,'l');
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(20,5,'Date',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(0,5,": {date}",0,1,'l');
+$pdf->Cell(0,5,": 2022-10-30",0,1,'l');
 
 $pdf->Ln(10);
 
@@ -61,7 +61,7 @@ $pdf->Line($x, $y, $x+165, $y);
 $pdf->Ln();
 $pdf->Cell(60,5,'Total',0,0,'R');
 // $total = number_format($data['total']).'.00';
-// $pdf->Cell(33,5,"{$total}",0,0,'R');
+$pdf->Cell(33,5,"230 000.00",0,0,'R');
 $pdf->Ln();
 
 $x = $pdf->GetX();
