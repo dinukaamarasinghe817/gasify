@@ -84,6 +84,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <div class="bottom_img"><img src="<?php echo BASEURL;?>/public/img/customer/payment_method.png" alt=""></div>
                 <div class="p_methods">
                     <div class="p_btn"><button onclick="location.href = '<?php echo BASEURL; ?>/Orders/payment_gateway'">
+                    <!-- <div class="p_btn"><button onclick="paynow(1);"> -->
                         <svg width="40" height="40" viewBox="0 0 263 176" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8.21875 0C3.61625 0 0 3.22667 0 7.33333V29.3333H263V7.33333C263 3.22667 259.384 0 254.781 0H8.21875ZM0 58.6667V168.667C0 172.773 3.61625 176 8.21875 176H254.781C259.384 176 263 172.773 263 168.667V58.6667H0ZM32.875 117.333H65.75V146.667H32.875V117.333ZM98.625 117.333H131.5V146.667H98.625V117.333Z" fill=""/>
                         </svg>Credit Card</button>
@@ -106,5 +107,56 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <!-- <div class="bottom">
             <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
         </div> -->
+        <script>
+            function paynow(orderId){
+            // Payment completed. It can be a successful failure.
+            payhere.onCompleted = function onCompleted(orderId) {
+                console.log("Payment completed. OrderID:" + orderId);
+                // Note: validate the payment and show success or failure page to the customer
+            };
+
+            // Payment window closed
+            payhere.onDismissed = function onDismissed() {
+                // Note: Prompt user to pay again or show an error page
+                console.log("Payment dismissed");
+            };
+
+            // Error occurred
+            payhere.onError = function onError(error) {
+                // Note: show an error page
+                console.log("Error:"  + error);
+            };
+
+            // Put the payment variables here
+            var payment = {
+                "sandbox": true,
+                "merchant_id": "1220978",    // Replace your Merchant ID
+                "merchant_secret": "MzE2OTk4ODg1NTQ2NzE3MjQyMjE1ODE1MTcxOTk0NDA2ODUzODI=",    // Replace your Merchant ID
+                "return_url": "undefined",     // Important
+                "cancel_url": "undefined",     // Important
+                "notify_url": "http://sample.com/notify",
+                "order_id": "1",
+                "items": "Door bell wireles",
+                "amount": "1000.00",
+                "currency": "LKR",
+                "hash": "45D3CBA93E9F2189BD630ADFE19AA6DC", // *Replace with generated hash retrieved from backend
+                "first_name": "Saman",
+                "last_name": "Perera",
+                "email": "dinukaamarasinghe817@gmail.com",
+                "phone": "0714872852",
+                "address": "No.1, Galle Road",
+                "city": "Colombo",
+                "country": "Sri Lanka",
+                "delivery_address": "No. 46, Galle road, Kalutara South",
+                "delivery_city": "Kalutara",
+                "delivery_country": "Sri Lanka",
+                "custom_1": "",
+                "custom_2": ""
+            };
+
+            // Show the payhere.js popup, when "PayHere Pay" is clicked
+                payhere.startPayment(payment);
+            }
+        </script>
     </div>
 </section>
