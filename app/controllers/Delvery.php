@@ -63,7 +63,7 @@ class Delvery extends Controller{
         $this->view('dashboard/delivery', $data);
     }
     public function deliveryReports(){
-        $data['navigation'] = 'dealerReports';
+        $data['navigation'] = 'reports';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
         //$current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);

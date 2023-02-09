@@ -1201,7 +1201,7 @@ select{
     margin: auto;
     color: black;
     border-radius: 10px;
-    background-color: dodgerblue;
+    background-color: var(--accept-blue);
 }
 .cancel_btn{
     margin-bottom: -3%;
@@ -1223,7 +1223,7 @@ select{
     margin-top: 1%;
     width: 98%;
     height: 25%;
-    background-color: rgb(69, 154, 234);
+    background-color: var(--navmenu-orange-dark);
 }
 .orderIDRow{
     display: flex;
@@ -1344,4 +1344,18 @@ select{
     width: 45%;
     height: 80%;
     border-radius: 10px;
+}
+.analysis_top{
+    display: flex;
+    width: 100%;
+    height: 48.5%;
+}
+.analysis_bottom{
+    display: flex;
+    width: 100%;
+    height: 45%;
+}
+.graph{
+    width: 50%;
+    height: 100%;
 }
