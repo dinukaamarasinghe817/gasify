@@ -967,7 +967,7 @@ class Body{
                 $distributor = "";
                 foreach($result as $row){
                     //print_r($data) ;
-                    $distributor .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #deb4f8;height:10%">
+                    $distributor .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #d8ca30;height:10%">
                                     <div class="dealer_name" id="col" style="margin-top:1%">Sample</div>
                                     <div class="dealer_location" id="col" style="margin-top:1%">'.$row['city'].'</div>
                                     <div class="dealer_contactno" id="col" style="margin-top:1%">'.$row['street'].'</div>
@@ -1037,22 +1037,22 @@ class Body{
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/registerProducts" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="Productname" placeholder="Enter product name" style="margin-bottom:3%;border:3px solid #deb4f8" required>
-                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">
+                <input type="text" class="registerProduct" name="Productname" placeholder="Enter product name" style="margin-bottom:3%;border:3px solid #d8ca30" required>
+                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">
                 <option value="cylinder">Cylinder</option>
                 <option value="support">Support</option>
                 </select>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter price" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
-                <input type="text" class="registerProduct" name="weight" placeholder="Enter weight" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
+                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter price" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
+                <input type="text" class="registerProduct" name="weight" placeholder="Enter weight" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #deb4f8" required> <br>
-                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins" required > <br>
+                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
+                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins" required > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" required> <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" required> <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Add product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -1096,11 +1096,7 @@ class Body{
                         </div>
                     </div>
                     <div class="salesChart">';
-                        $chart['vector']=[12,45,76,34,47];
-                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart['color']="rgba(30, 105, 176, 1)";
-                        $chart['y']='Deliveries';
-                        $chart = new Chart('bar',$chart,1);
+                        echo '<img src="';echo BASEURL.'/public/img/delivery/del.png"';echo' width="65%" height="100%" ">';
                         
                     echo '   
                     </div>
@@ -1282,33 +1278,33 @@ class Body{
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/registerDealer" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="name" placeholder="Firstname    Lastname" style="margin-bottom:2%;border:3px solid #deb4f8" >
-                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="name" placeholder="Firstname    Lastname" style="margin-bottom:2%;border:3px solid #d8ca30" >
+                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
                 </div>
                 <div class="product_reg_row">
-                    <input type="text" class="registerProduct" name="email" placeholder="Enter email" style="margin-bottom:2%;border:3px solid #deb4f8;width:65%" >
+                    <input type="text" class="registerProduct" name="email" placeholder="Enter email" style="margin-bottom:2%;border:3px solid #d8ca30;width:65%" >
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="password" placeholder="Enter password" style="margin-bottom:2%;border:3px solid #deb4f8" >
-                <input type="text" class="registerProduct" name="confirmpswd" placeholder="Confirm password" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="password" placeholder="Enter password" style="margin-bottom:2%;border:3px solid #d8ca30" >
+                <input type="text" class="registerProduct" name="confirmpswd" placeholder="Confirm password" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="city" placeholder="Enter city" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
-                <input type="text" class="registerProduct" name="street" placeholder="Enter street" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="city" placeholder="Enter city" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
+                <input type="text" class="registerProduct" name="street" placeholder="Enter street" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
                 </div>
                 <div class="product_reg_row">
-                <select name="distributor_id" id="Producttype" class="registerProduct" style="margin-bottom:2%;border:3px solid #deb4f8">
+                <select name="distributor_id" id="Producttype" class="registerProduct" style="margin-bottom:2%;border:3px solid #d8ca30">
                 <option value="3">Kavish Ltd</option>
                 <option value="11">JT Agencies</option>
                 </select>
-                <input type="text" class="registerProduct" name="merchantid" placeholder="Enter merchant ID" style="margin-bottom:2%;border:3px solid #deb4f8;font-family:poppins"  > <br>
+                <input type="text" class="registerProduct" name="merchantid" placeholder="Enter merchant ID" style="margin-bottom:2%;border:3px solid #d8ca30;font-family:poppins"  > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="bank" placeholder="Enter bank" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
-                <input type="text" class="registerProduct" name="bank_acc" placeholder="Enter bank account no" style="margin-bottom:2%;border:3px solid #deb4f8;font-family:poppins"  > <br>
+                <input type="text" class="registerProduct" name="bank" placeholder="Enter bank" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
+                <input type="text" class="registerProduct" name="bank_acc" placeholder="Enter bank account no" style="margin-bottom:2%;border:3px solid #d8ca30;font-family:poppins"  > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:2%;border:3px solid #deb4f8" onchange="showImage(this)" > <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:2%;border:3px solid #d8ca30" onchange="showImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Register Dealer" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -1333,22 +1329,22 @@ class Body{
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/registerDistributor" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="name" placeholder="Firstname    Lastname" style="margin-bottom:2%;border:3px solid #deb4f8" >
-                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="name" placeholder="Firstname    Lastname" style="margin-bottom:2%;border:3px solid #d8ca30" >
+                <input type="text" class="registerProduct" name="cno" placeholder="Enter contact no" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
                 </div>
                 <div class="product_reg_row">
-                    <input type="text" class="registerProduct" name="email" placeholder="Enter email" style="margin-bottom:2%;border:3px solid #deb4f8;width:65%" >
+                    <input type="text" class="registerProduct" name="email" placeholder="Enter email" style="margin-bottom:2%;border:3px solid #d8ca30;width:65%" >
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="password" placeholder="Enter password" style="margin-bottom:2%;border:3px solid #deb4f8" >
-                <input type="text" class="registerProduct" name="confirmpswd" placeholder="Confirm password" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="password" placeholder="Enter password" style="margin-bottom:2%;border:3px solid #d8ca30" >
+                <input type="text" class="registerProduct" name="confirmpswd" placeholder="Confirm password" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="city" placeholder="Enter city" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
-                <input type="text" class="registerProduct" name="street" placeholder="Enter street" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
+                <input type="text" class="registerProduct" name="city" placeholder="Enter city" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
+                <input type="text" class="registerProduct" name="street" placeholder="Enter street" style="margin-bottom:2%;border:3px solid #d8ca30" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" required> <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" required> <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Register Distributor" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -1374,21 +1370,21 @@ class Body{
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
                 <div class="product_reg_row">
-                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #deb4f8">';
+                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">';
                 $result=$data['products'];
                 //echo $result;
                 foreach($result as $results){
                     echo '<option value='.$results['product_id'].'>'.$results['name'].'</option>';
                 }echo
                 '</select>
-                <input type="text" class="registerProduct" name="Productname" placeholder="Enter new price" style="margin-bottom:3%;border:3px solid #deb4f8">
+                <input type="text" class="registerProduct" name="Productname" placeholder="Enter new price" style="margin-bottom:3%;border:3px solid #d8ca30">
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #deb4f8"> <br>
-                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #deb4f8;font-family:poppins"> <br>
+                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30"> <br>
+                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"> <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" > <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -1582,6 +1578,14 @@ class Body{
                         $chart['y']='Deliveries';
                         $chart = new Chart('bar',$chart,1);                    
                     echo'</div>
+                    <div class="graph" >';
+                        $chart_2['vector']=array(50,30,20);
+                        $chart_2['labels']=array('Regular','Commercial','Buddy');
+                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                        $chart_2['y']='Top products';
+                        $chart_2['main']="fgdff";
+                        $chart_2 = new Chart('doughnut',$chart_2,3);                    
+                    echo'</div>
                 </div>
                 <div class="analysis_bottom">
                     <div class="graph">';
@@ -1591,13 +1595,6 @@ class Body{
                         $chart_3['y']='Deliveries-Last week';
                         $chart_3 = new Chart('line',$chart_3,4);   
                     
-                    echo'</div>
-                    <div class="graph" >';
-                        $chart_4['vector']=[567,458,1453,758];
-                        $chart_4['labels']=['Buddy','Budget','Regular','Commercial'];
-                        $chart_4['color']="rgba(30, 105, 176, 1)";
-                        $chart_4['y']='Last week sales-By product';
-                        $chart_4 = new Chart('bar',$chart_4,5);                    
                     echo'</div>
                 </div>  
             </div>';     
@@ -1623,27 +1620,27 @@ class Body{
                 <tbody>
                     <tr>
                         <td >Buddy</td>
-                        <td >1,450.00</td>
+                        <td >600</td>
                         <td >12</td>
-                        <td >17,400</td>
+                        <td >7,200.00</td>
                     </tr>
                     <tr>
                         <td >Regular</td>
-                        <td >3,220.00</td>
+                        <td >1,950.00</td>
                         <td >30</td>
-                        <td >96,600</td>
+                        <td >58,500.00</td>
                     </tr>
                     <tr>
                         <td >Commercial</td>
-                        <td >5,150.00</td>
+                        <td >7,500.00</td>
                         <td >15</td>
-                        <td >77,250</td>
+                        <td >112,500.00</td>
                     </tr>
                     <tr>
                         <td ></td>
                         <td ></td>
                         <td ></td>
-                        <td >191,250</td>
+                        <td >178,200.00</td>
                     </tr>
                 
                 </tbody>      
@@ -1721,6 +1718,14 @@ class Body{
                         $chart['y']='Deliveries-Last week';
                         $chart = new Chart('bar',$chart,1);                    
                     echo'</div>
+                    <div class="graph" >';
+                        $chart_2['vector']=array(20,80);
+                        $chart_2['labels']=array('Canceled','Delivered');
+                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                        $chart_2['y']='Last month deliveries';
+                        $chart_2['main']="fgdff";
+                        $chart_2 = new Chart('doughnut',$chart_2,3);                    
+                    echo'</div>
                 </div>
                 <div class="analysis_bottom">
                     <div class="graph">';
@@ -1731,13 +1736,7 @@ class Body{
                         $chart_3 = new Chart('line',$chart_3,4);   
                     
                     echo'</div>
-                    <div class="graph" >';
-                        $chart_4['vector']=[56,38,67,12];
-                        $chart_4['labels']=['Buddy','Budget','Regular','Commercial'];
-                        $chart_4['color']="rgba(30, 105, 176, 1)";
-                        $chart_4['y']='Deliveries(Last month)-By product';
-                        $chart_4 = new Chart('bar',$chart_4,5);                    
-                    echo'</div>
+     
                 </div>  
             </div>';     
         echo ' 
