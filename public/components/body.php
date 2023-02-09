@@ -1602,7 +1602,7 @@ class Body{
             
             <a class="btn" href="';
             echo BASEURL;
-            echo'/reports/salesdealer">Generate PDF</a>'; 
+            echo'/reports/companySales">Generate PDF</a>'; 
                 
         echo ' 
         </section>';
