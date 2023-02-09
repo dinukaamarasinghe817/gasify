@@ -245,3 +245,59 @@ form .part{
 }
 
 
+
+
+/* customer signup css */
+
+.info .selecttype .title{
+    display: flex;
+    flex-direction: column;
+    font-size:var(--small);
+}
+
+
+
+.info .selecttype .radio{
+    /* font-size: var(--mediums); */
+    display: flex;
+    /* margin-left: auto; */
+    flex-direction: column;
+    /* margin-right: 120px; */
+    /* width: max-content; */
+    width: 40%;
+    /* justify-content: left; */
+}
+
+.radio div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+.radio_input{
+    position: relative;
+    width: 10px;
+    /* font-size: 10px; */
+    margin-bottom: 10px;
+    
+}
+
+.radio div label{
+    width: 700px;
+   
+    
+    /* display: none; */
+}
+
+.radio{
+    
+    font-size:var(--small);
+    display: flex;
+    margin-left: auto;
+    flex-direction: column;
+    margin-right: 270px;
+    width: max-content;
+}
+
+
