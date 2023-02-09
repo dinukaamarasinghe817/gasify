@@ -94,4 +94,41 @@ class Admin extends Model
     public function getReportInfo($start_date,$to_date,$order_by){
 
     }
+
+    public function dashboard($user_id,$option){
+        // variable data
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
+        $sql = "SELECT p.product_id, SUM(r.quantity) as quantity, p.name as name
+        FROM reservation_include r INNER JOIN product p 
+        ON r.product_id = p.product_id WHERE order_id IN 
+            (SELECT order_id FROM reservation 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND order_state = 'Completed') 
+        GROUP BY product_id";
+
+        // chart details
+        $products = $this->Query($sql);
+        $chart['y'] = 'Sold Quantity';
+        $chart['color'] = 'rgba(255, 159, 64, 0.5)';
+        // $chart['color'] = '[
+        //     "rgb(255, 99, 132)",
+        //     "rgb(54, 162, 235)",
+        //     "rgb(54, 122, 15)"
+        //   ]';
+        $chart['labels'] = array();$chart['vector'] = array();
+        $products = $this->Query($sql);
+        foreach($products as $product){
+            array_push($chart['labels'],$product['name']);
+            array_push($chart['vector'],$product['quantity']);
+        }
+        $data['chart'] = $chart;
+        return $data;
+    }
 }

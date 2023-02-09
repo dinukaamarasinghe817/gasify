@@ -100,13 +100,13 @@ function redirecttouserSignup(){
     let user = document.querySelector('.custom-select').value;
     switch(user){
         case 'company': // can't found
-            location.href = 'http://localhost/mvc/signup/admin';
+            location.href = 'http://localhost/mvc/signup/company';
             break;
         case 'customer':
-            location.href = 'http://localhost/mvc/signup/admin';
+            location.href = 'http://localhost/mvc/signup/customer';
             break;
         case 'deliveryperson': // can't found
-            location.href = 'http://localhost/mvc/signup/admin';
+            location.href = 'http://localhost/mvc/signup/deliveryperson';
             break;
         default:
             break;

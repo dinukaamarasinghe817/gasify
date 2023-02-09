@@ -316,28 +316,28 @@ class Body{
 
                         </div>';
 
-                        $output = '
-                        <div class="box3">
-                            <h3>Current Stock</h3>
+                        // $output = '
+                        // <div class="box3">
+                        //     <h3>Current Stock</h3>
 
-                                <div class="content1">
-                                    <table class="dboard1">
-                                    <tbody>';     
+                        //         <div class="content1">
+                        //             <table class="dboard1">
+                        //             <tbody>';     
                                 
-                                $stocks = $data['currentstock'];
-                                foreach($stocks as $stock) {
-                                    $row1 = $stock['stockinfo'];
+                        //         $stocks = $data['currentstock'];
+                        //         foreach($stocks as $stock) {
+                        //             $row1 = $stock['stockinfo'];
 
-                                    $output .= '
-                                    <tr>
-                                        <td>'.$row1['name'].'</td>
-                                        <td>'.$row1['quantity'].'</td> 
-                                    </tr>';
-                                }
-                                    $output .= '</tbody></table>
-                                </div>
-                            </div>';
-                                    echo $output;
+                        //             $output .= '
+                        //             <tr>
+                        //                 <td>'.$row1['name'].'</td>
+                        //                 <td>'.$row1['quantity'].'</td> 
+                        //             </tr>';
+                        //         }
+                        //             $output .= '</tbody></table>
+                        //         </div>
+                        //     </div>';
+                        //             echo $output;
                                     echo '                               
                        
                     </div>';
@@ -391,13 +391,40 @@ class Body{
                                                 </tbody>
                                             </table>
                                         </div>
-                                </div>';
-                                echo $output1;  
-                            }
+                                    </div>';
+                                    echo $output1;  
+                                }
                             echo '
-                            </div>
-
-                    </div>';
+                            </div>';
+                            $output = '
+                            <div class="box3">
+                                <h3>Current Stock</h3>
+    
+                                    <div class="content1">
+                                        <table class="styled-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Current Stock</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';     
+                                    
+                                    $stocks = $data['currentstock'];
+                                    foreach($stocks as $stock) {
+                                        $row1 = $stock['stockinfo'];
+    
+                                        $output .= '
+                                        <tr>
+                                            <td>'.$row1['name'].'</td>
+                                            <td>'.$row1['quantity'].'</td> 
+                                        </tr>';
+                                    }
+                                        $output .= '</tbody></table>
+                                    </div>
+                                </div>';
+                                        echo $output;
+                    echo '</div>';
         echo '</section>';                         
     }
 
@@ -432,16 +459,21 @@ class Body{
                 <div class="topic">
                     <h2>Analytic Overview</h2>
                     <!-- drop down component -->
-                    <form action="#">
-                        <select id="period" onchange="updatechart()" class="dropdowndate">
+                    <form action="'.BASEURL.'/dashboard/admin">
+                        <select id="period" onchange="this.form.submit()" class="dropdowndate">
                             <option value="today" selected>To day</option>
                             <option  value="30day">Last 30 days</option>
                         </select>
                     </form>
                 </div>
-                <div class="chart">
-
-                </div>
+                <div class="chart">';
+                // $chart = $data['chart'];
+                // if(count($chart['labels']) > 0){
+                //     $chart = new Chart('bar',$chart,1);
+                // }else{
+                //     echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
+                // }
+                echo '</div>
             </div>
             <div class="reviews">
                 <h2>Recent Reviews</h2>

@@ -11,7 +11,7 @@
         }
 
         public function user(){
-            this->view('signup/users');
+            $this->view('signup/users');
         }
 
         public function dealer($error=null){

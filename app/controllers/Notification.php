@@ -38,7 +38,9 @@
                     break;
             }
             $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
-            $data['image'] = $row['image'];
+            if(isset($row['image'])){$data['image'] = $row['image'];}
+            else if(isset($row['logo'])){$data['image'] = $row['logo'];}
+            else{}
             $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
             $this->view($this->role.'/notifications',$data);
