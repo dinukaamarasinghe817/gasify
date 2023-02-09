@@ -1678,54 +1678,37 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Analysis</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
-            <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Product name</th>
-                    <th>Unit price (Rs.)</th>
-                    <th>Quantity</th>
-                    <th>Total (Rs.)</th>
-                </tr>
-            </thead>
-            <tbody style="overflow-y:auto;height:100px">
-                <tr>
-                    <td>Buddy</td>
-                    <td>1,450.00</td>
-                    <td>12</td>
-                    <td>17,400</td>
-                </tr>
-                <tr>
-                    <td>Regular</td>
-                    <td>3,220.00</td>
-                    <td>30</td>
-                    <td>96,600</td>
-                </tr>
-                <tr>
-                    <td>Commercial</td>
-                    <td>5,150.00</td>
-                    <td>15</td>
-                    <td>77,250</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>191,250</td>
-                </tr>
-             
-            </tbody>      
-        </table> 
-            </div>
-            
-            <a class="btn" href="';
-            echo BASEURL;
-            echo'/reports/deliverySales">Generate PDF</a>'; 
-                
+                <div class="analysis_top">
+                    <div class="graph" >';
+                        $chart['vector']=[12,45,76,34,47];
+                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart['color']="rgba(30, 105, 176, 1)";
+                        $chart['y']='Deliveries';
+                        $chart = new Chart('bar',$chart,1);                    
+                    echo'</div>
+                </div>
+                <div class="analysis_bottom">
+                    <div class="graph">';
+                        $chart_3['vector']=[15,25,28,23,28];
+                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart_3['color']="rgba(30, 105, 176, 1)";
+                        $chart_3['y']='Deliveries-Last week';
+                        $chart_3 = new Chart('line',$chart_3,4);   
+                    
+                    echo'</div>
+                    <div class="graph" >';
+                        $chart_4['vector']=[567,458,1453,758];
+                        $chart_4['labels']=['Buddy','Budget','Regular','Commercial'];
+                        $chart_4['color']="rgba(30, 105, 176, 1)";
+                        $chart_4['y']='Last week sales-By product';
+                        $chart_4 = new Chart('bar',$chart_4,5);                    
+                    echo'</div>
+                </div>  
+            </div>';     
         echo ' 
         </section>';
-
     }
 }
