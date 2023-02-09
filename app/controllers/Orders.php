@@ -357,7 +357,6 @@ class Orders extends Controller{
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
-        // profile picture
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
@@ -367,6 +366,22 @@ class Orders extends Controller{
         $this->view('distributor/placed_completed',$data);
 
     }
+    
+    // suitable vehicle list for pending , accepted gas orders
+    public function suitableVehicleList(){
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'orders';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
+
+        $this->view('distributor/suitableVehicleList', $data);
+    }
+
+
 
     public function validatepayments($tab){
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));

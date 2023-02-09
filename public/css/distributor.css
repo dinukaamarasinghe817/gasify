@@ -564,7 +564,6 @@ td:nth-child(4) {
     border-right: solid transparent;
     border-left: solid transparent;
     color: white;
-
 }
 
 .middle{
@@ -584,10 +583,13 @@ td:nth-child(4) {
     width: 100%;
     font-size: var(--mediums);
     text-align: center;
-    /* background-color: white; */
-    background-color: var(--navmenu-gray-dark);
+    background-color: var( --table-header);
     border-radius: 7px;
     padding: 3px;
+    padding: 8px;    
+}
+
+.middle ul li a {
     color: white;
 }
 
@@ -683,7 +685,7 @@ table tr:hover {
 }
 
 .inside{
-    padding: 7px;
+    padding: 12px;
     background-color: var(--button-orange-hover);
     color: white;
     border-radius: 10px;

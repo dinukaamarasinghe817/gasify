@@ -85,7 +85,8 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </table>
 
                 <div class="btnclz">
-                    <button class="btn2-1" type="submit" name="submit">Place the order</button>
+                    <!-- <button class="btn2-1" type="submit" name="submit">Place the order</button> -->
+                    <a href="<?php echo BASEURL?>/orders/distributor"><button class="btn2-1" type="submit" name="submit"><b>Place the Order</b></button>
                     <button class="btn2-2">Cancel</button>
                 </div>
                 

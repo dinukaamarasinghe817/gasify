@@ -53,12 +53,10 @@ table td{
     --exsmall: 12px;
 }
 
-/*
-
 @font-face{
     src: url(Poppins-Regular.ttf);
     font-family: poppins;
-} */
+}
 
 /* body{
     display: flex;

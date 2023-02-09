@@ -26,7 +26,7 @@ $user_id = $_SESSION['user_id'];
 
             <form>
                 <div class="part1">
-                    <label>Weight Limit</label>                    
+                    <label>Weight Limit :</label>                    
                     <table class="styled-table">
                         <thead>
                             <tr>
@@ -50,44 +50,18 @@ $user_id = $_SESSION['user_id'];
                         </tbody>
                     </table>
 
-                    <?php 
-                    // $output = '
-                    //     <table>
-                    //         <tr>
-                    //             <th>Product Name</th>
-                    //             <th>Capacity</th>
-                    //         </tr>
-
-                    //         <tr>';
-                            
-                            // $products = $data['product'];
-                            // echo(count($products));
-
-                            // foreach($products as $product) {
-                               
-
-                            //     $row1 = $product['productinfo'];
-                            //     $output .= '
-                            //         <tr>
-                            //             <td>'.$row1['name'].'</td>
-                            //             <td>'.$row1['capacity'].'</td> 
-                            //         </tr>';         
-                            // }
-                            // $output .= '</table>';
-                            // echo $output;    
-                    ?>
-
                 </div>
 
                 <div class="part1">
-                    <label>Fuel Consumption</label>
-                    <input type="number" name="fuel" required>
+                    <label>Fuel Consumption :</label>
+                    <input type="number" name="fuel" min=0 required>
                 </div>
             </form>
 
             <div class="beginbtn">
-                <!-- <button class="btn3" a href="<?php echo BASEURL?> /vehicles/viewvehicle"><b>Update</b></button> -->
-                <button class="btn3"><b>Update</b></button>
+                <!-- <button class="btn3"><b>Update</b></button> -->
+                <a href="<?php echo BASEURL ?>/vehicles/viewvehicle"><button class="btn3"><b>Update</b></button></a>
+              
             </div>
                 
         </div>
