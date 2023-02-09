@@ -234,7 +234,7 @@ class Orders extends Controller{
         $this->view('customer/quota/quota',$data);
     }
 
-/*.........................DISTRIBUTOR GAS ORDERS TAB.........................................*/
+    /*.........................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
      // distributor phurchase orders to company (Gas Orders)
     //  public function distributor($error = null) {
@@ -368,10 +368,11 @@ class Orders extends Controller{
 
     }
 
-    public function payments(){
+    public function validatepayments($tab){
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
         $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['image'] = $row['image'];
+        $data['activetab'] = $tab;
         $this->view('admin/payments',$data);
     }
 
