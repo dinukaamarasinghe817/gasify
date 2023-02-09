@@ -82,16 +82,9 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                     </table>
                                 </div>
                             </div>';
-
-                                   
                                         echo $output;
-                                    }
-                                   
-                                   
-                              
-                                      
+                        }               
                     ?>
-                    <!-- </div> -->
                 </div>   
             </div>
         </div>

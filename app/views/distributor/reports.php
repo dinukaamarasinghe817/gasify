@@ -28,7 +28,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                     <?php
                     $records = $data['distributions'];
-                    // echo count($records);
+                    
                     $output = '<div class="repbox">
                         <table class="styled-table">
                         <thead>
@@ -43,16 +43,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     foreach($records as $record) {
                         $row1 = $record['completedinfo'];
                         $capacities = $record['capacities'];
-
-                        // $output = '<div class="repbox">
-                        // <table class="table1">
-                        //     <tr>
-                        //         <th>Distributed Date</th>
-                        //         <th>Distribution ID</th>
-                        //         <th>Dealer ID</th>
-                        //         <th>Total Amount</th>
-                                
-                        //     </tr>';
 
                             $date = $row1['place_date'];
                             $distribution_num = $row1['po_id'];
