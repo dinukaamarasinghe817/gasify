@@ -10,6 +10,10 @@
             // echo "this is the signin controller";
         }
 
+        public function user(){
+            this->view('signup/users');
+        }
+
         public function dealer($error=null){
 
             $company_id = $_SESSION['user_id']; // company_id should be taken from session

@@ -97,6 +97,34 @@ class Chart{
         });
         </script>';
     }
+
+    public function pie($data,$index){
+        echo '<canvas id="bargraph'.$index.'"></canvas>
+        <script>
+        let ctx = document.getElementById("bargraph'.$index.'")
+        new Chart(ctx, {
+            type: "pie",
+            data: {
+                
+            labels: '.phpArrtoJs($data['labels']).',
+            datasets: [{
+                label: "'.$data['y'].'",
+                data: '.phpArrtoJs($data['vector']).',
+                backgroundColor: '.$data['color'].',
+                borderWidth: 1
+            }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "right"
+                    }
+                }
+            }
+        });
+        </script>';
+    }
 }
 
 ?>

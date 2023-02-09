@@ -50,6 +50,22 @@ class Reports extends Controller{
         $this->view('dealer/reports/salesreport',$data);
     }
 
+    public function admin(){
+        $start_date = '';
+        $to_date = '';
+        $order_by = '';
+        $data = $this->model("Admin")->getReportInfo($start_date,$to_date,$order_by);
+        $row = mysqli_fetch_assoc($this->model('Admin')->getAdmin($this->user_id));
+        $data['image'] = $row['image'];
+        $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $this->view('admin/reports',$data);
+    }
+
+    public function salesadmin(){
+        $data = [];
+        $this->view('admin/reports/salesreport',$data);
+    }
+
 }
 
 
