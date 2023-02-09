@@ -54,6 +54,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 <td>'.$distribution_num.'</td>
                                 <td>'.$dealer_id.'</td>
                                 <td>10 000.00</td>
+                                <td>
+                                    <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/salesdealer\'">Generate PDF</button>
+                                </td>
                                
                             </tr>';
                     }
@@ -64,10 +67,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     ';
                     echo $output;
                     ?>
-
-                    <div class="beginbtn">
+                    <!-- <div class="beginbtn">
                         <a class="btn" href="<?php echo BASEURL ?>/reports/salesdealer">Generate PDF</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
