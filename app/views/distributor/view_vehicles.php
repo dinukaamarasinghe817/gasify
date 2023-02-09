@@ -35,7 +35,6 @@ $user_id = $_SESSION['user_id'];
                         </tr>
                     </thead>
                     <tbody>';
-                // $query = mysqli_query($conn,"SELECT * FROM distributor_vehicle WHERE distributor_id = '{$dis_id}'");
                 
                 $vehicles = $data['vehicles'];
 

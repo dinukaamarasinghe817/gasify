@@ -28,7 +28,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                     <?php
                     $records = $data['distributions'];
-                    // echo count($records);
+                    
                     $output = '<div class="repbox">
                         <table class="styled-table">
                         <thead>
@@ -44,16 +44,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         $row1 = $record['completedinfo'];
                         $capacities = $record['capacities'];
 
-                        // $output = '<div class="repbox">
-                        // <table class="table1">
-                        //     <tr>
-                        //         <th>Distributed Date</th>
-                        //         <th>Distribution ID</th>
-                        //         <th>Dealer ID</th>
-                        //         <th>Total Amount</th>
-                                
-                        //     </tr>';
-
                             $date = $row1['place_date'];
                             $distribution_num = $row1['po_id'];
                             $dealer_id = $row1['dealer_id'];
@@ -64,6 +54,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 <td>'.$distribution_num.'</td>
                                 <td>'.$dealer_id.'</td>
                                 <td>10 000.00</td>
+                                <td>
+                                    <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/salesdealer\'">Generate PDF</button>
+                                </td>
                                
                             </tr>';
                     }
@@ -74,10 +67,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     ';
                     echo $output;
                     ?>
-
-                    <div class="beginbtn">
+                    <!-- <div class="beginbtn">
                         <a class="btn" href="<?php echo BASEURL ?>/reports/salesdealer">Generate PDF</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

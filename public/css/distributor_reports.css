@@ -582,6 +582,7 @@ table tr:hover {
     border-radius: 10px;
     border: none;
     margin-left: 15%;
+    width: 60%;
 }
 
 .inside{
