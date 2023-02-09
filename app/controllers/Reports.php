@@ -48,6 +48,10 @@ class Reports extends Controller{
         $data = [];
         $this->view('dealer/reports/salesreport',$data);
     }
+    public function companySales(){
+        $data = [];
+        $this->view('company/reports/salesreport',$data);
+    }
 
 }
 
