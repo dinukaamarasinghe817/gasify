@@ -128,7 +128,7 @@
                     </div>
                     <!-- <input type="submit" name='submit'> -->
                     <button type="submit" name="submit"onsubmit="main(); ">Register</button><br>
-                    <p>Already Registered? <a href="<?php echo BASEURL;?>/signin/dealer">Login now</a></p>
+                    <p>Already Registered? <a href="<?php echo BASEURL;?>/signin/user">Login now</a></p>
                 
                 </form>
             </div>
