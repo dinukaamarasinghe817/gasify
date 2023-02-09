@@ -9,14 +9,14 @@ $pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
 $pdf->Cell(0,5,'Gasify (Pvt,Ltd)',0,1,'C');
 $pdf->SetFont('Times', 'B', 16);
-$pdf->Cell(0,5,'Past Distribution Report',0,1,'C');
+$pdf->Cell(0,5,' Distribution Report',0,1,'C');
 
 $pdf->Ln(20);
 
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(30,5,'Distribution ID',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": 20",0,0,'l');
+$pdf->Cell(90,5,": 39",0,0,'l');
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(20,5,'Time',0,0,'l');
 $pdf->SetFont('Times', '', 12);
