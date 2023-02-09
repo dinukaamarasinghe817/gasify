@@ -1,4 +1,5 @@
 function showImage(event) {
+    console.log("hello");
     let imgPreview = document.getElementById('ff');
     imgPreview.src = URL.createObjectURL(event.files[0]);
 }

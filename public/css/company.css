@@ -1332,7 +1332,7 @@ input[type="text"]::placeholder{
     margin-top: 8%;
     width: 100%;
     height: 50%;
-    font-size: 5em;
+    font-size: 5vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1343,11 +1343,11 @@ input[type="text"]::placeholder{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3em;
+    font-size: 1.3vw;
 }
 .productTableTitle,.recentRequestTableTitle{
     color: white;
-    font-size: x-large;
+    font-size: 2vw;
     background-image: linear-gradient(90deg, #be6bf9, #be6bf9);
     border-radius: 10px;
     margin-top: 4%;
