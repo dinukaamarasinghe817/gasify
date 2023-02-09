@@ -89,9 +89,24 @@ a,button{
     color: #71717f;
     font-size: 12px;
 }
+
+.name{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    /* column-gap: 20px; */
+}
 .name h5{
     color: #71717f;
     font-size: var(--mediums);
+}
+
+.name h4{
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--button-blue);
+    width: 30%;
 }
 
 .price h4{
@@ -99,6 +114,12 @@ a,button{
     font-weight: 900;
     color: var(--currency);
 }
+
+/* .count h4{
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--button-blue);
+} */
 
 .increment_box{
     

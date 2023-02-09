@@ -33,7 +33,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     $reviews = $order['reviews'];
                     $deliveries = $order['delivery'];
                     $url_dealer = BASEURL.'/profile/preview/dealer/'.$row1['dealer_id'].'/profile/customer/viewdealerprofile';
-                    $url_delivery = BASEURL.'/profile/preview/dealer/'.$row1['delivery_id'].'/profile/customer/viewdealerprofile';
+                    $url_delivery = BASEURL.'/profile/preview/delivery/'.$row1['delivery_id'].'/profile/customer/viewdeliveryprofile';
                     // echo $row1['delivery_name'];
                     echo '<div class="order_card">
                             <div class="card_top">
