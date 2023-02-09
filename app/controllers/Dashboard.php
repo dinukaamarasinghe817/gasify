@@ -130,6 +130,12 @@
         }
 
         public function admin($error = null){
+            if(isset($_POST['option'])){
+                $option = $_POST['option'];
+            }else{
+                $option = 'today';
+            }
+            $data = $this->model('Admin')->dashboard($this->user_id,$option);
             $row = mysqli_fetch_assoc($this->model('Admin')->getAdmin($this->user_id));
             $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['image'] = $row['image'];

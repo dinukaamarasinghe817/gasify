@@ -78,7 +78,10 @@
 .graph .reviews{
     padding-right: 0px;
 }
-
+.graph .variable .chart{
+    /* width: 300px; */
+    height: 400px;
+}
 .reviews .contents{
     max-height: 400px;
     overflow-y: scroll;

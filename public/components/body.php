@@ -421,16 +421,21 @@ class Body{
                 <div class="topic">
                     <h2>Analytic Overview</h2>
                     <!-- drop down component -->
-                    <form action="#">
-                        <select id="period" onchange="updatechart()" class="dropdowndate">
+                    <form action="'.BASEURL.'/dashboard/admin">
+                        <select id="period" onchange="this.form.submit()" class="dropdowndate">
                             <option value="today" selected>To day</option>
                             <option  value="30day">Last 30 days</option>
                         </select>
                     </form>
                 </div>
-                <div class="chart">
-
-                </div>
+                <div class="chart">';
+                // $chart = $data['chart'];
+                // if(count($chart['labels']) > 0){
+                //     $chart = new Chart('bar',$chart,1);
+                // }else{
+                //     echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
+                // }
+                echo '</div>
             </div>
             <div class="reviews">
                 <h2>Recent Reviews</h2>
