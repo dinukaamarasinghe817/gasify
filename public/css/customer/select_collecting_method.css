@@ -165,7 +165,7 @@ a,button{
     margin-right: 90px;
     display: flex;
     flex-direction: row;
-    column-gap: 90px;
+    column-gap: 50px;
 }
 
 .delivery_middle_content{
@@ -218,10 +218,16 @@ a,button{
 
 .delivery_fee{
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    /* align-items: center; */
     /* justify-content: center; */
     column-gap: 7px;
+   
+   
+}
+
+.delivery_fee h4{
+    margin-bottom: 20px;
 }
 
 .delivery_fee h3{
@@ -229,7 +235,7 @@ a,button{
     border: 2px solid var(--navmenu-orange-dark);
     border-radius: 5px;
     padding: 10px;
-    width: 500px;
+    width: 600px;
     justify-content: right;
 }
 
