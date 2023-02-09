@@ -55,7 +55,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                     </div>
                                     <hr>
 
-                                    <table>
+                                    <table class="styled-table">
                                         <thead>
                                             <tr>
                                                 <th>Product ID</th>
