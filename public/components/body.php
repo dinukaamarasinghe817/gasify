@@ -534,8 +534,8 @@ class Body{
             <div class="recentRequestTableTitle">Recent Orders</div>
             </div>
             <div class="tables">
-            <table class="lowStockTable">
-                <thead style="background-color:#dbb1f9">
+            <table class="styled-table" style="width:45%">
+                <thead>
                     <tr>
                         <th>Product name</th>
                         <th>Quantity</th>
@@ -552,8 +552,8 @@ class Body{
                     </tr>                
                 </tbody>      
             </table>
-            <table class="pendingReqTable">
-                <thead style="background-color:#dbb1f9">
+            <table class="styled-table" style="width:45%;margin-left:5%">
+                <thead>
                     <tr>
                         <th>Dsitributor name</th>
                         <th>Products</th>
@@ -564,7 +564,7 @@ class Body{
                         <td class="tdCenter">AJ Agencies</td>
                         <td class="tdCenter">
                             <table class="requestProducts" style="width:100%">
-                                <thead style="background-color:#dbb1f9">
+                                <thead>
                                     <tr>
                                         <th>Product name</th>
                                         <th>Quantity</th>
@@ -854,7 +854,7 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#be6bf9;color:white">Registered Dealers</div></a>
+            <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Dealers</div></a>
             <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
             </div>
             <div class="DealerTables" id="DealerTables" style="margin:0">';
@@ -890,7 +890,7 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-                <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%;background-color:#be6bf9;color:white">Registered Distributors</div></a>
+                <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Distributors</div></a>
                 <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
             </div>
             <div class="DealerTables" id="DealerTables" style="margin:0">';
@@ -952,7 +952,7 @@ class Body{
         echo 
         '<section class="body-content">
              <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.3%">
-                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#be6bf9;color:white">Current Products</div></a>
+                 <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#d8ca30;color:white">Current Products</div></a>
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#fff">Register New Product</div></a>
                  <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#fff">Update Product</div></a>
              </div>
@@ -998,7 +998,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name"  style="margin:0;margin-left:-1.3%">
                  <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#fff">Current Products</div></a>
-                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#be6bf9;color:white">Register New Product</div></a>
+                 <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#d8ca30;color:white">Register New Product</div></a>
                  <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#fff">Update Product</div></a>
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%"">
@@ -1243,7 +1243,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
                  <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Dealers</div></a>
-                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#be6bf9;color:white">Register New Dealer</div></a>
+                 <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#d8ca30;color:white">Register New Dealer</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:90%;margin:0">
@@ -1294,7 +1294,7 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
                  <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%">Registered Distributors</div></a>
-                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#be6bf9;color:white">Register New Distributor</div></a>
+                 <a href="../Compny/regDistributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%;background-color:#d8ca30;color:white">Register New Distributor</div></a>
                  
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;height:80%;margin:0">
@@ -1336,7 +1336,7 @@ class Body{
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.3%">
                  <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#fff">Current Products</div></a>
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#fff">Register New Product</div></a>
-                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#be6bf9;color:white">Update Product</div></a>
+                 <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#d8ca30;color:white">Update Product</div></a>
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%">
                 <div class="left">
@@ -1373,7 +1373,7 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Gas Orders</div></a>
+            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Gas Orders</div></a>
             <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
@@ -1439,19 +1439,19 @@ class Body{
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
-            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#be6bf9;color:white">Limit Quota</div></a>
+            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#d8ca30;color:white">Limit Quota</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
             <div class="poductQuota">
                 <div class="productQuotaName" style="font-size: large"><lable>Domestic customer</lable></div>
-                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>2 Cylinder</label></div>
+                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>35 KG</label></div>
                 <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="domestic"></div>
                 <div class="productQuotaResetCurrent" onClick="setQuota()" key="domestic"><div class="quotaButtons" ><label>Set Quota</label></div></div>
                 <div class="productQuotaSetNew" onClick="resetQuota()" key="domestic"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>     
             </div>
             <div class="poductQuota">
                 <div class="productQuotaName" style="font-size: large"><lable>Commercial customer</lable></div>
-                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>1 Cylinder</label></div>
+                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>90 KG</label></div>
                 <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="commercial"></div>
                 <div class="productQuotaResetCurrent" onClick="setQuota()"><div class="quotaButtons" ><label>Set Quota</label></div></div>
                 <div class="productQuotaSetNew" onClick="resetQuota()"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>    
@@ -1539,7 +1539,7 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Analysis</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
                 <div class="analysis_top">
@@ -1576,53 +1576,50 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
+            <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Reports</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
             <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Product name</th>
-                    <th>Unit price (Rs.)</th>
-                    <th>Quantity</th>
-                    <th>Total (Rs.)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td >Buddy</td>
-                    <td >1,450.00</td>
-                    <td >12</td>
-                    <td >17,400</td>
-                </tr>
-                <tr>
-                    <td >Regular</td>
-                    <td >3,220.00</td>
-                    <td >30</td>
-                    <td >96,600</td>
-                </tr>
-                <tr>
-                    <td >Commercial</td>
-                    <td >5,150.00</td>
-                    <td >15</td>
-                    <td >77,250</td>
-                </tr>
-                <tr>
-                    <td ></td>
-                    <td ></td>
-                    <td ></td>
-                    <td >191,250</td>
-                </tr>
-             
-            </tbody>      
-        </table> 
-            </div>
-            
-            <a class="btn" href="';
-            echo BASEURL;
-            echo'/reports/companySales">Generate PDF</a>'; 
+                <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th>Unit price (Rs.)</th>
+                        <th>Quantity</th>
+                        <th>Total (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td >Buddy</td>
+                        <td >1,450.00</td>
+                        <td >12</td>
+                        <td >17,400</td>
+                    </tr>
+                    <tr>
+                        <td >Regular</td>
+                        <td >3,220.00</td>
+                        <td >30</td>
+                        <td >96,600</td>
+                    </tr>
+                    <tr>
+                        <td >Commercial</td>
+                        <td >5,150.00</td>
+                        <td >15</td>
+                        <td >77,250</td>
+                    </tr>
+                    <tr>
+                        <td ></td>
+                        <td ></td>
+                        <td ></td>
+                        <td >191,250</td>
+                    </tr>
                 
-        echo ' 
+                </tbody>      
+            </table> 
+            <a class="btn" style="margin-left:46%" href="';
+            echo BASEURL;
+            echo'/reports/companySales">Generate PDF</a>';
+            echo'</div>
         </section>';
     }
     function reportsCompany(){
