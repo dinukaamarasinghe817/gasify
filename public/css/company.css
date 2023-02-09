@@ -27,8 +27,8 @@ table td{
     /* --navmenu-orange: #FFF8F3; */
     --navmenu-blue: #e8f6ff;
     --navmenu-orange: #fdfbf1;
-    --navmenu-orange-dark: #be6bf9;
-    --button-orange-hover: #be6bf9;
+    --navmenu-orange-dark: #d8ca30;
+    --button-orange-hover: #bcb60d;
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
@@ -54,7 +54,7 @@ table td{
     font-family: poppins;
 }
 
-body{
+/*body{
     display: flex;
     flex-direction: row;
     background-color: var(--white);
@@ -63,10 +63,10 @@ body{
     font-family: poppins;
     font-style: normal;
     font-size: var(--small);
-}
+}*/
 
 /* left panel css */
-.leftpanel{
+/*.leftpanel{
     width: 20%;
     max-width: 220px;
     background-color: #f7eaff;
@@ -117,19 +117,19 @@ body{
 }
 .leftpanel .nav-tiles .nav-tile .active svg path{
     stroke: var(--white);
-}
+}*/
 
 
 /* body section css */
-.body{
+/*.body{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-}
+}*/
 
 /* body header section css */
-.body .body-header{
+/*.body .body-header{
     display: flex;
     flex-direction: row;
     height: 15%;
@@ -184,9 +184,9 @@ body{
     display: flex;;
     flex-direction: row;
     /* justify-content: center;; */
-    padding: 8px 10px;
-}
-.logout-menu ul li a{
+    /*padding: 8px 10px;
+}*/
+/*.logout-menu ul li a{
     margin-left: 10px;
 }
 .logout-menu ul li:last-child svg path{
@@ -202,23 +202,23 @@ body{
     stroke: var(--navmenu-orange-dark);
 }
 /* onclick set this to fill */
-.body-header-right svg:hover{
+/*.body-header-right svg:hover{
     fill: var(--navmenu-orange-dark);
 }
 
 
 /* body content css */
-.body-content{
+/*.body-content{
     /*display: flex;
     flex-direction: row;*/
-    box-sizing: border-box;
+    /*box-sizing: border-box;
     padding: 10px 10px 10px 40px;
     height: 85%;
     width: 100%;
     /* padding-bottom: 50px; */
-    overflow-y: scroll;
+    /*overflow-y: scroll;
     scroll-behavior: smooth;
-    /* background-color: var(--navmenu-gray-dark); */
+    /* background-color: var(--navmenu-gray-dark); 
 }
 .body-content::-webkit-scrollbar{
     display: hidden;
@@ -249,7 +249,7 @@ body{
     background-color: var(--button-orange);
 } */
 /* when hovering the bottom border should appear on innactive anchor tags */
-.top-panel ul li a:hover{
+/*.top-panel ul li a:hover{
     background-color: var(--white);
     color: var(--button-orange-hover);
     box-sizing: border-box;
@@ -258,7 +258,7 @@ body{
     /* border-top: solid var(--button-orange-hover);
     border-bottom: solid var(--button-orange-hover);
     border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover); */
+    border-left: solid var(--button-orange-hover); 
 }
 .top-panel ul li .active{
     background-color: var(--white);
@@ -268,7 +268,7 @@ body{
     -webkit-box-sizing: border-box;
     /* border-top: solid var(--button-orange-hover);
     border-right: solid var(--button-orange-hover);
-    border-left: solid var(--button-orange-hover); */
+    border-left: solid var(--button-orange-hover); 
 }
 
 .body-content .content-data{
@@ -342,7 +342,7 @@ table td input{
     padding: 0;
 }
 
-/* po tab css */
+/* po tab css 
 td button{
     width: 100%;
     height: 100%;
@@ -356,7 +356,7 @@ td button:hover{
     background-color: var(--button-blue-hover);
 }
 
-/* dashboard body */
+/* dashboard body 
 .body-content .body-left{
     width: 60%;
     display: flex;
@@ -493,10 +493,10 @@ td button:hover{
 
 /* .body-right .accordion:hover{
     border: 2px solid var(--button-blue-hover);
-} */
+} 
 
 .accordion .box{
-    /* width: 100%; */
+    /* width: 100%; 
     background-color: var(--navmenu-orange);
     box-sizing: border-box;
     position: relative;
@@ -512,7 +512,7 @@ td button:hover{
     box-sizing: border-box;
     font-size: 16px;
     width: 100%;
-    /* width: 532px; */
+    /* width: 532px; 
     height: 37px;
     position: relative;
     color: var(--navmenu-orange-dark);
@@ -974,7 +974,7 @@ label{
     color: black;
     border: 3px solid;
     box-sizing: border-box;
-    border-color: #be6bf9;
+    border-color: #d8ca30;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1006,7 +1006,7 @@ label{
     border-right-style: solid;
     border-bottom-style: solid;
     box-sizing: border-box;
-    border-color: #be6bf9;
+    border-color: var(--navmenu-orange-dark);
 }
 .DealerTables::-webkit-scrollbar-thumb{
     background-color: #85B6E2;
@@ -1015,7 +1015,7 @@ label{
     width: 100%;
     height: 100%;
     color: black;
-    outline: 3px solid #be6bf9;
+    outline: 3px solid var(--navmenu-orange-dark);
     background-color: #fff;
     display: flex;
     justify-content: center;
@@ -1208,7 +1208,7 @@ input[type="text"]::placeholder{
     width: 96%;
     height: 90%;
     background-color: #fdfdfd;
-    outline: 5px solid #be6bf9;
+    outline: 5px solid var(--navmenu-orange-dark);
 }
 .orderTbl{
     height: 60%;
@@ -1269,7 +1269,7 @@ input[type="text"]::placeholder{
     margin-top: 1%;
     width: 96%;
     height: 20%;
-    background-color: #be6bf9;
+    background-color: var(--navmenu-orange-dark);
 }
 .productQuotaName,.productQuotaCurrent,.productQuotaNew,.productQuotaResetCurrent,.productQuotaSetNew{
     display: flex;
@@ -1320,7 +1320,7 @@ input[type="text"]::placeholder{
     color: white;
     width: 20%;
     height: 20vh;
-    background-image: linear-gradient(135deg, #be6bf9, #be6bf9);
+    background-color:var(--navmenu-orange-dark);
     border-radius: 10px;
 }
 .Top{
@@ -1348,7 +1348,7 @@ input[type="text"]::placeholder{
 .productTableTitle,.recentRequestTableTitle{
     color: white;
     font-size: 2vw;
-    background-image: linear-gradient(90deg, #be6bf9, #be6bf9);
+    background-color: var(--navmenu-orange-dark);
     border-radius: 10px;
     margin-top: 4%;
     display: flex;

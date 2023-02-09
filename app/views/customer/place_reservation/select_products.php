@@ -33,7 +33,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
                                 <div class="product_details">
                                     <div class="brand_name">'.$product['c_name'].'</div>
-                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5></div>
+                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>22 in stock</h4></div>
                                     <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
                                 </div>
                                 <div class="increment_box">
@@ -63,7 +63,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
                                 <div class="product_details">
                                     <div class="brand_name">'.$product['c_name'].'</div>
-                                    <div class="name"><h5>'.$product['p_name'].'</h5></div>
+                                    <div class="name"><h5>'.$product['p_name'].'</h5><h4>22 in stock</h4></div>
                                     <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
                                 </div> 
                                 <div class="increment_box">
