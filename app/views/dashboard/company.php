@@ -9,6 +9,7 @@
         $sidebar = new Navigation('company',$data['navigation']);
     ?>
     <section class="body">
+        <script src="http://localhost/mvc/public/js/Company/company.js"></script>
         <?php 
         //echo $data['navigation'];
         $bodyheader = new BodyHeader($data);

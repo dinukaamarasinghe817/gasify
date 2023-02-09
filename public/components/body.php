@@ -858,8 +858,8 @@ class Body{
             <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
             </div>
             <div class="DealerTables" id="DealerTables" style="margin:0">';
-                echo '<table class="dealerInfoTable">
-                    <thead style="background-color:#dbb1f9">
+                echo '<table class="styled-table">
+                    <thead >
                         <tr>
                             <th>Name</th>
                             <th>Location</th>
@@ -874,11 +874,11 @@ class Body{
                             $dealer = "";
                             foreach ($result as $row) {
                                 $dealer .=  '<tr>
-                                                <td class="tdCenter">'.$row['name']. '</td>
-                                                <td class="tdCenter">'.$row['city'].'</td>
-                                                <td class="tdCenter">'.$row['contact_no'].'</td>
-                                                <td class="tdCenter">'.$row['account_no'].'</td>
-                                                <td class="tdCenter">'.$row['bank'].'</td>
+                                                <td>'.$row['name']. '</td>
+                                                <td>'.$row['city'].'</td>
+                                                <td>'.$row['contact_no'].'</td>
+                                                <td>'.$row['account_no'].'</td>
+                                                <td>'.$row['bank'].'</td>
                                             </tr>';
                             }
                             echo $dealer;
@@ -894,7 +894,7 @@ class Body{
                 <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
             </div>
             <div class="DealerTables" id="DealerTables" style="margin:0">';
-                echo '<table class="distributorInfoTable">
+                echo '<table class="styled-table">
                 <thead style="background-color:#dbb1f9">
                     <tr>
                         <th>Name</th>
@@ -910,11 +910,11 @@ class Body{
                         $distributor = "";
                         foreach ($result as $row) {
                             $distributor .=  '<tr>
-                                            <td class="tdCenter">'.'Distributor'. '</td>
-                                            <td class="tdCenter">'.$row['city'].'</td>
-                                            <td class="tdCenter">'.$row['street'].'</td>
-                                            <td class="tdCenter">'.$row['contact_no'].'</td>
-                                            <td class="tdCenter">'.$row['hold_time'].'</td>
+                                            <td>'.'Distributor'. '</td>
+                                            <td>'.$row['city'].'</td>
+                                            <td>'.$row['street'].'</td>
+                                            <td>'.$row['contact_no'].'</td>
+                                            <td>'.$row['hold_time'].'</td>
                                         </tr>';
                         }
                         echo $distributor;
@@ -957,8 +957,8 @@ class Body{
                  <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#fff">Update Product</div></a>
              </div>
              <div class="DealerTables" id="DealerTables" style="margin:0;width: 97.4%;height:80%"">';
-                echo '<table class="productInfoTable" style="margin-top:0.3%">
-                        <thead style="background-color:#dbb1f9">
+                echo '<table class="styled-table" style="margin-top:0.3%">
+                        <thead>
                             <tr>
                                 <th>Product ID</th>
                                 <th>Name</th>
@@ -976,14 +976,14 @@ class Body{
                                 $products = "";
                                 foreach ($result as $row) {
                                     $products .=  '<tr>
-                                                    <td class="tdCenter">'.$row['product_id']. '</td>
-                                                    <td class="tdCenter">'.$row['name'].'</td>
-                                                    <td class="tdCenter">'.$row['type'].'</td>
-                                                    <td class="tdCenter">'.$row['unit_price'].'</td>
-                                                    <td class="tdCenter">'.$row['weight'].'</td>
-                                                    <td class="tdCenter">'.$row['production_time']. '</td>
-                                                    <td class="tdCenter">'.$row['last_updated_date'].'</td>
-                                                    <td class="tdCenter">'.$row['quantity'].'</td>
+                                                    <td>'.$row['product_id']. '</td>
+                                                    <td>'.$row['name'].'</td>
+                                                    <td>'.$row['type'].'</td>
+                                                    <td>'.$row['unit_price'].'</td>
+                                                    <td>'.$row['weight'].'</td>
+                                                    <td>'.$row['production_time']. '</td>
+                                                    <td>'.$row['last_updated_date'].'</td>
+                                                    <td>'.$row['quantity'].'</td>
                                                 </tr>';
                                 }
                                 echo $products;
@@ -1050,7 +1050,7 @@ class Body{
                         <div class="cmTitle">Review</div>
                     </div>
                     <div class="card">
-                        <div class="cmValue" style="font-size:3em">LKR.14350</div>
+                        <div class="cmValue" style="font-size:3vw">LKR.14350</div>
                         <div class="cmTitle">Earned</div>
                     </div>
                 </div>
@@ -1144,8 +1144,8 @@ class Body{
             <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" style="width:100%;height:100%;color:black;" >Current deliveries</div></a>
             </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
-        echo '<table class="deliveryPool" style="margin-top:0.3%">
-                        <thead style="background-color:#dbb1f9">
+        echo '<table class="styled-table" style="margin-top:0.3%">
+                        <thead>
                             <tr>
                                 <th>Customer name</th>
                                 <th>Address</th>
@@ -1161,12 +1161,12 @@ class Body{
             $pool = "";
             foreach ($result as $row) {
                 $pool .=  '<tr>
-                    <td class="tdCenter">'.$row['first_name'].' '.$row['last_name'].'</td>
-                    <td class="tdCenter">'.$row['city'].','.$row['street'].'</td>
-                    <td class="tdCenter">'.$row['contact_no'].'</td>
-                    <td class="tdCenter">'.$row['place_date'].'</td>
-                    <td class="tdCenter">'.$row['place_time'].'</td>
-                    <td class="tdCenter"><div class="accept_btn" id="col" onClick="takeJob(this)" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a href="../Delvery/acceptDelivery" style="color:white" >Accept</a></div></td>
+                    <td>'.$row['first_name'].' '.$row['last_name'].'</td>
+                    <td>'.$row['city'].','.$row['street'].'</td>
+                    <td>'.$row['contact_no'].'</td>
+                    <td>'.$row['place_date'].'</td>
+                    <td>'.$row['place_time'].'</td>
+                    <td><div class="accept_btn" id="col" onClick="takeJob(this)" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a href="../Delvery/acceptDelivery" style="color:white" >Accept</a></div></td>
                 </tr>';
             }
             echo $pool;
@@ -1195,7 +1195,7 @@ class Body{
          <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" id="temp" style="width:100%;height:100%;color:white;background-color:#2d77bc">Current deliveries</div></a>
          </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
-        echo '<table class="deliveryPool" style="margin-top:0.3%">
+        echo '<table class="styled-table" style="margin-top:0.3%">
                     <thead style="background-color:#dbb1f9">
                         <tr>
                             <th>Customer name</th>
@@ -1212,12 +1212,12 @@ class Body{
             $pool = "";
             foreach ($result as $row) {
                 $pool .=  '<tr>
-                    <td class="tdCenter">'.$row['first_name'].' '.$row['last_name'].'</td>
-                    <td class="tdCenter">'.$row['city'].','.$row['street'].'</td>
-                    <td class="tdCenter">'.$row['contact_no'].'</td>
-                    <td class="tdCenter">'.$row['place_date'].'</td>
-                    <td class="tdCenter">'.$row['place_time'].'</td>
-                    <td class="tdCenter"><div class="delete_btn" id="delete_btn" onClick="takeJob(this)" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
+                    <td>'.$row['first_name'].' '.$row['last_name'].'</td>
+                    <td>'.$row['city'].','.$row['street'].'</td>
+                    <td>'.$row['contact_no'].'</td>
+                    <td>'.$row['place_date'].'</td>
+                    <td>'.$row['place_time'].'</td>
+                    <td><div class="delete_btn" id="delete_btn" onClick="takeJob(this)" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
                 </tr>';
             }
             echo $pool;
@@ -1276,7 +1276,7 @@ class Body{
                 <input type="text" class="registerProduct" name="bank_acc" placeholder="Enter bank account no" style="margin-bottom:2%;border:3px solid #deb4f8;font-family:poppins"  > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:2%;border:3px solid #deb4f8" onchange="showProductImage(this)" > <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:2%;border:3px solid #deb4f8" onchange="showImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Register Dealer" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -1316,7 +1316,7 @@ class Body{
                 <input type="text" class="registerProduct" name="street" placeholder="Enter street" style="margin-bottom:2%;border:3px solid #deb4f8" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showProductImage(this)" required> <br>
+                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #deb4f8" onchange="showImage(this)" required> <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="submit" name="Sign In" value="Register Distributor" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
@@ -1387,7 +1387,7 @@ class Body{
                     <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
                 </div>
                 <div class="orderTbl">
-                    <table class="orderTable">
+                    <table class="styled-table">
                         <thead>
                             <tr>
                                 <th>Product name</th>
@@ -1396,30 +1396,30 @@ class Body{
                                 <th>Total (Rs.)</th>
                             </tr>
                         </thead>
-                        <tbody style="overflow-y:auto;height:100px">
+                        <tbody>
                             <tr>
-                                <td class="tdCenter">Buddy</td>
-                                <td class="tdRight">1,450.00</td>
-                                <td class="tdRight">12</td>
-                                <td class="tdRight">17,400</td>
+                                <td>Buddy</td>
+                                <td>1,450.00</td>
+                                <td>12</td>
+                                <td>17,400</td>
                             </tr>
                             <tr>
-                                <td class="tdCenter">Regular</td>
-                                <td class="tdRight">3,220.00</td>
-                                <td class="tdRight">30</td>
-                                <td class="tdRight">96,600</td>
+                                <td>Regular</td>
+                                <td>3,220.00</td>
+                                <td>30</td>
+                                <td>96,600</td>
                             </tr>
                             <tr>
-                                <td class="tdCenter">Commercial</td>
-                                <td class="tdRight">5,150.00</td>
-                                <td class="tdRight">15</td>
-                                <td class="tdRight">77,250</td>
+                                <td>Commercial</td>
+                                <td>5,150.00</td>
+                                <td>15</td>
+                                <td>77,250</td>
                             </tr>
                             <tr>
-                                <td class="tdCenter"></td>
-                                <td class="tdRight"></td>
-                                <td class="tdRight"></td>
-                                <td class="tdRight">191,250</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>191,250</td>
                             </tr>
                          
                         </tbody>      
@@ -1553,12 +1553,19 @@ class Body{
                 </div>
                 <div class="analysis_bottom">
                     <div class="graph">';
-                        $chart_3['vector']=[12,45,76,34,47];
+                        $chart_3['vector']=[15,25,28,23,28];
                         $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
                         $chart_3['color']="rgba(30, 105, 176, 1)";
-                        $chart_3['y']='Deliveries';
+                        $chart_3['y']='Deliveries-Last week';
                         $chart_3 = new Chart('line',$chart_3,4);   
                     
+                    echo'</div>
+                    <div class="graph" >';
+                        $chart_4['vector']=[567,458,1453,758];
+                        $chart_4['labels']=['Buddy','Budget','Regular','Commercial'];
+                        $chart_4['color']="rgba(30, 105, 176, 1)";
+                        $chart_4['y']='Last week sales-By product';
+                        $chart_4 = new Chart('bar',$chart_4,5);                    
                     echo'</div>
                 </div>  
             </div>';     
@@ -1572,7 +1579,7 @@ class Body{
             <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
-            <table class="orderTable">
+            <table class="styled-table">
             <thead>
                 <tr>
                     <th>Product name</th>
@@ -1581,30 +1588,30 @@ class Body{
                     <th>Total (Rs.)</th>
                 </tr>
             </thead>
-            <tbody style="overflow-y:auto;height:100px">
+            <tbody>
                 <tr>
-                    <td class="tdCenter">Buddy</td>
-                    <td class="tdRight">1,450.00</td>
-                    <td class="tdRight">12</td>
-                    <td class="tdRight">17,400</td>
+                    <td >Buddy</td>
+                    <td >1,450.00</td>
+                    <td >12</td>
+                    <td >17,400</td>
                 </tr>
                 <tr>
-                    <td class="tdCenter">Regular</td>
-                    <td class="tdRight">3,220.00</td>
-                    <td class="tdRight">30</td>
-                    <td class="tdRight">96,600</td>
+                    <td >Regular</td>
+                    <td >3,220.00</td>
+                    <td >30</td>
+                    <td >96,600</td>
                 </tr>
                 <tr>
-                    <td class="tdCenter">Commercial</td>
-                    <td class="tdRight">5,150.00</td>
-                    <td class="tdRight">15</td>
-                    <td class="tdRight">77,250</td>
+                    <td >Commercial</td>
+                    <td >5,150.00</td>
+                    <td >15</td>
+                    <td >77,250</td>
                 </tr>
                 <tr>
-                    <td class="tdCenter"></td>
-                    <td class="tdRight"></td>
-                    <td class="tdRight"></td>
-                    <td class="tdRight">191,250</td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td >191,250</td>
                 </tr>
              
             </tbody>      
@@ -1677,7 +1684,7 @@ class Body{
             <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#be6bf9;color:white">Analysis</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
-            <table class="orderTable">
+            <table class="styled-table">
             <thead>
                 <tr>
                     <th>Product name</th>
@@ -1688,28 +1695,28 @@ class Body{
             </thead>
             <tbody style="overflow-y:auto;height:100px">
                 <tr>
-                    <td class="tdCenter">Buddy</td>
-                    <td class="tdRight">1,450.00</td>
-                    <td class="tdRight">12</td>
-                    <td class="tdRight">17,400</td>
+                    <td>Buddy</td>
+                    <td>1,450.00</td>
+                    <td>12</td>
+                    <td>17,400</td>
                 </tr>
                 <tr>
-                    <td class="tdCenter">Regular</td>
-                    <td class="tdRight">3,220.00</td>
-                    <td class="tdRight">30</td>
-                    <td class="tdRight">96,600</td>
+                    <td>Regular</td>
+                    <td>3,220.00</td>
+                    <td>30</td>
+                    <td>96,600</td>
                 </tr>
                 <tr>
-                    <td class="tdCenter">Commercial</td>
-                    <td class="tdRight">5,150.00</td>
-                    <td class="tdRight">15</td>
-                    <td class="tdRight">77,250</td>
+                    <td>Commercial</td>
+                    <td>5,150.00</td>
+                    <td>15</td>
+                    <td>77,250</td>
                 </tr>
                 <tr>
-                    <td class="tdCenter"></td>
-                    <td class="tdRight"></td>
-                    <td class="tdRight"></td>
-                    <td class="tdRight">191,250</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>191,250</td>
                 </tr>
              
             </tbody>      
