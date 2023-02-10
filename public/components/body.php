@@ -466,13 +466,14 @@ class Body{
                         </select>
                     </form>
                 </div>
-                <div class="chart">';
-                // $chart = $data['chart'];
-                // if(count($chart['labels']) > 0){
-                //     $chart = new Chart('bar',$chart,1);
-                // }else{
-                //     echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
-                // }
+                <div class="chart" style="width:100%; background-color:#0000000A;">';
+                $chart = $data['chart'];
+                // var_dump($chart);
+                if(count($chart['labels']) > 0){
+                    $chart = new Chart('bar',$chart,1);
+                }else{
+                    echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
+                }
                 echo '</div>
             </div>
             <div class="reviews">
