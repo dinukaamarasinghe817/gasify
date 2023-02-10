@@ -326,6 +326,21 @@ class Customer extends Model{
 
     }
 
+    public function add_refund_details($order_id, $bank,$branch,$Acc_no){
+       
+        $error = "";
+
+        if(!empty($bank) &&!empty($branch) &&!empty($Acc_no)){
+            $this->update('reservation',['bank'=>$bank,'branch'=>$branch,'acc_no'=>$Acc_no,'order_state'=>"Canceled"],'order_id='.$order_id);
+
+        }
+        else{
+            $error = "All input fields are required!";
+        }
+
+        return $error;
+
+    }
 
 
     /*..................customer place reservation..................*/
@@ -358,9 +373,10 @@ class Customer extends Model{
 
     //get  dealers details and display in view dealers tab according to selected brand and city
     public function getdealers($brand_name = null,$city_name = null) {
-        if($brand_name!= null && $city_name!= null){
+        if($brand_name != null && $city_name != null){
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name' AND d.city = '$city_name'");
-        }else if($brand_name!= null && $city_name== null){
+        }
+        else if($brand_name!= null && $city_name== null){
 
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name'");
         }else if($city_name!= null && $brand_name== null){
@@ -372,6 +388,7 @@ class Customer extends Model{
         }
        
         return $result1;
+        
     }
 
 
