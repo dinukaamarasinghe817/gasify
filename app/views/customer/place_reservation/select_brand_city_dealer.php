@@ -55,8 +55,16 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <div class="drop-down">
                     <div class="city_drapdown">
                         <select name="city" id="city" class="citydropdown dropdowndate" >
-                            <option value="-1" selected disabled hidden>Select City</option>
-                            <?php 
+                        <?php
+                            if(isset($data["city"])){
+                                $result1 = $data["city"];
+                                while($customer_city = mysqli_fetch_assoc($result1)){           
+                                    $customer_current_city = $customer_city["city"];
+                                    echo '<option value="-1" selected disabled hidden>'.$customer_current_city.'</option>';
+                                }
+                            }
+                            
+                            
                                 $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
                                 sort($cities);              
                                 foreach (CITIES as $city){

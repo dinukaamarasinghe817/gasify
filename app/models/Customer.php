@@ -16,7 +16,7 @@ class Customer extends Model{
 
     public function getCustomer($customer_id){
         // $result = $this->read('dealer', "dealer_id = $dealer_id");
-        $result = $this->Query("SELECT * FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.dealer_id = $customer_id");
+        $result = $this->Query("SELECT * FROM customer c INNER JOIN users u ON u.user_id = c.customer_id WHERE c.customer_id = $customer_id");
         return $result;
     }//
 
