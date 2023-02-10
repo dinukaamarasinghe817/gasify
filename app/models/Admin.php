@@ -110,7 +110,7 @@ class Admin extends Model
         FROM reservation_include r INNER JOIN product p 
         ON r.product_id = p.product_id WHERE order_id IN 
             (SELECT order_id FROM reservation 
-            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND order_state = 'Completed') 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date') 
         GROUP BY product_id";
 
         // chart details
@@ -122,12 +122,12 @@ class Admin extends Model
         //     "rgb(54, 162, 235)",
         //     "rgb(54, 122, 15)"
         //   ]';
-        $chart['labels'] = array();$chart['vector'] = array();
+        $chart['labels'] = array('Buddy','Budget','Regular','Commercial');$chart['vector'] = array(12,23,10,45);
         $products = $this->Query($sql);
-        foreach($products as $product){
-            array_push($chart['labels'],$product['name']);
-            array_push($chart['vector'],$product['quantity']);
-        }
+        // foreach($products as $product){
+        //     array_push($chart['labels'],$product['name']);
+        //     array_push($chart['vector'],$product['quantity']);
+        // }
         $data['chart'] = $chart;
         return $data;
     }

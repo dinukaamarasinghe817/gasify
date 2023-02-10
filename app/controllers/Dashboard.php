@@ -149,6 +149,7 @@
             $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['image'] = $row['image'];
             $data['navigation'] = 'dashboard';
+            // var_dump($data);
             $this->view('dashboard/admin', $data);
         }
 
