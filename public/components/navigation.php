@@ -262,22 +262,21 @@ class Navigation {
                     <h3> Dealers</h3>
                       
                 </a>
-            </li>
-            <li class="nav-tile">';
-            if($active=="help"){
-                echo '  <a href="'.BASEURL.'/Support/customer_support"  class="panel-tile active help">';
-            }else{
-                echo ' <a href="'.BASEURL.'/Support/customer_support" class="panel-tile help">';
-            }
+            </li>';
+            // echo '<li class="nav-tile">';
+            // if($active=="help"){
+            //     echo '  <a href="'.BASEURL.'/Support/customer_support"  class="panel-tile active help">';
+            // }else{
+            //     echo ' <a href="'.BASEURL.'/Support/customer_support" class="panel-tile help">';
+            // }
                
-            echo     '<svg width="26" height="26" viewBox="0 0 158 173" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M70.8162 78.6682V47.2601M110.076 78.6682V47.2601M149.336 8H8V133.632H47.2601V165.04L78.6682 133.632H117.928L149.336 102.224V8Z" stroke="" stroke-width="15.704" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-                    <h3>Help</h3>
-                </a>
-            </li>
-            <li class="nav-tile">
-        </ul>
+            // echo     '<svg width="26" height="26" viewBox="0 0 158 173" fill="none" xmlns="http://www.w3.org/2000/svg">
+            // <path d="M70.8162 78.6682V47.2601M110.076 78.6682V47.2601M149.336 8H8V133.632H47.2601V165.04L78.6682 133.632H117.928L149.336 102.224V8Z" stroke="" stroke-width="15.704" stroke-linecap="round" stroke-linejoin="round"/>
+            // </svg>
+            //         <h3>Help</h3>
+            //     </a>
+            // </li>';
+        echo '</ul>
         </section>';
     }
 
