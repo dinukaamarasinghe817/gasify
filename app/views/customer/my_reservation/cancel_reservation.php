@@ -30,7 +30,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         <input type="text" name="bank" placeholder="Bank Name">
                         <input type="text" name="branch" placeholder="Branch">
                         <input type="text" name="Acc_no" placeholder="Account No">
-                        <button type="submit" class="submit_btn" >Submit</button>
+                        <button type="submit" class="submit_btn" onclick="customerprompt(\'cancelorder\',\''.BASEURL.'/Orders/customer_allreservations\'); return false;">Submit</button>
                     </form>
                 
                 </div>';

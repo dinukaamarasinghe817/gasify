@@ -157,6 +157,8 @@ class Orders extends Controller{
 
         $data['brands'] = $this->model('Customer')->getCompanyBrand();
         $data['dealers'] = $this->model('Customer')->getdealers();
+        $data['city'] = $this->model('Customer')->getCustomer($customer_id);
+
 
         $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 
