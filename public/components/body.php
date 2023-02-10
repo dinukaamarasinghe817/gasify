@@ -1569,32 +1569,34 @@ class Body{
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Analysis</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
-                <div class="analysis_top">
-                    <div class="graph" >';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;  display:flex; flex-direction:row;">
+                <div class="analysis_top"  style="flex-direction:column;">
+                    <div class="graph" style="width:500px; padding:20px;">
+                    <h4>Last Week</h4>';
                         $chart['vector']=[12,45,76,34,47];
                         $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
                         $chart['color']="rgba(30, 105, 176, 1)";
                         $chart['y']='Deliveries';
                         $chart = new Chart('bar',$chart,1);                    
                     echo'</div>
-                    <div class="graph" >';
-                        $chart_2['vector']=array(50,30,20);
-                        $chart_2['labels']=array('Regular','Commercial','Buddy');
-                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
-                        $chart_2['y']='Top products';
-                        $chart_2['main']="fgdff";
-                        $chart_2 = new Chart('doughnut',$chart_2,3);                    
-                    echo'</div>
-                </div>
-                <div class="analysis_bottom">
-                    <div class="graph">';
+                    <div class="graph" style="width:500px; padding:20px;">
+                    <h4>Last Week Revenue</h4>';
                         $chart_3['vector']=[15,25,28,23,28];
                         $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
                         $chart_3['color']="rgba(30, 105, 176, 1)";
                         $chart_3['y']='Deliveries-Last week';
-                        $chart_3 = new Chart('line',$chart_3,4);   
-                    
+                        $chart_3 = new Chart('line',$chart_3,4);                   
+                    echo'</div>
+                </div>
+                <div class="analysis_bottom">
+                    <div class="graph" style="height: 70vh; padding:20px; width:500px;">
+                    <h4>Last Month</h4>';
+                            $chart_2['vector']=array(50,30,20);
+                            $chart_2['labels']=array('Regular','Commercial','Buddy');
+                            $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                            $chart_2['y']='Top products';
+                            $chart_2['main']="fgdff";
+                            $chart_2 = new Chart('doughnut',$chart_2,3);
                     echo'</div>
                 </div>  
             </div>';     
@@ -1709,32 +1711,34 @@ class Body{
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Analysis</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
-                <div class="analysis_top">
-                    <div class="graph" >';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0; display:flex; flex-direction:row;">
+                <div class="analysis_top" style="flex-direction:column;">
+                    <div class="graph" style="width:500px; padding:20px;">
+                        <h4>Last Week</h4>';
                         $chart['vector']=[12,18,23,15,17];
                         $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
                         $chart['color']="rgba(30, 105, 176, 1)";
                         $chart['y']='Deliveries-Last week';
                         $chart = new Chart('bar',$chart,1);                    
                     echo'</div>
-                    <div class="graph" >';
-                        $chart_2['vector']=array(20,80);
-                        $chart_2['labels']=array('Canceled','Delivered');
-                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
-                        $chart_2['y']='Last month deliveries';
-                        $chart_2['main']="fgdff";
-                        $chart_2 = new Chart('doughnut',$chart_2,3);                    
-                    echo'</div>
-                </div>
-                <div class="analysis_bottom">
-                    <div class="graph">';
+                    <div class="graph" style="width:500px; padding:20px;">
+                    <h4>Last Week Revenue</h4>';
                         $chart_3['vector']=[5500,3250,4800,4130,3900];
                         $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
                         $chart_3['color']="rgba(30, 105, 176, 1)";
                         $chart_3['y']='Revenue-Last week(Rs)';
-                        $chart_3 = new Chart('line',$chart_3,4);   
-                    
+                        $chart_3 = new Chart('line',$chart_3,4);                    
+                    echo'</div>
+                </div>
+                <div class="analysis_bottom">
+                    <div class="graph" style="height: 70vh; padding:20px; width:500px;">
+                        <h4>Last Month</h4>';
+                            $chart_2['vector']=array(20,80);
+                            $chart_2['labels']=array('Canceled','Delivered');
+                            $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                            $chart_2['y']='Last month deliveries';
+                            $chart_2['main']="fgdff";
+                            $chart_2 = new Chart('doughnut',$chart_2,3);
                     echo'</div>
      
                 </div>  
