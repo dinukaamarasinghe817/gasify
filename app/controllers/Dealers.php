@@ -22,7 +22,7 @@ class Dealers extends Controller {
 
 
     /*................................customer view dealers....................................*/
-    //select dealers accoering to brand and city
+    //select dealers according to brand and city
     public function customer_dealers($brand_name=null,$city_name = null) {
 
         $customer_id = $_SESSION['user_id'];

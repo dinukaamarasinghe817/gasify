@@ -105,7 +105,8 @@ class Orders extends Controller{
 
 
     //cancel the reservation
-    function customer_cancelreservation($order_id){
+    function customer_cancelreservation($order_id,$error = null){
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -113,11 +114,34 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+        $data['order_id'] = $order_id;
+
+        if($error != null){
+            // $data['error'] = $error;
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
 
         $data['confirmation'] = '';
         $this->view('customer/my_reservation/cancel_reservation', $data);
 
 
+    }
+
+    //refund form data for update reservation table
+    function refund_bank_details($order_id){
+        $customer_id = $_SESSION['user_id'];
+        $bank = $_POST['bank'];
+        $branch = $_POST['branch'];
+        $Acc_no = $_POST['Acc_no'];
+      
+        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
+        if(!empty($data['refund_detail_error'])){
+            $this->customer_cancelreservation($order_id,$data['refund_detail_error']);
+        }
+        else{
+            // $this->customer_cancelreservation($order_id);
+            // $this->view('customer/viewmyreservation', $data);
+        }    
     }
 
     /*.................Customer place reservation.................*/

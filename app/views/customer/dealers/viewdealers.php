@@ -101,7 +101,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
             event.preventDefault();
             var formData = new FormData();
             let xhr = new XMLHttpRequest(); //new xml object
-            xhr.open('POST', 'http://localhost/mvc/Dealers/selected_brand_dealers/'+ brand_selected_value, city_selected_value, true);
+            var url = 'http://localhost/mvc/Dealers/selected_brand_dealers/'+ brand_selected_value +'/' + city_selected_value;
+            console.log(url);
+            xhr.open('POST', url , true);
             xhr.onload = ()=>{
                 if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
                      let data = xhr.response;
