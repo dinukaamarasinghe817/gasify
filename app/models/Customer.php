@@ -362,6 +362,14 @@ class Customer extends Model{
         return $company_products;
     }
 
+    public function select_brand_city_dealer($brand = null,$dealer=null){
+        $error = " ";
+        if($brand == null || $dealer == null){
+            $error = "Please select a brand and a city";
+        }
+
+        return $error;
+    }
 
     //get dealer bank details for bank deposit payments
     public function getDealerBankDetails($dealer_id){

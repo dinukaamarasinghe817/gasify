@@ -26,8 +26,8 @@ class Products extends Controller{
         $this->view('customer/dashboard/view_company_products',$data);
     }
 
-    // customer select product quantity in place reservation tab
-    function select_products($company_id){
+       // customer select product quantity in place reservation tab
+       function select_products($company_id){
     
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -45,6 +45,7 @@ class Products extends Controller{
 
 
     }
+
 }
 
 ?>

@@ -8,7 +8,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        
+        if(isset($data['toast'])){
+            $error = new Prompt('toast',$data['error']);
+
+        }
     ?>
 
     <div class="under_topbar">
@@ -16,7 +19,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
            <h3>Place Reservation</h3>
         </div> 
         <div class="middle">
-            <form action="<?php BASEURL ?>/"></form>
+            <!-- <form action="<?php BASEURL ?>/Orders/get_brand_city_dealer" method="post"> -->
                 <div class="brand">
                     <div class="img">
                         <svg width="106" height="166" viewBox="0 0 106 166" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,12 +109,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         </div>
                     </div>
                 </div>
-            </form>
+                <!-- <button type="submit">Next</button> -->
+                
+            <!-- </form> -->
         </div>
 
         <div class="bottom">
             
             <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
+            <!-- <button type="submit">Next</button> -->
         </div>
         
     </div>
@@ -148,7 +154,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             event.preventDefault();
             var formData = new FormData();
             let xhr = new XMLHttpRequest(); //new xml object
-            var url = 'http://localhost/mvc/Orders/filter_dealers/'+brand_selected_value +'/' + city_selected_value + '/' + dealer_selected_value ;
+            var url = 'http://localhost/mvc/Orders/filter_dealers/'+brand_selected_value +'/' + city_selected_value + '/' + dealer_selected_value +'/'+"hi" ;
             console.log(url);
             xhr.open('POST', url , true);
             xhr.onload = ()=>{

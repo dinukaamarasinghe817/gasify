@@ -32,6 +32,12 @@ a,button{
     margin-top: 40px;
 }
 
+.middle form{
+    display: flex;
+    column-gap: 50px;
+    
+}
+
 /* three cards brand,city,dealer  css*/
 .brand , .city , .dealer {
     display: flex;
