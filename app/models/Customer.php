@@ -362,6 +362,7 @@ class Customer extends Model{
         return $company_products;
     }
 
+
     public function select_brand_city_dealer($brand = null,$dealer=null){
         $error = " ";
         if($brand == null || $dealer == null){

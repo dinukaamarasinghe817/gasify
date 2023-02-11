@@ -117,7 +117,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="bottom">
             
             <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
-            <!-- <button type="submit">Next</button> -->
+            <!-- <button type="submit" onclick="check_values('brand','city','dealer');">Next</button> -->
         </div>
         
     </div>
@@ -126,6 +126,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <script>
 
         const page = document.querySelector('.dealer');
+        const middle = document.querySelector('body');
+
 
         function get_select_value(branddropdown_id=null,citydropdown_id=null,dealerdropdown_id=null){
 
@@ -154,7 +156,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             event.preventDefault();
             var formData = new FormData();
             let xhr = new XMLHttpRequest(); //new xml object
-            var url = 'http://localhost/mvc/Orders/filter_dealers/'+brand_selected_value +'/' + city_selected_value + '/' + dealer_selected_value +'/'+"hi" ;
+            var url = 'http://localhost/mvc/Orders/filter_dealers/'+brand_selected_value +'/' + city_selected_value + '/' + dealer_selected_value;
             console.log(url);
             xhr.open('POST', url , true);
             xhr.onload = ()=>{
@@ -176,6 +178,31 @@ $sidebar = new Navigation('customer',$data['navigation']);
             // $_SESSION['dealer'] = dealerdropdown_selected_value;
 
         }
+        
+
+
+        // function check_values(branddropdown_id=null,citydropdown_id=null,dealerdropdown_id=null){
+        //     var brand_selected_value = document.getElementById(branddropdown_id).id;
+        //     var city_selected_value = document.getElementById(citydropdown_id).value;
+        //     var dealer_selected_value = document.getElementById(dealerdropdown_id).value;
+
+        //     event.preventDefault();
+        //     var formData = new FormData();
+        //     let xhr = new XMLHttpRequest(); //new xml object
+        //     var url = 'http://localhost/mvc/Products/select_products/'+brand_selected_value;
+        //     console.log(url);
+        //     xhr.open('POST', url , true);
+        //     xhr.onload = ()=>{
+        //         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+        //              let data = xhr.response;
+        //         if(data){
+        //              middle.innerHTML = data;
+    
+        //         }
+        //         }
+        //     }
+        //     xhr.send(formData);
+        // }
 
        
 
