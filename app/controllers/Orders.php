@@ -164,6 +164,18 @@ class Orders extends Controller{
 
     }
 
+    function filter_dealers($brand,$city,$dealer){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+        echo $brand,$city,$dealer;
+        $data['dealers'] = $this->model('Customer')->getdealers($brand,$city);
+
+        $this -> view('customer/place_reservation/filter_dealers',$data);
+
+
+
+    }
+
 
     //select payment method
     function select_payment_method(){
