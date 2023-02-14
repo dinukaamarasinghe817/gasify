@@ -159,23 +159,20 @@ class Orders extends Controller{
         $data['dealers'] = $this->model('Customer')->getdealers();
         $data['city'] = $this->model('Customer')->getCustomer($customer_id);
 
-        if($error != null){
-            // $data['error'] = $error;
-            $data['toast'] = ['type'=>'error', 'message'=>$error];
-        }
-
         $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 
     }
 
-    function filter_dealers($brand,$city,$dealer){
+    function filter_dealers($brand=null,$city=null){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
+
+        $_SESSION['brand'] = $brand;
+        $_SESSION['city'] = $city;
+
         $data['dealers'] = $this->model('Customer')->getdealers($brand,$city);
-
+        
         $this -> view('customer/place_reservation/filter_dealers',$data);
-
-
 
     }
 

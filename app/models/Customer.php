@@ -344,7 +344,6 @@ class Customer extends Model{
 
 
     /*..................customer place reservation..................*/
-
     //get company products for select quantity to customer
     public function getCompanyProducts($company_id){
 

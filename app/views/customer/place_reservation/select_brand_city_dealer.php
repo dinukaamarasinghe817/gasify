@@ -1,6 +1,6 @@
 <?php
 
-$header = new Header("customer/customer_brand_city_dealer");
+$header = new Header("customer/customer_brand_city_dealer",$data);
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 
@@ -9,7 +9,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
         if(isset($data['toast'])){
-            $error = new Prompt('toast',$data['error']);
+            $error = new Prompt('toast',$data['toast']);
 
         }
     ?>
@@ -39,7 +39,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             $name = $brands["name"];
                                             $c_id = $brands["company_id"];
 
-                                            echo "<option value = $name id= $c_id> $name </option>";
+                                            echo "<option class = 'company_id' value = $name id= $c_id> $name </option>";
                                         }
                                     }
                                 ?>
@@ -102,6 +102,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             $dealer_id = $dealers["dealer_id"];
                                             echo "<option value = $name id= $dealer_id> $name </option>";
                                         }
+
+                                        
                                     }
                                 ?>
                         
@@ -116,7 +118,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
         <div class="bottom">
             
-            <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
+            <a href="<?php echo BASEURL; ?>/Products/select_products" class="btn">Next</a>
             <!-- <button type="submit" onclick="check_values('brand','city','dealer');">Next</button> -->
         </div>
         
@@ -134,6 +136,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
             var brand_selected_value = document.getElementById(branddropdown_id).value;
             var city_selected_value = document.getElementById(citydropdown_id).value;
             var dealer_selected_value = document.getElementById(dealerdropdown_id).value;
+
+            // var brand_id = document.querySelector('.company_id').value;
+
+            // console.log(brand_id);
+            
            
             
             
@@ -149,7 +156,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             // $_SESSION['brand'] = brand_selected_value;
             // $_SESSION['city'] = city_selected_value;
 
-            // console.log(brand_selected_value);
+            console.log(brand_selected_value);
             // console.log(city_selected_value);
             // console.log(dealer_selected_value);
             
@@ -175,7 +182,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
         function get_dealer_value(dealerdropdown_id = null){
             var dealer_selected_value = document.getElementById(dealerdropdown_id).value;
             console.log(dealer_selected_value);
-            // $_SESSION['dealer'] = dealerdropdown_selected_value;
 
         }
         
