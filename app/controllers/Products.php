@@ -27,23 +27,23 @@ class Products extends Controller{
     }
 
        // customer select product quantity in place reservation tab
-       function select_products(){
+    //    function select_products(){
     
-        $customer_id = $_SESSION['user_id'];
-        $data['navigation'] = 'placereservation';
-        $company = $_SESSION['brand'];
+    //     $customer_id = $_SESSION['user_id'];
+    //     $data['navigation'] = 'placereservation';
+    //     $company = $_SESSION['brand'];
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+    //     $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+    //     $row1 = mysqli_fetch_assoc($customer_details);
+    //     $data['image'] = $row1['image'];
+    //     $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
         
-        $data['products']= $this ->model('Customer')->getCompanyProducts($company);
-        $this->view('customer/place_reservation/select_products',$data);
+    //     $data['products']= $this ->model('Customer')->getCompanyProducts($company);
+    //     $this->view('customer/place_reservation/select_products',$data);
 
 
-    }
+    // }
 
 }
 
