@@ -345,20 +345,25 @@ class Customer extends Model{
 
     /*..................customer place reservation..................*/
     //get company products for select quantity to customer
-    public function getCompanyProducts($company_id){
+    public function getDealerProducts($dealer_id){
 
-        $company_products = array();
-        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price FROM company c 
+        $dealer_products = array();
+        // $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price FROM company c 
+        // INNER JOIN product p ON c.company_id = p.company_id 
+        // WHERE c.company_id = '{$company_id}'");
+
+        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price,dk.quantity as dealer_stock FROM company c 
         INNER JOIN product p ON c.company_id = p.company_id 
-        WHERE c.company_id = '{$company_id}'");
-
+        INNER JOIN dealer_keep dk  ON p.product_id = dk.product_id 
+        WHERE dk.dealer_id = '{$dealer_id}'");
+    
         if(mysqli_num_rows($result1)>0){
             while($row1=mysqli_fetch_assoc($result1)){
-                array_push($company_products,$row1);
+                array_push($dealer_products,$row1);
             }
         }
 
-        return $company_products;
+        return $dealer_products;
     }
 
 
@@ -380,14 +385,14 @@ class Customer extends Model{
     /*.........................Customer dealers tab ....................*/
 
     //get  dealers details and display in view dealers tab according to selected brand and city
-    public function getdealers($brand_name = null,$city_name = null) {
-        if($brand_name != null && $city_name != null){
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name' AND d.city = '$city_name'");
+    public function getdealers($company_id = null,$city_name = null) {
+        if($company_id != null && $city_name != null){
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
         }
-        else if($brand_name!= null && $city_name== null){
+        else if($company_id!= null && $city_name== null){
 
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name'");
-        }else if($city_name!= null && $brand_name== null){
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
+        }else if($city_name!= null && $company_id== null){
 
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
         

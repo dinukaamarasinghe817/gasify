@@ -16,7 +16,7 @@
                                     while($dealers = mysqli_fetch_assoc($result1)){    
                                         $name = $dealers["d_name"];
                                         $dealer_id = $dealers["dealer_id"];
-                                        echo "<option value = $name id= $dealer_id> $name </option>";
+                                        echo "<option value = $dealer_id id= $dealer_id> $name </option>";
                                     }
                                 }
                             ?>

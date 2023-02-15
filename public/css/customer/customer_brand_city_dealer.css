@@ -34,8 +34,15 @@ a,button{
 
 .middle form{
     display: flex;
-    column-gap: 50px;
+    flex-direction: column;
     
+    
+}
+
+form .top{
+    display: flex;
+    flex-direction: row;
+    column-gap: 100px;
 }
 
 /* three cards brand,city,dealer  css*/
@@ -82,7 +89,7 @@ a,button{
     padding-top: 100px;
     display: flex;
     justify-content: right;
-    margin-right: 80px;
+    /* margin-right: 80px; */
     
 }
 
