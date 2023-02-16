@@ -421,11 +421,31 @@ class Customer extends Model{
     /*..................................customer help tab........................................... */
     //get admin id
     public function getAdminId(){
-        $result = $this->Query("SELECT user_id FROM users where type='admin'");
+        $result = $this->Query("SELECT * FROM users where type='admin'");
 
         return $result;
 
     }
+
+    //display customer send messages
+    public function getMessages($customer_id,$admin_id){
+        $result = $this->Query("SELECT * FROM customer_support WHERE sender = '$customer_id' OR reciever = '$customer_id' ORDER BY time ASC");
+
+
+        return $result;
+
+
+    }
+
+    //display customer recieved messages
+    // public function getRecievedMessages($customer_id){
+    //     $result = $this->Query("SELECT * FROM customer_support WHERE reciever = '$customer_id' ORDER BY time ASC");
+
+
+    //     return $result;
+
+
+    // }
 
     //get customer message and send to admin
     public function sendMessage($customer_id, $admin_id, $message){
@@ -434,12 +454,15 @@ class Customer extends Model{
         $date = date('Y-m-d');
     
 
-        $result = $this->insert('customer_support',['customer_id'=> $customer_id,'admin_id'=>$admin_id,'date' => $date,'time'=>$time,'sender'=>$customer_id,'reciever'=>$admin_id
+        $result = $this->insert('customer_support',['customer_id'=> $customer_id,'admin_id'=>$admin_id,'date' => $date,
+        'time'=>$time,'sender'=>$customer_id,'reciever'=>$admin_id
         ,'description'=>$message]);
 
         return $result;
 
     }
+
+
 
 
     

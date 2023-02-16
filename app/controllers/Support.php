@@ -19,6 +19,9 @@ class Support extends Controller{
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row['image'];
+        $admin_id = 9;
+        $data['messages'] = $this->model('Customer')->getMessages($customer_id,$admin_id);
+        // $data['recieved_messages'] = $this->model('Customer')->getRecievedMessages($customer_id);
 
         // $data['products']= $this ->model('Customer')->getCompanyProducts($company_id);
         $this->view('customer/help/support',$data);
