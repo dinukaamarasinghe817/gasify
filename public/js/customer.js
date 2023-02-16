@@ -69,14 +69,6 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
         <p>Check your current delivery address is correct.If you need to change your delivery address,change it!</p>
         <form>
-            <select name="city" id="city" class="citydropdown dropdowndate" >
-                <option value="-1" selected disabled hidden>Maharagama</option>` 
-                for(i=0;i<cities.length;i++){
-                    body += `<option value=cities[i] id=cities[i] >`+cities[i]+`</option>`;
-                } 
-
-                  
-            body += `</select>
             <input name="new_address" placeholder="NO 22, Main Street" required >
         </form>
         <div class="buttons">

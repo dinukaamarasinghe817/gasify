@@ -146,13 +146,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
             var city_selected_value = document.getElementById(citydropdown_id).value;
             var dealer_selected_value = document.getElementById(dealerdropdown_id).value;
 
-            // var brand_id = document.querySelector('.company_id').value;
-
-            // console.log(brand_id);
-            
-           
-            
-            
             if (brand_selected_value == -1){
                 brand_selected_value = null;
 
@@ -162,10 +155,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 
             }
 
-            // $_SESSION['brand'] = brand_selected_value;
-            // $_SESSION['city'] = city_selected_value;
-
-            console.log(brand_selected_value);
+            // console.log(brand_selected_value);
             // console.log(city_selected_value);
             // console.log(dealer_selected_value);
             
@@ -190,6 +180,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
         function get_dealer_value(dealerdropdown_id = null){
             var dealer_selected_value = document.getElementById(dealerdropdown_id).value;
+            if (dealer_selected_value == -1){
+                dealer_selected_value = null;
+            }
             console.log(dealer_selected_value);
 
         }

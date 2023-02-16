@@ -10,7 +10,7 @@ class Support extends Controller{
     }
 
 
-    function customer_support(){
+    public function customer_support(){
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'help';
@@ -24,6 +24,25 @@ class Support extends Controller{
         $this->view('customer/help/support',$data);
     }
 
+    public function customer_send_message(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'help';
+
+        $admin = $this->model('Customer')->getAdminId();
+        // $admin_id = mysqli_fetch_assoc($admin);
+        $admin_id = 9;
+        $message = $_POST['message'];
+
+        if(!empty($message)){
+            $this->model('Customer')->sendMessage($customer_id, $admin_id, $message);
+        }
+        
+        $this -> customer_support();
+
+
+        // $data['']$this->model('Customer')->getCustomerSupportDetail($customer_id);
+
+    }
 
 }
 
