@@ -25,33 +25,49 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     <section class="chat-area">
                         
                         <div class="chat-box">
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                                    <h6>22:43</h6>
-                                </div>
-                                <img src="<?php echo $profile_image ?>" alt="">
-                            </div>
+                            <?php 
+                                $customer_id = $_SESSION['user_id'];
+                                $messages = $data['messages'];
+                                foreach ($messages as $message ) {
+                                    if( $message['sender']== $customer_id ) {
 
-                            <div class="chat incoming">
-                                <img src="<?php echo BASEURL; ?>/public/img/people/company.png" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                                    <h6>22:45</h6>
-                                </div>
-                            </div>
+                                        echo '<div class="chat outgoing">
+                                        <div class="details">
+                                            <p>'.$message['description'].'</p>
+                                            <h6>'.$message['time'].'</h6>
+                                        </div>
+                                        <img src="'.$profile_image.'" alt="">
+                                        </div>';
+                                    }
+                                    if($message['reciever']== $customer_id) {
 
-
-                            <div class="chat outgoing">
+                                        echo '<div class="chat incoming">
+                                            <img src="'.BASEURL.'/public/img/people/company.png" alt="">
+                                            <div class="details">
+                                                <p>'.$message['description'].'</p>
+                                                <h6>'.$message['time'].'</h6>
+                                            </div>
+                                            </div>';
+                                    }
+                                }   
                                 
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                                    <h6>22:50</h6>
-                                </div>
-                                <img src="<?php echo $profile_image ?>" alt="">
-                            </div>
+                                
+                                // $recieved_messages = $data['recieved_messages'];
+                                // foreach ($recieved_messages as $recieved_message ) {
+                                    
+                                // } 
+                                
 
-                            <div class="chat incoming">
+                                
+                            ?>
+                            
+
+                            
+
+
+                            
+
+                            <!-- <div class="chat incoming">
                                 <img src="<?php echo BASEURL; ?>/public/img/people/company.png" alt="">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
@@ -65,15 +81,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     <h6>23:15</h6>
                                 </div>
                                 <img src="<?php echo $profile_image ?>" alt="">
-                            </div>
+                            </div> -->
 
-                            <div class="chat incoming">
-                                <img src="<?php echo BASEURL; ?>/public/img/people/company.png" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                                    <h6>23:18</h6>
-                                </div>
-                            </div>
+                            
 
                         </div>
 
@@ -142,27 +152,45 @@ $sidebar = new Navigation('customer',$data['navigation']);
 <script>
     // const form = document.querySelector(".typing-area"),
     // inputField = form.querySelector(".input-field"),
-    // sendBtn = form.querySelector("button");
+    // sendBtn = form.querySelector("button"),
+    // chatBox = document.querySelector(".chat-area");
+
+    // ;
 
     // sendBtn.onclick = () => {
     //     event.preventDefault();
-    //         var formData = new FormData();
+    //         // var formData = new FormData();
     //         let xhr = new XMLHttpRequest(); //new xml object
-    //         // var url = 'http://localhost/mvc/Support/customer_send_message/';
+    //         var url = 'http://localhost/mvc/Support/customer_send_message';
+    //         console.log(url);
+    //         xhr.open('POST', url , true);
+    //         xhr.onload = ()=>{
+    //             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+    //                  inputField.value = "";
+    //             }
+    //         }
+    //         let formData = new FormData(form);
+
+    //         xhr.send(formData);
+
+    // }
+
+    // setInterval(()=>{
+    //     let xhr = new XMLHttpRequest(); //new xml object
+    //         var url = 'http://localhost/mvc/Support/customer_support';
     //         console.log(url);
     //         xhr.open('POST', url , true);
     //         xhr.onload = ()=>{
     //             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
     //                  let data = xhr.response;
-    //             if(data){
-    //                  page.innerHTML = data;
-    
-    //             }
+    //                  chatBox.innerHTML = data;
     //             }
     //         }
+    //         let formData = new FormData(form);
+
     //         xhr.send(formData);
 
-    // }
+    // })
 
     
 </script>
