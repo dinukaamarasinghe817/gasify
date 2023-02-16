@@ -77,9 +77,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                         </div>
 
-                        <form action="#" class="typing-area">
-                            <input type="text" placeholder="Type a message here...">
-                            <button><svg width="30" height="30" viewBox="0 0 53 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <form action="<?php echo BASEURL; ?>/Support/customer_send_message" method="post" class="typing-area" autocomplete="off">
+                            <input type="text" class="input-field" name="message" placeholder="Type a message here...">
+                            <button type="submit"><svg width="30" height="30" viewBox="0 0 53 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M44.4728 13.1615L19.1282 2.93559C2.10354 -3.94543 -4.88399 1.69318 3.64317 15.4313L6.21908 19.5886C6.95928 20.8071 6.95928 22.2168 6.21908 23.4353L3.64317 27.5687C-4.88399 41.3068 2.07393 46.9454 19.1282 40.0644L44.4728 29.8385C55.8424 25.2511 55.8424 17.7489 44.4728 13.1615ZM34.9094 23.2919H18.921C17.707 23.2919 16.7004 22.4796 16.7004 21.5C16.7004 20.5204 17.707 19.7081 18.921 19.7081H34.9094C36.1233 19.7081 37.13 20.5204 37.13 21.5C37.13 22.4796 36.1233 23.2919 34.9094 23.2919Z" fill="#fff"/>
                                     </svg>
                             </button>
@@ -138,3 +138,31 @@ $sidebar = new Navigation('customer',$data['navigation']);
     
 
 </section>
+
+<script>
+    // const form = document.querySelector(".typing-area"),
+    // inputField = form.querySelector(".input-field"),
+    // sendBtn = form.querySelector("button");
+
+    // sendBtn.onclick = () => {
+    //     event.preventDefault();
+    //         var formData = new FormData();
+    //         let xhr = new XMLHttpRequest(); //new xml object
+    //         // var url = 'http://localhost/mvc/Support/customer_send_message/';
+    //         console.log(url);
+    //         xhr.open('POST', url , true);
+    //         xhr.onload = ()=>{
+    //             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+    //                  let data = xhr.response;
+    //             if(data){
+    //                  page.innerHTML = data;
+    
+    //             }
+    //             }
+    //         }
+    //         xhr.send(formData);
+
+    // }
+
+    
+</script>

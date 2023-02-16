@@ -159,6 +159,11 @@ class Orders extends Controller{
         $data['dealers'] = $this->model('Customer')->getdealers();
         $data['city'] = $this->model('Customer')->getCustomer($customer_id);
 
+        if($error != null){
+            // $data['error'] = $error;
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
+
         $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 
     }
@@ -187,7 +192,7 @@ class Orders extends Controller{
         
         $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
 
-        // echo $company.$city.$dealer;
+        // echo $company_id.$city.$dealer_id;
         $data['company_id'] = $company_id;
         $data['city'] = $city;
         $data['dealer_id'] = $dealer_id;
@@ -210,23 +215,20 @@ class Orders extends Controller{
         $brand = $_POST['brand'];
         $city = $_POST['city'];
         $dealer = $_POST['dealer'];
+        
 
-        // $data['selection_error'] = $this->model('Customer')->select_brand_city_dealer($brand,$city,$dealer);
+        // ||
+       if($brand == null || $dealer == null){
+            $error = "Please fill all fields";
+            $this->select_brand_city_dealer($error);
+            // $this -> select_products($brand,$city,$dealer);
 
-        // if(!empty($data['selection_error'])){
-        //     $this -> select_brand_city_dealer($data['selection_error']);
-        // }
-
-    //    if($brand == null || $dealer == null){
-    //         $error = "Please fill all fields";
-    //         $this -> select_brand_city_dealer($error);
-    //    }
-
-    //    echo $brand,$dealer,$city;
-
-        $this -> select_products($brand,$city,$dealer);
-
-        // $this->view('customer/place_reservation/select_products',$data);
+       }
+       if($brand != null && $dealer != null){
+            $this -> select_products($brand,$city,$dealer);
+       }
+       
+       
 
     }
 

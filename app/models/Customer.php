@@ -405,6 +405,43 @@ class Customer extends Model{
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*..................................customer help tab........................................... */
+    //get admin id
+    public function getAdminId(){
+        $result = $this->Query("SELECT user_id FROM users where type='admin'");
+
+        return $result;
+
+    }
+
+    //get customer message and send to admin
+    public function sendMessage($customer_id, $admin_id, $message){
+        date_default_timezone_set("Asia/Colombo");
+        $time = date('H:i:s');
+        $date = date('Y-m-d');
+    
+
+        $result = $this->insert('customer_support',['customer_id'=> $customer_id,'admin_id'=>$admin_id,'date' => $date,'time'=>$time,'sender'=>$customer_id,'reciever'=>$admin_id
+        ,'description'=>$message]);
+
+        return $result;
+
+    }
+
+
     
 }
 

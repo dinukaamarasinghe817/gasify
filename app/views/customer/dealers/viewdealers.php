@@ -28,7 +28,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             $result1 = $data["brands"];
                             while($brands = mysqli_fetch_assoc($result1)){           
                                 $name = $brands["name"];
-                                echo "<option value = $name > $name </option>";
+                                $company_id = $brands["company_id"];
+                                echo "<option value = $company_id > $name </option>";
                             }
                         }
                     ?>
