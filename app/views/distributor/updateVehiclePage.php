@@ -21,6 +21,8 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
+
+                
                 echo "Vehicle Number : AX2103 ".'<br><br>';
             ?>
 
@@ -60,7 +62,7 @@ $user_id = $_SESSION['user_id'];
 
             <div class="beginbtn">
                 <!-- <button class="btn3"><b>Update</b></button> -->
-                <a href="<?php echo BASEURL ?>/vehicles/viewvehicle"><button class="btn3"><b>Update</b></button></a>
+                <a href="<?php echo BASEURL ?>/vehicles/viewvehicle"><button class="btn3" name="update"><b>Update</b></button></a>
               
             </div>
                 
