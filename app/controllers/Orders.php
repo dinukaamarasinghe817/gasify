@@ -178,7 +178,8 @@ class Orders extends Controller{
 
     }
 
-    function select_products($company_id,$city,$dealer_id){
+    //display all products according to the selected dealer
+    function select_products($company_id=null,$city=null,$dealer_id=null){
     
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -215,9 +216,7 @@ class Orders extends Controller{
         $brand = $_POST['brand'];
         $city = $_POST['city'];
         $dealer = $_POST['dealer'];
-        
-
-        // ||
+      
        if($brand == null || $dealer == null){
             $error = "Please fill all fields";
             $this->select_brand_city_dealer($error);
@@ -229,6 +228,32 @@ class Orders extends Controller{
        }
        
        
+
+    }
+
+    //get customer selected products 
+    function selected_products($dealer_id){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
+        $products = $data['products'];
+
+        
+        $selected_products = array();
+
+        foreach($products as $product){
+            $product_id = $product['p_id'];
+            $selected_product = $_POST[$product_id];
+            array_push($selected_products,[$product_id => $selected_product]);
+
+        }
+
+        foreach($selected_products as $selected_product){
+            echo $selected_product[$product_id];
+        }
+
+        $this->select_payment_method();
 
     }
 
