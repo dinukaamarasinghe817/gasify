@@ -16,10 +16,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="title">
            <h3>Products</h3>
         </div>
-        <!-- <div class="middle"> -->
+        <div class="middle">
         <?php
 
+            $company_id = $data['company_id'];
+            $city = $data['city'];
+            $dealer_id = $data['dealer_id'];
+
             $products = $data['products'];
+           echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
             echo '
                 <div class="gas_cylinder">
                     <div class="subtitle">
@@ -33,12 +38,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
                                 <div class="product_details">
                                     <div class="brand_name">'.$product['c_name'].'</div>
-                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>22 in stock</h4></div>
+                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
                                     <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
                                 </div>
                                 <div class="increment_box">
                                     <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                    <input type="text" name="qty" id="'.$product['p_id'].'" value="0" class="num" >
+                                    <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num">
                                     <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
                                 <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
@@ -63,12 +68,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
                                 <div class="product_details">
                                     <div class="brand_name">'.$product['c_name'].'</div>
-                                    <div class="name"><h5>'.$product['p_name'].'</h5><h4>22 in stock</h4></div>
+                                    <div class="name"><h5>'.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
                                     <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
                                 </div> 
                                 <div class="increment_box">
                                     <div class="minus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                    <input type="text" name="qty" id="'.$product['p_id'].'" value="0" class="num">
+                                    <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num">
                                     <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
                                 <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
@@ -78,8 +83,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
             } 
             echo '</div>
             </div>';      
-        ?>
-            <!-- <div class="total"> -->
+        
+            echo '<!-- <div class="total"> -->
                 <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
             <!-- </div> -->
             <div class="total"> 
@@ -87,12 +92,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
             </div>
 
             <div class="bottom">
-            <a href="<?php echo BASEURL; ?>/Orders/select_brand_city_dealer" class="btn" id="back_btn">Back</a>
-            <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn" id="next_btn">Next</a>
-        </div>
+                <a href="<?php echo BASEURL; ?>/Orders/select_brand_city_dealer" class="btn" id="back_btn">Back</a>
+                <!-- <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn" id="next_btn">Next</a> -->
+                <button type="submit" >Next</button>
+            </div>
+            </form>
         
-    </div>
-    
+        </div>';
+    ?>
 
 
 </section>
@@ -199,16 +206,37 @@ $sidebar = new Navigation('customer',$data['navigation']);
             let total = 0.00;
             let subtotals = document.querySelectorAll('.subtotal');
             for(let i = 0; i < subtotals.length; i++){
-                // console.log(subtotals[i]);
+                // console.log(subtotals[i].id);
                 let sub = subtotals[i].innerHTML;
                 // console.log(sub);
                 sub = sub.substring(3);
                 sub = parseFloat(sub.replace(/,/g, ''));
 
-                console.log(sub);
+                // console.log(sub);
                 total += sub;
             }
             return total.toLocaleString('en-US');
+        }
+
+        function move_next(){
+            let qty_input = document.querySelectorAll('.qty');
+            let total = document.querySelector('.total .amount');
+            total_amount = total.innerHTML;
+            // var products = {};
+            for(let i = 0; i < qty_input.length; i++){
+                console.log(qty_input[i].id);
+
+            //     if(qty[i].value != 0){
+                    // let product_id = qty_input[i].id;
+                    // let quantity = qty_input[i].value;
+                    // products.product_id = product_id;
+                    // products.quantity = quantity;
+                    // console.log(product_id);
+                    // console.log(quantity);
+                // } 
+
+
+            }
         }
 
     

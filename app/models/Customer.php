@@ -16,7 +16,7 @@ class Customer extends Model{
 
     public function getCustomer($customer_id){
         // $result = $this->read('dealer', "dealer_id = $dealer_id");
-        $result = $this->Query("SELECT * FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.dealer_id = $customer_id");
+        $result = $this->Query("SELECT * FROM customer c INNER JOIN users u ON u.user_id = c.customer_id WHERE c.customer_id = $customer_id");
         return $result;
     }//
 
@@ -326,27 +326,55 @@ class Customer extends Model{
 
     }
 
+    public function add_refund_details($order_id, $bank,$branch,$Acc_no){
+       
+        $error = "";
+
+        if(!empty($bank) &&!empty($branch) &&!empty($Acc_no)){
+            $this->update('reservation',['bank'=>$bank,'branch'=>$branch,'acc_no'=>$Acc_no,'order_state'=>"Canceled"],'order_id='.$order_id);
+
+        }
+        else{
+            $error = "All input fields are required!";
+        }
+
+        return $error;
+
+    }
 
 
     /*..................customer place reservation..................*/
-
     //get company products for select quantity to customer
-    public function getCompanyProducts($company_id){
+    public function getDealerProducts($dealer_id){
 
-        $company_products = array();
-        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price FROM company c 
+        $dealer_products = array();
+        // $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price FROM company c 
+        // INNER JOIN product p ON c.company_id = p.company_id 
+        // WHERE c.company_id = '{$company_id}'");
+
+        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price,dk.quantity as dealer_stock FROM company c 
         INNER JOIN product p ON c.company_id = p.company_id 
-        WHERE c.company_id = '{$company_id}'");
-
+        INNER JOIN dealer_keep dk  ON p.product_id = dk.product_id 
+        WHERE dk.dealer_id = '{$dealer_id}'");
+    
         if(mysqli_num_rows($result1)>0){
             while($row1=mysqli_fetch_assoc($result1)){
-                array_push($company_products,$row1);
+                array_push($dealer_products,$row1);
             }
         }
 
-        return $company_products;
+        return $dealer_products;
     }
 
+
+    public function select_brand_city_dealer($brand = null,$dealer=null){
+        $error = " ";
+        if($brand == null || $dealer == null){
+            $error = "Please select a brand and a city";
+        }
+
+        return $error;
+    }
 
     //get dealer bank details for bank deposit payments
     public function getDealerBankDetails($dealer_id){
@@ -357,13 +385,14 @@ class Customer extends Model{
     /*.........................Customer dealers tab ....................*/
 
     //get  dealers details and display in view dealers tab according to selected brand and city
-    public function getdealers($brand_name = null,$city_name = null) {
-        if($brand_name!= null && $city_name!= null){
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name' AND d.city = '$city_name'");
-        }else if($brand_name!= null && $city_name== null){
+    public function getdealers($company_id = null,$city_name = null) {
+        if($company_id != null && $city_name != null){
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
+        }
+        else if($company_id!= null && $city_name== null){
 
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.name = '$brand_name'");
-        }else if($city_name!= null && $brand_name== null){
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
+        }else if($city_name!= null && $company_id== null){
 
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
         
@@ -372,7 +401,68 @@ class Customer extends Model{
         }
        
         return $result1;
+        
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*..................................customer help tab........................................... */
+    //get admin id
+    public function getAdminId(){
+        $result = $this->Query("SELECT * FROM users where type='admin'");
+
+        return $result;
+
+    }
+
+    //display customer send messages
+    public function getMessages($customer_id,$admin_id){
+        $result = $this->Query("SELECT * FROM customer_support WHERE sender = '$customer_id' OR reciever = '$customer_id' ORDER BY time ASC");
+
+
+        return $result;
+
+
+    }
+
+    //display customer recieved messages
+    // public function getRecievedMessages($customer_id){
+    //     $result = $this->Query("SELECT * FROM customer_support WHERE reciever = '$customer_id' ORDER BY time ASC");
+
+
+    //     return $result;
+
+
+    // }
+
+    //get customer message and send to admin
+    public function sendMessage($customer_id, $admin_id, $message){
+        date_default_timezone_set("Asia/Colombo");
+        $time = date('H:i:s');
+        $date = date('Y-m-d');
+    
+
+        $result = $this->insert('customer_support',['customer_id'=> $customer_id,'admin_id'=>$admin_id,'date' => $date,
+        'time'=>$time,'sender'=>$customer_id,'reciever'=>$admin_id
+        ,'description'=>$message]);
+
+        return $result;
+
+    }
+
+
 
 
     

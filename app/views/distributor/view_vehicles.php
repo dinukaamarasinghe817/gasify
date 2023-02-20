@@ -63,8 +63,7 @@ $user_id = $_SESSION['user_id'];
                     $output .= '</table>
                                             </td>
                                             <td>'.$row2['fuel_consumption'].'</td>
-                                            <td>'.$row2['availability'].'</td>
-                                            ';
+                                            <td>'.$row2['availability'].'</td>';
                                 if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
                                     $output .= '<td><button type="button" class="btn4" style="background-color: B4AAFF;">Release</button></td>';
                                 }else{

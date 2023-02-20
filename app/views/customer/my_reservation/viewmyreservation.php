@@ -129,7 +129,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             </div>';
                     }
 
-                    //check status is Completed or Delivered then display already added reviews and reviews count<3 then active add review option
+                    //check status is Completed or Delivered then display already added reviews 
                     else if($row1['order_state'] == "Completed" || $row1['order_state']=="Delivered"){
                         
                         $url = BASEURL.'/Orders/customer_reviewform/'.$row1['order_id'];
@@ -210,6 +210,27 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">More details</button>
                                         </div>
                                     </div>'.$output1.'
+
+                                    '.$output.' 
+                                    <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                                </div>
+                            </div>';
+                    }
+
+                    else if($row1['order_state'] == "Canceled"){
+                        echo'<div class="cancel_card_bottom">
+                                <div class="cancel_item_side">
+                                    <div class="d_details">
+                                        <div>
+                                            <strong>Dealer : </strong>
+                                        </div>
+                                        <div>
+                                            '.$row1['dealer_name'].'
+                                        </div>
+                                        <div>
+                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">More details</button>
+                                        </div>
+                                    </div>
 
                                     '.$output.' 
                                     <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>

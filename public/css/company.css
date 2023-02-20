@@ -1034,13 +1034,14 @@ label{
     margin-left: 2%;
 }
 .submitRegisterProduct{
+    color: white;
     margin-left: 5%;
     height: 5vh;
     width: 30%;
     border-radius: 10px;
     border-width: 0px;
     font-family: poppins;
-    background-color: var(--accept-blue);
+    background-color: var(--navmenu-orange-dark);
 }
 .submitRegisterProduct:hover{
     background-color: royalblue;

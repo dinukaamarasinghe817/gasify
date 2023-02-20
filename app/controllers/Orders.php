@@ -119,7 +119,8 @@ class Orders extends Controller{
 
 
     //cancel the reservation
-    function customer_cancelreservation($order_id){
+    function customer_cancelreservation($order_id,$error = null){
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -127,6 +128,12 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+        $data['order_id'] = $order_id;
+
+        if($error != null){
+            // $data['error'] = $error;
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
 
         $data['confirmation'] = '';
         $this->view('customer/my_reservation/cancel_reservation', $data);
@@ -134,9 +141,26 @@ class Orders extends Controller{
 
     }
 
+    //refund form data for update reservation table
+    function refund_bank_details($order_id){
+        $customer_id = $_SESSION['user_id'];
+        $bank = $_POST['bank'];
+        $branch = $_POST['branch'];
+        $Acc_no = $_POST['Acc_no'];
+      
+        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
+        if(!empty($data['refund_detail_error'])){
+            $this->customer_cancelreservation($order_id,$data['refund_detail_error']);
+        }
+        else{
+            // $this->customer_cancelreservation($order_id);
+            // $this->view('customer/viewmyreservation', $data);
+        }    
+    }
+
     /*.................Customer place reservation.................*/
     //select brand,city and dealer
-    function select_brand_city_dealer(){
+    function select_brand_city_dealer($error=null){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -147,11 +171,108 @@ class Orders extends Controller{
 
         $data['brands'] = $this->model('Customer')->getCompanyBrand();
         $data['dealers'] = $this->model('Customer')->getdealers();
+        $data['city'] = $this->model('Customer')->getCustomer($customer_id);
+
+        if($error != null){
+            // $data['error'] = $error;
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
 
         $this->view('customer/place_reservation/select_brand_city_dealer',$data);
 
     }
 
+    function filter_dealers($company_id=null,$city=null){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $data['dealers'] = $this->model('Customer')->getdealers($company_id,$city);
+        
+        $this -> view('customer/place_reservation/filter_dealers',$data);
+
+    }
+
+    //display all products according to the selected dealer
+    function select_products($company_id=null,$city=null,$dealer_id=null){
+    
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+        // $company = $_SESSION['brand'];
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        
+        $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
+
+        // echo $company_id.$city.$dealer_id;
+        $data['company_id'] = $company_id;
+        $data['city'] = $city;
+        $data['dealer_id'] = $dealer_id;
+        $this->view('customer/place_reservation/select_products',$data);
+
+        
+    }
+
+
+    function get_brand_city_dealer(){
+
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $brand = $_POST['brand'];
+        $city = $_POST['city'];
+        $dealer = $_POST['dealer'];
+      
+       if($brand == null || $dealer == null){
+            $error = "Please fill all fields";
+            $this->select_brand_city_dealer($error);
+            // $this -> select_products($brand,$city,$dealer);
+
+       }
+       if($brand != null && $dealer != null){
+            $this -> select_products($brand,$city,$dealer);
+       }
+       
+       
+
+    }
+
+    //get customer selected products 
+    function selected_products($dealer_id){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
+        $products = $data['products'];
+
+        
+        $selected_products = array();
+
+        foreach($products as $product){
+            $product_id = $product['p_id'];
+            $selected_product = $_POST[$product_id];
+            array_push($selected_products,[$product_id => $selected_product]);
+
+        }
+
+        foreach($selected_products as $selected_product){
+            echo $selected_product[$product_id];
+        }
+
+        $this->select_payment_method();
+
+    }
+
+
+    
 
     //select payment method
     function select_payment_method(){

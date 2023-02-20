@@ -32,6 +32,19 @@ a,button{
     margin-top: 40px;
 }
 
+.middle form{
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+form .top{
+    display: flex;
+    flex-direction: row;
+    column-gap: 100px;
+}
+
 /* three cards brand,city,dealer  css*/
 .brand , .city , .dealer {
     display: flex;
@@ -76,7 +89,7 @@ a,button{
     padding-top: 100px;
     display: flex;
     justify-content: right;
-    margin-right: 80px;
+    /* margin-right: 80px; */
     
 }
 
@@ -97,4 +110,46 @@ a,button{
 .btn:hover{
     background-color: var(--button-orange-hover);
     color: var(--white);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:900px){
+    .middle{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+       
+        /* margin-left: 40px;
+        margin-right: 90px;
+        margin-top: 40px; */
+    }
+
+    .brand , .city , .dealer {
+        /* display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; */
+        width: 100%;
+        /* padding: 30px;
+        column-gap: 30px;
+        background-color: var(--navmenu-orange);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        border-radius: 5px; */
+        margin-bottom: 30px;
+    }
+    
+
+
+
+
 }
