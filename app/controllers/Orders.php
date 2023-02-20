@@ -227,9 +227,9 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $brand = $_POST['brand'];
+        if(isset($_POST['brand'])){$brand = $_POST['brand'];}else{$brand = null;}
         $city = $_POST['city'];
-        $dealer = $_POST['dealer'];
+        if(isset($_POST['dealer'])){$dealer = $_POST['dealer'];}else{$dealer = null;}
       
        if($brand == null || $dealer == null){
             $error = "Please fill all fields";
