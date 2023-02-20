@@ -241,8 +241,6 @@ class Orders extends Controller{
             $this -> select_products($brand,$city,$dealer);
        }
        
-       
-
     }
 
     //get customer selected products 

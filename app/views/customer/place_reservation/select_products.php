@@ -43,7 +43,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>
                                 <div class="increment_box">
                                     <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                    <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num">
+                                    <input type="text" onchange="changeinputnum('.$product['p_id'].','.$product['unit_price'].')" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num">
                                     <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
                                 <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
@@ -160,86 +160,93 @@ $sidebar = new Navigation('customer',$data['navigation']);
     }
 
 
-        function changeqty(id, unitprice,operation) {
-            id = parseInt(id);
-            unitprice = parseFloat(unitprice);
-            if (operation == plus) {
+    function changeqty(id, unitprice,operation) {
+        id = parseInt(id);
+        unitprice = parseFloat(unitprice);
+        if (operation == plus) {
 
-                let inputstring = `${id}`;
-                let input = document.getElementById(inputstring);
-                let inputvalue = parseInt(input.value)+1;
-            
+            let inputstring = `${id}`;
+            let input = document.getElementById(inputstring);
+            let inputvalue = parseInt(input.value)+1;
+        
+            let substring = `sub${id}`;
+            let subtotal = document.getElementById(substring);
+    
+            subtotal.innerHTML = "Rs." + (inputvalue*unitprice).toLocaleString('en-US') + ".00";
+
+            let total = document.querySelector('.total .amount');
+
+                let totalvalue = get_total();
+            total.innerHTML = "Rs. "+totalvalue +".00";
+        }
+        if(operation == minus){
+            let inputstring = `${id}`;
+            let input = document.getElementById(inputstring);
+            if (input.value > 0) {
+                let inputvalue = parseInt(input.value)- 1;
+
                 let substring = `sub${id}`;
                 let subtotal = document.getElementById(substring);
         
                 subtotal.innerHTML = "Rs." + (inputvalue*unitprice).toLocaleString('en-US') + ".00";
 
                 let total = document.querySelector('.total .amount');
-
-                 let totalvalue = get_total();
-                total.innerHTML = "Rs. "+totalvalue +".00";
-            }
-            if(operation == minus){
-                let inputstring = `${id}`;
-                let input = document.getElementById(inputstring);
-                if (input.value > 0) {
-                    let inputvalue = parseInt(input.value)- 1;
-
-                    let substring = `sub${id}`;
-                    let subtotal = document.getElementById(substring);
-            
-                    subtotal.innerHTML = "Rs." + (inputvalue*unitprice).toLocaleString('en-US') + ".00";
-
-                    let total = document.querySelector('.total .amount');
-                    
-                     let totalvalue = get_total();
-                     total.innerHTML = "Rs. "+ totalvalue +".00";
-                }
                 
+                    let totalvalue = get_total();
+                    total.innerHTML = "Rs. "+ totalvalue +".00";
             }
-
             
-            
         }
 
-        function get_total(){
-            let total = 0.00;
-            let subtotals = document.querySelectorAll('.subtotal');
-            for(let i = 0; i < subtotals.length; i++){
-                // console.log(subtotals[i].id);
-                let sub = subtotals[i].innerHTML;
-                // console.log(sub);
-                sub = sub.substring(3);
-                sub = parseFloat(sub.replace(/,/g, ''));
+        
+        
+    }
 
-                // console.log(sub);
-                total += sub;
-            }
-            return total.toLocaleString('en-US');
+    function get_total(){
+        let total = 0.00;
+        let subtotals = document.querySelectorAll('.subtotal');
+        for(let i = 0; i < subtotals.length; i++){
+            // console.log(subtotals[i].id);
+            let sub = subtotals[i].innerHTML;
+            // console.log(sub);
+            sub = sub.substring(3);
+            sub = parseFloat(sub.replace(/,/g, ''));
+
+            // console.log(sub);
+            total += sub;
         }
+        return total.toLocaleString('en-US');
+    }
 
-        function move_next(){
-            let qty_input = document.querySelectorAll('.qty');
-            let total = document.querySelector('.total .amount');
-            total_amount = total.innerHTML;
-            // var products = {};
-            for(let i = 0; i < qty_input.length; i++){
-                console.log(qty_input[i].id);
+    function move_next(){
+        let qty_input = document.querySelectorAll('.qty');
+        let total = document.querySelector('.total .amount');
+        total_amount = total.innerHTML;
+        // var products = {};
+        for(let i = 0; i < qty_input.length; i++){
+            console.log(qty_input[i].id);
 
-            //     if(qty[i].value != 0){
-                    // let product_id = qty_input[i].id;
-                    // let quantity = qty_input[i].value;
-                    // products.product_id = product_id;
-                    // products.quantity = quantity;
-                    // console.log(product_id);
-                    // console.log(quantity);
-                // } 
+        //     if(qty[i].value != 0){
+                // let product_id = qty_input[i].id;
+                // let quantity = qty_input[i].value;
+                // products.product_id = product_id;
+                // products.quantity = quantity;
+                // console.log(product_id);
+                // console.log(quantity);
+            // } 
 
 
-            }
         }
+    }
 
-    
+    function changeinputnum(productid, quantity){
+        let inputnum = document.querySelector(`.increment-box #${productid}`);
+        let subtotal = inputnum.value*quantity;
+        inputnum.parentElement.parentElement.querySelector('.subtotal_part .subtotal').innerHTML = ` Rs.${subtotal}.00 `;
+        let totalinput = document.querySelector('.total .amount');
+        let total = get_total()+subtotal;
+        totalnput.innerHTML = ` Rs.${total}.00 `;
+    }
 
 
   
