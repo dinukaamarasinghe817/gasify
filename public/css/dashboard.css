@@ -760,8 +760,11 @@ td button:hover{
     font-size: var(--small);
     width: 100%;
     min-width: 400px;
+    /* table-layout: fixed; */
 }
-
+.styled-table thead{
+    table-layout: fixed;
+}
 .styled-table thead tr {
     background-color: var(--table-header);
     /* background-color: black;; */
@@ -772,8 +775,15 @@ td button:hover{
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
+    width: auto;
 }
-
+.styled-table tbody{
+    display:block;
+    width: 100%;
+    overflow: auto;
+    height: 100px;
+    table-layout: fixed;
+}
 .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
     transition: 0.3s;
@@ -798,6 +808,14 @@ td button:hover{
     padding: 10px;
     border-radius: 10px;
     border: var(--button-blue-hover) 2px solid;
+}
+.styled-table thead th{
+    position: sticky;
+    top: 0;
+}
+.styled-table thead td{
+    display: table;
+    width: 100%;
 }
 
 
@@ -983,6 +1001,12 @@ input,select{
 }
 .button:hover{
     background-color: var(--button-blue-hover);
+}
+.button.red{
+    background-color: var(--cancel-red);
+}
+.button.red:hover{
+    background-color: red;
 }
 label{
     font-weight: 500;

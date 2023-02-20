@@ -166,3 +166,23 @@ function orderverification(payments,stock){
     accorinfo.classList.toggle("active");
     document.querySelector("body").classList.toggle("blur");
 }
+
+function dealerprompt(name=null,forewardlink=null,backwardlink=null,formurl=null){
+    let body = ``;
+    if(name == 'orderrefund'){
+        body = `<h1>Select Payment Slip</h1>
+        <form method="post" action="${formurl}" enctype="multipart/form-data">
+        <div class="input"><label>Payslip</label><input type="file" name="payslip" accept=".png, .jpg, .jpeg, .pdf">
+        </form>
+        <div class="buttons">
+        <button onclick="${backwardlink}" class="button red">Cancel</button>
+        <button onclick="${forewardlink}" class="button">Submit</button>
+        </div>
+        `;
+    }
+
+    let accorinfo = document.querySelector(".verification");
+    accorinfo.innerHTML = body;
+    accorinfo.classList.toggle("active");
+    document.querySelector("body").classList.toggle("blur");
+}

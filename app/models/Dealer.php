@@ -1,11 +1,12 @@
 <?php
-
+// session_start();
 class Dealer extends Model
 {
-
+    // public $user_id;
     public function __construct()
     {
         parent::__construct();
+        // $this->user_id = $_SESSION['user_id'];
     }
 
     public function getAllDealers(){ 
@@ -128,7 +129,7 @@ class Dealer extends Model
         FROM reservation_include r INNER JOIN product p 
         ON r.product_id = p.product_id WHERE order_id IN 
             (SELECT order_id FROM reservation 
-            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND dealer_id = 6 AND order_state = 'Completed') 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND dealer_id = 6 AND order_state != 'Pending') 
         GROUP BY product_id";
 
         // chart details
@@ -321,13 +322,44 @@ class Dealer extends Model
         $tab1 = ucwords($tab1);
         $orders = array();
         $result;
-        if($tab2 == null){
-            $result = $this->Query("SELECT * FROM reservation r INNER JOIN users u ON r.customer_id = u.user_id WHERE r.dealer_id = $dealer_id and r.order_state = '$tab1' ORDER BY r.order_id ASC");
-            // $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1'","order_id ASC");
-        }else{
-            $result = $this->Query("SELECT * FROM reservation r INNER JOIN users u ON r.customer_id = u.user_id WHERE r.dealer_id = $dealer_id  and r.collecting_method = '$tab2' and r.order_state = '$tab1' ORDER BY r.order_id ASC");
-            // $result = $this->read("reservation","dealer_id = $dealer_id and order_state = '$tab1' and collecting_method = '$tab2'","order_id ASC");
+
+        $sql = "SELECT 
+        r.order_id AS order_id,
+        r.customer_id AS customer_id,
+        r.order_state AS order_state,
+        r.payment_method AS payment_method,
+        r.pay_slip AS pay_slip,
+        r.payment_verification AS payment_verification,
+        r.collecting_method AS collecting_method,
+        r.place_date AS place_date,
+        r.place_time AS place_time,
+        r.dealer_id AS dealer_id,
+        r.bank AS bank,
+        r.acc_no AS acc_no,
+        r.refund_date AS refund_date,
+        r.refund_time AS refund_time,
+        r.refund_verification AS refund_verification,
+        r.delivery_id AS delivery_id,
+        r.deliver_date AS deliver_date,
+        r.deliver_time AS deliver_time,
+        r.distance_range AS distance_range,
+        r.cancel_date AS cancel_date,
+        u.first_name AS first_name,
+        u.last_name AS last_name,
+        u.type AS type,
+        d.first_name AS delivery_first_name,
+        d.last_name AS delivery_last_name
+        FROM reservation r INNER JOIN users u
+        ON r.customer_id = u.user_id
+        LEFT JOIN users d
+        ON r.delivery_id = d.user_id
+        WHERE r.dealer_id = $dealer_id AND r.order_state = '$tab1'"; 
+        if($tab2 != null){
+            $sql .= "AND collecting_method = '$tab2'";
         }
+        $sql .= " ORDER BY r.order_id ASC";
+        $result = $this->Query($sql);
+
         while($order = mysqli_fetch_assoc($result)){
             $total_amount = 0;
             $id = $order['order_id'];
@@ -360,6 +392,45 @@ class Dealer extends Model
         }
         return $orders;
     }//
+
+    public function dealerAcceptOrder($order_id){
+        $user_id = $_SESSION['user_id'];
+        $result = $this->read('reservation_include',"order_id = $order_id");
+        while($row = mysqli_fetch_assoc($result)){
+            $product_id = $row['product_id'];
+            $product_quantity = $row['quantity'];
+            $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
+        }
+        $this->update('reservation',['order_state' => 'Accepted'],"order_id = $order_id");
+    }
+
+    public function dealerIssueOrder($order_id){
+        $user_id = $_SESSION['user_id'];
+        // $result = $this->read('reservation_include',"order_id = $order_id");
+        // while($row = mysqli_fetch_assoc($result)){
+        //     $product_id = $row['product_id'];
+        //     $product_quantity = $row['quantity'];
+        //     $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
+        // }
+        $this->update('reservation',['order_state' => 'Completed'],"order_id = $order_id");
+    }
+
+    public function dealersubmitpayslipOrder($order_id){
+        $image_name = '';$tmp_name = '';
+        if(isset($_FILES['payslip']['size']) && $_FILES['payslip']['size'] > 0){ 
+            $image_name = $_FILES['payslip']['name'];
+            $tmp_name = $_FILES['payslip']['tmp_name'];
+        }
+        $image = getImageRename($image_name,$tmp_name);
+        $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'payslips'.DIRECTORY_SEPARATOR;
+        if(move_uploaded_file($tmp_name, $path.($image))){
+            $this->update('reservation',['refund_verification'=>'pending','refund_payslip'=>"$image"],"order_id = $order_id");
+            $data['toast'] = ['type'=>'success', 'message'=>'You have successfully uploaded payslip for verification'];
+        }else{
+            $data['toast'] = ['type'=>'error', 'message'=>'couldn\'t upload, try again'];
+        }
+        return $data;
+    }
 
     public function dealerpoinfo($poid){
         $sql = "SELECT pi.product_id AS product_id, pi.quantity AS quantity, pr.name AS name ,pi.unit_price AS unit_price,pr.weight AS weight,pr.image AS image

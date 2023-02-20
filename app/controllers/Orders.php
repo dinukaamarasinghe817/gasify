@@ -26,6 +26,20 @@ class Orders extends Controller{
         $this->view('dealer/orders', $data);
     }
 
+    function dealeraccept($order_id){
+        $this->model('Dealer')->dealerAcceptOrder($order_id);
+        header('LOCATION: '.BASEURL.'/orders/dealer/pending');
+    }
+
+    function dealerissue($order_id){
+        $this->model('Dealer')->dealerIssueOrder($order_id);
+        header('LOCATION: '.BASEURL.'/orders/dealer/accepted/pickup');
+    }
+
+    function dealersubmitpayslip($order_id){
+        $data = $this->model('Dealer')->dealersubmitpayslipOrder($order_id);
+        header('LOCATION: '.BASEURL.'/orders/dealer/canceled');
+    }
 
 
     /*.................Customer my reservation...............*/
