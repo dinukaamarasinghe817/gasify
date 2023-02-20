@@ -26,6 +26,20 @@ class Orders extends Controller{
         $this->view('dealer/orders', $data);
     }
 
+    function dealeraccept($order_id){
+        $this->model('Dealer')->dealerAcceptOrder($order_id);
+        header('LOCATION: '.BASEURL.'/orders/dealer/pending');
+    }
+
+    function dealerissue($order_id){
+        $this->model('Dealer')->dealerIssueOrder($order_id);
+        header('LOCATION: '.BASEURL.'/orders/dealer/accepted/pickup');
+    }
+
+    function dealersubmitpayslip($order_id){
+        $data = $this->model('Dealer')->dealersubmitpayslipOrder($order_id);
+        header('LOCATION: '.BASEURL.'/orders/dealer/canceled');
+    }
 
 
     /*.................Customer my reservation...............*/
@@ -213,9 +227,9 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $brand = $_POST['brand'];
+        if(isset($_POST['brand'])){$brand = $_POST['brand'];}else{$brand = null;}
         $city = $_POST['city'];
-        $dealer = $_POST['dealer'];
+        if(isset($_POST['dealer'])){$dealer = $_POST['dealer'];}else{$dealer = null;}
       
        if($brand == null || $dealer == null){
             $error = "Please fill all fields";
@@ -227,8 +241,6 @@ class Orders extends Controller{
             $this -> select_products($brand,$city,$dealer);
        }
        
-       
-
     }
 
     //get customer selected products 

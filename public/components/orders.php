@@ -16,17 +16,21 @@ class Order{
                             <div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Total amount : </strong>Rs.'.$totalamount.'</div>
                             <div><strong>Date : </strong>'.$order['place_date'].'<br><strong>Time : </strong>'.$order['place_time'].'</div>
                         </div>';
-                        $refunded = true;
                         if($active1 == 'pending' && !($payment == 'verified' && $stock == 'available')){
-                            echo '<button onclick="orderverification(\''.$payment.'\',\''.$stock.'\'); return false;" class="btn">Info</button>';
+                            echo '<button onclick="orderverification(\''.$payment.'\',\''.$stock.'\'); return false;" class="btn gray">Info</button>';
                         }else if($active1 == 'pending'){
-                            echo '<button onclick="orderverification(\''.$payment.'\',\''.$stock.'\'); return false;" class="btn">Accept</button>';
+                            echo '<button onclick="location.href = \''.BASEURL.'/orders/dealeraccept/'.$order['order_id'].'\'" class="btn">Accept</button>';
                         }else if($active1 == 'accepted' && $active2 == 'pickup'){
-                            echo '<button onclick="issueorder(); return false;" class="btn">Issue</button>';
-                        }else if($active1 == 'canceled' && !$refunded){
-                            echo '<button onclick="refundorder(); return false;" class="btn">Refund</button>';
+                            echo '<button onclick="location.href = \''.BASEURL.'/orders/dealerissue/'.$order['order_id'].'\'" class="btn">Issue</button>';
+                        }else if($active1 == 'canceled' && $order['refund_verification'] == 'verified'){
+                            echo '<button class="btn transparent">Refunded</button>';
+                        }else if($active1 == 'canceled' && $order['refund_verification'] == 'pending'){
+                            echo '<button class="btn transparent">Pending</button>';
                         }else if($active1 == 'canceled'){
-                            echo '<button class="btn">Refunded</button>';
+                            $forewardlink = BASEURL.'/orders/dealerrefund/'.$order['order_id'];
+                            $backwardlink = 'dealerprompt();';
+                            $formlink = BASEURL.'/orders/dealersubmitpayslip/'.$order['order_id'];
+                            echo '<button onclick="dealerprompt(\'orderrefund\',\''.$forewardlink.'\',\''.$backwardlink.'\',\''.$formlink.'\')" class="btn">Refund</button>';
                         }
                         echo '
                             <svg width="22" height="22" viewBox="0 0 36 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +40,7 @@ class Order{
                     <div class="info">
                         <div><p><strong>Customer ID : </strong>'.$order['customer_id'].'</p><p><strong>Customer Name : </strong>'.$order['first_name'].' '.$order['last_name'].'</p></div><br>';
                         if($active2 != 'delivery' && ($active1 == 'dispatched' || $active1 == 'delivered' || $active1 == 'completed')){
-                            echo '<div><p><strong>Delivery ID : </strong>'.$order['customer_id'].'</p><p><strong>Delivery Name : </strong>'.$order['first_name'].' '.$order['last_name'].'</p></div><br>';
+                            echo '<div><p><strong>Delivery ID : </strong>'.$order['delivery_id'].'</p><p><strong>Delivery Name : </strong>'.$order['delivery_first_name'].' '.$order['delivery_last_name'].'</p></div><br>';
                         }
                     echo '<table class="styled-table">
                             <thead>
@@ -131,18 +135,18 @@ class OrdersHTML{
     }
 
     public function func($active1,$active2,$data){
-        echo '<div class="content-data">
-                    <div class="search-bar">
-                        <input type="text" class="ticker-input" placeholder="Type to search" autocomplete="off">
-                        <button class="btn btn-primary" type="submit">
-                            <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10.5417 19C14.7759 19 18.2083 15.4183 18.2083 11C18.2083 6.58172 14.7759 3 10.5417 3C6.30748 3 2.875 6.58172 2.875 11C2.875 15.4183 6.30748 19 10.5417 19Z" stroke="#FFF8F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M20.1248 20.9999L15.9561 16.6499" stroke="#FFF8F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <p>Search</p>
-                        </button>
-                    </div>
-                    <ul>';
+        echo '<div class="content-data">';
+                    // <div class="search-bar">
+                    //     <input type="text" class="ticker-input" placeholder="Type to search" autocomplete="off">
+                    //     <button class="btn btn-primary" type="submit">
+                    //         <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    //             <path d="M10.5417 19C14.7759 19 18.2083 15.4183 18.2083 11C18.2083 6.58172 14.7759 3 10.5417 3C6.30748 3 2.875 6.58172 2.875 11C2.875 15.4183 6.30748 19 10.5417 19Z" stroke="#FFF8F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    //             <path d="M20.1248 20.9999L15.9561 16.6499" stroke="#FFF8F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    //         </svg>
+                    //         <p>Search</p>
+                    //     </button>
+                    // </div>
+                    echo '<ul>';
                         $orders = $data['orders'];
                         foreach($orders as $tuple){
                             $o = new Order($tuple,$active1,$active2);
