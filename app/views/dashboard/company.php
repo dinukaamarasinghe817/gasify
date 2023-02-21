@@ -39,6 +39,10 @@
             $bodycontent = new Body('companyReports', $data);
         }elseif($data['navigation']=='reports'){
             $bodycontent = new Body('reportsCompany', $data);
+        }elseif($data['navigation']=='issuedorders'){
+            $bodycontent = new Body('issuedOrdersCompany', $data);
+        }elseif($data['navigation']=='delayedorders'){
+            $bodycontent = new Body('delayOrdersCompany', $data);
         }
         
         ?>

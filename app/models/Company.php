@@ -91,7 +91,11 @@ class Company extends Model
     }public function updateProduct($data,$productID,$companyID){
         //print_r("tu");
         $this->update("product",$data,"company_id=".$companyID." AND product_id=".$productID);
+    }public function setQuota($companyID,$customer,$quota){
+        $this->Query("UPDATE quota SET monthly_limit=$quota WHERE (company_id=$companyID AND customer_type='$customer')");
     }
-    
+    public function resetQuota($companyID,$customer){
+        $this->Query("UPDATE quota SET monthly_limit=0 WHERE (company_id=$companyID AND customer_type='$customer')");
+    }
     
 }

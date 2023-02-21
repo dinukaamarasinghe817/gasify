@@ -3,21 +3,24 @@ function showImage(event) {
     let imgPreview = document.getElementById('ff');
     imgPreview.src = URL.createObjectURL(event.files[0]);
 }
-function setQuota() {
-    /*var formData = new FormData();
-    formData.append("customer", customer);
-    formData.append("quota", "r");*/
-    console.log("customer");
-    /*var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
-    }
-};
-xmlhttp.open("POST", "../Compny/setQuota");
-xmlhttp.send();*/
+function setQuota(div) {
+    var customerName = div.getAttribute("key");
+    var formData = new FormData();
+    formData.append("customer", customerName);
+    formData.append("quota", document.getElementById(customerName.toLowerCase()).value);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(customerName.toLowerCase()).value = "";
+        }
+    };
+    xmlhttp.open("POST", "../Compny/setQuota");
+    xmlhttp.send(formData);
 }
-function resetQuota() {
+function resetQuota(div) {
+    var customerName = div.getAttribute("key");
+    var formData = new FormData();
+    formData.append("customer", customerName);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -25,5 +28,10 @@ function resetQuota() {
         }
     };
     xmlhttp.open("POST", "../Compny/resetQuota");
-    xmlhttp.send();
+    xmlhttp.send(formData);
+}
+function removeStyles(div) {
+    console.log("heas");
+    div.style.removeProperty('display');
+
 }
