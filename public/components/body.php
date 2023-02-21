@@ -1402,8 +1402,10 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Gas Orders</div></a>
-            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
+            <a href="../Compny/orders" style="width:24.25%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white;border-right:0px">Gas Orders</div></a>
+            <a href="../Compny/issuedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Issued Orders</div></a>
+            <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
+            <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
             <div class="orderCard" >
@@ -1467,8 +1469,10 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/orders" style="width:48.5%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
-            <a href="../Compny/limitquota" style="width:48.5%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#d8ca30;color:white">Limit Quota</div></a>
+            <a href="../Compny/orders" style="width:24.25%" ><div class="DealerTableTopics" style="width:100%;height:100%;border-right:0px">Gas Orders</div></a>
+            <a href="../Compny/issuedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Issued Orders</div></a>
+            <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
+            <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#d8ca30;color:white">Limit Quota</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
             <div class="poductQuota">
@@ -1745,6 +1749,135 @@ class Body{
                 </div>  
             </div>';     
         echo ' 
+        </section>';
+    }
+    function issuedOrdersCompany($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Compny/orders" style="width:24.25%" ><div class="DealerTableTopics" style="width:100%;height:100%">Gas Orders</div></a>
+            <a href="../Compny/issuedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px;background-color:#d8ca30;color:white">Issued Orders</div></a>
+            <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
+            <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
+            <div class="orderCard" >
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
+                </div>
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
+                </div>
+                <div class="orderTbl">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Product name</th>
+                                <th>Unit price (Rs.)</th>
+                                <th>Quantity</th>
+                                <th>Total (Rs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody style="display:legacy">
+                            <tr>
+                                <td>Buddy</td>
+                                <td>1,450.00</td>
+                                <td>12</td>
+                                <td>17,400</td>
+                            </tr>
+                            <tr>
+                                <td>Regular</td>
+                                <td>3,220.00</td>
+                                <td>30</td>
+                                <td>96,600</td>
+                            </tr>
+                            <tr>
+                                <td>Commercial</td>
+                                <td>5,150.00</td>
+                                <td>15</td>
+                                <td>77,250</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>191,250</td>
+                            </tr>
+                         
+                        </tbody>      
+                    </table>
+                </div>
+            </div>
+            </div>';
+            echo ' 
+        </section>';
+    }
+    function delayOrdersCompany($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Compny/orders" style="width:24.25%" ><div class="DealerTableTopics" style="width:100%;height:100%;border-right:0px">Gas Orders</div></a>
+            <a href="../Compny/issuedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Issued Orders</div></a>
+            <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px;background-color:#d8ca30;color:white">Delayed Orders</div></a>
+            <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
+            <div class="orderCard" >
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
+                </div>
+                <div class="orderRow">
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
+                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
+                </div>
+                <div class="orderTbl">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Product name</th>
+                                <th>Unit price (Rs.)</th>
+                                <th>Quantity</th>
+                                <th>Total (Rs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody style="display:legacy">
+                            <tr>
+                                <td>Buddy</td>
+                                <td>1,450.00</td>
+                                <td>12</td>
+                                <td>17,400</td>
+                            </tr>
+                            <tr>
+                                <td>Regular</td>
+                                <td>3,220.00</td>
+                                <td>30</td>
+                                <td>96,600</td>
+                            </tr>
+                            <tr>
+                                <td>Commercial</td>
+                                <td>5,150.00</td>
+                                <td>15</td>
+                                <td>77,250</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>191,250</td>
+                            </tr>
+                         
+                        </tbody>      
+                    </table>
+                </div>
+                <div class="orderRow">
+                    <div class="orderButtons" style="margin-left:28.5%"><label>Issue</label></div>
+                </div>
+            </div>
+            </div>';
+            echo ' 
         </section>';
     }
 }
