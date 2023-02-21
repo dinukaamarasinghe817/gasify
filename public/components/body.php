@@ -574,7 +574,7 @@ class Body{
                         <th>Quantity</th>
                     </tr>
                 </thead>
-                <tbody style="overflow-y:auto;height:100px">
+                <tbody style="overflow-y:auto;height:100px" >
                     <tr>
                         <td class="tdCenter">Buddy</td>
                         <td class="tdRight">130</td>
@@ -1425,7 +1425,7 @@ class Body{
                                 <th>Total (Rs.)</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="display:legacy">
                             <tr>
                                 <td>Buddy</td>
                                 <td>1,450.00</td>
@@ -1475,15 +1475,15 @@ class Body{
                 <div class="productQuotaName" style="font-size: large"><lable>Domestic customer</lable></div>
                 <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>35 KG</label></div>
                 <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="domestic"></div>
-                <div class="productQuotaResetCurrent" onClick="setQuota()" key="domestic"><div class="quotaButtons" ><label>Set Quota</label></div></div>
-                <div class="productQuotaSetNew" onClick="resetQuota()" key="domestic"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>     
+                <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="Domestic"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew" onClick="resetQuota(this)" key="Domestic"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>     
             </div>
             <div class="poductQuota">
                 <div class="productQuotaName" style="font-size: large"><lable>Commercial customer</lable></div>
                 <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>90 KG</label></div>
                 <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="commercial"></div>
-                <div class="productQuotaResetCurrent" onClick="setQuota()"><div class="quotaButtons" ><label>Set Quota</label></div></div>
-                <div class="productQuotaSetNew" onClick="resetQuota()"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>    
+                <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="Commercial"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                <div class="productQuotaSetNew" onClick="resetQuota(this)" key="Commercial"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>    
             </div>
             </div>
             

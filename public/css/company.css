@@ -1317,6 +1317,9 @@ input[type="text"]::placeholder{
 .quotaButtons label,.quotaButtons_2 label{
     color: white;
 }
+.quotaButtons:hover,.quotaButtons_2:hover,.quotaButtons label:hover,.quotaButtons_2 label:hover{
+    cursor: pointer;
+}
 .card{
     color: white;
     width: 20%;
