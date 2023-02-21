@@ -778,7 +778,7 @@ td button:hover{
     width: auto;
 }
 .styled-table tbody{
-    /*display:block;*/
+    display:block;
     width: 100%;
     overflow: auto;
     height: 100px;
