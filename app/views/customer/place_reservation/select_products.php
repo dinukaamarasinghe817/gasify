@@ -43,7 +43,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>
                                 <div class="increment_box">
                                     <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                    <input type="text" onchange="changeinputnum('.$product['p_id'].','.$product['unit_price'].')" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num">
+                                    <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
                                     <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
                                 <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
@@ -73,7 +73,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div> 
                                 <div class="increment_box">
                                     <div class="minus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                    <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num">
+                                    <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
                                     <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
                                 </div>
                                 <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
@@ -239,19 +239,5 @@ $sidebar = new Navigation('customer',$data['navigation']);
         }
     }
 
-    function changeinputnum(productid, quantity){
-        let inputnum = document.querySelector(`.increment-box #${productid}`);
-        let subtotal = inputnum.value*quantity;
-        inputnum.parentElement.parentElement.querySelector('.subtotal_part .subtotal').innerHTML = ` Rs.${subtotal}.00 `;
-        let totalinput = document.querySelector('.total .amount');
-        let total = get_total()+subtotal;
-        totalnput.innerHTML = ` Rs.${total}.00 `;
-    }
-
-
-  
-
-    
-   
 
 </script>
