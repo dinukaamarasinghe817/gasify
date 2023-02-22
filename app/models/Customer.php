@@ -432,7 +432,7 @@ class Customer extends Model{
 
     //display customer send messages
     public function getMessages($customer_id,$admin_id){
-        $result = $this->Query("SELECT * FROM customer_support WHERE sender = '$customer_id' OR reciever = '$customer_id' ORDER BY time ASC");
+        $result = $this->Query("SELECT * FROM customer_support WHERE sender = '$customer_id' OR reciever = '$customer_id' ORDER BY time AND date ASC");
 
 
         return $result;
