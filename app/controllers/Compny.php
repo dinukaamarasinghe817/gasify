@@ -1,7 +1,6 @@
 <?php
     session_start();
 class Compny extends Controller{
-    
     function __construct(){
         if(isset($_POST['productImage '])){
             echo "done";
@@ -200,10 +199,12 @@ class Compny extends Controller{
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
         $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $product_details = $this->model('Company')->getProductDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['dealer']=$dealer_details;
+        $data['prodducts']=$product_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
             //$data=[];
@@ -211,11 +212,18 @@ class Compny extends Controller{
 
     }
     function setQuota(){
-        echo "hello";
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $quota = mysqli_real_escape_string($conn,$_POST["quota"]);
+        $customer = mysqli_real_escape_string($conn,$_POST["customer"]);
+        $company_id=$_SESSION['user_id'];
+        $this->model('Company')->setQuota($company_id,$customer,$quota);
         die();
     }
     function resetQuota(){
-        echo "hello";
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $customer = mysqli_real_escape_string($conn,$_POST["customer"]);
+        $company_id=$_SESSION['user_id'];
+        $this->model('Company')->resetQuota($company_id,$customer);
         die();
     }
     function analysis(){
@@ -238,6 +246,34 @@ class Compny extends Controller{
         $data['navigation'] = 'reportsCompany';
 
         $this->view('dashboard/company',$data);
+    }
+    public function issuedOrders(){
+        $data['navigation'] = 'issuedorders';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        //$row = mysqli_fetch_assoc($dealer_details);
+        $data['dealer']=$dealer_details;
+        //$data['cc']=$row['account_no'];
+        //echo $data['cc'];
+            //$data=[];
+        $this->view('dashboard/company', $data);
+    }
+    public function delayedOrders(){
+        $data['navigation'] = 'delayedorders';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        //$row = mysqli_fetch_assoc($dealer_details);
+        $data['dealer']=$dealer_details;
+        //$data['cc']=$row['account_no'];
+        //echo $data['cc'];
+            //$data=[];
+        $this->view('dashboard/company', $data);
     }
 
 }
