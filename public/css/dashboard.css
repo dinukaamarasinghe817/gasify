@@ -756,7 +756,7 @@ td button:hover{
 
 .styled-table {
     border-collapse: collapse;
-    margin: 20px 0;
+    /* margin: 20px 0; */
     font-size: var(--small);
     width: 100%;
     min-width: 400px;
@@ -766,7 +766,7 @@ td button:hover{
     table-layout: fixed;
 }
 .styled-table thead tr {
-    background-color: var(--table-header);
+    /* background-color: var(--table-header); */
     /* background-color: black;; */
     color: #ffffff;
     text-align: left;
@@ -778,7 +778,7 @@ td button:hover{
     width: auto;
 }
 .styled-table tbody{
-    display:block;
+    /* display:block; */
     width: 100%;
     overflow: auto;
     height: 100px;
@@ -810,13 +810,14 @@ td button:hover{
     border: var(--button-blue-hover) 2px solid;
 }
 .styled-table thead th{
+    background-color: var(--table-header);
     position: sticky;
     top: 0;
 }
-.styled-table thead td{
+/* .styled-table thead td{
     display: table;
     width: 100%;
-}
+} */
 
 
 #show-toast{
@@ -980,7 +981,7 @@ div div.input.half{
     width: 48%;
 }
 input,select{
-    position: relative;
+    /* position: relative; */
     padding: 10px;
     margin-bottom: 10px;
     margin-left: 1px;
