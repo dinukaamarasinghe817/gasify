@@ -234,7 +234,8 @@ class Distributor extends Model
         }
         return $accepted;
     }
-
+    
+    // count of received all gas orders
     public function countReceivedOrders($user_id) {
         $count = array();
         $query1 = $this->Query("SELECT count(stock_req_id) as receviedOrders from stock_request where distributor_id='{$user_id}'");
@@ -244,11 +245,7 @@ class Distributor extends Model
             }
         }
         return $count;
-
     }
-
-
-
 
     // Distributor - gas distributions - pending
     public function pendingdistributions($user_id) {
