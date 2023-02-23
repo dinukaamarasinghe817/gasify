@@ -21,14 +21,24 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
+            $products = $data['products'];
+            // foreach($products as $product) {
+                $row1 = $product['productinfo'];
+              
+            // }
+            
+            $number = $row1['vehicle_no'];
+            echo "Vehicle Number : $number ".'<br><br>';
+            // echo "Vehicle Number :  ".'<br><br>';
 
-                
-                echo "Vehicle Number : AX2103 ".'<br><br>';
             ?>
 
-            <form>
+            <form action="<?php echo BASEURL;?>/vehicles/updateVehiclePage" method="POST">
+
+            <?php 
+                echo '
                 <div class="part1">
-                    <label>Weight Limit :</label>                    
+                    <label>Weight Limit: </label>
                     <table class="styled-table">
                         <thead>
                             <tr>
@@ -36,36 +46,40 @@ $user_id = $_SESSION['user_id'];
                                 <th>Capacity</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody>';
+                    
+                    $products = $data['products'];
+                    foreach($products as $product) {
+                        $row1 = $product['productinfo'];
+                        $row2 = $product['newcapacities'];
+                        $output = '
                             <tr>
-                                <td>Buddy (Refill)</td>
-                                <td><input type="number" name="capacity" value=250 min=0 required></td>
-                            </tr>
-                            <tr>
-                                <td>Budget (Refill)</td>
-                                <td><input type="number" name="capacity" value=300 min=0 required></td>
-                            </tr>
-                            <tr>
-                                <td>Regular (Refill)</td>
-                                <td><input type="number" name="capacity" value=100 min=0 required></td>
-                            </tr>
+                                <td>'.$row1['product_id'].'</td>
+                                <td><input type="number" name="capacity" value='.$row2['capacity'].' min=0 required></td>
+                            </tr>';
+                    }
+                    $output .= '
                         </tbody>
                     </table>
 
-                </div>
-
-                <div class="part1">
                     <label>Fuel Consumption :</label>
                     <input type="number" name="fuel" min=0 required>
                 </div>
             </form>
 
-            <div class="beginbtn">
-                <!-- <button class="btn3"><b>Update</b></button> -->
-                <a href="<?php echo BASEURL ?>/vehicles/viewvehicle"><button class="btn3" name="update"><b>Update</b></button></a>
-              
-            </div>
-                
+                <div class="beginbtn">
+                    <button class="btn3" name="update" onclick="document.location.href=\''.BASEURL .'/vehicles/viewvehicle\'"><b>Update</b></button>
+                </div>';
+                echo $output;
+            
+            ?>
+
+
+               
+          
+             
+            
+
         </div>
     </section>
 </section>
@@ -73,4 +87,3 @@ $user_id = $_SESSION['user_id'];
 <?php
 $footer = new Footer();
 ?>
-

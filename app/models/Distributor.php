@@ -112,19 +112,30 @@ class Distributor extends Model
     }
 
     // update vehicle
-    public function updatevehicle($vehicle_no) {
-        $vehicles = array();
-        $query1 = "UPDATE distributor_vehicle SET fuel_consumption = $vehicles[1] where $vehicle_no = '$vehicles[0]' ";
+    public function updatevehicle($vehicle_no, $user_id, $new_capacity) {
+
+        $products = array();
+        $query1 =  $this->Query("SELECT DISTINCT v.vehicle_no as vehicle_no, p.name AS product_name, v.capacity as capacity FROM distributor_vehicle_capacity v INNER JOIN product p ON v.product_id = p.product_id WHERE v.distributor_id = '{$user_id}'");
+        // $query1 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $distributor_id AND vehicle_no = '$vehicle_id'");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
-                $capacities = array();
-                $query2 = "UPDATE distributor_vehicle_capacity SET capacity = $capacities[1] where $vehicle_no = '$vehicles[0]' ";
-                
+                // array_push($products, ['productinfo'=>$row1]);
+
+                $newdata = array();
+                $query2 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $user_id AND vehicle_no = '$vehicle_no'");
+                if(mysqli_num_rows($query2)>0) {
+                    while($row2 = mysqli_fetch_assoc($query2)) {
+                        array_push($newdata, $row2);
+                    }
+                }
+                array_push($products,['productinfo'=>$row1, 'newcapacities'=>$newdata ]);   
             }
         }
+        // $query2 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $distributor_id AND vehicle_no = '$vehicle_id'");
+
+        return $products; 
 
     }
-
 
     public function viewdealers($user_id) {
         $dealers = array();
@@ -248,6 +259,8 @@ class Distributor extends Model
         return $pending;
     }
 
+    
+
     // Distributor - gas distributions -completed
     public function completedistributions($user_id) {
         $completed = array();
@@ -305,6 +318,7 @@ class Distributor extends Model
         return $stock;
     }
 
-
+   
+    
 }
 
