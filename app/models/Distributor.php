@@ -170,7 +170,7 @@ class Distributor extends Model
     public function pendingGasOrders($user_id) {
         $pending = array();
 
-        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='pending';");
+        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='pending' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['stock_req_id'];
@@ -193,7 +193,7 @@ class Distributor extends Model
     public function completedGasOrders($user_id) {
         $completed = array();
 
-        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='completed';");
+        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='completed' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['stock_req_id'];
@@ -216,7 +216,7 @@ class Distributor extends Model
     public function acceptedGasOrders($user_id) {
         $accepted = array();
 
-        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='accepted';");
+        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='accepted' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['stock_req_id'];
@@ -234,7 +234,7 @@ class Distributor extends Model
         }
         return $accepted;
     }
-    
+
     // count of received all gas orders
     public function countReceivedOrders($user_id) {
         $count = array();
@@ -251,7 +251,7 @@ class Distributor extends Model
     public function pendingdistributions($user_id) {
         $pending = array();
 
-        $query1 = $this->Query("SELECT po_id, dealer_id, place_date from purchase_order where distributor_id = '{$user_id}' and po_state='pending'; ");
+        $query1 = $this->Query("SELECT po_id, dealer_id, place_date from purchase_order where distributor_id = '{$user_id}' and po_state='pending' order by (place_date) ASC; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['po_id'];
@@ -288,7 +288,7 @@ class Distributor extends Model
     public function completedistributions($user_id) {
         $completed = array();
 
-        $query1 = $this->Query("SELECT po_id, dealer_id, place_date from purchase_order where distributor_id = '{$user_id}' and po_state='completed'; ");
+        $query1 = $this->Query("SELECT po_id, dealer_id, place_date from purchase_order where distributor_id = '{$user_id}' and po_state='completed' order by (place_date) ASC; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['po_id'];
