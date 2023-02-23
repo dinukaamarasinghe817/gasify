@@ -99,7 +99,9 @@
     width: 100%;
     justify-content: space-between;
 }
-
+.body-content .content-data{
+    padding: 0;
+}
 .content-data .top-panel ul:last-child{
     border-top: white solid 2px;
 }
@@ -499,5 +501,6 @@
     border: 2px solid transparent;
     padding: 0px 0px;
     margin: 0px;
-    padding: 5px;
+    /* padding: 5px; */
+    margin-top: 5px;
 }
