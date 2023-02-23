@@ -234,6 +234,18 @@ class Distributor extends Model
         }
         return $accepted;
     }
+    
+    // count of received all gas orders
+    public function countReceivedOrders($user_id) {
+        $count = array();
+        $query1 = $this->Query("SELECT count(stock_req_id) as receviedOrders from stock_request where distributor_id='{$user_id}'");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                $count = $row1['receviedOrders'];
+            }
+        }
+        return $count;
+    }
 
     // Distributor - gas distributions - pending
     public function pendingdistributions($user_id) {
@@ -259,7 +271,18 @@ class Distributor extends Model
         return $pending;
     }
 
-    
+    // dashboard -> count of pending distributions
+    public function sumpendingdistirbutions($user_id) {
+        $count = array();
+        // $query1 = $this->Query("SELECT count()")
+        $query1 = $this->Query("SELECT count(po_id) as numofpendis from purchase_order where distributor_id = '{$user_id}' and po_state='pending'; ");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                $count = $row1['numofpendis'];
+            }
+        }
+        return $count;
+    }
 
     // Distributor - gas distributions -completed
     public function completedistributions($user_id) {

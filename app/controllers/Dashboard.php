@@ -121,6 +121,12 @@
 
             // $data['pendingorders']= $this->model("Distributor")->pendingGasOrders($distributor_id);
             $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($distributor_id);
+            
+            // count of pending distributions
+            $data['count_pending_distributions'] = $this->model("Distributor")->sumpendingdistirbutions($distributor_id);
+
+            // count of received gas orders
+            $data['count_received_gasorders'] = $this->model("Distributor")->countReceivedOrders($distributor_id);
 
             // $data['chart'] = array();
             $chart['type'] = 'bar';

@@ -265,9 +265,6 @@ class Body{
             }
 
           
-          
-                       
-
             // echo '</div> 
             // </div>';
            
@@ -285,25 +282,39 @@ class Body{
                                 <h3>Analytic Overview</h3>
                                 <!-- drop down component -->
                                 <form action="#">
-                                    <select id="period" onchange="updatechart()" class="dropdowndate">
-                                        <option value="today" selected>To day</option>
-                                        <option  value="30day">Last 30 days</option>
+                                <form action="'.BASEURL.'/dashboard/distributor" method="post">
+                                    <select id="period" onchange="this.form.submit()" class="dropdowndate">';
+                                        if($data['option'] == 'today') {
+                                            echo '<option value="today" selected>To day</option>
+                                            <option  value="30day">Last 30 days</option>';
+                                        }else{
+                                            echo '<option value="today" >To day</option>
+                                            <option  value="30day" selected>Last 30 days</option>';
+                                        }
+
+                                    echo'
                                     </select>
                                 </form>
                             </div>
 
                             <div class="box1">
-                                <div class="box2">
-                                    <p class="p1"><b>10</b></p>
-                                    <p>pending distributions</p>
-                                </div>
+                               <div class="box2">';
+                                    $pendingcount = $data['count_pending_distributions'];
+                                    echo '
+                                        <p class="p1"><b>'.$pendingcount.'</b></p>
+                                        <p>pending distributions</p>
+                                </div>';
 
-                                <div class="box2">
-                                    <p class="p1"><b>14</b></p>
-                                    <p>received orders</p>
+                                echo '
+                                <div class="box2">';
+                                    $receivedCount = $data['count_received_gasorders'];
+                                    echo '
+                                        <p class="p1"><b>'.$receivedCount.'</b></p>
+                                        <p>received orders</p>
                                 </div>
-                            </div> 
-
+                            </div>';
+                                    
+                            echo '
                             <div class="chart">';
                             $chart = $data['chart'];
                             if(count($chart['labels']) > 0){
@@ -313,35 +324,11 @@ class Body{
                             }
                             echo  '</div>
 
-
-                        </div>';
-
-                        // $output = '
-                        // <div class="box3">
-                        //     <h3>Current Stock</h3>
-
-                        //         <div class="content1">
-                        //             <table class="dboard1">
-                        //             <tbody>';     
-                                
-                        //         $stocks = $data['currentstock'];
-                        //         foreach($stocks as $stock) {
-                        //             $row1 = $stock['stockinfo'];
-
-                        //             $output .= '
-                        //             <tr>
-                        //                 <td>'.$row1['name'].'</td>
-                        //                 <td>'.$row1['quantity'].'</td> 
-                        //             </tr>';
-                        //         }
-                        //             $output .= '</tbody></table>
-                        //         </div>
-                        //     </div>';
-                        //             echo $output;
-                                    echo '                               
-                       
+                        </div>
                     </div>';
 
+                        
+              
                     echo '
                     <div class="body-right">
                         <div class="accordion new">
