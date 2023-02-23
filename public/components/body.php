@@ -293,17 +293,29 @@ class Body{
                             </div>
 
                             <div class="box1">
-                                <div class="box2">
-                                    <p class="p1"><b>10</b></p>
-                                    <p>pending distributions</p>
-                                </div>
 
-                                <div class="box2">
-                                    <p class="p1"><b>14</b></p>
+                               <div class="box2">';
+                                    $pendingcount = $data['count_pending_distributions'];
+                                    $count = $pendingcount['numofpendis'];
+                                    
+                                    echo '
+                                        <p class="p1"><b>'.$count.'</b></p>
+                                        <p>pending distributions</p>
+                                </div>';
+                              
+                              
+
+                                echo '
+                                <div class="box2">';
+                                    $receivedCount = $data['count_received_gasorders'];
+                                    $count = $receivedCount['receviedOrders'];
+                                echo '
+                                    <p class="p1"><b>'.$count.'</b></p>
                                     <p>received orders</p>
                                 </div>
-                            </div> 
-
+                            </div>';
+                                    
+                            echo '
                             <div class="chart">';
                             $chart = $data['chart'];
                             if(count($chart['labels']) > 0){
