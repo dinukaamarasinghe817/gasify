@@ -22,14 +22,10 @@ $user_id = $_SESSION['user_id'];
         <div class="main2">
             <?php
             $products = $data['products'];
-            // foreach($products as $product) {
-                $row1 = $product['productinfo'];
-              
-            // }
+            $row1 = $products['productinfo'];
             
             $number = $row1['vehicle_no'];
-            echo "Vehicle Number : $number ".'<br><br>';
-            // echo "Vehicle Number :  ".'<br><br>';
+            echo "Vehicle Number :  ".'<br><br>';
 
             ?>
 
@@ -51,11 +47,12 @@ $user_id = $_SESSION['user_id'];
                     $products = $data['products'];
                     foreach($products as $product) {
                         $row1 = $product['productinfo'];
-                        $row2 = $product['newcapacities'];
+                        // $capacities = $product['capacities'];
+                      
                         $output = '
                             <tr>
-                                <td>'.$row1['product_id'].'</td>
-                                <td><input type="number" name="capacity" value='.$row2['capacity'].' min=0 required></td>
+                                <td>'.$row1['product_name'].'</td>
+                                <td><input type="number" name="capacity" value='.$row1['capacity'].' min=0 required></td>
                             </tr>';
                     }
                     $output .= '

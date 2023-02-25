@@ -282,7 +282,6 @@ class Body{
                                 <h3>Analytic Overview</h3>
                                 <!-- drop down component -->
                                 <form action="#">
-                                <form action="'.BASEURL.'/dashboard/distributor" method="post">
                                     <select id="period" onchange="this.form.submit()" class="dropdowndate">';
                                         if($data['option'] == 'today') {
                                             echo '<option value="today" selected>To day</option>

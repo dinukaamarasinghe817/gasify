@@ -54,7 +54,7 @@ $user_id = $_SESSION['user_id'];
                             </tr>';
                         }
                         $output .= '
-                        </tbody>
+                            </tbody>
                         </table>';
                         echo $output;
                     ?>

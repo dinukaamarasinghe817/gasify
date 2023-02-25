@@ -20,11 +20,13 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </div>
         
                 <div class="middle">
-                    <select id="period" onchange="updatechart()" class="dropdowndate">
-                        <option value="today" selected>Last 7 days</option>
-                        <option  value="month">Last 30 days</option>
-                        <option  value="3months">Last 3 months</option>
-                    </select>
+                    <form>
+                        <select id="period" onchange="updatechart()" class="dropdowndate">
+                            <option value="today" selected>Last 7 days</option>
+                            <option  value="month">Last 30 days</option>
+                            <option  value="3months">Last 3 months</option>
+                        </select>
+                    </form>
 
                     <?php
                     $records = $data['distributions'];
