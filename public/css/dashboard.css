@@ -184,9 +184,12 @@ body{
     display: flex;
     flex-direction: row;
 }
-.body-header-right .bell p{
+.body-header-right .bell span{
     position: absolute;
-    background-color: rgb(101, 100, 100);
+}
+.body-header-right .bell p.active{
+    position: absolute;
+    background-color: rgb(72, 72, 72);
     border-radius: 50px;
     padding: 3px;
     color: white;

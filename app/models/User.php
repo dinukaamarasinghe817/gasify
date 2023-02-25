@@ -14,7 +14,16 @@ class User extends Model
         $result = $this->read('users', "email = '$email'");
         return $result;
     }
+    public function getnewnotificationcount($user_id){
+        $query = $this->read('notifications',"user_id = $user_id AND state = 'delivered'");
+        if(mysqli_num_rows($query) > 0){
+            return mysqli_num_rows($query);
+        }else{
+            return 0;
+        }
+    }
     public function getnotifications($user_id){
+        $this->update('notifications',array('state'=>'read'),"user_id = $user_id AND state = 'delivered'");
         $data['notifications'] = $this->read('notifications', "user_id = '$user_id'",'date AND time DESC');
         return $data;
     }
