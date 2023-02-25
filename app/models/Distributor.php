@@ -113,19 +113,19 @@ class Distributor extends Model
 
     // update vehicle
     // public function updatevehicle($vehicle_no, $user_id, $new_capacity) {
-    public function updatevehicle($user_id) {
+    public function updatevehicle($user_id, $vehicle_no) {
         // $vehicle_no = $_POST['vehicle_no'];
 
         $products = array();
-        $query1 =  $this->Query("SELECT DISTINCT v.vehicle_no as vehicle_no, p.name AS product_name, v.capacity as capacity FROM distributor_vehicle_capacity v INNER JOIN product p ON v.product_id = p.product_id WHERE v.distributor_id = '{$user_id}'");
+        $query1 =  $this->Query("SELECT DISTINCT p.name AS product_name, p.product_id as product_id, v.capacity as capacity FROM distributor_vehicle_capacity v INNER JOIN product p ON v.product_id = p.product_id WHERE v.distributor_id = '{$user_id}' and v.vehicle_no = '{$vehicle_no}'");
         // $query1 = $this->Query("SELECT DISTINCT v.fuel_consumption as fuel, c.capacity as capacity, c.product_id as product_id from distributor_vehicle_capacity c inner join distributor_vehicle v on v.vehicle_bo = c.vehicle_no where v.distributor_id = '{$user_id}' and c.distributor_id = '{$user_id}'");
         
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
-                $number = $row1['vehicle_no'];
-                $name = $row1['product_name'];
+                // $number = $row1['vehicle_no'];
+                // $name = $row1['product_name'];
                 // $capacities = array();
-                $capacity = $row1['capacity'];
+                // $capacity = $row1['capacity'];
 
 
                 // array_push($products,['productinfo'=>$row1 ]);   
@@ -138,13 +138,16 @@ class Distributor extends Model
                 // }
                 // array_push($products,['productinfo'=>$row1, 'newcapacities'=>$newdata ]); 
                 // array_push($products,['productinfo'=>$row1, 'capacities'=>$capacities]);   
-                array_push($products,['productinfo'=>$row1]);   
+                array_push($products,$row1);   
 
             }
         }
+        $query2 = $this->read("distributor_vehicle", "vehicle_no = '$vehicle_no' and distributor_id = '$user_id'");
+        $row2 = mysqli_fetch_assoc($query2);
+
         // array_push($products,['productinfo'=>$row1 ]);   
         // $query2 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $distributor_id AND vehicle_no = '$vehicle_id'");
-        return $products; 
+        return ['fuel_consumption'=> $row2['fuel_consumption'],'vehicle_no'=> $vehicle_no, 'products'=> $products];
 
 
 
@@ -166,6 +169,26 @@ class Distributor extends Model
 
         // }
         // return $data;
+
+    }
+
+    public function updatingVehicle($vehicle_no) {
+        $fuel = $_POST['fuel'];
+        $user_id = $_SESSION['user_id'];
+
+        $query1 =  $this->Query("SELECT DISTINCT p.name AS product_name, p.product_id as product_id, v.capacity as capacity FROM distributor_vehicle_capacity v INNER JOIN product p ON v.product_id = p.product_id WHERE v.distributor_id = '{$user_id}' and v.vehicle_no = '{$vehicle_no}'");
+        $products = array();
+        while($row1 = mysqli_fetch_assoc($query1)){
+            array_push($products, ['id'=> $row1["product_id"], "quantity"=>$_POST[$row1["product_id"]] ]);
+
+        }
+        foreach($products as $product) {
+            $this->update("distributor_vehicle_capacity", ["capacity"=>$product["quantity"]], "distributor_id= $user_id and vehicle_no = $vehicle_no and product_id = ".$product['id']);
+            
+        }
+        $this->update("distributor_vehicle", ["fuel_consumption"=>$fuel], "distributor_id= $user_id and vehicle_no = $vehicle_no" );
+
+
 
     }
 
