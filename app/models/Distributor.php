@@ -112,28 +112,60 @@ class Distributor extends Model
     }
 
     // update vehicle
-    public function updatevehicle($vehicle_no, $user_id, $new_capacity) {
+    // public function updatevehicle($vehicle_no, $user_id, $new_capacity) {
+    public function updatevehicle($user_id) {
+        // $vehicle_no = $_POST['vehicle_no'];
 
         $products = array();
         $query1 =  $this->Query("SELECT DISTINCT v.vehicle_no as vehicle_no, p.name AS product_name, v.capacity as capacity FROM distributor_vehicle_capacity v INNER JOIN product p ON v.product_id = p.product_id WHERE v.distributor_id = '{$user_id}'");
-        // $query1 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $distributor_id AND vehicle_no = '$vehicle_id'");
+        // $query1 = $this->Query("SELECT DISTINCT v.fuel_consumption as fuel, c.capacity as capacity, c.product_id as product_id from distributor_vehicle_capacity c inner join distributor_vehicle v on v.vehicle_bo = c.vehicle_no where v.distributor_id = '{$user_id}' and c.distributor_id = '{$user_id}'");
+        
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
-                // array_push($products, ['productinfo'=>$row1]);
+                $number = $row1['vehicle_no'];
+                $name = $row1['product_name'];
+                // $capacities = array();
+                $capacity = $row1['capacity'];
 
-                $newdata = array();
-                $query2 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $user_id AND vehicle_no = '$vehicle_no'");
-                if(mysqli_num_rows($query2)>0) {
-                    while($row2 = mysqli_fetch_assoc($query2)) {
-                        array_push($newdata, $row2);
-                    }
-                }
-                array_push($products,['productinfo'=>$row1, 'newcapacities'=>$newdata ]);   
+
+                // array_push($products,['productinfo'=>$row1 ]);   
+                // $newdata = array();
+                // $query2 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $user_id AND vehicle_no = '$vehicle_no'");
+                // if(mysqli_num_rows($query2)>0) {
+                    // while($row2 = mysqli_fetch_assoc($query2)) {
+                        // array_push($newdata, $row2);
+                    // }
+                // }
+                // array_push($products,['productinfo'=>$row1, 'newcapacities'=>$newdata ]); 
+                // array_push($products,['productinfo'=>$row1, 'capacities'=>$capacities]);   
+                array_push($products,['productinfo'=>$row1]);   
+
             }
         }
+        // array_push($products,['productinfo'=>$row1 ]);   
         // $query2 =  $this->Query("UPDATE distributor_vehicle_capacity SET capacity = $new_capacity WHERE distributor_id = $distributor_id AND vehicle_no = '$vehicle_id'");
-
         return $products; 
+
+
+
+        // $result = $this->update('users', array('fuel'=>$data['fuel']), "distributor_id = $user_id AND vehicle_no = $vehicle_no");
+        // if($result) {
+        //     $row = mysqli_fetch_assoc($this->read('distributor',"distributor_id = $user_id"));
+        //     $result = $this->read('product',"company_id = ".$row['company_id']);
+        //     $capacity = array();
+        //     while($row = mysqli_fetch_assoc($result)){
+        //         if(isset($_POST[$row['product_id']])){
+        //             $quantity = $_POST[$row['product_id']];
+        //             array_push($capacity,['product_id' => $row['product_id'], 'quantity' => $quantity]);
+        //         }
+        //     }
+        //     foreach($capacity as $cap){
+        //         $this->update('distributor_capacity',array('capacity'=>$cap['quantity']),"distributor_id = $user_id AND product_id = ".$cap['product_id']);
+        //     }
+           
+
+        // }
+        // return $data;
 
     }
 

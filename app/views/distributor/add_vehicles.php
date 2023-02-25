@@ -14,36 +14,28 @@ $user_id = $_SESSION['user_id'];
     ?>
 
     <section class="body-content">
-          <h2>Vehicles</h2> <br>
+          <h1>Vehicles</h1> <br>
 
           <?php 
           $result = new Vehicles_Comp("add");
           ?>
 
           <div class="main2">
-            <?php
-                // echo "Your Distributor ID : $user_id";
-            ?>
 
             <!-- <form action=BASEURL."/vehicles/addvehicle" method="POST"> -->
             <form action="<?php echo BASEURL;?>/vehicles/addvehicle" method="POST">
                 <div class="err-txt1">
-                <?php
-                    if(isset($data['error'])){
-                        echo '<p>'.$data['error'].'</p>';
-                    }
-                ?>
+                    <?php
+                        if(isset($data['error'])){
+                            echo '<p>'.$data['error'].'</p>';
+                        }
+                    ?>
                 </div>
 
                 <div class="part1">
                     <label>Vehicle Number </label>               
                     <input type="text" name="vehiclenum" placeholder="Vehicle Number" required>
                 </div>
-                
-                <!-- <div class="part1">
-                    <label>Vehicle Type  </label>
-                    <input type="text" name="type" placeholder="Vehicle Type" required>
-                </div> -->
 
                 <div class="part1">
                     <label>Vehicle Type  </label>
