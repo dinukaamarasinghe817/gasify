@@ -21,17 +21,20 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-            $products = $data['products'];
-            $row1 = $products['productinfo'];
+            // $products = $data['products'];
+            // $row1 = $products['productinfo'];
             
-            $number = $row1['vehicle_no'];
-            echo "Vehicle Number :  ".'<br><br>';
+            // $number = $row1['vehicle_no'];
+            $upproducts = $data['updateproduct'];
+            $vehicle_no = $upproducts['vehicle_no'];
+            echo "Vehicle Number : $vehicle_no ".'<br><br>';
 
             ?>
 
-            <form action="<?php echo BASEURL;?>/vehicles/updateVehiclePage" method="POST">
+            <form action="<?php echo BASEURL;?>/vehicles/updateVehicle/<?php echo $vehicle_no ?>" method="POST">
 
             <?php 
+                $output = '';
                 echo '
                 <div class="part1">
                     <label>Weight Limit: </label>
@@ -42,31 +45,39 @@ $user_id = $_SESSION['user_id'];
                                 <th>Capacity</th>
                             </tr>
                         </thead>
-                        <tbody>';
+                        <tbody>
+
+
+                        
+                        ';
+
                     
-                    $products = $data['products'];
+                    $upproducts = $data['updateproduct'];
+                    $products = $upproducts['products'];
+                    // echo count($products);
                     foreach($products as $product) {
-                        $row1 = $product['productinfo'];
+                        $row1 = $product;
                         // $capacities = $product['capacities'];
                       
-                        $output = '
+                        $output .= '
                             <tr>
                                 <td>'.$row1['product_name'].'</td>
-                                <td><input type="number" name="capacity" value='.$row1['capacity'].' min=0 required></td>
+                                <td><input type="number" name="'.$row1['product_id'].'" value='.$row1['capacity'].' min=0 required></td>
                             </tr>';
                     }
                     $output .= '
+                    
                         </tbody>
                     </table>
 
                     <label>Fuel Consumption :</label>
-                    <input type="number" name="fuel" min=0 required>
+                    <input type="number" name="fuel" value='.$upproducts['fuel_consumption'].' min=0 required>
                 </div>
-            </form>
 
                 <div class="beginbtn">
-                    <button class="btn3" name="update" onclick="document.location.href=\''.BASEURL .'/vehicles/viewvehicle\'"><b>Update</b></button>
-                </div>';
+                    <button class="btn3" name="update" type="submit" onclick="document.location.href=\''.BASEURL .'/vehicles/viewvehicle\'"><b>Update</b></button>
+                </div>
+                </form>';
                 echo $output;
             
             ?>

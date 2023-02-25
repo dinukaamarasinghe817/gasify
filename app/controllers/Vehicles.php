@@ -107,7 +107,7 @@ class Vehicles extends Controller{
 
     
     // update vehicle page (view page)
-    public function updateVehiclePage() {
+    public function updateVehiclePage($vehicle_no) {
         $user_id = $_SESSION['user_id'];
         // $vehicle_no = $_SESSION['vehicle_no'];
         // $vehicle_no = $_POST['vehicle_no'];
@@ -120,9 +120,21 @@ class Vehicles extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $data['products'] = $this->model("Distributor")->updatevehicle($user_id);
+        $data['updateproduct'] = $this->model("Distributor")->updatevehicle($user_id, $vehicle_no);
 
         $this->view('distributor/updateVehiclePage', $data);
+    }
+
+    public function updateVehicle($vehicle_no){
+
+       $this->model("Distributor")->updatingVehicle( $vehicle_no);
+       $this->viewvehicle();
+
+
+       
+
+
+
     }
 
     public function removeVehicle() {
