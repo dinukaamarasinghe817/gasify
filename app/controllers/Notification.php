@@ -45,5 +45,10 @@
             $data['navigation'] = 'dashboard';
             $this->view($this->role.'/notifications',$data);
         }
+
+        public function count(){
+            $data['count'] = $this->model("User")->getnewnotificationcount($this->user_id);
+            echo $data['count'];
+        }
     }
 ?>
