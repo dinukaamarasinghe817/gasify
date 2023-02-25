@@ -106,7 +106,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             }
 
                                             
+
+                                            
                                         }
+                                        
                                     ?>
                             
                                 </select>
@@ -138,7 +141,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         const middle = document.querySelector('body');
 
 
-        function get_select_value(branddropdown_id=null,citydropdown_id=null,dealerdropdown_id=null){
+        function get_select_value(branddropdown_id,citydropdown_id,dealerdropdown_id){
 
             var brand_selected_value = document.getElementById(branddropdown_id).value;
             var city_selected_value = document.getElementById(citydropdown_id).value;

@@ -9,6 +9,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
         // $bodycontent = new Body('addreview', $data);
+        if(isset($data['toast'])){
+            $error = new Prompt('toast',$data['toast']);
+
+        }
         
     ?>
 
@@ -92,7 +96,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             </div>
 
             <div class="bottom">
-                <a href="<?php echo BASEURL; ?>/Orders/select_brand_city_dealer" class="btn" id="back_btn">Back</a>
+                <a href=" '.BASEURL.'/Orders/select_brand_city_dealer" class="btn" id="back_btn">Back</a>
                 <!-- <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn" id="next_btn">Next</a> -->
                 <button type="submit" >Next</button>
             </div>

@@ -10,7 +10,6 @@
         <select name="dealer" id="dealer" class="dealerdropdown dropdowndate" onchange = "get_dealer_value('dealer');">
             <option value="-1" selected disabled hidden>Select Dealer</option>
             <?php 
-
                 if(isset($data["dealers"])){
                     $result1 = $data["dealers"];
                     while($dealers = mysqli_fetch_assoc($result1)){    

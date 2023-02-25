@@ -19,7 +19,9 @@ class Support extends Controller{
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row['image'];
-        $admin_id = 9;
+        $admin = $this->model('Customer')->getAdminId();
+        $row =  mysqli_fetch_assoc($admin);
+        $admin_id = $row['user_id'];
         $data['messages'] = $this->model('Customer')->getMessages($customer_id,$admin_id);
         // $data['recieved_messages'] = $this->model('Customer')->getRecievedMessages($customer_id);
 
@@ -32,8 +34,10 @@ class Support extends Controller{
         $data['navigation'] = 'help';
 
         $admin = $this->model('Customer')->getAdminId();
-        // $admin_id = mysqli_fetch_assoc($admin);
-        $admin_id = 9;
+        $row =  mysqli_fetch_assoc($admin);
+        $admin_id = $row['user_id'];
+
+        // $admin_id = 9;
         $message = $_POST['message'];
 
         if(!empty($message)){
