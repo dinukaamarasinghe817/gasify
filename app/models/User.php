@@ -54,7 +54,7 @@ class User extends Model
                 // sendResetLink($name, $row['email'], $token);
                 //Create an instance; passing `true` enables exceptions
                 $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
-                $data = $mail->send();
+                $data = $mail->send("Please check your email and reset your password");
                 return $data;
             }else{
                 $data['toast'] = ['type' => 'error', 'message' => 'Server error'];

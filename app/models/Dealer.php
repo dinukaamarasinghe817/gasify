@@ -402,6 +402,29 @@ class Dealer extends Model
             $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
         }
         $this->update('reservation',['order_state' => 'Accepted'],"order_id = $order_id");
+
+        // sendig email updates
+        $row1 = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
+        $row2 = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $user_id"));
+        $dealername = $row2['name'];
+
+        $customer_id = $row1['customer_id'];
+        $row3 = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+        $row4 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+        $reciepName = $row4['first_name'].' '.$row4['last_name'];
+        $from = 'admin@gasify.com';
+        $to = $row3['email'];
+        $subject = 'Gasify: Your order has been accepted';
+        if($row1['collecting_method'] == 'Delivery'){
+            $message = 'Hello $reciepName ,<br>Your recent order at <strong>$dealername</strong> has been accepted by the dealer and waiting for a delivery. Please stay standby';
+        }else{
+            $message = 'Hello $reciepName ,<br>Your recent order at <strong>$dealername</strong> has been accepted by the dealer and waiting to be collected by. Please visit the store to collect your order.';
+        }
+        //$link = BASEURL."/controller/method/params";
+        // sendResetLink($name, $row['email'], $token);
+        //Create an instance; passing `true` enables exceptions
+        $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
+        $data = $mail->send();
     }
 
     public function dealerIssueOrder($order_id){
