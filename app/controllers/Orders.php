@@ -182,7 +182,8 @@ class Orders extends Controller{
 
     }
 
-    function filter_dealers($company_id=null,$city=null){
+    function filter_dealers($company_id=null,$city=null,$dealer=null){
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -192,29 +193,7 @@ class Orders extends Controller{
 
     }
 
-    //display all products according to the selected dealer
-    function select_products($company_id=null,$city=null,$dealer_id=null){
-    
-        $customer_id = $_SESSION['user_id'];
-        $data['navigation'] = 'placereservation';
-        // $company = $_SESSION['brand'];
-
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
-        
-        $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
-
-        // echo $company_id.$city.$dealer_id;
-        $data['company_id'] = $company_id;
-        $data['city'] = $city;
-        $data['dealer_id'] = $dealer_id;
-        $this->view('customer/place_reservation/select_products',$data);
-
-        
-    }
+   
 
 
     function get_brand_city_dealer(){
@@ -238,9 +217,52 @@ class Orders extends Controller{
 
        }
        if($brand != null && $dealer != null){
-            $this -> select_products($brand,$city,$dealer);
+            // $this -> select_products($brand,$city,$dealer);
+            $this -> select_products();
        }
        
+
+       $_SESSION['company_id'] = $brand;
+       $_SESSION['city'] = $city;
+       $_SESSION['dealer_id'] = $dealer;
+
+
+    }
+
+     //display all products according to the selected dealer
+     function select_products($error=null){
+
+    
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+        // $company = $_SESSION['brand'];
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $company_id = $_SESSION['company_id'];
+
+        $city = $_SESSION['city'];
+        $dealer_id = $_SESSION['dealer_id'];
+
+        
+        $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
+
+        // echo $company_id.$city.$dealer_id;
+        $data['company_id'] = $company_id;
+        $data['city'] = $city;
+        $data['dealer_id'] = $dealer_id;
+
+        if($error != NULL){
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
+
+
+        $this->view('customer/place_reservation/select_products',$data);
+
+        
     }
 
     //get customer selected products 
@@ -256,16 +278,24 @@ class Orders extends Controller{
 
         foreach($products as $product){
             $product_id = $product['p_id'];
-            $selected_product = $_POST[$product_id];
-            array_push($selected_products,[$product_id => $selected_product]);
+            $qty = $_POST[$product_id];
+            array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty]);
 
+           
+        }
+       
+        
+        if(isset($selected_products[$qty])){
+            $_SESSION['order_products'] = $selected_products;
+            $this->select_payment_method();
+        }
+        else{
+            
+            $error = "Please select at least one product";
+            $this->select_products($error);
         }
 
-        foreach($selected_products as $selected_product){
-            echo $selected_product[$product_id];
-        }
-
-        $this->select_payment_method();
+       
 
     }
 
@@ -281,6 +311,12 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+       
+        $data['selected_products']= $this ->model('Customer')->getSelectedProducts();
+       
+
+        // var_dump($selected_products[0]);
+
 
         // $data['brands'] = $this->model('Customer')->getCompanyBrand();
         // $data['dealers'] = $this->model('Customer')->getAlldealers();

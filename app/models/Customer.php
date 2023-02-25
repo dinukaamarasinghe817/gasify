@@ -376,6 +376,24 @@ class Customer extends Model{
         return $error;
     }
 
+
+    //get selected products details in payment method page
+    public function getSelectedProducts(){
+        $order_products_details = array();
+        $order_products = $_SESSION['order_products'];
+        
+        foreach($order_products  as $order_product){
+            $product_id  = $order_product['product_id'];
+
+            $result = $this->Query("SELECT * FROM product WHERE product_id = '{$product_id}'");
+            array_push($order_products_details, $result);
+        }
+
+        return $order_products_details;
+        
+
+    }
+
     //get dealer bank details for bank deposit payments
     public function getDealerBankDetails($dealer_id){
     
@@ -385,16 +403,21 @@ class Customer extends Model{
     /*.........................Customer dealers tab ....................*/
 
     //get  dealers details and display in view dealers tab according to selected brand and city
-    public function getdealers($company_id = null,$city_name = null) {
+    public function getdealers($company_id=null,$city_name = null) {
+        if($company_id == 'null'){
+            $company_id = null;
+        }
+        
+
         if($company_id != null && $city_name != null){
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
         }
         else if($company_id!= null && $city_name== null){
 
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
-        }else if($city_name!= null && $company_id== null){
-
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
+        }else if($city_name != null && $company_id == null){
+            
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no FROM dealer d  WHERE  d.city = '$city_name'");
         
         }else{
             $customer_id = $_SESSION['user_id'];

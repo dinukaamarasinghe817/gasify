@@ -41,7 +41,26 @@ $sidebar = new Navigation('customer',$data['navigation']);
             </div> --> 
              
             <ul>
+                <?php
+                    if (isset($data['selected_products'])) {
 
+                        $selected_products = $data['selected_products'];
+                        foreach ( $selected_products as $selected_product){
+                            $product_id = $selected_product['product_id'];
+                            $product_name = $selected_product['name'];
+                            $product_type = $selected_product['type'];
+                            echo $product_id,$product_name;
+                        }
+                        
+                        
+
+
+                    }
+
+
+
+                
+                ?>
                 <li>
                     <div class="order_item">
                         <img src="<?php echo BASEURL; ?>/public/img/products/12.5kglitro.png" alt="">
