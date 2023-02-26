@@ -110,7 +110,11 @@
         
         public function distributor($error = null){
             $distributor_id = $_SESSION['user_id'];
-            
+            if(isset($_POST['option'])){
+                $option = $_POST['option'];
+            }else{
+                $option = 'today';
+            }
             $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
             $row = mysqli_fetch_assoc($distributor_details);
             $data['image'] = $row['image'];
@@ -129,15 +133,16 @@
             $data['count_received_gasorders'] = $this->model("Distributor")->countReceivedOrders($distributor_id);
 
             // $data['chart'] = array();
-            $chart['type'] = 'bar';
-            $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
-            $chart['vector'] = array(7,10,2,5);
-            $chart['main'] = 'Based on Product';
-            $chart['y'] = 'Number of sold items';
-            $chart['color'] = 'rgba(245, 215, 39, 0.8)';
-            // array_push($data['charts'],$chart);
-            $data['chart'] = $chart;
-            
+            // $chart['type'] = 'bar';
+            // $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
+            // $chart['vector'] = array(7,10,2,5);
+            // $chart['main'] = 'Based on Product';
+            // $chart['y'] = 'Number of sold items';
+            // $chart['color'] = 'rgba(245, 215, 39, 0.8)';
+            // //array_push($data['charts'],$chart);
+            // $data['chart'] = $chart;
+            $data['chart'] = $this->model("Distributor")->dashboard($distributor_id,$option);
+            $data['option'] = $option;
             $this->view('dashboard/distributor',$data);
 
 

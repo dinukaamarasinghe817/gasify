@@ -126,14 +126,8 @@ class Vehicles extends Controller{
     }
 
     public function updateVehicle($vehicle_no){
-
        $this->model("Distributor")->updatingVehicle( $vehicle_no);
-       $this->viewvehicle();
-
-
-       
-
-
+       $this->updateVehiclePage($vehicle_no);
 
     }
 

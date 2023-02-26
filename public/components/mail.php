@@ -33,10 +33,10 @@ class Mail{
         $this->mail->Body    = $body;
     }
 
-    public function send(){
+    public function send($message=null){
         try{
             $result = $this->mail->send();
-            $data['toast'] = ['type' => 'success', 'message' => 'Please check your email and reset your password'];
+            $data['toast'] = ['type' => 'success', 'message' => $message];
         }catch(Exception $e){
             $data['toast'] = ['type' => 'error', 'message' =>'phpmailer server error'];
         }

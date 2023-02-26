@@ -27,6 +27,35 @@ class Distributor extends Model
         return $result;
     }
 
+    public function dashboard($distributor_id,$option){
+        $today = date('Y-m-d');
+            if($option == 'today'){
+                $start_date = $today;
+                $end_date = $today;
+            }else{
+                $start_date = date('Y-m-d', strtotime('-30 days'));
+                $end_date = date('Y-m-d', strtotime('-1 days'));
+            }
+            $sql = "SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
+            FROM purchase_include pi INNER JOIN product p 
+            ON pi.product_id = p.product_id WHERE po_id IN 
+                (SELECT po_id FROM purchase_order 
+                WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $distributor_id AND po_state != 'Pending') 
+            GROUP BY product_id";
+
+            //chart details
+            $products = $this->Query($sql);
+            $chart['y'] = 'Distributed Quantity';
+            $chart['color'] = 'rgba(255, 159, 64, 0.5)';
+            $chart['labels'] = array();$chart['vector'] = array();
+            $products = $this->Query($sql);
+            foreach($products as $product){
+                array_push($chart['labels'],$product['name']);
+                array_push($chart['vector'],$product['quantity']);
+            }
+            return $chart;
+    }
+
     public function getVehicleInfo($distributor_id){
         // $result = $this->read('distributor', "distributor_id = $distributor_id");
         $sql = "SELECT p.name AS name, p.product_id AS product_id FROM distributor_capacity d inner join product p on d.product_id=p.product_id where d.distributor_id = '{$distributor_id}'";
@@ -183,10 +212,10 @@ class Distributor extends Model
 
         }
         foreach($products as $product) {
-            $this->update("distributor_vehicle_capacity", ["capacity"=>$product["quantity"]], "distributor_id= $user_id and vehicle_no = $vehicle_no and product_id = ".$product['id']);
+            $this->update("distributor_vehicle_capacity", ["capacity"=>$product["quantity"]], "distributor_id= $user_id and vehicle_no = '$vehicle_no' and product_id = ".$product['id']);
             
         }
-        $this->update("distributor_vehicle", ["fuel_consumption"=>$fuel], "distributor_id= $user_id and vehicle_no = $vehicle_no" );
+        $this->update("distributor_vehicle", ["fuel_consumption"=>$fuel], "distributor_id= $user_id and vehicle_no = '$vehicle_no'" );
 
 
 

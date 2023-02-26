@@ -34,8 +34,7 @@ $user_id = $_SESSION['user_id'];
             <form action="<?php echo BASEURL;?>/vehicles/updateVehicle/<?php echo $vehicle_no ?>" method="POST">
 
             <?php 
-                $output = '';
-                echo '
+                $output = '
                 <div class="part1">
                     <label>Weight Limit: </label>
                     <table class="styled-table">
@@ -45,11 +44,7 @@ $user_id = $_SESSION['user_id'];
                                 <th>Capacity</th>
                             </tr>
                         </thead>
-                        <tbody>
-
-
-                        
-                        ';
+                        <tbody>';
 
                     
                     $upproducts = $data['updateproduct'];
@@ -62,7 +57,7 @@ $user_id = $_SESSION['user_id'];
                         $output .= '
                             <tr>
                                 <td>'.$row1['product_name'].'</td>
-                                <td><input type="number" name="'.$row1['product_id'].'" value='.$row1['capacity'].' min=0 required></td>
+                                <td><input type="number" name="'.$row1['product_id'].'" value='.$row1['capacity'].' min=0 required disabled></td>
                             </tr>';
                     }
                     $output .= '
@@ -75,7 +70,8 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="beginbtn">
-                    <button class="btn3" name="update" type="submit" onclick="document.location.href=\''.BASEURL .'/vehicles/viewvehicle\'"><b>Update</b></button>
+                    <a href="'.BASEURL.'/vehicles/viewvehicle">Back</a>
+                    <button class="btn3 edit" name="update" onclick="edit();"><b>Edit</b></button>
                 </div>
                 </form>';
                 echo $output;
@@ -91,6 +87,26 @@ $user_id = $_SESSION['user_id'];
         </div>
     </section>
 </section>
+
+<script>
+
+    document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault(); // prevent default form submission behavior
+    });
+
+    function edit(){
+        let btn = document.querySelector('form .beginbtn');
+        btn.querySelector('button.edit').onclick = function(){
+            console.log("clicked");
+            btn.innerHTML = `<button class="btn3" name="update" type="submit" onclick="this.form.submit()"><b>Update</b></button>`;
+            let inputs = document.querySelectorAll('form input');
+            for(var i = 0; i < inputs.length; i++){
+                inputs[i].disabled = false;
+            }
+        }
+    }
+
+</script>
 
 <?php
 $footer = new Footer();
