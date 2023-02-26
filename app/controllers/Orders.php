@@ -279,23 +279,21 @@ class Orders extends Controller{
         foreach($products as $product){
             $product_id = $product['p_id'];
             $qty = $_POST[$product_id];
-            array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty]);
-
-           
+            if($qty != 0){
+                array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty]);
+            }
         }
        
         
-        if(isset($selected_products[$qty])){
+        if(count($selected_products) > 0){
             $_SESSION['order_products'] = $selected_products;
             $this->select_payment_method();
         }
         else{
             
-            $error = "Please select at least one product";
+            $error = "You must select at least one product";
             $this->select_products($error);
         }
-
-       
 
     }
 
