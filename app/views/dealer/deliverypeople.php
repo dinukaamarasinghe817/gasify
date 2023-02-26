@@ -16,10 +16,10 @@ $sidebar = new Navigation('dealer',$data['navigation']);
                         <?php
                         if($data['option'] == 'all'){
                             echo '<li><a href="'.BASEURL.'/delvery/getdeliverypeople/all" class="current active">All delivery people</a></li>
-                            <li><a href="'.BASEURL.'/delvery/getdeliverypeople/current" class="current">Current delivery people</a></li>';
+                            <li><a href="'.BASEURL.'/delvery/getdeliverypeople/current" class="current">Ongoing delivery people</a></li>';
                         }else{
                             echo '<li><a href="'.BASEURL.'/delvery/getdeliverypeople/all" class="current">All delivery people</a></li>
-                            <li><a href="'.BASEURL.'/delvery/getdeliverypeople/current" class="current active">Current delivery people</a></li>';
+                            <li><a href="'.BASEURL.'/delvery/getdeliverypeople/current" class="current active">Ongoing delivery people</a></li>';
                         }
                         ?>
                     </ul>

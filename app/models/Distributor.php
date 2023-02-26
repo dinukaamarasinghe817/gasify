@@ -48,8 +48,8 @@ class Distributor extends Model
             $chart['y'] = 'Distributed Quantity';
             $chart['color'] = 'rgba(255, 159, 64, 0.5)';
             $chart['labels'] = array();$chart['vector'] = array();
-            $products = $this->Query($sql);
-            foreach($products as $product){
+            //$products = $this->Query($sql);
+            while($product = mysqli_fetch_assoc($products)){
                 array_push($chart['labels'],$product['name']);
                 array_push($chart['vector'],$product['quantity']);
             }
