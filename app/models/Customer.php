@@ -385,8 +385,8 @@ class Customer extends Model{
         foreach($order_products  as $order_product){
             $product_id  = $order_product['product_id'];
 
-            $result = $this->Query("SELECT * FROM product WHERE product_id = '{$product_id}'");
-            array_push($order_products_details, $result);
+            $row = mysqli_fetch_assoc($this->Query("SELECT * FROM product WHERE product_id = '{$product_id}'"));
+            array_push($order_products_details, ['quantity'=>$order_product['qty'], 'product_details' => $row]);
         }
 
         return $order_products_details;

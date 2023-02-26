@@ -42,40 +42,61 @@ $sidebar = new Navigation('customer',$data['navigation']);
              
             <ul>
                 <?php
-                    // if (isset($data['selected_products'])) {
+                    if (isset($data['selected_products'])) {
 
-                    //     $selected_products = $data['selected_products'];
-                    //     foreach ( $selected_products as $selected_product){
-                    //         $product_id = $selected_product['product_id'];
-                    //         $product_name = $selected_product['name'];
-                    //         $product_type = $selected_product['type'];
-                    //         echo $product_id,$product_name;
-                    //     }
+                        $selected_products = $data['selected_products'];
+                        $total = 0;
+                        foreach ( $selected_products as $selected_product){
+                            // $product_id = $selected_product['product_id'];
+                            // $product_name = $selected_product['name'];
+                            // $product_type = $selected_product['type'];
+                            // echo $product_id,$product_name;
+                            $quantity = $selected_product['quantity'];
+                            $row = $selected_product['product_details'];
+                            $total += $quantity*$row['unit_price'];
+                            $subtotal = number_format($quantity*$row['unit_price'],2);
+                            echo '<li>
+                                        <div class="order_item">
+                                            <img src="'.BASEURL.'/public/img/products/'.$row['image'].'" alt="">
+                                            <div>
+                                                <h3>'.$row['name'].'</h3>
+                                                <p>'.$row['weight'].' kg</p>
+                                            </div>
+                                            <p>Unit Price<br>Rs '.number_format($row['unit_price'],2).'</p>
+                                            <div><p>Quntity</p><h2>x '.$quantity.'</h2></div>
+                                            <p>Subtotal<br>Rs '.$subtotal.'</p>
+                                            <!-- <svg width="30" height="30" viewBox="0 0 854 976" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M365.987 0C298.889 0 243.991 54.898 243.991 121.996H121.996C54.898 121.996 0 176.894 0 243.991H853.97C853.97 176.894 799.071 121.996 731.974 121.996H609.978C609.978 54.898 555.08 0 487.983 0H365.987ZM121.996 365.987V952.786C121.996 966.205 131.755 975.965 145.175 975.965H710.015C723.434 975.965 733.194 966.205 733.194 952.786V365.987H611.198V792.972C611.198 827.13 584.359 853.969 550.2 853.969C516.042 853.969 489.203 827.13 489.203 792.972V365.987H367.207V792.972C367.207 827.13 340.368 853.969 306.209 853.969C272.05 853.969 245.211 827.13 245.211 792.972V365.987H123.216H121.996Z" fill="#FF4D4D"/>
+                                            </svg> -->
+                                        </div>
+                                    </li>';
+
+                        }
                         
                         
 
 
-                    // }
+                    }
 
 
 
             
                 ?>
-                <li>
+                <!-- <li>
                     <div class="order_item">
-                        <img src="<?php echo BASEURL; ?>/public/img/products/12.5kglitro.png" alt="">
+                        <img src="/public/img/products/12.5kglitro.png" alt="">
                         <div>
                             <h3>Regular Gas Cylinder</h3>
                             <p>12 .5 kg</p>
                         </div>
                         <p>Unit Price<br>Rs 4500.00</p>
                         <div><p>Quntity</p><h2>x 3</h2></div>
-                        <p>Subtotal<br>Rs 13,500.00</p>
+                        <p>Subtotal<br>Rs 13,500.00</p> -->
                         <!-- <svg width="30" height="30" viewBox="0 0 854 976" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M365.987 0C298.889 0 243.991 54.898 243.991 121.996H121.996C54.898 121.996 0 176.894 0 243.991H853.97C853.97 176.894 799.071 121.996 731.974 121.996H609.978C609.978 54.898 555.08 0 487.983 0H365.987ZM121.996 365.987V952.786C121.996 966.205 131.755 975.965 145.175 975.965H710.015C723.434 975.965 733.194 966.205 733.194 952.786V365.987H611.198V792.972C611.198 827.13 584.359 853.969 550.2 853.969C516.042 853.969 489.203 827.13 489.203 792.972V365.987H367.207V792.972C367.207 827.13 340.368 853.969 306.209 853.969C272.05 853.969 245.211 827.13 245.211 792.972V365.987H123.216H121.996Z" fill="#FF4D4D"/>
                         </svg> -->
-                    </div>
-                </li>
+                    <!-- </div>
+                </li> -->
 
                 
 
@@ -87,7 +108,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         <!-- <a href = "'.BASEURL.'/stock/dealer/pohistory" ><button class="btn" onclick>Back</button></a> -->
                         <div class="total">
                             <div><h3>Total </h3></div>
-                            <div><h3>Rs. 13,500.00</h3></div>
+                            <div><h3>Rs. <?php echo number_format($total,2); ?></h3></div>
                         </div>
                     </div>
                 </li>
