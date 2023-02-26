@@ -28,10 +28,10 @@ $user_id = $_SESSION['user_id'];
                         <tr>
                             <th>Vehicle Number</th>
                             <th>Vehicle Type</th>
-                            <th>Weight Limit</th>
-                            <th>Fuel Consumption</th>
+                            <th>Fuel Consumption (L/Km) </th>
                             <th>Availability</th>
-                        
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -44,25 +44,24 @@ $user_id = $_SESSION['user_id'];
                     $output .= '
                                 <tr>
                                     <td>'.$row2['vehicle_no'].'</td>
-                                    <td>'.$row2['type'].'</td>
-                                    <td>
-                                    <table class="table2">
-                                        <tr>
-                                            <th>Product Name</th>
-                                            <th>Capacity</th>
-                                        </tr>';
-                    foreach($capacities as $capacity){
-                        $row3 = $capacity;
-                        $output .= '
-                                        <tr>
-                                            <td>'.$row3['product_name'].'</td>
-                                            <td>'.$row3['capacity'].'</td>
-                                        </tr>
-                                    ';
-                    }
-                    $output .= '</table>
-                                            </td>
-                                            <td>'.$row2['fuel_consumption'].'</td>
+                                    <td>'.$row2['type'].'</td>';
+                    //                 <td><table class="table2">
+                    //                     <tr>
+                    //                         <th>Product Name</th>
+                    //                         <th>Capacity</th>
+                    //                     </tr>';
+                    // foreach($capacities as $capacity){
+                    //     $row3 = $capacity;
+                    //     $output .= '
+                    //                     <tr>
+                    //                         <td>'.$row3['product_name'].'</td>
+                    //                         <td>'.$row3['capacity'].'</td>
+                    //                     </tr>
+                    //                 ';
+                    // }
+                    // $output .= '</table></td>
+                                    $output .= '
+                                            <td>'.$row2['fuel_consumption'].' L</td>
                                             <td>'.$row2['availability'].'</td>';
                                 if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
                                     $output .= '<td><button type="button" class="btn4" style="background-color: B4AAFF;">Release</button></td>';

@@ -42,20 +42,20 @@ $sidebar = new Navigation('customer',$data['navigation']);
              
             <ul>
                 <?php
-                    if (isset($data['selected_products'])) {
+                    // if (isset($data['selected_products'])) {
 
-                        $selected_products = $data['selected_products'];
-                        foreach ( $selected_products as $selected_product){
-                            $product_id = $selected_product['product_id'];
-                            $product_name = $selected_product['name'];
-                            $product_type = $selected_product['type'];
-                            echo $product_id,$product_name;
-                        }
+                    //     $selected_products = $data['selected_products'];
+                    //     foreach ( $selected_products as $selected_product){
+                    //         $product_id = $selected_product['product_id'];
+                    //         $product_name = $selected_product['name'];
+                    //         $product_type = $selected_product['type'];
+                    //         echo $product_id,$product_name;
+                    //     }
                         
                         
 
 
-                    }
+                    // }
 
 
 

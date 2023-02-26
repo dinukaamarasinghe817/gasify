@@ -129,7 +129,7 @@ class Dealer extends Model
         FROM reservation_include r INNER JOIN product p 
         ON r.product_id = p.product_id WHERE order_id IN 
             (SELECT order_id FROM reservation 
-            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND dealer_id = 6 AND order_state != 'Pending') 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND dealer_id = $dealer_id AND order_state != 'Pending') 
         GROUP BY product_id";
 
         // chart details
