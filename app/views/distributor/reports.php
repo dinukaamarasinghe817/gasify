@@ -24,6 +24,7 @@ $user_id = $_SESSION['user_id'];
                 <div class="middle">
                 <?php echo'
                     <form action ="'.BASEURL.'/reports/distributor" method="POST">
+                    
                         <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">';
                        
                             if($data['option'] == 'today') {
@@ -38,7 +39,8 @@ $user_id = $_SESSION['user_id'];
                         
                         echo '
                         </select>
-                    </form>';
+                    </form>
+                </div>';
                         ?>
                     
                         <!-- <select id="period" onchange="updatechart()" class="dropdowndate">

@@ -29,6 +29,8 @@ class Distributor extends Model
 
     public function dashboard($distributor_id,$option){
         $data = [];
+
+        
         $today = date('Y-m-d');
             if($option == 'today'){
                 $start_date = $today;
@@ -46,7 +48,7 @@ class Distributor extends Model
 
 
 
-            
+        // chart
             $sql = "SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
             FROM purchase_include pi INNER JOIN product p 
             ON pi.product_id = p.product_id WHERE po_id IN 
