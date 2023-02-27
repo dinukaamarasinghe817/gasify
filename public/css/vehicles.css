@@ -264,9 +264,6 @@ a,button,input[type="button"],input[type="file"]{
     padding: 10px;
     background-color: var(--navmenu-orange);
     width: auto;
-    /* border: solid black 1px; */
-    /* border-radius: 10px; */
-    /* margin-top: 10px; */
 }
 
 .btn2 {
@@ -284,24 +281,39 @@ a,button,input[type="button"],input[type="file"]{
     padding-top: 10px;
     padding-bottom: 20px;
     margin-top: 5px;
-    margin-left: 87%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .btn3 {
-    width: 150px;
+    width: 10%;
     border: none;
     padding: 10px;
     border-radius: 10px;
     color: white;
-    /* margin-left: 87.2%; */
     background-color: var(--button-orange-hover);
-    /* margin-top: 30px; */
+}
+
+.back {
+    background-color: var( --button-blue-hover);
+    padding: 10px;
+    border-radius: 10px;
+    width: 8.5%;
+    height: auto;
+    border: none;
+    text-align: center;
+    margin-top:10px;
+    margin-left: 5px;
+}
+
+.back a {
+    color: white;  
 }
 
 .part1 {
     display: flex;
     flex-direction: column;
-    /* flex-direction: row; */
     margin-bottom: 5px;
 }
 
@@ -324,7 +336,6 @@ a,button,input[type="button"],input[type="file"]{
 
 .part2 {
     display: flex;
-    /* flex-direction: column; */
     flex-direction: row;
     margin-bottom: 5px;
 }
@@ -410,16 +421,6 @@ a,button,input[type="button"],input[type="file"]{
     color: white;
     margin-left: 5%;
 }
-/* 
-.btn5{
-    width: 120px;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    margin-left: 5%;
-    background-color: var(--button-orange-hover);
-} */
 
 .top ul {
     display: inline-flex;
@@ -441,7 +442,6 @@ a,button,input[type="button"],input[type="file"]{
     padding: 10px 10px;
     width: 100%;
     height: 100%;
-    /* color: var(--black); */
     color: white;
     background-color: var(--navmenu-orange-dark);
     border-top: solid transparent;

@@ -25,7 +25,7 @@ class Reports extends Controller{
 
     }
 
-    public function distributor_pdf() {
+    public function distributor_pdf($user_id) {
         $data = [];
         $this->view('distributor/reports/report_pdf',$data);
     }

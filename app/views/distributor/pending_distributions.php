@@ -9,7 +9,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
     ?>
     <section class="body-content">
         <div class="split right">
-            <h1>Pending Gas Distributions</h1>
+            <h2>Pending Gas Distributions</h2>
 
             <div class="top">
                 <ul>

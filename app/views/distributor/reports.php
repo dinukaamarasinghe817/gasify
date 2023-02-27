@@ -1,6 +1,8 @@
 <?php
 $header = new Header("distributor_reports");
 $sidebar = new Navigation('distributor',$data['navigation']);
+
+$user_id = $_SESSION['user_id'];
 ?>
 
 <section class="body">
@@ -11,7 +13,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
     <section class="body-content">
         <div class="split right">
         
-            <h1>Reports</h1>
+            <h2>Reports</h2>
 
             <div class="main">
 
@@ -20,13 +22,33 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </div>
         
                 <div class="middle">
-                    <form>
-                        <select id="period" onchange="updatechart()" class="dropdowndate">
+                <?php echo'
+                    <form action ="'.BASEURL.'/reports/distributor" method="POST">
+                    
+                        <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">';
+                       
+                            if($data['option'] == 'today') {
+                                echo '
+                                <option value="today" selected>To day</option>
+                                <option value="30day" >Last 30 days</option>';
+                            }else {
+                                echo '
+                                <option value="today">To day</option>
+                                <option value="30day" selected>Last 30 days</option>';
+                            }
+                        
+                        echo '
+                        </select>
+                    </form>
+                </div>';
+                        ?>
+                    
+                        <!-- <select id="period" onchange="updatechart()" class="dropdowndate">
                             <option value="today" selected>Last 7 days</option>
                             <option  value="month">Last 30 days</option>
                             <option  value="3months">Last 3 months</option>
-                        </select>
-                    </form>
+                        </select> -->
+                    <!-- </form> -->
 
                     <?php
                     $records = $data['distributions'];
@@ -57,7 +79,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 <td>'.$dealer_id.'</td>
                                 <td>10 000.00</td>
                                 <td>
-                                    <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/ distributor_pdf\'">Generate PDF</button>
+                                    <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/distributor_pdf/'.$distribution_num.'\'">Generate PDF</button>
                                 </td>
                                
                             </tr>';
@@ -69,9 +91,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     ';
                     echo $output;
                     ?>
-                    <!-- <div class="beginbtn">
-                        <a class="btn" href="<?php echo BASEURL ?>/reports/salesdealer">Generate PDF</a>
-                    </div> -->
+                   
                 </div>
             </div>
         </div>

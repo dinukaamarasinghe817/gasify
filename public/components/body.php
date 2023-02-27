@@ -319,7 +319,7 @@ class Body{
                             if(count($chart['labels']) > 0){
                                 $chart = new Chart('bar',$chart,1);
                             }else{
-                                echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
+                                echo "<img src = ".BASEURL."/public/img/placeholders/2.png class='chartimg'>";
                             }
                             echo  '</div>
 

@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_id'];
 
     <div class="split right">
         
-        <h1>Gas Orders</h1>
+        <h2>Gas Orders</h2>
 
         <?php 
         //   $result = new GasOrders_Comp("place");
