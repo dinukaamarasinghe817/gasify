@@ -13,7 +13,7 @@ $user_id = $_SESSION['user_id'];
 <section class="body-content">
     <div class="split right">
         
-        <h1>Gas Orders</h1>
+        <h2>Dealers</h2>
 
         <div class="top">
             <ul>

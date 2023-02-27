@@ -11,7 +11,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
     <section class="body-content">
         <div class="split right">
         
-            <h1>Reports</h1>
+            <h2>Reports</h2>
 
             <div class="main">
 

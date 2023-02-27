@@ -12,7 +12,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
         <div class="split right">
             
-            <h1>Gas Orders</h1>
+            <h2>Gas Orders</h2>
 
             <div class="top">
                 <ul>

@@ -573,3 +573,8 @@ td:nth-child(4) {
     padding: 5%;
 }
 
+.chartimg{
+    width: 90%;
+    height: auto;
+}
+

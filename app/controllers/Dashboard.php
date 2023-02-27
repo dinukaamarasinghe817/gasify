@@ -107,6 +107,7 @@
             $data['navigation'] = 'dashboard';
             $this->view('dashboard/customer', $data);
         }
+
         
         public function distributor($error = null){
             $distributor_id = $_SESSION['user_id'];
@@ -115,6 +116,10 @@
             }else{
                 $option = 'today';
             }
+
+            $data = $this->model('Distributor')->dashboard($this->user_id, $option);
+
+            
             $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
             $row = mysqli_fetch_assoc($distributor_details);
             $data['image'] = $row['image'];

@@ -28,6 +28,7 @@ class Distributor extends Model
     }
 
     public function dashboard($distributor_id,$option){
+        $data = [];
         $today = date('Y-m-d');
             if($option == 'today'){
                 $start_date = $today;
@@ -36,6 +37,16 @@ class Distributor extends Model
                 $start_date = date('Y-m-d', strtotime('-30 days'));
                 $end_date = date('Y-m-d', strtotime('-1 days'));
             }
+
+            // pending distirbutions
+            $data['pending_dis_count'] = mysqli_num_rows($this->read("purchase_order", "distributor_id = $distributor_id AND po_state='pending' AND place_date>='$start_date' AND place_date <= '$end_date'"));
+
+            // received orders
+            $data['received_orders_count'] = mysqli_num_rows($this->read("stock_request","distributor_id = $distributor_id AND place_date >='$start_date' AND place_date <='$end_date'"));
+
+
+
+            
             $sql = "SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
             FROM purchase_include pi INNER JOIN product p 
             ON pi.product_id = p.product_id WHERE po_id IN 
@@ -358,7 +369,6 @@ class Distributor extends Model
     // dashboard -> count of pending distributions
     public function sumpendingdistirbutions($user_id) {
         $count = array();
-        // $query1 = $this->Query("SELECT count()")
         $query1 = $this->Query("SELECT count(po_id) as numofpendis from purchase_order where distributor_id = '{$user_id}' and po_state='pending'; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
