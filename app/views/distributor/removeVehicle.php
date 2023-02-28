@@ -1,6 +1,6 @@
 <?php
 
-// echo "This is for remove vehicles";
+echo "This is for remove vehicles";
 
 
 ?>
