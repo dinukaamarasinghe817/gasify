@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer/bank_slip_upload");
+$header = new Header("customer/bank_slip_upload",$data);
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 
@@ -7,6 +7,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
+        if(isset($data['toast'])){
+            $error = new Prompt('toast',$data['toast']);
+
+        }
         
     ?>
 

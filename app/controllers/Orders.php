@@ -342,15 +342,20 @@ class Orders extends Controller{
             $file_type = $_FILES['slip_img']['type'];
             $file_size = $_FILES['slip_img']['size'];
             $temp_name = $_FILES['slip_img']['tmp_name'];
-            
+
             $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
 
-
+            $_SESSION['slip_img'] = $file_name;
             move_uploaded_file($temp_name,$upload_to . $file_name);
 
-        }else{
-            $error = "You must select a file";
-            $this -> bank_slip_upload($error);
+            if($file_size<=0){
+                $error = "Please upload a bank slip image!";
+                $this -> bank_slip_upload($error);
+            }
+            else{
+                $this->model('Customer')->place_reservation();
+                $this->select_collecting_method();
+            }
 
         }
 
@@ -401,6 +406,21 @@ class Orders extends Controller{
         $data['confirmation'] = '';
 
         $this->view('customer/place_reservation/delivery_collecting_method',$data);
+    }
+
+    function getcollecting_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $_SESSION['collecting_method'] = 'Pickup';
+        $this -> model('Customer')->insertcollectingmethod();
+         $this->view('customer/place_reservation/collecting_method',$data);
+
     }
 
 
