@@ -47,10 +47,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         $selected_products = $data['selected_products'];
                         $total = 0;
                         foreach ( $selected_products as $selected_product){
-                            // $product_id = $selected_product['product_id'];
-                            // $product_name = $selected_product['name'];
-                            // $product_type = $selected_product['type'];
-                            // echo $product_id,$product_name;
                             $quantity = $selected_product['quantity'];
                             $row = $selected_product['product_details'];
                             $total += $quantity*$row['unit_price'];

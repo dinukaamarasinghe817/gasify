@@ -395,8 +395,13 @@ class Customer extends Model{
     }
 
     //get dealer bank details for bank deposit payments
-    public function getDealerBankDetails($dealer_id){
-    
+    public function getDealerBankDetails(){
+        $dealer_id = $_SESSION['dealer_id'];
+        $result = $this->Query("SELECT d.bank,d.account_no,CONCAT(u.first_name ,'  ' ,u.last_name) as full_name FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE dealer_id = '{$dealer_id}'");
+
+        return $result;
+
+        
     }
 
 
