@@ -12,9 +12,9 @@ $sidebar = new Navigation('dealer','analysis');
     ?>
     <div class="body-content">
         <h2>Sales Analysis</h2>
-        <form action="" class="filters">
-                <div class="input half"><label>From</label><input type="date" name="start_date" value="'.$row['street'].'"></div>
-                <div class="input half"><label>To</label><input type="date" name="end_date" value="'.$row['street'].'"></div>
+        <form action="<?php echo BASEURL;?>/analysis/dealer" class="filters">
+                <div class="input half"><label>From</label><input onchange="refreshcharts()" type="date" name="start_date" value="<?php echo $data['start_date'];?>"></div>
+                <div class="input half"><label>To</label><input onchange="refreshcharts()" type="date" name="end_date" value="<?php echo $data['end_date'];?>"></div>
         </form>
         <div class="content-data analysis">
             <?php
@@ -31,6 +31,23 @@ $sidebar = new Navigation('dealer','analysis');
     </div>
 </section>
 
+<script>
+function refreshcharts(){
+    let form = document.querySelector('.body-content .filters');
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/mvc/analysis/dealerrefresh', true);
+    xhr.onload = ()=>{
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+            let data = xhr.response;
+            if(data){
+                console.log("data");
+            }
+        }
+    }
+    let formData = new FormData(form);
+    xhr.send(formData);
+}
+</script>
 <?php
 $footer = new Footer("dealer");
 ?>

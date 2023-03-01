@@ -146,13 +146,21 @@ class OrdersHTML{
                     //         <p>Search</p>
                     //     </button>
                     // </div>
+                    $orders = $data['orders'];
+                if(count($orders) > 0){
                     echo '<ul>';
-                        $orders = $data['orders'];
+                        
                         foreach($orders as $tuple){
                             $o = new Order($tuple,$active1,$active2);
                         }
-                echo '</ul>
-                </div>';
+                    echo '</ul>';
+                }else{
+                    echo '<div class="noorders">
+                        <img src="'.BASEURL.'/public/img/placeholders/noorders.png" alt="">
+                        <p class="gray-text">You currently dont have any '.$active1.' orders</p>
+                      </div>';  
+                }
+                echo '</div>';
     }
 }
 

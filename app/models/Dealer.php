@@ -279,7 +279,7 @@ class Dealer extends Model
         switch($tab){
             case "currentstock":
                 $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
-                p.weight as product_weight,p.unit_price as unit_price,p.quantity as quantity
+                p.weight as product_weight,p.unit_price as unit_price,d.quantity as quantity
                 FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
                 return $result;
                 break;
@@ -393,38 +393,56 @@ class Dealer extends Model
         return $orders;
     }//
 
+    public function dealerNofifycustomer($order_id,$dealer_id,$state){
+        // sendig email updates
+        $row1 = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
+        $row2 = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $dealer_id"));
+        $dealername = $row2['name'];
+
+        $customer_id = $row1['customer_id'];
+        $row3 = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+        $row4 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+        $reciepName = $row3['first_name'].' '.$row3['last_name'];
+        $from = 'admin@gasify.com';
+        $to = $row3['email'];
+        $subject = "Gasify: Your order has been $state";
+        if($row1['collecting_method'] == 'Delivery'){
+            if($state == 'accepted'){
+                $message = "Your recent order at $dealername has been accepted by the dealer and waiting for a delivery. Please stay standby";
+            }else if($state == 'completed'){
+                $message = "Your recent order at $dealername has been completed. Hope you are satisfy with our service. Thank you for shopping. Stay with us";
+            }
+        }else{
+            if($state == 'accepted'){
+                $message = "Your recent order at $dealername has been accepted by the dealer and waiting to be collected. Please visit the store to collect your order.";
+            }else if($state == 'completed'){
+                $message = "Your recent order at $dealername has been completed. Hope you are satisfy with our service. Thank you for shopping. Stay with us";
+            }
+        }
+        //$link = BASEURL."/controller/method/params";
+        // sendResetLink($name, $row['email'], $token);
+        //Create an instance; passing `true` enables exceptions
+        $mail = new Mail($from,$to,$reciepName,$subject,$message);
+        $data = $mail->send();
+
+        date_default_timezone_set("Asia/Colombo");
+        $time = date('H:i');
+        $date = date('Y-m-d');
+        // sending notification
+        $this->insert('notifications',['user_id' => $customer_id,'date'=> $date,'time'=> $time,'type' => 'Order Status','message' => $message,'state' => 'delivered']);
+    }
+
     public function dealerAcceptOrder($order_id){
         $user_id = $_SESSION['user_id'];
         $result = $this->read('reservation_include',"order_id = $order_id");
         while($row = mysqli_fetch_assoc($result)){
             $product_id = $row['product_id'];
             $product_quantity = $row['quantity'];
-            $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
+            $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $dealer_id");
         }
         $this->update('reservation',['order_state' => 'Accepted'],"order_id = $order_id");
-
-        // sendig email updates
-        $row1 = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
-        $row2 = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $user_id"));
-        $dealername = $row2['name'];
-
-        $customer_id = $row1['customer_id'];
-        $row3 = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
-        $row4 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
-        $reciepName = $row4['first_name'].' '.$row4['last_name'];
-        $from = 'admin@gasify.com';
-        $to = $row3['email'];
-        $subject = 'Gasify: Your order has been accepted';
-        if($row1['collecting_method'] == 'Delivery'){
-            $message = 'Hello $reciepName ,<br>Your recent order at <strong>$dealername</strong> has been accepted by the dealer and waiting for a delivery. Please stay standby';
-        }else{
-            $message = 'Hello $reciepName ,<br>Your recent order at <strong>$dealername</strong> has been accepted by the dealer and waiting to be collected by. Please visit the store to collect your order.';
-        }
-        //$link = BASEURL."/controller/method/params";
-        // sendResetLink($name, $row['email'], $token);
-        //Create an instance; passing `true` enables exceptions
-        $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
-        $data = $mail->send();
+        $this->dealerNofifycustomer($order_id,$user_id,'accepted');
+        
     }
 
     public function dealerIssueOrder($order_id){
@@ -436,6 +454,7 @@ class Dealer extends Model
         //     $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
         // }
         $this->update('reservation',['order_state' => 'Completed'],"order_id = $order_id");
+        $this->dealerNofifycustomer($order_id,$user_id,'completed');
     }
 
     public function dealersubmitpayslipOrder($order_id){
@@ -504,6 +523,11 @@ class Dealer extends Model
     }
 
     public function getanalysis($user_id,$start_date,$end_date){
+        if($start_date == null){
+            $row = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+            $start_date = $row['date_joined'];
+        }
+
         //chart 1
         $data['charts'] = array();
         $chart['type'] = 'bar';
@@ -545,6 +569,8 @@ class Dealer extends Model
         $chart['color'] = 'rgba(48, 39, 245, 0.8)';
         array_push($data['charts'],$chart);
         
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
         return $data;
     }
 

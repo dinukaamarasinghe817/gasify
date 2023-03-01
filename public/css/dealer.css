@@ -246,6 +246,22 @@
     text-align: left;
     border: none;
 }
+.content-data .noorders{
+    width: 100%;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.content-data .noorders img{
+    width: 200px;
+    height: 200px;
+}
+.gray-text{
+    font-size: var(--mediums);
+    color: var(--navmenu-gray-dark);
+}
 
 
 
@@ -473,6 +489,7 @@
     width: 47%;
     height: 70%;
     max-height: 350px;
+    min-width: 400px;
     align-items: center;
     justify-content: center;
     display: flex;
