@@ -329,9 +329,12 @@ class Customer extends Model{
     public function add_refund_details($order_id, $bank,$branch,$Acc_no){
        
         $error = "";
+        date_default_timezone_set("Asia/Colombo");
+        $cancel_time = date('H:i:s');
+        $cancel_date = date('Y-m-d');
 
         if(!empty($bank) &&!empty($branch) &&!empty($Acc_no)){
-            $this->update('reservation',['bank'=>$bank,'branch'=>$branch,'acc_no'=>$Acc_no,'order_state'=>"Canceled"],'order_id='.$order_id);
+            $this->update('reservation',['bank'=>$bank,'branch'=>$branch,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time],'order_id='.$order_id);
 
         }
         else{
@@ -403,6 +406,73 @@ class Customer extends Model{
 
         
     }
+
+    public function place_reservation(){
+        $customer_id = $_SESSION['user_id'];
+        $dealer_id = $_SESSION['dealer_id'];
+        $company_id = $_SESSION['company_id'];
+        $order_state = 'Pending';
+        $payslip = $_SESSION['slip_img'];
+        date_default_timezone_set("Asia/Colombo");
+        $place_time = date('H:i:s');
+        $place_date = date('Y-m-d');
+        $products = $_SESSION['order_products'];
+
+        $_SESSION['place_time'] = $place_time;
+        $_SESSION['place_date'] = $place_date;
+        
+
+
+        if(isset($payslip)){
+            $payment_method = 'Bank Deposit';
+        }else{
+            $payment_method = 'Credit Card';
+        }
+
+        if(isset($customer_id)){
+            if(isset($dealer_id)){
+                if(isset($company_id)){
+                    if(isset($payslip)){
+                        $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
+                    }else{
+                        $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
+                    }
+                }else{
+                    $error = "Please select a company";
+                }
+            }else{
+                $error = "Please select a dealer";
+            }
+
+        }else{
+            $error = "session customer_id is empty!";
+
+        }
+
+
+
+
+    }
+
+    function insertcollectingmethod(){
+        $customer_id = $_SESSION['user_id'];
+        $dealer_id = $_SESSION['dealer_id'];
+        $order_state = 'Pending';
+        $place_time = $_SESSION['place_time'];
+
+        $place_date = $_SESSION['place_date'];
+
+        $collecting_method = $_SESSION['collecting_method'];
+
+        $result1 = $this->Query("SELECT order_id FROM reservation WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
+
+         while ($row = mysqli_fetch_assoc($result1)) {
+            $order_id =  $row['order_id'] ;
+            $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
+
+        }
+    }
+
 
 
     /*.........................Customer dealers tab ....................*/
