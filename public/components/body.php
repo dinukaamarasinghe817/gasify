@@ -1393,8 +1393,74 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
-            <div class="orderCard" >
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+            if (isset($data['order_details'])){
+                $result = $data["order_details"];
+                $orders='';
+                $processedOrders=array();
+                $orderID='';
+                $distName='';
+                $placedDate='';
+                $placedTime='';
+                foreach ($result as $row) {
+                    $orderID=$row['stock_req_id'];
+                    $distName=$row['first_name'].' '.$row['last_name'];
+                    $placedDate=$row['place_date'];
+                    $placedTime=$row['place_time'];
+                    if(!in_array($orderID,$processedOrders)){
+                    $orders .=  '<div class="orderCard" >
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>'.$orderID.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
+                    </div>
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                    </div>
+                    <div class="orderTbl">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Product name</th>
+                                    <th>Unit price (Rs.)</th>
+                                    <th>Quantity</th>
+                                    <th>Total (Rs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody style="display:legacy">';
+                    
+                    foreach ($result as $row_2) {
+                        if($row_2['stock_req_id']==$orderID){
+                            $orders.='<tr>
+                            <td>YES</td>
+                            <td>'.$row_2['unit_price'].'</td>
+                            <td>'.$row_2['quantity'].'</td>
+                            <td>'.$row_2['unit_price']*$row_2['quantity'].'</td>
+                        </tr>';
+                        }
+
+                    }
+                    array_push($processedOrders,$orderID);
+
+                    $orders.='</tbody>      
+                    </table>
+                    </div>
+                        <div class="orderRow">
+                            <div class="orderButtons"><label>Issue</label></div>
+                            <div class="orderButtons"><label>Delay</label></div>
+                        </div>
+                    </div>
+                    </div>';
+                    }
+                }
+                echo $orders;
+                echo ' 
+                </section>';
+
+
+
+            }
+            /*<div class="orderCard" >
                 <div class="orderRow">
                     <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
                     <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
@@ -1449,7 +1515,7 @@ class Body{
             </div>
             </div>';
             echo ' 
-        </section>';
+        </section>';*/
     }
     function companyLimitQuota($data){
         echo 

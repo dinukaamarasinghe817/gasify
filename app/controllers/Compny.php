@@ -184,10 +184,12 @@ class Compny extends Controller{
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
         $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $order_details=$this->model('Company')->getStockReqDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['dealer']=$dealer_details;
+        $data['order_details']=$order_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
             //$data=[];
