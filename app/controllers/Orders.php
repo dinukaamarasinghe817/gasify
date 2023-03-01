@@ -235,8 +235,7 @@ class Orders extends Controller{
     
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
-        // $company = $_SESSION['brand'];
-
+      
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
@@ -250,7 +249,6 @@ class Orders extends Controller{
         
         $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
 
-        // echo $company_id.$city.$dealer_id;
         $data['company_id'] = $company_id;
         $data['city'] = $city;
         $data['dealer_id'] = $dealer_id;
@@ -312,19 +310,12 @@ class Orders extends Controller{
        
         $data['selected_products']= $this ->model('Customer')->getSelectedProducts();
        
-
-        // var_dump($selected_products[0]);
-
-
-        // $data['brands'] = $this->model('Customer')->getCompanyBrand();
-        // $data['dealers'] = $this->model('Customer')->getAlldealers();
-
         $this->view('customer/place_reservation/select_payment_method',$data);
     }
 
 
     //display bank slip uploader
-    function bank_slip_upload(){
+    function bank_slip_upload($error=null){
     
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -334,10 +325,37 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $data['bank_details'] = $this->model('Customer')->getDealerBankDetails($customer_id);
+        $data['bank_details'] = $this->model('Customer')->getDealerBankDetails();
 
-
+        if($error != null){
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
+        
         $this->view('customer/place_reservation/bank_slip_upload',$data);
+        
+    }
+
+    function get_bank_slip(){
+        $customer_id = $_SESSION['user_id'];
+        if(isset($_POST['submit_btn'])){
+           $file_name = $_FILES['slip_img']['name'];
+            $file_type = $_FILES['slip_img']['type'];
+            $file_size = $_FILES['slip_img']['size'];
+            $temp_name = $_FILES['slip_img']['tmp_name'];
+            
+            $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
+
+
+            move_uploaded_file($temp_name,$upload_to . $file_name);
+
+        }else{
+            $error = "You must select a file";
+            $this -> bank_slip_upload($error);
+
+        }
+
+        
+
     }
 
     //display payment gateway
@@ -351,7 +369,7 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $this->view('customer/place_reservation/payment_gateway',$data);
+        // $this->view('customer/place_reservation/payment_gateway',$data);
     }
 
     //select collecting method of reservation
