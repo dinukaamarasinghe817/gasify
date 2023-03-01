@@ -97,5 +97,20 @@ class Company extends Model
     public function resetQuota($companyID,$customer){
         $this->Query("UPDATE quota SET monthly_limit=0 WHERE (company_id=$companyID AND customer_type='$customer')");
     }
+    public function getStockReqDetails($company_id){
+        $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=2 INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id;");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['first_name'=>$row['first_name'], 'last_name'=>$row['last_name'], 'place_date'=>$row['place_date'], 'place_time'=>$row['place_time'], 'stock_req_id'=>$row['stock_req_id'], 'distributor_id'=>$row['distributor_id'], 'product_id'=>$row['product_id'], 'quantity'=>$row['quantity'], 'unit_price'=>$row['unit_price']]);
+            }
+            return $info;
+        }
+        
+        
+        
+        
+        return $result;
+    }
     
 }
