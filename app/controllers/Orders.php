@@ -439,7 +439,7 @@ class Orders extends Controller{
         $this->view('customer/quota/quota',$data);
     }
 
-    /*.........................DISTRIBUTOR GAS ORDERS TAB.........................................*/
+    /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
      public function distributor() {
         $user_id = $_SESSION['user_id'];
@@ -455,7 +455,7 @@ class Orders extends Controller{
 
     // distributor -> place an order (phurchase order)
     public function placeorder(){
-        // $quantity = $_POST['qnty'];
+        
 
 
     }
@@ -557,6 +557,7 @@ class Orders extends Controller{
     }
 
 
+    /*****************************************************************************************************/
 
     public function validatepayments($tab){
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));

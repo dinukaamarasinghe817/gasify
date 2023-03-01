@@ -27,6 +27,78 @@ class Distributor extends Model
         return $result;
     }
 
+    /*
+    public function dashboard($distributor_id, $option) {
+        $data = [];
+
+        $today = date('Y-m-d');
+            if($option == 'today'){
+                $start_date = $today;
+                $end_date = $today;
+            }else{
+                $start_date = date('Y-m-d', strtotime('-30 days'));
+                $end_date = date('Y-m-d', strtotime('-1 days'));
+            }
+
+
+        // chart
+            $sql = "SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
+            FROM purchase_include pi INNER JOIN product p 
+            ON pi.product_id = p.product_id WHERE po_id IN 
+                (SELECT po_id FROM purchase_order 
+                WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $distributor_id AND po_state != 'pending') 
+            GROUP BY product_id";
+
+            //chart details
+            $products = $this->Query($sql);
+            $chart['y'] = 'Distributed Quantity';
+            $chart['color'] = 'rgba(255, 159, 64, 0.5)';
+            $chart['labels'] = array();$chart['vector'] = array();
+            //$products = $this->Query($sql);
+            while($product = mysqli_fetch_assoc($products)){
+                array_push($chart['labels'],$product['name']);
+                array_push($chart['vector'],$product['quantity']);
+            }
+            return $chart;
+
+
+        // new phurchase orders list (pending distributions)
+        $result = $this->Query("SELECT po_id, dealer_id, place_date 
+        from purchase_order 
+        where distributor_id = '{$distributor_id}' 
+        and po_state='pending' 
+        order by (place_date) ASC; ");
+
+        $data['pending_distributions'] = $result;
+
+        // count of pending distributions
+        $data['pending_count'] = mysqli_num_rows($this->read("purchase_order", "distributor_id = $distributor_id and po_state='pending' and place_date >= '$start_date' and place_date <= '$end_date' "));
+
+        // count of recevied orders (pendign distributions + completed distributions)
+        $data['total_received'] = mysqli_num_rows($this->read("purchase_order", "distributor_id = $distributor_id  and place_date >= '$start_date' and place_date <= '$end_date' "));
+
+
+        // current stock
+        $current_stock = array();
+        $sql = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity 
+        FROM distributor_keep d inner join product p 
+        on d.product_id=p.product_id 
+        where d.distributor_id= $distribution_id");
+
+        $result = $this->Query($sql);
+        if(mysqli_num_rows($sql)>0) {
+            while($row1 = mysqli_fetch_assoc($sql)) {
+                // $product_id = $row1['product_id'];
+                // $product_name = $row1['name'];
+                // $quantity = $row1['quantity'];
+
+                array_push($current_stock,['currentstockinfo'=>$row1]);
+            }
+        }
+        $data['current_stock'] = $current_stock;
+    }
+    */  
+
     public function dashboard($distributor_id,$option){
         $data = [];
 
@@ -40,20 +112,13 @@ class Distributor extends Model
                 $end_date = date('Y-m-d', strtotime('-1 days'));
             }
 
-            // pending distirbutions
-            $data['pending_dis_count'] = mysqli_num_rows($this->read("purchase_order", "distributor_id = $distributor_id AND po_state='pending' AND place_date>='$start_date' AND place_date <= '$end_date'"));
-
-            // received orders
-            $data['received_orders_count'] = mysqli_num_rows($this->read("stock_request","distributor_id = $distributor_id AND place_date >='$start_date' AND place_date <='$end_date'"));
-
-
 
         // chart
             $sql = "SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
             FROM purchase_include pi INNER JOIN product p 
             ON pi.product_id = p.product_id WHERE po_id IN 
                 (SELECT po_id FROM purchase_order 
-                WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $distributor_id AND po_state != 'Pending') 
+                WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $distributor_id AND po_state != 'pending') 
             GROUP BY product_id";
 
             //chart details
@@ -68,6 +133,9 @@ class Distributor extends Model
             }
             return $chart;
     }
+    
+
+    
 
     public function getVehicleInfo($distributor_id){
         // $result = $this->read('distributor', "distributor_id = $distributor_id");
@@ -201,27 +269,27 @@ class Distributor extends Model
     // }
 
 
-    // public function removeVehicle($vehicle_no, $user_id) {
-    //     $removevehicle = array();
-    //     $query1 = $this->Query("DELETE * from distributor_vehicle where vehicle_no = $vehicle_no and distributor_id = $user_id");
-    //     if(mysqli_num_rows($query1)>0) {
-    //         while($row1 = mysqli_fetch_assoc($query1)) {
-    //             array_push( $removevehicle,$row1);
+    public function removeVehicle($vehicle_no, $user_id) {
+        $removevehicle = array();
+        $query1 = $this->Query("DELETE * from distributor_vehicle where vehicle_no = $vehicle_no and distributor_id = $user_id");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 = mysqli_fetch_assoc($query1)) {
+                array_push( $removevehicle,$row1);
 
-    //             $query2 = $this-> Query("DELETE * from distributor_vehicle_capacity where vehicle_no = $vehicle_no and distributor_id = $user_id");
-    //             if(mysqli_num_rows($query2)>0) {
-    //                 while($row2 = mysqli_fetch_assoc($query2)) {
-    //                     array_push( $removevehicle,$row1);
+                $query2 = $this-> Query("DELETE * from distributor_vehicle_capacity where vehicle_no = $vehicle_no and distributor_id = $user_id");
+                if(mysqli_num_rows($query2)>0) {
+                    while($row2 = mysqli_fetch_assoc($query2)) {
+                        array_push( $removevehicle,$row1);
 
-    //                 }
-    //             }
-    //             array_push( $removevehicle, ['vehicleinfo'=>$row1, 'capacityinfo'=>$row2]);
+                    }
+                }
+                array_push( $removevehicle, ['vehicleinfo'=>$row1, 'capacityinfo'=>$row2]);
 
-    //         }
-    //     }
-    //     return $removevehicle;
+            }
+        }
+        return $removevehicle;
 
-    // }
+    }
 
 
     public function viewdealers($user_id) {
@@ -323,9 +391,21 @@ class Distributor extends Model
     }
 
     // count of received all gas orders
-    public function countReceivedOrders($user_id) {
+    public function countReceivedOrders($user_id, $option) {
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
+
         $count = array();
-        $query1 = $this->Query("SELECT count(stock_req_id) as receviedOrders from stock_request where distributor_id='{$user_id}'");
+        // $query1 = $this->Query("SELECT count(po_id) as receviedOrders from purchase_order where distributor_id='{$user_id}'");
+        $query1 = $this->Query("SELECT count(po_id) AS receviedOrders FROM purchase_order WHERE distributor_id='{$user_id}' AND place_date >= '$start_date' AND place_date <= '$end_date' ");
+        
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $count = $row1['receviedOrders'];
@@ -359,9 +439,18 @@ class Distributor extends Model
     }
 
     // dashboard -> count of pending distributions
-    public function sumpendingdistirbutions($user_id) {
+    public function sumpendingdistirbutions($user_id, $option) {
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
         $count = array();
-        $query1 = $this->Query("SELECT count(po_id) as numofpendis from purchase_order where distributor_id = '{$user_id}' and po_state='pending'; ");
+        $query1 = $this->Query("SELECT count(po_id) as numofpendis from purchase_order where distributor_id = '{$user_id}' AND po_state='pending' AND place_date >= '$start_date' AND place_date <= '$end_date';");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $count = $row1['numofpendis'];
@@ -414,12 +503,12 @@ class Distributor extends Model
         $stock = array();
 
         // $query1 = $this->Query("SELECT DISTINCT  p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
-        $query1 = $this->Query("SELECT name FROM  product  where company_id = '2';");
+        $query1 = $this->Query("SELECT name, product_id FROM  product  where company_id = '2';");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 // $product_id = $row1['product_id'];
-                $product_name = $row1['name'];
-                // $quantity = $row1['quantity'];
+                // $product_name = $row1['name'];
+               
 
                 array_push($stock, ['stockinfo'=> $row1]);
             }

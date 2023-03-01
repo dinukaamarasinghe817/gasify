@@ -264,15 +264,161 @@ class Body{
                 }
             }
 
-          
             // echo '</div> 
-            // </div>';
-           
-       
+            // </div>'; 
     }
 
-   
+  /*
   
+    function distributordashboard($data){
+        echo '<section class="body-content dashboard">
+                    <div class="body-left">
+
+                        <div class="variable">
+                            <div class="topic">
+                                <h3>Analytic Overview</h3>
+                                <!-- drop down component -->
+                                <form action="'.BASEURL.'/dashboard/distributor" method="POST">
+                                    <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">';
+                                        if($data['option'] == 'today') {
+                                            echo '<option value="today" selected>To day</option>
+                                            <option  value="30day">Last 30 days</option>';
+                                        }else{
+                                            echo '<option value="today" >To day</option>
+                                            <option  value="30day" selected>Last 30 days</option>';
+                                        }
+
+                                    echo'
+                                    </select>
+                                </form>
+                            </div>
+
+                            <div class="box1">
+                               <div class="box2">
+                                    <h1>'.sprintf("%02d", $data['pending_count']).'</h1>
+                                    <p>Pending Distributions</p>
+                                </div>
+
+                               <div class="box2">
+                                    <h1>'.sprintf("%02d", $data['total_received']).'</h1>
+                                    <p>Received Orders</p>
+                                </div>
+                            </div>';    
+                                    
+                            echo '
+                            <div class="chart">';
+                            $chart = $data['chart'];
+                            if(count($chart['labels']) > 0){
+                                $chart = new Chart('bar',$chart,1);
+                            }else{
+                                echo "<img src = ".BASEURL."/public/img/placeholders/2.png class='chartimg'>";
+                            }
+                            echo  '</div>
+
+                        </div>
+                    </div>';   
+              
+                    echo '
+                    <div class="body-right">
+                        <div class="accordion new">
+                                <h3>New Purchase Orders</h3>';
+
+                                $pendingorders = $data['pending_distributions'];
+                                foreach($pendingorders as $pendingorder) {
+                                    $row2 = $pendingorder['pendinginfo'];
+                                    $capacities = $pendingorder['capacities'];
+
+                                    $output1 = '
+                                    <div class="box">';
+                                        $order_id = $row2['po_id'];
+                                        $output1 .= '
+                                            <div class="label">Phurchase Order ID : '.$order_id.'
+                                                <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#9c6109"/>
+                                                </svg>
+                                            </div>';
+
+                                        $date = $row2['place_date'];
+                                        $dealer_id = $row2['dealer_id'];
+
+                                        $output1 .= '
+                                        <div class="content">
+                                            <span><strong>Dealer ID : </strong> '.$dealer_id.'</span>&nbsp<br>
+                                            <span><strong>Placed Date : </strong> '.$date.'</span>
+                                            <hr>
+                                            <table class="styled-table">
+                                                <thread>
+                                                    <tr>
+                                                        <th>Item ID</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thread>
+
+                                                <tbody>';
+                                                foreach($capacities as $capacity) {
+                                                    $row3 = $capacity;
+                                                    $output1 .= '
+                                                        <tr>
+                                                            <td>'.$row3['product_id'].'</td>
+                                                            <td>'.$row3['quantity'].'</td>
+                                                        </tr>';  
+                                                }
+                                                $output1 .= '
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>';
+                                    echo $output1;  
+                                }
+                            echo '
+                            </div>';
+                            $output = '
+                            <div class="box3">
+                                <h3>Current Stock</h3>
+    
+                                    <div class="content1">
+                                        <table class="styled-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Current Stock</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';
+                                            
+                                            if(isset($data["current_stock"])) {
+                                        
+                                                $result = $data['current_stock'];
+                                                // echo count($result);
+
+                                                $stock = "";
+                                                // echo count($stock);
+                                                while($row = mysqli_fetch_assoc($result)) {
+                                                    // echo count($row);
+                                                    
+                                                    $name = $row["name"];
+                                                    $qty = $row['quantity'];
+                                                    $stock .= 
+                                                    '<tr>
+                                                        <td>'.$name.'</td>
+                                                        <td>'.$qty.'</td>
+                                                    </tr>';
+                                                    
+                                                }
+                                                echo $stock;
+                                            }
+                                            echo '
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>';        
+                    echo '</div>';
+        echo '</section>';                         
+    }
+
+    */
+
+    
     function distributordashboard($data){
         echo '<section class="body-content dashboard">
                     <div class="body-left">
@@ -324,14 +470,12 @@ class Body{
                             echo  '</div>
 
                         </div>
-                    </div>';
-
-                        
+                    </div>';   
               
                     echo '
                     <div class="body-right">
                         <div class="accordion new">
-                                <h3>New Purchase Orders</h3>';
+                                <h3>New Pending Orders</h3>';
 
                                 $pendingorders = $data['pending_distributions'];
                                 foreach($pendingorders as $pendingorder) {
@@ -342,7 +486,7 @@ class Body{
                                     <div class="box">';
                                         $order_id = $row2['po_id'];
                                         $output1 .= '
-                                            <div class="label">Phurchase Order ID : '.$order_id.'
+                                            <div class="label">Pending Order ID : '.$order_id.'
                                                 <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#9c6109"/>
                                                 </svg>
@@ -413,6 +557,9 @@ class Body{
                     echo '</div>';
         echo '</section>';                         
     }
+    
+
+
 
 
 

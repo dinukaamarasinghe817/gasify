@@ -80,9 +80,6 @@
    
 
 
-        
-
-
         //customer dashboard 
         public function customer($error = null){
             $customer_id = $_SESSION['user_id'];
@@ -122,7 +119,6 @@
             $distributor_details = $this->model('Distributor')->getDistributorImage($distributor_id);
             $row = mysqli_fetch_assoc($distributor_details);
             $data['image'] = $row['image'];
-    
             $data['navigation'] = 'dashboard';
 
             $data['currentstock']= $this->model("Distributor")->currentstock($distributor_id);
@@ -131,16 +127,14 @@
             $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($distributor_id);
             
             // count of pending distributions
-            $data['count_pending_distributions'] = $this->model("Distributor")->sumpendingdistirbutions($distributor_id);
+            $data['count_pending_distributions'] = $this->model("Distributor")->sumpendingdistirbutions($distributor_id, $option);
 
             // count of received gas orders
-            $data['count_received_gasorders'] = $this->model("Distributor")->countReceivedOrders($distributor_id);
+            $data['count_received_gasorders'] = $this->model("Distributor")->countReceivedOrders($distributor_id, $option);
 
             $data['chart'] = $this->model("Distributor")->dashboard($distributor_id,$option);
             $data['option'] = $option;
             $this->view('dashboard/distributor',$data);
-
-
 
         }
 
