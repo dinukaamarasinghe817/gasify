@@ -18,7 +18,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="delivery_middle">
             <div class="delivery_middle_content">
                 <label for=""><h4>Your Delivery Address :</h4></label>
-                <div class="deliver_address"><h3>No 22, Main Street Maharagama</h3> <button onclick="customerprompt('deliveryaddress','<?php echo BASEURL;?>/Orders/select_delivery_method'); return false;" class="edit_btn">edit</button></div>
+                <div class="deliver_address"><h3><?php echo $data['street'] ,' , ', $data['city']; ?></h3> <button onclick="customerprompt('deliveryaddress','<?php echo BASEURL;?>/Orders/select_delivery_method','<?php echo $data['city']; ?>'); return false;" class="edit_btn">edit</button></div>
 
                 <div class="delivery_fee">
                     <h4>Delivery Fee :</h4><h3>RS.350.00</h3>

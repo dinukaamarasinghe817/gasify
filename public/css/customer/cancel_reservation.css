@@ -38,7 +38,7 @@ a,button{
     border-radius: 5px;
 }
 
-.detail_form form input{
+.detail_form form input,.bankdropdown{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -48,6 +48,8 @@ a,button{
     font-size: var(--mediums);
     border-radius: 5px;
 }
+
+
 
 .submit_btn{
     background-color: var(--button-blue);
