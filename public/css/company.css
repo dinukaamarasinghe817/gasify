@@ -1210,6 +1210,7 @@ input[type="text"]::placeholder{
     height: 90%;
     background-color: #fdfdfd;
     outline: 5px solid var(--navmenu-orange-dark);
+    margin-bottom: 3%;
 }
 .orderTbl{
     height: 60%;
@@ -1256,6 +1257,17 @@ input[type="text"]::placeholder{
     color: white;
     font-size: larger;
     text-align: center;
+}
+.orderButtons label:hover{
+    cursor: pointer;
+}
+.orderButtons:hover{
+    cursor: pointer;
+    background-color: dodgerblue;
+}
+.orderButtons:nth-child(2):hover{
+    cursor: pointer;
+    background-color: #d03d3d;
 }
 .tdCenter{
     text-align: center;

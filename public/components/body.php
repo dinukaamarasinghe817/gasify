@@ -1593,15 +1593,16 @@ class Body{
                     </table>
                     </div>
                         <div class="orderRow">
-                            <div class="orderButtons"><label>Issue</label></div>
-                            <div class="orderButtons"><label>Delay</label></div>
+                            <div class="orderButtons" onClick="issueOrder(this)" key="'.$orderID.'"><label>Issue</label></div>
+                            <div class="orderButtons" onClick="delayOrder(this)" key="'.$orderID.'"><label>Delay</label></div>
                         </div>
-                    </div>
                     </div>';
                     }
                 }
                 echo $orders;
                 echo ' 
+                
+                </div>
                 </section>';
 
 
@@ -1959,59 +1960,70 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
-            <div class="orderCard" >
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
-                </div>
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
-                </div>
-                <div class="orderTbl">
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Product name</th>
-                                <th>Unit price (Rs.)</th>
-                                <th>Quantity</th>
-                                <th>Total (Rs.)</th>
-                            </tr>
-                        </thead>
-                        <tbody style="display:legacy">
-                            <tr>
-                                <td>Buddy</td>
-                                <td>1,450.00</td>
-                                <td>12</td>
-                                <td>17,400</td>
-                            </tr>
-                            <tr>
-                                <td>Regular</td>
-                                <td>3,220.00</td>
-                                <td>30</td>
-                                <td>96,600</td>
-                            </tr>
-                            <tr>
-                                <td>Commercial</td>
-                                <td>5,150.00</td>
-                                <td>15</td>
-                                <td>77,250</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>191,250</td>
-                            </tr>
-                         
-                        </tbody>      
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+            if (isset($data['order_details'])){
+                $result = $data["order_details"];
+                $orders='';
+                $processedOrders=array();
+                $orderID='';
+                $distName='';
+                $placedDate='';
+                $placedTime='';
+                foreach ($result as $row) {
+                    $orderID=$row['stock_req_id'];
+                    $distName=$row['first_name'].' '.$row['last_name'];
+                    $placedDate=$row['place_date'];
+                    $placedTime=$row['place_time'];
+                    if(!in_array($orderID,$processedOrders)){
+                    $orders .=  '<div class="orderCard" >
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>'.$orderID.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
+                    </div>
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                    </div>
+                    <div class="orderTbl">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Product name</th>
+                                    <th>Unit price (Rs.)</th>
+                                    <th>Quantity</th>
+                                    <th>Total (Rs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody style="display:legacy">';
+                    
+                    foreach ($result as $row_2) {
+                        if($row_2['stock_req_id']==$orderID){
+                            $orders.='<tr>
+                            <td>YES</td>
+                            <td>'.$row_2['unit_price'].'</td>
+                            <td>'.$row_2['quantity'].'</td>
+                            <td>'.$row_2['unit_price']*$row_2['quantity'].'</td>
+                        </tr>';
+                        }
+
+                    }
+                    array_push($processedOrders,$orderID);
+
+                    $orders.='</tbody>      
                     </table>
+                    </div>
+                    </div>';
+                    }
+                }
+                echo $orders;
+                echo ' 
+                
                 </div>
-            </div>
-            </div>';
-            echo ' 
-        </section>';
+                </section>';
+
+
+
+            }
     }
     function delayOrdersCompany($data){
         echo 
@@ -2022,61 +2034,73 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px;background-color:#d8ca30;color:white">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
-            <div class="orderCard" >
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
-                </div>
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
-                </div>
-                <div class="orderTbl">
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Product name</th>
-                                <th>Unit price (Rs.)</th>
-                                <th>Quantity</th>
-                                <th>Total (Rs.)</th>
-                            </tr>
-                        </thead>
-                        <tbody style="display:legacy">
-                            <tr>
-                                <td>Buddy</td>
-                                <td>1,450.00</td>
-                                <td>12</td>
-                                <td>17,400</td>
-                            </tr>
-                            <tr>
-                                <td>Regular</td>
-                                <td>3,220.00</td>
-                                <td>30</td>
-                                <td>96,600</td>
-                            </tr>
-                            <tr>
-                                <td>Commercial</td>
-                                <td>5,150.00</td>
-                                <td>15</td>
-                                <td>77,250</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>191,250</td>
-                            </tr>
-                         
-                        </tbody>      
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+            if (isset($data['order_details'])){
+                $result = $data["order_details"];
+                $orders='';
+                $processedOrders=array();
+                $orderID='';
+                $distName='';
+                $placedDate='';
+                $placedTime='';
+                foreach ($result as $row) {
+                    $orderID=$row['stock_req_id'];
+                    $distName=$row['first_name'].' '.$row['last_name'];
+                    $placedDate=$row['place_date'];
+                    $placedTime=$row['place_time'];
+                    if(!in_array($orderID,$processedOrders)){
+                    $orders .=  '<div class="orderCard" >
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>'.$orderID.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
+                    </div>
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                    </div>
+                    <div class="orderTbl">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Product name</th>
+                                    <th>Unit price (Rs.)</th>
+                                    <th>Quantity</th>
+                                    <th>Total (Rs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody style="display:legacy">';
+                    
+                    foreach ($result as $row_2) {
+                        if($row_2['stock_req_id']==$orderID){
+                            $orders.='<tr>
+                            <td>YES</td>
+                            <td>'.$row_2['unit_price'].'</td>
+                            <td>'.$row_2['quantity'].'</td>
+                            <td>'.$row_2['unit_price']*$row_2['quantity'].'</td>
+                        </tr>';
+                        }
+
+                    }
+                    array_push($processedOrders,$orderID);
+
+                    $orders.='</tbody>      
                     </table>
+                    </div>
+                        <div class="orderRow">
+                            <div class="orderButtons" style="margin-left:28.5%" onClick="issueOrder(this)" key="'.$orderID.'"><label>Issue</label></div>
+                        </div>
+                    </div>';
+                    }
+                }
+                echo $orders;
+                echo ' 
+                
                 </div>
-                <div class="orderRow">
-                    <div class="orderButtons" style="margin-left:28.5%"><label>Issue</label></div>
-                </div>
-            </div>
-            </div>';
-            echo ' 
-        </section>';
+                </section>';
+
+
+
+            }
+            
     }
 }
