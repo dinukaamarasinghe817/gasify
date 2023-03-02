@@ -30,10 +30,19 @@ $user_id = $_SESSION['user_id'];
                             if($data['option'] == 'today') {
                                 echo '
                                 <option value="today" selected>To day</option>
-                                <option value="30day" >Last 30 days</option>';
+                                <option value="7day">Last 7 days</option>
+                                <option value="30day">Last 30 days</option>';
+
+                            }elseif($data['option'] == '7day'){
+                                echo '
+                                <option value="today">To day</option>
+                                <option value="7day"  selected>Last 7 days</option>
+                                <option value="30day">Last 30 days</option>';
+                            
                             }else {
                                 echo '
                                 <option value="today">To day</option>
+                                <option value="7day">Last 7 days</option>
                                 <option value="30day" selected>Last 30 days</option>';
                             }
                         
@@ -41,14 +50,7 @@ $user_id = $_SESSION['user_id'];
                         </select>
                     </form>
                 </div>';
-                        ?>
-                    
-                        <!-- <select id="period" onchange="updatechart()" class="dropdowndate">
-                            <option value="today" selected>Last 7 days</option>
-                            <option  value="month">Last 30 days</option>
-                            <option  value="3months">Last 3 months</option>
-                        </select> -->
-                    <!-- </form> -->
+                ?>
 
                     <?php
                     $records = $data['distributions'];
