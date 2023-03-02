@@ -42,7 +42,7 @@
             }else{
                 $end_date = date('Y-m-d');
             }
-            return $this->model("Dealer")->getanalysis($this->user_id,$start_date,$end_date);
+            echo json_encode($this->model("Dealer")->getanalysis($this->user_id,$start_date,$end_date));
         }
 
         public function admin(){
