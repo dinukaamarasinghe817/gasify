@@ -135,6 +135,18 @@ a,button{
     color: black;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1px;
+  }
+
+  /* .custom_btn::-webkit-file-upload-button {
+    
+  } */
+
+  #custom_btn::file-selector-button {
+    visibility: hidden;
+    /* width: 300px; */
+    content: 'Choose a file'; 
+   
   }
 
   .buttons #custom_btn{

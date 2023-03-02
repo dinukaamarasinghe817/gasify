@@ -70,7 +70,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         <div class="buttons">
                             <button  id="back_btn" onclick= "document.location.href = '../Orders/select_payment_method';">Back</button>
                             <!-- <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button> -->
-                            <input id="default-btn" type="file"  accept=".png, .jpg, .jpeg" name="slip_img">
+                            <input id="custom_btn" type="file" hidden accept=".png, .jpg, .jpeg"  name="slip_img">
                             <!-- <button  id="next_btn" type="submit" onclick="location.href = '<?php echo BASEURL?>/Orders/select_collecting_method'">Submit</button> -->
                             <button  id="next_btn" type="submit" name="submit_btn">Submit</button>
                             

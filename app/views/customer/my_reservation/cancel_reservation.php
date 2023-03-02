@@ -9,8 +9,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
         // $bodycontent = new Body('viewmyreservation', $data);
-        if(isset($data['error'])){
-            $error = new Prompt('toast',$data['error']);
+        if(isset($data['toast'])){
+            $error = new Prompt('toast',$data['toast']);
 
         }
        
@@ -27,10 +27,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
             echo'<div class="detail_form">
                     <form id="bank_details_form" method="POST"  action="'.BASEURL.'/Orders/refund_bank_details/'.$data['order_id'].'" >
-                        <input type="text" name="bank" placeholder="Bank Name">
-                        <input type="text" name="branch" placeholder="Branch">
-                        <input type="text" name="Acc_no" placeholder="Account No">
-                        <button type="submit" class="submit_btn" onclick="customerprompt(\'cancelorder\',\''.BASEURL.'/Orders/customer_allreservations\'); return false;">Submit</button>
+                        
+                        <select name="bank" id="bank" class="bankdropdown dropdowndate">
+                                    <option value="-1" selected disabled hidden>Select Gas Brand</option>';
+                                    foreach (BANKS as $bank){
+                                        echo "<option value=$bank id=$bank >$bank</option>";
+                                        
+                                    }
+                 echo   '<input type="text" name="Acc_no" placeholder="Account No">
+                        <button type="submit" class="submit_btn" >Submit</button>
                     </form>
                 
                 </div>';

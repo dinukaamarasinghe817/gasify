@@ -131,7 +131,6 @@ class Orders extends Controller{
         $data['order_id'] = $order_id;
 
         if($error != null){
-            // $data['error'] = $error;
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
 
@@ -144,17 +143,16 @@ class Orders extends Controller{
     //refund form data for update reservation table
     function refund_bank_details($order_id){
         $customer_id = $_SESSION['user_id'];
-        $bank = $_POST['bank'];
-        $branch = $_POST['branch'];
+        if(isset($_POST['bank']) ? $bank = $_POST['bank'] : $bank = -1);
         $Acc_no = $_POST['Acc_no'];
-      
-        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
+       
+        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$Acc_no);
         if(!empty($data['refund_detail_error'])){
             $this->customer_cancelreservation($order_id,$data['refund_detail_error']);
         }
         else{
             // $this->customer_cancelreservation($order_id);
-            // $this->view('customer/viewmyreservation', $data);
+            $this->customer_allreservations();
         }    
     }
 
@@ -276,9 +274,12 @@ class Orders extends Controller{
 
         foreach($products as $product){
             $product_id = $product['p_id'];
+            $unit_price = $product['unit_price'];
+
             $qty = $_POST[$product_id];
             if($qty != 0){
-                array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty]);
+                array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty ,'unit_price'=>$unit_price]);
+
             }
         }
        
@@ -403,6 +404,14 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
+        $data['city'] = $row1['city'];
+        $data['street'] = $row1['street'];
+        // $new_street = $_POST['new_street'];
+        // if(!empty($new_street)){
+        //     echo $new_street;
+
+        // }
+
         $data['confirmation'] = '';
 
         $this->view('customer/place_reservation/delivery_collecting_method',$data);
@@ -419,7 +428,7 @@ class Orders extends Controller{
 
         $_SESSION['collecting_method'] = 'Pickup';
         $this -> model('Customer')->insertcollectingmethod();
-         $this->view('customer/place_reservation/collecting_method',$data);
+        $this->view('customer/place_reservation/collecting_method',$data);
 
     }
 
