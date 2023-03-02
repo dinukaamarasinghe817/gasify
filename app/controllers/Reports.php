@@ -13,13 +13,20 @@ class Reports extends Controller{
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'reports';
 
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = 'today';
+        }
+
         // profile picture
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $data['distributions'] = $this->model("Distributor")-> completedistributions($user_id);
-
+        $data['distributions'] = $this->model("Distributor")-> reportpastdistributions($user_id, $option);
+       
+        $data['option'] = $option;
         $this->view('distributor/reports',$data);
 
 
@@ -27,6 +34,8 @@ class Reports extends Controller{
 
     public function distributor_pdf($user_id) {
         $data = [];
+        $data['reportdetails'] = $this->model("Distributor")-> reportdetails($user_id);
+
         $this->view('distributor/reports/report_pdf',$data);
     }
 
