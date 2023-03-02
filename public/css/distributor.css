@@ -238,16 +238,19 @@ body.blur > *::before{
 
 
 /* body content css */
-/* .body-content{
-    display: flex;
+ .body-content{
+    /* display: flex;
     flex-direction: row;
     box-sizing: border-box;
     padding: 10px 10px 10px 40px;
     height: 85%;
     width: 100%;
     overflow-y: scroll;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; */
+    /* overflow-x:hidden;  
+     overflow-y:hidden;  */
 }
+/*
 .body-content::-webkit-scrollbar{
     display: hidden;
 }
@@ -538,6 +541,11 @@ td:nth-child(4) {
     margin-left: 420px;
 }
 
+/* .top {
+     overflow-x:hidden; 
+     overflow-y:hidden;
+} */
+
 .top ul {
     display: inline-flex;
     width: 100%;
@@ -569,6 +577,8 @@ td:nth-child(4) {
 .middle{
     padding:20px;
     background-color:var(--navmenu-orange);
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 .middle ul {
