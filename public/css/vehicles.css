@@ -214,13 +214,17 @@ table td{
 
 
 /* body content css */
-/* .body-content{
-    padding: 10px 10px 10px 40px;
+ .body-content{
+    /* padding: 10px 10px 10px 40px;
     height: 85%;
-    width: 100%;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    width: 100%; */
+
+    /* overflow-y: scroll; */
+    overflow-x:hidden;
+    overflow-y:hidden;
+    /* scroll-behavior: smooth; */
 }
+/*
 
 .body-content::-webkit-scrollbar{
     display: hidden;
@@ -264,6 +268,8 @@ a,button,input[type="button"],input[type="file"]{
     padding: 10px;
     background-color: var(--navmenu-orange);
     width: auto;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 .btn2 {

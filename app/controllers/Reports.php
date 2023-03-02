@@ -34,7 +34,7 @@ class Reports extends Controller{
 
     public function distributor_pdf($user_id) {
         $data = [];
-        $data['reportdetails'] = $this->model("Distributor")-> reportdetails($user_id);
+        // $data['reportdetails'] = $this->model("Distributor")-> reportdetails($user_id);
 
         $this->view('distributor/reports/report_pdf',$data);
     }

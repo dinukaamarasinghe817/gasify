@@ -235,16 +235,18 @@ body.blur > *::before{
 
 
 /* body content css */
-/* .body-content{
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    padding: 10px 10px 10px 40px;
-    height: 85%;
-    width: 100%;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+ .body-content{
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* box-sizing: border-box; */
+    /* padding: 10px 10px 10px 40px; */
+    /* height: 85%; */
+    /* width: 100%; */
+    /* overflow-x:hidden;
+    overflow-y:hidden; */
+    /* scroll-behavior: smooth; */
 }
+/*
 .body-content::-webkit-scrollbar{
     display: hidden;
 }
@@ -560,12 +562,16 @@ table tr:hover {
     padding: 5px;
     font-size: var(--exsmall);
     color: white;
+    /* overflow-x:hidden;  
+     overflow-y:hidden; */
 
 }
 
 .middle{
     background-color:var(--navmenu-orange);
     padding: 20px;
+    /* overflow-x:hidden; 
+     overflow-y:hidden; */
 }
 
 .beginbtn {
@@ -627,6 +633,8 @@ table tr:hover {
 
 .repbox {
     padding: 2%;
+    /* overflow-y: scroll;
+    scroll-behavior: smooth; */
 
 }
 

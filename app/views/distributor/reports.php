@@ -22,7 +22,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
         
                 <div class="middle">
-                <?php echo'
+                    <?php echo'
                     <form action ="'.BASEURL.'/reports/distributor" method="POST">
                     
                         <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">';
@@ -50,12 +50,13 @@ $user_id = $_SESSION['user_id'];
                         </select>
                     </form>
                 </div>';
-                ?>
+                    ?>
 
                     <?php
                     $records = $data['distributions'];
                     
-                    $output = '<div class="repbox">
+                    $output = '
+                    <div class="repbox">
                         <table class="styled-table">
                         <thead>
                             <tr>
