@@ -40,7 +40,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         //     while($brands = mysqli_fetch_assoc($result1)){           
                                         //         $name = $brands["name"];
                                         //         if($brands["company_id"] == $c_id){
-                                        //             echo "<option class = 'company_id' value = '$c_id' id= $c_id> $name </option>";
+                                        //             echo "<option class = 'company_id' value = '$c_id' id= $c_id selected hidden> $name </option>";
                                         //         }
                                         //     }
                                         // }else{

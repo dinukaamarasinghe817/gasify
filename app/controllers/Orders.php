@@ -211,6 +211,10 @@ class Orders extends Controller{
         $city = $_POST['city'];
         if(isset($_POST['dealer'])){$dealer = $_POST['dealer'];}else{$dealer = null;}
       
+        $_SESSION['company_id'] = $brand;
+        $_SESSION['city'] = $city;
+        $_SESSION['dealer_id'] = $dealer;
+
        if($brand == null || $dealer == null){
             $error = "Please fill all fields";
             $this->select_brand_city_dealer($error);
@@ -223,10 +227,7 @@ class Orders extends Controller{
        }
        
 
-       $_SESSION['company_id'] = $brand;
-       $_SESSION['city'] = $city;
-       $_SESSION['dealer_id'] = $dealer;
-
+      
 
     }
 
