@@ -143,8 +143,13 @@ class Orders extends Controller{
     //refund form data for update reservation table
     function refund_bank_details($order_id){
         $customer_id = $_SESSION['user_id'];
-        if(isset($_POST['bank']) ? $bank = $_POST['bank'] : $bank = -1);
+        if(isset($_POST['bank'])){
+            $bank = $_POST['bank'];
+        }else{
+            $bank = -1;
+        } 
         $Acc_no = $_POST['Acc_no'];
+        
        
         $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$Acc_no);
         if(!empty($data['refund_detail_error'])){

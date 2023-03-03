@@ -124,7 +124,7 @@ a,button{
 
 
 
-  #custom_btn ,#next_btn , #back_btn{
+  #custom-btn ,#next_btn , #back_btn{
     display: flex;
     width: 150px;
     padding: 10px;
@@ -136,6 +136,7 @@ a,button{
     align-items: center;
     justify-content: center;
     margin-bottom: 1px;
+    cursor: pointer;
   }
 
   /* .custom_btn::-webkit-file-upload-button {
@@ -144,16 +145,14 @@ a,button{
 
   #custom_btn::file-selector-button {
     visibility: hidden;
-    /* width: 300px; */
-    content: 'Choose a file'; 
    
   }
 
-  .buttons #custom_btn{
+  #custom-btn{
     border: 3px solid var(--button-blue);
     
   }
-  .buttons #custom_btn:hover{
+  #custom-btn:hover{
     background-color: var(--button-blue-hover);
     color: var(--white);
   }

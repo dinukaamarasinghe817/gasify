@@ -70,7 +70,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         <div class="buttons">
                             <button  id="back_btn" onclick= "document.location.href = '../Orders/select_payment_method';">Back</button>
                             <!-- <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button> -->
-                            <input id="custom_btn" type="file" hidden accept=".png, .jpg, .jpeg"  name="slip_img">
+                            <label for="custom_btn" id="custom-btn">Choose File</label>
+                            <input id="custom_btn" type="file" accept=".png, .jpg, .jpeg"  name="slip_img" hidden>
                             <!-- <button  id="next_btn" type="submit" onclick="location.href = '<?php echo BASEURL?>/Orders/select_collecting_method'">Submit</button> -->
                             <button  id="next_btn" type="submit" name="submit_btn">Submit</button>
                             
@@ -94,14 +95,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
          const wrapper = document.querySelector(".box_area");
          const fileName = document.querySelector(".file-name");
          const defaultBtn = document.querySelector("#default-btn");
-         const customBtn = document.querySelector("#custom-btn");
+         const customBtn = document.querySelector("#custom_btn");
          const cancelBtn = document.querySelector("#cancel-btn svg");
          const img = document.querySelector(".image img");
          let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
-         function defaultBtnActive(){
-           defaultBtn.click();
-         }
-         defaultBtn.addEventListener("change", function(){
+        //  function defaultBtnActive(){
+        //    defaultBtn.click();
+        //  }
+         customBtn.addEventListener("change", function(){
            const file = this.files[0];
            if(file){
              const reader = new FileReader();

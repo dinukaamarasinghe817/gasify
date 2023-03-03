@@ -69,6 +69,22 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         '.$row1['order_state'].'
                                     </div>
                                 </div>
+                                <div class="top_content">
+                                    <div>
+                                        <strong>Payment Method</strong>
+                                    </div>
+                                    <div>
+                                        '.$row1['payment_method'].'
+                                    </div>
+                                </div>
+                                <div class="top_content">
+                                    <div>
+                                        <strong>Collecting Method</strong>
+                                    </div>
+                                    <div>
+                                        '.$row1['collecting_method'].'
+                                    </div>
+                                </div>
                                 
                             </div>';
 
@@ -98,8 +114,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         <div>
                                             '.$delivery['delivery_name'].'
                                         </div>
+                                       
                                         <div>
-                                            <button class="d_btn" onclick = "location.href=\''.$url_delivery.'\'">More details</button>
+                                            <button class="d_btn" onclick = "location.href=\''.$url_delivery.'\'">Profile</button>
+                                        </div>
+                                        <div>
+                                        <strong>Delivery fee: </strong>
+                                        </div>
+                                        <div>
+                                            <p>Rs 323.00</p>
                                         </div>
 
                                     </div>';
@@ -118,7 +141,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             '.$row1['dealer_name'].'
                                         </div>
                                         <div>
-                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">More details</button>
+                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                         </div>
                                     </div>
 
@@ -146,7 +169,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                     '.$row1['dealer_name'].'
                                                 </div>
                                                 <div>
-                                                    <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">More details</button>
+                                                    <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                                 </div>
                                             </div>
                                             '.$output1.'
@@ -172,7 +195,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                     '.$row1['dealer_name'].'
                                                 </div>
                                                 <div>
-                                                    <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">More details</button>
+                                                    <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                                 </div>
                                             </div>'.$output1.'
     
@@ -207,7 +230,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             '.$row1['dealer_name'].'
                                         </div>
                                         <div>
-                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">More details</button>
+                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                         </div>
                                     </div>'.$output1.'
 
@@ -228,7 +251,19 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             '.$row1['dealer_name'].'
                                         </div>
                                         <div>
-                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">More details</button>
+                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
+                                        </div>
+                                        <div>
+                                            <strong>Canceled Date : </strong> 
+                                        </div>
+                                        <div>
+                                            '.$row1['cancel_date'].'
+                                        </div>
+                                        <div>
+                                            <strong>Canceled Time : </strong> 
+                                        </div>
+                                        <div>
+                                            '.$row1['cancel_time'].'
                                         </div>
                                     </div>
 

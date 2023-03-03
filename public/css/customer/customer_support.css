@@ -73,7 +73,18 @@ a,button{
     box-shadow: inset 0 32px 32px -32px rgb(0, 0, 0/8%),
                 inset  0 32px 32px -32px rgb(0, 0, 0/10%) ;
 }
-
+/* empty chat box */
+.empty_msg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--navmenu-orange);
+    padding: 5px;
+    border-radius: 5px;
+    color: var(--navmenu-gray-dark);
+    font-weight: 600;
+    /* font-size: var(--mediums); */
+}
 
 /* outgoing css */
 .chat-box .outgoing{
@@ -92,6 +103,7 @@ a,button{
     background-color:var(--navmenu-orange-dark);
     color:black;
     border-radius: 18px 18px 0 18px;
+    word-wrap: anywhere;
 }
 
 .outgoing .details h6{
@@ -128,6 +140,7 @@ a,button{
     background-color:var(--navmenu-orange);
     color: #333;
     border-radius: 18px 18px 18px 0;
+    word-wrap: anywhere;
 }
 
 /* message typing area */

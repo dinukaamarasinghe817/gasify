@@ -196,19 +196,20 @@ a,button{
 .d_details{
     display: flex;
     flex-direction: row;
-    /* column-gap: 0px; */
+    column-gap: 20px;
     padding: 10px;
     justify-content: left;
     align-items: center;
+
 }
 
 .d_details div{
-    width: 150px;
+    /* width: 180px; */
     
 }
 
 .d_btn{
-    width: 150px;
+    width: 225px;
     background-color: var(--button-blue);
     color: var(--white);
     font-size: var(--mediums);
