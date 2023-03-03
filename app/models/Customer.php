@@ -93,7 +93,7 @@ class Customer extends Model{
     public function getPopularProducts(){
 
         $popular_products = array();
-        $result1 = $this->Query("SELECT SUM(reservation_include.quantity),product.name as p_name,product.weight,product.unit_price,product.image,company.name as c_name 
+        $result1 = $this->Query("SELECT SUM(reservation_include.quantity) as p_count ,product.name as p_name,product.weight,product.unit_price,product.image,company.name as c_name 
         FROM reservation_include
         JOIN product ON reservation_include.product_id = product.product_id
         Join company ON product.company_id = company.company_id
@@ -121,8 +121,14 @@ class Customer extends Model{
         $result1 = $this->Query("SELECT order_id,order_state,place_date
             FROM reservation
             WHERE customer_id = '{$customer_id}'
-            -- GROUP BY order_state
-            ORDER BY place_date DESC ");
+            ORDER BY (CASE order_state
+             WHEN 'Pending' THEN 1
+             WHEN 'Accepted' THEN 2
+             WHEN'Dispatched' THEN 3
+             WHEN 'Delivered' THEN 4
+             WHEN 'Completed' THEN 5
+             WHEN 'Canceled' THEN 6
+             ELSE 100 END) ASC, place_date DESC ,place_time DESC");
 
         
                
@@ -317,7 +323,6 @@ class Customer extends Model{
             }
             else{
                 $error = "Write your review!";
-                // array_push($add_review_errors,$error); 
             }
         }
         //collecting method delivery then have both review_type Delivery and Dealer 
@@ -329,7 +334,6 @@ class Customer extends Model{
             }
             else{
                 $error = "All input fields are required!";
-                // array_push($add_review_errors,$error); 
             }
         
         }
@@ -345,7 +349,7 @@ class Customer extends Model{
         $cancel_date = date('Y-m-d');
        
 
-        if($bank = -1 && !empty($Acc_no)){
+        if($bank != -1 && !empty($Acc_no)){
             $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time],'order_id='.$order_id);
 
         }
@@ -522,6 +526,10 @@ class Customer extends Model{
         if($company_id == 'null'){
             $company_id = null;
         }
+        // if($city_name==1){
+        //     $city_name = null;
+
+        // }
         
 
         if($company_id != null && $city_name != null){
@@ -530,9 +538,9 @@ class Customer extends Model{
         else if($company_id!= null && $city_name== null){
 
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
-        }else if($city_name != null && $company_id == null){
+        }else if($company_id == null && $city_name != null){
             
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no FROM dealer d  WHERE  d.city = '$city_name'");
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
         
         }else{
             $customer_id = $_SESSION['user_id'];
@@ -541,6 +549,25 @@ class Customer extends Model{
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE d.city = '$mycity'");
         }
        
+        // if($company_id == null && $city_name == 1){
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+        // }
+
+        // if($company_id != null && $city_name != 1){
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
+        // }
+        // else if($company_id!= null && $city_name== 1){
+
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
+        // }else if($company_id == null && $city_name != 1){
+            
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
+        
+        // }else{
+            
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+        // }
+
         return $result1;
         
     }
