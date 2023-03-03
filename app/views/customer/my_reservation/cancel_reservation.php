@@ -31,7 +31,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         <select name="bank" id="bank" class="bankdropdown dropdowndate">
                                     <option value="-1" selected disabled hidden>Select Bank</option>';
                                     foreach (BANKS as $bank){
-                                        echo "<option value=$bank id=$bank >$bank</option>";
+                                        echo "<option value=$bank id=$bank name='bank'>$bank</option>";
                                         
                                     }
                  echo   '<input name="Acc_no" placeholder="Account No" onkeyup = "lettersOnly(this)" >
