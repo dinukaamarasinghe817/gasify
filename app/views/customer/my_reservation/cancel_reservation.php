@@ -34,7 +34,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         echo "<option value=$bank id=$bank >$bank</option>";
                                         
                                     }
-                 echo   '<input type="text" name="Acc_no" placeholder="Account No">
+                 echo   '<input type="text" pattern="[0-9]+" name="Acc_no" placeholder="Account No"  >
                         <button type="submit" class="submit_btn" >Submit</button>
                     </form>
                 
