@@ -37,6 +37,14 @@ class Customer extends Model{
         $result = $this->Query("SELECT company_id,name,logo FROM company");
         return $result;
     }
+
+    public function getCompanyProducts($company_id){
+        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price FROM company c 
+         INNER JOIN product p ON c.company_id = p.company_id 
+         WHERE c.company_id = '{$company_id}'");
+
+        return $result1;
+    }
     
     //display most recent 3 reservations in dashboard
     public function getRecentorders($customer_id){
@@ -337,7 +345,7 @@ class Customer extends Model{
         $cancel_date = date('Y-m-d');
        
 
-        if(!empty($bank) && !empty($Acc_no)){
+        if($bank = -1 && !empty($Acc_no)){
             $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time],'order_id='.$order_id);
 
         }
