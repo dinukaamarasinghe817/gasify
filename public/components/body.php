@@ -258,7 +258,10 @@ class Body{
                              <div class="product_details">
                                 <div class="brand_name">'.$popular_product['c_name'].'</div>
                                 <div class="name"><h5>'.$popular_product['weight'].'Kg '.$popular_product['p_name'].'</h5></div>
-                                <div class="price"><h4>Rs.'.number_format($popular_product['unit_price']).'.00</h4></div>
+                                <div class = price_count>
+                                    <div class="price"><h4>Rs.'.number_format($popular_product['unit_price']).'.00</h4></div>
+                                    <div class="p_count"><h4>Units Sold : '.$popular_product['p_count'].'</h4></div>
+                                </div>
                             </div>
                         </div>';
                 }

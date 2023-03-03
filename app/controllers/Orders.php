@@ -191,8 +191,6 @@ class Orders extends Controller{
 
     }
 
-   
-
 
     function get_brand_city_dealer(){
 
@@ -428,7 +426,9 @@ class Orders extends Controller{
 
         $_SESSION['collecting_method'] = 'Pickup';
         $this -> model('Customer')->insertcollectingmethod();
-        $this->view('customer/place_reservation/collecting_method',$data);
+        header('LOCATION:'.BASEURL.'/Dashboard/customer');
+
+        // $this->view('customer/place_reservation/collecting_method',$data);
 
     }
 

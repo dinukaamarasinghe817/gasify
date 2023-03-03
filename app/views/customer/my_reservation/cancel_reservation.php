@@ -29,12 +29,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     <form id="bank_details_form" method="POST"  action="'.BASEURL.'/Orders/refund_bank_details/'.$data['order_id'].'" >
                         
                         <select name="bank" id="bank" class="bankdropdown dropdowndate">
-                                    <option value="-1" selected disabled hidden>Select Gas Brand</option>';
+                                    <option value="-1" selected disabled hidden>Select Bank</option>';
                                     foreach (BANKS as $bank){
                                         echo "<option value=$bank id=$bank >$bank</option>";
                                         
                                     }
-                 echo   '<input type="text" pattern="[0-9]+" name="Acc_no" placeholder="Account No"  >
+                 echo   '<input name="Acc_no" placeholder="Account No" onkeyup = "lettersOnly(this)" >
                         <button type="submit" class="submit_btn" >Submit</button>
                     </form>
                 
@@ -51,6 +51,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
     </div> 
 </section>
+<script>
+    function lettersOnly(input){
+        var regexp = /[^0-9]/g;
+        input.value = input.value.replace(regexp,"");
+
+    }
+</script>
 
 <?php
 $footer = new Footer("customer");
