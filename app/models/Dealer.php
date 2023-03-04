@@ -279,7 +279,7 @@ class Dealer extends Model
         switch($tab){
             case "currentstock":
                 $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
-                p.weight as product_weight,p.unit_price as unit_price,p.quantity as quantity
+                p.weight as product_weight,p.unit_price as unit_price,d.quantity as quantity
                 FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
                 return $result;
                 break;
@@ -393,38 +393,56 @@ class Dealer extends Model
         return $orders;
     }//
 
+    public function dealerNofifycustomer($order_id,$dealer_id,$state){
+        // sendig email updates
+        $row1 = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
+        $row2 = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $dealer_id"));
+        $dealername = $row2['name'];
+
+        $customer_id = $row1['customer_id'];
+        $row3 = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+        $row4 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+        $reciepName = $row3['first_name'].' '.$row3['last_name'];
+        $from = 'admin@gasify.com';
+        $to = $row3['email'];
+        $subject = "Gasify: Your order has been $state";
+        if($row1['collecting_method'] == 'Delivery'){
+            if($state == 'accepted'){
+                $message = "Your recent order at $dealername has been accepted by the dealer and waiting for a delivery. Please stay standby";
+            }else if($state == 'completed'){
+                $message = "Your recent order at $dealername has been completed. Hope you are satisfy with our service. Thank you for shopping. Stay with us";
+            }
+        }else{
+            if($state == 'accepted'){
+                $message = "Your recent order at $dealername has been accepted by the dealer and waiting to be collected. Please visit the store to collect your order.";
+            }else if($state == 'completed'){
+                $message = "Your recent order at $dealername has been completed. Hope you are satisfy with our service. Thank you for shopping. Stay with us";
+            }
+        }
+        //$link = BASEURL."/controller/method/params";
+        // sendResetLink($name, $row['email'], $token);
+        //Create an instance; passing `true` enables exceptions
+        $mail = new Mail($from,$to,$reciepName,$subject,$message);
+        $data = $mail->send();
+
+        date_default_timezone_set("Asia/Colombo");
+        $time = date('H:i');
+        $date = date('Y-m-d');
+        // sending notification
+        $this->insert('notifications',['user_id' => $customer_id,'date'=> $date,'time'=> $time,'type' => 'Order Status','message' => $message,'state' => 'delivered']);
+    }
+
     public function dealerAcceptOrder($order_id){
         $user_id = $_SESSION['user_id'];
         $result = $this->read('reservation_include',"order_id = $order_id");
         while($row = mysqli_fetch_assoc($result)){
             $product_id = $row['product_id'];
             $product_quantity = $row['quantity'];
-            $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
+            $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $dealer_id");
         }
         $this->update('reservation',['order_state' => 'Accepted'],"order_id = $order_id");
-
-        // sendig email updates
-        $row1 = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
-        $row2 = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $user_id"));
-        $dealername = $row2['name'];
-
-        $customer_id = $row1['customer_id'];
-        $row3 = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
-        $row4 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
-        $reciepName = $row4['first_name'].' '.$row4['last_name'];
-        $from = 'admin@gasify.com';
-        $to = $row3['email'];
-        $subject = 'Gasify: Your order has been accepted';
-        if($row1['collecting_method'] == 'Delivery'){
-            $message = 'Hello $reciepName ,<br>Your recent order at <strong>$dealername</strong> has been accepted by the dealer and waiting for a delivery. Please stay standby';
-        }else{
-            $message = 'Hello $reciepName ,<br>Your recent order at <strong>$dealername</strong> has been accepted by the dealer and waiting to be collected by. Please visit the store to collect your order.';
-        }
-        //$link = BASEURL."/controller/method/params";
-        // sendResetLink($name, $row['email'], $token);
-        //Create an instance; passing `true` enables exceptions
-        $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
-        $data = $mail->send();
+        $this->dealerNofifycustomer($order_id,$user_id,'accepted');
+        
     }
 
     public function dealerIssueOrder($order_id){
@@ -436,6 +454,7 @@ class Dealer extends Model
         //     $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
         // }
         $this->update('reservation',['order_state' => 'Completed'],"order_id = $order_id");
+        $this->dealerNofifycustomer($order_id,$user_id,'completed');
     }
 
     public function dealersubmitpayslipOrder($order_id){
@@ -504,20 +523,53 @@ class Dealer extends Model
     }
 
     public function getanalysis($user_id,$start_date,$end_date){
-        //chart 1
+        if($start_date == null){
+            $row = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+            $start_date = $row['date_joined'];
+        }
+
         $data['charts'] = array();
+        //chart 1
+        $products = array();
+        $query1 = $this->read('dealer_capacity',"dealer_id = $user_id");
+        while($row = mysqli_fetch_assoc($query1)){
+            $products[$row['product_id']] = 0;
+        }
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $order_id = $row['order_id'];
+            $query2 = $this->read('reservation_include',"order_id = $order_id");
+            while($row2 = mysqli_fetch_assoc($query2)){
+                $products[$row2['product_id']] += $row2['quantity'];
+            }
+        }
+        $chart['labels'] = array();
+        $chart['vector'] = array();
+        foreach($products as $id => $quantity){
+            $row = mysqli_fetch_assoc($this->read('product',"product_id = $id"));
+            array_push($chart['labels'], $row['name']);
+            array_push($chart['vector'], $quantity);
+        }
         $chart['type'] = 'bar';
-        $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
-        $chart['vector'] = array(7,10,2,5);
         $chart['main'] = 'Based on Product';
         $chart['y'] = 'Number of sold items';
         $chart['color'] = 'rgba(245, 215, 39, 0.8)';
         array_push($data['charts'],$chart);
 
-        //chart 2
+        //chart 2,3
+        $days = array("Mon"=>0,"Tue"=>0,"Wed"=>0,"Thu"=>0,"Fri"=>0,"Sat"=>0,"Sun"=>0);
+        $deliverymode = array("Delivery"=>0,"Pickup"=>0);
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $day = date('D', strtotime($row['place_date']));
+            $days[$day]++;
+            $deliverymode[$row['collecting_method']]++;
+        }
         $chart['type'] = 'line';
-        $chart['labels'] = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
-        $chart['vector'] = array(7,10,12,5,7,8,3);
+        $chart['labels'] = array_keys($days);
+        $chart['vector'] = array_values($days);
         $chart['main'] = 'Based on the day';
         $chart['y'] = 'Number of Orders';
         $chart['color'] = 'rgba(242, 71, 235, 0.8)';
@@ -525,8 +577,8 @@ class Dealer extends Model
 
         //chart 3
         $chart['type'] = 'doughnut';
-        $chart['labels'] = array('Delivery','Pickup');
-        $chart['vector'] = array(60,40);
+        $chart['labels'] = array_keys($deliverymode);
+        $chart['vector'] = array_values($deliverymode);
         $chart['main'] = 'Based on Collecting Method';
         $chart['y'] = 'Number of orders';
         $chart['color'] = '[
@@ -537,18 +589,84 @@ class Dealer extends Model
         array_push($data['charts'],$chart);
 
         //chart 4
+        $usertype = array("Domestic"=>0, "CommercialLarge"=>0, "CommercialSmall"=>0);
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $customer_id = $row['customer_id'];
+            $row2 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+            $usertype[$row2['type']]++;
+        }
         $chart['type'] = 'bar';
-        $chart['labels'] = array('Domestic','LargeScale','SmallScale');
-        $chart['vector'] = array(22,65,45);
+        $chart['labels'] = array_keys($usertype);
+        $chart['vector'] = array_values($usertype);
         $chart['main'] = 'Based on Customer Type';
         $chart['y'] = 'Number of Orders';
         $chart['color'] = 'rgba(48, 39, 245, 0.8)';
         array_push($data['charts'],$chart);
         
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
         return $data;
     }
 
-    public function getReportInfo($start_date,$to_date,$order_by){
+    public function getReportInfo($start_date,$end_date,$order_by){
+        $user_id = $_SESSION["user_id"];
+        if($start_date == null){
+            $row = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+            $start_date = $row['date_joined'];
+        }
+        $productsquantity = array();
+        $productsearnings = array();
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $order_id = $row["order_id"];
+            $query2 = $this->read('reservation_include',"order_id = $order_id");
+            while($row2 = mysqli_fetch_assoc($query2)){
+                if(isset($productsquantity[$row2['product_id']])){
+                    $productsquantity[$row2['product_id']] += $row2['quantity'];
+                    $productsearnings[$row2['product_id']] += $row2['unit_price']*$row2['quantity'];
+                }else{
+                    $productsquantity[$row2['product_id']] = $row2['quantity'];
+                    $productsearnings[$row2['product_id']] = $row2['unit_price']*$row2['quantity'];
+                }
+            }
+        }
 
+        $percentage = array();
+        if($order_by == 'soldquantity'){
+            $total = 0;
+            foreach($productsquantity as $key => $value){
+                $total += $value;
+            }
+            foreach($productsquantity as $key => $value){
+                $percentage[$key] = round(($value/$total)*100, 2);
+            }
+        }else{
+            $total = 0;
+            foreach($productsearnings as $key => $value){
+                $total += $value;
+            }
+            foreach($productsearnings as $key => $value){
+                $percentage[$key] = round(($value/$total)*100, 2);
+            }
+        }
+
+        $tabledata = array();
+        foreach($productsquantity as $key => $value){
+            $row = mysqli_fetch_assoc($this->read('product',"product_id = $key"));
+            array_push($tabledata,['id'=>$key,'image'=>$row['image'],'name'=>$row['name'],'sold_quantity'=>$value,'total_earnings'=>$productsearnings[$key],'percentage'=>$percentage[$key]]);
+        }
+        usort($tabledata,'cmp');
+        $data['tabledata'] = $tabledata;
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['filter'] = $order_by;
+        return $data;
     }
+}
+
+function cmp($a, $b) {
+    return $b['percentage'] - $a['percentage'];
 }

@@ -40,13 +40,29 @@ class Reports extends Controller{
     }
 
     public function dealer(){
-        $start_date = '';
-        $to_date = '';
-        $order_by = '';
-        $data = $this->model("Dealer")->getReportInfo($start_date,$to_date,$order_by);
+        if(isset($_POST['start_date'])){
+            $start_date = $_POST['start_date'];
+        }else{
+            $start_date = null;
+        }
+
+        if(isset($_POST['end_date'])){
+            $end_date = $_POST['end_date'];
+        }else{
+            $end_date = date('Y-m-d');
+        }
+
+        if(isset($_POST['filter'])){
+            $order_by = $_POST['filter'];
+        }else{
+            $order_by = 'soldquantity';
+        }
+        
+        $data = $this->model("Dealer")->getReportInfo($start_date,$end_date,$order_by);
         $row = mysqli_fetch_assoc($this->model('Dealer')->getDealer($this->user_id));
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $data['date_joined'] = $row['date_joined'];
         $this->view('dealer/reports',$data);
     }
 
