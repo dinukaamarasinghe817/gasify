@@ -63,3 +63,13 @@ function delayOrder(div) {
     xmlhttp.send(formData);
 
 }
+function changeOrderDetails(productID, unitPrice, stockQty, orderID, resultArray) {
+    console.log(orderID);
+    var quantity = document.getElementById(productID + "1").value;
+    if (quantity < stockQty) {
+        document.getElementById(productID + "2").src = "http://localhost/mvc/public/icons/check.png";
+    } else {
+        document.getElementById(productID + "2").src = "http://localhost/mvc/public/icons/warning.png";
+    }
+    document.getElementById(productID + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us');
+}
