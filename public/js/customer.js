@@ -62,14 +62,13 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         </div>`;
     }else if(variant == 'deliveryaddress'){
 
-        let cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
-        cities.sort();
-
+    
         body = `<h2>Change Delivery Address</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
-        <p>Check your current delivery address is correct.If you need to change your delivery address,change it!</p>
-        <form>
-            <input name="new_address" placeholder="NO 22, Main Street" required >
+        <p>Check your current delivery address is correct.If you need to change your delivery address around selected city,change it!</p>
+        <form> 
+            <input name="new_street" placeholder="New Street" required >
+            <input name="city" value ="${backwardlink}" readonly >
         </form>
         <div class="buttons">
             <button onclick="location.href='${forwardlink}'">OK</button>

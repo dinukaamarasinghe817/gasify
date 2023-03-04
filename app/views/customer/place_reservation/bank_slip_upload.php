@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer/bank_slip_upload");
+$header = new Header("customer/bank_slip_upload",$data);
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 
@@ -7,6 +7,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
+        if(isset($data['toast'])){
+            $error = new Prompt('toast',$data['toast']);
+
+        }
         
     ?>
 
@@ -14,11 +18,24 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="subtitle">
            <h3>Upload Bank Slip</h3>
         </div> 
+        <?php
+            if(isset($data['bank_details'])){
+                while( $row = mysqli_fetch_assoc($data['bank_details'])){
+                    $bank_name = $row['bank'];
+                    $acc_no = $row['account_no'];
+                    $acc_holder_name = $row['full_name'];
+
+                }
+            }
+        
+        ?>
         
         <div class="bank_details">
-                    <span><strong>Dealer's Bank Name :</strong> Peoples' Bank</span>
-                    <span><strong>Dealer's Bank Branch :</strong> Maharagama</span>
-                    <span><strong>Dealer's Bank Account No :</strong> 19000129383</span>
+                <?php
+                    echo "<span><strong>Account Holder's Name :</strong> $acc_holder_name</span>
+                          <span><strong>Dealer's Bank Name :</strong> $bank_name</span>
+                          <span><strong>Dealer's Bank Account No :</strong> $acc_no</span>";
+                ?>
                 </div>
 
                 <div class="upload_box">
@@ -49,14 +66,17 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             File name here
                         </div>
                     </div>
-                    <div class="buttons">
-                        <button  id="back_btn" onclick= "document.location.href = '../Orders/select_payment_method';">Back</button>
-                        <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button>
-                        <input id="default-btn" type="file" hidden accept=".png, .jpg, .jpeg">
-                        <button  id="next_btn" type="submit" onclick="location.href = '<?php echo BASEURL?>/Orders/select_collecting_method'">Submit</button>
-                        
-                    </div>
-                    
+                    <form action="<?php echo BASEURL?>/Orders/get_bank_slip" method="post" enctype="multipart/form-data">
+                        <div class="buttons">
+                            <button  id="back_btn" onclick= "document.location.href = '../Orders/select_payment_method';">Back</button>
+                            <!-- <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button> -->
+                            <label for="custom_btn" id="custom-btn">Choose File</label>
+                            <input id="custom_btn" type="file" accept=".png, .jpg, .jpeg"  name="slip_img" hidden>
+                            <!-- <button  id="next_btn" type="submit" onclick="location.href = '<?php echo BASEURL?>/Orders/select_collecting_method'">Submit</button> -->
+                            <button  id="next_btn" type="submit" name="submit_btn">Submit</button>
+                            
+                        </div>
+                    </form>
                 </div>
       
 
@@ -75,14 +95,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
          const wrapper = document.querySelector(".box_area");
          const fileName = document.querySelector(".file-name");
          const defaultBtn = document.querySelector("#default-btn");
-         const customBtn = document.querySelector("#custom-btn");
+         const customBtn = document.querySelector("#custom_btn");
          const cancelBtn = document.querySelector("#cancel-btn svg");
          const img = document.querySelector(".image img");
          let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
-         function defaultBtnActive(){
-           defaultBtn.click();
-         }
-         defaultBtn.addEventListener("change", function(){
+        //  function defaultBtnActive(){
+        //    defaultBtn.click();
+        //  }
+         customBtn.addEventListener("change", function(){
            const file = this.files[0];
            if(file){
              const reader = new FileReader();

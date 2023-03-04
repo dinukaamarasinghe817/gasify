@@ -258,21 +258,170 @@ class Body{
                              <div class="product_details">
                                 <div class="brand_name">'.$popular_product['c_name'].'</div>
                                 <div class="name"><h5>'.$popular_product['weight'].'Kg '.$popular_product['p_name'].'</h5></div>
-                                <div class="price"><h4>Rs.'.number_format($popular_product['unit_price']).'.00</h4></div>
+                                <div class = price_count>
+                                    <div class="price"><h4>Rs.'.number_format($popular_product['unit_price']).'.00</h4></div>
+                                    <div class="p_count"><h4>Units Sold : '.$popular_product['p_count'].'</h4></div>
+                                </div>
                             </div>
                         </div>';
                 }
             }
 
-          
             // echo '</div> 
-            // </div>';
-           
-       
+            // </div>'; 
     }
 
-   
+  /*
   
+    function distributordashboard($data){
+        echo '<section class="body-content dashboard">
+                    <div class="body-left">
+
+                        <div class="variable">
+                            <div class="topic">
+                                <h3>Analytic Overview</h3>
+                                <!-- drop down component -->
+                                <form action="'.BASEURL.'/dashboard/distributor" method="POST">
+                                    <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">';
+                                        if($data['option'] == 'today') {
+                                            echo '<option value="today" selected>To day</option>
+                                            <option  value="30day">Last 30 days</option>';
+                                        }else{
+                                            echo '<option value="today" >To day</option>
+                                            <option  value="30day" selected>Last 30 days</option>';
+                                        }
+
+                                    echo'
+                                    </select>
+                                </form>
+                            </div>
+
+                            <div class="box1">
+                               <div class="box2">
+                                    <h1>'.sprintf("%02d", $data['pending_count']).'</h1>
+                                    <p>Pending Distributions</p>
+                                </div>
+
+                               <div class="box2">
+                                    <h1>'.sprintf("%02d", $data['total_received']).'</h1>
+                                    <p>Received Orders</p>
+                                </div>
+                            </div>';    
+                                    
+                            echo '
+                            <div class="chart">';
+                            $chart = $data['chart'];
+                            if(count($chart['labels']) > 0){
+                                $chart = new Chart('bar',$chart,1);
+                            }else{
+                                echo "<img src = ".BASEURL."/public/img/placeholders/2.png class='chartimg'>";
+                            }
+                            echo  '</div>
+
+                        </div>
+                    </div>';   
+              
+                    echo '
+                    <div class="body-right">
+                        <div class="accordion new">
+                                <h3>New Purchase Orders</h3>';
+
+                                $pendingorders = $data['pending_distributions'];
+                                foreach($pendingorders as $pendingorder) {
+                                    $row2 = $pendingorder['pendinginfo'];
+                                    $capacities = $pendingorder['capacities'];
+
+                                    $output1 = '
+                                    <div class="box">';
+                                        $order_id = $row2['po_id'];
+                                        $output1 .= '
+                                            <div class="label">Phurchase Order ID : '.$order_id.'
+                                                <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#9c6109"/>
+                                                </svg>
+                                            </div>';
+
+                                        $date = $row2['place_date'];
+                                        $dealer_id = $row2['dealer_id'];
+
+                                        $output1 .= '
+                                        <div class="content">
+                                            <span><strong>Dealer ID : </strong> '.$dealer_id.'</span>&nbsp<br>
+                                            <span><strong>Placed Date : </strong> '.$date.'</span>
+                                            <hr>
+                                            <table class="styled-table">
+                                                <thread>
+                                                    <tr>
+                                                        <th>Item ID</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thread>
+
+                                                <tbody>';
+                                                foreach($capacities as $capacity) {
+                                                    $row3 = $capacity;
+                                                    $output1 .= '
+                                                        <tr>
+                                                            <td>'.$row3['product_id'].'</td>
+                                                            <td>'.$row3['quantity'].'</td>
+                                                        </tr>';  
+                                                }
+                                                $output1 .= '
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>';
+                                    echo $output1;  
+                                }
+                            echo '
+                            </div>';
+                            $output = '
+                            <div class="box3">
+                                <h3>Current Stock</h3>
+    
+                                    <div class="content1">
+                                        <table class="styled-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Current Stock</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';
+                                            
+                                            if(isset($data["current_stock"])) {
+                                        
+                                                $result = $data['current_stock'];
+                                                // echo count($result);
+
+                                                $stock = "";
+                                                // echo count($stock);
+                                                while($row = mysqli_fetch_assoc($result)) {
+                                                    // echo count($row);
+                                                    
+                                                    $name = $row["name"];
+                                                    $qty = $row['quantity'];
+                                                    $stock .= 
+                                                    '<tr>
+                                                        <td>'.$name.'</td>
+                                                        <td>'.$qty.'</td>
+                                                    </tr>';
+                                                    
+                                                }
+                                                echo $stock;
+                                            }
+                                            echo '
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>';        
+                    echo '</div>';
+        echo '</section>';                         
+    }
+
+    */
+
+    
     function distributordashboard($data){
         echo '<section class="body-content dashboard">
                     <div class="body-left">
@@ -319,19 +468,17 @@ class Body{
                             if(count($chart['labels']) > 0){
                                 $chart = new Chart('bar',$chart,1);
                             }else{
-                                echo "<img src = ".BASEURL."/public/img/placeholders/2.png>";
+                                echo "<img src = ".BASEURL."/public/img/placeholders/2.png class='chartimg'>";
                             }
                             echo  '</div>
 
                         </div>
-                    </div>';
-
-                        
+                    </div>';   
               
                     echo '
                     <div class="body-right">
                         <div class="accordion new">
-                                <h3>New Purchase Orders</h3>';
+                                <h3>New Pending Orders</h3>';
 
                                 $pendingorders = $data['pending_distributions'];
                                 foreach($pendingorders as $pendingorder) {
@@ -342,7 +489,7 @@ class Body{
                                     <div class="box">';
                                         $order_id = $row2['po_id'];
                                         $output1 .= '
-                                            <div class="label">Phurchase Order ID : '.$order_id.'
+                                            <div class="label">Pending Order ID : '.$order_id.'
                                                 <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#9c6109"/>
                                                 </svg>
@@ -413,6 +560,9 @@ class Body{
                     echo '</div>';
         echo '</section>';                         
     }
+    
+
+
 
 
 
@@ -1393,8 +1543,75 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
-            <div class="orderCard" >
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+            if (isset($data['order_details'])){
+                $result = $data["order_details"];
+                $orders='';
+                $processedOrders=array();
+                $orderID='';
+                $distName='';
+                $placedDate='';
+                $placedTime='';
+                foreach ($result as $row) {
+                    $orderID=$row['stock_req_id'];
+                    $distName=$row['first_name'].' '.$row['last_name'];
+                    $placedDate=$row['place_date'];
+                    $placedTime=$row['place_time'];
+                    if(!in_array($orderID,$processedOrders)){
+                    $orders .=  '<div class="orderCard" >
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>'.$orderID.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
+                    </div>
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                    </div>
+                    <div class="orderTbl">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Product name</th>
+                                    <th>Unit price (Rs.)</th>
+                                    <th>Quantity</th>
+                                    <th>Total (Rs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody style="display:legacy">';
+                    
+                    foreach ($result as $row_2) {
+                        if($row_2['stock_req_id']==$orderID){
+                            $orders.='<tr>
+                            <td>YES</td>
+                            <td>'.$row_2['unit_price'].'</td>
+                            <td>'.$row_2['quantity'].'</td>
+                            <td>'.$row_2['unit_price']*$row_2['quantity'].'</td>
+                        </tr>';
+                        }
+
+                    }
+                    array_push($processedOrders,$orderID);
+
+                    $orders.='</tbody>      
+                    </table>
+                    </div>
+                        <div class="orderRow">
+                            <div class="orderButtons" onClick="issueOrder(this)" key="'.$orderID.'"><label>Issue</label></div>
+                            <div class="orderButtons" onClick="delayOrder(this)" key="'.$orderID.'"><label>Delay</label></div>
+                        </div>
+                    </div>';
+                    }
+                }
+                echo $orders;
+                echo ' 
+                
+                </div>
+                </section>';
+
+
+
+            }
+            /*<div class="orderCard" >
                 <div class="orderRow">
                     <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
                     <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
@@ -1449,7 +1666,7 @@ class Body{
             </div>
             </div>';
             echo ' 
-        </section>';
+        </section>';*/
     }
     function companyLimitQuota($data){
         echo 
@@ -1746,59 +1963,70 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
-            <div class="orderCard" >
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
-                </div>
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
-                </div>
-                <div class="orderTbl">
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Product name</th>
-                                <th>Unit price (Rs.)</th>
-                                <th>Quantity</th>
-                                <th>Total (Rs.)</th>
-                            </tr>
-                        </thead>
-                        <tbody style="display:legacy">
-                            <tr>
-                                <td>Buddy</td>
-                                <td>1,450.00</td>
-                                <td>12</td>
-                                <td>17,400</td>
-                            </tr>
-                            <tr>
-                                <td>Regular</td>
-                                <td>3,220.00</td>
-                                <td>30</td>
-                                <td>96,600</td>
-                            </tr>
-                            <tr>
-                                <td>Commercial</td>
-                                <td>5,150.00</td>
-                                <td>15</td>
-                                <td>77,250</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>191,250</td>
-                            </tr>
-                         
-                        </tbody>      
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+            if (isset($data['order_details'])){
+                $result = $data["order_details"];
+                $orders='';
+                $processedOrders=array();
+                $orderID='';
+                $distName='';
+                $placedDate='';
+                $placedTime='';
+                foreach ($result as $row) {
+                    $orderID=$row['stock_req_id'];
+                    $distName=$row['first_name'].' '.$row['last_name'];
+                    $placedDate=$row['place_date'];
+                    $placedTime=$row['place_time'];
+                    if(!in_array($orderID,$processedOrders)){
+                    $orders .=  '<div class="orderCard" >
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>'.$orderID.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
+                    </div>
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                    </div>
+                    <div class="orderTbl">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Product name</th>
+                                    <th>Unit price (Rs.)</th>
+                                    <th>Quantity</th>
+                                    <th>Total (Rs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody style="display:legacy">';
+                    
+                    foreach ($result as $row_2) {
+                        if($row_2['stock_req_id']==$orderID){
+                            $orders.='<tr>
+                            <td>YES</td>
+                            <td>'.$row_2['unit_price'].'</td>
+                            <td>'.$row_2['quantity'].'</td>
+                            <td>'.$row_2['unit_price']*$row_2['quantity'].'</td>
+                        </tr>';
+                        }
+
+                    }
+                    array_push($processedOrders,$orderID);
+
+                    $orders.='</tbody>      
                     </table>
+                    </div>
+                    </div>';
+                    }
+                }
+                echo $orders;
+                echo ' 
+                
                 </div>
-            </div>
-            </div>';
-            echo ' 
-        </section>';
+                </section>';
+
+
+
+            }
     }
     function delayOrdersCompany($data){
         echo 
@@ -1809,61 +2037,73 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px;background-color:#d8ca30;color:white">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
-            <div class="orderCard" >
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
-                </div>
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
-                </div>
-                <div class="orderTbl">
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Product name</th>
-                                <th>Unit price (Rs.)</th>
-                                <th>Quantity</th>
-                                <th>Total (Rs.)</th>
-                            </tr>
-                        </thead>
-                        <tbody style="display:legacy">
-                            <tr>
-                                <td>Buddy</td>
-                                <td>1,450.00</td>
-                                <td>12</td>
-                                <td>17,400</td>
-                            </tr>
-                            <tr>
-                                <td>Regular</td>
-                                <td>3,220.00</td>
-                                <td>30</td>
-                                <td>96,600</td>
-                            </tr>
-                            <tr>
-                                <td>Commercial</td>
-                                <td>5,150.00</td>
-                                <td>15</td>
-                                <td>77,250</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>191,250</td>
-                            </tr>
-                         
-                        </tbody>      
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+            if (isset($data['order_details'])){
+                $result = $data["order_details"];
+                $orders='';
+                $processedOrders=array();
+                $orderID='';
+                $distName='';
+                $placedDate='';
+                $placedTime='';
+                foreach ($result as $row) {
+                    $orderID=$row['stock_req_id'];
+                    $distName=$row['first_name'].' '.$row['last_name'];
+                    $placedDate=$row['place_date'];
+                    $placedTime=$row['place_time'];
+                    if(!in_array($orderID,$processedOrders)){
+                    $orders .=  '<div class="orderCard" >
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>'.$orderID.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
+                    </div>
+                    <div class="orderRow">
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                    </div>
+                    <div class="orderTbl">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Product name</th>
+                                    <th>Unit price (Rs.)</th>
+                                    <th>Quantity</th>
+                                    <th>Total (Rs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody style="display:legacy">';
+                    
+                    foreach ($result as $row_2) {
+                        if($row_2['stock_req_id']==$orderID){
+                            $orders.='<tr>
+                            <td>YES</td>
+                            <td>'.$row_2['unit_price'].'</td>
+                            <td>'.$row_2['quantity'].'</td>
+                            <td>'.$row_2['unit_price']*$row_2['quantity'].'</td>
+                        </tr>';
+                        }
+
+                    }
+                    array_push($processedOrders,$orderID);
+
+                    $orders.='</tbody>      
                     </table>
+                    </div>
+                        <div class="orderRow">
+                            <div class="orderButtons" style="margin-left:28.5%" onClick="issueOrder(this)" key="'.$orderID.'"><label>Issue</label></div>
+                        </div>
+                    </div>';
+                    }
+                }
+                echo $orders;
+                echo ' 
+                
                 </div>
-                <div class="orderRow">
-                    <div class="orderButtons" style="margin-left:28.5%"><label>Issue</label></div>
-                </div>
-            </div>
-            </div>';
-            echo ' 
-        </section>';
+                </section>';
+
+
+
+            }
+            
     }
 }

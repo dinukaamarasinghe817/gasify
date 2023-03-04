@@ -70,9 +70,10 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="beginbtn">
-                    <a href="'.BASEURL.'/vehicles/viewvehicle">Back</a>
                     <button class="btn3 edit" name="update" onclick="edit();"><b>Edit</b></button>
+                    <div class="back"><a href="'.BASEURL.'/vehicles/viewvehicle" >Back</a></div>
                 </div>
+                
                 </form>';
                 echo $output;
             

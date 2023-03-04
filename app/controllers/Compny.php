@@ -184,10 +184,12 @@ class Compny extends Controller{
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
         $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $order_details=$this->model('Company')->getStockReqDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['dealer']=$dealer_details;
+        $data['order_details']=$order_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
             //$data=[];
@@ -251,11 +253,12 @@ class Compny extends Controller{
         $data['navigation'] = 'issuedorders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
-        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $order_details=$this->model('Company')->getIssuedStockReqDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
+        $data['order_details']=$order_details;
         //$row = mysqli_fetch_assoc($dealer_details);
-        $data['dealer']=$dealer_details;
+        //$data['dealer']=$dealer_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
             //$data=[];
@@ -265,15 +268,29 @@ class Compny extends Controller{
         $data['navigation'] = 'delayedorders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
-        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $order_details=$this->model('Company')->getDelayedStockReqDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
-        $data['dealer']=$dealer_details;
+        $data['order_details']=$order_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
             //$data=[];
         $this->view('dashboard/company', $data);
+    }
+    public function issueOrder(){
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $orderID = mysqli_real_escape_string($conn,$_POST["orderID"]);
+        $company_id=$_SESSION['user_id'];
+        $this->model('Company')->issueOrder($orderID);
+        die();
+    }
+    public function delayOrder(){
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $orderID = mysqli_real_escape_string($conn,$_POST["orderID"]);
+        $company_id=$_SESSION['user_id'];
+        $this->model('Company')->delayOrder($orderID);
+        die();
     }
 
 }

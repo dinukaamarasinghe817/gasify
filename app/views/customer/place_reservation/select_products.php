@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer/customer_select_products");
+$header = new Header("customer/customer_select_products",$data);
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 
@@ -98,7 +98,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             <div class="bottom">
                 <a href=" '.BASEURL.'/Orders/select_brand_city_dealer" class="btn" id="back_btn">Back</a>
                 <!-- <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn" id="next_btn">Next</a> -->
-                <button type="submit" >Next</button>
+                <button type="submit" class="btn" id="next_btn" >Next</button>
             </div>
             </form>
         

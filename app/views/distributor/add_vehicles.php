@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_id'];
     ?>
 
     <section class="body-content">
-          <h1>Vehicles</h1> <br>
+          <h2>Vehicles</h2> <br>
 
           <?php 
           $result = new Vehicles_Comp("add");

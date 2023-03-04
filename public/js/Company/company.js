@@ -35,3 +35,31 @@ function removeStyles(div) {
     div.style.removeProperty('display');
 
 }
+function issueOrder(div) {
+    var orderID = div.getAttribute("key");
+    var formData = new FormData();
+    formData.append("orderID", orderID);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    };
+    xmlhttp.open("POST", "../Compny/issueOrder");
+    xmlhttp.send(formData);
+
+}
+function delayOrder(div) {
+    var orderID = div.getAttribute("key");
+    var formData = new FormData();
+    formData.append("orderID", orderID);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    };
+    xmlhttp.open("POST", "../Compny/delayOrder");
+    xmlhttp.send(formData);
+
+}
