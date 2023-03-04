@@ -12,6 +12,7 @@ require_once 'chart.php';
 require_once 'vehicles.php';
 require_once 'StockHTML.php';
 require_once 'prompt.php';
+require_once 'progresscircle.php';
 require_once 'orders.php';
 require_once 'forgotpwd.php';
 require_once 'mail.php';

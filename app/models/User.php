@@ -66,7 +66,7 @@ class User extends Model
             $row = mysqli_fetch_assoc($result);
             
         }else{
-            $data['toast'] = 'Email does not exist';
+            $data['toast'] = ['type'=>'error', 'message'=>'Email does not exist'];
             return $data;
         }
         

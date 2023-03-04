@@ -13,31 +13,54 @@ class Reports extends Controller{
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'reports';
 
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = 'today';
+        }
         // profile picture
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $data['distributions'] = $this->model("Distributor")-> completedistributions($user_id);
-
+        $data['distributions'] = $this->model("Distributor")-> reportpastdistributions($user_id, $option);
+       
+        $data['option'] = $option;
         $this->view('distributor/reports',$data);
-
 
     }
 
     public function distributor_pdf($user_id) {
         $data = [];
+        $data['reportdetails'] = $this->model("Distributor")-> reportdetails($user_id);
+
         $this->view('distributor/reports/report_pdf',$data);
     }
 
     public function dealer(){
-        $start_date = '';
-        $to_date = '';
-        $order_by = '';
-        $data = $this->model("Dealer")->getReportInfo($start_date,$to_date,$order_by);
+        if(isset($_POST['start_date'])){
+            $start_date = $_POST['start_date'];
+        }else{
+            $start_date = null;
+        }
+
+        if(isset($_POST['end_date'])){
+            $end_date = $_POST['end_date'];
+        }else{
+            $end_date = date('Y-m-d');
+        }
+
+        if(isset($_POST['filter'])){
+            $order_by = $_POST['filter'];
+        }else{
+            $order_by = 'soldquantity';
+        }
+        
+        $data = $this->model("Dealer")->getReportInfo($start_date,$end_date,$order_by);
         $row = mysqli_fetch_assoc($this->model('Dealer')->getDealer($this->user_id));
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $data['date_joined'] = $row['date_joined'];
         $this->view('dealer/reports',$data);
     }
 

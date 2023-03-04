@@ -9,12 +9,13 @@ $sidebar = new Navigation('dealer','analysis');
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
         // $bodycontent = new ProfileHTML($data);
+        $max_date = date('Y-m-d');
     ?>
     <div class="body-content">
         <h2>Sales Analysis</h2>
-        <form action="" class="filters">
-                <div class="input half"><label>From</label><input type="date" name="start_date" value="'.$row['street'].'"></div>
-                <div class="input half"><label>To</label><input type="date" name="end_date" value="'.$row['street'].'"></div>
+        <form action="<?php echo BASEURL;?>/analysis/dealer" class="filters" method="POST">
+                <div class="input half start"><label>From</label><input type="date" onchange="this.form.submit()" name="start_date" value="<?php echo $data['start_date']?>" max="<?php echo $data['end_date']?>"  min="<?php echo $data['date_joined'] ?>"></div>
+                <div class="input half end"><label>To</label><input type="date" onchange="this.form.submit()" name="end_date" value="<?php echo $data['end_date']?>" max="<?php echo $max_date;?>" min="<?php echo $data['start_date'] ?>"></div>
         </form>
         <div class="content-data analysis">
             <?php
@@ -30,6 +31,14 @@ $sidebar = new Navigation('dealer','analysis');
         </div>
     </div>
 </section>
+<script>
+
+    const form = document.querySelector('form');
+    form.onsubmit(e){
+        e.preventDefault();
+    }
+</script>
+
 
 <?php
 $footer = new Footer("dealer");

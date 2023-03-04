@@ -29,7 +29,7 @@ class StockHTML{
                                     <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                     <td>'.$row['product_name'].'</td>
                                     <td>'.$row['product_weight'].' Kg</td>
-                                    <td>Rs. '.$row['unit_price'].'</td>
+                                    <td>Rs. '.number_format($row['unit_price'],2).'</td>
                                     <td>'.$row['quantity'].'</td>
                                 </tr>';
                 }

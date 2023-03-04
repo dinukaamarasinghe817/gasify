@@ -55,11 +55,11 @@ class Chart{
             },
             options: {
                 scales: {
-                    yAxes: [{
+                    y: {
                         ticks: {
                             stepSize: 1
                         }
-                    }]
+                    }
                 },
                 legend: {
                     display: true,

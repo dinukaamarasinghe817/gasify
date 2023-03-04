@@ -35,7 +35,7 @@ class Stock extends Controller{
         if(isset($data['toast'])){
             $this->dealer("purchaseorder", $data['toast']);
         }else{
-            // $this->view("/dealer/reports/purchaseorder", $data);
+            $this->view("/dealer/reports/purchaseorder", $data);
         }
     }
 

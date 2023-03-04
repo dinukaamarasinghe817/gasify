@@ -20,9 +20,11 @@ class Support extends Controller{
         $row = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row['image'];
         $admin = $this->model('Customer')->getAdminId();
-        $row =  mysqli_fetch_assoc($admin);
-        $admin_id = $row['user_id'];
+        $data['admin'] =  mysqli_fetch_assoc($admin);
+        $admin_id = $data['admin']['user_id'];
+        
         $data['messages'] = $this->model('Customer')->getMessages($customer_id,$admin_id);
+    
         // $data['recieved_messages'] = $this->model('Customer')->getRecievedMessages($customer_id);
 
         // $data['products']= $this ->model('Customer')->getCompanyProducts($company_id);

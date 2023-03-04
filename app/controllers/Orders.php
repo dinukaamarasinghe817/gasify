@@ -131,7 +131,6 @@ class Orders extends Controller{
         $data['order_id'] = $order_id;
 
         if($error != null){
-            // $data['error'] = $error;
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
 
@@ -144,17 +143,21 @@ class Orders extends Controller{
     //refund form data for update reservation table
     function refund_bank_details($order_id){
         $customer_id = $_SESSION['user_id'];
-        $bank = $_POST['bank'];
-        $branch = $_POST['branch'];
+        if(isset($_POST['bank'])){
+            $bank = $_POST['bank'];
+        }else{
+            $bank = -1;
+        } 
         $Acc_no = $_POST['Acc_no'];
-      
-        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
+        
+       
+        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$Acc_no);
         if(!empty($data['refund_detail_error'])){
             $this->customer_cancelreservation($order_id,$data['refund_detail_error']);
         }
         else{
             // $this->customer_cancelreservation($order_id);
-            // $this->view('customer/viewmyreservation', $data);
+            $this->customer_allreservations();
         }    
     }
 
@@ -193,8 +196,6 @@ class Orders extends Controller{
 
     }
 
-   
-
 
     function get_brand_city_dealer(){
 
@@ -210,6 +211,10 @@ class Orders extends Controller{
         $city = $_POST['city'];
         if(isset($_POST['dealer'])){$dealer = $_POST['dealer'];}else{$dealer = null;}
       
+        $_SESSION['company_id'] = $brand;
+        $_SESSION['city'] = $city;
+        $_SESSION['dealer_id'] = $dealer;
+
        if($brand == null || $dealer == null){
             $error = "Please fill all fields";
             $this->select_brand_city_dealer($error);
@@ -222,10 +227,7 @@ class Orders extends Controller{
        }
        
 
-       $_SESSION['company_id'] = $brand;
-       $_SESSION['city'] = $city;
-       $_SESSION['dealer_id'] = $dealer;
-
+      
 
     }
 
@@ -276,9 +278,12 @@ class Orders extends Controller{
 
         foreach($products as $product){
             $product_id = $product['p_id'];
+            $unit_price = $product['unit_price'];
+
             $qty = $_POST[$product_id];
             if($qty != 0){
-                array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty]);
+                array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty ,'unit_price'=>$unit_price]);
+
             }
         }
        
@@ -342,15 +347,20 @@ class Orders extends Controller{
             $file_type = $_FILES['slip_img']['type'];
             $file_size = $_FILES['slip_img']['size'];
             $temp_name = $_FILES['slip_img']['tmp_name'];
-            
+
             $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
 
-
+            $_SESSION['slip_img'] = $file_name;
             move_uploaded_file($temp_name,$upload_to . $file_name);
 
-        }else{
-            $error = "You must select a file";
-            $this -> bank_slip_upload($error);
+            if($file_size<=0){
+                $error = "Please upload a bank slip image!";
+                $this -> bank_slip_upload($error);
+            }
+            else{
+                $this->model('Customer')->place_reservation();
+                $this->select_collecting_method();
+            }
 
         }
 
@@ -398,9 +408,34 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
+        $data['city'] = $row1['city'];
+        $data['street'] = $row1['street'];
+        // $new_street = $_POST['new_street'];
+        // if(!empty($new_street)){
+        //     echo $new_street;
+
+        // }
+
         $data['confirmation'] = '';
 
         $this->view('customer/place_reservation/delivery_collecting_method',$data);
+    }
+
+    function getcollecting_method(){
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+
+        $_SESSION['collecting_method'] = 'Pickup';
+        $this -> model('Customer')->insertcollectingmethod();
+        header('LOCATION:'.BASEURL.'/Dashboard/customer');
+
+        // $this->view('customer/place_reservation/collecting_method',$data);
+
     }
 
 
@@ -419,7 +454,7 @@ class Orders extends Controller{
         $this->view('customer/quota/quota',$data);
     }
 
-    /*.........................DISTRIBUTOR GAS ORDERS TAB.........................................*/
+    /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
      public function distributor() {
         $user_id = $_SESSION['user_id'];
@@ -435,7 +470,7 @@ class Orders extends Controller{
 
     // distributor -> place an order (phurchase order)
     public function placeorder(){
-        // $quantity = $_POST['qnty'];
+        
 
 
     }
@@ -537,6 +572,7 @@ class Orders extends Controller{
     }
 
 
+    /*****************************************************************************************************/
 
     public function validatepayments($tab){
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));

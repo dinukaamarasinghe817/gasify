@@ -37,6 +37,14 @@ class Customer extends Model{
         $result = $this->Query("SELECT company_id,name,logo FROM company");
         return $result;
     }
+
+    public function getCompanyProducts($company_id){
+        $result1 = $this->Query("SELECT c.name as c_name,p.name as p_name,p.product_id as p_id,p.type,p.weight,p.image,p.unit_price FROM company c 
+         INNER JOIN product p ON c.company_id = p.company_id 
+         WHERE c.company_id = '{$company_id}'");
+
+        return $result1;
+    }
     
     //display most recent 3 reservations in dashboard
     public function getRecentorders($customer_id){
@@ -85,7 +93,7 @@ class Customer extends Model{
     public function getPopularProducts(){
 
         $popular_products = array();
-        $result1 = $this->Query("SELECT SUM(reservation_include.quantity),product.name as p_name,product.weight,product.unit_price,product.image,company.name as c_name 
+        $result1 = $this->Query("SELECT SUM(reservation_include.quantity) as p_count ,product.name as p_name,product.weight,product.unit_price,product.image,company.name as c_name 
         FROM reservation_include
         JOIN product ON reservation_include.product_id = product.product_id
         Join company ON product.company_id = company.company_id
@@ -113,7 +121,15 @@ class Customer extends Model{
         $result1 = $this->Query("SELECT order_id,order_state,place_date
             FROM reservation
             WHERE customer_id = '{$customer_id}'
-            ORDER BY place_date DESC");
+            ORDER BY (CASE order_state
+             WHEN 'Pending' THEN 1
+             WHEN 'Accepted' THEN 2
+             WHEN'Dispatched' THEN 3
+             WHEN 'Delivered' THEN 4
+             WHEN 'Completed' THEN 5
+             WHEN 'Canceled' THEN 6
+             ELSE 100 END) ASC, place_date DESC ,place_time DESC");
+
         
                
         $allmyreservations = array();
@@ -128,6 +144,7 @@ class Customer extends Model{
                 INNER JOIN product p ON r.product_id = p.product_id 
                 INNER JOIN company c ON p.company_id = c.company_id 
                 WHERE r.order_id = '{$order_id}'");
+
 
                 $total_amount = 0;
                 while($row2=mysqli_fetch_assoc($result2)){
@@ -164,7 +181,7 @@ class Customer extends Model{
             // INNER JOIN users ON reservation.delivery_id = users.user_id
             // WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
 
-            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,reservation.dealer_id,reservation.delivery_id
+            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,reservation.dealer_id,reservation.delivery_id,reservation.cancel_date,reservation.cancel_time,reservation.payment_method
             FROM reservation
             INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
             WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
@@ -306,7 +323,6 @@ class Customer extends Model{
             }
             else{
                 $error = "Write your review!";
-                // array_push($add_review_errors,$error); 
             }
         }
         //collecting method delivery then have both review_type Delivery and Dealer 
@@ -318,7 +334,6 @@ class Customer extends Model{
             }
             else{
                 $error = "All input fields are required!";
-                // array_push($add_review_errors,$error); 
             }
         
         }
@@ -326,12 +341,16 @@ class Customer extends Model{
 
     }
 
-    public function add_refund_details($order_id, $bank,$branch,$Acc_no){
+    public function add_refund_details($order_id, $bank,$Acc_no){
        
         $error = "";
+        date_default_timezone_set("Asia/Colombo");
+        $cancel_time = date('H:i:s');
+        $cancel_date = date('Y-m-d');
+       
 
-        if(!empty($bank) &&!empty($branch) &&!empty($Acc_no)){
-            $this->update('reservation',['bank'=>$bank,'branch'=>$branch,'acc_no'=>$Acc_no,'order_state'=>"Canceled"],'order_id='.$order_id);
+        if($bank != -1 && !empty($Acc_no)){
+            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time],'order_id='.$order_id);
 
         }
         else{
@@ -404,6 +423,101 @@ class Customer extends Model{
         
     }
 
+    //insert place reservation details for reservation table
+    public function place_reservation(){
+        $customer_id = $_SESSION['user_id'];
+        $dealer_id = $_SESSION['dealer_id'];
+        $company_id = $_SESSION['company_id'];
+        $order_state = 'Pending';
+        $payslip = $_SESSION['slip_img'];
+        date_default_timezone_set("Asia/Colombo");
+        $place_time = date('H:i:s');
+        $place_date = date('Y-m-d');
+       
+        $_SESSION['place_time'] = $place_time;
+        $_SESSION['place_date'] = $place_date;
+        
+
+
+        if(isset($payslip)){
+            $payment_method = 'Bank Deposit';
+        }else{
+            $payment_method = 'Credit Card';
+        }
+
+        if(isset($customer_id)){
+            if(isset($dealer_id)){
+                if(isset($company_id)){
+                    if(isset($payslip)){
+                        $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
+                        $this->insertproducts();
+                    }else{
+                        $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
+                        $this->insertproducts();
+                    }   
+                }else{
+                    $error = "Please select a company";
+                }
+            }else{
+                $error = "Please select a dealer";
+            }
+
+        }else{
+            $error = "session customer_id is empty!";
+
+        }
+    }
+
+    function insertproducts(){
+
+        $customer_id = $_SESSION['user_id'];
+        $dealer_id = $_SESSION['dealer_id'];
+        $order_state = 'Pending';
+        $place_time = $_SESSION['place_time'];
+        $place_date = $_SESSION['place_date'];
+        $order_products = $_SESSION['order_products'];
+
+        $result1 = $this->Query("SELECT order_id FROM reservation WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
+
+        $row = mysqli_fetch_assoc($result1);
+        $order_id =  $row['order_id'] ;
+
+        foreach ($order_products as $order_product){
+            $product_id = $order_product['product_id'];
+            $qty = $order_product['qty'];
+            $unit_price = $order_product['unit_price'];
+
+            if($qty>0){
+                $this->insert('reservation_include',['order_id'=>$order_id,'product_id'=>$product_id,'quantity'=>$qty,'unit_price'=>$unit_price]);
+            }
+        }
+
+
+
+    }
+
+
+    //insert collecting method in to reservation table
+    function insertcollectingmethod(){
+        $customer_id = $_SESSION['user_id'];
+        $dealer_id = $_SESSION['dealer_id'];
+        $order_state = 'Pending';
+        $place_time = $_SESSION['place_time'];
+
+        $place_date = $_SESSION['place_date'];
+
+        $collecting_method = $_SESSION['collecting_method'];
+
+        $result1 = $this->Query("SELECT order_id FROM reservation WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
+
+        $row = mysqli_fetch_assoc($result1);
+        $order_id =  $row['order_id'] ;
+        $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
+
+        
+    }
+
+
 
     /*.........................Customer dealers tab ....................*/
 
@@ -412,6 +526,10 @@ class Customer extends Model{
         if($company_id == 'null'){
             $company_id = null;
         }
+        // if($city_name==1){
+        //     $city_name = null;
+
+        // }
         
 
         if($company_id != null && $city_name != null){
@@ -420,9 +538,9 @@ class Customer extends Model{
         else if($company_id!= null && $city_name== null){
 
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
-        }else if($city_name != null && $company_id == null){
+        }else if($company_id == null && $city_name != null){
             
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no FROM dealer d  WHERE  d.city = '$city_name'");
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
         
         }else{
             $customer_id = $_SESSION['user_id'];
@@ -431,6 +549,25 @@ class Customer extends Model{
             $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE d.city = '$mycity'");
         }
        
+        // if($company_id == null && $city_name == 1){
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+        // }
+
+        // if($company_id != null && $city_name != 1){
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
+        // }
+        // else if($company_id!= null && $city_name== 1){
+
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
+        // }else if($company_id == null && $city_name != 1){
+            
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
+        
+        // }else{
+            
+        //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+        // }
+
         return $result1;
         
     }
@@ -452,7 +589,7 @@ class Customer extends Model{
     /*..................................customer help tab........................................... */
     //get admin id
     public function getAdminId(){
-        $result = $this->Query("SELECT * FROM users where type='admin'");
+        $result = $this->Query("SELECT * FROM users u INNER JOIN admin a ON u.user_id = a.admin_id where type='admin'");
 
         return $result;
 
