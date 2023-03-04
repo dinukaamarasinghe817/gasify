@@ -97,14 +97,9 @@ class Vehicles extends Controller{
         
         $data['vehicles'] = $this->model("Distributor")->viewvehicle($user_id);
 
-        // $data['fuel'] = $_POST['fuel'];
-        // $data = $this->model("Distributor")-> 
-
-
 
         $this->view('distributor/view_vehicles', $data);
     }
-
     
     // update vehicle page (view page)
     public function updateVehiclePage($vehicle_no) {
@@ -127,6 +122,10 @@ class Vehicles extends Controller{
        $this->model("Distributor")->updatingVehicle( $vehicle_no);
        $this->updateVehiclePage($vehicle_no);
 
+    }
+
+    public function releasing($vehicle_no) {
+        $this->model("Distributor")->releaseVehicle($vehicle_no);
     }
 
     public function removeVehicle($vehicle_no) {

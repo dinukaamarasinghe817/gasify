@@ -179,34 +179,36 @@ class Distributor extends Model
         $this->update("distributor_vehicle", ["fuel_consumption"=>$fuel], "distributor_id= $user_id and vehicle_no = '$vehicle_no'" );
     }
 
-    // public function releaseVehicle($vehicle_no) {
-    //     $query1 = $this->Query("SELECT availability from distributor_vehicle where vehicle_no = $vehicle_no");
-    //     $details = array();
-    //     while($row1 = mysqli_fetch_assoc($query1)) {
-    //         array_push($details, ['availability'=>$row1["availability"]]);
-    //     }
-        
-    //     $this->update("distributor_vehicle", ["availability"=>"Yes"], "distributor_id= $user_id and vehicle_no = '$vehicle_no'" );
+    // release a vehicle before removing
+    public function releaseVehicle($vehicle_no) {
+        $user_id = $_SESSION['user_id'];
 
-    // }
+        $query1 = $this->Query("SELECT DISTINCT availability FROM distributor_vehicle WHERE distributor_id = '{$user_id}' and vehicle_no = '{$vehicle_no}'");
+        $availabilites = array();
+        while($row1 = mysqli_fetch_assoc($query1)) {
+            array_push($availabilites, ['vehicle_no'=>$row1["vehicle_no"], 'availability'=>$row1["availability"]]);
+        }
+
+        $this->update("distributor_vehicle", ["availability"=>$row1["availability"]], "distributor_id = '$user_id' and vehicle_no = '$vehicle_no");
+    }
 
 
     public function removeVehicle($vehicle_no, $user_id) {
         $removevehicle = array();
         // $query1 = $this->Query("DELETE * from distributor_vehicle where vehicle_no = $vehicle_no and distributor_id = $user_id");
-        $query1 = $this->Query("DELETE FROM distributor_vehicle v INNER JOIN distributor_vehicle_capacity c ON v.vehicle_no = c.vehicle_no WHERE distributor_id = '{$user_id}'");
+        $query1 = $this->Query("DELETE * FROM distributor_vehicle v INNER JOIN distributor_vehicle_capacity c ON v.vehicle_no = c.vehicle_no WHERE distributor_id = '{$user_id}'");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 array_push( $removevehicle,$row1);
 
                 // $query2 = $this-> Query("DELETE * from distributor_vehicle_capacity where vehicle_no = $vehicle_no and distributor_id = $user_id");
                 // if(mysqli_num_rows($query2)>0) {
-                //     while($row2 = mysqli_fetch_assoc($query2)) {
-                //         array_push( $removevehicle,$row1);
+                    // while($row2 = mysqli_fetch_assoc($query2)) {
+                        // array_push( $removevehicle,$row1);
 
-                //     }
+                    // }
                 // }
-                // array_push( $removevehicle, ['vehicleinfo'=>$row1, 'capacityinfo'=>$row2]);
+                array_push( $removevehicle, ['vehicleinfo'=>$row1, 'capacityinfo'=>$row2]);
 
             }
         }
@@ -460,10 +462,8 @@ class Distributor extends Model
             while($row1 = mysqli_fetch_assoc($query1)) {
                 array_push($reportdata, ["reportinfo"=>$row1]);
             }
-
         }
         return $reportdata;
-
     }
 
 
