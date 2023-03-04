@@ -1396,12 +1396,17 @@ class Body{
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             if (isset($data['order_details'])){
                 $result = $data["order_details"];
+                $product_array=$data['product_details'];
                 $orders='';
                 $processedOrders=array();
                 $orderID='';
                 $distName='';
                 $placedDate='';
                 $placedTime='';
+                $productIDlist='';
+                foreach($result as $row_1){
+                    $productIDlist.=$row_1['product_id'].' ';
+                }
                 foreach ($result as $row) {
                     $orderID=$row['stock_req_id'];
                     $distName=$row['first_name'].' '.$row['last_name'];
@@ -1424,19 +1429,32 @@ class Body{
                                     <th>Product name</th>
                                     <th>Unit price (Rs.)</th>
                                     <th>Quantity</th>
+                                    <th>Status</th>
                                     <th>Total (Rs.)</th>
                                 </tr>
                             </thead>
                             <tbody style="display:legacy">';
                     
                     foreach ($result as $row_2) {
-                        if($row_2['stock_req_id']==$orderID){
-                            $orders.='<tr>
-                            <td>YES</td>
-                            <td>'.$row_2['unit_price'].'</td>
-                            <td>'.$row_2['quantity'].'</td>
-                            <td>'.$row_2['unit_price']*$row_2['quantity'].'</td>
-                        </tr>';
+                        if ($row_2['stock_req_id']==$orderID) {
+                            foreach ($product_array as $row_3) {
+                                if($row_3['product_id']==$row_2['product_id']){
+                                $orders.='<tr>
+                                <td>'.$row_3['name'].'</td>
+                                    <td>'.$row_2['unit_price'].'</td>
+                                    <td><input type="number" value="'.$row_2['quantity'].'" id="'.$row_2['product_id']."1".'"';
+                                    if($row_2['quantity']<$row_3['quantity']){
+                                        $orders.='disabled></td>';
+                                        $orders.='<td><img src='.BASEURL.'/public/icons/check.png'.' width="32px" height="32px" id="'.$row_2['product_id']."2".'"></td>';
+                                    }else{
+                                        $orders.=' oninput="changeOrderDetails('.$row_2['product_id'].','.$row_2['unit_price'].','.$row_3['quantity'].','.$row_2['stock_req_id'].','.'"rt"'.')"></td>';
+                                        $orders.='<td><img src='.BASEURL.'/public/icons/warning.png'.' width="32px" height="32px" title="Current Stock is '.$row_3['quantity'].' Cylinders" id="'.$row_2['product_id']."2".'"></td>';
+                                    }
+                                    
+                                    $orders.='<td id="'.$row_2['product_id']."3".'">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
+                                </tr>';
+                            }
+}
                         }
 
                     }
@@ -1446,7 +1464,7 @@ class Body{
                     </table>
                     </div>
                         <div class="orderRow">
-                            <div class="orderButtons" onClick="issueOrder(this)" key="'.$orderID.'"><label>Issue</label></div>
+                            <div class="orderButtons" onClick="issueOrder(this)" key="'.$orderID.'" id="'.$orderID.'issue"><label>Issue</label></div>
                             <div class="orderButtons" onClick="delayOrder(this)" key="'.$orderID.'"><label>Delay</label></div>
                         </div>
                     </div>';
