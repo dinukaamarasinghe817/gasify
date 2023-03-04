@@ -20,29 +20,21 @@
             }else{
                 $end_date = date('Y-m-d');
             }
-
+            //echo $start_date; echo $end_date;
             $data = $this->model("Dealer")->getanalysis($this->user_id,$start_date,$end_date);
             $row = mysqli_fetch_assoc($this->model('Dealer')->getDealer($this->user_id));
             $data['image'] = $row['image'];
             $data['name'] = $row['first_name'].' '.$row['last_name'];
+            $data['date_joined'] = $row['date_joined'];
             $data['navigation'] = 'dashboard';
             // echo count($data['charts']);
             $this->view('dealer/analysis',$data);
         }
 
         public function dealerrefresh(){
-            if(isset($_POST['start_date'])){
-                $start_date = $_POST['start_date'];
-            }else{
-                $start_date = null;
-            }
-
-            if(isset($_POST['end_date'])){
-                $end_date = $_POST['end_date'];
-            }else{
-                $end_date = date('Y-m-d');
-            }
-            echo json_encode($this->model("Dealer")->getanalysis($this->user_id,$start_date,$end_date));
+            $start_date = $_POST['start_date'];
+            echo $start_date;
+            //echo json_encode($this->model("Dealer")->getanalysis($this->user_id,$start_date,$end_date));
         }
 
         public function admin(){

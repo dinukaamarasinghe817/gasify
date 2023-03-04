@@ -528,20 +528,48 @@ class Dealer extends Model
             $start_date = $row['date_joined'];
         }
 
-        //chart 1
         $data['charts'] = array();
+        //chart 1
+        $products = array();
+        $query1 = $this->read('dealer_capacity',"dealer_id = $user_id");
+        while($row = mysqli_fetch_assoc($query1)){
+            $products[$row['product_id']] = 0;
+        }
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $order_id = $row['order_id'];
+            $query2 = $this->read('reservation_include',"order_id = $order_id");
+            while($row2 = mysqli_fetch_assoc($query2)){
+                $products[$row2['product_id']] += $row2['quantity'];
+            }
+        }
+        $chart['labels'] = array();
+        $chart['vector'] = array();
+        foreach($products as $id => $quantity){
+            $row = mysqli_fetch_assoc($this->read('product',"product_id = $id"));
+            array_push($chart['labels'], $row['name']);
+            array_push($chart['vector'], $quantity);
+        }
         $chart['type'] = 'bar';
-        $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
-        $chart['vector'] = array(7,10,2,5);
         $chart['main'] = 'Based on Product';
         $chart['y'] = 'Number of sold items';
         $chart['color'] = 'rgba(245, 215, 39, 0.8)';
         array_push($data['charts'],$chart);
 
-        //chart 2
+        //chart 2,3
+        $days = array("Mon"=>0,"Tue"=>0,"Wed"=>0,"Thu"=>0,"Fri"=>0,"Sat"=>0,"Sun"=>0);
+        $deliverymode = array("Delivery"=>0,"Pickup"=>0);
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $day = date('D', strtotime($row['place_date']));
+            $days[$day]++;
+            $deliverymode[$row['collecting_method']]++;
+        }
         $chart['type'] = 'line';
-        $chart['labels'] = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
-        $chart['vector'] = array(7,10,12,5,7,8,3);
+        $chart['labels'] = array_keys($days);
+        $chart['vector'] = array_values($days);
         $chart['main'] = 'Based on the day';
         $chart['y'] = 'Number of Orders';
         $chart['color'] = 'rgba(242, 71, 235, 0.8)';
@@ -549,8 +577,8 @@ class Dealer extends Model
 
         //chart 3
         $chart['type'] = 'doughnut';
-        $chart['labels'] = array('Delivery','Pickup');
-        $chart['vector'] = array(60,40);
+        $chart['labels'] = array_keys($deliverymode);
+        $chart['vector'] = array_values($deliverymode);
         $chart['main'] = 'Based on Collecting Method';
         $chart['y'] = 'Number of orders';
         $chart['color'] = '[
@@ -561,9 +589,17 @@ class Dealer extends Model
         array_push($data['charts'],$chart);
 
         //chart 4
+        $usertype = array("Domestic"=>0, "CommercialLarge"=>0, "CommercialSmall"=>0);
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $customer_id = $row['customer_id'];
+            $row2 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+            $usertype[$row2['type']]++;
+        }
         $chart['type'] = 'bar';
-        $chart['labels'] = array('Domestic','LargeScale','SmallScale');
-        $chart['vector'] = array(22,65,45);
+        $chart['labels'] = array_keys($usertype);
+        $chart['vector'] = array_values($usertype);
         $chart['main'] = 'Based on Customer Type';
         $chart['y'] = 'Number of Orders';
         $chart['color'] = 'rgba(48, 39, 245, 0.8)';
@@ -574,7 +610,63 @@ class Dealer extends Model
         return $data;
     }
 
-    public function getReportInfo($start_date,$to_date,$order_by){
+    public function getReportInfo($start_date,$end_date,$order_by){
+        $user_id = $_SESSION["user_id"];
+        if($start_date == null){
+            $row = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+            $start_date = $row['date_joined'];
+        }
+        $productsquantity = array();
+        $productsearnings = array();
+        $query1 = $this->read('reservation',
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $order_id = $row["order_id"];
+            $query2 = $this->read('reservation_include',"order_id = $order_id");
+            while($row2 = mysqli_fetch_assoc($query2)){
+                if(isset($productsquantity[$row2['product_id']])){
+                    $productsquantity[$row2['product_id']] += $row2['quantity'];
+                    $productsearnings[$row2['product_id']] += $row2['unit_price']*$row2['quantity'];
+                }else{
+                    $productsquantity[$row2['product_id']] = $row2['quantity'];
+                    $productsearnings[$row2['product_id']] = $row2['unit_price']*$row2['quantity'];
+                }
+            }
+        }
 
+        $percentage = array();
+        if($order_by == 'soldquantity'){
+            $total = 0;
+            foreach($productsquantity as $key => $value){
+                $total += $value;
+            }
+            foreach($productsquantity as $key => $value){
+                $percentage[$key] = round(($value/$total)*100, 2);
+            }
+        }else{
+            $total = 0;
+            foreach($productsearnings as $key => $value){
+                $total += $value;
+            }
+            foreach($productsearnings as $key => $value){
+                $percentage[$key] = round(($value/$total)*100, 2);
+            }
+        }
+
+        $tabledata = array();
+        foreach($productsquantity as $key => $value){
+            $row = mysqli_fetch_assoc($this->read('product',"product_id = $key"));
+            array_push($tabledata,['id'=>$key,'image'=>$row['image'],'name'=>$row['name'],'sold_quantity'=>$value,'total_earnings'=>$productsearnings[$key],'percentage'=>$percentage[$key]]);
+        }
+        usort($tabledata,'cmp');
+        $data['tabledata'] = $tabledata;
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['filter'] = $order_by;
+        return $data;
     }
+}
+
+function cmp($a, $b) {
+    return $b['percentage'] - $a['percentage'];
 }

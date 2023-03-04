@@ -1168,3 +1168,54 @@ label{
     border: 2px solid var(--navmenu-gray-dark);
     width: 250px;
 }
+
+/* progressbar css */
+.skill {
+    position: relative;
+}
+
+.skill .outer {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: rgb(238, 238, 238);
+}
+
+.skill .outer .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+}
+
+.skill .outer .inner .number {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    font-weight: 600;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #4fa0ff;
+}
+
+.skill circle {
+    fill: none;
+    stroke-width: 10px;
+    stroke-dasharray: 472;
+    stroke-dashoffset: 472;
+    transition: 0.75s linear;
+    stroke: #4fa0ff;
+}
+
+.skill svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    rotate: -90deg;
+}
