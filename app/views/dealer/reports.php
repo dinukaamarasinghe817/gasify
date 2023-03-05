@@ -64,7 +64,10 @@ $sidebar = new Navigation('dealer','reports');
                 </tbody>
             </table>
             <br>
-            <a class="anchor-button" href="<?php echo BASEURL ?>/reports/salesdealer">Generate PDF</a>
+            <form class="pdfform" action="<?php echo BASEURL ?>/reports/salesdealer/<?php echo $data['start_date']?>/<?php echo $data['end_date']?>/<?php echo $data['filter']?>" method="POST">
+                <button class="btn-red">Generate PDF</button>
+            </form>
+            <!-- <a class="anchor-button" href="/reports/salesdealer/">Generate PDF</a> -->
         </div>
     </div>
 </section>

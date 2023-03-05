@@ -16,20 +16,27 @@ $pdf->Ln(20);
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(30,5,'Dealer ID',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": {dealer_id}",0,0,'l');
+$pdf->Cell(90,5,": {$data['dealer_id']}",0,0,'l');
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(20,5,'Time',0,0,'l');
+$pdf->Cell(20,5,'Issue Date',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(0,5,": {time}",0,1,'l');
+$pdf->Cell(0,5,": {$data['issue_date']}",0,1,'l');
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(30,5,'Business Name',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": {business_name}",0,0,'l');
+$pdf->Cell(90,5,": {$data['business_name']}",0,0,'l');
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(20,5,'Date',0,0,'l');
+$pdf->Cell(20,5,'Issue Time',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(0,5,": {date}",0,1,'l');
-
+$pdf->Cell(0,5,": {$data['issue_time']}",0,1,'l');
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(20,5,'From',0,0,'l');
+$pdf->SetFont('Times', '', 12);
+$pdf->Cell(0,5,": {$data['start_date']}",0,1,'l');
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(20,5,'To',0,0,'l');
+$pdf->SetFont('Times', '', 12);
+$pdf->Cell(0,5,": {$data['end_date']}",0,1,'l');
 $pdf->Ln(10);
 
 $pdf->SetFont('Times', 'B', 12);
@@ -41,27 +48,33 @@ $pdf->Cell(33,5,'Percentage',0,0,'R');
 $pdf->Ln();
 $pdf->Ln();
 
-// $products = $data['products'];
+$products = $data['tabledata'];
 $pdf->SetFont('Times', '', 12);
-// foreach($products as $product){
-//     $pdf->Cell(33,5,"{$product['product_id']}",0,0,'L');
-//     $pdf->Cell(33,5,"{$product['product_name']}",0,0,'L');
-//     $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
-//     $unit_price = number_format($product['unit_price']).'.00';
-//     $pdf->Cell(33,5,"{$unit_price}",0,0,'R');
-//     $subtotal = number_format($product['subtotal']).'.00';
-//     $pdf->Cell(33,5,"{$subtotal}",0,0,'R');
-//     $pdf->Ln();
-// }
+$total_earnings = 0;
+$total_qty = 0;
+foreach($products as $product){
+    $pdf->Cell(25,5,"{$product['id']}",0,0,'L');
+    $pdf->Cell(30,5,"{$product['name']}",0,0,'L');
+    $pdf->Cell(38,5,"{$product['sold_quantity']}",0,0,'C');
+    $unit_price = number_format($product['total_earnings'],2);
+    $pdf->Cell(38,5,"{$unit_price }",0,0,'R');
+    // $subtotal = number_format($product['subtotal']).'.00';
+    $pdf->Cell(33,5,"{$product['percentage']} %",0,0,'R');
+    $pdf->Ln();
+    $total_earnings += $product['total_earnings'];
+    $total_qty += $product['sold_quantity'];
+}
 
 $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 
 $pdf->Ln();
-$pdf->Cell(60,5,'Total',0,0,'R');
-// $total = number_format($data['total']).'.00';
-// $pdf->Cell(33,5,"{$total}",0,0,'R');
+$pdf->Cell(55,5,'Total',0,0,'R');
+$total_earnings = number_format($total_earnings,2);
+$total_qty = number_format($total_qty);
+$pdf->Cell(38,5,"{$total_qty}",0,0,'C');
+$pdf->Cell(38,5,"{$total_earnings}",0,0,'R');
 $pdf->Ln();
 
 $x = $pdf->GetX();
