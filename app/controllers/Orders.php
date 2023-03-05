@@ -366,6 +366,8 @@ class Orders extends Controller{
 
         
 
+        
+
     }
 
     //display payment gateway
@@ -408,13 +410,26 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $data['city'] = $row1['city'];
-        $data['street'] = $row1['street'];
-        // $new_street = $_POST['new_street'];
-        // if(!empty($new_street)){
-        //     echo $new_street;
+        $data['selected_city'] = $_SESSION['city'];
+        $data['home_city'] = $row1['city'];
+        
+        if(isset($_POST['new_street'])){
+            $data['street'] = $_POST['new_street'];
+            if(isset($_POST['new_city'])){
+                $data['city'] = $_POST['new_city'];
+            }
 
-        // }
+        }else{
+            $data['city'] = $row1['city'];
+            $data['street'] = $row1['street'];
+        }
+
+        $distance = 9;
+        $this->model('Customer')->insertdelivery_street($data['street'],$distance);   //insert delivery street  and distance range to reservation table
+
+
+        // $data['delivery_charge'] = $this->
+       
 
         $data['confirmation'] = '';
 
@@ -437,6 +452,7 @@ class Orders extends Controller{
         // $this->view('customer/place_reservation/collecting_method',$data);
 
     }
+
 
 
     /*..........................Customer quota......................... */

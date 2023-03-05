@@ -1778,8 +1778,12 @@ class Body{
                         while($notification = mysqli_fetch_assoc($data['notifications'])){
                             echo '<li>
                                     <div class="notification">
+                                        '.notificationIcon($notification['type']).'
+                                        <div>
                                         <h2>'.$notification['type'].'</h2>
                                         <p>'.$notification['message'].'</p>
+                                        <p class="time gray">'.date('F j, Y, g:i A', strtotime($notification['date'].' '.$notification['time'])).'</p>
+                                        </div>
                                     </div>
                                 </li>';
                         }

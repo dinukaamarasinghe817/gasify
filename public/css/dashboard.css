@@ -194,6 +194,7 @@ body{
     padding: 3px;
     color: white;
     min-width: 15px;
+    border: 3px solid white;
     transform: translateX(-35px);
     transform: translateY(-15px);
 }
@@ -249,7 +250,7 @@ body{
     stroke: var(--navmenu-orange-dark);
 }
 /* onclick set this to fill */
-.body-header-right svg:hover{
+.body-header-right svg{
     fill: var(--navmenu-orange-dark);
 }
 
@@ -380,9 +381,6 @@ body.blur::before{
     /* scroll-behavior: smooth; */
     scrollbar-width: thin;
 }
-.content-data.notifications{
-    border: 2px solid var(--button-orange-hover);
-}
 .content-data::-webkit-scrollbar{
     display: none;
 }
@@ -498,6 +496,7 @@ td button:hover{
     border: 2px solid var(--navmenu-orange-dark);
     padding: 10px;
     border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 .variable .topic{
@@ -774,6 +773,9 @@ td button:hover{
     color: #ffffff;
     text-align: left;
 }
+.styled-table thead tr th{
+    z-index: 1;
+}
 
 .styled-table th,
 .styled-table td {
@@ -1036,7 +1038,8 @@ label{
         5px 5px;
     background-repeat: no-repeat;
 }
-.btn-blue{
+.btn-blue,
+.btn-red{
     padding: 15px;
     background-color: var(--button-blue);
     color: white;
@@ -1045,6 +1048,12 @@ label{
     min-width: 100px;
     font-size: var(--mediums);
     transition: 0.3s;
+}
+.btn-red{
+    background-color: var(--cancel-red);
+}
+.btn-red:hover{
+    background-color: #e53131;
 }
 
 .btn-blue:hover,
@@ -1092,10 +1101,29 @@ label{
 /* notification css */
 .notification{
     display: flex;
-    flex-direction: column;
-    background-color: rgb(243, 243, 243);
+    flex-direction: row;
+    /* background-color: rgb(243, 243, 243); */
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 10px;
     border-radius: 10px;
+    margin: 0px 10px;
+    gap: 10px;
+}
+.notification img{
+    height: 70px;
+    width: 70px;
+}
+.notification div{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.content-data.notifications{
+    border: 2px solid var(--button-orange-hover);
+}
+.content-data.notifications .notification .time{
+    color: var(gray);
+    margin-left: auto;
 }
 .notification h2{
     font-size: var(--mediums);
@@ -1153,6 +1181,21 @@ label{
     justify-content: center;
     gap: 20px;
 }
+
+/* change delivery address pop up css */
+/* .confirmation .delivery_address{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+}
+.confirmation  #cancel_change_address{
+    background-color: var(--cancel-red);
+} */
+
+
+
+
 .confirmation .buttons button{
     padding: 10px;
     background-color: var(--cancel-red);
@@ -1180,6 +1223,7 @@ label{
     border-radius: 50%;
     padding: 10px;
     background-color: rgb(238, 238, 238);
+    z-index: 0;
 }
 
 .skill .outer .inner {

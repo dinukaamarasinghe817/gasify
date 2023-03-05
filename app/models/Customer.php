@@ -127,7 +127,7 @@ class Customer extends Model{
              WHEN'Dispatched' THEN 3
              WHEN 'Delivered' THEN 4
              WHEN 'Completed' THEN 5
-             WHEN 'Canceled' THEN 6
+             WHEN 'Refunded' THEN 6
              ELSE 100 END) ASC, place_date DESC ,place_time DESC");
 
         
@@ -181,7 +181,8 @@ class Customer extends Model{
             // INNER JOIN users ON reservation.delivery_id = users.user_id
             // WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
 
-            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,reservation.dealer_id,reservation.delivery_id,reservation.cancel_date,reservation.cancel_time,reservation.payment_method
+            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,reservation.dealer_id,reservation.delivery_id,reservation.cancel_date,reservation.cancel_time,reservation.payment_method,reservation.deliver_date,reservation.deliver_time,reservation.bank,reservation.acc_no,reservation.refund_date,reservation.refund_time,reservation.refund_verification
+
             FROM reservation
             INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
             WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
@@ -350,7 +351,7 @@ class Customer extends Model{
        
 
         if($bank != -1 && !empty($Acc_no)){
-            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time],'order_id='.$order_id);
+            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time,'refund_verification'=>'Pending'],'order_id='.$order_id);
 
         }
         else{
@@ -492,6 +493,7 @@ class Customer extends Model{
             }
         }
 
+        return $order_id;
 
 
     }
@@ -515,6 +517,30 @@ class Customer extends Model{
         $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
 
         
+    }
+
+    //insert delivery address to reservation table if it changed
+    function insertdelivery_street($new_street,$distance){
+        $customer_id = $_SESSION['user_id'];
+        $dealer_id = $_SESSION['dealer_id'];
+        $order_state = 'Pending';
+        $place_time = $_SESSION['place_time'];
+
+        $place_date = $_SESSION['place_date'];
+
+        // $collecting_method = $_SESSION['collecting_method'];
+        $result1 = $this->Query("SELECT order_id FROM reservation WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}' AND collecting_method = ''");
+
+
+        $row = mysqli_fetch_assoc($result1);
+        $order_id =  $row['order_id'] ;
+
+        $result2 = $this->Query("SELECT * FROM delivery_charge");
+        while($row = mysqli_fetch_assoc($result2)){
+            $distance_range = $row['distance_range']; 
+        }
+        
+        $this ->update('reservation',['deliver_address'=>$new_street,'distance_range'=>'0-10'],'order_id='.$order_id);
     }
 
 
