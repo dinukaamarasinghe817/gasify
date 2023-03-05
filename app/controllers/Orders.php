@@ -366,6 +366,8 @@ class Orders extends Controller{
 
         
 
+        
+
     }
 
     //display payment gateway
@@ -408,13 +410,29 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $data['city'] = $row1['city'];
-        $data['street'] = $row1['street'];
-        // $new_street = $_POST['new_street'];
-        // if(!empty($new_street)){
-        //     echo $new_street;
+        $data['selected_city'] = $_SESSION['city'];
+        $data['home_city'] = $row1['city'];
+        $new_street = $_POST['new_street'];
 
-        // }
+    
+        if(isset($_POST['new_street'])){
+            $data['street'] = $_POST['new_street'];
+            // $_SESSION['new_street'] = $_POST['new_street'];
+            // $new_street = $_SESSION['new_street'];
+
+            if(isset($_POST['new_city'])){
+                $data['city'] = $_POST['new_city'];
+                // $_SESSION['new_delivery_city'] = $_POST['new_city'];
+                // $new_delivery_city = $_SESSION['new_delivery_city'];
+
+            }
+
+        }else{
+            $data['city'] = $row1['city'];
+            $data['street'] = $row1['street'];
+        }
+
+       
 
         $data['confirmation'] = '';
 
@@ -437,6 +455,7 @@ class Orders extends Controller{
         // $this->view('customer/place_reservation/collecting_method',$data);
 
     }
+
 
 
     /*..........................Customer quota......................... */

@@ -108,23 +108,31 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     $output1 = " ";
                     foreach ($deliveries as $delivery){
                         $output1 .= ' <div class="d_details">
-                                        <div>
+                                        <div class="profile_details">
                                             <strong>Delivery : </strong>
-                                        </div>
-                                        <div>
                                             '.$delivery['delivery_name'].'
-                                        </div>
-                                       
-                                        <div>
                                             <button class="d_btn" onclick = "location.href=\''.$url_delivery.'\'">Profile</button>
                                         </div>
+                                    </div>
+                                    <div class="d_details">
                                         <div>
                                         <strong>Delivery fee: </strong>
                                         </div>
                                         <div>
                                             <p>Rs 323.00</p>
                                         </div>
-
+                                        <div>
+                                        <strong>Delivery Date: </strong>
+                                        </div>
+                                        <div>
+                                            <p>'.$row1['deliver_date'].'</p>
+                                        </div>
+                                        <div>
+                                        <strong>Delivery Time: </strong>
+                                        </div>
+                                        <div>
+                                            <p>'.$row1['deliver_time'].'</p>
+                                        </div>
                                     </div>';
                     }
                    
@@ -134,13 +142,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         echo'<div class="cancel_card_bottom">
                                 <div class="cancel_item_side">
                                     <div class="d_details">
-                                        <div>
+                                        <div  class="profile_details">
                                             <strong>Dealer : </strong>
-                                        </div>
-                                        <div>
                                             '.$row1['dealer_name'].'
-                                        </div>
-                                        <div>
                                             <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                         </div>
                                     </div>
@@ -162,13 +166,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 echo '<div class="card_bottom">
                                         <div class="item_side">
                                             <div class="d_details">
-                                                <div>
+                                                <div class="profile_details">
                                                     <strong>Dealer : </strong>
-                                                </div>
-                                                <div>
                                                     '.$row1['dealer_name'].'
-                                                </div>
-                                                <div>
                                                     <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                                 </div>
                                             </div>
@@ -188,13 +188,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 echo '<div class="card_bottom">
                                         <div class="item_side">
                                             <div class="d_details">
-                                                <div>
+                                                <div class="profile_details">
                                                     <strong>Dealer : </strong>
-                                                </div>
-                                                <div>
                                                     '.$row1['dealer_name'].'
-                                                </div>
-                                                <div>
                                                     <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                                 </div>
                                             </div>'.$output1.'
@@ -223,13 +219,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         echo'<div class="cancel_card_bottom">
                                 <div class="cancel_item_side">
                                     <div class="d_details">
-                                        <div>
+                                        <div class="profile_details">
                                             <strong>Dealer : </strong>
-                                        </div>
-                                        <div>
                                             '.$row1['dealer_name'].'
-                                        </div>
-                                        <div>
                                             <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                         </div>
                                     </div>'.$output1.'
@@ -244,13 +236,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         echo'<div class="cancel_card_bottom">
                                 <div class="cancel_item_side">
                                     <div class="d_details">
-                                        <div>
+                                        <div class="profile_details">
                                             <strong>Dealer : </strong>
-                                        </div>
-                                        <div>
                                             '.$row1['dealer_name'].'
-                                        </div>
-                                        <div>
                                             <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                         </div>
                                         <div>

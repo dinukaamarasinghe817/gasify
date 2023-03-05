@@ -198,9 +198,20 @@ a,button{
     flex-direction: row;
     column-gap: 20px;
     padding: 10px;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
+    width: 99%;
 
+}
+
+.profile_details{
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    padding: 10px;
+    /* justify-content: space-between; */
+    align-items: center;
+    width: 100%;
 }
 
 .d_details div{
@@ -209,7 +220,7 @@ a,button{
 }
 
 .d_btn{
-    width: 225px;
+    width: 325px;
     background-color: var(--button-blue);
     color: var(--white);
     font-size: var(--mediums);
