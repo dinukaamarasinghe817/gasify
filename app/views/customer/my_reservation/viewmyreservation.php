@@ -34,6 +34,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     $deliveries = $order['delivery'];
                     $url_dealer = BASEURL.'/profile/preview/dealer/'.$row1['dealer_id'].'/profile/customer/viewdealerprofile';
                     $url_delivery = BASEURL.'/profile/preview/delivery/'.$row1['delivery_id'].'/profile/customer/viewdeliveryprofile';
+                    $url_cancel = BASEURL.'/Orders/customer_cancelreservation/'.$row1['order_id'].'';
                     // echo $row1['delivery_name'];
                     echo '<div class="order_card">
                             <div class="card_top">
@@ -150,7 +151,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     </div>
 
                                     '.$output.' 
-                                    <div class="cancel_btn"><button onclick="customerprompt(\'confirmcancellation\',\''.BASEURL.'/Orders/customer_cancelreservation/'.$row1['order_id'].'\',\''.BASEURL.'/Orders/customer_myreservation/'.$row1['order_id'].'\'); return false;" >Cancel Reservation</button></div>
+                                    <div class="cancel_btn"><button onclick = "location.href=\''.$url_cancel.'\'">Cancel Reservation</button></div>
                                     <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
                                 </div>
                             </div>';
@@ -241,18 +242,74 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             '.$row1['dealer_name'].'
                                             <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
                                         </div>
+                                       
+                                    </div>
+                                    <div class="d_details">
                                         <div>
                                             <strong>Canceled Date : </strong> 
-                                        </div>
-                                        <div>
                                             '.$row1['cancel_date'].'
                                         </div>
                                         <div>
                                             <strong>Canceled Time : </strong> 
+                                           '.$row1['cancel_time'].'
+                                        </div>';
+                                        if($row1['refund_verification'] == "Pending"){
+                                           echo '<div>
+                                                    <strong style="color:#f20202" >Refund is processing</strong>
+                                                </div>';
+                                        }
+                                        
+                                    echo '</div>
+
+                                    '.$output.' 
+                                    <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                                </div>
+                            </div>';
+                    }
+
+
+                    else if($row1['order_state'] == "Refunded"){
+                        echo'<div class="cancel_card_bottom">
+                                <div class="cancel_item_side">
+                                    <div class="d_details">
+                                        <div class="profile_details">
+                                            <strong>Dealer : </strong>
+                                            '.$row1['dealer_name'].'
+                                            <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'">Profile</button>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="d_details">
+                                        <div>
+                                            <strong>Canceled Date : </strong> 
+                                            '.$row1['cancel_date'].'
                                         </div>
                                         <div>
-                                            '.$row1['cancel_time'].'
+                                            <strong>Canceled Time : </strong> 
+                                           '.$row1['cancel_time'].'
                                         </div>
+                                        <div>
+                                            <strong style="color:#239B56;">Refund completed </strong> 
+                                        </div>
+                                    </div>
+                                    <div class="d_details">
+                                        <div>
+                                            <strong>Refunded Bank : </strong> 
+                                            '.$row1['bank'].'
+                                        </div>
+                                        <div>
+                                            <strong>Refunded Acc No : </strong> 
+                                            '.$row1['acc_no'].'
+                                        </div>
+                                        <div>
+                                            <strong>Refunded Date : </strong> 
+                                            '.$row1['refund_date'].'
+                                        </div>
+                                        <div>
+                                            <strong>Refunded Time : </strong> 
+                                            '.$row1['refund_time'].'
+                                        </div>
+                                    
                                     </div>
 
                                     '.$output.' 

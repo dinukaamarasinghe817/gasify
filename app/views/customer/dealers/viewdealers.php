@@ -118,7 +118,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             xhr.send(formData);
             
 
-}
+        }
 
 
     </script>
