@@ -42,7 +42,7 @@ function issueOrder(div) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            location.href = "../Compny/orders"
         }
     };
     xmlhttp.open("POST", "../Compny/issueOrder");
@@ -63,13 +63,33 @@ function delayOrder(div) {
     xmlhttp.send(formData);
 
 }
-function changeOrderDetails(productID, unitPrice, stockQty, orderID, resultArray) {
-    console.log(orderID);
-    var quantity = document.getElementById(productID + "1").value;
-    if (quantity < stockQty) {
-        document.getElementById(productID + "2").src = "http://localhost/mvc/public/icons/check.png";
+function changeOrderDetails(imgIndex, imgCount, orderID, productID, unitPrice, stockQty, orderID, resultArray) {
+    console.log(imgCount);
+    var quantity = document.getElementById(orderID + String(imgIndex) + "1").value;
+    if (quantity <= stockQty) {
+        document.getElementById(orderID + String(imgIndex) + "2").src = "http://localhost/mvc/public/icons/check.png";
     } else {
-        document.getElementById(productID + "2").src = "http://localhost/mvc/public/icons/warning.png";
+        document.getElementById(orderID + String(imgIndex) + "2").src = "http://localhost/mvc/public/icons/warning.png";
     }
     document.getElementById(productID + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us');
+    checkIFOrderIsClean(orderID, resultArray, imgCount);
+
+}
+function checkIFOrderIsClean(orderID, resultArray, imgCount) {
+    var imageIDs = resultArray.split(" ");
+    imageIDs.pop();
+    var isclean = true;
+    for (let index = 0; index < imgCount; index++) {
+        if (document.getElementById(orderID + String(index + 1) + 2).src == "http://localhost/mvc/public/icons/warning.png") {
+            isclean = false;
+        }
+
+    }
+    if (isclean) {
+        document.getElementById(orderID + 'issue').style.pointerEvents = "auto";
+        document.getElementById(orderID + 'issue').style.backgroundColor = "dodgerblue";
+    } else {
+        document.getElementById(orderID + 'issue').style.pointerEvents = "none";
+        document.getElementById(orderID + 'issue').style.backgroundColor = "#80B3FF";
+    }
 }
