@@ -64,8 +64,12 @@ function delayOrder(div) {
 
 }
 function changeOrderDetails(imgIndex, imgCount, orderID, productID, unitPrice, stockQty, orderID, resultArray) {
-    console.log(imgCount);
+
     var quantity = document.getElementById(orderID + String(imgIndex) + "1").value;
+    if (quantity.length == 0) {
+        document.getElementById(orderID + String(imgIndex) + "1").value = 0;
+        quantity = 0;
+    };
     if (quantity <= stockQty) {
         document.getElementById(orderID + String(imgIndex) + "2").src = "http://localhost/mvc/public/icons/check.png";
     } else {

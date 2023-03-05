@@ -140,5 +140,45 @@ class Company extends Model
         }
         //return $result;
     }
+    public function getProductCount($company_id){
+        $result=$this->Query("SELECT COUNT(product.product_id) as count FROM product WHERE product.company_id=2");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['count'=>$row['count']]);
+            }
+            return $info;
+        }
+    }
+    public function getPendingReqCount($company_id){
+        $result=$this->Query("SELECT COUNT(stock_request.stock_req_id) as count FROM stock_request WHERE stock_request.company_id=$company_id AND stock_request.stock_req_state='pending';");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['count'=>$row['count']]);
+            }
+            return $info;
+        }
+    }
+    public function getDistributorCount($company_id){
+        $result=$this->Query("SELECT COUNT(distributor.distributor_id) AS count FROM distributor INNER JOIN users ON distributor.distributor_id=users.user_id AND distributor.company_id=$company_id;");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['count'=>$row['count']]);
+            }
+            return $info;
+        }
+    }
+    public function getDealerCount($company_id){
+        $result=$this->Query("SELECT COUNT(dealer.dealer_id) AS count FROM dealer INNER JOIN users ON dealer.dealer_id=users.user_id AND dealer.company_id=$company_id;");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['count'=>$row['count']]);
+            }
+            return $info;
+        }
+    }
     
 }
