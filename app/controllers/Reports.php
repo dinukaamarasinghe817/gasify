@@ -66,8 +66,16 @@ class Reports extends Controller{
         $this->view('dealer/reports',$data);
     }
 
-    public function salesdealer(){
-        $data = [];
+    public function salesdealer($start_date,$end_date,$order_by){
+        // $start_date = $_POST['start_date'];
+        // $end_date = $_POST['end_date'];
+        // $order_by = $_POST['filter'];
+        $data = $this->model("Dealer")->getReportInfo($start_date,$end_date,$order_by);
+        $row = mysqli_fetch_assoc($this->model('Dealer')->getDealer($this->user_id));
+        $data['dealer_id'] = $row['user_id'];
+        $data['business_name'] = $row['name'];
+        $data['issue_date'] = date('Y-m-d');
+        $data['issue_time'] = date('H:i:s');
         $this->view('dealer/reports/salesreport',$data);
     }
     public function companySales(){

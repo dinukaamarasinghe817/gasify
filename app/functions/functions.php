@@ -103,3 +103,13 @@ function phpArrtoJs($array){
     $result .= ']';
     return $result;
 }
+
+function notificationIcon($type){
+    $source = '';
+    if($type == 'Re-order Level Alert'){
+        $source = 'alert.png';
+    }else{
+        $source = 'mail.png';
+    }
+    return '<img src="'.BASEURL.'/public/img/icons/'.$source.'" alt="">';
+}

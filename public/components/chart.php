@@ -8,6 +8,7 @@ class Chart{
     }
 
     public function bar($data,$index){
+        $max = max($data['vector']) +1;
         echo '<canvas id="bargraph'.$index.'" ></canvas>
         <script>
         let ctx'.$index.' = document.getElementById("bargraph'.$index.'")
@@ -27,7 +28,8 @@ class Chart{
                     y: {
                         ticks: {
                             stepSize: 1
-                        }
+                        },
+                        suggestedMax: '.$max.'
                     }
                 }
             }
@@ -36,6 +38,7 @@ class Chart{
     }
 
     public function line($data,$index){
+        $max = max($data['vector'])+1;
         echo '<canvas id="bargraph'.$index.'" ></canvas>
         <script>
         let ctx'.$index.' = document.getElementById("bargraph'.$index.'")
@@ -58,7 +61,8 @@ class Chart{
                     y: {
                         ticks: {
                             stepSize: 1
-                        }
+                        },
+                        suggestedMax: '.$max.'
                     }
                 },
                 legend: {
