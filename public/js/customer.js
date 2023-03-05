@@ -66,16 +66,17 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         body = `<h2>Change Delivery Address</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
         <p>Check your current delivery address is correct.If you need to change your delivery address around selected city,change it!</p>
-        <form action="${forwardlink}" method="POST"> 
-            <input name="new_street" placeholder="New Street" required>
+        <form  id="myForm" action="${forwardlink}" method="POST"> 
+            <input id="new_street" name="new_street" placeholder="New Street" required>
             <input name="new_city" value ="${backwardlink}" readonly >
-            <div class="buttons  delivery_address">
-                <button >OK</button>
-            </div>
+            
         </form>
-        <div class="buttons  delivery_address ">
-            <button  id = "cancel_change_address" onclick="customerprompt()">Cancel</button>
+        <div class="buttons">
+            <button  class= "btn-red" onclick="customerprompt()">Cancel</button>
+            <button class="btn-blue" onclick = "submitForm()">OK</button>
         </div>
+
+        
         `;
 
     }else if(variant == 'deliverymethod'){
@@ -103,4 +104,25 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
     accorinfo.innerHTML = body;
     accorinfo.classList.toggle("active");
     document.querySelector("body").classList.toggle("blur");
+
+
+
+    
+}
+
+
+function submitForm() {
+    
+    var streetInput = document.getElementById("new_street");
+    // streetInput.setAttribute("required", true);
+
+    if(streetInput.value == ""){
+        return false;
+    }
+
+    var form = document.getElementById("myForm");
+    form.submit();
+    // console.log('form');
+
+
 }

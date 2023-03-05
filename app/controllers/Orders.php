@@ -412,19 +412,11 @@ class Orders extends Controller{
 
         $data['selected_city'] = $_SESSION['city'];
         $data['home_city'] = $row1['city'];
-        $new_street = $_POST['new_street'];
-
-    
+        
         if(isset($_POST['new_street'])){
             $data['street'] = $_POST['new_street'];
-            // $_SESSION['new_street'] = $_POST['new_street'];
-            // $new_street = $_SESSION['new_street'];
-
             if(isset($_POST['new_city'])){
                 $data['city'] = $_POST['new_city'];
-                // $_SESSION['new_delivery_city'] = $_POST['new_city'];
-                // $new_delivery_city = $_SESSION['new_delivery_city'];
-
             }
 
         }else{
@@ -432,6 +424,11 @@ class Orders extends Controller{
             $data['street'] = $row1['street'];
         }
 
+        $distance = 9;
+        $this->model('Customer')->insertdelivery_street($data['street'],$distance);   //insert delivery street  and distance range to reservation table
+
+
+        // $data['delivery_charge'] = $this->
        
 
         $data['confirmation'] = '';
