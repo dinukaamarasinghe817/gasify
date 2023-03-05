@@ -1282,7 +1282,8 @@ input[type="text"]::placeholder{
     margin-top: 1%;
     width: 96%;
     height: 20%;
-    background-color: var(--navmenu-orange-dark);
+    outline: 5px solid var(--navmenu-orange-dark);
+    margin-bottom: 3%;
 }
 .productQuotaName,.productQuotaCurrent,.productQuotaNew,.productQuotaResetCurrent,.productQuotaSetNew{
     display: flex;
@@ -1292,10 +1293,10 @@ input[type="text"]::placeholder{
     align-content: center;
     width: 20%;
     height: 100%;
-    color: white;
+    color: black;
 }
 .productQuotaCurrent label{
-    color: white;
+    color: black;
 }
 .newQuota{
     margin-bottom: 0px;
@@ -1430,7 +1431,9 @@ input[type="text"]::placeholder{
     width: 50%;
     height: 100%;
 }
-
+.qtyInput{
+    text-align: right;
+}
 /*=========================================================================================================*/
 
 
