@@ -29,64 +29,93 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
             $products = $data['products'];
            echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
-            echo '
+           
+           $r_cylinder_count = 0;
+            foreach($products as $product){
+                if($product['type'] == 'cylinder'){
+                    $r_cylinder_count = $r_cylinder_count + 1;
+                }
+            }
+
+           
+
+            if($r_cylinder_count > 0){
+                echo '
                 <div class="gas_cylinder">
                     <div class="subtitle">
                         <h4>Re-Fill Cylinders</h4>
                     </div>
                     <div class="product_list">';
+
+                foreach($products as $product){
+                    if($product['type']=="cylinder"){
+                        echo '
+                                <div class="product_card">
+                                    <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+                                    <div class="product_details">
+                                        <div class="brand_name">'.$product['c_name'].'</div>
+                                        <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+                                        <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+                                    </div>
+                                    <div class="increment_box">
+                                        <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                        <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
+                                        <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+                                    </div>
+                                    <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
+                                </div>
+                            ';
+                    }
+                }
+
+                echo '</div>';
+
+            }
+
+            $accessory_count = 0;
             foreach($products as $product){
-                if($product['type']=="cylinder"){
-                    echo '
-                            <div class="product_card">
-                                <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                <div class="product_details">
-                                    <div class="brand_name">'.$product['c_name'].'</div>
-                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                    <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                </div>
-                                <div class="increment_box">
-                                    <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                    <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
-                                    <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                </div>
-                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
-                            </div>
-                        ';
+                if($product['type'] == 'accessory'){
+                    $accessory_count = $accessory_count + 1;
                 }
             }
 
-            echo '</div>';
+           
+
+            if($accessory_count > 0){
+                echo '<div class="accessories">
+                <div class="subtitle">
+                    <h4>Accessories</h4>
+                </div>
+                <div class="product_list">';
+            
+                foreach($products as $product){
+                    if($product['type']=="accessory"){
+                        echo '
+                                <div class="product_card">
+                                    <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+                                    <div class="product_details">
+                                        <div class="brand_name">'.$product['c_name'].'</div>
+                                        <div class="name"><h5>'.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+                                        <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+                                    </div> 
+                                    <div class="increment_box">
+                                        <div class="minus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                        <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
+                                        <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+                                    </div>
+                                    <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
+                                </div>
+                            ';
+                    }
+                } 
+                echo '</div>
+                </div>'; 
+            }
+
+            
             
            
-            echo '<div class="accessories">
-                    <div class="subtitle">
-                        <h4>Accessories</h4>
-                    </div>
-                    <div class="product_list">';
                 
-            foreach($products as $product){
-                if($product['type']=="accessory"){
-                    echo '
-                            <div class="product_card">
-                                <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                <div class="product_details">
-                                    <div class="brand_name">'.$product['c_name'].'</div>
-                                    <div class="name"><h5>'.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                    <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                </div> 
-                                <div class="increment_box">
-                                    <div class="minus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                    <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
-                                    <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                </div>
-                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.0.00 </h4></div>
-                            </div>
-                        ';
-                }
-            } 
-            echo '</div>
-            </div>';      
         
             echo '<!-- <div class="total"> -->
                 <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
@@ -96,7 +125,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             </div>
 
             <div class="bottom">
-                <a href=" '.BASEURL.'/Orders/select_brand_city_dealer" class="btn" id="back_btn">Back</a>
+                <a href=" '.BASEURL.'/Orders/select_brand_city_dealer" class="btn" id="back_btn" >Back</a>
                 <!-- <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn" id="next_btn">Next</a> -->
                 <button type="submit" class="btn" id="next_btn" >Next</button>
             </div>

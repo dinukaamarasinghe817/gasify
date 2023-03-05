@@ -66,13 +66,18 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         body = `<h2>Change Delivery Address</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
         <p>Check your current delivery address is correct.If you need to change your delivery address around selected city,change it!</p>
-        <form> 
-            <input name="new_street" placeholder="New Street" required >
-            <input name="city" value ="${backwardlink}" readonly >
+        <form action="${forwardlink}" method="POST"> 
+            <input name="new_street" placeholder="New Street" required>
+            <input name="new_city" value ="${backwardlink}" readonly >
+            <div class="buttons  delivery_address">
+                <button >OK</button>
+            </div>
         </form>
-        <div class="buttons">
-            <button onclick="location.href='${forwardlink}'">OK</button>
-        </div>`;
+        <div class="buttons  delivery_address ">
+            <button  id = "cancel_change_address" onclick="customerprompt()">Cancel</button>
+        </div>
+        `;
+
     }else if(variant == 'deliverymethod'){
         body = `<h2>Select Collecting Method</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">

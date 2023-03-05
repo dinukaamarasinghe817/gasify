@@ -181,7 +181,7 @@ class Customer extends Model{
             // INNER JOIN users ON reservation.delivery_id = users.user_id
             // WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
 
-            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,reservation.dealer_id,reservation.delivery_id,reservation.cancel_date,reservation.cancel_time,reservation.payment_method
+            $result1 = $this->Query("SELECT reservation.order_id,reservation.order_state,reservation.place_date,reservation.collecting_method,dealer.name as dealer_name,reservation.dealer_id,reservation.delivery_id,reservation.cancel_date,reservation.cancel_time,reservation.payment_method,reservation.deliver_date,reservation.deliver_time
             FROM reservation
             INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
             WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
@@ -492,6 +492,7 @@ class Customer extends Model{
             }
         }
 
+        return $order_id;
 
 
     }
