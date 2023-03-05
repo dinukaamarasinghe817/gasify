@@ -465,10 +465,36 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
+       
+        $result = $this->model('Customer')->getCustomer($customer_id);
+        $row = mysqli_fetch_assoc($result);
+        $customer_type = $row['c_type'];
+       
+        $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type);
 
         $this->view('customer/quota/quota',$data);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 

@@ -16,7 +16,7 @@ class Customer extends Model{
 
     public function getCustomer($customer_id){
         // $result = $this->read('dealer', "dealer_id = $dealer_id");
-        $result = $this->Query("SELECT * FROM customer c INNER JOIN users u ON u.user_id = c.customer_id WHERE c.customer_id = $customer_id");
+        $result = $this->Query("SELECT c.city ,c.street,c.image,c.contact_no,c.ebill_no,c.verification_state,c.type as c_type  FROM customer c INNER JOIN users u ON u.user_id = c.customer_id WHERE c.customer_id = $customer_id");
         return $result;
     }//
 
@@ -654,6 +654,25 @@ class Customer extends Model{
 
         return $result;
 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /*.............................................Quota tab...........................................................*/
+
+    function getQuotaDetails($customer_type){
+        $result = $this->Query("SELECT * FROM quota q INNER JOIN company c ON q.company_id = c.company_id WHERE customer_type = '$customer_type'");
+
+        return $result;
     }
 
 

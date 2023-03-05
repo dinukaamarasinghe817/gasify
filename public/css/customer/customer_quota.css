@@ -22,6 +22,14 @@ a,button{
     color: var( --navmenu-orange-dark);
 }
 
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-right: 80px;
+    /* column-gap: 20px; */
+    
+}
 
 /* quota details */
 .one_company{
@@ -42,15 +50,18 @@ a,button{
     font-size: var(--large);
     color: var(--navmenu-orange-dark);
     font-weight: 800;
-    
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
   
 .company_details .date{
     display: flex;
     font-size: small;
     font-weight: 800;
-    justify-content: right;
-    padding-right: 150px;
+    padding-top: 20px;
+    /* justify-content: right; */
+    /* padding-right: 150px; */
 }
   
   
@@ -69,18 +80,27 @@ a,button{
 }
   
 .company_quota img{
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
    
 }
 
 .quota-bars{
     padding: 5px 25px 5px;
-    width:80% ;
+    width:400px ;
     background: #fff;
     box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
     border-radius: 10px;
 }
+
+.quota_logo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
 .quota-bars .bar{
     margin: 15px 0;
     display: flex;
