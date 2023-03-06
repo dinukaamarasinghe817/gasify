@@ -33,6 +33,9 @@ class Reports extends Controller{
     public function distributor_pdf($user_id) {
         $data = [];
         $data['reportdetails'] = $this->model("Distributor")-> reportdetails($user_id);
+        // $data = $this->model("Distributor")->reportdetails($user_id);
+        // $row = mysqli_fetch_assoc($this->model("Distributor")->reportdetails($this->$user_id));
+        // $data['distribution_no'] = $row['distribution_no'];
 
         $this->view('distributor/reports/report_pdf',$data);
     }
