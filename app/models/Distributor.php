@@ -452,15 +452,30 @@ class Distributor extends Model
     public function reportdetails($user_id) {
         $reportdata = array();
         // $query1 = $this->Query("SELECT * from purchase_order where distribution_id = '{$user_id}' and po_state='completed' );
-        $query1 = $this->Query("SELECT DISTINCT o.po_id as distribution_no, o.dealer_id as dealer_id, o.place_date as date, o.place_time as time,
-        i.product_id as product_id, i.quantity as qty, i.unit_price as unit_price
-        FROM purchase_order o INNER JOIN purchase_include i
-        ON o.po_id = i.po_id
+        $query1 = $this->Query("SELECT DISTINCT o.po_id as distribution_no, o.dealer_id as dealer_id,
+        o.place_date as date, o.place_time as time, CONCAT(u.first_name, ' ', u.last_name) as name
+        from purchase_order o INNER JOIN users u 
+        ON o.distributor_id = u.user_id 
         WHERE o.distributor_id = '{$user_id}'");
 
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
-                array_push($reportdata, ["reportinfo"=>$row1]);
+                $distribution_no = $row1['distribution_no'];
+                $dealer_id = $row1['dealer_id'];
+                $date = $row1['date'];
+                $time = $row['time'];
+
+                $capacities = array();
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity
+                FROM purchase_include i INNER JOIN purchase_order o
+                ON i.po_id = o.po_id 
+                WHERE o.distributor_id = '{$user_id}'");
+                if(mysqli_num_rows($query2)>0) {
+                    while($row2 = mysqli_fetch_assoc($query2)) {
+                        array_push($capacities, $row2);
+                    }
+                }
+                array_push($reportdata,['details'=>$row1, 'capacities'=>$capacities]);
             }
         }
         return $reportdata;
@@ -487,7 +502,7 @@ class Distributor extends Model
         $stock = array();
 
         // $query1 = $this->Query("SELECT DISTINCT  p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
-        $query1 = $this->Query("SELECT name, product_id FROM  product  where company_id = '2';");
+        $query1 = $this->Query("SELECT name, product_id, unit_price FROM  product  where company_id = '2';");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 array_push($stock, ['stockinfo'=> $row1]);

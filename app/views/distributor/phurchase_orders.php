@@ -40,7 +40,7 @@ $user_id = $_SESSION['user_id'];
             <div class="middle">
                 <p>Order ID :  </p> <br>
 
-                <form action="<?php echo BASEURL;?>/orders/placeorder" method="POST">
+                <form action="<?php echo BASEURL;?>/orders/placeorder" method="POST" class="po">
 
 
                     <table class="styled-table">
@@ -65,17 +65,17 @@ $user_id = $_SESSION['user_id'];
                                         <tr>
                                             <td>'.$row1['name'].'</td>
                                         
-                                            <td><input type="number" name="qnty" min="0" value="5" required></td>
-                                            <td>3200.00</td>
+                                            <td><input type="number" name="qnty" step="1" value="0" name="'.$row1['product_id'].'" min=0 onchange="changeqty('.$row1['product_id'].', '.$row1['unit_price'].'); return false;"></td>
+                                            <td class="subtotal">Rs. 0</td>
                                         </tr>';
                                 }
                                 $output .= '</table>
 
                                 <table class="styled-table">
                                     <tbody>
-                                        <tr>
+                                        <tr class="total">
                                             <td class="second1">Total Amount </td>
-                                            <td class="second2">9400.00</td>
+                                            <td class="second2">Rs. 0.00</td>
                                         </tr>
                                     </tbody>
                                 </table>';

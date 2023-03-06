@@ -27,7 +27,7 @@ $user_id = $_SESSION['user_id'];
                     <thead>
                         <tr>
                             <th>Vehicle Number</th>
-                            <th>Vehicle Type</th>
+                            <th>Vehicle Type (axels)</th>
                             <th>Fuel Consumption (L/Km) </th>
                             <th>Availability</th>
                             <th></th>
