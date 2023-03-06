@@ -449,36 +449,39 @@ class Distributor extends Model
 
     //get details of distribution report
 
-    public function reportdetails($user_id) {
-        $reportdata = array();
+    public function reportdetails($distribution_no) {
+        // $reportdata = array();
         // $query1 = $this->Query("SELECT * from purchase_order where distribution_id = '{$user_id}' and po_state='completed' );
         $query1 = $this->Query("SELECT DISTINCT o.po_id as distribution_no, o.dealer_id as dealer_id,
-        o.place_date as date, o.place_time as time, CONCAT(u.first_name, ' ', u.last_name) as name
+        o.place_date as date, o.place_time as time, o.distributor_id as distributor_id,  CONCAT(u.first_name, ' ', u.last_name) as name
         from purchase_order o INNER JOIN users u 
-        ON o.distributor_id = u.user_id 
-        WHERE o.distributor_id = '{$user_id}'");
+        ON o.dealer_id = u.user_id 
+        WHERE o.po_id = '{$distribution_no}'");
 
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $distribution_no = $row1['distribution_no'];
+                $distributor_id = $row1['distributor_id'];
                 $dealer_id = $row1['dealer_id'];
                 $date = $row1['date'];
-                $time = $row['time'];
+                $time = $row1['time'];
+                $name = $row1['name'];
 
-                $capacities = array();
+                $products = array();
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity
                 FROM purchase_include i INNER JOIN purchase_order o
                 ON i.po_id = o.po_id 
-                WHERE o.distributor_id = '{$user_id}'");
+                WHERE i.po_id = $distribution_no");
                 if(mysqli_num_rows($query2)>0) {
                     while($row2 = mysqli_fetch_assoc($query2)) {
-                        array_push($capacities, $row2);
+                        array_push($products, $row2);
                     }
                 }
-                array_push($reportdata,['details'=>$row1, 'capacities'=>$capacities]);
+               return ['details'=>$row1, 'quantites'=>$products];
             }
+           
         }
-        return $reportdata;
+        return;
     }
 
 
