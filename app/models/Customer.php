@@ -670,15 +670,51 @@ class Customer extends Model{
     /*.............................................Quota tab...........................................................*/
 
     function getQuotaDetails($customer_type){
-        $result = $this->Query("SELECT * FROM quota q INNER JOIN company c ON q.company_id = c.company_id WHERE customer_type = '$customer_type'");
+        $customer_id = $_SESSION['user_id'];
+        $quota_details = array();
 
-        return $result;
+        $quotas = array();
+
+        $result1 = $this->Query("SELECT q.company_id,q.customer_type,q.monthly_limit,q.state,c.name,c.logo
+        FROM quota q 
+        INNER JOIN company c ON q.company_id = c.company_id
+        WHERE customer_type = '$customer_type'");
+
+        
+
+        if(mysqli_num_rows($result1) > 0){
+            
+            while($row1=mysqli_fetch_assoc($result1)){
+                array_push($quotas,$row1);
+                $products =array();
+                // $company_id = $row1['company_id'];
+                $result2 = $this->Query("SELECT c.company_id,p.product_id,p.name as p_name ,p.weight FROM product p INNER JOIN company c ON p.company_id = c.company_id WHERE p.type = 'cylinder'");
+                
+                while($row2=mysqli_fetch_assoc($result2)){
+                    array_push($products,$row2);
+                }
+
+                $remaining = array();
+                $result3 = $this->Query("SELECT * FROM customer_quota c INNER JOIN quota q ON q.company_id = c.company_id WHERE c.customer_type = '$customer_type' AND c.customer_id = '$customer_id'");
+                while($row3=mysqli_fetch_assoc($result3)){
+                    array_push($remaining,$row3);
+                }
+
+            }
+
+            array_push($quota_details,['quotas'=>$quotas,'products'=>$products,'remaining'=>$remaining]);
+        }
+
+
+        return $quota_details;
     }
 
-
+    
 
 
     
+
+
 }
 
 
