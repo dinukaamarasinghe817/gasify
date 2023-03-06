@@ -51,7 +51,7 @@ class Customer extends Model{
         $result1 = $this->Query("SELECT order_id,order_state,place_date
             FROM reservation
             WHERE customer_id = '{$customer_id}'
-            ORDER BY place_date DESC LIMIT 3");
+            ORDER BY place_date DESC , place_time DESC LIMIT 3");
         
                
         $orders = array();
@@ -519,28 +519,54 @@ class Customer extends Model{
         
     }
 
-    //insert delivery address to reservation table if it changed
+    //insert delivery distance ranges and return delivery charge 
     function insertdelivery_street($new_street,$distance){
         $customer_id = $_SESSION['user_id'];
         $dealer_id = $_SESSION['dealer_id'];
         $order_state = 'Pending';
         $place_time = $_SESSION['place_time'];
-
         $place_date = $_SESSION['place_date'];
+        $order_products = $_SESSION['order_products'];
+
+        $sum_of_weights = 0;
+        foreach ($order_products as $order_product){
+            $product_id = $order_product['product_id'];
+            $qty = $order_product['qty'];
+
+            $result3 = $this->Query("SELECT * FROM product WHERE product_id = $product_id");
+            $row3 = mysqli_fetch_assoc($result3);
+            $item_weight = $row3['weight'];
+
+            $product_total_weight = $item_weight * $qty;
+
+            $sum_of_weights = $sum_of_weights + $product_total_weight;
+
+        }
 
         // $collecting_method = $_SESSION['collecting_method'];
-        $result1 = $this->Query("SELECT order_id FROM reservation WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}' AND collecting_method = ''");
+        $result1 = $this->Query("SELECT order_id FROM reservation WHERE customer_id = '$customer_id' AND order_state = '$order_state' AND place_date = '$place_date' AND place_time = '$place_time' AND dealer_id = '$dealer_id' ");
 
 
         $row = mysqli_fetch_assoc($result1);
         $order_id =  $row['order_id'] ;
 
         $result2 = $this->Query("SELECT * FROM delivery_charge");
-        while($row = mysqli_fetch_assoc($result2)){
-            $distance_range = $row['distance_range']; 
+        while($row2 = mysqli_fetch_assoc($result2)){
+            $min_distance = $row2['min_distance']; 
+            $max_distance = $row2['max_distance'];
+            $charge_per_kilo = $row2['charge_per_kg'];
+
+            if($distance>=$min_distance && $distance<=$max_distance){
+                $order_min_distance = $min_distance;
+                $order_max_distance = $max_distance;
+                
+                $delivery_charge = $charge_per_kilo * $sum_of_weights;
+            }
         }
         
-        $this ->update('reservation',['deliver_address'=>$new_street,'distance_range'=>'0-10'],'order_id='.$order_id);
+        $this ->update('reservation',['min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
+
+        return $delivery_charge;
     }
 
 

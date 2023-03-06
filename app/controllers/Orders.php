@@ -424,8 +424,8 @@ class Orders extends Controller{
             $data['street'] = $row1['street'];
         }
 
-        $distance = 9;
-        $this->model('Customer')->insertdelivery_street($data['street'],$distance);   //insert delivery street  and distance range to reservation table
+        $distance = 9;   //********************** *have to take distance using maps ******************************************
+        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($data['street'],$distance);   //insert delivery street  and distance range to reservation table
 
 
         // $data['delivery_charge'] = $this->
@@ -436,7 +436,7 @@ class Orders extends Controller{
         $this->view('customer/place_reservation/delivery_collecting_method',$data);
     }
 
-    function getcollecting_method(){
+    function getcollecting_method($collecting_method){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -445,7 +445,7 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $_SESSION['collecting_method'] = 'Pickup';
+        $_SESSION['collecting_method'] = $collecting_method;
         $this -> model('Customer')->insertcollectingmethod();
         header('LOCATION:'.BASEURL.'/Dashboard/customer');
 
