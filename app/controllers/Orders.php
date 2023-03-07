@@ -342,6 +342,28 @@ class Orders extends Controller{
 
     function get_bank_slip(){
         $customer_id = $_SESSION['user_id'];
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $customer_type = $row1['type'];
+
+        $quota_details = $this->model('Customer')->getQuotaDetails($customer_type);
+        foreach($quota_details as $quota_detail){
+            $quotas = $quota_detail['quotas'];
+            $remainings = $quota_detail['remaining'];
+            foreach($quotas as $quota){
+                if($quota['company_id'] == $_SESSION['company_id']){
+                    $quota_state = $quota['state'];
+                    $monthly_limit = $quota['monthly_limit'];
+                }
+            }
+            foreach($remainings as $remaining){
+                if($remaining['company_id'] == $_SESSION['company_id']){
+                    $remaining_weight = $remaining['remaining_amount'];
+                }
+            }
+        }
+
+
         if(isset($_POST['submit_btn'])){
            $file_name = $_FILES['slip_img']['name'];
             $file_type = $_FILES['slip_img']['type'];
@@ -353,12 +375,14 @@ class Orders extends Controller{
             $_SESSION['slip_img'] = $file_name;
             move_uploaded_file($temp_name,$upload_to . $file_name);
 
+            
+
             if($file_size<=0){
                 $error = "Please upload a bank slip image!";
                 $this -> bank_slip_upload($error);
             }
             else{
-                $this->model('Customer')->place_reservation();
+                $this->model('Customer')->place_reservation($quota_state,$monthly_limit,$remaining_weight);
                 $this->select_collecting_method();
             }
 

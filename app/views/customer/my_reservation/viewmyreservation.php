@@ -115,24 +115,21 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                             <button class="d_btn" onclick = "location.href=\''.$url_delivery.'\'">Profile</button>
                                         </div>
                                     </div>
-                                    <div class="d_details">
+                                    <div class="delivery_details d_details" >
                                         <div>
-                                        <strong>Delivery fee: </strong>
-                                        </div>
-                                        <div>
+                                            <strong>Delivery fee: </strong>
                                             <p>Rs 323.00</p>
                                         </div>
                                         <div>
-                                        <strong>Delivery Date: </strong>
-                                        </div>
-                                        <div>
+                                            <strong>Delivery Date: </strong>
                                             <p>'.$row1['deliver_date'].'</p>
                                         </div>
                                         <div>
-                                        <strong>Delivery Time: </strong>
+                                            <strong>Delivery Time: </strong>
+                                            <p>'.$row1['deliver_time'].'</p>
                                         </div>
                                         <div>
-                                            <p>'.$row1['deliver_time'].'</p>
+                                        <div></div>
                                         </div>
                                     </div>';
                     }

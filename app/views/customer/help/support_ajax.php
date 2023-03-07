@@ -1,33 +1,9 @@
-<?php
-$header = new Header("customer/customer_support");
-$sidebar = new Navigation('customer',$data['navigation']);
-?>
 
-<section class="body">
-    <?php
-        // call the default header for yout interface
-        $bodyheader = new BodyHeader($data);
-        $profile_image = BASEURL.'/public/img/profile/'.$data['image'];
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
-        
-        $admin = $data['admin'];
-        $admin_image = $admin['image'];
 
-    ?>
-       
-    <div class="under_topbar">
-        <div class="subtitle">
-           <h3>Customer Support</h3>
-        </div>
     
-        <div class="middle">
-            <!-- message box -->
-            <div class="msg_box" >
-                <div class="wrapper">
-                    <section class="chat-area">
+    
                         
-                        <div class="chat-box" id="chatbox">
+                        <div class="chat-box">
                             <?php 
                                 $customer_id = $_SESSION['user_id'];
                                 $messages = $data['messages'];
@@ -116,11 +92,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     </svg>
                             </button>
                         </form>
-                        
-                    </section>
-                </div>
-            </div>
-
+                   
             <!-- help options -->
             <div class="help_options">
                 <!-- <div class="title"><h3>Contact Us</h3></div> -->
@@ -171,9 +143,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 </section>
 
-<!-- <script>
+<script>
     const form = document.querySelector(".typing-area"),
-    incoming_id = form.querySelector(".incoming_id").value,
+    // incoming_id = form.querySelector(".incoming_id").value,
     inputField = form.querySelector(".input-field"),
     sendBtn = form.querySelector("button"),
     chatBox = document.querySelector(".chat-box");
@@ -193,7 +165,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
     sendBtn.onclick = ()=>{
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "php/insert-chat.php", true);
+        xhr.open("POST", "http://localhost/mvc/Support/customer_send_message_ajax", true);
         xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if(xhr.status === 200){
@@ -215,7 +187,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
     setInterval(() =>{
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "php/get-chat.php", true);
+        xhr.open("POST", "http://localhost/mvc/Support/customer_send_message_ajax", true);
         xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if(xhr.status === 200){
@@ -228,7 +200,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         }
         }
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("incoming_id="+incoming_id);
+        xhr.send();
     }, 500);
 
     function scrollToBottom(){
@@ -237,4 +209,4 @@ $sidebar = new Navigation('customer',$data['navigation']);
   
 
     
-</script> -->
+</script>

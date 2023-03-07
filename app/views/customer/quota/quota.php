@@ -110,7 +110,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     
                                     
                                     $percentage = $remaining_weight/$total_weight * 100;
-                                    // $progresscircle = new PercentageCircle($percentage,0); 
+                                    $progresscircle = new PercentageCircle($percentage,0); 
                                             // $progresscircle = new PercentageCircle($percentage,0);
                                             echo '</div><div class="remaining"><span style="color:#0047AB;"><strong> Remaining : </strong></span><span style="color:#0047AB;"  id = "remaining_cylinders"><strong>'.$remaining_weight.'</strong></span>&nbsp Cylinders<span><strong></strong></span></div></div></div><div class="bottom_details">
                                                 <div class="days" >'.$remaingDays.' days more</div>

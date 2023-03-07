@@ -204,6 +204,12 @@ a,button{
 
 }
 
+.delivery_details div{
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+}
+
 .profile_details{
     display: flex;
     flex-direction: row;

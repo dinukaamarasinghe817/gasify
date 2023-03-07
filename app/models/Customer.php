@@ -425,10 +425,11 @@ class Customer extends Model{
     }
 
     //insert place reservation details for reservation table
-    public function place_reservation(){
+    public function place_reservation($quota_state,$monthly_limit,$remaining_weight){
         $customer_id = $_SESSION['user_id'];
         $dealer_id = $_SESSION['dealer_id'];
         $company_id = $_SESSION['company_id'];
+        $order_products = $_SESSION['order_products'];
         $order_state = 'Pending';
         $payslip = $_SESSION['slip_img'];
         date_default_timezone_set("Asia/Colombo");
@@ -446,27 +447,57 @@ class Customer extends Model{
             $payment_method = 'Credit Card';
         }
 
-        if(isset($customer_id)){
-            if(isset($dealer_id)){
-                if(isset($company_id)){
-                    if(isset($payslip)){
-                        $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
-                        $this->insertproducts();
-                    }else{
-                        $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
-                        $this->insertproducts();
-                    }   
-                }else{
-                    $error = "Please select a company";
+        //check quota is active or not
+        if($quota_state == 'ON'){
+             $sum_of_weights = 0;
+            foreach ($order_products as $order_product){
+                $product_id = $order_product['product_id'];
+                $qty = $order_product['qty'];
+
+                $result1 = $this->Query("SELECT * FROM product WHERE product_id = $product_id");
+                $row1 = mysqli_fetch_assoc($result1);
+                $product_type = $row1['type'];
+                if($product_type == 'cylinder'){
+                    $item_weight = $row1['weight'];
+                    $product_total_weight = $item_weight * $qty;
+                    $sum_of_weights = $sum_of_weights + $product_total_weight;
                 }
-            }else{
-                $error = "Please select a dealer";
+
             }
 
-        }else{
-            $error = "session customer_id is empty!";
+            $new_remaining_weight = $remaining_weight - $sum_of_weights;  //new remainig quota
 
         }
+
+        if($sum_of_weights <= $remaining_weight){
+
+            if(isset($customer_id)){
+                if(isset($dealer_id)){
+                    if(isset($company_id)){
+                        if(isset($payslip)){
+                            $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
+                            $this->insertproducts();
+                            //update remaining quota
+                            $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
+                        }else{
+                            $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
+                            $this->insertproducts();
+                            $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
+                        }   
+                    }else{
+                        $error = "Please select a company";
+                    }
+                }else{
+                    $error = "Please select a dealer";
+                }
+
+            }else{
+                $error = "session customer_id is empty!";
+            }
+        }else{
+            $error = "You don't have enough quota";
+        }
+
     }
 
     function insertproducts(){
@@ -574,7 +605,7 @@ class Customer extends Model{
     /*.........................Customer dealers tab ....................*/
 
     //get  dealers details and display in view dealers tab according to selected brand and city
-    public function getdealers($company_id=null,$city_name = null) {
+    function getdealers($company_id=null,$city_name = null) {
         if($company_id == 'null'){
             $company_id = null;
         }
