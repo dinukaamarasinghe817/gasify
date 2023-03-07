@@ -396,6 +396,28 @@ class Customer extends Model{
         return $error;
     }
 
+    //selected products total weight(only cylinders) for check quota is exceed or not
+    public function products_total_weight(){
+        $order_products = $_SESSION['order_products'];
+
+        $sum_of_weights = 0;
+        foreach ($order_products as $order_product){
+            $product_id = $order_product['product_id'];
+            $qty = $order_product['qty'];
+
+            $result3 = $this->Query("SELECT * FROM product WHERE product_id = $product_id AND type = 'cylinder'");
+            $row3 = mysqli_fetch_assoc($result3);
+            $item_weight = $row3['weight'];
+
+            $product_total_weight = $item_weight * $qty;
+
+            $sum_of_weights = $sum_of_weights + $product_total_weight;
+
+        }
+
+        return $sum_of_weights;
+    }
+
 
     //get selected products details in payment method page
     public function getSelectedProducts(){

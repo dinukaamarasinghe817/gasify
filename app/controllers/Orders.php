@@ -269,34 +269,76 @@ class Orders extends Controller{
     function selected_products($dealer_id){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
+        $result = $this->model('Customer')->getCustomer($customer_id);
+        $row = mysqli_fetch_assoc($result);
+        $customer_type = $row['c_type'];
 
         $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
         $products = $data['products'];
 
-        
+        //check selected products weights are higher than remaining quota
+        $quota_details = $this->model('Customer')->getQuotaDetails($customer_type);
+        foreach($quota_details as $quota_detail){
+            $quotas = $quota_detail['quotas'];
+            $remainings = $quota_detail['remaining'];
+            foreach($quotas as $quota){
+                if($quota['company_id'] == $_SESSION['company_id']){
+                    $quota_state = $quota['state'];
+                    $monthly_limit = $quota['monthly_limit'];
+                }
+            }
+            foreach($remainings as $remaining){
+                if($remaining['company_id'] == $_SESSION['company_id']){
+                    $remaining_weight = $remaining['remaining_amount'];
+                }
+            }
+        }
+
+       
+
+
         $selected_products = array();
 
         foreach($products as $product){
             $product_id = $product['p_id'];
             $unit_price = $product['unit_price'];
-
             $qty = $_POST[$product_id];
             if($qty != 0){
                 array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty ,'unit_price'=>$unit_price]);
 
             }
         }
-       
-        
+
+      
+        //check atleast one product is selected
         if(count($selected_products) > 0){
             $_SESSION['order_products'] = $selected_products;
-            $this->select_payment_method();
+            $total_weight_cylinders = $this->model('Customer')->products_total_weight();
+            //check quota is active or not
+            if($quota_state == 'ON'){
+                //check remaining quota exceed or not
+                if($total_weight_cylinders <= $remaining_weight ){
+                    $this->select_payment_method();
+                }else{
+                   $error = "Your quota amount is exceeded!";
+                   $this->select_products($error);
+                }
+            }else{
+                $this->select_payment_method();
+            }
+           
+            
         }
         else{
-            
             $error = "You must select at least one product";
             $this->select_products($error);
         }
+
+
+        
+        
+
+       
 
     }
 
