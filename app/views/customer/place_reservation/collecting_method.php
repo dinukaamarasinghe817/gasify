@@ -28,7 +28,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         </button>
                         </div>
                         <?php
-                            $url = BASEURL.'/Orders/select_delivery_method/';
+                            $url = BASEURL.'/Orders/select_delivery_method';
                         
                     echo     '<div class="c_btn"><button onclick="location.href=\''.$url.'\'">
                         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
