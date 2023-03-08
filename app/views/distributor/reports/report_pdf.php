@@ -51,7 +51,7 @@ $details = $details['details'];
     $pdf->Cell(30,5,'Distributor ID',0,0,'l');
     $pdf->SetFont('Times', '', 12);
     $pdf->Cell(90,5,": {$details['distributor_id']}",0,0,'l');
-    $pdf->Ln(10);
+    $pdf->Ln(15);
 
     $pdf->SetFont('Times', 'B', 12);
     $pdf->Cell(40,5,'Product ID',0,0,'C');
@@ -61,20 +61,9 @@ $details = $details['details'];
     $pdf->Ln();
     $pdf->Ln();
 
-
-    // $pdf->SetFont('Times', '', 12);
-    // $pdf->Cell(40,5,'4',0,0,'C');
-    // $pdf->Cell(40,5,'2300.00',0,0,'C');
-    // $pdf->Cell(40,5,'2',0,0,'C');
-    // $pdf->Cell(40,5,'4600.00',0,0,'C');
-    // $pdf->Ln();
-
-    // $products = $data['products'];
     $pdf->SetFont('Times', '', 12);
     foreach($products as $product){
     $pdf->Cell(33,5,"{$product['product_id']}",0,0,'C');
-    // $pdf->Cell(33,5,"{$product['unit_price']}",0,0,'L');
-    // $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
     $unit_price = number_format($product['unit_price']).'.00';
     $pdf->Cell(33,5,"{$unit_price}",0,0,'R');
     $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
