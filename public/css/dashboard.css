@@ -1040,7 +1040,7 @@ label{
 }
 .btn-blue,
 .btn-red{
-    padding: 15px;
+    padding: 12px;
     background-color: var(--button-blue);
     color: white;
     border-radius: 10px;
@@ -1076,7 +1076,7 @@ label{
     border-top: 2px solid var(--button-orange-hover);
     box-sizing: border-box;
     /* padding: 15px; */
-    height: 700px;
+    /* height: 700px; */
     overflow-y: scroll;
     scroll-behavior: smooth;
     transition: transtionIn 2.5s;
@@ -1091,6 +1091,16 @@ label{
     overflow-y: scroll;
     scroll-behavior: smooth;
     transition: transtionIn 2.5s;
+}
+.content-data.notifications{
+    overflow-y: hidden;
+}
+.content-data.notifications ul{
+    max-height: 700px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    transition: transtionIn 2.5s;
+    padding: 10px 0px;
 }
 .body-content{
     overflow-y: scroll;
@@ -1206,7 +1216,6 @@ label{
 .confirmation .buttons button:last-child{
     background-color: var(--button-blue);
 }
-
 .confirmation form input{
     border: 2px solid var(--navmenu-gray-dark);
     /* width: 250px; */
