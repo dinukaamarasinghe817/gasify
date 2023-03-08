@@ -788,6 +788,14 @@ class Customer extends Model{
         return $quota_details;
     }
 
+
+    function getproductweight($product_id){
+        $result1 = $this->Query("SELECT weight FROM product WHERE product_id = '$product_id'");
+        $row1=mysqli_fetch_assoc($result1);
+        return $row1;
+
+    }
+
     
 
 

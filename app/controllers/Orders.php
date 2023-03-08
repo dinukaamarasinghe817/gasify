@@ -543,7 +543,7 @@ class Orders extends Controller{
         $this->view('customer/quota/quota',$data);
     }
 
-    function selected_product_quota($percentage){
+    function selected_product_quota($product_id,$total_cylinders,$remaining_cylinders){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'quota';
 
@@ -559,7 +559,10 @@ class Orders extends Controller{
        
         $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type);
 
-        $data['percentage'] = $percentage;
+        $data['product_id'] = $product_id;
+        $data['total_cylinders'] = $total_cylinders;
+        $data['remaining_cylinders'] = $remaining_cylinders;
+        $data['product_weight'] = $this->model('Customer')->getproductweight($product_id);
 
         $this->view('customer/quota/quota_ajax',$data);
 
