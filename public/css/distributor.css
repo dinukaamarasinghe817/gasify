@@ -34,6 +34,7 @@ table td{
     --navmenu-gray-dark: #8A8B9F;
     --button-blue: #3E8CFF;
     --button-blue-hover: #1672fc;
+    --toggle-blue: #2379faf3;
     --white: #ffffff;
     --black: #000000;
     --logo-background: #ffde59;
@@ -746,3 +747,54 @@ table tr:hover {
     width: 69.5%;
 }
 
+
+/* toggle button */
+
+.togglemain {
+    position: absolute;
+    left: 7%;
+    margin-left: 2%;
+    transform: translate(-50%);
+    height:50%;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+.togglemain .toggle {
+    position: absolute;
+    left: 120%;
+    width: 70px;
+    height: 30px;
+    background-color: #444;
+    border-radius: 30px;
+    transition: 0.3s;
+    align-items: center;
+
+}
+
+.togglemain .toggle .toggle-button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--white);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+
+.togglemain .toggle.active {
+    background-color: var(--toggle-blue);
+}
+
+.togglemain .toggle.active .toggle-button {
+    left: 60%;
+
+}
+
+.togglemain .text {
+    font-size: var(--small);
+}
