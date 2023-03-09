@@ -23,10 +23,19 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             </div>
 
             <div class="middle">
+                    <p>Delay Time</p>
+                    <div class = "togglemain">
+                        <!-- <p>Delay Time</p> -->
+                        <div class="text">Disable</div>
+                        <div class="toggle">
+                            <div class="toggle-button" onclick = "Animatedtoggle()"></div>
+                        </div> <br>
+                    </div>
+                <br><br>
+
 
                 <div class="accordion new">
 
-                    <!-- <div class="box"> -->
                     <?php 
                         $pendings = $data['pending_distributions'];
                         foreach($pendings as $pending) {
@@ -92,6 +101,21 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 </section>
 
 <script>
+    // toggle button js
+    let toggle = document.querySelector('.toggle');
+    let text = document.querySelector('.text');
+
+    function Animatedtoggle() {
+        toggle.classList.toggle('active');
+
+        if(toggle.classList.contains('active')) {
+            text.innerHTML = "Enable";
+        }else {
+            text.innerHTML = "Disable";
+        }
+    }
+
+    // accordion box js
     let accordion = document.querySelectorAll('.accordion .box');
     for(i=0; i<accordion.length; i++) {
         accordion[i].addEventListener('click', function(){
