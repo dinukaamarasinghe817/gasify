@@ -31,7 +31,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                             <div class="toggle-button" onclick = "Animatedtoggle()"></div>
                         </div> <br>
                     </div>
-                <br><br>
+                <br>
 
 
                 <div class="accordion new">

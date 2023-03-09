@@ -183,13 +183,10 @@ class Distributor extends Model
     public function releaseVehicle($vehicle_no) {
         $user_id = $_SESSION['user_id'];
 
-        $query1 = $this->Query("SELECT DISTINCT availability FROM distributor_vehicle WHERE distributor_id = '{$user_id}' and vehicle_no = '{$vehicle_no}'");
-        $availabilites = array();
-        while($row1 = mysqli_fetch_assoc($query1)) {
-            array_push($availabilites, ['vehicle_no'=>$row1["vehicle_no"], 'availability'=>$row1["availability"]]);
-        }
-
-        $this->update("distributor_vehicle", ["availability"=>$row1["availability"]], "distributor_id = '$user_id' and vehicle_no = '$vehicle_no");
+        // $query1 = $this->Query("SELECT DISTINCT vehicle_no, availability FROM distributor_vehicle WHERE distributor_id = '{$user_id}' and vehicle_no = '{$vehicle_no}'");
+       
+        $query2 = $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
+        return $query2;
     }
 
 
