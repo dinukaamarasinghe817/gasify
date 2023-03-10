@@ -79,6 +79,7 @@ $user_id = $_SESSION['user_id'];
                 $output .= '</tbody></table>';
                 echo $output;
             ?>
+            <!-- </div> -->
         </div>
     </section>
 </section>
