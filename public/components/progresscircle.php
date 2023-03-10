@@ -48,8 +48,12 @@ class PercentageCircle{
     }
 }
 class Quota{
-    function __construct($product_id,$product_weight,$total_cyl,$remaining_cyl){
-        $percentage = $remaining_cyl*100/$total_cyl;
+    function __construct($product_id,$total_cyl,$remaining_cyl){
+        if($total_cyl == 0){
+            $percentage = 0;
+        }else{
+            $percentage = $remaining_cyl*100/$total_cyl;
+        }
         echo '<div class="skill">
                     <div class="outer">
                         <div class="inner">
@@ -88,7 +92,7 @@ class Quota{
                     if(counters[index] > number.dataset.remain){
                         counters[index] = number.dataset.remain;
                     }
-                    number.innerHTML = counters[index] + \" \ \" + number.dataset.total;
+                    number.innerHTML = counters[index] + \" /\ \" + number.dataset.total;
                     svgEl[index].style.strokeDashoffset = Math.floor(472 - (315 * parseFloat(number.dataset.num / 100)));
                 }
             }, 5);

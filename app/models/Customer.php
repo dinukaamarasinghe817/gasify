@@ -748,53 +748,152 @@ class Customer extends Model{
 
     /*.............................................Quota tab...........................................................*/
 
-    function getQuotaDetails($customer_type){
-        $customer_id = $_SESSION['user_id'];
-        $quota_details = array();
+    // function getQuotaDetails($customer_type){
+    //     $customer_id = $_SESSION['user_id'];
+    //     $quota_details = array();
 
-        $quotas = array();
+    //     $quotas = array();
 
-        $result1 = $this->Query("SELECT q.company_id,q.customer_type,q.monthly_limit,q.state,c.name,c.logo
-        FROM quota q 
-        INNER JOIN company c ON q.company_id = c.company_id
-        WHERE customer_type = '$customer_type'");
+    //     $result1 = $this->Query("SELECT q.company_id,q.customer_type,q.monthly_limit,q.state,c.name,c.logo
+    //     FROM quota q 
+    //     INNER JOIN company c ON q.company_id = c.company_id
+    //     WHERE customer_type = '$customer_type'");
 
         
 
-        if(mysqli_num_rows($result1) > 0){
+    //     if(mysqli_num_rows($result1) > 0){
             
-            while($row1=mysqli_fetch_assoc($result1)){
-                array_push($quotas,$row1);
-                $products =array();
-                // $company_id = $row1['company_id'];
-                $result2 = $this->Query("SELECT c.company_id,p.product_id,p.name as p_name ,p.weight FROM product p INNER JOIN company c ON p.company_id = c.company_id WHERE p.type = 'cylinder'");
+    //         while($row1=mysqli_fetch_assoc($result1)){
+    //             array_push($quotas,$row1);
+    //             $products =array();
+    //             // $company_id = $row1['company_id'];
+    //             $result2 = $this->Query("SELECT c.company_id,p.product_id,p.name as p_name ,p.weight FROM product p INNER JOIN company c ON p.company_id = c.company_id WHERE p.type = 'cylinder'");
                 
-                while($row2=mysqli_fetch_assoc($result2)){
-                    array_push($products,$row2);
+    //             while($row2=mysqli_fetch_assoc($result2)){
+    //                 array_push($products,$row2);
+    //             }
+
+    //             $remaining = array();
+    //             $result3 = $this->Query("SELECT * FROM customer_quota c INNER JOIN quota q ON q.company_id = c.company_id WHERE c.customer_type = '$customer_type' AND c.customer_id = '$customer_id'");
+    //             while($row3=mysqli_fetch_assoc($result3)){
+    //                 array_push($remaining,$row3);
+    //             }
+
+    //         }
+
+    //         array_push($quota_details,['quotas'=>$quotas,'products'=>$products,'remaining'=>$remaining]);
+    //     }
+
+
+    //     return $quota_details;
+    // }
+
+    function getcustomerquota($customer_id){
+        //get all companies
+        $companies = array();
+        $query = $this->read('company');
+        if(mysqli_num_rows($query) > 0){
+            while($row = mysqli_fetch_assoc($query)){
+                $company_id = $row['company_id'];
+                $row3 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+                $user_type = $row3['type'];
+
+                // see whether the quota for your customer type available
+                $query4 = $this->read('quota',"company_id = $company_id AND customer_type = '$user_type' AND state = 'ON'");
+                if(mysqli_num_rows($query4) > 0){
+                    $row4 = mysqli_fetch_assoc($query4);
+                    $total_quota = $row4['monthly_limit'];
+
+                    $query5 = $this->read('customer_quota',"customer_id = $customer_id AND company_id = $company_id");
+                    $row5 = mysqli_fetch_assoc($query5);
+                    $remaining_quota = $row5['remaining_amount'];
+
+                }else{
+                    // the quota is not set. then you don't want to display this in customer quota section
                 }
 
-                $remaining = array();
-                $result3 = $this->Query("SELECT * FROM customer_quota c INNER JOIN quota q ON q.company_id = c.company_id WHERE c.customer_type = '$customer_type' AND c.customer_id = '$customer_id'");
-                while($row3=mysqli_fetch_assoc($result3)){
-                    array_push($remaining,$row3);
+                $allproducts = array();
+                
+                //check whether there is any selected produce on that company
+                if(isset($_POST[$company_id])){
+                    $selected_pid = $_POST[$company_id];
+                }else{
+                    $selected_pid = null;
+                    $query2 = $this->read('product',"company_id = $company_id  AND type = 'cylinder'",null,1);
+
+                    // if that comapny have products
+                    if(mysqli_num_rows($query2) > 0){
+                        $row2 = mysqli_fetch_assoc($query2);
+                        $selected_pid = $row2['product_id'];
+                    }else{
+                        // means no produc selected and no product to select at random
+                        //think
+                    }
                 }
 
+                if($selected_pid != null){
+                    $row6 = mysqli_fetch_assoc($this->read('product',"product_id = $selected_pid"));
+                    $selected_product_weight = $row6['weight'];
+
+                    $total_cyl = floor($total_quota/$selected_product_weight);
+                    $remaining_cyl = floor($remaining_quota/$selected_product_weight);
+                }else{
+                    // think 
+                }
+
+                // get all the products belongs to that company to put it in select
+                $query7 = $this->read('product',"company_id = $company_id AND type = 'cylinder'");
+
+                if(mysqli_num_rows($query7) > 0){
+                    while($row7 = mysqli_fetch_assoc($query7)){
+                        array_push($allproducts,['product_id'=> $row7['product_id'],'product_name'=>$row7['name'],'product_weight'=>$row7['weight']]);
+                    }
+                }
+
+                // now push all attributes needed in companies array
+                $element = ['company_id'=>$company_id, 'name'=>$row['name'], 'logo'=>$row['logo'],'selected_pid'=>$selected_pid, 'total_cyl'=>$total_cyl, 'remaining_cyl'=>$remaining_cyl,'all_products'=>$allproducts];
+                array_push($companies,$element);
             }
-
-            array_push($quota_details,['quotas'=>$quotas,'products'=>$products,'remaining'=>$remaining]);
         }
 
+        return $companies;
+    }
 
+    function getQuotaDetails($customer_type,$company_id,$product_id){
+        $customer_id = $_SESSION['user_id'];
+        $quota_details = array();
+
+       $result1 = $this->Query("SELECT monthly_limit, state
+        FROM quota 
+        WHERE customer_type = '$customer_type' AND company_id = '$company_id'");
+
+        $quotas = mysqli_fetch_assoc($result1);
+        $total_quota_weight = $quotas['monthly_limit'];
+        $quota_state = $quotas['state'];
+
+
+        $result2 = $this->Query("SELECT * FROM customer_quota WHERE customer_type = '$customer_type' AND customer_id = '$customer_id' AND company_id = '$company_id'");
+        $remainings = mysqli_fetch_assoc($result2);
+        $remaining_quota_weight = $remainings['remaining_amount'];
+        
+        $result3 = $this->Query("SELECT weight FROM product WHERE product_id = '$product_id'");
+        $products =mysqli_fetch_assoc($result3);
+        $product_weight = $products['weight'];
+
+        $total_cylinders = floor($total_quota_weight/$product_weight);
+        $remaining_cylinders = floor($remaining_quota_weight/$product_weight);
+
+
+        array_push($quota_details,['quota_state'=>$quota_state,'total_quota_cylinders'=>$total_cylinders,'remaining_quota_cylinders'=>$remaining_cylinders]);
         return $quota_details;
     }
 
+    // function getproductweight($product_id){
+    //     $result1 = $this->Query("SELECT weight FROM product WHERE product_id = '$product_id'");
+    //     $row1=mysqli_fetch_assoc($result1);
+    //     return $row1;
 
-    function getproductweight($product_id){
-        $result1 = $this->Query("SELECT weight FROM product WHERE product_id = '$product_id'");
-        $row1=mysqli_fetch_assoc($result1);
-        return $row1;
-
-    }
+    // }
 
     
 
