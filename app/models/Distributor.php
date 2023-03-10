@@ -182,37 +182,28 @@ class Distributor extends Model
     // release a vehicle before removing
     public function releaseVehicle($vehicle_no) {
         $user_id = $_SESSION['user_id'];
-
-        $query1 = $this->Query("SELECT DISTINCT availability FROM distributor_vehicle WHERE distributor_id = '{$user_id}' and vehicle_no = '{$vehicle_no}'");
-        $availabilites = array();
-        while($row1 = mysqli_fetch_assoc($query1)) {
-            array_push($availabilites, ['vehicle_no'=>$row1["vehicle_no"], 'availability'=>$row1["availability"]]);
-        }
-
-        $this->update("distributor_vehicle", ["availability"=>$row1["availability"]], "distributor_id = '$user_id' and vehicle_no = '$vehicle_no");
+       
+        $query2 = $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
+        return $query2;
     }
 
 
-    public function removeVehicle($vehicle_no, $user_id) {
-        $removevehicle = array();
-        // $query1 = $this->Query("DELETE * from distributor_vehicle where vehicle_no = $vehicle_no and distributor_id = $user_id");
-        $query1 = $this->Query("DELETE * FROM distributor_vehicle v INNER JOIN distributor_vehicle_capacity c ON v.vehicle_no = c.vehicle_no WHERE distributor_id = '{$user_id}'");
-        if(mysqli_num_rows($query1)>0) {
-            while($row1 = mysqli_fetch_assoc($query1)) {
-                array_push( $removevehicle,$row1);
+    public function removeVehicle($vehicle_no) {
+        $user_id = $_SESSION['user_id'];
 
-                // $query2 = $this-> Query("DELETE * from distributor_vehicle_capacity where vehicle_no = $vehicle_no and distributor_id = $user_id");
-                // if(mysqli_num_rows($query2)>0) {
-                    // while($row2 = mysqli_fetch_assoc($query2)) {
-                        // array_push( $removevehicle,$row1);
+        // $query1 = $this->Query();
+        // return $query1;
+        // $removevehicle = array();
+    
+        // $query1 = $this->Query("DELETE * FROM distributor_vehicle v INNER JOIN distributor_vehicle_capacity c ON v.vehicle_no = c.vehicle_no WHERE distributor_id = '{$user_id}'");
+        // if(mysqli_num_rows($query1)>0) {
+        //     while($row1 = mysqli_fetch_assoc($query1)) {
+        //         array_push( $removevehicle,$row1);
+        //         array_push( $removevehicle, ['vehicleinfo'=>$row1, 'capacityinfo'=>$row2]);
 
-                    // }
-                // }
-                array_push( $removevehicle, ['vehicleinfo'=>$row1, 'capacityinfo'=>$row2]);
-
-            }
-        }
-        return $removevehicle;
+        //     }
+        // }
+        // return $removevehicle;
 
     }
 
@@ -513,9 +504,9 @@ class Distributor extends Model
         for($i=0; $i<count($productid); $i++){
             if($postproducts[$productid[$i]]!=0) {
                 $notvalidquantity = false;
-            }
+            };
         }
-
+        // var_dump($postproducts);
         if($notvalidquantity) {
             $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
             return $data;
@@ -540,7 +531,7 @@ class Distributor extends Model
                     $stock_req_id = $row['stock_req_id'];
                     $result = $this->Query("SELECT * FROM stock_include WHERE stock_req_id='{$stock_req_id}' AND product_id = '{$product}'");
                     $row2 = mysqli_fethc_assoc($result);
-                    $pending_stock +=$row2['quantity'];
+                    $pending_stock += $row2['quantity'];
                 }
             }
 
@@ -586,6 +577,7 @@ class Distributor extends Model
             $query7 = $this->Query("INSERT INTO stock_include(stock_req_id, product_id, quantity, unit_price) VALUES($stock_req_id, '$product', $quantity, $unit_price)");
 
         }
+        return $data;
 
     }
 

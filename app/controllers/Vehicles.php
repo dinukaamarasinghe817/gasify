@@ -126,6 +126,7 @@ class Vehicles extends Controller{
 
     public function releasing($vehicle_no) {
         $this->model("Distributor")->releaseVehicle($vehicle_no);
+        $this->viewvehicle();
     }
 
     public function removeVehicle($vehicle_no) {

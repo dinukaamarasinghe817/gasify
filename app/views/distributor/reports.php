@@ -85,7 +85,7 @@ $user_id = $_SESSION['user_id'];
                                         <td>10 000.00</td>
                                         <td>
                                             <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/distributor_pdf/'.$distribution_num.'\'">Generate PDF</button>
-                                        </td>                                    
+                                        </td>                                                                      
                                     </tr>';
                             }
                             $output .= '

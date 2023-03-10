@@ -334,16 +334,7 @@ class Orders extends Controller{
             $this->select_products($error);
         }
 
-
-        
-        
-
-       
-
     }
-
-
-    
 
     //select payment method
     function select_payment_method(){
@@ -672,7 +663,7 @@ class Orders extends Controller{
         }
         $data = $this->model("Distributor")->phurchaseOrders($this->$user_id, $productid, $postproducts);
         if(isset($data['toast'])) {
-            // $this->distributor("purchaseorder", $data['toast']);
+            // $this->distributor("phurchase_orders", $data['toast']);
         }else {
             $this->view('distributor/phurchase_orders',$data);      
         }
