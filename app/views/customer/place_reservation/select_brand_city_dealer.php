@@ -112,7 +112,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         if(isset($data["dealers"])){
                                             $result1 = $data["dealers"];
                                             
-                                            while($dealers = mysqli_fetch_assoc($result1)){ 
+                                            while($dealers = mysqli_fetch_assoc($result1)){
                                                 $name = $dealers["d_name"];
                                                 $dealer_id = $dealers["dealer_id"];
                                                 echo "<option value = $dealer_id id= $dealer_id> $name </option>";

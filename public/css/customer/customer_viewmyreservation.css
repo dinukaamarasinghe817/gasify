@@ -220,11 +220,6 @@ a,button{
     width: 100%;
 }
 
-.d_details div{
-    /* width: 180px; */
-    
-}
-
 .d_btn{
     width: 325px;
     background-color: var(--button-blue);

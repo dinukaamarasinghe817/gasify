@@ -83,10 +83,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     
                                                 // echo $total_cylinders;
                                                 if($product['weight']== 12.5){
-                                                    echo '<option value="'.$product['weight'].'" selected>'.$product['weight'].' Kg '.$product['p_name'].'</option>'; 
+                                                    echo '<option value="'.$product['product_id'].'" selected>'.$product['weight'].' Kg '.$product['p_name'].'</option>'; 
                                                 }else{
                                                     
-                                                    echo '<option value="'.$product['weight'].'">'.$product['weight'].' Kg '.$product['p_name'].'</option>';
+                                                    echo '<option value="'.$product['product_id'].'">'.$product['weight'].' Kg '.$product['p_name'].'</option>';
                                                 }
                                                 
                                                 
@@ -169,7 +169,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             const progress_bar = document.getElementById("progress_bar");
             
                 function select_product(total_weight,remaining_weight){
-                    var product_weight = document.getElementById("product_dropdown").value;   //get product weight
+                    var product_id = document.getElementById("product_dropdown").value;   //get product id
 
                     product_weight = parseInt(product_weight);
                     total_weight = parseInt(total_weight);    
@@ -181,12 +181,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     remaining_cylinders = Math.floor(remaining_weight/product_weight);  //total cylinders
                     remaining_quota.innerHTML = remaining_cylinders;
                     
-                    percentage = remaining_cylinders/total_cylinders * 100;
+                    // percentage = remaining_cylinders/total_cylinders * 100;
 
                     event.preventDefault();
                     var formData = new FormData();
                     let xhr = new XMLHttpRequest(); //new xml object
-                    var url = 'http://localhost/mvc/Orders/selected_product_quota/'+ percentage;
+                    var url = 'http://localhost/mvc/Orders/selected_product_quota/'+ product_id + '/' + total_cylinders + '/' + remaining_cylinders;
                     console.log(url);
                     xhr.open('POST', url , true);
                     xhr.onload = ()=>{
