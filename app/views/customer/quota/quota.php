@@ -80,6 +80,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                             <img src= " '.BASEURL.'/public/img/profile/'.$company_logo.'" alt="">
                                                         </div><div id="'.$company_id.'">
                                                         <div id ="progress_bar">';
+                                                            //progress circle
                                                             $progresscircle = new Quota($selected_pid,$total_cylinders,$remaining_cylinders); 
                                                  echo '</div><div class="remaining"><span style="color:#0047AB;"><strong> Remaining : </strong></span><span style="color:#0047AB;"  id = "remaining_cylinders"><strong>'.$remaining_cylinders.'</strong></span><span style="color:#0047AB;"><strong>&nbsp Cylinders</strong></span></div></div></div><div class="bottom_details">
                                                         <div class="days" >'.$remaingDays.' days more</div>   
