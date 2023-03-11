@@ -279,19 +279,9 @@ class Orders extends Controller{
         //check selected products weights are higher than remaining quota
         $quota_details = $this->model('Customer')->getQuotaDetails($customer_type);
         foreach($quota_details as $quota_detail){
-            $quotas = $quota_detail['quotas'];
-            $remainings = $quota_detail['remaining'];
-            foreach($quotas as $quota){
-                if($quota['company_id'] == $_SESSION['company_id']){
-                    $quota_state = $quota['state'];
-                    $monthly_limit = $quota['monthly_limit'];
-                }
-            }
-            foreach($remainings as $remaining){
-                if($remaining['company_id'] == $_SESSION['company_id']){
-                    $remaining_weight = $remaining['remaining_amount'];
-                }
-            }
+           $quota_state = $quota_detail['state'];
+           $monthly_limit = $quota_detail['monthly_limit'];
+           $remaining_weight = $quota_detail['remaining_weight'];
         }
 
        
@@ -388,22 +378,22 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $customer_type = $row1['type'];
 
-        $quota_details = $this->model('Customer')->getQuotaDetails($customer_type);
-        foreach($quota_details as $quota_detail){
-            $quotas = $quota_detail['quotas'];
-            $remainings = $quota_detail['remaining'];
-            foreach($quotas as $quota){
-                if($quota['company_id'] == $_SESSION['company_id']){
-                    $quota_state = $quota['state'];
-                    $monthly_limit = $quota['monthly_limit'];
-                }
-            }
-            foreach($remainings as $remaining){
-                if($remaining['company_id'] == $_SESSION['company_id']){
-                    $remaining_weight = $remaining['remaining_amount'];
-                }
-            }
-        }
+        // $quota_details = $this->model('Customer')->getQuotaDetails($customer_id);
+        // foreach($quota_details as $quota_detail){
+        //     $quotas = $quota_detail['quotas'];
+        //     $remainings = $quota_detail['remaining'];
+        //     foreach($quotas as $quota){
+        //         if($quota['company_id'] == $_SESSION['company_id']){
+        //             $quota_state = $quota['state'];
+        //             $monthly_limit = $quota['monthly_limit'];
+        //         }
+        //     }
+        //     foreach($remainings as $remaining){
+        //         if($remaining['company_id'] == $_SESSION['company_id']){
+        //             $remaining_weight = $remaining['remaining_amount'];
+        //         }
+        //     }
+        // }
 
 
         if(isset($_POST['submit_btn'])){
@@ -424,7 +414,7 @@ class Orders extends Controller{
                 $this -> bank_slip_upload($error);
             }
             else{
-                $this->model('Customer')->place_reservation($quota_state,$monthly_limit,$remaining_weight);
+                $this->model('Customer')->place_reservation($customer_type);
                 $this->select_collecting_method();
             }
 
@@ -522,58 +512,7 @@ class Orders extends Controller{
 
 
     /*..........................Customer quota......................... */
-   // display active quotas for customers according to their types
-    // function customer_quota(){
-    //     $customer_id = $_SESSION['user_id'];
-    //     $data['navigation'] = 'quota';
-
-    //     $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-    //     $row1 = mysqli_fetch_assoc($customer_details);
-    //     $data['image'] = $row1['image'];
-    //     $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-       
-    //     $result = $this->model('Customer')->getCustomer($customer_id);
-    //     $row = mysqli_fetch_assoc($result);
-    //     $customer_type = $row['c_type'];
-       
-    //     $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type);
-
-    //     // $data['remaining'] = $this->model('Customer')->getRemaining($customer_id,$customer_type,);
-
-    //     $this->view('customer/quota/quota',$data);
-    // }
-
-    // function selected_product_quota($product_id,$total_weight,$remaining_weight){
-    //     $customer_id = $_SESSION['user_id'];
-    //     $data['navigation'] = 'quota';
-
-    //     $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-    //     $row1 = mysqli_fetch_assoc($customer_details);
-    //     $data['image'] = $row1['image'];
-    //     $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
-
-    //     $result = $this->model('Customer')->getCustomer($customer_id);
-    //     $row = mysqli_fetch_assoc($result);
-    //     $customer_type = $row['c_type'];
-       
-    //     $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type);
-
-    //     $data['product_id'] = $product_id;
-    //     $data['product_weight'] = $this->model('Customer')->getproductweight($product_id);
-
-    //     $product_weight = $data['product_weight'];
-    //     $product_weight = $product_weight['weight'];
-
-
-    //     $total_weight = floatval($total_weight);
-    //     $remaining_weight = floatval($remaining_weight);
-    //     $data['total_cylinders'] = floor($total_weight/$product_weight);
-    //     $data['remaining_cylinders'] = floor($remaining_weight/$product_weight);
-
-    //     $this->view('customer/quota/quota_ajax',$data);
-
-    // }
+  
     function customer_quota(){
         $data = array();
         $customer_id = $_SESSION['user_id'];
@@ -590,73 +529,73 @@ class Orders extends Controller{
         $this->view('customer/quota/quota',$data);
     }
 
-    function customer_quotas(){
-        $customer_id = $_SESSION['user_id'];
-        $data['navigation'] = 'quota';
+    // function customer_quotas(){
+    //     $customer_id = $_SESSION['user_id'];
+    //     $data['navigation'] = 'quota';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+    //     $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+    //     $row1 = mysqli_fetch_assoc($customer_details);
+    //     $data['image'] = $row1['image'];
+    //     $data['name'] = $row1['first_name'].' '.$row1['last_name'];
        
-        $result = $this->model('Customer')->getCustomer($customer_id);
-        $row = mysqli_fetch_assoc($result);
-        $customer_type = $row['c_type'];
+    //     $result = $this->model('Customer')->getCustomer($customer_id);
+    //     $row = mysqli_fetch_assoc($result);
+    //     $customer_type = $row['c_type'];
 
        
-       $data['company_details'] = $this->model('Customer')->getCompanyBrand();  //get all companies
-       while($company = mysqli_fetch_assoc($data['company_details'])){
-            $company_id = $company['company_id'];
-            if(isset($_POST[$company_id])){
-                 $selected_product_id = $_POST[$company_id];
-            }else{
-                $selected_product_id = null;
-            }
-            //input of dropdown in not null
-            if($selected_product_id != null){
-                $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type,$company_id,$selected_product_id);
-                $quota_details = $data['quota_details'];
-                foreach($quota_details as $quota_detail){
+    //    $data['company_details'] = $this->model('Customer')->getCompanyBrand();  //get all companies
+    //    while($company = mysqli_fetch_assoc($data['company_details'])){
+    //         $company_id = $company['company_id'];
+    //         if(isset($_POST[$company_id])){
+    //              $selected_product_id = $_POST[$company_id];
+    //         }else{
+    //             $selected_product_id = null;
+    //         }
+    //         //input of dropdown in not null
+    //         if($selected_product_id != null){
+    //             $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type,$company_id,$selected_product_id);
+    //             $quota_details = $data['quota_details'];
+    //             foreach($quota_details as $quota_detail){
                 
-                    $data['quota_state'] = $quota_detail['quota_state'];
-                    if($data['quota_state'] == 'ON'){
-                        $data['total_quota_weight'] = $quota_detail['total_quota_cylinders'];
-                        $data['remaining_quota_weight'] = $quota_detail['remaining_quota_cylinders'];
-                    }
-                }
+    //                 $data['quota_state'] = $quota_detail['quota_state'];
+    //                 if($data['quota_state'] == 'ON'){
+    //                     $data['total_quota_weight'] = $quota_detail['total_quota_cylinders'];
+    //                     $data['remaining_quota_weight'] = $quota_detail['remaining_quota_cylinders'];
+    //                 }
+    //             }
 
-                $data['product_weight'] = $this->model('Customer')->getproductweight($selected_product_id);
-                $this->view('customer/quota/quota',$data);
+    //             $data['product_weight'] = $this->model('Customer')->getproductweight($selected_product_id);
+    //             $this->view('customer/quota/quota',$data);
 
-            }
-            //otherwise take default product as input
-            else{
-                $data['company_products'] = $this->model('Customer')->getCompanyProducts($company_id);
-                $products = mysqli_fetch_assoc($data['company_products']);
-                foreach ($products as $product){
-                    $default_product = 4;
-                }
-                $default_product_id = $default_product['product_id'];
-                $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type,$company_id,$default_product_id);
+    //         }
+    //         //otherwise take default product as input
+    //         else{
+    //             $data['company_products'] = $this->model('Customer')->getCompanyProducts($company_id);
+    //             $products = mysqli_fetch_assoc($data['company_products']);
+    //             foreach ($products as $product){
+    //                 $default_product = 4;
+    //             }
+    //             $default_product_id = $default_product['product_id'];
+    //             $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type,$company_id,$default_product_id);
                
-                $quota_details = $data['quota_details'];
-                foreach($quota_details as $quota_detail){
-                    $data['quota_state'] = $quota_detail['quota_state'];
-                    if($data['quota_state'] == 'ON'){
-                        $data['total_quota_weight'] = $quota_detail['total_quota_cylinders'];
-                        $data['remaining_quota_weight'] = $quota_detail['remaining_quota_cylinders'];
-                    }
-                }
+    //             $quota_details = $data['quota_details'];
+    //             foreach($quota_details as $quota_detail){
+    //                 $data['quota_state'] = $quota_detail['quota_state'];
+    //                 if($data['quota_state'] == 'ON'){
+    //                     $data['total_quota_weight'] = $quota_detail['total_quota_cylinders'];
+    //                     $data['remaining_quota_weight'] = $quota_detail['remaining_quota_cylinders'];
+    //                 }
+    //             }
 
 
-                $data['product_weight'] = $this->model('Customer')->getproductweight($default_product_id);
-                $this->view('customer/quota/quota',$data);
-            }
-       }
+    //             $data['product_weight'] = $this->model('Customer')->getproductweight($default_product_id);
+    //             $this->view('customer/quota/quota',$data);
+    //         }
+    //    }
 
 
 
-    }
+    // }
 
 
 
