@@ -21,7 +21,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="drop_down">
             <div class="brand_dropdown">
                 <select name="brand" id="brand" class="branddropdown dropdowndate" onchange="get_select_value('brand','city');">
-                    <option value="-1" selected disabled hidden >Select Gas Brand</option>
+                    <!-- <option value="-1" selected disabled hidden >Select Gas Brand</option> -->
+                    <option value="1" selected>All Brands</option>
                     <?php 
 
                         if(isset($data["brands"])){
@@ -41,7 +42,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 
                 <select name="city" id="city" class="citydropdown dropdowndate" onchange="get_select_value('brand','city');">
                     <option value="<?php echo $data['mycity'];?>" selected hidden ><?php echo $data['mycity'];?></option>
-                    <option value= 1 >ALL Cities</option></option>
+                    <option value= 1 >All Cities</option></option>
                     <?php 
                         $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
                         sort($cities);              
@@ -63,7 +64,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                     if(isset($data["dealers"])){
                         $result = $data["dealers"];
+                        if(mysqli_num_rows($result)==0){
+                            echo "No Dealers Found!";
+                        }
                         while($dealer = mysqli_fetch_assoc($result)){
+                            
                                 $url = BASEURL.'/profile/preview/dealer/'.$dealer['dealer_id'].'/profile/customer/viewdealerprofile';
                                 echo ' <tr><td>'.$dealer["d_name"].'</td><td>'.$dealer["c_name"].'</td><td>'.$dealer["address"].'</td><td>'.$dealer["contact_no"].'</td><td><button type="submit" class="More_details" onclick = "location.href=\''.$url.'\'">More Details</button></td></tr>';
                         }
@@ -87,6 +92,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             var brand_selected_value = document.getElementById(branddropdown_id).value;
             var city_selected_value = document.getElementById(citydropdown_id).value;
            
+            // console.log(city_selected_value);
 
             if (city_selected_value == -1){
                 city_selected_value = null;
@@ -96,6 +102,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 brand_selected_value = null;
 
             }
+
+            // if(city_selected_value == 1){
+            //     // city_selected_value = 'all';
+            // }
 
             console.log(brand_selected_value);
             console.log(city_selected_value);

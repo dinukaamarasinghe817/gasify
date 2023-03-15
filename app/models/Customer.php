@@ -313,29 +313,58 @@ class Customer extends Model{
         if($company_id == 'null'){
             $company_id = null;
         }
-        // if($city_name==1){
-        //     $city_name = null;
-
-        // }
-        
-
-        if($company_id != null && $city_name != null){
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
+        if($city_name == '1'){
+            $city_name = 1;
         }
-        else if($company_id!= null && $city_name== null){
 
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
-        }else if($company_id == null && $city_name != null){
-            
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
-        
-        }else{
-            $customer_id = $_SESSION['user_id'];
-            $row = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
-            $mycity = $row['city'];
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE d.city = '$mycity'");
-        }
-       
+
+        if($city_name !=1 &&  $company_id != 1){
+                //both brand and city selected by customer
+                if($company_id != null && $city_name != null){
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
+                }
+                //only brand selected by customer
+                else if($company_id!= null && $city_name == null){
+                    $customer_id = $_SESSION['user_id'];
+                    $row = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+                    $mycity = $row['city'];
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$mycity'");
+                }
+                // only city selected by customer
+                else if($company_id == null && $city_name != null){
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
+                }
+                //both city and brand not selected by customer
+                else if($company_id == null &&  $city_name== null){
+                    $customer_id = $_SESSION['user_id'];
+                    $row = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+                    $mycity = $row['city'];
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE d.city = '$mycity'");
+                }
+            }else if($company_id ==1 && $city_name == 1){
+                
+                //both all cities and all brands option selected
+                // elseif($company_id == 1 &&  $city_name == 1){
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+                // }
+            }else{
+                //only selected brand and all cities option without company
+                if($company_id == null && $city_name == 1){
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
+                }
+                //brand and all cities option selected by customer
+                else if($company_id != null && $city_name == 1){
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
+                }
+                //only selected city all brand option selected by customer
+                elseif($company_id == 1 && $city_name != null ){
+                    $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
+                }
+            }
+
+
+
+
         // if($company_id == null && $city_name == 1){
         //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id");
         // }
@@ -484,22 +513,22 @@ class Customer extends Model{
         }
         //check if both company and city is selected
         if($company_id != null && $city_name != null){
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
         }
         //check if only company is selected 
         else if($company_id!= null && $city_name== null){
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id'");
         }
         //check if only city is selected
         else if($company_id == null && $city_name != null){
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no ,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE  d.city = '$city_name'");
         }
         //both company and city is null
         else{
             $customer_id = $_SESSION['user_id'];
             $row = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
             $mycity = $row['city'];
-            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,CONCAT(d.street,' , ',d.city) as address ,d.contact_no,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE d.city = '$mycity'");
+            $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE d.city = '$mycity'");
         }
        
       return $result1;
