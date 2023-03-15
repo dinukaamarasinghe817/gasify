@@ -88,10 +88,12 @@ class Customer extends Model{
     public function getPopularProducts(){
 
         $popular_products = array();
-        $result1 = $this->Query("SELECT SUM(reservation_include.quantity) as p_count ,product.name as p_name,product.weight,product.unit_price,product.image,company.name as c_name 
+        $result1 = $this->Query("SELECT reservation.order_state,reservation.order_id,SUM(reservation_include.quantity) as p_count ,product.name as p_name,product.weight,product.unit_price,product.image,company.name as c_name 
         FROM reservation_include
+        JOIN reservation ON reservation.order_id = reservation_include.order_id
         JOIN product ON reservation_include.product_id = product.product_id
         Join company ON product.company_id = company.company_id
+        WHERE order_state != 'Canceled'
         GROUP BY product.product_id
         ORDER BY SUM(reservation_include.quantity) DESC LIMIT 4");
 
@@ -677,16 +679,17 @@ class Customer extends Model{
 
             }
 
-        }
-
+        }   
         //if quota is not active then customer is allowed to buy any amount of items 
-        if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
-            $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
-            $this->insertproducts();    //insert selected products to reservation include table     
-        }else{
-            $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
-            $this->insertproducts();    //insert selected products to reservation include table 
-        } 
+        else{
+            if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
+                $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
+                $this->insertproducts();    //insert selected products to reservation include table     
+            }else{
+                $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
+                $this->insertproducts();    //insert selected products to reservation include table 
+            } 
+        }
 
     }
 

@@ -171,12 +171,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 </section>
 
-<!-- <script>
+<script>
     const form = document.querySelector(".typing-area"),
-    incoming_id = form.querySelector(".incoming_id").value,
+    // incoming_id = form.querySelector(".incoming_id").value,
     inputField = form.querySelector(".input-field"),
     sendBtn = form.querySelector("button"),
     chatBox = document.querySelector(".chat-box");
+    
 
     form.onsubmit = (e)=>{
         e.preventDefault();
@@ -191,13 +192,27 @@ $sidebar = new Navigation('customer',$data['navigation']);
         }
     }
 
+
+    // inputField.addEventListener('input', function() {
+    //     let line = inputField.value.split{'\n'}.length;
+
+    //     if(inputField.rows < 6 || line < 6){
+    //         inputField.rows = line;
+    //     }
+    //     if(inputField.rows >1){
+    //         form.style.alignItems = "flex-end";
+    //     }else{
+    //         form.style.alignItems = "center";
+    //     }
+    // })
+
     sendBtn.onclick = ()=>{
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "php/insert-chat.php", true);
+        xhr.open("POST", 'http://localhost/mvc/Support/customer_send_message/', true);
         xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if(xhr.status === 200){
-                inputField.value = "";
+                // inputField.value = "";
                 scrollToBottom();
             }
         }
@@ -214,27 +229,30 @@ $sidebar = new Navigation('customer',$data['navigation']);
     }
 
     setInterval(() =>{
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "php/get-chat.php", true);
-        xhr.onload = ()=>{
-        if(xhr.readyState === XMLHttpRequest.DONE){
-            if(xhr.status === 200){
-                let data = xhr.response;
-                chatBox.innerHTML = data;
+        // let xhr = new XMLHttpRequest();
+        // xhr.open("POST", 'http://localhost/mvc/Support/customer_support/', true);
+        // xhr.onload = ()=>{
+        // if(xhr.readyState === XMLHttpRequest.DONE){
+        //     if(xhr.status === 200){
+        //         let data = xhr.response;
+        //         chatBox.innerHTML = data;
                 if(!chatBox.classList.contains("active")){
                     scrollToBottom();
                 }
-            }
-        }
-        }
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("incoming_id="+incoming_id);
+        //     }
+        // }
+        // }
+        // console.log('interval');
+       
     }, 500);
 
     function scrollToBottom(){
-        chatBox.scrollTop = chatBox.scrollHeight;
+        // console.log('scrollToBottom');
+        // chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.scrollTo(0,chatBox.scrollHeight);
     }
+
   
 
     
-</script> -->
+</script>
