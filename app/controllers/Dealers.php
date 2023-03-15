@@ -36,6 +36,7 @@ class Dealers extends Controller {
 
         $data['brands']= $this->model("Customer")->getCompanyBrand();
         $data['dealers']= $this->model("Customer")->getdealersDetails($brand_name,$city_name);
+       
 
         $this->view('customer/dealers/viewdealers',$data);
 
