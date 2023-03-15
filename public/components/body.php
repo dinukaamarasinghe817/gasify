@@ -1620,7 +1620,7 @@ class Body{
                                 $orders.='<tr>
                                 <td>'.$row_3['name'].'</td>
                                     <td style="text-align:center">'.number_format($row_2['unit_price']).'</td>
-                                    <td style="text-align:center"><input type="number" class="qtyInput" value="'.$row_2['quantity'].'" id="'.$orderID.$imgIndex."1".'"';
+                                    <td style="text-align:center"><input type="number" class="qtyInput" value="'.$row_2['quantity'].'" id="'.$orderID.$imgIndex."1".'" key="'.$row_3['product_id'].'"';
                                     if($row_2['quantity']<=$row_3['quantity']){
                                         $orders.='disabled></td>';
                                         $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/check.png'.' width="32px" height="32px" id="'.$orderID.$imgIndex."2".'" class="stateImg"></td>';
@@ -1731,25 +1731,34 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;background-color:#d8ca30;color:white">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">
-            <div class="poductQuota">
-                <div class="productQuotaName" style="font-size: large"><lable>Domestic customer</lable></div>
-                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>35 KG</label></div>
-                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="domestic"></div>
-                <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="Domestic"><div class="quotaButtons" ><label>Set Quota</label></div></div>
-                <div class="productQuotaSetNew" onClick="resetQuota(this)" key="Domestic"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>     
-            </div>
-            <div class="poductQuota">
-                <div class="productQuotaName" style="font-size: large"><lable>Commercial customer</lable></div>
-                <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>90 KG</label></div>
-                <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="commercial"></div>
-                <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="Commercial"><div class="quotaButtons" ><label>Set Quota</label></div></div>
-                <div class="productQuotaSetNew" onClick="resetQuota(this)" key="Commercial"><div class="quotaButtons_2" ><label>Reset Quota</label></div></div>    
-            </div>
-            </div>
-            
-            
-            ';     
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+            if (isset($data['quotaDetails'])) { 
+                $quota='';
+                $result = $data["quotaDetails"];
+                foreach ($result as $row) {
+                    $quota.='
+                        <div class="poductQuota">
+                            <div class="productQuotaName" style="font-size: large"><lable>'.$row['customer_type'].'</lable></div>
+                            <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>'.$row['monthly_limit'].'KG</label></div>
+                            <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'"></div>
+                            <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                            <div class="productQuotaSetNew">
+                            <label class="switch">';
+                                if($row['state']=="ON"){
+                                    $quota.='<input type="checkbox" oninput="resetQuota(this)" key='.$row['customer_type'].' checked>';
+
+                                }else{
+                                    $quota.='<input type="checkbox" oninput="resetQuota(this)"key='.$row['customer_type'].'>';
+                                }
+                                $quota.='
+                                <span class="slider round"></span>
+                            </label>
+                            </div>     
+                        </div>';
+
+                }
+                echo $quota;
+            }
         echo ' 
         </section>';
     }
@@ -2168,7 +2177,7 @@ class Body{
                                         $orders.='<tr>
                                         <td>'.$row_3['name'].'</td>
                                             <td style="text-align:center">'.number_format($row_2['unit_price']).'</td>
-                                            <td style="text-align:center"><input type="number" class="qtyInput" value="'.$row_2['quantity'].'" id="'.$orderID.$imgIndex."1".'"';
+                                            <td style="text-align:center"><input type="number" class="qtyInput" value="'.$row_2['quantity'].'" id="'.$orderID.$imgIndex."1".'" key="'.$row_3['product_id'].'"';
                                             if($row_2['quantity']<$row_3['quantity']){
                                                 $orders.='disabled></td>';
                                                 $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/check.png'.' width="32px" height="32px" id="'.$orderID.$imgIndex."2".'"></td>';
@@ -2194,9 +2203,9 @@ class Body{
                     </div>
                         <div class="orderRow">';
                         if($isEnabled){
-                            $orders.='<div class="orderButtons" style="margin-left:28.5%;background-color:dodgerblue" onClick="issueOrder(this)" key="'.$orderID.'issue" id="'.$orderID.'issue"><label>Issue</label></div>';
+                            $orders.='<div class="orderButtons" style="margin-left:28.5%;background-color:dodgerblue" onClick="issueOrder(this)" key="'.$orderID.'" id="'.$orderID.'issue"><label>Issue</label></div>';
                         }else{
-                            $orders.='<div class="orderButtons" style="margin-left:28.5%;pointer-events:none" onClick="issueOrder(this)" key="'.$orderID.'issue" id="'.$orderID.'issue"><label>Issue</label></div>';
+                            $orders.='<div class="orderButtons" style="margin-left:28.5%;pointer-events:none" onClick="issueOrder(this)" key="'.$orderID.'" id="'.$orderID.'issue"><label>Issue</label></div>';
                         }
                          $orders.='   
                         </div>

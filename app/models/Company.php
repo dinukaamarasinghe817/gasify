@@ -94,8 +94,8 @@ class Company extends Model
     }public function setQuota($companyID,$customer,$quota){
         $this->Query("UPDATE quota SET monthly_limit=$quota WHERE (company_id=$companyID AND customer_type='$customer')");
     }
-    public function resetQuota($companyID,$customer){
-        $this->Query("UPDATE quota SET monthly_limit=0 WHERE (company_id=$companyID AND customer_type='$customer')");
+    public function resetQuota($companyID,$customer,$state){
+        $this->Query("UPDATE quota SET state='$state' WHERE (company_id=$companyID AND customer_type='$customer');");
     }
     public function getStockReqDetails($company_id){
         $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=2 INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='pending';");
@@ -141,7 +141,7 @@ class Company extends Model
         //return $result;
     }
     public function getProductCount($company_id){
-        $result=$this->Query("SELECT COUNT(product.product_id) as count FROM product WHERE product.company_id=2");
+        $result=$this->Query("SELECT COUNT(product.product_id) as count FROM product WHERE product.company_id=$company_id");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -179,6 +179,20 @@ class Company extends Model
             }
             return $info;
         }
+    }
+    public function reduceStock($key,$qty){
+        $this->Query("UPDATE product SET quantity=quantity-$qty WHERE product_id=$key;");
+    }
+    public function getQuotaDetails($company_id){
+        $result=$this->Query("SELECT * FROM `quota` WHERE company_id=$company_id");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['customer_type'=>$row['customer_type'],'monthly_limit'=>$row['monthly_limit'],'state'=>$row['state']]);
+            }
+            return $info;
+        }
+
     }
     
 }

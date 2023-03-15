@@ -202,13 +202,11 @@ class Compny extends Controller{
         $data['navigation'] = 'limitquota';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
-        $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
-        $product_details = $this->model('Company')->getProductDetails($company_id);
+        $product_details = $this->model('Company')->getQuotaDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
-        $data['dealer']=$dealer_details;
-        $data['prodducts']=$product_details;
+        $data['quotaDetails']=$product_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
             //$data=[];
@@ -226,8 +224,9 @@ class Compny extends Controller{
     function resetQuota(){
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $customer = mysqli_real_escape_string($conn,$_POST["customer"]);
+        $state = mysqli_real_escape_string($conn,$_POST["state"]);
         $company_id=$_SESSION['user_id'];
-        $this->model('Company')->resetQuota($company_id,$customer);
+        $this->model('Company')->resetQuota($company_id,$customer,$state);
         die();
     }
     function analysis(){
@@ -287,8 +286,11 @@ class Compny extends Controller{
     public function issueOrder(){
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $orderID = mysqli_real_escape_string($conn,$_POST["orderID"]);
+        $key = mysqli_real_escape_string($conn,$_POST["key"]);
+        $qty = mysqli_real_escape_string($conn,$_POST[$key]);
         $company_id=$_SESSION['user_id'];
         $this->model('Company')->issueOrder($orderID);
+        $this->model('Company')->reduceStock($key,$qty);
     }
     public function delayOrder(){
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
@@ -296,6 +298,10 @@ class Compny extends Controller{
         $company_id=$_SESSION['user_id'];
         $this->model('Company')->delayOrder($orderID);
         die();
+    }
+    public function ProductCount(){
+        $product_count = $this->model('Company')->getProductCount($_SESSION['user_id']);
+        echo json_encode($product_count);
     }
 
 }
