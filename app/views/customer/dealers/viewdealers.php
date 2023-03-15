@@ -5,11 +5,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 <section class="body">
     <?php
-        // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        // call whatever the component you need to show
-        // $bodycontent = new Body('allmyreservation', $data);
-        
     ?>
 
     <div class="under_topbar">
@@ -22,7 +18,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             <div class="brand_dropdown">
                 <select name="brand" id="brand" class="branddropdown dropdowndate" onchange="get_select_value('brand','city');">
                     <!-- <option value="-1" selected disabled hidden >Select Gas Brand</option> -->
-                    <option value="1" selected>All Brands</option>
+                    <option value="-1" selected>All Brands</option>
                     <?php 
 
                         if(isset($data["brands"])){
@@ -42,7 +38,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 
                 <select name="city" id="city" class="citydropdown dropdowndate" onchange="get_select_value('brand','city');">
                     <option value="<?php echo $data['mycity'];?>" selected hidden ><?php echo $data['mycity'];?></option>
-                    <option value= 1 >All Cities</option></option>
+                    <option value = "-1" >All Cities</option></option>
                     <?php 
                         $cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
                         sort($cities);              
@@ -64,8 +60,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                     if(isset($data["dealers"])){
                         $result = $data["dealers"];
+                        //if no dealers found selected city and brand
                         if(mysqli_num_rows($result)==0){
-                            echo "No Dealers Found!";
+                            echo ' <tr><td></td><td></td><td><strong>No Dealers Found!</strong></td><td></td><td></td></tr>';
                         }
                         while($dealer = mysqli_fetch_assoc($result)){
                             
@@ -91,20 +88,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
         function get_select_value(branddropdown_id=null,citydropdown_id=null){
             var brand_selected_value = document.getElementById(branddropdown_id).value;
             var city_selected_value = document.getElementById(citydropdown_id).value;
-           
-            // console.log(city_selected_value);
-
-            if (city_selected_value == -1){
-                city_selected_value = null;
+          
+            // if (city_selected_value == -1){
+            //     city_selected_value = null;
                 
-            }
-            if (brand_selected_value == -1){
-                brand_selected_value = null;
+            // }
+            // if (brand_selected_value == -1){
+            //     brand_selected_value = null;
 
-            }
-
-            // if(city_selected_value == 1){
-            //     // city_selected_value = 'all';
             // }
 
             console.log(brand_selected_value);

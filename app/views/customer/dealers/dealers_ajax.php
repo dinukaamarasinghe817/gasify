@@ -6,6 +6,7 @@
 
             if(isset($data["dealers"])){
                 $result = $data["dealers"];
+                //if no dealers found selected city and brand
                 if(mysqli_num_rows($result)==0){
                     echo ' <tr><td> </td><td> </td><td><strong>No Dealers Found!</strong></td><td> </td><td> </td></tr>';
                 }

@@ -25,7 +25,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     // echo '<table><tr id="first_row"><th><h3><center>No reservations Found!</center></h3></td></tr></table>';
                     echo '<table class="styled-table"><div class="table_header">
                         <thead><tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></thead></div>';
-                        echo'<tbody><tr><td></td><td><img src="../img/placeholders/1.png"></td><td></td></tr></tbody></table>';
+                        echo'<tbody><tr><td></td><td></td><td><strong>No Reservations Found!</strong></td><td></td><td></td></tr></tbody></table>';
 
                 }else{
                     if(isset($data['allmyreservations'])){

@@ -111,6 +111,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                                         if(isset($data["dealers"])){
                                             $result1 = $data["dealers"];
+                                            //if no dealers found selected city and brand
                                             if(mysqli_num_rows($result1)==0){
                                                 echo '<option value="-1" disabled >No Dealers Found</option>';
                                             }
