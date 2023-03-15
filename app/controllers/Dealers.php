@@ -44,7 +44,7 @@ class Dealers extends Controller {
     //display dealers table according to selected brand and city
     public function selected_brand_dealers($brand_name=null,$city_name=null) {
 
-        $data['dealers']= $this->model("Customer")->getdealers($brand_name,$city_name);
+        $data['dealers']= $this->model("Customer")->getdealersDetails($brand_name,$city_name);
         //view of changing part of table
         $this -> view('customer/dealers/dealers_ajax',$data);
     }
