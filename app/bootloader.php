@@ -11,4 +11,5 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
+    require_once 'library/stripe/vendor/autoload.php';
 ?>

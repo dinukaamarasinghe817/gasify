@@ -16,4 +16,5 @@ require_once 'progresscircle.php';
 require_once 'orders.php';
 require_once 'forgotpwd.php';
 require_once 'mail.php';
+require_once 'payment.php';
 // require_once 'gasOrders.php';

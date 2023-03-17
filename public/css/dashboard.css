@@ -381,6 +381,9 @@ body.blur::before{
     /* scroll-behavior: smooth; */
     scrollbar-width: thin;
 }
+.body-content .top-panel li a{
+    border: 2px solid transparent;
+}
 .content-data::-webkit-scrollbar{
     display: none;
 }
