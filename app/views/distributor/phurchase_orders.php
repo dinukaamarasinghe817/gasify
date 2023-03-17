@@ -16,10 +16,6 @@ $user_id = $_SESSION['user_id'];
         
         <h2>Gas Orders</h2>
 
-        <?php 
-        //   $result = new GasOrders_Comp("place");
-        ?>
-
         <div class="top">
             <ul>
                 <li>
@@ -38,12 +34,10 @@ $user_id = $_SESSION['user_id'];
 
         <div>
             <div class="middle">
-                <p>Order ID :  </p> <br>
+                <!-- <p>Order ID :  </p> <br> -->
 
-                <form action="<?php echo BASEURL;?>/orders/placeorder" method="POST">
-
-
-                    <table class="styled-table">
+                <!-- <form action="<?php echo BASEURL;?>/orders/placeorder" method="POST" class="po" onsubmit="buttonclicked(); return false;"> -->
+                    <!-- <table class="styled-table">
                         <thead>
                             <tr>
                                 <th>Item Name</th>
@@ -51,50 +45,70 @@ $user_id = $_SESSION['user_id'];
                                 <th>Subtotal (Rs.)</th>
                             </tr>
                         </thead>
+                        <tbody> -->
 
-                        <tbody>
+                        <?php
+                        $output .= '
+                        <p>Order ID :  </p> <br>
+
+                        <form action="<?php echo BASEURL;?>/orders/placeorder" method="POST" class="po" onsubmit="buttonclicked(); return false;">
+
+                        <table class="styled-table">
+                        <thead>
                             <tr>
-                                <?php
-                                $output = '';
-
-                                $stocks = $data['placeorderpg'];
-                                foreach($stocks as $stock) {
-                                    $row1 = $stock['stockinfo'];
-
-                                    $output .= '
-                                        <tr>
-                                            <td>'.$row1['name'].'</td>
-                                        
-                                            <td><input type="number" name="qnty" min="0" value="5" required></td>
-                                            <td>3200.00</td>
-                                        </tr>';
-                                }
-                                $output .= '</table>
-
-                                <table class="styled-table">
-                                    <tbody>
-                                        <tr>
-                                            <td class="second1">Total Amount </td>
-                                            <td class="second2">9400.00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>';
-                                echo $output;
-                                ?>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Subtotal (Rs.)</th>
                             </tr>
-                        </tbody>
-                    </table>
-                </form>
+                        </thead>
+                        <tbody>
+                        ';
 
+                        if(mysqli_num_rows($data['purchaseorder'])>0) {
+                            $product_array = array();
+                            $j = 0;
 
+                            while($row = mysqli_fetch_assoc($data['purchaseorder'])) {
+                                $product_id = $row['product_id'];
+                                $product_array[$j] = $product_id;
+                                $j++;
 
+                                $output .= '
+                                <tr class="data'.$row['product_id'].'">
+                                    <td>'.$row['name'].'</td>
+                                    <td><input type="number" step="1" value=0 name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
+                                    <td class="subtotal">Rs. 0</td>
+                                </tr>';
+                            }
+                            $_SESSION["productarray"] = $product_array;
 
+                            $output .= '
+                            <tr class="total">
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td class="amount">Rs. 0.00</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><button type="submit">Submit</button></td>
+                            </tr>';
 
-                <div class="btnclz">
-                    <!-- <button class="btn2-1" type="submit" name="submit">Place the order</button> -->
+                        }
+                        $output .= '
+                        </tbody></table>
+                        </form>';
+
+                        echo $output;
+
+                        ?>
+
+                <!-- <div class="btnclz">
                     <a href="<?php echo BASEURL?>/orders/distributor"><button class="btn2-1" type="submit" name="submit"><b>Place the Order</b></button>
                     <button class="btn2-2">Cancel</button>
-                </div>
+                </div> -->
                 
             </div>
         </div>

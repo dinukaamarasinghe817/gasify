@@ -55,8 +55,14 @@
         public function company($error=null){
             $company_id=$_SESSION['user_id'];
             $company_details = $this->model('Company')->getCompanyImage($company_id);
-            $product_details = $this->model('Company')->getProductDetails($company_id);
+            $product_details = $this->model('Company')->getProductCount($company_id);
+            $pendingReq = $this->model('Company')->getPendingReqCount($company_id);
+            $distCount= $this->model('Company')->getDistributorCount($company_id);
+            $dealerCount= $this->model('Company')->getDealerCount($company_id);
             $data['products']=$product_details;
+            $data['reqCount']=$pendingReq;
+            $data['distCount']=$distCount;
+            $data['dealerCount']=$dealerCount;
             $row = mysqli_fetch_assoc($company_details);
             $data['navigation'] = 'dashboard';
             $data['image'] = $row['logo'];

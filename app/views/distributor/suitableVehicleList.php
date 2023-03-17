@@ -40,7 +40,7 @@ $user_id = $_SESSION['user_id'];
                     $output .= '
                                 <tr>
                                     <td>'.$row2['vehicle_no'].'</td>
-                                    <td>'.$row2['type'].' axel</td>
+                                    <td>'.$row2['type'].' </td>
                                     <td>'.$row2['fuel_consumption'].'</td>
                                     ';
 

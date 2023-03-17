@@ -1,33 +1,9 @@
-<?php
-$header = new Header("customer/customer_support");
-$sidebar = new Navigation('customer',$data['navigation']);
-?>
 
-<section class="body">
-    <?php
-        // call the default header for yout interface
-        $bodyheader = new BodyHeader($data);
-        $profile_image = BASEURL.'/public/img/profile/'.$data['image'];
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
-        
-        $admin = $data['admin'];
-        $admin_image = $admin['image'];
 
-    ?>
-       
-    <div class="under_topbar">
-        <div class="subtitle">
-           <h3>Customer Support</h3>
-        </div>
     
-        <div class="middle">
-            <!-- message box -->
-            <div class="msg_box" >
-                <div class="wrapper">
-                    <section class="chat-area">
+    
                         
-                        <div class="chat-box" id="chatbox">
+                        <div class="chat-box">
                             <?php 
                                 $customer_id = $_SESSION['user_id'];
                                 $messages = $data['messages'];
@@ -116,11 +92,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     </svg>
                             </button>
                         </form>
-                        
-                    </section>
-                </div>
-            </div>
-
+                   
             <!-- help options -->
             <div class="help_options">
                 <!-- <div class="title"><h3>Contact Us</h3></div> -->
@@ -177,7 +149,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
     inputField = form.querySelector(".input-field"),
     sendBtn = form.querySelector("button"),
     chatBox = document.querySelector(".chat-box");
-    
 
     form.onsubmit = (e)=>{
         e.preventDefault();
@@ -192,27 +163,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
         }
     }
 
-
-    // inputField.addEventListener('input', function() {
-    //     let line = inputField.value.split{'\n'}.length;
-
-    //     if(inputField.rows < 6 || line < 6){
-    //         inputField.rows = line;
-    //     }
-    //     if(inputField.rows >1){
-    //         form.style.alignItems = "flex-end";
-    //     }else{
-    //         form.style.alignItems = "center";
-    //     }
-    // })
-
     sendBtn.onclick = ()=>{
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", 'http://localhost/mvc/Support/customer_send_message/', true);
+        xhr.open("POST", "http://localhost/mvc/Support/customer_send_message_ajax", true);
         xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if(xhr.status === 200){
-                // inputField.value = "";
+                inputField.value = "";
                 scrollToBottom();
             }
         }
@@ -229,29 +186,26 @@ $sidebar = new Navigation('customer',$data['navigation']);
     }
 
     setInterval(() =>{
-        // let xhr = new XMLHttpRequest();
-        // xhr.open("POST", 'http://localhost/mvc/Support/customer_support/', true);
-        // xhr.onload = ()=>{
-        // if(xhr.readyState === XMLHttpRequest.DONE){
-        //     if(xhr.status === 200){
-        //         let data = xhr.response;
-        //         chatBox.innerHTML = data;
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost/mvc/Support/customer_send_message_ajax", true);
+        xhr.onload = ()=>{
+        if(xhr.readyState === XMLHttpRequest.DONE){
+            if(xhr.status === 200){
+                let data = xhr.response;
+                chatBox.innerHTML = data;
                 if(!chatBox.classList.contains("active")){
                     scrollToBottom();
                 }
-        //     }
-        // }
-        // }
-        // console.log('interval');
-       
+            }
+        }
+        }
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send();
     }, 500);
 
     function scrollToBottom(){
-        // console.log('scrollToBottom');
-        // chatBox.scrollTop = chatBox.scrollHeight;
-        chatBox.scrollTo(0,chatBox.scrollHeight);
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
-
   
 
     

@@ -1194,6 +1194,21 @@ label{
     justify-content: center;
     gap: 20px;
 }
+
+/* change delivery address pop up css */
+/* .confirmation .delivery_address{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+}
+.confirmation  #cancel_change_address{
+    background-color: var(--cancel-red);
+} */
+
+
+
+
 .confirmation .buttons button{
     padding: 10px;
     background-color: var(--cancel-red);

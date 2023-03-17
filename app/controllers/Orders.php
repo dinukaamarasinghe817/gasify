@@ -269,39 +269,62 @@ class Orders extends Controller{
     function selected_products($dealer_id){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
+        $result = $this->model('Customer')->getCustomer($customer_id);
+        $row = mysqli_fetch_assoc($result);
+        $customer_type = $row['c_type'];
 
         $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
         $products = $data['products'];
 
-        
+        //check selected products weights are higher than remaining quota
+        $quota_details = $this->model('Customer')->getQuotaDetails($customer_type);
+        foreach($quota_details as $quota_detail){
+           $quota_state = $quota_detail['state'];
+           $monthly_limit = $quota_detail['monthly_limit'];
+           $remaining_weight = $quota_detail['remaining_weight'];
+        }
+
+       
+
+
         $selected_products = array();
 
         foreach($products as $product){
             $product_id = $product['p_id'];
             $unit_price = $product['unit_price'];
-
             $qty = $_POST[$product_id];
             if($qty != 0){
                 array_push($selected_products,['product_id'=>$product_id ,'qty'=> $qty ,'unit_price'=>$unit_price]);
 
             }
         }
-       
-        
+
+      
+        //check atleast one product is selected
         if(count($selected_products) > 0){
             $_SESSION['order_products'] = $selected_products;
-            $this->select_payment_method();
+            $total_weight_cylinders = $this->model('Customer')->products_total_weight();
+            //check quota is active or not
+            if($quota_state == 'ON'){
+                //check remaining quota exceed or not
+                if($total_weight_cylinders <= $remaining_weight ){
+                    $this->select_payment_method();
+                }else{
+                   $error = "Your quota amount is exceeded!";
+                   $this->select_products($error);
+                }
+            }else{
+                $this->select_payment_method();
+            }
+           
+            
         }
         else{
-            
             $error = "You must select at least one product";
             $this->select_products($error);
         }
 
     }
-
-
-    
 
     //select payment method
     function select_payment_method(){
@@ -342,6 +365,28 @@ class Orders extends Controller{
 
     function get_bank_slip(){
         $customer_id = $_SESSION['user_id'];
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $customer_type = $row1['type'];
+
+        // $quota_details = $this->model('Customer')->getQuotaDetails($customer_id);
+        // foreach($quota_details as $quota_detail){
+        //     $quotas = $quota_detail['quotas'];
+        //     $remainings = $quota_detail['remaining'];
+        //     foreach($quotas as $quota){
+        //         if($quota['company_id'] == $_SESSION['company_id']){
+        //             $quota_state = $quota['state'];
+        //             $monthly_limit = $quota['monthly_limit'];
+        //         }
+        //     }
+        //     foreach($remainings as $remaining){
+        //         if($remaining['company_id'] == $_SESSION['company_id']){
+        //             $remaining_weight = $remaining['remaining_amount'];
+        //         }
+        //     }
+        // }
+
+
         if(isset($_POST['submit_btn'])){
            $file_name = $_FILES['slip_img']['name'];
             $file_type = $_FILES['slip_img']['type'];
@@ -353,18 +398,18 @@ class Orders extends Controller{
             $_SESSION['slip_img'] = $file_name;
             move_uploaded_file($temp_name,$upload_to . $file_name);
 
+            
+
             if($file_size<=0){
                 $error = "Please upload a bank slip image!";
                 $this -> bank_slip_upload($error);
             }
             else{
-                $this->model('Customer')->place_reservation();
+                $this->model('Customer')->place_reservation($customer_type);
                 $this->select_collecting_method();
             }
 
-        }
-
-        
+        } 
 
     }
 
@@ -408,20 +453,33 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $data['city'] = $row1['city'];
-        $data['street'] = $row1['street'];
-        // $new_street = $_POST['new_street'];
-        // if(!empty($new_street)){
-        //     echo $new_street;
+        $data['selected_city'] = $_SESSION['city'];
+        $data['home_city'] = $row1['city'];
+        
+        if(isset($_POST['new_street'])){
+            $data['street'] = $_POST['new_street'];
+            if(isset($_POST['new_city'])){
+                $data['city'] = $_POST['new_city'];
+            }
 
-        // }
+        }else{
+            $data['city'] = $row1['city'];
+            $data['street'] = $row1['street'];
+        }
+
+        $distance = 9;   //********************** *have to take distance using maps ******************************************
+        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($data['street'],$distance);   //insert delivery street  and distance range to reservation table
+
+
+        // $data['delivery_charge'] = $this->
+       
 
         $data['confirmation'] = '';
 
         $this->view('customer/place_reservation/delivery_collecting_method',$data);
     }
 
-    function getcollecting_method(){
+    function getcollecting_method($collecting_method){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -430,7 +488,7 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $_SESSION['collecting_method'] = 'Pickup';
+        $_SESSION['collecting_method'] = $collecting_method;
         $this -> model('Customer')->insertcollectingmethod();
         header('LOCATION:'.BASEURL.'/Dashboard/customer');
 
@@ -439,41 +497,120 @@ class Orders extends Controller{
     }
 
 
-    /*..........................Customer quota......................... */
-    //display active quotas for customers according to their types
-    function customer_quota(){
-        $customer_id = $_SESSION['user_id'];
-        $data['navigation'] = 'quota';
 
+    /*..........................Customer quota......................... */
+  
+    function customer_quota(){
+        $data = array();
+        $customer_id = $_SESSION['user_id'];
+
+        // take quota information on each company
+        $data['companies_array'] = $this->model('Customer')->getcustomerquota($customer_id);
+
+        // get customer personal information and naviagation
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
-
+        $data['navigation'] = 'quota';
         $this->view('customer/quota/quota',$data);
     }
 
+    // function customer_quotas(){
+    //     $customer_id = $_SESSION['user_id'];
+    //     $data['navigation'] = 'quota';
+
+    //     $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+    //     $row1 = mysqli_fetch_assoc($customer_details);
+    //     $data['image'] = $row1['image'];
+    //     $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+       
+    //     $result = $this->model('Customer')->getCustomer($customer_id);
+    //     $row = mysqli_fetch_assoc($result);
+    //     $customer_type = $row['c_type'];
+
+       
+    //    $data['company_details'] = $this->model('Customer')->getCompanyBrand();  //get all companies
+    //    while($company = mysqli_fetch_assoc($data['company_details'])){
+    //         $company_id = $company['company_id'];
+    //         if(isset($_POST[$company_id])){
+    //              $selected_product_id = $_POST[$company_id];
+    //         }else{
+    //             $selected_product_id = null;
+    //         }
+    //         //input of dropdown in not null
+    //         if($selected_product_id != null){
+    //             $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type,$company_id,$selected_product_id);
+    //             $quota_details = $data['quota_details'];
+    //             foreach($quota_details as $quota_detail){
+                
+    //                 $data['quota_state'] = $quota_detail['quota_state'];
+    //                 if($data['quota_state'] == 'ON'){
+    //                     $data['total_quota_weight'] = $quota_detail['total_quota_cylinders'];
+    //                     $data['remaining_quota_weight'] = $quota_detail['remaining_quota_cylinders'];
+    //                 }
+    //             }
+
+    //             $data['product_weight'] = $this->model('Customer')->getproductweight($selected_product_id);
+    //             $this->view('customer/quota/quota',$data);
+
+    //         }
+    //         //otherwise take default product as input
+    //         else{
+    //             $data['company_products'] = $this->model('Customer')->getCompanyProducts($company_id);
+    //             $products = mysqli_fetch_assoc($data['company_products']);
+    //             foreach ($products as $product){
+    //                 $default_product = 4;
+    //             }
+    //             $default_product_id = $default_product['product_id'];
+    //             $data['quota_details'] = $this->model('Customer')->getQuotaDetails($customer_type,$company_id,$default_product_id);
+               
+    //             $quota_details = $data['quota_details'];
+    //             foreach($quota_details as $quota_detail){
+    //                 $data['quota_state'] = $quota_detail['quota_state'];
+    //                 if($data['quota_state'] == 'ON'){
+    //                     $data['total_quota_weight'] = $quota_detail['total_quota_cylinders'];
+    //                     $data['remaining_quota_weight'] = $quota_detail['remaining_quota_cylinders'];
+    //                 }
+    //             }
+
+
+    //             $data['product_weight'] = $this->model('Customer')->getproductweight($default_product_id);
+    //             $this->view('customer/quota/quota',$data);
+    //         }
+    //    }
+
+
+
+    // }
+
+
     /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
+    // distributor -> place an order (phurchase order)
      public function distributor() {
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
-
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $data['placeorderpg'] = $this->model("Distributor")->phurchaseOrders($user_id);
-        $this->view('distributor/phurchase_orders',$data);   
+        $productid = $_SESSION['productarray'];
+        $postproducts = [];
+        for($i=0; $i<count($productid); $i++) {
+            $postproducts[$productid[$i]] = $_POST[$productid[$i]];
+        }
+        $data = $this->model("Distributor")->phurchaseOrders($this->$user_id, $productid, $postproducts);
+        if(isset($data['toast'])) {
+            // $this->distributor("phurchase_orders", $data['toast']);
+        }else {
+            $this->view('distributor/phurchase_orders',$data);      
+        }
+
+        // $data['placeorderpg'] = $this->model("Distributor")->phurchaseOrders($user_id);
+        // $this->view('distributor/phurchase_orders',$data);   
     }
 
-    // distributor -> place an order (phurchase order)
-    public function placeorder(){
-        
-
-
-    }
 
 
     // distributor current stock (Gas Orders)

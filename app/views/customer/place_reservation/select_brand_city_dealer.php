@@ -111,8 +111,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                                         if(isset($data["dealers"])){
                                             $result1 = $data["dealers"];
-                                            
-                                            while($dealers = mysqli_fetch_assoc($result1)){ 
+                                            //if no dealers found selected city and brand
+                                            if(mysqli_num_rows($result1)==0){
+                                                echo '<option value="-1" disabled >No Dealers Found</option>';
+                                            }
+                                            while($dealers = mysqli_fetch_assoc($result1)){
                                                 $name = $dealers["d_name"];
                                                 $dealer_id = $dealers["dealer_id"];
                                                 echo "<option value = $dealer_id id= $dealer_id> $name </option>";

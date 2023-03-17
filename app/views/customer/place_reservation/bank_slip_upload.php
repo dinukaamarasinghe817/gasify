@@ -99,14 +99,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
          const cancelBtn = document.querySelector("#cancel-btn svg");
          const img = document.querySelector(".image img");
          let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
-        //  function defaultBtnActive(){
-        //    defaultBtn.click();
-        //  }
+         function customBtnActive(){
+           customBtn.click();
+         }
          customBtn.addEventListener("change", function(){
            const file = this.files[0];
            if(file){
-             const reader = new FileReader();
-             reader.onload = function(){
+               const reader = new FileReader();
+               reader.onload = function(){
                const result = reader.result;
                img.src = result;
                wrapper.classList.add("active");
@@ -114,6 +114,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
              cancelBtn.addEventListener("click", function(){
                img.src = "";
                wrapper.classList.remove("active");
+               customBtn.value = "";
+
+               
              })
              reader.readAsDataURL(file);
            }

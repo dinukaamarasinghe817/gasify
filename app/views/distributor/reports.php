@@ -67,31 +67,36 @@ $user_id = $_SESSION['user_id'];
                             </tr>
                         </thead>
                         <tbody>';
-                    foreach($records as $record) {
-                        $row1 = $record['completedinfo'];
-                        $capacities = $record['capacities'];
+                    
+                        if(count($records)>0) {
+                            foreach($records as $record) {
+                                $row1 = $record['completedinfo'];
+                                $capacities = $record['capacities'];
 
-                            $date = $row1['place_date'];
-                            $distribution_num = $row1['po_id'];
-                            $dealer_id = $row1['dealer_id'];
+                                    $date = $row1['place_date'];
+                                    $distribution_num = $row1['po_id'];
+                                    $dealer_id = $row1['dealer_id'];
 
-                        $output .= '
-                            <tr>
-                                <td>'. $date.'</td>
-                                <td>'.$distribution_num.'</td>
-                                <td>'.$dealer_id.'</td>
-                                <td>10 000.00</td>
-                                <td>
-                                    <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/distributor_pdf/'.$distribution_num.'\'">Generate PDF</button>
-                                </td>
-                               
-                            </tr>';
-                    }
-                    $output .= '
-                    </tbody>
-                    </table>
-                    </div>
-                    ';
+                                $output .= '
+                                    <tr>
+                                        <td>'. $date.'</td>
+                                        <td>'.$distribution_num.'</td>
+                                        <td>'.$dealer_id.'</td>
+                                        <td>10 000.00</td>
+                                        <td>
+                                            <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/distributor_pdf/'.$distribution_num.'\'">Generate PDF</button>
+                                        </td>                                                                      
+                                    </tr>';
+                            }
+                            $output .= '
+                            </tbody></table>';
+                        }else {
+                            $output .= '</table>';
+                            $output .= '<p class="nofoundtxt">No records found</p>';
+                        }
+
+                    $output .= '</div>';
+                    
                     echo $output;
                     ?>
                    

@@ -9,68 +9,99 @@ $sidebar = new Navigation('customer',$data['navigation']);
         $bodyheader = new BodyHeader($data);
         // call whatever the component you need to show
         // $bodycontent = new Body('addreview', $data);
+       
         
     ?>
 
-<div class="under_topbar">
+    <div class="under_topbar">
         <div class="subtitle">
            <h3>Quota</h3>
         </div> 
 
         <div class="middle">
-        
-            <div class="one_company">
-            <div class="company_details">
-                <div class="name">Litro</div>
-                <div class="date"><span>Time Period : </span>01/01/2023 - 01/02/2023</div>
-            </div>
-            <div class="company_quota">
-                <div class="logo"><img src= "<?php echo BASEURL;?>/public/img/profile/litro-removebg-preview.png" alt=""></div>
-                <div class="quota-bars">
-                    
-                    <div class="bar">
-                        <div class="total">
-                            <span><strong>Total : </strong></span><span> 45 kg</span>
-                        </div>
-                        <div class="progress-line litro">
-                            <span></span>
-                        </div>
-                        <div class="bottom_details">
-                            <div class="remaining"><span><strong> Remaining : </strong></span><span>35 kg</span></div>
-                            <div class="days">18 days more</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
+            <div class="content">
+                <form action="<?php echo BASEURL;?>/Orders/customer_quota" method="post" id="quota_form">   
+                    <?php
+                        $companies_array = $data['companies_array'];
+                        if(isset($companies_array)){
+                            foreach($companies_array as $company_array){
+                               
+                                $next_month = date('m', strtotime('+1 month'));  //quota finished month
+    
+                                $start_date = date('Y/m/01');  //quota start date
+                                $end_date = date('Y/'.$next_month.'/01');  //quota end date
+    
+                                $today = date('Y/m/d');  //today's date
+    
+                                $Date1 = new DateTime($today);
+                                $Date2 = new DateTime($end_date);
+    
+                                $interval = $Date1->diff($Date2);
+                                $remaingDays = $interval->days;     //calculate current days
 
-            <div class="one_company">
-            <div class="company_details">
-                <div class="name">Laugfs</div>
-                <div class="date"><span>Time Period : </span>01/01/2023 - 01/02/2023</div>
-            </div>
-            <div class="company_quota">
-                <div class="logo"><img src="<?php echo BASEURL;?>/public/img/profile/laufs-removebg-preview.png" alt=""></div>
-                <div class="quota-bars">
-                    
-                    <div class="bar">
-                        <div class="total">
-                            <span><strong>Total : </strong></span><span> 50 kg</span>
-                        </div>
-                        <div class="progress-line laugfs">
-                            <span></span>
-                        </div>
-                        <div class="bottom_details">
-                            <div class="remaining"><span><strong> Remaining : </strong></span><span>35 kg</span></div>
-                            <div class="days">10 days more</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
+                                $company_id = $company_array['company_id'];
+                                $company_name = $company_array['name'];
+                                $company_logo = $company_array['logo'];
 
+                                $selected_pid = $company_array['selected_pid'];
+                                $total_cylinders = $company_array['total_cyl'];
+                                $remaining_cylinders = $company_array['remaining_cyl'];
+                                
+                            echo  '<div class="one_company">
+                                        <div class="company_details">
+                                            <div class="name">'.$company_name.'</div>
+                                            <div class="date"><span>Time Period : </span>'.$start_date.' - '.$end_date.'</div>
+                                        </div>
+                                        <div class="company_quota" >
+                                            <div class="quota-bars">
+                                        
+                                                <div class="bar">
+                                                    <div class="total_dropdown">
+                                                        <div class="total">
+                                                            <span style="color:#0047AB;"><strong>Total : </strong></span><span id="total_cylinders" style="color:#0047AB;"><strong> &nbsp '.$total_cylinders.'</strong></span><span style="color:#0047AB;"><strong> &nbsp Cylinders</strong></span> 
+                                                        </div>
+                                                        <div>
+                                                            <select id="product_dropdown"  name = "'.$company_id.'" class="dropdowndate" onchange = "this.form.submit()">';
+                                                            $all_products = $company_array['all_products'];
+                                                            foreach ($all_products as $product) {
+                                                                if($product['product_id']==$selected_pid){
+                                                                    echo '<option value="'.$product['product_id'].'" selected >'.$product['product_weight'].' Kg '.$product['product_name'].'</option>'; 
+
+                                                                }else{
+                                                                    echo '<option value="'.$product['product_id'].'">'.$product['product_weight'].' Kg '.$product['product_name'].'</option>';
+                                                                }
+                                                            }
+                                                                
+                                                            echo '</select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="quota_logo">
+                                                        <div class="logo">
+                                                            <img src= " '.BASEURL.'/public/img/profile/'.$company_logo.'" alt="">
+                                                        </div><div id="'.$company_id.'">
+                                                        <div id ="progress_bar">';
+                                                            //progress circle
+                                                            $progresscircle = new Quota($selected_pid,$total_cylinders,$remaining_cylinders); 
+                                                 echo '</div><div class="remaining"><span style="color:#0047AB;"><strong> Remaining : </strong></span><span style="color:#0047AB;"  id = "remaining_cylinders"><strong>'.$remaining_cylinders.'</strong></span><span style="color:#0047AB;"><strong>&nbsp Cylinders</strong></span></div></div></div><div class="bottom_details">
+                                                        <div class="days" >'.$remaingDays.' days more</div>   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>';
+                          
+                                
+                            }   
+                        }
+                        
+
+
+                    ?>
+                </form>
+            </div>     
+    
         </div>
-
         
+    </div>
 
 </section>

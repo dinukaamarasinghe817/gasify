@@ -25,7 +25,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     // echo '<table><tr id="first_row"><th><h3><center>No reservations Found!</center></h3></td></tr></table>';
                     echo '<table class="styled-table"><div class="table_header">
                         <thead><tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></thead></div>';
-                        echo'<tbody><tr><td></td><td><img src="../img/placeholders/1.png"></td><td></td></tr></tbody></table>';
+                        echo'<tbody><tr><td></td><td></td><td><strong>No Reservations Found!</strong></td><td></td><td></td></tr></tbody></table>';
 
                 }else{
                     if(isset($data['allmyreservations'])){
@@ -36,7 +36,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             $row1 = $order['order'];
                             $url = BASEURL.'/Orders/customer_myreservation/'.$row1['order_id'];
                             if($row1['order_state']=='Canceled'){
-                                echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td style="color:#E74C3C  ;">  '.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
+                                echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td style="color:#f20202  ;">  '.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
                             }else if($row1['order_state']=='Pending'){
                                 echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td style="color:#F1C40F;">  '.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
                             }else if($row1['order_state']=='Accepted'){
@@ -49,8 +49,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             }else if($row1['order_state']=='Completed'){
                                 echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td style="color:#239B56;">  '.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
                             }
-                            else{
-                                echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td>'.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
+                            elseif($row1['order_state']=='Refunded'){
+                                echo'<tr><td>'.$row1['order_id'].'</td><td id="place_date">'.$row1['place_date'].'</td><td id="tot_amount">Rs .'.number_format($order['total_amount']).'.00</td><td style="color:#c27e65;">'.$row1['order_state'].'</td><td><a><button type="submit" class="More_details" onclick="location.href=\''.$url.'\'">More Details</button></a></td></tr>';
                             }
                         }
                         echo '</tbody></table>';

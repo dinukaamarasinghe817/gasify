@@ -638,6 +638,15 @@ table tr:hover {
 
 }
 
+.nofoundtxt {
+    text-align: center;
+    width: 100%;
+    margin-top: 30px;
+    font-size: var(--medium);
+    background-color: var(--navmenu-orange);
+
+}
+
 
 
 
