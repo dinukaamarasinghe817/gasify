@@ -173,7 +173,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 <script>
     const form = document.querySelector(".typing-area"),
-    // incoming_id = form.querySelector(".incoming_id").value,
     inputField = form.querySelector(".input-field"),
     sendBtn = form.querySelector("button"),
     chatBox = document.querySelector(".chat-box");
@@ -183,76 +182,32 @@ $sidebar = new Navigation('customer',$data['navigation']);
         e.preventDefault();
     }
 
-    inputField.focus();
-    inputField.onkeyup = ()=>{
-        if(inputField.value != ""){
-            sendBtn.classList.add("active");
-        }else{
-            sendBtn.classList.remove("active");
-        }
-    }
-
-
-    // inputField.addEventListener('input', function() {
-    //     let line = inputField.value.split{'\n'}.length;
-
-    //     if(inputField.rows < 6 || line < 6){
-    //         inputField.rows = line;
-    //     }
-    //     if(inputField.rows >1){
-    //         form.style.alignItems = "flex-end";
-    //     }else{
-    //         form.style.alignItems = "center";
-    //     }
-    // })
-
+    //click send button then send message to database and scrollbottom and refresh page
     sendBtn.onclick = ()=>{
         let xhr = new XMLHttpRequest();
         xhr.open("POST", 'http://localhost/mvc/Support/customer_send_message/', true);
         xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if(xhr.status === 200){
-                // inputField.value = "";
                 scrollToBottom();
+                location.reload();
             }
         }
         }
         let formData = new FormData(form);
         xhr.send(formData);
     }
-    chatBox.onmouseenter = ()=>{
-        chatBox.classList.add("active");
-    }
-
-    chatBox.onmouseleave = ()=>{
-        chatBox.classList.remove("active");
-    }
-
+    
+    //if chat box visible then scroll to bottom to display recent message
     setInterval(() =>{
-        // let xhr = new XMLHttpRequest();
-        // xhr.open("POST", 'http://localhost/mvc/Support/customer_support/', true);
-        // xhr.onload = ()=>{
-        // if(xhr.readyState === XMLHttpRequest.DONE){
-        //     if(xhr.status === 200){
-        //         let data = xhr.response;
-        //         chatBox.innerHTML = data;
-                if(!chatBox.classList.contains("active")){
-                    scrollToBottom();
-                }
-        //     }
-        // }
-        // }
-        // console.log('interval');
-       
-    }, 500);
+        if(!chatBox.classList.contains("active")){
+            scrollToBottom();
+        }
+    }, 1000);
 
+    //function to scroll bottom of chatbox
     function scrollToBottom(){
-        // console.log('scrollToBottom');
-        // chatBox.scrollTop = chatBox.scrollHeight;
         chatBox.scrollTo(0,chatBox.scrollHeight);
     }
-
   
-
-    
 </script>

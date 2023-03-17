@@ -72,7 +72,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             <!-- <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button> -->
                             <label for="custom_btn" id="custom-btn">Choose File</label>
                             <input id="custom_btn" type="file" accept=".png, .jpg, .jpeg"  name="slip_img" hidden>
-                            <!-- <button  id="next_btn" type="submit" onclick="location.href = '<?php echo BASEURL?>/Orders/select_collecting_method'">Submit</button> -->
                             <button  id="next_btn" type="submit" name="submit_btn">Submit</button>
                             
                         </div>
