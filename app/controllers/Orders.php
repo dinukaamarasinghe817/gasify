@@ -374,24 +374,6 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $customer_type = $row1['type'];
 
-        // $quota_details = $this->model('Customer')->getQuotaDetails($customer_id);
-        // foreach($quota_details as $quota_detail){
-        //     $quotas = $quota_detail['quotas'];
-        //     $remainings = $quota_detail['remaining'];
-        //     foreach($quotas as $quota){
-        //         if($quota['company_id'] == $_SESSION['company_id']){
-        //             $quota_state = $quota['state'];
-        //             $monthly_limit = $quota['monthly_limit'];
-        //         }
-        //     }
-        //     foreach($remainings as $remaining){
-        //         if($remaining['company_id'] == $_SESSION['company_id']){
-        //             $remaining_weight = $remaining['remaining_amount'];
-        //         }
-        //     }
-        // }
-
-
         if(isset($_POST['submit_btn'])){
            $file_name = $_FILES['slip_img']['name'];
             $file_type = $_FILES['slip_img']['type'];
