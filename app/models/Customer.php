@@ -840,6 +840,10 @@ class Customer extends Model{
         return $delivery_charge;
     }
 
+    function getdealerpubkey($dealer_id){
+        $row = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $dealer_id"));
+        return ['pub_key'=>$row['pub_key'], 'rest_key'=>$row['rest_key']];
+    }
 
 
 

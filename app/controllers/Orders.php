@@ -327,7 +327,7 @@ class Orders extends Controller{
     }
 
     //select payment method
-    function select_payment_method(){
+    function select_payment_method($error=null){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -335,8 +335,13 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+        $data['email'] = $row1['email'];
        
         $data['selected_products']= $this ->model('Customer')->getSelectedProducts();
+        $data['dealer_keys'] = $this ->model('Customer')->getdealerpubkey($_SESSION['dealer_id']);
+        if($error != null){
+            $data['toast'] = $error;
+        }
        
         $this->view('customer/place_reservation/select_payment_method',$data);
     }
@@ -418,12 +423,27 @@ class Orders extends Controller{
        
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
-
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
+        //post data from payment component
+        $dealer_id = $_POST['dealer_id'];
+        $customer_email= $_POST['customer_email'];
+        //first of all charge the customer
+        $charge = new Charge($_POST['rest_key'],$data['name'],$_POST['amount']);
+        if($charge->make()){
+            //successfully charged
+            $products = $_SESSION['order_products'];
+            $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Credit card');
+            $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
+            $this->view('customer/place_reservation/collecting_method',$data);
+        }else{
+            //charging unsuccess
+            $data['toast'] = ['type' => 'error', 'message' => "Payment failed, Please check you card details"];
+            $this->select_payment_method($data['toast']);
+        }
         // $this->view('customer/place_reservation/payment_gateway',$data);
     }
 
