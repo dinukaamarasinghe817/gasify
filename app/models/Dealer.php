@@ -318,7 +318,7 @@ class Dealer extends Model
         }
     }//
 
-    public function addtoReservation($customer_id,$dealer_id,$products,$payment_method,$order_state){
+    public function addtoReservation($customer_id,$dealer_id,$products,$payment_method,$order_state,$place_date,$place_time){
         if($payment_method == 'Credit card'){
             $payment_verification = 'verified';
         }else{
@@ -334,19 +334,21 @@ class Dealer extends Model
         
         // put them into the reservation include table
         foreach($products as $product){
-            $this->insert('reservation_include',['order_id'=>$order_id, 'product_id'=>$product['product_id'], 'quantity'=>$product['quantity'], 'unit_price'=>$product['unit_price']]);
+            $this->insert('reservation_include',['order_id'=>$order_id, 'product_id'=>$product['product_id'], 'quantity'=>$product['qty'], 'unit_price'=>$product['unit_price']]);
         }
+        return $order_id;
     }
 
     public function customerOrder($customer_id,$dealer_id,$products,$payment_method){
         //collecting previouse reorder flags before updating the dealer keep table
-        $prev_flags = array();
+        $prev_flags;
         foreach($products as $product){
             $product_id = $product['product_id'];
-            $row = $this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id");
-            array_push($prev_flags, ['product_id' => $product_id, 'reorder_flag' =>$row['reorder_flag']]);
+            $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
+            // array_push($prev_flags, [$product_id=>$row['reorder_flag']]);
+            $prev_flags[$product_id] = $row['reorder_flag'];
         }
-        
+        // var_dump($prev_flags);
         $place_date = date('Y-m-d');
         $place_time = date('H:i:s');
         //checking payment method
@@ -355,7 +357,7 @@ class Dealer extends Model
             $ok = true;
             foreach($products as $product){
                 $product_id = $product['product_id'];
-                $row = $this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id");
+                $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
                 if($product['qty'] > $row['quantity']){
                     $ok = false;
                     break;
@@ -377,7 +379,75 @@ class Dealer extends Model
                 $risk_products = array();
                 foreach($products as $product){
                     $product_id = $product['product_id'];
-                    $row = $this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id");
+                    $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
+                    if($prev_flags[$product_id] == 0 && $row['reorder_flag'] == 1){
+                        array_push($risk_products,[$product_id => '']);
+                    }
+                }
+
+                // send notifications on risk products
+                // var_dump($risk_products);
+                if(count($risk_products) > 0){
+                    foreach($risk_products as $product_id => $value){
+                        $row = mysqli_fetch_assoc($this->read('product',"product_id = $product_id"));
+                        $risk_products[$product_id] = $row['name'];
+                    }
+
+                    $message = "Hey seems like you have a low stock on the following products :";
+                    foreach($risk_products as $product_id => $value){
+                        $message .= " $value,";
+                    }
+                    $message = rtrim($message,',');
+                    $message .= " please hurry up and place a purchase order. Otherwise you will not be having enough stock to sell.";
+                    $this->insert('notifications',['user_id' => $dealer_id, 'date'=>$place_date, 'time'=>$place_time, 'type'=> 'Re-order Level Alert', 'message' => $message, 'state'=>'delivered']);
+                    
+                    // send a mail as well
+                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
+                    $dealer_email = $q['email'];
+                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+                    $customer_Name = $q['first_name'].' '.$q['last_name'];
+                    $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
+                    $mail->send();
+                }
+
+                // placing the reservation then
+                return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Accepted',$place_date,$place_time);
+                
+                
+            }else{
+                // order is pending due to low stock but place the reservation
+                return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
+
+            }
+        }else{
+            // payment method payslip
+            //checking the availability of the stock
+            $ok = true;
+            foreach($products as $product){
+                $product_id = $product['product_id'];
+                $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
+                if($product['qty'] > $row['quantity']){
+                    $ok = false;
+                    break;
+                }
+            }
+
+            if($ok){
+                // order accepted automatically
+
+                // immediately reducing the stock of the dealer first
+                foreach($products as $product){
+                    $qty = $product['qty'];
+                    $product_id = $product['product_id'];
+                    $sql = "UPDATE dealer_keep SET quantity = quantity - $qty WHERE dealer_id = $dealer_id AND product_id = $product_id";
+                    $this->Query($sql);
+                }
+
+                // checking the reorder flags again
+                $risk_products = array();
+                foreach($products as $product){
+                    $product_id = $product['product_id'];
+                    $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
                     if($prev_flags[$product_id] == 0 && $row['reorder_flag'] == 1){
                         array_push($risk_products,[$product_id => '']);
                     }
@@ -398,17 +468,17 @@ class Dealer extends Model
                     $message .= " please hurry up and place a purchase order. Otherwise you will not be having enough stock to sell.";
                     $this->insert('notifications',['user_id' => $dealer_id, 'date'=>$place_date, 'time'=>$place_time, 'type'=> 'Re-order Level Alert', 'message' => $message, 'state'=>'delivered']);
                 }
-
-                // placing the reservation then
-                $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Accepted');
-                
-                
-            }else{
-                // order is pending due to low stock but place the reservation
-                $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending');
+                // send a mail as well
+                $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
+                $dealer_email = $q['email'];
+                $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+                $customer_Name = $q['first_name'].' '.$q['last_name'];
+                $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
+                $mail->send();
 
             }
-        }else{
+            // placing the reservation but pending because of payslip need to verify by admin
+            return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending');
 
         }
     }

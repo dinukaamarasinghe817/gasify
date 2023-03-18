@@ -119,11 +119,17 @@ $sidebar = new Navigation('customer',$data['navigation']);
             <div class="bottom_content">
                 <div class="bottom_img"><img src="<?php echo BASEURL;?>/public/img/customer/payment_method.png" alt=""></div>
                 <div class="p_methods">
-                    <div class="p_btn"><button onclick="location.href = '<?php echo BASEURL; ?>/Orders/payment_gateway'">
+                    <!-- <div class="p_btn"><button onclick="location.href = '<?php echo BASEURL; ?>/Orders/payment_gateway'"> -->
                     <!-- <div class="p_btn"><button onclick="paynow(1);"> -->
-                        <svg width="40" height="40" viewBox="0 0 263 176" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- <svg width="40" height="40" viewBox="0 0 263 176" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8.21875 0C3.61625 0 0 3.22667 0 7.33333V29.3333H263V7.33333C263 3.22667 259.384 0 254.781 0H8.21875ZM0 58.6667V168.667C0 172.773 3.61625 176 8.21875 176H254.781C259.384 176 263 172.773 263 168.667V58.6667H0ZM32.875 117.333H65.75V146.667H32.875V117.333ZM98.625 117.333H131.5V146.667H98.625V117.333Z" fill=""/>
                         </svg>Credit Card</button>
+                    </div> -->
+                    <div class="p_btn">
+                        <?php
+                            $keys = $data['dealer_keys'];
+                            $card = new Payment('orders/payment_gateway',$data['email'],$total,$keys['pub_key'],$keys['rest_key'],$_SESSION['dealer_id']);
+                        ?>
                     </div>
 
                     <div class="p_btn"><button onclick="location.href = '<?php echo BASEURL; ?>/Orders/bank_slip_upload'">

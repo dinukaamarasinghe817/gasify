@@ -1,18 +1,19 @@
 <?php
 class Payment{
-    public function __construct($link,$customer_email,$amount,$pubkey,$dealer_id){
+    public function __construct($link,$customer_email,$amount,$pubkey,$restkey,$dealer_id){
+        $total = $amount*100;
         echo '<form action="'.BASEURL.'/'.$link.'" method="POST">
                 <input type="text" name="customer_email" value="'.$customer_email.'" hidden>
                 <input type="number" name="amount" value="'.$amount.'" step="0.01" hidden>
-                // publishable key
-                <input type=number name="dealer_id" value="'.$dealer_id.'" hidden>
+                <input type="number" name="dealer_id" value="'.$dealer_id.'" hidden>
+                <input type="text" name="rest_key" value="'.$restkey.'" hidden>
                 <script
                     src="https://checkout.stripe.com/checkout.js"
                     class="stripe-button"
                     data-key="'.$pubkey.'"
                     data-name="Online Payment"
                     data-description="gasify"
-                    data-amount="'.$amount.'"
+                    data-amount="'.$total.'"
                     data-email="'.$customer_email.'"
                     data-currency="lkr">
                 </script>
@@ -29,7 +30,7 @@ class Charge{
     public function __construct($restkey,$description,$amount){
         $this->restkey = $restkey;
         $this->description = $description;
-        $this->amount = $amount;
+        $this->amount = $amount*100;
     }
 
     public function make(){
