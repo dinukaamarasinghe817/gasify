@@ -374,6 +374,10 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $customer_type = $row1['type'];
 
+        $data['image'] = $row1['image'];
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+        $data['navigation'] = 'placereservation';
+        
         if(isset($_POST['submit_btn'])){
            $file_name = $_FILES['slip_img']['name'];
             $file_type = $_FILES['slip_img']['type'];
@@ -392,8 +396,10 @@ class Orders extends Controller{
                 $this -> bank_slip_upload($error);
             }
             else{
-                $this->model('Customer')->place_reservation($customer_type);
-                $this->select_collecting_method();
+                $this->model('Customer')->place_reservation($customer_type);  ///
+                // $this->select_collecting_method();
+                $data['confirmation'] = '';
+                $this->view('customer/place_reservation/collecting_method',$data);
             }
 
         } 
@@ -409,7 +415,7 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
+        //check customer quota
         //post data from payment component
         $dealer_id = $_POST['dealer_id'];
         $customer_email= $_POST['customer_email'];
@@ -420,6 +426,7 @@ class Orders extends Controller{
             $products = $_SESSION['order_products'];
             $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Credit card');
             $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
+            $data['confirmation'] = '';
             $this->view('customer/place_reservation/collecting_method',$data);
         }else{
             //charging unsuccess
@@ -446,7 +453,8 @@ class Orders extends Controller{
     }
 
     //select delivery as collecting method
-    function select_delivery_method(){
+    function select_delivery_method($order_id){
+        $data['order_id'] = $order_id;
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -470,7 +478,7 @@ class Orders extends Controller{
         }
 
         $distance = 9;   //********************** *have to take distance using maps ******************************************
-        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($data['street'],$distance);   //insert delivery street  and distance range to reservation table
+        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$distance);   //insert delivery street  and distance range to reservation table
 
 
         // $data['delivery_charge'] = $this->
@@ -481,7 +489,7 @@ class Orders extends Controller{
         $this->view('customer/place_reservation/delivery_collecting_method',$data);
     }
 
-    function getcollecting_method($collecting_method){
+    function getcollecting_method($collecting_method,$order_id){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -491,7 +499,7 @@ class Orders extends Controller{
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
         $_SESSION['collecting_method'] = $collecting_method;
-        $this -> model('Customer')->insertcollectingmethod();
+        $this -> model('Customer')->insertcollectingmethod($order_id);
         header('LOCATION:'.BASEURL.'/Dashboard/customer');
 
         // $this->view('customer/place_reservation/collecting_method',$data);
