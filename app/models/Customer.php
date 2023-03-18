@@ -768,19 +768,19 @@ class Customer extends Model{
 
     /*===================================================select collecting method=========================================================== */
     //insert collecting method in to reservation table
-    public function insertcollectingmethod(){
-        $customer_id = $_SESSION['user_id'];
-        $dealer_id = $_SESSION['dealer_id'];
-        $order_state = 'Pending';
-        $place_time = $_SESSION['place_time'];
-        $place_date = $_SESSION['place_date'];
+    public function insertcollectingmethod($order_id){
+        // $customer_id = $_SESSION['user_id'];
+        // $dealer_id = $_SESSION['dealer_id'];
+        // $order_state = 'Pending';
+        // $place_time = $_SESSION['place_time'];
+        // $place_date = $_SESSION['place_date'];
         $collecting_method = $_SESSION['collecting_method'];
 
         //get order id from reservation table
-        $result1 = $this->Query("SELECT order_id FROM reservation
-        WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
-        $row = mysqli_fetch_assoc($result1);
-        $order_id =  $row['order_id'] ;
+        // $result1 = $this->Query("SELECT order_id FROM reservation
+        // WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
+        // $row = mysqli_fetch_assoc($result1);
+        // $order_id =  $row['order_id'] ;
 
         //update reservation table with collecting method
         $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
@@ -789,12 +789,12 @@ class Customer extends Model{
 
     /*=======================================select delivery method========================================================================= */
     //insert delivery distance ranges to reservation table and return delivery charge  
-    function insertdelivery_street($new_street = null,$distance){
-        $customer_id = $_SESSION['user_id'];
-        $dealer_id = $_SESSION['dealer_id'];
-        $order_state = 'Pending';
-        $place_time = $_SESSION['place_time'];
-        $place_date = $_SESSION['place_date'];
+    function insertdelivery_street($order_id,$new_street = null,$distance){
+        // $customer_id = $_SESSION['user_id'];
+        // $dealer_id = $_SESSION['dealer_id'];
+        // $order_state = 'Pending';
+        // $place_time = $_SESSION['place_time'];
+        // $place_date = $_SESSION['place_date'];
         $order_products = $_SESSION['order_products'];
 
         $sum_of_weights = 0;
@@ -813,10 +813,10 @@ class Customer extends Model{
         }
 
         //get order id from reservation table
-        $result1 = $this->Query("SELECT order_id FROM reservation 
-        WHERE customer_id = '$customer_id' AND order_state = '$order_state' AND place_date = '$place_date' AND place_time = '$place_time' AND dealer_id = '$dealer_id' ");
-        $row = mysqli_fetch_assoc($result1);
-        $order_id =  $row['order_id'] ;
+        // $result1 = $this->Query("SELECT order_id FROM reservation 
+        // WHERE customer_id = '$customer_id' AND order_state = '$order_state' AND place_date = '$place_date' AND place_time = '$place_time' AND dealer_id = '$dealer_id' ");
+        // $row = mysqli_fetch_assoc($result1);
+        // $order_id =  $row['order_id'] ;
         
         //get delivery charges details from delivery_charge table
         $result2 = $this->Query("SELECT * FROM delivery_charge");
