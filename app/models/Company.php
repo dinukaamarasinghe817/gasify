@@ -194,5 +194,26 @@ class Company extends Model
         }
 
     }
+    public function getDistributorNamesOnly($company_id){
+        $result=$this->Query("SELECT CONCAT(users.first_name,' ',users.last_name)AS names,distributor.distributor_id AS id FROM users INNER JOIN distributor ON users.user_id=distributor.distributor_id AND distributor.company_id=$company_id");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['names'=>$row['names'],'id'=>$row['id']]);
+            }
+            return $info;
+        }
+    
+    }
+    public function getOrderDates($ID){
+        $result=$this->Query("SELECT users.date_joined AS joinedDate FROM users WHERE users.user_id=$ID");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['joinedDate'=>$row['joinedDate']]);
+            }
+            return $info;
+        }
+    }
     
 }
