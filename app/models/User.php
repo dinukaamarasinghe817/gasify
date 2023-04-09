@@ -197,81 +197,153 @@ class User extends Model
             $data['error'] = "8";
         }
 
+        if(!empty($image_name) && !empty($tmp_name)){
+            // image type validity jpg png jpeg
+            if(isNotValidImageFormat($image_name)){
+                $data['error'] = "10";
+            }
+        }
+
         //redirect if any error occured
         if(isset($data['error'])){
             return $data;
         }
 
+        //add the dealer to database without image
+        $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$first_name,'last_name'=>$last_name,'type'=>'dealer','verification_code'=>'','verification_state'=>'verified']);
+        //get dealer_id of newly inserted dealer
+        $query2 = $this->read('users', "email = '$email'");
+        $row = mysqli_fetch_assoc($query2);
+        $dealer_id = $row['user_id'];
+        $query1 = $this->insert('dealer', ['dealer_id'=>$dealer_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=> $company_id, 'distributor_id'=> $distributor_id, 'bank'=> $bank, 'account_no'=>$account_no, 'merchant_id'=> $merchant_id, 'contact_no'=>$contact_no]);
+        $query3;
+
+        // set the capacity of the dealer
+        for($i = 0; $i<count($capacity); $i++){
+            $product = $capacity[$i][0];
+            $qty = $capacity[$i][1];
+            $query3 = $this->insert('dealer_capacity',['dealer_id'=> $dealer_id,'product_id'=>$product,'capacity'=>$qty]);
+        }
+
         // optional image uploaded
         if(!empty($image_name) && !empty($tmp_name)){
-
-            // image type validity jpg png jpeg
-            if(isNotValidImageFormat($image_name)){
-                $data['error'] = "invalid image type";
-                exit();
-            }
 
             $image = getImageRename($image_name,$tmp_name);
             $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
             // echo $path;
             if(move_uploaded_file($tmp_name, $path.($image))){
-                //add the dealer to database with image
-                $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$first_name,'last_name'=>$last_name,'type'=>'dealer','verification_code'=>'','verification_state'=>'verified']);
-                //get dealer_id of newly inserted dealer
-                $query2 = $this->read('users', "email = '$email'");
-                $row = mysqli_fetch_assoc($query2);
-                $dealer_id = $row['user_id'];
-                $query1 = $this->insert('dealer', ['dealer_id'=>$dealer_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=> $company_id, 'distributor_id'=> $distributor_id, 'bank'=> $bank, 'account_no'=>$account_no, 'merchant_id'=> $merchant_id, 'contact_no'=>$contact_no, 'image'=>$image]);
-                $query3;
-
-                // set the capacity of the dealer
-                for($i = 0; $i<count($capacity); $i++){
-                    $product = $capacity[$i][0];
-                    $qty = $capacity[$i][1];
-                    $query3 = $this->insert('dealer_capacity',['dealer_id'=> $dealer_id,'product_id'=>$product,'capacity'=>$qty]);
-                }
-                
-                // if successfully registred and set capacity
-                if($query1 && $query3){
-                    $_SESSION['user_id'] = $dealer_id;
-                    $_SESSION['role'] = 'dealer';
-                    $data['error'] = "success";
-                }else{
-                    $data['error'] = "9";
-                    return $data;
-                }
-
+                $query4 = $this->update('dealer', ['image'=>$image],"dealer_id = $dealer_id");
             }
-        }else{
-
-            //add the dealer to database with image
-            $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$first_name,'last_name'=>$last_name,'type'=>'dealer','verification_code'=>'','verification_state'=>'verified']);
-            //get dealer_id of newly inserted dealer
-            $query2 = $this->read('users', "email = '$email'");
-            $row = mysqli_fetch_assoc($query2);
-            $dealer_id = $row['user_id'];
-            $query1 = $this->insert('dealer', ['dealer_id'=>$dealer_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=> $company_id, 'distributor_id'=> $distributor_id, 'bank'=> $bank, 'account_no'=>$account_no, 'merchant_id'=> $merchant_id, 'contact_no'=>$contact_no]);
-            $query3;
-            
-            // set the capacity
-            $data['hel'] = count($capacity);
-            for($i = 0; $i<count($capacity); $i++){
-                $product = $capacity[$i][0];
-                $qty = $capacity[$i][1];
-                // $sql = "INSERT INTO dealer_capacity (dealer_id, company_id, product_id, capacity) VALUES ($dealer_id,1,$product,$qty)";
-                $query3 = $this->insert('dealer_capacity',['dealer_id'=> $dealer_id,'product_id'=>$product,'capacity'=>$qty]);
-            }
-
-            if($query1 && $query3){
-                $_SESSION['user_id'] = $dealer_id;
-                $_SESSION['role'] = 'dealer';
-                // $data['error'] = "success";
-            }else{
-                $data['error'] = "9";
-                return $data;
-            }
-
         }
+
+        // send notifications to setup stripe public and restricted keys
+        date_default_timezone_set("Asia/Colombo");
+        $time = date('H:i');
+        $date = date('Y-m-d');
+        $message = "Hi $first_name $last_name, Before any further processing please setup your stripe public and restricted
+        keys on your <strong>Profile -> Bank Details</strong> section.";
+        // sending notification
+        $this->insert('notifications',['user_id' => $dealer_id,'date'=> $date,'time'=> $time,'type' => 'Setup Stripe details','message' => $message,'state' => 'delivered']);
+        
+        // if successfully registred and set capacity
+        if($query1 && $query3){
+            $_SESSION['user_id'] = $dealer_id;
+            $_SESSION['role'] = 'dealer';
+            $data['error'] = "success";
+        }else{
+            $data['error'] = "9";
+            return $data;
+        }
+
+        // optional image uploaded
+        // if(!empty($image_name) && !empty($tmp_name)){
+
+        //     // image type validity jpg png jpeg
+        //     if(isNotValidImageFormat($image_name)){
+        //         $data['error'] = "invalid image type";
+        //         exit();
+        //     }
+
+        //     $image = getImageRename($image_name,$tmp_name);
+        //     $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+        //     // echo $path;
+        //     if(move_uploaded_file($tmp_name, $path.($image))){
+        //         //add the dealer to database with image
+        //         $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$first_name,'last_name'=>$last_name,'type'=>'dealer','verification_code'=>'','verification_state'=>'verified']);
+        //         //get dealer_id of newly inserted dealer
+        //         $query2 = $this->read('users', "email = '$email'");
+        //         $row = mysqli_fetch_assoc($query2);
+        //         $dealer_id = $row['user_id'];
+        //         $query1 = $this->insert('dealer', ['dealer_id'=>$dealer_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=> $company_id, 'distributor_id'=> $distributor_id, 'bank'=> $bank, 'account_no'=>$account_no, 'merchant_id'=> $merchant_id, 'contact_no'=>$contact_no, 'image'=>$image]);
+        //         $query3;
+
+        //         // set the capacity of the dealer
+        //         for($i = 0; $i<count($capacity); $i++){
+        //             $product = $capacity[$i][0];
+        //             $qty = $capacity[$i][1];
+        //             $query3 = $this->insert('dealer_capacity',['dealer_id'=> $dealer_id,'product_id'=>$product,'capacity'=>$qty]);
+        //         }
+
+        //         // send notifications to setup stripe public and restricted keys
+        //         date_default_timezone_set("Asia/Colombo");
+        //         $time = date('H:i');
+        //         $date = date('Y-m-d');
+        //         $message = "Hi $first_name $last_name, Before any further processing please setup your stripe public and restricted
+        //         keys on your <strong>Profile -> Bank Details</strong> section.";
+        //         // sending notification
+        //         $this->insert('notifications',['user_id' => $dealer_id,'date'=> $date,'time'=> $time,'type' => 'Setup Stripe details','message' => $message,'state' => 'delivered']);
+                
+        //         // if successfully registred and set capacity
+        //         if($query1 && $query3){
+        //             $_SESSION['user_id'] = $dealer_id;
+        //             $_SESSION['role'] = 'dealer';
+        //             $data['error'] = "success";
+        //         }else{
+        //             $data['error'] = "9";
+        //             return $data;
+        //         }
+
+        //     }
+        // }else{
+
+        //     //add the dealer to database without image
+        //     $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$first_name,'last_name'=>$last_name,'type'=>'dealer','verification_code'=>'','verification_state'=>'verified']);
+        //     //get dealer_id of newly inserted dealer
+        //     $query2 = $this->read('users', "email = '$email'");
+        //     $row = mysqli_fetch_assoc($query2);
+        //     $dealer_id = $row['user_id'];
+        //     $query1 = $this->insert('dealer', ['dealer_id'=>$dealer_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=> $company_id, 'distributor_id'=> $distributor_id, 'bank'=> $bank, 'account_no'=>$account_no, 'merchant_id'=> $merchant_id, 'contact_no'=>$contact_no]);
+        //     $query3;
+            
+        //     // set the capacity
+        //     $data['hel'] = count($capacity);
+        //     for($i = 0; $i<count($capacity); $i++){
+        //         $product = $capacity[$i][0];
+        //         $qty = $capacity[$i][1];
+        //         // $sql = "INSERT INTO dealer_capacity (dealer_id, company_id, product_id, capacity) VALUES ($dealer_id,1,$product,$qty)";
+        //         $query3 = $this->insert('dealer_capacity',['dealer_id'=> $dealer_id,'product_id'=>$product,'capacity'=>$qty]);
+        //     }
+
+        //     // send notifications to setup stripe public and restricted keys
+        //     date_default_timezone_set("Asia/Colombo");
+        //     $time = date('H:i');
+        //     $date = date('Y-m-d');
+        //     $message = "Hi $first_name $last_name, Before any further processing please setup your stripe public and restricted
+        //     keys on your <strong>Profile -> Bank Details</strong> section.";
+        //     // sending notification
+        //     $this->insert('notifications',['user_id' => $dealer_id,'date'=> $date,'time'=> $time,'type' => 'Setup Stripe details','message' => $message,'state' => 'delivered']);
+            
+
+        //     if($query1 && $query3){
+        //         $_SESSION['user_id'] = $dealer_id;
+        //         $_SESSION['role'] = 'dealer';
+        //         // $data['error'] = "success";
+        //     }else{
+        //         $data['error'] = "9";
+        //         return $data;
+        //     }
+
+        // }
     }
 
 

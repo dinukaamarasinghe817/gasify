@@ -85,7 +85,7 @@
                                 </select>
                                 <input name="account_no" class="half" type="number" placeholder="Bank Account No" required><br>
                             </div>
-                            <input class="acc_no" name="merchant_id" type="number" placeholder="Payhere Merchant ID">
+                            <!-- <input class="acc_no" name="merchant_id" type="number" placeholder="Payhere Merchant ID"> -->
 
                             <label for="image">
                                 <svg width="20" height="20" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
