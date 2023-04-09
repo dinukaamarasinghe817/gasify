@@ -396,8 +396,14 @@ class Orders extends Controller{
                 $this -> bank_slip_upload($error);
             }
             else{
-                $this->model('Customer')->place_reservation($customer_type);  ///
+                // $this->model('Customer')->place_reservation($customer_type);  ///
+                // $this->model('Customer')->check_quota_state($customer_type);  ///
                 // $this->select_collecting_method();
+                //successfully payed
+                $dealer_id = $_SESSION['dealer_id'];
+                $products = $_SESSION['order_products'];
+                $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Bank Deposit');
+                $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
                 $data['confirmation'] = '';
                 $this->view('customer/place_reservation/collecting_method',$data);
             }
@@ -413,6 +419,7 @@ class Orders extends Controller{
         $data['navigation'] = 'placereservation';
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
+        $customer_type = $row1['type'];
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
         //check customer quota
@@ -425,6 +432,7 @@ class Orders extends Controller{
             //successfully charged
             $products = $_SESSION['order_products'];
             $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Credit card');
+            $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
             $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
             $data['confirmation'] = '';
             $this->view('customer/place_reservation/collecting_method',$data);
