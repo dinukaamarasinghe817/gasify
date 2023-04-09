@@ -68,7 +68,7 @@ $user_id = $_SESSION['user_id'];
                                     $output .= '<td><button type="button" class="btn4" style="background-color: B4AAFF" onclick="document.location.href=\''.BASEURL.'/vehicles/releasing/'.$row2['vehicle_no'].'\'">Release</button></td>';
                                 }else{
                                     // $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="deleteVehicle('.$row2['vehicle_no'].')";">Remove</button></td>';
-                                    $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="document.location.href=\''.BASEURL .'/vehicles/removeVehicle/'.$row2['vehicle_no'].'\'">Remove</button></td>';
+                                    $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="location.href=\''.BASEURL .'/vehicles/removeVehicle/'.$row2['vehicle_no'].'\'">Remove</button></td>';
                                 }
                                 $output .= '<td><button type="button" class="btn4" style="background-color: #9c6109" onclick="document.location.href=\''.BASEURL .'/vehicles/updateVehiclePage/'.$row2['vehicle_no'].'\'">Update</button></td>';                                                              
                                 

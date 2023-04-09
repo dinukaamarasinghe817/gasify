@@ -187,27 +187,14 @@ class Distributor extends Model
         return $query2;
     }
 
+    // remove e vehicle
+    public function removeVehicle($vehicle_no) { 
+        $result = $this->delete('distributor_vehicle', "vehicle_no = '{$vehicle_no}'");  
 
-    public function removeVehicle($vehicle_no) {
-        $user_id = $_SESSION['user_id'];
-
-        // $query1 = $this->Query();
-        // return $query1;
-        // $removevehicle = array();
-    
-        // $query1 = $this->Query("DELETE * FROM distributor_vehicle v INNER JOIN distributor_vehicle_capacity c ON v.vehicle_no = c.vehicle_no WHERE distributor_id = '{$user_id}'");
-        // if(mysqli_num_rows($query1)>0) {
-        //     while($row1 = mysqli_fetch_assoc($query1)) {
-        //         array_push( $removevehicle,$row1);
-        //         array_push( $removevehicle, ['vehicleinfo'=>$row1, 'capacityinfo'=>$row2]);
-
-        //     }
-        // }
-        // return $removevehicle;
-
+        return $result;
     }
 
-
+    // view dealers
     public function viewdealers($user_id) {
         $dealers = array();
 
@@ -475,7 +462,7 @@ class Distributor extends Model
         return;
     }
 
-
+    // current stock
     public function currentstock($user_id) {
         $stock = array();
 

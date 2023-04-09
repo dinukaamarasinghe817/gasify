@@ -124,24 +124,16 @@ class Vehicles extends Controller{
 
     }
 
+    // release a vehicle
     public function releasing($vehicle_no) {
         $this->model("Distributor")->releaseVehicle($vehicle_no);
         $this->viewvehicle();
     }
 
+    // remove a vehicle
     public function removeVehicle($vehicle_no) {
-        $user_id = $_SESSION['user_id'];
-        $data['navigation'] = 'vehicles';
-
-        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-        $row = mysqli_fetch_assoc($distributor_details);
-        $data['image'] = $row['image'];
-
-        $data['remove'] = $this->model("Distributor")->removeVehicle($vehicle_no, $user_id);
-
-
-        $this->view('distributor/removeVehicle', $data);
-        
+        $this->model("Distributor")->removeVehicle($vehicle_no);
+        $this->viewvehicle();     
     }
 
     public function updatesinglevehicle($number){
