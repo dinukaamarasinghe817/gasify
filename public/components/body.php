@@ -1665,62 +1665,6 @@ class Body{
 
 
             }
-            /*<div class="orderCard" >
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>14</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>AJ Agencies</div>
-                </div>
-                <div class="orderRow">
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>2023/02/12</div>
-                    <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>12:34pm</div>
-                </div>
-                <div class="orderTbl">
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Product name</th>
-                                <th>Unit price (Rs.)</th>
-                                <th>Quantity</th>
-                                <th>Total (Rs.)</th>
-                            </tr>
-                        </thead>
-                        <tbody style="display:legacy">
-                            <tr>
-                                <td>Buddy</td>
-                                <td>1,450.00</td>
-                                <td>12</td>
-                                <td>17,400</td>
-                            </tr>
-                            <tr>
-                                <td>Regular</td>
-                                <td>3,220.00</td>
-                                <td>30</td>
-                                <td>96,600</td>
-                            </tr>
-                            <tr>
-                                <td>Commercial</td>
-                                <td>5,150.00</td>
-                                <td>15</td>
-                                <td>77,250</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>191,250</td>
-                            </tr>
-                         
-                        </tbody>      
-                    </table>
-                </div>
-                <div class="orderRow">
-                    <div class="orderButtons"><label>Issue</label></div>
-                    <div class="orderButtons"><label>Delay</label></div>
-                </div>
-            </div>
-            </div>';
-            echo ' 
-        </section>';*/
     }
     function companyLimitQuota($data){
         echo 
@@ -1844,36 +1788,69 @@ class Body{
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Analysis</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;  display:flex; flex-direction:row;">
-                <div class="analysis_top"  style="flex-direction:column;">
-                    <div class="graph" style="width:500px; padding:20px;">
-                    <h4>Last Week</h4>';
-                        $chart['vector']=[12,45,76,34,47];
-                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart['color']="rgba(30, 105, 176, 1)";
-                        $chart['y']='Deliveries';
-                        $chart = new Chart('bar',$chart,1);                    
-                    echo'</div>
-                    <div class="graph" style="width:500px; padding:20px;">
-                    <h4>Last Week Revenue</h4>';
-                        $chart_3['vector']=[15,25,28,23,28];
-                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart_3['color']="rgba(30, 105, 176, 1)";
-                        $chart_3['y']='Deliveries-Last week';
-                        $chart_3 = new Chart('line',$chart_3,4);                   
-                    echo'</div>
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;">
+                <div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
+                    <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
+                        if(isset($data['distNames'])){
+                            $result=$data['distNames'];
+                            echo'<select name="distNames" id="distNames" onchange="addYearsToSelectBoxes(this)">
+                            <option value="" disabled selected>Select distributor</option>';
+                            $tag='';
+                            foreach ($result as $row) {
+                                $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
+                            }
+                            $tag.='</select></div>';
+                            echo $tag;
+                        }
+                        echo'<div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                                From <select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
+                                    <option value="" disabled selected>Year</option>
+                                </select>
+                                <select name="monthFrom" id="monthFrom">
+                                    <option value="" disabled selected>Month</option>
+                                </select>
+                            </div>
+                            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
+                                    <option value="" disabled selected>Year</option>
+                                </select>
+                                <select name="monthTo" id="monthTo">
+                                    <option value="" disabled selected>Month</option>
+                                </select>
+                            </div>';                                     
+                    //echo'</div>';
+                    echo'
                 </div>
-                <div class="analysis_bottom">
-                    <div class="graph" style="height: 70vh; padding:20px; width:500px;">
-                    <h4>Last Month</h4>';
+                <div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
+                    <div class="leftAnalysis" style="width:50%;height:100%">
+                        <div class="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                            $chart['vector']=[12,45,76,34,47];
+                            $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                            $chart['color']="rgba(30, 105, 176, 1)";
+                            $chart['y']='Deliveries';
+                            $chart = new Chart('bar',$chart,1); 
+                        echo'</div>
+                        <div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                            $chart_3['vector']=[15,25,28,23,28];
+                            $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                            $chart_3['color']="rgba(30, 105, 176, 1)";
+                            $chart_3['y']='Deliveries-Last week';
+                            $chart_3 = new Chart('line',$chart_3,4);                 
+                        echo'</div>
+                    </div>
+                    <div class="rightAnalysis" style="width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             $chart_2['vector']=array(50,30,20);
                             $chart_2['labels']=array('Regular','Commercial','Buddy');
                             $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
                             $chart_2['y']='Top products';
                             $chart_2['main']="fgdff";
                             $chart_2 = new Chart('doughnut',$chart_2,3);
+                    
                     echo'</div>
-                </div>  
+                
+                
+                </div>
+                
             </div>';     
         echo ' 
         </section>';
