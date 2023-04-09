@@ -189,8 +189,9 @@ class Distributor extends Model
 
     // remove e vehicle
     public function removeVehicle($vehicle_no) { 
-        $result = $this->delete('distributor_vehicle', "vehicle_no = '{$vehicle_no}'");  
+        $user_id = $_SESSION['user_id'];
 
+        $result = $this->delete('distributor_vehicle', "vehicle_no = '$vehicle_no' AND distributor_id = '$user_id'");  
         return $result;
     }
 
