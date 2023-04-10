@@ -460,52 +460,61 @@ class Customer extends Model{
                     $row5 = mysqli_fetch_assoc($query5);
                     $remaining_quota = $row5['remaining_amount'];
 
+
+
+
+
+                    $allproducts = array();
+                
+                    //check whether there is any selected produce on that company
+                    if(isset($_POST[$company_id])){
+                        $selected_pid = $_POST[$company_id];
+                    }else{
+                        $selected_pid = null;
+                        $query2 = $this->read('product',"company_id = $company_id  AND type = 'cylinder'",null,1);
+    
+                        // if that comapny have products
+                        if(mysqli_num_rows($query2) > 0){
+                            $row2 = mysqli_fetch_assoc($query2);
+                            $selected_pid = $row2['product_id'];
+                        }else{
+                            // means no produc selected and no product to select at random
+                            //think
+                        }
+                    }
+    
+                    if($selected_pid != null){
+                        $row6 = mysqli_fetch_assoc($this->read('product',"product_id = $selected_pid"));
+                        $selected_product_weight = $row6['weight'];
+    
+                        $total_cyl = floor($total_quota/$selected_product_weight);
+                        $remaining_cyl = floor($remaining_quota/$selected_product_weight);
+                    }else{
+                        // think 
+                    }
+    
+                    // get all the products belongs to that company to put it in select
+                    $query7 = $this->read('product',"company_id = $company_id AND type = 'cylinder'");
+    
+                    if(mysqli_num_rows($query7) > 0){
+                        while($row7 = mysqli_fetch_assoc($query7)){
+                            array_push($allproducts,['product_id'=> $row7['product_id'],'product_name'=>$row7['name'],'product_weight'=>$row7['weight']]);
+                        }
+                    }
+    
+                    // now push all attributes needed in companies array
+                    $element = ['company_id'=>$company_id, 'name'=>$row['name'], 'logo'=>$row['logo'],'selected_pid'=>$selected_pid, 'total_cyl'=>$total_cyl, 'remaining_cyl'=>$remaining_cyl,'all_products'=>$allproducts,'quota_state'=>'ON'];
+                    array_push($companies,$element);
+                    
                 }else{
                     // the quota is not set. then you don't want to display this in customer quota section
+                    $element = ['company_id'=>$company_id, 'name'=>$row['name'], 'logo'=>$row['logo'],'quota_state'=>'OFF'];
+                    array_push($companies,$element);
+                    
                 }
-
-                $allproducts = array();
-                
-                //check whether there is any selected produce on that company
-                if(isset($_POST[$company_id])){
-                    $selected_pid = $_POST[$company_id];
-                }else{
-                    $selected_pid = null;
-                    $query2 = $this->read('product',"company_id = $company_id  AND type = 'cylinder'",null,1);
-
-                    // if that comapny have products
-                    if(mysqli_num_rows($query2) > 0){
-                        $row2 = mysqli_fetch_assoc($query2);
-                        $selected_pid = $row2['product_id'];
-                    }else{
-                        // means no produc selected and no product to select at random
-                        //think
-                    }
-                }
-
-                if($selected_pid != null){
-                    $row6 = mysqli_fetch_assoc($this->read('product',"product_id = $selected_pid"));
-                    $selected_product_weight = $row6['weight'];
-
-                    $total_cyl = floor($total_quota/$selected_product_weight);
-                    $remaining_cyl = floor($remaining_quota/$selected_product_weight);
-                }else{
-                    // think 
-                }
-
-                // get all the products belongs to that company to put it in select
-                $query7 = $this->read('product',"company_id = $company_id AND type = 'cylinder'");
-
-                if(mysqli_num_rows($query7) > 0){
-                    while($row7 = mysqli_fetch_assoc($query7)){
-                        array_push($allproducts,['product_id'=> $row7['product_id'],'product_name'=>$row7['name'],'product_weight'=>$row7['weight']]);
-                    }
-                }
-
-                // now push all attributes needed in companies array
-                $element = ['company_id'=>$company_id, 'name'=>$row['name'], 'logo'=>$row['logo'],'selected_pid'=>$selected_pid, 'total_cyl'=>$total_cyl, 'remaining_cyl'=>$remaining_cyl,'all_products'=>$allproducts];
-                array_push($companies,$element);
             }
+
+               
         }
 
         return $companies;

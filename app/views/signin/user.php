@@ -1,5 +1,5 @@
 <?php
-    $header = new Header("login",$data)
+    $header = new Header("login",$data);
 ?>
     <div class="container">
         <div class="wrapper">
@@ -26,9 +26,9 @@
                     ?>
                     
                     <div class="info">
-                    <input name="email" type="text" placeholder="Email Address"><br>
-                    <input name="password" type="password" placeholder="Password"><br>
-                    <p class="forgotpwd" ><a href="<?php echo BASEURL ;?>/signin/forgetpassword/reset" >Forgot password?</a><br></p>
+                        <input name="email" type="text" placeholder="Email Address"><br>
+                        <input name="password" type="password" placeholder="Password"><br>
+                        <p class="forgotpwd" ><a href="<?php echo BASEURL ;?>/signin/forgetpassword/reset" >Forgot password?</a><br></p>
                     </div>
                     <button type="submit" name="submit">Login</button><br>
                     <p>Not Registered? <a href="<?php echo BASEURL;?>/signup/dealer">Create Account</a></p>

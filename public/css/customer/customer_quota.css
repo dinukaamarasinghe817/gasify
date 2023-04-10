@@ -94,6 +94,7 @@ a,button{
 .quota-bars{
     padding: 5px 25px 5px;
     width:500px ;
+    min-height: 320px;
     background: #fff;
     box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
     border-radius: 10px;
@@ -149,6 +150,19 @@ a,button{
 
 .remaining{
     padding-top: 10px;
+}
+
+
+
+/* when quota disabled */
+.disabled_quota{
+    width:1300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0px 0px 50px;
+    padding: 20px;
+    background-color: var(--table-gray);
 }
   
  
