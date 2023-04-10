@@ -97,12 +97,12 @@
                                         </div>
                                         <div>
                                             
-                                            <input type="radio" value="Small_Scale_Business" id="Small_scale"  name="cus_type" class="radio_input" >
+                                            <input type="radio" value="Small Scale Business" id="Small_scale"  name="cus_type" class="radio_input" >
                                             <label for="Small_scale">Small Scale Business</label>
                                         </div>
                                         <div>
                                             
-                                            <input type="radio" value="Large_Scale_Business" id="Large_scale"  name="cus_type" class="radio_input">
+                                            <input type="radio" value="Large Scale Business" id="Large_scale"  name="cus_type" class="radio_input">
                                             <label for="Large_scale">Large Scale Business</label>
                                         </div>
                                     </div> 
