@@ -72,7 +72,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         <span><strong>Placed Date : '.$date.' </strong></span><br><br>
                                         <span><strong>Placed Time : '.$time.' </strong></span><br><br>
                                     </div>
-                                    
+
                                     <hr>
                                     <table class="styled-table">
                                         <thead>
@@ -87,13 +87,17 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         <tbody>';
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
+                                            $unit_price = $row2['unit_price'];
+                                            $quantity = $row2['quantity'];
 
+                                            $subtotal = $unit_price * $quantity;
+                                            // $total = $total + $subtotal;
                                             $output .= '
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
                                                 <td>'.$row2['unit_price'].'</td>
                                                 <td>'.$row2['quantity'].'</td>
-                                                <td></td>
+                                                <td>'.$subtotal.'</td>
                                             </tr>';                                            
                                         }
                                         $output .= '
