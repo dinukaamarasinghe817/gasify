@@ -104,19 +104,28 @@
             if($error != null){
                 switch($error){
                     case '1':
-                        $data['toast'] = ['type'=>"error", 'message'=>"fill all the fields"];
+                        $data['toast'] = ['type'=>"error", 'message'=>"fill all the fields!"];
                         break;
                     case '2':
-                        $data['toast'] = ['type'=>"error", 'message'=>"too many login attempts, recommend reset your password"];
+                        $data['toast'] = ['type'=>"error", 'message'=>"too many login attempts, recommend reset your password!"];
                         break;
                     case '3':
-                        $data['toast'] = ['type'=>"error", 'message'=>"password missmatch"];
+                        $data['toast'] = ['type'=>"error", 'message'=>"password missmatch!"];
                         break;
                     case '4':
-                        $data['toast'] = ['type'=>"error", 'message'=>"invalid email"];
+                        $data['toast'] = ['type'=>"error", 'message'=>"invalid email!"];
                         break;
                     case '5':
                         $data['toast'] = ['type'=>"success", 'message'=>"Please check your email and reset your password"];
+                        break;
+                    case '6':
+                        $data['toast'] = ['type'=>"success", 'message'=>"You've successfully verified your account"];
+                        break;
+                    case '7':
+                        $data['toast'] = ['type'=>"error", 'message'=>"Please verify your email and try again!"];
+                        break;
+                    case '8':
+                        $data['toast'] = ['type'=>"error", 'message'=>"Invalid token passed!"];
                         break;
                 }
                 

@@ -233,8 +233,10 @@ class Compny extends Controller{
         $data['navigation'] = 'analysis';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $row['logo'];
+        $data['distNames'] = $distributor_details;
         $this->view('dashboard/company', $data);
     }
     function reports(){
@@ -302,6 +304,12 @@ class Compny extends Controller{
     public function ProductCount(){
         $product_count = $this->model('Company')->getProductCount($_SESSION['user_id']);
         echo json_encode($product_count);
+    }
+    public function getDateRange(){
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $ID = mysqli_real_escape_string($conn,$_POST["ID"]);
+        $dates = $this->model('Company')->getOrderDates($ID);
+        echo json_encode($dates);
     }
 
 }

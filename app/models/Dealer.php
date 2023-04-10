@@ -478,7 +478,16 @@ class Dealer extends Model
 
             }
             // placing the reservation but pending because of payslip need to verify by admin
-            return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending');
+            $order_id = $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
+
+            // update and upload the payslip
+            $payslip = $_SESSION['slip_img'];
+            $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'payslips'.DIRECTORY_SEPARATOR;
+            $image = getImageRename($payslip['file_name'],$payslip['temp_name']);
+            if(move_uploaded_file($payslip['temp_name'], $path.($image))){
+                $this->update('reservation',['pay_slip'=>$image],"order_id = $order_id");
+            }
+            return $order_id;
 
         }
     }

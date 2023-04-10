@@ -156,3 +156,104 @@ function checkIFOrderIsClean(orderID, resultArray, imgCount) {
         document.getElementById(orderID + 'issue').style.backgroundColor = "#80B3FF";
     }
 }
+function addYearsToSelectBoxes(selectObject) {
+    var formData = new FormData();
+    formData.append("ID", selectObject.value);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var dateobj = new Date();
+            var dateObject = dateobj.getFullYear();
+            joinedDateArray = JSON.parse(this.responseText);
+            joinedMonth = parseInt(joinedDateArray[0].joinedDate.split('-')[1]);
+            joinedDate = parseInt(joinedDateArray[0].joinedDate.split('-')[0]);
+            var yearFrom = document.getElementById("yearFrom");
+            yearFrom.options.length = 0;
+            option = document.createElement('option');
+            option.value = "";
+            option.text = "Year";
+            option.disabled = true;
+            option.setAttribute('selected', true);
+            yearFrom.add(option);
+            var yearTo = document.getElementById("yearTo");
+            yearTo.options.length = 0;
+            option = document.createElement('option');
+            option.value = "";
+            option.text = "Year";
+            option.disabled = true;
+            option.setAttribute('selected', true);
+            yearTo.add(option);
+            for (i = 0; i <= parseInt(dateObject - joinedDate); i += 1) {
+                option = document.createElement('option');
+                option.value = parseInt(joinedDate) + i;
+                option.text = parseInt(joinedDate) + i;
+                yearFrom.add(option);
+                option = document.createElement('option');
+                option.value = parseInt(joinedDate) + i;
+                option.text = parseInt(joinedDate) + i;
+                yearTo.add(option);
+            }
+
+
+
+        }
+    };
+    xmlhttp.open("POST", "../Compny/getDateRange");
+    xmlhttp.send(formData);
+}
+function addMonthsToSelectBoxes(selectObject) {
+    var yearSelectName = selectObject.getAttribute("name");
+    var monthBox;
+    if (yearSelectName == "yearFrom") {
+        monthBox = "monthFrom";
+    } else {
+        monthBox = "monthTo";
+    }
+    var selectedYear = document.getElementById(yearSelectName).value;
+    var formData = new FormData();
+    formData.append("ID", document.getElementById("distNames").value);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            joinedDateArray = JSON.parse(this.responseText);
+            joinedMonth = parseInt(joinedDateArray[0].joinedDate.split('-')[1]);
+            joinedDate = parseInt(joinedDateArray[0].joinedDate.split('-')[0]);
+            var selectMonth = document.getElementById(monthBox);
+            selectMonth.options.length = 0;
+            option = document.createElement('option');
+            option.value = "";
+            option.text = "Month";
+            console.log(joinedDate)
+            console.log(joinedMonth)
+            option.setAttribute('selected', true);
+            option.setAttribute('disabled', true);
+            selectMonth.add(option);
+            if (joinedDate == selectedYear) {
+                for (i = joinedMonth; i <= 12; i += 1) {
+                    console.log("hello");
+                    option = document.createElement('option');
+                    option.value = i;
+                    option.text = i;
+                    selectMonth.add(option);
+                    //yearTo.add(option);
+                }
+            } else {
+                for (i = 1; i <= 12; i += 1) {
+                    console.log("hello");
+                    option = document.createElement('option');
+                    option.value = i;
+                    option.text = i;
+                    selectMonth.add(option);
+                    //yearTo.add(option);
+                }
+            }
+
+
+
+
+        }
+    };
+    xmlhttp.open("POST", "../Compny/getDateRange");
+    xmlhttp.send(formData);
+
+}
