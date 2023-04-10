@@ -154,15 +154,5 @@ a,button{
 
 
 
-/* when quota disabled */
-.disabled_quota{
-    width:1300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 50px 0px 0px 50px;
-    padding: 20px;
-    background-color: var(--table-gray);
-}
-  
+
  

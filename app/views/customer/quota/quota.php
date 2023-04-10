@@ -98,7 +98,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 //if qouata is inactivated
                                 else{
                                 
-                                echo  '<div class="one_company">
+                                    echo  '<div class="one_company">
                                             <div class="company_details">
                                                 <div class="name">'.$company_name.'</div>
                                                 <div class="date"><span> &nbsp </span></div>

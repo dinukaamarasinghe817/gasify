@@ -303,87 +303,87 @@
             $city,$street,$contact_no,$ebill_no,$type,$password,$confirmpassword,$image_name,$tmp_name);
             if(isset($data['error'])){
                 $error = $data['error'];
-                header("Location: ./customer/$error");
-                return;
-            }
-
-            // optional image uploaded
-            if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
-                $image_name = $_FILES['image']['name'];
-                $tmp_name = $_FILES['image']['tmp_name'];
-
-                // image type validity jpg png jpeg
-                if(isNotValidImageFormat($image_name)){
-                    $error = 10;
-                    header("Location: ./customer/$error");
-                    return;
-                }
-
-                $image = getImageRename($image_name,$tmp_name);
-                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
-                echo $path;
-                if(move_uploaded_file($tmp_name, $path.($image))){
-                    //add the dealer to database with image
-                    $query1 = $this->model('Customer')->addCustomer($name, $email, $hashed_pwd, $city, $street, $contact_no,$image,$ebill_no);
-                    //get dealer_id of newly inserted dealer
-                    $query2 = $this->model('Customer')->getCustomer($email);
-                    $row = mysqli_fetch_assoc($query2);
-                    $customer_id = $row['customer_id'];
-                    //$query3;
-
-                    // set the capacity of the dealer
-                    // for($i = 0; $i<count($capacity); $i++){
-                    //     $product = $capacity[$i][0];
-                    //     $qty = $capacity[$i][1];
-                    //     $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
-                    // }
-                    
-                    // if successfully registred and set capacity
-                    // if($query1 && $query3){
-                    //     $_SESSION['user_id'] = $dealer_id;
-                    //     $_SESSION['role'] = 'dealer';
-                    //     $data['error'] = "success";
-                    // }else{
-                    //     $error = '9';
-                    //     header("Location: ./dealer/$error");
-                    // }
-
-                }
-            }else{
-
-                // add the dealer to the database without image
-                $query1 = $this->model('Signin')->addDealer($name, $email, $hashed_pwd, $city, $street, $contact_no, NULL,$ebill_no);
-                // get the dealer_id from the database
-                echo $email;
-                $query2 = $this->model('Customer')->getCustomer($email);
-                $row = mysqli_fetch_assoc($query2);
-                $customer_id = $row['customer_id'];
-                echo $customer_id;
-                //$query3;
-                
-                // set the capacity
-                // for($i = 0; $i<count($capacity); $i++){
-                //     $product = $capacity[$i][0];
-                //     $qty = $capacity[$i][1];
-                //     // $sql = "INSERT INTO dealer_capacity (dealer_id, company_id, product_id, capacity) VALUES ($dealer_id,1,$product,$qty)";
-                //     $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
-                // }
-
-                if($query1){
-                    $_SESSION['user_id'] = $customer_id;
-                    $_SESSION['role'] = 'customer';
-                    $data['error'] = "success";
-                }else{
-                    $error = "9";
-                    header("Location: ./customer/$error");
-                }
-            }
-
-            if($error){
                 header("Location: ".BASEURL."/signup/customer/$error");
             }else{
                 header("Location: ".BASEURL."/signin/user");
             }
+            // optional image uploaded
+            // if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+            //     $image_name = $_FILES['image']['name'];
+            //     $tmp_name = $_FILES['image']['tmp_name'];
+
+            //     // image type validity jpg png jpeg
+            //     if(isNotValidImageFormat($image_name)){
+            //         $error = 10;
+            //         header("Location: ./customer/$error");
+            //         return;
+            //     }
+
+            //     $image = getImageRename($image_name,$tmp_name);
+            //     $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+            //     echo $path;
+            //     if(move_uploaded_file($tmp_name, $path.($image))){
+            //         //add the dealer to database with image
+            //         $query1 = $this->model('Customer')->addCustomer($name, $email, $hashed_pwd, $city, $street, $contact_no,$image,$ebill_no);
+            //         //get dealer_id of newly inserted dealer
+            //         $query2 = $this->model('Customer')->getCustomer($email);
+            //         $row = mysqli_fetch_assoc($query2);
+            //         $customer_id = $row['customer_id'];
+            //         //$query3;
+
+            //         // set the capacity of the dealer
+            //         // for($i = 0; $i<count($capacity); $i++){
+            //         //     $product = $capacity[$i][0];
+            //         //     $qty = $capacity[$i][1];
+            //         //     $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
+            //         // }
+                    
+            //         // if successfully registred and set capacity
+            //         // if($query1 && $query3){
+            //         //     $_SESSION['user_id'] = $dealer_id;
+            //         //     $_SESSION['role'] = 'dealer';
+            //         //     $data['error'] = "success";
+            //         // }else{
+            //         //     $error = '9';
+            //         //     header("Location: ./dealer/$error");
+            //         // }
+
+            //     }
+            // }else{
+
+            //     // add the dealer to the database without image
+            //     $query1 = $this->model('Signin')->addDealer($name, $email, $hashed_pwd, $city, $street, $contact_no, NULL,$ebill_no);
+            //     // get the dealer_id from the database
+            //     echo $email;
+            //     $query2 = $this->model('Customer')->getCustomer($email);
+            //     $row = mysqli_fetch_assoc($query2);
+            //     $customer_id = $row['customer_id'];
+            //     echo $customer_id;
+            //     //$query3;
+                
+            //     // set the capacity
+            //     // for($i = 0; $i<count($capacity); $i++){
+            //     //     $product = $capacity[$i][0];
+            //     //     $qty = $capacity[$i][1];
+            //     //     // $sql = "INSERT INTO dealer_capacity (dealer_id, company_id, product_id, capacity) VALUES ($dealer_id,1,$product,$qty)";
+            //     //     $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
+            //     // }
+
+            //     if($query1){
+            //         $_SESSION['user_id'] = $customer_id;
+            //         $_SESSION['role'] = 'customer';
+            //         $data['error'] = "success";
+            //     }else{
+            //         $error = "9";
+            //         header("Location: ./customer/$error");
+            //     }
+            // }
+
+            // if($error){
+            //     header("Location: ".BASEURL."/signup/customer/$error");
+            // }else{
+            //     header("Location: ".BASEURL."/signin/user");
+            // }
 
             // header("Location: ../signin/dealer");
         
