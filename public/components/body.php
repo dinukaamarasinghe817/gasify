@@ -1790,6 +1790,7 @@ class Body{
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;">
                 <div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
+                <form action="'. BASEURL.'/Compny/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
                     <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
                         if(isset($data['distNames'])){
                             $result=$data['distNames'];
@@ -1817,18 +1818,21 @@ class Body{
                                 <select name="monthTo" id="monthTo">
                                     <option value="" disabled selected>Month</option>
                                 </select>
-                            </div>';                                     
+                            </div>
+                            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
+                                <input type="submit" name="sub" value="submit">
+                            </div></form>';                                     
                     //echo'</div>';
                     echo'
                 </div>
                 <div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
                     <div class="leftAnalysis" style="width:50%;height:100%">
-                        <div class="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                        <div class="barChart" id="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             $chart['vector']=[12,45,76,34,47];
                             $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
                             $chart['color']="rgba(30, 105, 176, 1)";
                             $chart['y']='Deliveries';
-                            $chart = new Chart('bar',$chart,1); 
+                            $chart = new Chart('bar',$chart,1);
                         echo'</div>
                         <div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             $chart_3['vector']=[15,25,28,23,28];
