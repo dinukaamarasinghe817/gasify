@@ -14,6 +14,15 @@
             $this->view('signup/users');
         }
 
+        public function verifyemail($dealer_id,$token){
+            if($this->model('User')->verifyemail($dealer_id,$token)){
+                header("Location: ".BASEURL."/signin/user/6");
+            }else{
+                header("Location: ".BASEURL."/signin/user/8");
+            }
+
+        }
+
         public function dealer($error=null){
 
             $company_id = $_SESSION['user_id']; // company_id should be taken from session
@@ -104,11 +113,11 @@
             $data = $this->model("User")->dealerSignup($name,$first_name,$last_name,$email,
             $city,$street,$company_id,$distributor_id,$contact_no,$bank,$account_no,$merchant_id,
             $password,$confirmpassword,$image_name,$tmp_name,$capacity,$isvalidqty);
-            if(isset($data['error'])){
-                $error = $data['error'];
-                header("Location: ./dealer/$error");
-                return;
-            }
+            // if(isset($data['error'])){
+            //     $error = $data['error'];
+            //     header("Location: ".BASEURL."/signup/dealer/$error");
+            //     return;
+            // }
 
             // optional image uploaded
             // if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
@@ -182,7 +191,8 @@
             //     }
             // }
 
-            if($error){
+            if(isset($data['error'])){
+                $error = $data['error'];
                 header("Location: ".BASEURL."/signup/dealer/$error");
             }else{
                 header("Location: ".BASEURL."/signin/user");

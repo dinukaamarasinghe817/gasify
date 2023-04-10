@@ -170,7 +170,8 @@
             }else if($tab == 'bank'){
                 $data['bank'] = $_POST['bank'];
                 $data['account_no'] = $_POST['account_no'];
-                $data['merchant_id'] = $_POST['merchant_id'];
+                $data['pub_key'] = $_POST['pub_key'];
+                $data['rest_key'] = $_POST['rest_key'];
             }else if($tab == 'security'){
                 $data['current_password'] = $_POST['current_password'];
                 $data['new_password'] = $_POST['new_password'];

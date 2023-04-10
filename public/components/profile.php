@@ -348,7 +348,8 @@ class ProfileHTML{
                                     </div>
                                     <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'"></div>
                                 </div>
-                                <div class="input"><label>Payhere merchant ID</label><input type="text" name="merchant_id" placeholder="merchant id" value="'.$row['merchant_id'].'"></div>
+                                <div class="input"><label>Stripe Public Key</label><input type="text" name="pub_key" placeholder="public key" value="'.$row['pub_key'].'"></div>
+                                <div class="input"><label>Stripe Restricted Key</label><input type="text" name="rest_key" placeholder="restricted key" value="'.$row['rest_key'].'"></div>
                                 <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='profile'){
