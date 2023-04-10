@@ -189,8 +189,11 @@ class Distributor extends Model
 
     // remove e vehicle
     public function removeVehicle($vehicle_no) { 
-        $result = $this->delete('distributor_vehicle', "vehicle_no = '{$vehicle_no}'");  
+        $user_id = $_SESSION['user_id'];
 
+        // $result = $this->delete('distributor_vehicle', "vehicle_no = '$vehicle_no' AND distributor_id = '$user_id'");  
+        $sql = "DELETE FROM distributor_vehicle WHERE vehicle_no = '{$vehicle_no}' AND distributor_id = '{$user_id}'";
+        $result = $this ->Query($sql);
         return $result;
     }
 
@@ -228,11 +231,12 @@ class Distributor extends Model
     public function pendingGasOrders($user_id) {
         $pending = array();
 
-        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='pending' order by (place_date) ASC;");
+        $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='pending' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['stock_req_id'];
                 $date = $row1['place_date'];
+                $time = $row1['place_time'];
 
                 $capacities = array();
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
@@ -251,11 +255,12 @@ class Distributor extends Model
     public function completedGasOrders($user_id) {
         $completed = array();
 
-        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='completed' order by (place_date) ASC;");
+        $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='completed' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['stock_req_id'];
                 $date = $row1['place_date'];
+                $time = $row1['place_time'];
 
                 $capacities = array();
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
@@ -274,11 +279,12 @@ class Distributor extends Model
     public function acceptedGasOrders($user_id) {
         $accepted = array();
 
-        $query1 = $this->Query("SELECT stock_req_id, place_date from stock_request where distributor_id='{$user_id}' and stock_req_state='accepted' order by (place_date) ASC;");
+        $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='accepted' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['stock_req_id'];
                 $date = $row1['place_date'];
+                $time = $row1['place_time'];
 
                 $capacities = array();
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
@@ -320,12 +326,13 @@ class Distributor extends Model
     public function pendingdistributions($user_id) {
         $pending = array();
 
-        $query1 = $this->Query("SELECT po_id, dealer_id, place_date from purchase_order where distributor_id = '{$user_id}' and po_state='pending' order by (place_date) ASC; ");
+        $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time from purchase_order where distributor_id = '{$user_id}' and po_state='pending' order by (place_date) ASC; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['po_id'];
                 $dealer_id = $row1['dealer_id'];
                 $date = $row1['place_date'];
+                $time = $row1['place_time'];
 
                 $capacities = array();
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
@@ -366,12 +373,13 @@ class Distributor extends Model
     public function completedistributions($user_id) {
         $completed = array();
 
-        $query1 = $this->Query("SELECT po_id, dealer_id, place_date from purchase_order where distributor_id = '{$user_id}' and po_state='completed' order by (place_date) ASC; ");
+        $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time from purchase_order where distributor_id = '{$user_id}' and po_state='completed' order by (place_date) ASC; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['po_id'];
                 $dealer_id = $row1['dealer_id'];
                 $date = $row1['place_date'];
+                $time = $row1['place_time'];
 
                 $capacities = array();
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
