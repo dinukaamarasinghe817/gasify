@@ -26,9 +26,9 @@ $user_id = $_SESSION['user_id'];
         <div class="middle">
             <div class="accordion new">
      
-                <!-- <div class="box"> -->
                     <?php
                     $dealers = $data['dealers'];
+                    if(count($dealers)>0) {
                   
                         foreach($dealers as $dealer) {
                             $row1 = $dealer['dealerinfo'];
@@ -114,15 +114,19 @@ $user_id = $_SESSION['user_id'];
                         
                         echo $output;
                     }
+                    }else {
+                        $output .= '</table>';
+                        $output .= '<p class="nofoundtxt">No records found</p>';
+                        echo $output;
+                    }
                     ?>
-                </div> 
-
+                <!-- </div>  -->
             </div>
         </div>
     </div>
 </section>
+<!-- </section> -->
 
-</section>
 
 <script>
     let accordion = document.querySelectorAll('.accordion .box');
