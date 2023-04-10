@@ -650,33 +650,134 @@ class Customer extends Model{
 
     /*====================================insert reservation details and selected product details to database============================== */
     //insert place reservation details for reservation table
-    public function place_reservation($customer_type){
+    // public function place_reservation($customer_type){
+    //     $customer_id = $_SESSION['user_id'];
+    //     $dealer_id = $_SESSION['dealer_id'];
+    //     $company_id = $_SESSION['company_id'];
+    //     $order_products = $_SESSION['order_products'];
+    //     $order_state = 'Pending';
+    //     $payslip = $_SESSION['slip_img'];
+    //     //set current date and time 
+    //     date_default_timezone_set("Asia/Colombo");
+    //     $place_time = date('H:i:s');
+    //     $place_date = date('Y-m-d');
+       
+    //     $_SESSION['place_time'] = $place_time;
+    //     $_SESSION['place_date'] = $place_date;
+        
+    //     //check payment method
+    //     if(isset($payslip)){
+    //         $payment_method = 'Bank Deposit';
+    //     }else{
+    //         $payment_method = 'Credit Card';
+    //     }
+
+    //     //query to get quota details
+    //     $result2 = $this->Query("SELECT * FROM quota WHERE company_id = '{$company_id}' AND customer_type = '{$customer_type}'");
+    //     $row2 = mysqli_fetch_assoc($result2);
+    //     $quota_state = $row2['state'];
+    //     $monthly_limit = $row2['monthly_limit'];
+
+    //     //query to get remaining quota for relevant customer
+    //     $result3 = $this->Query("SELECT * FROM customer_quota WHERE company_id = '{$company_id}' AND customer_id = '{$customer_id}'");
+    //     $row3 = mysqli_fetch_assoc($result3);
+    //     $remaining_weight = $row3['remaining_amount'];
+
+
+    //     //check quota is active ,then reduce the remaining quota amount 
+    //     if($quota_state == 'ON'){
+    //          $sum_of_weights = 0;
+    //         foreach ($order_products as $order_product){
+    //             $product_id = $order_product['product_id'];
+    //             $qty = $order_product['qty'];
+    //             //get products weight
+    //             $result1 = $this->Query("SELECT * FROM product WHERE product_id = $product_id");
+    //             $row1 = mysqli_fetch_assoc($result1);
+    //             $product_type = $row1['type'];
+    //             //check product type is cylinder or not
+    //             if($product_type == 'cylinder'){
+    //                 $item_weight = $row1['weight'];
+    //                 $product_total_weight = $item_weight * $qty;
+    //                 $sum_of_weights = $sum_of_weights + $product_total_weight;  //calculate all cylinder type selected products total weight
+    //             }
+    //         }
+
+    //         $new_remaining_weight = $remaining_weight - $sum_of_weights;  //new remainig quota amount
+
+    //         //check if total weight exceed the remaining available quota
+    //         if($sum_of_weights <= $remaining_weight){
+    //             if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
+    //                 $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
+    //                 $this->insertproducts();    //insert selected products to reservation include table
+    //                 //update remaining quota
+    //                 $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
+    //             }else{
+    //                 $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
+    //                 $this->insertproducts();    //insert selected products to reservation include table
+    //                 //update remaining quota
+    //                 $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
+    //             } 
+
+    //         }
+
+    //     }   
+    //     //if quota is not active then customer is allowed to buy any amount of items 
+    //     else{
+    //         if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
+    //             $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
+    //             $this->insertproducts();    //insert selected products to reservation include table     
+    //         }else{
+    //             $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
+    //             $this->insertproducts();    //insert selected products to reservation include table 
+    //         } 
+    //     }
+
+    // }
+
+   
+
+    //insert selected products to reservation include table
+    // public function insertproducts(){
+
+    //     $customer_id = $_SESSION['user_id'];
+    //     $dealer_id = $_SESSION['dealer_id'];
+    //     $order_state = 'Pending';
+    //     $place_time = $_SESSION['place_time'];
+    //     $place_date = $_SESSION['place_date'];
+    //     $order_products = $_SESSION['order_products'];
+
+    //     //get order id from reservation table
+    //     $result1 = $this->Query("SELECT order_id FROM reservation 
+    //     WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
+    //     $row = mysqli_fetch_assoc($result1);
+    //     $order_id =  $row['order_id'] ;
+
+    //     foreach ($order_products as $order_product){
+    //         $product_id = $order_product['product_id'];
+    //         $qty = $order_product['qty'];
+    //         $unit_price = $order_product['unit_price'];
+    //         //check selected products quantity is greater than 0 
+    //         if($qty>0){
+    //             //insert products to reservation include table
+    //             $this->insert('reservation_include',['order_id'=>$order_id,'product_id'=>$product_id,'quantity'=>$qty,'unit_price'=>$unit_price]);
+    //         }
+    //     }
+
+    //     return $order_id;
+    // }
+
+
+     //check the quota status and update remaining weight after place reservation if it is active
+     public function update_remaining_weight($customer_type){
         $customer_id = $_SESSION['user_id'];
-        $dealer_id = $_SESSION['dealer_id'];
         $company_id = $_SESSION['company_id'];
         $order_products = $_SESSION['order_products'];
-        $order_state = 'Pending';
-        $payslip = $_SESSION['slip_img'];
-        //set current date and time 
-        date_default_timezone_set("Asia/Colombo");
-        $place_time = date('H:i:s');
-        $place_date = date('Y-m-d');
-       
-        $_SESSION['place_time'] = $place_time;
-        $_SESSION['place_date'] = $place_date;
         
-        //check payment method
-        if(isset($payslip)){
-            $payment_method = 'Bank Deposit';
-        }else{
-            $payment_method = 'Credit Card';
-        }
-
         //query to get quota details
         $result2 = $this->Query("SELECT * FROM quota WHERE company_id = '{$company_id}' AND customer_type = '{$customer_type}'");
         $row2 = mysqli_fetch_assoc($result2);
         $quota_state = $row2['state'];
-        $monthly_limit = $row2['monthly_limit'];
+        
 
         //query to get remaining quota for relevant customer
         $result3 = $this->Query("SELECT * FROM customer_quota WHERE company_id = '{$company_id}' AND customer_id = '{$customer_id}'");
@@ -703,84 +804,30 @@ class Customer extends Model{
             }
 
             $new_remaining_weight = $remaining_weight - $sum_of_weights;  //new remainig quota amount
-
-            //check if total weight exceed the remaining available quota
-            if($sum_of_weights <= $remaining_weight){
-                if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
-                    $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
-                    $this->insertproducts();    //insert selected products to reservation include table
-                    //update remaining quota
-                    $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
-                }else{
-                    $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
-                    $this->insertproducts();    //insert selected products to reservation include table
-                    //update remaining quota
-                    $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
-                } 
-
-            }
+            //update remaining quota
+            $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
 
         }   
-        //if quota is not active then customer is allowed to buy any amount of items 
-        else{
-            if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
-                $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
-                $this->insertproducts();    //insert selected products to reservation include table     
-            }else{
-                $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
-                $this->insertproducts();    //insert selected products to reservation include table 
-            } 
-        }
 
-    }
-
-    //insert selected products to reservation include table
-    public function insertproducts(){
-
-        $customer_id = $_SESSION['user_id'];
-        $dealer_id = $_SESSION['dealer_id'];
-        $order_state = 'Pending';
-        $place_time = $_SESSION['place_time'];
-        $place_date = $_SESSION['place_date'];
-        $order_products = $_SESSION['order_products'];
-
-        //get order id from reservation table
-        $result1 = $this->Query("SELECT order_id FROM reservation 
-        WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
-        $row = mysqli_fetch_assoc($result1);
-        $order_id =  $row['order_id'] ;
-
-        foreach ($order_products as $order_product){
-            $product_id = $order_product['product_id'];
-            $qty = $order_product['qty'];
-            $unit_price = $order_product['unit_price'];
-            //check selected products quantity is greater than 0 
-            if($qty>0){
-                //insert products to reservation include table
-                $this->insert('reservation_include',['order_id'=>$order_id,'product_id'=>$product_id,'quantity'=>$qty,'unit_price'=>$unit_price]);
-            }
-        }
-
-        return $order_id;
     }
 
 
 
     /*===================================================select collecting method=========================================================== */
     //insert collecting method in to reservation table
-    public function insertcollectingmethod(){
-        $customer_id = $_SESSION['user_id'];
-        $dealer_id = $_SESSION['dealer_id'];
-        $order_state = 'Pending';
-        $place_time = $_SESSION['place_time'];
-        $place_date = $_SESSION['place_date'];
+    public function insertcollectingmethod($order_id){
+        // $customer_id = $_SESSION['user_id'];
+        // $dealer_id = $_SESSION['dealer_id'];
+        // $order_state = 'Pending';
+        // $place_time = $_SESSION['place_time'];
+        // $place_date = $_SESSION['place_date'];
         $collecting_method = $_SESSION['collecting_method'];
 
         //get order id from reservation table
-        $result1 = $this->Query("SELECT order_id FROM reservation
-        WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
-        $row = mysqli_fetch_assoc($result1);
-        $order_id =  $row['order_id'] ;
+        // $result1 = $this->Query("SELECT order_id FROM reservation
+        // WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
+        // $row = mysqli_fetch_assoc($result1);
+        // $order_id =  $row['order_id'] ;
 
         //update reservation table with collecting method
         $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
@@ -789,12 +836,12 @@ class Customer extends Model{
 
     /*=======================================select delivery method========================================================================= */
     //insert delivery distance ranges to reservation table and return delivery charge  
-    function insertdelivery_street($new_street = null,$distance){
-        $customer_id = $_SESSION['user_id'];
-        $dealer_id = $_SESSION['dealer_id'];
-        $order_state = 'Pending';
-        $place_time = $_SESSION['place_time'];
-        $place_date = $_SESSION['place_date'];
+    function insertdelivery_street($order_id,$new_street = null,$distance){
+        // $customer_id = $_SESSION['user_id'];
+        // $dealer_id = $_SESSION['dealer_id'];
+        // $order_state = 'Pending';
+        // $place_time = $_SESSION['place_time'];
+        // $place_date = $_SESSION['place_date'];
         $order_products = $_SESSION['order_products'];
 
         $sum_of_weights = 0;
@@ -813,10 +860,10 @@ class Customer extends Model{
         }
 
         //get order id from reservation table
-        $result1 = $this->Query("SELECT order_id FROM reservation 
-        WHERE customer_id = '$customer_id' AND order_state = '$order_state' AND place_date = '$place_date' AND place_time = '$place_time' AND dealer_id = '$dealer_id' ");
-        $row = mysqli_fetch_assoc($result1);
-        $order_id =  $row['order_id'] ;
+        // $result1 = $this->Query("SELECT order_id FROM reservation 
+        // WHERE customer_id = '$customer_id' AND order_state = '$order_state' AND place_date = '$place_date' AND place_time = '$place_time' AND dealer_id = '$dealer_id' ");
+        // $row = mysqli_fetch_assoc($result1);
+        // $order_id =  $row['order_id'] ;
         
         //get delivery charges details from delivery_charge table
         $result2 = $this->Query("SELECT * FROM delivery_charge");
