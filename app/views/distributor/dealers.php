@@ -53,9 +53,7 @@ $user_id = $_SESSION['user_id'];
                             </div>';
 
                             $output .= '
-                            <div class="content">
-                            Dealer Details : 
-                            
+                            <div class="content">                            
                             <hr>
                             <table class="styled-table">
                                 <tbody>

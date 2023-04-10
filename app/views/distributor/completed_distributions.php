@@ -48,13 +48,15 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 
                                 $date = $row1['place_date'];
                                 $dealer_id = $row1['dealer_id'];
-                            
+                                $time = $row1['place_time'];
+                               
                             $output .= '
                                 <div class="content">
                                     <div class="details">
                                         <span><strong>Dealer ID : '.$dealer_id.' </strong></span>
                                         <span><strong>Date : '.$date.' </strong></span>
-
+                                        <span><strong>Time : '.$time.' </strong></span>
+                                        
                                     </div>
                                     <hr>
 
@@ -64,6 +66,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                 <th>Product ID</th>
                                                 <th>Unit Price</th>
                                                 <th>Quantity</th>
+                                                <th>Total</th>
                                             </tr>
                                         </thead>
 
@@ -76,6 +79,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                     <td>'.$row2['product_id'].'</td>
                                                     <td>'.$row2['unit_price'].'</td>
                                                     <td>'.$row2['quantity'].'</td>
+                                                    <td></td>
                                                 </tr>';
                                             
                                         }
