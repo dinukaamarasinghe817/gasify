@@ -311,6 +311,18 @@ class Compny extends Controller{
         $dates = $this->model('Company')->getOrderDates($ID);
         echo json_encode($dates);
     }
+    public function getCharts(){
+        $data=array('distNames'=>$_POST['distNames'],'yearFrom'=>$_POST['yearFrom'],'monthFrom'=>$_POST['monthFrom'],'yearTo'=>$_POST['yearTo'],'monthTo'=>$_POST['monthTo']);
+        /*$data['navigation'] = 'analysis';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        $data['distNames'] = $distributor_details;
+        $this->view('dashboard/company', $data);*/
+        print_r($data);
+    }
 
 }
 ?>

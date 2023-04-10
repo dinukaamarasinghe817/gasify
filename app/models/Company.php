@@ -98,7 +98,7 @@ class Company extends Model
         $this->Query("UPDATE quota SET state='$state' WHERE (company_id=$companyID AND customer_type='$customer');");
     }
     public function getStockReqDetails($company_id){
-        $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=2 INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='pending';");
+        $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=$company_id INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='pending';");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -116,7 +116,7 @@ class Company extends Model
         $this->Query("UPDATE stock_request SET stock_req_state='completed' WHERE stock_req_id=$orderID");
     }
     public function getIssuedStockReqDetails($company_id){
-        $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=2 INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='completed';");
+        $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=$company_id INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='completed';");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -130,7 +130,7 @@ class Company extends Model
         $this->Query("UPDATE stock_request SET stock_req_state='delayed' WHERE stock_req_id=$orderID");
     }
     public function getDelayedStockReqDetails($company_id){
-        $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=2 INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='delayed';");
+        $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=$company_id INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='delayed';");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){

@@ -257,3 +257,16 @@ function addMonthsToSelectBoxes(selectObject) {
     xmlhttp.send(formData);
 
 }
+function showCharts() {
+    //var formData = new FormData();
+    //formData.append("orderID", orderID);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            //console.log(this.responseText);
+        }
+    };
+    xmlhttp.open("POST", "../Compny/getCharts");
+    xmlhttp.send();
+
+}
