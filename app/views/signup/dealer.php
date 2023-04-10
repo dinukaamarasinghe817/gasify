@@ -5,7 +5,7 @@
     //         showToast();
     //     </script>';
     // }
-    $header = new Header("login",$data)
+    $header = new Header("login",$data);
 ?>
 <!-- <!DOCTYPE html>
 <html lang="en">
