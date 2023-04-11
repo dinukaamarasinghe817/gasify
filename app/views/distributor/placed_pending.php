@@ -78,9 +78,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         <thead>
                                             <tr>
                                                 <th>Item ID</th>
-                                                <th>Unit Price</th>
+                                                <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
-                                                <th>Total</th>
+                                                <th>Total(Rs.)</th>
                                             </tr>
                                         </thead>
 
@@ -91,7 +91,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             $quantity = $row2['quantity'];
 
                                             $subtotal = $unit_price * $quantity;
-
+                                            $subtotal = number_format($subtotal).'.00';
                                             $output .= '
                                                 <tr>
                                                     <td>'.$row2['product_id'].'</td>
