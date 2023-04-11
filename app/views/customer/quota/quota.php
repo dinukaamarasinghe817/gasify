@@ -20,7 +20,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
         <div class="middle">
             <div class="content">
-                <form action="<?php echo BASEURL;?>/Orders/customer_quota" method="post" id="quota_form">   
+                <form action="<?php echo BASEURL;?>/Orders/customer_quota" method="post" id="quota_form">
+                    <div class="all_company">   
                     <?php
                         $companies_array = $data['companies_array'];
                         if(isset($companies_array)){
@@ -136,6 +137,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 
                     ?>
+                    </div>
                 </form>
             </div>     
     

@@ -30,6 +30,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             $products = $data['products'];
            echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
            
+            //check if there are any refill cylinder products available in company 
            $r_cylinder_count = 0;
             foreach($products as $product){
                 if($product['type'] == 'cylinder'){
@@ -37,8 +38,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 }
             }
 
-           
+            //check if there are any accessories available in company 
+            $accessory_count = 0;
+            foreach($products as $product){
+                if($product['type'] == 'accessory'){
+                    $accessory_count = $accessory_count + 1;
+                }
+            }
 
+           //if there are refill cylinder products available in company
             if($r_cylinder_count > 0){
                 echo '
                 <div class="gas_cylinder">
@@ -71,16 +79,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 echo '</div>';
 
             }
-
-            $accessory_count = 0;
-            foreach($products as $product){
-                if($product['type'] == 'accessory'){
-                    $accessory_count = $accessory_count + 1;
-                }
-            }
-
-           
-
+            
+            //if there are accessory products available in company
             if($accessory_count > 0){
                 echo '<div class="accessories">
                 <div class="subtitle">

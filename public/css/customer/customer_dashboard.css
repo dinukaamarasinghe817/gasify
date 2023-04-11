@@ -142,6 +142,7 @@ a,button{
     flex-direction: row;
     margin:30px 50px 10px 50px;
     column-gap: 40px;
+    flex-wrap: wrap;
 }
 .brand_img div{
     display: flex;
@@ -152,11 +153,19 @@ a,button{
     border-radius: 50%;
     height: 150px;
     width: 150px;
+    margin-top: 5px;
 } 
 .brand img{
     width: 90px;
     height: 90px;
 }
+
+.brand h3{
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
 
 .brand_img a{
     color: black;
