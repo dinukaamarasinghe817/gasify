@@ -319,13 +319,38 @@ class Compny extends Controller{
         $monthFrom=mysqli_real_escape_string($conn,$_POST['monthFrom']);
         $yearTo=mysqli_real_escape_string($conn,$_POST['yearTo']);
         $monthTo=mysqli_real_escape_string($conn,$_POST['monthTo']);
-        //print_r($distributorID.' '.$yearFrom.' '.$monthFrom.' '.$yearTo.' '.$monthTo);
         $order_details=$this->model('Company')->getProductsForAnalysis($company_id,$distributorID,$yearFrom,$yearTo);
         $product_details = $this->model('Company')->getProductDetails($company_id);
         $barChart=array();
         $barChart['dates']=array();
-        $barChart['values']=array();;
+        $barChart['values']=array();
+        $doughNut=array();
+        $doughNut['products']=array();
+        $doughNut['values']=array();
+        $lineChart=array();
+        $lineChart['values']=array();
+        $lineChart['names']=array();
+        $colors=array("green","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)","rgb(255, 128, 0)","rgb(0, 0, 255)","rgb(255, 0, 191)","rgb(102, 204, 255)");
+        /*doughnut colors*/
+        for ($i=0; $i <50 ; $i++) { 
+            shuffle($colors);
+        }
+        $data['doughnutColors']='[';
+        foreach($colors as $item){
+            $data['doughnutColors'].="\"".$item."\",";
+            
+        }
+        $data['doughnutColors']=rtrim($data['doughnutColors'],",");
+        $data['doughnutColors'].="]";
+        /*doughnut colors*/
+        /*bar chart colors*/
+        for ($i=0; $i <50 ; $i++) { 
+            $rand_color=array_rand($colors);
+        }
+        $data['barColor']=$colors[$rand_color];
+        /*bar chart colors*/
         if(isset($order_details)){
+            /*Bar chart details Begin*/
             $processedOrders=array();
             $processedDates=array();
             $tempDates=array();
@@ -375,10 +400,60 @@ class Compny extends Controller{
                 //print_r(intval($yearAndMonth[0]));
                 //print_r($date.'_______');
             }
-            //print_r($barChart['dates']);
-            //print_r($barChart['values']);
+            /*Bar chart details End*/
+            /*Doughnut chart details begin*/
+            $productArr=array();
+            //for line chart
+            $revenueArr=array();
+            foreach($barChart['dates'] as $dates){
+                foreach($order_details as $row){
+                    $date=explode("-",$row['place_date']);
+                    $dateMonth=$date[0].'-'.$date[1];
+                    if($dates==$dateMonth){
+                        if(array_key_exists((int)$row['product_id'],$productArr)){
+                            $newQty=(int)$row['quantity']+(int)$productArr[$row['product_id']]; 
+                            unset($productArr[(int)$row['product_id']]);
+                            $productArr+=array((int)$row['product_id']=>$newQty);
+                            /*For line chart*/
+                            if(array_key_exists($dates,$revenueArr)){
+                                $newRevenue=(int)$row['quantity']*(int)$row['unit_price']+$revenueArr[$dates];
+                                unset($revenueArr[$dates]);
+                                $revenueArr+=array($dates=>$newRevenue);
+                            }else{
+                                $revenueArr+=array($dates=>(int)$row['quantity']*(int)$row['unit_price']);
+                            }
+                        }else{
+                            $productArr+=array((int)$row['product_id']=>(int)$row['quantity']);
+                            /*For line chart*/
+                            if(array_key_exists($dates,$revenueArr)){
+                                $newRevenue=(int)$row['quantity']*(int)$row['unit_price']+$revenueArr[$dates];
+                                unset($revenueArr[$dates]);
+                                $revenueArr+=array($dates=>$newRevenue);
+                            }else{
+                                $revenueArr+=array($dates=>(int)$row['quantity']*(int)$row['unit_price']);
+                            }
+                        }
+
+                    }
+                }
+            }
+            foreach ($productArr as $key => $value) {
+                foreach($product_details as $productRow){
+                    if((int)$productRow['product_id']==$key){
+                        array_push($doughNut['products'],$productRow['name']);
+                    }
+                }
+                array_push($doughNut['values'],$value);
+            }
+            foreach($revenueArr as $key => $value){
+                array_push($lineChart['values'],$value);
+                array_push($lineChart['names'],$key);    
+            }
+            /*Doughnut chart details ends*/          
         }
         $data['barChart']=$barChart;
+        $data['doughNut']=$doughNut;
+        $data['lineChart']=$lineChart;
         $data['navigation'] = 'analysis';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
