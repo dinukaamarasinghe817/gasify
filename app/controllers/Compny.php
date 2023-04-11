@@ -312,7 +312,87 @@ class Compny extends Controller{
         echo json_encode($dates);
     }
     public function getCharts(){
-        $data=array('distNames'=>$_POST['distNames'],'yearFrom'=>$_POST['yearFrom'],'monthFrom'=>$_POST['monthFrom'],'yearTo'=>$_POST['yearTo'],'monthTo'=>$_POST['monthTo']);
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $company_id=$_SESSION['user_id'];
+        $distributorID=mysqli_real_escape_string($conn,$_POST["distNames"]);
+        $yearFrom=mysqli_real_escape_string($conn,$_POST['yearFrom']);
+        $monthFrom=mysqli_real_escape_string($conn,$_POST['monthFrom']);
+        $yearTo=mysqli_real_escape_string($conn,$_POST['yearTo']);
+        $monthTo=mysqli_real_escape_string($conn,$_POST['monthTo']);
+        //print_r($distributorID.' '.$yearFrom.' '.$monthFrom.' '.$yearTo.' '.$monthTo);
+        $order_details=$this->model('Company')->getProductsForAnalysis($company_id,$distributorID,$yearFrom,$yearTo);
+        $product_details = $this->model('Company')->getProductDetails($company_id);
+        $barChart=array();
+        $barChart['dates']=array();
+        $barChart['values']=array();;
+        if(isset($order_details)){
+            $processedOrders=array();
+            $processedDates=array();
+            $tempDates=array();
+            $tempOrderCount=array();
+            $orderCount=0;
+            foreach ($order_details as $row){
+                $date=explode("-",$row['place_date']);
+                $dateMonth=$date[0].'-'.$date[1];
+                if(!(in_array($dateMonth,$processedDates))){
+                    array_push($processedDates,$dateMonth);
+                    foreach ($order_details as $row2){
+                        $date_2=explode("-",$row2['place_date']);
+                        $dateMonth_2=$date_2[0].'-'.$date_2[1];
+                        if($dateMonth_2==$dateMonth){
+                            if(!(in_array($row2['stock_req_id'],$processedOrders))){
+                                array_push($processedOrders,$row2['stock_req_id']);
+                                $orderCount+=1;
+                                
+                            }
+                            
+                        }
+                    }
+                    array_push($tempDates,$dateMonth);
+                    array_push($tempOrderCount,$orderCount);
+                    $orderCount=0;
+                }else{
+                    continue;
+                }
+                
+            } 
+            foreach($tempDates as $date){
+                $yearAndMonth=explode('-',$date);
+                if(intval($yearAndMonth[0])==$yearFrom){
+                    if(intval($yearAndMonth[1])>=$monthFrom){
+                        array_push($barChart['dates'],$date);
+                        array_push($barChart['values'],$tempOrderCount[array_search($date,$tempDates)]);
+                    }
+                }elseif(intval($yearAndMonth[0])==$yearTo){
+                    if(intval($yearAndMonth[1])<=$monthTo){
+                        array_push($barChart['dates'],$date);
+                        array_push($barChart['values'],$tempOrderCount[array_search($date,$tempDates)]);
+                    }
+                }elseif(intval($yearAndMonth[0])>$yearFrom && intval($yearAndMonth[0])<$yearTo){
+                    array_push($barChart['dates'],$date);
+                    array_push($barChart['values'],$tempOrderCount[array_search($date,$tempDates)]);         
+                }
+                //print_r(intval($yearAndMonth[0]));
+                //print_r($date.'_______');
+            }
+            //print_r($barChart['dates']);
+            //print_r($barChart['values']);
+        }
+        $data['barChart']=$barChart;
+        $data['navigation'] = 'analysis';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        $data['distNames'] = $distributor_details;
+        $this->view('dashboard/company', $data);  
+        
+        
+        
+        
+        
+        
         /*$data['navigation'] = 'analysis';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -321,7 +401,7 @@ class Compny extends Controller{
         $data['image'] = $row['logo'];
         $data['distNames'] = $distributor_details;
         $this->view('dashboard/company', $data);*/
-        print_r($data);
+        //print_r($order_details);
     }
 
 }
