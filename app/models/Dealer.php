@@ -349,6 +349,7 @@ class Dealer extends Model
             $prev_flags[$product_id] = $row['reorder_flag'];
         }
         // var_dump($prev_flags);
+        date_default_timezone_set("Asia/Colombo");
         $place_date = date('Y-m-d');
         $place_time = date('H:i:s');
         //checking payment method
