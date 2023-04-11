@@ -209,11 +209,6 @@
 
 
         public function customer($error=null){
-
-            // $company_id = $_SESSION['user_id']; // company_id should be taken from session
-            // prduct breakdown
-            // $data = $this->model("Customer")->customerSignupForm();
-
             // if any errors to be printed
             $data['error'] = $error;
             if($error != null){
@@ -237,20 +232,17 @@
                         $data['toast'] = ['type' => 'error', 'message' =>'Select a city'];
                         break;
                     case '7':
-                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid capacity'];
+                        $data['toast'] = ['type' => 'error', 'message' =>'Select customer type'];
                         break;
                     case '8':
-                        $data['toast'] = ['type' => 'error', 'message' =>'Select a distributor'];
-                        break;
-                    case '9':
                         $data['toast'] = ['type' => 'error', 'message' =>'Server Error, please try again'];
                         break;
-                    case '10':
+                    case '9':
                         $data['toast'] = ['type' => 'error', 'message' =>'Invalid image type'];
                         break;
                 }
             }
-            // load the view with product breakdown, distributor breakdown and error messages
+            // load the view with error messages
             $this->view('signup/customer', $data);
         }
 
@@ -259,137 +251,34 @@
 
             // take post inputs
             $data = [];
-            // $company_id = $_SESSION['user_id']; // user who register a dealer
-            // $company_id = 2;
-            $name = $_POST['name'];
-            $first_name = $_POST['fname']; //
-            $last_name = $_POST['lname']; //
+            $first_name = $_POST['fname']; 
+            $last_name = $_POST['lname']; 
             $email = $_POST['email'];
             if(isset($_POST['city']) ? $city = $_POST['city'] : $city = -1);
             $street = $_POST['street'];
-            // if(isset($_POST['distributor']) ? $distributor_id = (int)$_POST['distributor'] : $distributor_id = -1);
             $contact_no = $_POST['contactno'];
             $ebill_no = $_POST['ebill'];
-
             if(isset($_POST['cus_type']) ? $type = $_POST['cus_type'] : $type = -1);
-
-            // if(isset($_POST['bank']) ? $bank = $_POST['bank'] : $bank = -1);
-            // $account_no = $_POST['account_no'];
-            // $merchant_id = $_POST['merchant_id'];
             $password = $_POST['password'];
             $confirmpassword = $_POST['confirmpassword'];
-            $image_name = '';$tmp_name = '';
+            $image_name = '';
+            $tmp_name = '';
             if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
                 $image_name = $_FILES['image']['name'];
                 $tmp_name = $_FILES['image']['tmp_name'];
             }
-            // capacity should be taken as product breakdown
-            // $capacity = array();
-            // $isvalidqty = false;
-            // $result = $this->model("Dealer")->getProducts($company_id);
-            // $records = mysqli_num_rows($result);
-            // for($i = 0; $i < $records; $i++){
-            //     $product = mysqli_fetch_assoc($result); // this is a query
-            //     $product_id = $product['product_id'];
-            //     $qty = $_POST["$product_id"];
-            //     if($qty != 0){
-            //         $isvalidqty = true;
-            //     }
-            //     $capacity[$i] = array($product['product_id'],$qty);
-            // }
             
             // password hashing
-            $data = $this->model("User")->CustomerSignup($name,$first_name,$last_name,$email,
+            $data = $this->model("User")->CustomerSignup($first_name,$last_name,$email,
             $city,$street,$contact_no,$ebill_no,$type,$password,$confirmpassword,$image_name,$tmp_name);
             if(isset($data['error'])){
                 $error = $data['error'];
-                header("Location: ./customer/$error");
-                return;
-            }
-
-            // optional image uploaded
-            if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
-                $image_name = $_FILES['image']['name'];
-                $tmp_name = $_FILES['image']['tmp_name'];
-
-                // image type validity jpg png jpeg
-                if(isNotValidImageFormat($image_name)){
-                    $error = 10;
-                    header("Location: ./customer/$error");
-                    return;
-                }
-
-                $image = getImageRename($image_name,$tmp_name);
-                $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
-                echo $path;
-                if(move_uploaded_file($tmp_name, $path.($image))){
-                    //add the dealer to database with image
-                    $query1 = $this->model('Customer')->addCustomer($name, $email, $hashed_pwd, $city, $street, $contact_no,$image,$ebill_no);
-                    //get dealer_id of newly inserted dealer
-                    $query2 = $this->model('Customer')->getCustomer($email);
-                    $row = mysqli_fetch_assoc($query2);
-                    $customer_id = $row['customer_id'];
-                    //$query3;
-
-                    // set the capacity of the dealer
-                    // for($i = 0; $i<count($capacity); $i++){
-                    //     $product = $capacity[$i][0];
-                    //     $qty = $capacity[$i][1];
-                    //     $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
-                    // }
-                    
-                    // if successfully registred and set capacity
-                    // if($query1 && $query3){
-                    //     $_SESSION['user_id'] = $dealer_id;
-                    //     $_SESSION['role'] = 'dealer';
-                    //     $data['error'] = "success";
-                    // }else{
-                    //     $error = '9';
-                    //     header("Location: ./dealer/$error");
-                    // }
-
-                }
-            }else{
-
-                // add the dealer to the database without image
-                $query1 = $this->model('Signin')->addDealer($name, $email, $hashed_pwd, $city, $street, $contact_no, NULL,$ebill_no);
-                // get the dealer_id from the database
-                echo $email;
-                $query2 = $this->model('Customer')->getCustomer($email);
-                $row = mysqli_fetch_assoc($query2);
-                $customer_id = $row['customer_id'];
-                echo $customer_id;
-                //$query3;
-                
-                // set the capacity
-                // for($i = 0; $i<count($capacity); $i++){
-                //     $product = $capacity[$i][0];
-                //     $qty = $capacity[$i][1];
-                //     // $sql = "INSERT INTO dealer_capacity (dealer_id, company_id, product_id, capacity) VALUES ($dealer_id,1,$product,$qty)";
-                //     $query3 = $this->model('Dealer')->setCapacity($dealer_id, $company_id, $product, $qty);
-                // }
-
-                if($query1){
-                    $_SESSION['user_id'] = $customer_id;
-                    $_SESSION['role'] = 'customer';
-                    $data['error'] = "success";
-                }else{
-                    $error = "9";
-                    header("Location: ./customer/$error");
-                }
-            }
-
-            if($error){
                 header("Location: ".BASEURL."/signup/customer/$error");
             }else{
                 header("Location: ".BASEURL."/signin/user");
             }
 
-            // header("Location: ../signin/dealer");
         
-
-        // public function companysignup(){
-        // }
         }
 
 

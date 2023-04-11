@@ -1790,6 +1790,7 @@ class Body{
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;">
                 <div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
+                <form action="'. BASEURL.'/Compny/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
                     <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
                         if(isset($data['distNames'])){
                             $result=$data['distNames'];
@@ -1817,32 +1818,38 @@ class Body{
                                 <select name="monthTo" id="monthTo">
                                     <option value="" disabled selected>Month</option>
                                 </select>
-                            </div>';                                     
+                            </div>
+                            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
+                                <input type="submit" name="sub" value="submit">
+                            </div></form>';                                     
                     //echo'</div>';
                     echo'
                 </div>
                 <div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
                     <div class="leftAnalysis" style="width:50%;height:100%">
-                        <div class="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                            $chart['vector']=[12,45,76,34,47];
-                            $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                            $chart['color']="rgba(30, 105, 176, 1)";
-                            $chart['y']='Deliveries';
-                            $chart = new Chart('bar',$chart,1); 
+                        <div class="barChart" id="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                            if(isset($data['barChart'])){
+                                $chart['vector']=$data['barChart']['values'];
+                                $chart['labels']=$data['barChart']['dates'];
+                                $chart['color']=$data['barColor'];
+                                $chart['y']='Deliveries';
+                                $chart = new Chart('bar',$chart,1);
+                            }
+                            
                         echo'</div>
                         <div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                            $chart_3['vector']=[15,25,28,23,28];
-                            $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                            $chart_3['vector']=$data['lineChart']['values'];
+                            $chart_3['labels']=$data['lineChart']['names'];
                             $chart_3['color']="rgba(30, 105, 176, 1)";
-                            $chart_3['y']='Deliveries-Last week';
+                            $chart_3['y']='Revenue';
                             $chart_3 = new Chart('line',$chart_3,4);                 
                         echo'</div>
                     </div>
                     <div class="rightAnalysis" style="width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                            $chart_2['vector']=array(50,30,20);
-                            $chart_2['labels']=array('Regular','Commercial','Buddy');
-                            $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
-                            $chart_2['y']='Top products';
+                            $chart_2['vector']=$data['doughNut']['values'];
+                            $chart_2['labels']=$data['doughNut']['products'];
+                            $chart_2['color']=$data['doughnutColors'];
+                            $chart_2['y']='Stock sold';
                             $chart_2['main']="fgdff";
                             $chart_2 = new Chart('doughnut',$chart_2,3);
                     

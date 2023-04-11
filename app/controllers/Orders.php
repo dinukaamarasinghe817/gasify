@@ -386,8 +386,10 @@ class Orders extends Controller{
 
             $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
 
-            $_SESSION['slip_img'] = $file_name;
-            move_uploaded_file($temp_name,$upload_to . $file_name);
+            // $slip_image = array();
+            // array_push($slip_image,['file_name' => $file_name, 'temp_name' =>$temp_name]);
+            $_SESSION['slip_img'] = ['file_name' => $file_name, 'temp_name' =>$temp_name];
+            // move_uploaded_file($temp_name,$upload_to . $file_name);
 
             
 

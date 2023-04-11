@@ -1,12 +1,13 @@
 <?php
-    if(isset($data['toast'])){
-        $error = new Prompt('toast',$data['toast']);
-        echo '<script>
-            showToast();
-        </script>';
-    }
+    // if(isset($data['toast'])){
+    //     $error = new Prompt('toast',$data['toast']);
+    //     echo '<script>
+    //         showToast();
+    //     </script>';
+    // }
+    $header = new Header("login",$data);
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="<?php echo BASEURL; ?>/public/css/login.css">
     <title>Gasify Customer</title>
 </head>
-<body>
+<body> -->
     <div class="container">
         <div class="wrapper">
             <div class="logo">
@@ -75,20 +76,6 @@
                                 <input name="contactno" type="text" placeholder="Contact number" maxlength="10">
                                 <input type="text" placeholder="Electricity Bill Number" name="ebill" required maxlength="10">
 
-                                <!-- <div class="address bank">
-                                    <select id="city2" name="bank" class="half">
-                                        <option value="-1" selected disabled hidden>Select your Bank</option>
-                                        <?php 
-                                            // include_once '../../model/functions/functions.php';
-                                            // foreach (BANKS as $bank){
-                                            //     echo "<option value=$bank>$bank</option>";
-                                            // }
-                                        ?>
-                                    </select>
-                                    <input name="account_no" class="half" type="number" placeholder="Bank Account No" required><br>
-                                </div>
-                                <input class="acc_no" name="merchant_id" type="number" placeholder="Payhere Merchant ID"> -->
-
                                 <label for="image">
                                     <svg width="20" height="20" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M29.0299 2.44482H5.69661C3.85567 2.44482 2.36328 3.93721 2.36328 5.77816V29.1115C2.36328 30.9524 3.85567 32.4448 5.69661 32.4448H29.0299C30.8709 32.4448 32.3633 30.9524 32.3633 29.1115V5.77816C32.3633 3.93721 30.8709 2.44482 29.0299 2.44482Z" stroke="black"  stroke-linecap="round" stroke-linejoin="round"/>
@@ -110,12 +97,12 @@
                                         </div>
                                         <div>
                                             
-                                            <input type="radio" value="Small_Scale_Business" id="Small_scale"  name="cus_type" class="radio_input" >
+                                            <input type="radio" value="Small Scale Business" id="Small_scale"  name="cus_type" class="radio_input" >
                                             <label for="Small_scale">Small Scale Business</label>
                                         </div>
                                         <div>
                                             
-                                            <input type="radio" value="Large_Scale_Business" id="Large_scale"  name="cus_type" class="radio_input">
+                                            <input type="radio" value="Large Scale Business" id="Large_scale"  name="cus_type" class="radio_input">
                                             <label for="Large_scale">Large Scale Business</label>
                                         </div>
                                     </div> 
@@ -134,6 +121,8 @@
             </div>
         </div>
     </div>
-   <script src="../public/js/Dealer/signup.js"></script> 
-</body>
-</html>
+    
+
+<?php
+$footer = new Footer("signin");
+?>

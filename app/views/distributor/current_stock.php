@@ -37,7 +37,8 @@ $user_id = $_SESSION['user_id'];
                                 <tr>
                                     <th>Item ID</th>
                                     <th>Item Name</th>
-                                    <th>Quantity</th>
+                                    <th>Current Quantity</th>
+                                    <th>Available Space</th>
                                 </tr>
                             </thead>
                             
@@ -50,7 +51,8 @@ $user_id = $_SESSION['user_id'];
                             <tr>
                                 <td>'.$row1['product_id'].'</td>
                                 <td>'.$row1['name'].'</td>
-                                <td>'.$row1['quantity'].'</td>                        
+                                <td>'.$row1['quantity'].'</td> 
+                                <td></td>                       
                             </tr>';
                         }
                         $output .= '
