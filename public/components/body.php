@@ -1828,11 +1828,14 @@ class Body{
                 <div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
                     <div class="leftAnalysis" style="width:50%;height:100%">
                         <div class="barChart" id="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                            $chart['vector']=[12,45,76,34,47];
-                            $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                            $chart['color']="rgba(30, 105, 176, 1)";
-                            $chart['y']='Deliveries';
-                            $chart = new Chart('bar',$chart,1);
+                            if(isset($data['barChart'])){
+                                $chart['vector']=$data['barChart']['values'];
+                                $chart['labels']=$data['barChart']['dates'];
+                                $chart['color']="rgba(30, 105, 176, 1)";
+                                $chart['y']='Deliveries';
+                                $chart = new Chart('bar',$chart,1);
+                            }
+                            
                         echo'</div>
                         <div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             $chart_3['vector']=[15,25,28,23,28];
