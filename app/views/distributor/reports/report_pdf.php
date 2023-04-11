@@ -55,7 +55,7 @@ $details = $details['details'];
 
     $pdf->SetFont('Times', 'B', 12);
     $pdf->Cell(40,5,'Product ID',0,0,'C');
-    $pdf->Cell(40,5,'Unit Prie (Rs)',0,0,'C');
+    $pdf->Cell(40,5,'Unit Price (Rs)',0,0,'C');
     $pdf->Cell(40,5,'Sold Quantity',0,0,'C');
     $pdf->Cell(40,5,'Sub Total (Rs)',0,0,'C');
     $pdf->Ln();
@@ -67,8 +67,10 @@ $details = $details['details'];
     $unit_price = number_format($product['unit_price']).'.00';
     $pdf->Cell(33,5,"{$unit_price}",0,0,'R');
     $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
-    // $subtotal = number_format($product['subtotal']).'.00';
-    // $pdf->Cell(33,5,"{$subtotal}",0,0,'R');
+    
+    $subtotal = $product['unit_price'] * $product['quantity'];
+    $subtotal = number_format($subtotal).'.00';
+    $pdf->Cell(50,5,"{$subtotal}",0,0,'R');
     $pdf->Ln();
 }
 

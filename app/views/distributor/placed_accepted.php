@@ -80,24 +80,35 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         <thead>
                                             <tr>
                                                 <th>Item ID</th>
-                                                <th>Unit Price</th>
+                                                <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
-                                                <th>Total</th>
+                                                <th>Total(Rs.)</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>';
+                                       
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
+                                            $unit_price = $row2['unit_price'];
+                                            $quantity = $row2['quantity'];
+                                            // $total = 0;
+
+                                            $subtotal = $unit_price * $quantity;
+                                            $subtotal = number_format($subtotal).'.00';
+                                            // $total = $total + $subtotal;
                                             $output .= '
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
                                                 <td>'.$row2['unit_price'].'</td>
                                                 <td>'.$row2['quantity'].'</td>
-                                                <td></td>
-                                            </tr>';
+                                                <td>'.$subtotal.'</td>    
+                                            </tr>
+                                            ';
+                                            // $total = $total + $subtotal;
                                         }
                                         $output .= '
+                                        
                                         </tbody>
                                     </table>
                                     <button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button>

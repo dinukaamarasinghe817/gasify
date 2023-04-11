@@ -72,28 +72,33 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         <span><strong>Placed Date : '.$date.' </strong></span><br><br>
                                         <span><strong>Placed Time : '.$time.' </strong></span><br><br>
                                     </div>
-                                    
+
                                     <hr>
                                     <table class="styled-table">
                                         <thead>
                                             <tr>
                                                 <th>Item ID</th>
-                                                <th>Unit Price</th>
+                                                <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
-                                                <th>Total</th>
+                                                <th>Total(Rs.)</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>';
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
+                                            $unit_price = $row2['unit_price'];
+                                            $quantity = $row2['quantity'];
 
+                                            $subtotal = $unit_price * $quantity;
+                                            $subtotal = number_format($subtotal).'.00';
+                                            // $total = $total + $subtotal;
                                             $output .= '
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
                                                 <td>'.$row2['unit_price'].'</td>
                                                 <td>'.$row2['quantity'].'</td>
-                                                <td></td>
+                                                <td>'.$subtotal.'</td>
                                             </tr>';                                            
                                         }
                                         $output .= '

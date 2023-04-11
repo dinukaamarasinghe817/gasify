@@ -72,7 +72,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                 <th>Product ID</th>
                                                 <th>Unit Price</th>
                                                 <th>Quantity</th>
-                                                <th>Total</th>
+                                                <th>Total(Rs.)</th>
                                             </tr>
                                         </thead>
 
@@ -80,12 +80,18 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
+                                            $unit_price = $row2['unit_price'];
+                                            $quantity = $row2['quantity'];
+
+                                            $subtotal = $unit_price * $quantity;
+                                            $subtotal = number_format($subtotal).'.00';
+
                                             $output .= '
                                                 <tr>
                                                     <td>'.$row2['product_id'].'</td>
                                                     <td>'.$row2['unit_price'].'</td>
                                                     <td>'.$row2['quantity'].'</td>
-                                                    <td></td>
+                                                    <td>'.$subtotal.'</td>
                                                 </tr>';
                                             
                                         }
