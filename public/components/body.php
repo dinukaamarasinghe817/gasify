@@ -1868,7 +1868,43 @@ class Body{
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Reports</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">';
+            echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
+                <form action="'. BASEURL.'/Compny/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
+                    <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
+                        if(isset($data['distNames'])){
+                            $result=$data['distNames'];
+                            echo'<select name="distNames" id="distNames" onchange="addYearsToSelectBoxes(this)">
+                            <option value="" disabled selected>Select distributor</option>';
+                            $tag='';
+                            foreach ($result as $row) {
+                                $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
+                            }
+                            $tag.='</select></div>';
+                            echo $tag;
+                        }
+                        echo'<div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                                From <select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
+                                    <option value="" disabled selected>Year</option>
+                                </select>
+                                <select name="monthFrom" id="monthFrom">
+                                    <option value="" disabled selected>Month</option>
+                                </select>
+                            </div>
+                            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
+                                    <option value="" disabled selected>Year</option>
+                                </select>
+                                <select name="monthTo" id="monthTo">
+                                    <option value="" disabled selected>Month</option>
+                                </select>
+                            </div>
+                            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
+                                <input type="submit" name="sub" value="submit">
+                            </div></form>';                                     
+                    //echo'</div>';
+                    echo'
+                </div>
             <table class="styled-table">
                 <thead>
                     <tr>
