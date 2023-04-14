@@ -168,14 +168,20 @@ a,button{
     
   }
 
-  .buttons #back_btn{
-    border: 3px solid var(--navmenu-gray-dark);
+  #back_btn{
+    
+    background-color: var(--navmenu-gray-dark);
     margin-right: 850px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 15px;
   }
 
-  .buttons #back_btn:hover{
-    background-color: var(--navmenu-gray-dark);
-    color: var(--white);
+  #back_btn:hover{
+    border: 3px solid var(--navmenu-gray-dark);
+    background-color: var(--white);
+    color: var(--black);
     
   }
 
@@ -187,3 +193,6 @@ a,button{
     column-gap: 20px;
     padding-top: 20px;
   }
+
+
+

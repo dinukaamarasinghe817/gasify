@@ -66,16 +66,18 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             File name here
                         </div>
                     </div>
-                    <form action="<?php echo BASEURL?>/Orders/get_bank_slip" method="post" enctype="multipart/form-data">
+                    
+                    <form id="myForm" method="post" action="<?php echo BASEURL?>/Orders/get_bank_slip" enctype="multipart/form-data">
                         <div class="buttons">
-                            <button  id="back_btn" onclick= "document.location.href = '../Orders/select_payment_method';">Back</button>
                             <!-- <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button> -->
                             <label for="custom_btn" id="custom-btn">Choose File</label>
                             <input id="custom_btn" type="file" accept=".png, .jpg, .jpeg"  name="slip_img" hidden>
                             <button  id="next_btn" type="submit" name="submit_btn">Submit</button>
+                            <!-- <button  id="next_btn" type="submit" name="submit_btn" onclick="customerprompt('deliverymethod','<?php echo BASEURL;?>/dashboard/customer','<?php echo BASEURL;?>/Orders/get_bank_slip'); return false;">Submit</button> -->
                             
                         </div>
                     </form>
+                <button id="back_btn" onclick= "document.location.href = '../Orders/select_payment_method';">Back</button>
                 </div>
       
 
@@ -124,6 +126,35 @@ $sidebar = new Navigation('customer',$data['navigation']);
              fileName.textContent = valueStore;
            }
          });
+
+
+
+
+
+    //     let form = document.getElementById("myForm");
+    //     form.addEventListener("submit", function(event) {
+    //     event.preventDefault();
+        
+    //     let xhr = new XMLHttpRequest(); //new xml object
+    //     var url = 'http://localhost/mvc/Orders/get_bank_slip';
+    //     console.log(url);
+    //     xhr.open('POST', url , true);
+    //     xhr.onload = ()=>{
+    //         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+    //                 let data = xhr.response;
+    //             if(data){
+    //                 form.submit();
+    //                 console.log(data);
+    //             }
+
+    //         }
+    //     }
+
+    //     let formData = new FormData(form);
+    //     xhr.send(formData);
+    // });
+
+
     </script>
 </section>
 
