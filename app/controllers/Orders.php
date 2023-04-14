@@ -607,14 +607,14 @@ class Orders extends Controller{
 
     /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
-    // distributor -> place an order (phurchase order)
+    // distributor -> phurchase order interface
      public function distributor() {
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
-
+        /*
         $productid = $_SESSION['productarray'];
         $postproducts = [];
         for($i=0; $i<count($productid); $i++) {
@@ -625,10 +625,41 @@ class Orders extends Controller{
             // $this->distributor("phurchase_orders", $data['toast']);
         }else {
             $this->view('distributor/phurchase_orders',$data);      
-        }
+        } */
+
+        $data['productdetails'] = $this->model('Distributor')->productdetails();
+
+        $this->view('distributor/phurchase_orders',$data);      
 
         // $data['placeorderpg'] = $this->model("Distributor")->phurchaseOrders($user_id);
         // $this->view('distributor/phurchase_orders',$data);   
+    }
+
+    public function purchase_order() {
+        $user_id = $_SESSION['user_id'];
+
+        $quantities = array();
+        $result = $this->model('Distributor')->productdetails();
+
+        $records = mysqli_num_rows($result);
+        $isvalidity = false;
+        for($i=0; $i<$records; $i++) {
+            $product = mysqli_fetch_assoc($result);
+            $product_id = $product['product_id'];
+            $name = $product['name'];
+            $qty = $POST["$product_id"];
+            if($qty!=0) {
+                $isvalidity = true;
+            }
+            $quantities[$i] = array($product['product_id'], $qty);
+        }
+        
+
+      
+        
+
+
+
     }
 
 

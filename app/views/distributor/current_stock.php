@@ -38,11 +38,12 @@ $user_id = $_SESSION['user_id'];
                                     <th>Item ID</th>
                                     <th>Item Name</th>
                                     <th>Current Quantity</th>
-                                    <th>Available Space</th>
+                                   
                                 </tr>
                             </thead>
                             
                             <tbody>';
+            
                         $stocks = $data['currentstock'];
                         foreach($stocks as $stock) {
                             $row1 = $stock['stockinfo'];
