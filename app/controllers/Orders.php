@@ -359,7 +359,7 @@ class Orders extends Controller{
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
         $data['bank_details'] = $this->model('Customer')->getDealerBankDetails();
-
+        $data['confirmation'] = '';
         if($error != null){
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
@@ -391,7 +391,6 @@ class Orders extends Controller{
             $_SESSION['slip_img'] = ['file_name' => $file_name, 'temp_name' =>$temp_name];
             // move_uploaded_file($temp_name,$upload_to . $file_name);
 
-            
 
             if($file_size<=0){
                 $error = "Please upload a bank slip image!";
@@ -409,9 +408,8 @@ class Orders extends Controller{
                 $data['confirmation'] = '';
                 $this->view('customer/place_reservation/collecting_method',$data);
             }
-
+            
         } 
-
     }
 
     //display payment gateway

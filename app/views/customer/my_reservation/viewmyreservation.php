@@ -234,7 +234,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         
                         $url = BASEURL.'/Orders/customer_reviewform/'.$row1['order_id'];
                         
-                       
+                            //if there is no exists reviews
                             if(count($reviews)==0){
                                 echo '<div class="card_bottom">
                                         <div class="item_side">
@@ -248,11 +248,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                              <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
                                         </div>';
     
-                            }else{
+                            }
+                            //if there already exists reviews
+                            else{
                                 if( $row1['collecting_method']=="Delivery"){
                                     echo '<div class="card_bottom">
-                                            <div class="item_side">
-                                           
+                                            <div class="item_side">  
                                             '.$output.'
                                             </div>
                                             <div class="review_side"><strong>Reviews</strong>';
@@ -264,7 +265,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     </div>
                                     <div class="review_side"><strong>Reviews</strong>';
                                 }
-    
+                                //display the already exist reviews
                                 foreach($reviews as $review){
                                     echo '<div class="review_box">
                                             <div class="date"><h5>'.$review['date'].'</h5></div>
@@ -272,9 +273,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         </div>';
                                 }
     
-                                        echo '  <div class="review_btn"><button class="rbtn" onclick="location.href=\''.$url.'\'">Write Review</button></div>
-                                                <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
-                                            </div>';
+                                echo '  <div class="review_btn"><button class="rbtn" onclick="location.href=\''.$url.'\'">Write Review</button></div>
+                                        <div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
+                                    </div>';
                             }
                         
                 
