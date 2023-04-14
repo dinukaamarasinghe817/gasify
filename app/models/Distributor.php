@@ -485,6 +485,7 @@ class Distributor extends Model
             }
         }
         return $stock;
+
     }
     
     public function getDistributor($user_id) {
@@ -492,6 +493,23 @@ class Distributor extends Model
         return $result;
     }
 
+    public function productdetails() {
+        $products = array();
+
+        $query1 = $this->Query("SELECT product_id, name, unit_price FROM product WHERE company_id = 2;");
+        if(mysqli_num_rows($query1)>0) {
+            while($row1 =mysqli_fetch_assoc($query1)) {
+                $product_id = $row1['product_id'];
+                $name = $row1['name'];
+                $unit_price = $row1['unit_price'];
+
+                array_push($products, ['productdetails'=> $row1]);
+            }
+        }
+        return $products;
+    }
+    
+/*
     public function phurchaseOrders($user_id, $productid, $postproducts) {
         $data=[];
         $flag = false;
@@ -574,7 +592,7 @@ class Distributor extends Model
         }
         return $data;
 
-    }
+    } */
 
    
     
