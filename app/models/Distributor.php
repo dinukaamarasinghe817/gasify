@@ -322,7 +322,7 @@ class Distributor extends Model
         return $count;
     }
 
-    // Distributor - gas distributions - pending
+    // Distributor - gas distributions - pending   
     public function pendingdistributions($user_id) {
         $pending = array();
 

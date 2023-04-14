@@ -508,19 +508,33 @@ class Body{
                                                     <tr>
                                                         <th>Item ID</th>
                                                         <th>Quantity</th>
+                                                        <th>Subtotal</th>
                                                     </tr>
                                                 </thread>
 
                                                 <tbody>';
+                                                
+                                                $total =0;
                                                 foreach($capacities as $capacity) {
                                                     $row3 = $capacity;
+                                                    $unit_price = $row3['unit_price'];
+                                                    $quantity = $row3['quantity'];
+                                                    $subtotal = $unit_price * $quantity;
+
                                                     $output1 .= '
                                                         <tr>
                                                             <td>'.$row3['product_id'].'</td>
                                                             <td>'.$row3['quantity'].'</td>
-                                                        </tr>';  
+                                                            <td>'.$subtotal.'</td>
+                                                        </tr>'; 
+                                                        $total += $subtotal;           
                                                 }
                                                 $output1 .= '
+                                                <tr>
+                                                    <td><b>Total Amount</b></td>
+                                                    <td></td>
+                                                    <td><b>'.$total.'</b></td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>
