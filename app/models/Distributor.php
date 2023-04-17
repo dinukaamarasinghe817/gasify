@@ -489,7 +489,7 @@ class Distributor extends Model
     }
     
     public function getDistributor($user_id) {
-        $result = $this->Query("SELECT * FROM users u inner join distributor d on u.user_id = d.distributor_id where d.distributor_id =$distributor_id");
+        $result = $this->Query("SELECT * FROM users u inner join distributor d on u.user_id = d.distributor_id where d.distributor_id =$user_id");
         return $result;
     }
 
@@ -508,93 +508,131 @@ class Distributor extends Model
         }
         return $products;
     }
-    
-/*
-    public function phurchaseOrders($user_id, $productid, $postproducts) {
-        $data=[];
+
+    public function distributorplaceorder($user_id, $prodcutid,$postproducts) {
+        $data =[];
         $flag = false;
         $notvalidquantity = true;
-        for($i=0; $i<count($productid); $i++){
-            if($postproducts[$productid[$i]]!=0) {
+        for($i=0; $i<count($prodcutid); $i++) {
+            if($postproducts[$prodcutid[$i]] != 0) {
                 $notvalidquantity = false;
             };
         }
-        // var_dump($postproducts);
+        
         if($notvalidquantity) {
             $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
             return $data;
         }
+        for($i=0; $i<count($prodcutid); $i++) {
+            $product = $prodcutid[$i];
 
-        for($i=0; $i<count($productid); $i++){
-            $product = $productid[$i];
-
-            // take the current stock
+            // take current stock
             $current_stock = 0;
-            $result = $this->Query("SELECT * FROM distributor_keep WHERE  distributor_id = '{$user_id}' and product_id = '{$product}'");
+            $result = $this->Query("SELECT * FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$prodcut}'");
             if(mysqli_num_rows($result)>0) {
                 $row = mysqli_fetch_assoc($result);
                 $current_stock = $row['quantity'];
             }
 
             // take previously ordered but still pending amount
-            $pending_stock = 0;
-            $result = $this->Query("SELECT * FROM stock_request WHERE distributor_id = '{$user_id}' AND stock_req_state = 'pending' ");
+            $pending_stock =0;
+            $result = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' AND po_state = 'pending'");
             if(mysqli_num_rows($result)>0) {
                 while($row = mysqli_fetch_assoc($result)) {
-                    $stock_req_id = $row['stock_req_id'];
-                    $result = $this->Query("SELECT * FROM stock_include WHERE stock_req_id='{$stock_req_id}' AND product_id = '{$product}'");
-                    $row2 = mysqli_fethc_assoc($result);
-                    $pending_stock += $row2['quantity'];
+                    $req_id = $row['stock_req_id'];
+                    $result = $this->Query("SELECT * FROM stock_include WHERE stock_req_id ='{$req_id}' AND product_id = '{$prodcut}'");
+                    $row2 = mysqli_fetch_assoc($result);
+                    $pending_stock +=$row2['quantity'];
                 }
             }
 
             // take capacity
             $capacity = 0;
-            $result = $this->Query("SELECT * FROM distributor_capacity WHERE distributor_id = '{$user_id}' AND product_id = '{$product}'");
-            if(mysqli_num_rows($result)>0) {
+            $result = $this->Qeury("SELECT * FROM distributor_capacity WHERE distributor_id = '{$user_id}' AND product_id = '{$prodcut}'");
+            if(mysli_num_rows($result)>0) {
                 $row = mysqli_fetch_assoc($result);
                 $capacity = $row['capacity'];
             }
-            if($postproducts[$product] > ($capacity - $current_stock - $pending_stock)) {
-                $flag = true;
+            if($postproducts[$prodcut] > ($capacity - $current_stock - $pending_stock)) {
+                $flag=true;
             }
+        }
 
-        } 
+        // if false 
         if($flag) {
             $data['toast'] = ['type'=>"error", 'message'=>"Insufficient Storage"];
             return $data;
         }
 
-        // get the company details
+        // get company details
         $query1 = $this->getDistributor($user_id);
         $row1 = mysqli_fetch_assoc($query1);
         $company_id = $row1['company_id'];
-        // $distributor_id = $row1['distributor_id'];
-        $business_name = $row1['name'];
 
         date_default_timezone_set("Asia/Colombo");
         $place_time = date('H:i');
         $place_date = date('Y-m-d');
 
-        $query3 = $this->Query("INSERT INTO stock_request(distributor_id, stock_req_state, company_id, place_date, place_time) VALUES('{$user_id}', 'pending', '{$company_id}','{$place_date}', '{$place_time}');");
-        $query4 = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' ORDER BY place_date DESC, place_time DESC LIMIT 1");
+        $query3 = $this->Query("INSERT INTO stock_request (distributor_id, stock_req_state, company_id, delay_time, place_date, place_time) VALUES ('{$user_id}', 'pending', '{$company_id}', 0, '{$place_date}', '{$place_time}')");
+        $query4 = $this->Query("SELECT * FROM stock_request WHERE distributor_id = '{$user_id}' ORDER BY place_date DESC, place_time DESC LIMIT 1");
         $row4 = mysqli_fetch_assoc($query4);
-        $stock_req_id = $row4['stock_req_id'];
+        $req_id = $row4['stock_req_id'];
 
-        for($i=0; $i<count($productid); $i++) {
-            $product = $prodcutid[$i];
-            $quantity = $postproducts[$product];
-            $query7 = $this->Query("SELECT unit_price FROM product where product_id = '$product'");
-            $row7 = mysqli_fetch_assoc($query7);
-            $unit_price = $row7['unit_price'];
-            $query7 = $this->Query("INSERT INTO stock_include(stock_req_id, product_id, quantity, unit_price) VALUES($stock_req_id, '$product', $quantity, $unit_price)");
-
+        for($i=0; $i<count($prodcutid); $i++) {
+            $prodcut = $prodcutid[$i];
+            $quantity = $postproducts[$prodcut];
+            $query5 = $this->Query("SELECT unit_price FROM product WHERE product_id = '$prodcut'");
+            $row5 = mysli_fetch_assoc($query5);
+            $unit_price = $row5['unit_price'];
+            $query5 = $this->Query("INSERT INTO stock_include (stock_req_id, product_id, quantity, unit_price) VALUES ($req_id, '$prodcut', $quantity, $unit_price)");
         }
         return $data;
+    }
 
-    } */
+    public function distributorStock($distributor_id,$tab){
+        switch($tab){
+            case "currentstock":
+                $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
+                p.weight as product_weight,p.unit_price as unit_price,d.quantity as quantity
+                FROM product p INNER JOIN distributor_keep d ON p.product_id = d.product_id WHERE d.distributor_id = $distributor_id");
+                return $result;
+                break;
 
-   
+            case "purchaseorder":
+                $result = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price, p.image as image
+                FROM distributor_capacity d INNER JOIN product p
+                ON d.product_id = p.product_id 
+                WHERE distributor_id = '$distributor_id'");
+                return $result;
+                break;
+
+            case "pohistory":
+                // get the dealer's stock information
+                $query2 = $this->Query("SELECT * FROM stock_request WHERE  distributor_id = '{$distributor_id}' ORDER BY stock_req_id DESC");
+                $purchase_orders = array();
+
+                if(mysqli_num_rows($query2) > 0){
+                    while($row2 = mysqli_fetch_assoc($query2)){
+                            
+                            $sql = "SELECT si.product_id AS product_id, si.quantity AS quantity, pr.name AS name 
+                                    FROM stock_include si 
+                                    INNER JOIN product pr 
+                                    ON si.product_id = pr.product_id 
+                                    WHERE si.po_id = '{$row2['stock_req_id']}'";
+                            $result3 = $this->Query($sql);
+                            $products = array();
+                            if(mysqli_num_rows($result3)>0){
+                                while($row3 = mysqli_fetch_assoc($result3)){
+                                    array_push($products, $row3);
+                                }
+                                array_push($purchase_orders, ['purchase_order' => $row2, 'products' => $products]);
+                            }
+                    }
+                }
+                return $purchase_orders;
+                break;
+        }
+    }   
     
 }
 
