@@ -77,14 +77,14 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         </thead>
 
                                         <tbody>';
-
+                                        $total = 0;
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
                                             $unit_price = $row2['unit_price'];
                                             $quantity = $row2['quantity'];
 
                                             $subtotal = $unit_price * $quantity;
-                                            $subtotal = number_format($subtotal).'.00';
+                                            // $subtotal = number_format($subtotal).'.00';
 
                                             $output .= '
                                                 <tr>
@@ -93,10 +93,16 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                     <td>'.$row2['quantity'].'</td>
                                                     <td>'.$subtotal.'</td>
                                                 </tr>';
-                                            
+                                                $total += $subtotal;           
                                         }
+                                        // $total = number_format($total).'.00';
                                         $output.='
-
+                                            <tr>
+                                                <td><b>Total Amount</b></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b>'.$total.'</b></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

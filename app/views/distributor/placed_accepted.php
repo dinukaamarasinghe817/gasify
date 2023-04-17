@@ -87,28 +87,36 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         </thead>
 
                                         <tbody>';
+                                        $total=0;
                                        
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
                                             $unit_price = $row2['unit_price'];
                                             $quantity = $row2['quantity'];
-                                            // $total = 0;
+                                            
 
                                             $subtotal = $unit_price * $quantity;
-                                            $subtotal = number_format($subtotal).'.00';
-                                            // $total = $total + $subtotal;
+                                            // $subtotal = number_format($subtotal).'.00';
+                                           
                                             $output .= '
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
                                                 <td>'.$row2['unit_price'].'</td>
                                                 <td>'.$row2['quantity'].'</td>
                                                 <td>'.$subtotal.'</td>    
-                                            </tr>
-                                            ';
-                                            // $total = $total + $subtotal;
+                                            </tr>';
+                                            $total += $subtotal;
+
                                         }
+                                        $output.='
+                                        <tr>
+                                            <td><b>Total Amount</b></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><b>'.$total.'</b></td>
+                                        </tr>';
+
                                         $output .= '
-                                        
                                         </tbody>
                                     </table>
                                     <button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button>

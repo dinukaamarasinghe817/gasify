@@ -15,7 +15,7 @@ class Customer extends Model{
     // }//
 
     public function getCustomer($customer_id){
-        $result = $this->Query("SELECT c.city ,c.street,c.image,c.contact_no,c.ebill_no,c.verification_state,c.type as c_type  
+        $result = $this->Query("SELECT c.city ,c.street,c.image,c.contact_no,c.ebill_no,c.ebill_verification_state,c.type as c_type  
         FROM customer c INNER JOIN users u ON u.user_id = c.customer_id WHERE c.customer_id = $customer_id");
         return $result;
     }
@@ -167,7 +167,7 @@ class Customer extends Model{
             $reviews = array();
 
             //query for get details about selected reservation
-            $result1 = $this->Query("SELECT r.order_id,r.order_state,r.place_date,r.collecting_method,d.name as dealer_name, r.dealer_id,r.delivery_id,
+            $result1 = $this->Query("SELECT r.order_id,r.order_state,r.place_date,r.place_time,r.collecting_method,d.name as dealer_name, r.dealer_id,r.delivery_id,
             r.cancel_date,r.cancel_time,r.payment_method,r.deliver_date,r.deliver_time,r.bank,r.acc_no,r.refund_date,r.refund_time,r.refund_verification
             FROM reservation r
             INNER JOIN dealer d ON r.dealer_id = d.dealer_id
@@ -292,7 +292,7 @@ class Customer extends Model{
         //check bank and acc no fields are empty or not
         if($bank != -1 && !empty($Acc_no)){
             //update reservation table with status and refund details relevant order
-            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time,'refund_verification'=>'Pending'],
+            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Cancelled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time,'refund_verification'=>'Pending'],
             'order_id='.$order_id);
 
             //check and update the quota if it is active and canceled reservation is placed during this month

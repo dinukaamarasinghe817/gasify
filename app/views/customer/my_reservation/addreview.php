@@ -6,11 +6,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 <section class="body">
     <?php
-        // call the default header for yout interface
+        // call the default header for interface
         $bodyheader = new BodyHeader($data);
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
-        
     ?>
        
     <div class="under_topbar">
@@ -19,15 +16,17 @@ $sidebar = new Navigation('customer',$data['navigation']);
         </div>        
         <?php
             //write a review for selected customer completed or delivered reservation
-
             echo '<div class="write_review">
                     <form id="write_review_form" method="POST" action="'.BASEURL.'/Orders/customer_addreview/'.$data['order_id'].'">';
             
+            //check order collecting method delivery or pick up
             $collecting_method = $data['collecting_method'];
-            if($collecting_method == 'Pick up'){
+            //pick up orders only can give reviews for dealers
+            if($collecting_method == 'Pickup'){
                 echo '<div class="type_title"><h3>Add Review for Dealer:</h3></div><div class="radio"></div>';
-            }else{
-
+            }
+            //delivery orders can give reviews for dealer and delivery person
+            else{
                 echo '<div class="type_title"><h3>Select Review Type:</h3></div>
                         <div class="radio">
                             <div>
@@ -42,19 +41,18 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
             }
             
-            $url =  BASEURL.'/Orders/customer_myreservation/'.$data['order_id'];
-           
             echo'<div class="write_box">
                     <textarea name="review" placeholder="Write your review here....." cols="30" rows="10"></textarea>
                 </div>
                 <div class="btn">
-                    <button id="send" class="send" type="submit"  >Submit</button>
-                    <button id="cancel" class="cancel"><a href ="'.$url.'">Cancel</a></button>
-                    
+                    <button id="send" class="send" type="submit" >Submit</button>
                 </div>
-            </form>
-            </div>';
+            </form>';
         ?>
+            <div class="btn">
+                <button id="cancel" class="cancel" onclick= "document.location.href = '<?php echo BASEURL;?>/Orders/customer_myreservation/<?php echo $data['order_id']?>'" >Cancel</button>
+            </div>
+        </div>
             
     </div>
 </section>

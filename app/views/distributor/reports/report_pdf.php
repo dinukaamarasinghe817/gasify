@@ -62,6 +62,7 @@ $details = $details['details'];
     $pdf->Ln();
 
     $pdf->SetFont('Times', '', 12);
+    $total =0;
     foreach($products as $product){
     $pdf->Cell(33,5,"{$product['product_id']}",0,0,'C');
     $unit_price = number_format($product['unit_price']).'.00';
@@ -69,9 +70,10 @@ $details = $details['details'];
     $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
     
     $subtotal = $product['unit_price'] * $product['quantity'];
-    $subtotal = number_format($subtotal).'.00';
+    // $subtotal = number_format($subtotal).'.00';
     $pdf->Cell(50,5,"{$subtotal}",0,0,'R');
     $pdf->Ln();
+    $total += $subtotal;
 }
 
 $pdf->Ln();
@@ -86,9 +88,8 @@ $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(40,5,'Total Amount',0,0,'C');
 $pdf->Cell(40,5,' ',0,0,'L');
 $pdf->Cell(40,5,' ',0,0,'L');
-$pdf->Cell(40,5,23000,0,0,'C');
 // $total = number_format($data['total']).'.00';
-// $pdf->Cell(33,5,"{$total}",0,0,'R');
+$pdf->Cell(30,5,"{$total}",0,0,'R');
 $pdf->Ln();
 
 $x = $pdf->GetX();

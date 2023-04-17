@@ -443,7 +443,7 @@ class User extends Model
         $query2 = $this->read('users', "email = '$email'");
         $row = mysqli_fetch_assoc($query2);
         $customer_id = $row['user_id'];
-        $query3 = $this->insert('customer', ['customer_id'=>$customer_id,'city'=> $city, 'street'=> $street,'type'=>$type,'contact_no'=>$contact_no,'ebill_no'=>$ebill_no,'verification_state'=>'pending']);
+        $query3 = $this->insert('customer', ['customer_id'=>$customer_id,'city'=> $city, 'street'=> $street,'type'=>$type,'contact_no'=>$contact_no,'ebill_no'=>$ebill_no,'ebill_verification_state'=>'pending']);
        // $query3;
 
        //insert intial record into customer_quota table

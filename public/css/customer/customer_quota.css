@@ -36,6 +36,11 @@ a,button{
     column-gap: 100px;
 }
 
+.all_company{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 /* quota details */
 .one_company{
     display: flex;
