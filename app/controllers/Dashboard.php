@@ -145,12 +145,17 @@
         }
 
         public function admin($error = null){
-            if(isset($_POST['option'])){
-                $option = $_POST['option'];
+            if(isset($_POST['option1'])){
+                $option = $_POST['option1'];
             }else{
                 $option = 'today';
             }
-            $data = $this->model('Admin')->dashboard($this->user_id,$option);
+            if(isset($_POST['option2'])){
+                $option2 = $_POST['option2'];
+            }else{
+                $option2 = 'all';
+            }
+            $data = $this->model('Admin')->dashboard($this->user_id,$option,$option2);
             $row = mysqli_fetch_assoc($this->model('Admin')->getAdmin($this->user_id));
             $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['image'] = $row['image'];

@@ -126,7 +126,7 @@
 }
 
 .variable{
-    border: 2px solid var(--navmenu-orange-dark);
+    /* border: 2px solid var(--navmenu-orange-dark); */
     
     border-radius: 5px;
 }
@@ -163,7 +163,7 @@
 }
 
 .variable .chart{
-    background-color: var(--table-gray);
+    /* background-color: var(--table-gray); */
     height: 400px;
     margin-top: 10px;
     border-radius: 10px;

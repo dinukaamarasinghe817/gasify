@@ -12,7 +12,12 @@ class Users extends Controller{
     }
 
     function companies(){
-        $data = $this->model("Admin")->companies();
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = "stock";
+        }
+        $data = $this->model("Admin")->companies($option);
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
@@ -20,7 +25,17 @@ class Users extends Controller{
     }
     
     function distributors(){
-        $data = $this->model("Admin")->distributors();
+        if(isset($_POST['option1'])){
+            $option1 = $_POST['option1'];
+        }else{
+            $option1 = "all";
+        }
+        if(isset($_POST['option2'])){
+            $option2 = $_POST['option2'];
+        }else{
+            $option2 = "all";
+        }
+        $data = $this->model("Admin")->distributors($option1, $option2);
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];

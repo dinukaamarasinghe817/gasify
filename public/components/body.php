@@ -570,23 +570,23 @@ class Body{
         echo '<section class="body-content">
         <div class="tiles one">
             <div class="tile">
-                <h1>246</h1>
+                <h1>'.$data['customers_count'].'</h1>
                 <p>Customers</p>
             </div>
             <div class="tile">
-                <h1>74</h1>
+                <h1>'.$data['dealers_count'].'</h1>
                 <p>Dealers</p>
             </div>
             <div class="tile">
-                <h1>53</h1>
+                <h1>'.$data['delivery_count'].'</h1>
                 <p>Delivery People</p>
             </div>
             <div class="tile">
-                <h1>24</h1>
+                <h1>'.$data['distributors_count'].'</h1>
                 <p>Distributors</p>
             </div>
             <div class="tile">
-                <h1>2</h1>
+                <h1>'.$data['company_count'].'</h1>
                 <p>Companies</p>
             </div>
         </div>
@@ -595,14 +595,35 @@ class Body{
                 <div class="topic">
                     <h2>Analytic Overview</h2>
                     <!-- drop down component -->
-                    <form action="'.BASEURL.'/dashboard/admin">
-                        <select id="period" onchange="this.form.submit()" class="dropdowndate">
-                            <option value="today" selected>To day</option>
-                            <option  value="30day">Last 30 days</option>
-                        </select>
+                    <form action="'.BASEURL.'/dashboard/admin" method="post">
+                        <label>Company</label>
+                        <select id="period" onchange="this.form.submit()" class="dropdowndate" name="option2">';
+                        $companies = $data['companies'];
+                        if($data['option2'] == 'all'){
+                            echo "<option value='all' selected>All</option>";
+                        }else{
+                            echo "<option value='all' >All</option>";
+                        }
+                        while($row = mysqli_fetch_assoc($companies)){
+                            if($data['option2'] == $row['company_id']){
+                                echo "<option value='".$row['company_id']."' selected>".$row['name']."</option>";
+                            }else{
+                                echo "<option value='".$row['company_id']."' >".$row['name']."</option>";
+                            }
+                        }
+                        echo '</select>
+                        <select id="period" onchange="this.form.submit()" class="dropdowndate" name="option1">';
+                            if($data['option1'] == 'today'){
+                                echo '<option value="today" selected>To day</option>
+                                <option  value="30day">Last 30 days</option>';
+                            }else{
+                                echo '<option value="today">To day</option>
+                                <option  value="30day" selected>Last 30 days</option>';
+                            }
+                        echo '</select>
                     </form>
                 </div>
-                <div class="chart" style="width:100%; background-color:#0000000A;">';
+                <div class="chart">';
                 $chart = $data['chart'];
                 // var_dump($chart);
                 if(count($chart['labels']) > 0){
@@ -614,64 +635,26 @@ class Body{
             </div>
             <div class="reviews">
                 <h2>Recent Reviews</h2>
-                <div class="contents">
-                    <div class="review">
-                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
+                <div class="contents">';
+                    $reviews = $data['reviews'];
+                    while($review = mysqli_fetch_assoc($reviews)){
+                        echo '<div class="review">
+                        <img src="'.BASEURL.'/img/profile/'.$review['image'].'" alt="">
                         <div class="review-info">
                             <div class="name-time">
-                                <h3>Dinuka Ashan</h3>
-                                <span>12:03 p.m</span>
+                                <h3>'.$review['customer_name'].'</h3>
+                                <span>'.date('F j, Y, g:i A', strtotime($review['date'].' '.$review['time'])).'</span>
                             </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                Nobis nulla, asperiores animi similique rem totam aliquam, 
-                                facilis quibusdam incidunt corrupti provident sit suscipit 
-                                sed vel obcaecati modi nisi velit optio?
-                            </p>
-                        </div>
-                    </div>
-                    <div class="review">
-                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
-                        <div class="review-info">
-                            <div class="name-time">
-                                <h3>Dinuka Ashan</h3>
-                                <span>12:03 p.m</span>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                Nobis nulla, asperiores animi similique rem totam aliquam, 
-                                facilis quibusdam incidunt corrupti provident sit suscipit 
-                                sed vel obcaecati modi nisi velit optio?
-                            </p>
-                        </div>
-                    </div>
-                    <div class="review">
-                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
-                        <div class="review-info">
-                            <div class="name-time">
-                                <h3>Dinuka Ashan</h3>
-                                <span>12:03 p.m</span>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                Nobis nulla, asperiores animi similique rem totam aliquam, 
-                                facilis quibusdam incidunt corrupti provident sit suscipit 
-                                sed vel obcaecati modi nisi velit optio?
-                            </p>
-                        </div>
-                    </div>
-                    <div class="review">
-                        <img src="'.BASEURL.'/img/profile/defaultprofile.png" alt="">
-                        <div class="review-info">
-                            <div class="name-time">
-                                <h3>Dinuka Ashan</h3>
-                                <span>12:03 p.m</span>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                Nobis nulla, asperiores animi similique rem totam aliquam, 
-                                facilis quibusdam incidunt corrupti provident sit suscipit 
-                                sed vel obcaecati modi nisi velit optio?
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                            <p>'.$review['message'].'</p>';
+                            if($review['review_type'] == 'Dealer'){
+                                echo '<p><strong>Dealer : </strong><a href="'.BASEURL.'/profile/preview/dealer/'.$review['dealer_id'].'/profile/admin/dealerprofile" style="color: #1672fc"><strong>'.$review['dealer_name'].'</strong></a></p>';
+                            }else{
+                                echo '<p><strong>Delivery : </strong><a href="'.BASEURL.'/profile/preview/delivery/'.$review['delivery_id'].'/profile/admin/deliveryprofile" style="color: #1672fc"><strong>'.$review['delivery_name'].'</strong></a></p>';
+                            }
+                        echo '</div>
+                    </div>';
+                    }
+                echo '</div>
             </div>
         </div>
     </section>';
@@ -1173,11 +1156,11 @@ class Body{
                                                 </tr>';
                                 }
                                 echo $products;
-    }       
-                        echo '</tbody>      
-                    </table>';   
-            echo '</div>
-        </section>';
+                            }       
+                                                echo '</tbody>      
+                                            </table>';   
+                                    echo '</div>
+                                </section>';
     }
     function companyRegProducts($data){
         echo 
