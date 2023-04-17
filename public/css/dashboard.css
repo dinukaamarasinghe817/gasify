@@ -592,6 +592,11 @@ td button:hover{
     margin-bottom: 20px;
 }
 
+.variable .chart img{
+    max-height: 250px;
+    width: auto;
+}
+
 /* .body-left table{
     width: 100%;
     margin-top: 10px;
