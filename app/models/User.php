@@ -387,10 +387,20 @@ class User extends Model
         $query2 = $this->read('users', "email = '$email'");
         //check if user already exists using email address
         if(mysqli_num_rows($query2) > 0){
-            $row = mysqli_fetch_assoc($query2);
-            $customer_id = $row['user_id'];
+            $row1 = mysqli_fetch_assoc($query2);
+            $customer_id = $row1['user_id'];
         }else{
             $customer_id = NULL;
+        }
+
+
+        $query3 = $this->read('customer', "ebill_no = '$ebill_no'");
+        //check if user already exists using ebill no
+        if(mysqli_num_rows($query3) > 0){
+            // $row2 = mysqli_fetch_assoc($query3);
+            $uniq_ebill_no = FALSE;
+        }else{
+            $uniq_ebill_no = TRUE;
         }
         
         //return errors
@@ -423,6 +433,14 @@ class User extends Model
         else if($type == -1){
             $data['error'] = "7";
         }
+        //check the entered ebill number is valid or not
+        else if(!verify_ebill($ebill_no)){
+            $data['error'] = "10";
+        }
+         //check the entered ebill number is unique
+        else if($uniq_ebill_no == FALSE){
+            $data['error'] = "11";
+        }
        //check image type is valid 
         if(!empty($image_name) && !empty($tmp_name)){
             // image type validity jpg png jpeg
@@ -443,7 +461,7 @@ class User extends Model
         $query2 = $this->read('users', "email = '$email'");
         $row = mysqli_fetch_assoc($query2);
         $customer_id = $row['user_id'];
-        $query3 = $this->insert('customer', ['customer_id'=>$customer_id,'city'=> $city, 'street'=> $street,'type'=>$type,'contact_no'=>$contact_no,'ebill_no'=>$ebill_no,'ebill_verification_state'=>'pending']);
+        $query3 = $this->insert('customer', ['customer_id'=>$customer_id,'city'=> $city, 'street'=> $street,'type'=>$type,'contact_no'=>$contact_no,'ebill_no'=>$ebill_no,'ebill_verification_state'=>'verified']);
        // $query3;
 
        //insert intial record into customer_quota table
