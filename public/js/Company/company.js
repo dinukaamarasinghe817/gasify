@@ -270,3 +270,9 @@ function showCharts() {
     xmlhttp.send();
 
 }
+function submitReport(r) {
+    console.log(r);
+}
+function ooo() {
+    console.log("hello world");
+}

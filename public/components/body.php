@@ -1860,12 +1860,13 @@ class Body{
         </section>';
     }
     function companyReports($data){
+        $arr = json_encode($data);
         echo 
-        '<section class="body-content">
+        '<section class="body-content" >
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Reports</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
                 <form action="'. BASEURL.'/Compny/companyReports" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
                     <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
@@ -1929,12 +1930,15 @@ class Body{
                     echo'</tbody>';
 
                 }    
-            echo '</table> 
-            <a class="btn" style="margin-left:46%" href="';
-            echo BASEURL;
-            echo'/reports/companySales">Generate PDF</a>';
-            echo'</div>
-        </section>';
+            echo '</table>';
+            echo'</div>'; 
+            echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
+            echo'<div style="background-color:dodgerblue;height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport('.json_encode($data['distributorName']).')">';
+            echo'Generate PDF</div>';
+            
+            echo'</div>';
+           
+        echo'</section>';
     }
     function reportsCompany(){
         $pdf = new FPDF('P','mm','A4');
