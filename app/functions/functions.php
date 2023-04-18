@@ -176,4 +176,18 @@ function verify_ebill($bill_no){
     $driver->quit();
     return $flag;
 }
+
+// function to calculate the distance between two given addresses
+function getDistance($origin, $destination) {
+    $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" . urlencode($origin) . "&destinations=" . urlencode($destination) . "&units=metric&key=".MAPAPI;
+
+    $response = file_get_contents($url);
+    $json = json_decode($response, true);
+
+    if ($json['status'] == 'OK') {
+        return $json['rows'][0]['elements'][0]['distance']['value'] / 1000;
+    } else {
+        return false;
+    }
+}
 ?>

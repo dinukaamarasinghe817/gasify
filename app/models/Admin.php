@@ -13,6 +13,15 @@ class Admin extends Model
         return $result;
     }
 
+    // public function gever(){
+    //     $distance = getDistance("No:43, Lional Jayasinghe Mawatha, Godagama", "Akarawita Patumaga, Homagama");
+    //     if ($distance) {
+    //         echo "The distance between the two addresses is " . $distance . " km.";
+    //     } else {
+    //         echo "Error calculating distance.";
+    //     }
+    // }
+    
     public function companies($option){
         $data['option'] = $option;
         if($option == 'stock'){ $option = 'quantity'; }
