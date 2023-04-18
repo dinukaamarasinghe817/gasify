@@ -265,27 +265,6 @@ class Compny extends Controller{
         $barChart=array();
         $barChart['dates']=array();
         $barChart['values']=array();
-        $doughNut=array();
-        $doughNut['products']=array();
-        $doughNut['values']=array();
-        $lineChart=array();
-        $lineChart['values']=array();
-        $lineChart['names']=array();
-        $colors=array("green","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)","rgb(255, 128, 0)","rgb(0, 0, 255)","rgb(255, 0, 191)","rgb(102, 204, 255)");
-        for ($i=0; $i <50 ; $i++) { 
-            shuffle($colors);
-        }
-        $data['doughnutColors']='[';
-        foreach($colors as $item){
-            $data['doughnutColors'].="\"".$item."\",";
-            
-        }
-        $data['doughnutColors']=rtrim($data['doughnutColors'],",");
-        $data['doughnutColors'].="]";
-        for ($i=0; $i <50 ; $i++) { 
-            $rand_color=array_rand($colors);
-        }
-        $data['barColor']=$colors[$rand_color];
         if(isset($order_details)){
             $processedOrders=array();
             $processedDates=array();
@@ -376,6 +355,11 @@ class Compny extends Controller{
             }    
         }
         $data['products']=$productArr;
+        $data['distributorName']=$this->model('Company')->getDistributorName($distributorID);
+        $date['fromDate']=$yearFrom.'-'.$monthFrom;
+        $date['toDate']=$yearTo.'-'.$monthTo;
+        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
+        $data['distNames'] = $distributor_details;
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
         $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);

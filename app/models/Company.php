@@ -226,5 +226,15 @@ class Company extends Model
         }
         //return $result;
     }
+    public function getDistributorName($distributorID){
+        $result=$this->Query("SELECT CONCAT(users.first_name,' ',users.last_name) AS name FROM users WHERE users.user_id=$distributorID");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['name'=>$row['name']]);
+            }
+            return $info;
+        }
+    }
     
 }
