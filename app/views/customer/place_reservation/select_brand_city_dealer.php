@@ -42,11 +42,19 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         //         if($brands["company_id"] == $c_id){
                                         //             echo "<option class = 'company_id' value = '$c_id' id= $c_id selected hidden> $name </option>";
                                         //         }
+                                    
                                         //     }
                                         // }else{
                                         //     echo '<option value="-1" selected disabled hidden>Select Gas Brand</option>';
+                                        //     // while($brands = mysqli_fetch_assoc($result1)){           
+                                        //     //     $name = $brands["name"];
+                                        //     //     $c_id = $brands["company_id"];
+
+                                        //     //     echo "<option class = 'company_id' value = $c_id id= $c_id> $name </option>";
+                                        //     // }
                                         // }
 
+                                        
                                         if(isset($data["brands"])){
                                             $result1 = $data["brands"];
                                             while($brands = mysqli_fetch_assoc($result1)){           
