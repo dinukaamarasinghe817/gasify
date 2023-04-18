@@ -251,7 +251,121 @@ class Compny extends Controller{
     }
     public function companyReports(){
         $data['navigation'] = 'reportsCompany';
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $company_id=$_SESSION['user_id'];
+        $distributorID=mysqli_real_escape_string($conn,$_POST["distNames"]);
+        $yearFrom=mysqli_real_escape_string($conn,$_POST['yearFrom']);
+        $monthFrom=mysqli_real_escape_string($conn,$_POST['monthFrom']);
+        $yearTo=mysqli_real_escape_string($conn,$_POST['yearTo']);
+        $monthTo=mysqli_real_escape_string($conn,$_POST['monthTo']);
+        $order_details=$this->model('Company')->getProductsForAnalysis($company_id,$distributorID,$yearFrom,$yearTo);
+        $product_details = $this->model('Company')->getProductDetails($company_id);
+        $productArr=array();
+        $revenueArr=array();
+        $barChart=array();
+        $barChart['dates']=array();
+        $barChart['values']=array();
+        if(isset($order_details)){
+            $processedOrders=array();
+            $processedDates=array();
+            $tempDates=array();
+            $tempOrderCount=array();
+            $orderCount=0;
+            foreach ($order_details as $row){
+                //print_r($row);
+                $date=explode("-",$row['place_date']);
+                $dateMonth=$date[0].'-'.$date[1];
+                if(!(in_array($dateMonth,$processedDates))){
+                    array_push($processedDates,$dateMonth);
+                    foreach ($order_details as $row2){
+                        $date_2=explode("-",$row2['place_date']);
+                        $dateMonth_2=$date_2[0].'-'.$date_2[1];
+                        if($dateMonth_2==$dateMonth){
+                            if(!(in_array($row2['stock_req_id'],$processedOrders))){
+                                array_push($processedOrders,$row2['stock_req_id']);
+                                $orderCount+=1;
+                                
+                            }
+                            
+                        }
+                    }
+                    array_push($tempDates,$dateMonth);
+                    array_push($tempOrderCount,$orderCount);
+                    $orderCount=0;
+                }else{
+                    continue;
+                }
+                
+            } 
+            //print_r($tempDates);
+            foreach($tempDates as $date){
+                $yearAndMonth=explode('-',$date);
+                if(intval($yearAndMonth[0])==$yearFrom){
+                    if(intval($yearAndMonth[1])>=$monthFrom){
+                        array_push($barChart['dates'],$date);
+                        array_push($barChart['values'],$tempOrderCount[array_search($date,$tempDates)]);
+                    }
+                }elseif(intval($yearAndMonth[0])==$yearTo){
+                    if(intval($yearAndMonth[1])<=$monthTo){
+                        array_push($barChart['dates'],$date);
+                        array_push($barChart['values'],$tempOrderCount[array_search($date,$tempDates)]);
+                    }
+                }elseif(intval($yearAndMonth[0])>$yearFrom && intval($yearAndMonth[0])<$yearTo){
+                    array_push($barChart['dates'],$date);
+                    array_push($barChart['values'],$tempOrderCount[array_search($date,$tempDates)]);         
+                }
+            }
+            
+            foreach($barChart['dates'] as $dates){
+                foreach($order_details as $row){
+                    $date=explode("-",$row['place_date']);
+                    $dateMonth=$date[0].'-'.$date[1];
+                    if($dates==$dateMonth){
+                        if(array_key_exists((int)$row['product_id'],$productArr)){
+                            $newQty=(int)$row['quantity']+(int)$productArr[$row['product_id']][1]; 
+                            unset($productArr[(int)$row['product_id']]);
+                            $productArr+=array((int)$row['product_id']=>array((int)$row['unit_price'],$newQty));
+                            if(array_key_exists($dates,$revenueArr)){
+                                $newRevenue=(int)$row['quantity']*(int)$row['unit_price']+$revenueArr[$dates];
+                                unset($revenueArr[$dates]);
+                                $revenueArr+=array($dates=>$newRevenue);
+                            }else{
+                                $revenueArr+=array($dates=>(int)$row['quantity']*(int)$row['unit_price']);
+                            }
+                        }else{
+                            $productArr+=array((int)$row['product_id']=>array((int)$row['unit_price'],(int)$row['quantity']));
+                            if(array_key_exists($dates,$revenueArr)){
+                                $newRevenue=(int)$row['quantity']*(int)$row['unit_price']+$revenueArr[$dates];
+                                unset($revenueArr[$dates]);
+                                $revenueArr+=array($dates=>$newRevenue);
+                            }else{
+                                $revenueArr+=array($dates=>(int)$row['quantity']*(int)$row['unit_price']);
+                            }
+                        }
 
+                    }
+                }
+            }
+            foreach($product_details as $row){
+                if(array_key_exists($row['product_id'],$productArr)){
+                    $temp=$productArr[$row['product_id']];
+                    unset($productArr[$row['product_id']]);
+                    $productArr+=array($row['name']=>$temp);
+                }
+            }    
+        }
+        $data['products']=$productArr;
+        $data['distributorName']=$this->model('Company')->getDistributorName($distributorID);
+        $date['fromDate']=$yearFrom.'-'.$monthFrom;
+        $date['toDate']=$yearTo.'-'.$monthTo;
+        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
+        $data['distNames'] = $distributor_details;
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        $data['distNames'] = $distributor_details;
         $this->view('dashboard/company',$data);
     }
     public function issuedOrders(){

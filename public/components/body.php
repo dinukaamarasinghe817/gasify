@@ -1860,14 +1860,15 @@ class Body{
         </section>';
     }
     function companyReports($data){
+        $arr = json_encode($data);
         echo 
-        '<section class="body-content">
+        '<section class="body-content" >
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/reports" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Reports</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0">';
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
-                <form action="'. BASEURL.'/Compny/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
+                <form action="'. BASEURL.'/Compny/companyReports" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
                     <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
                         if(isset($data['distNames'])){
                             $result=$data['distNames'];
@@ -1879,6 +1880,7 @@ class Body{
                             }
                             $tag.='</select></div>';
                             echo $tag;
+                            
                         }
                         echo'<div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
                                 From <select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
@@ -1910,40 +1912,33 @@ class Body{
                         <th>Quantity</th>
                         <th>Total (Rs.)</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td >Buddy</td>
-                        <td >600</td>
-                        <td >12</td>
-                        <td >7,200.00</td>
-                    </tr>
-                    <tr>
-                        <td >Regular</td>
-                        <td >1,950.00</td>
-                        <td >30</td>
-                        <td >58,500.00</td>
-                    </tr>
-                    <tr>
-                        <td >Commercial</td>
-                        <td >7,500.00</td>
-                        <td >15</td>
-                        <td >112,500.00</td>
-                    </tr>
-                    <tr>
-                        <td ></td>
-                        <td ></td>
-                        <td ></td>
-                        <td >178,200.00</td>
-                    </tr>
-                
-                </tbody>      
-            </table> 
-            <a class="btn" style="margin-left:46%" href="';
-            echo BASEURL;
-            echo'/reports/companySales">Generate PDF</a>';
-            echo'</div>
-        </section>';
+                </thead>';
+                if(isset($data['products'])){
+                    echo'<tbody>';
+                    //print_r($data['products']) ;
+                    $result=$data['products'];
+                    $tag="";
+                    foreach($result as $key=>$value){
+                        $tag.='<tr>
+                        <td >'.$key.'</td>
+                        <td >'.$value[0].'</td>
+                        <td >'.$value[1].'</td>
+                        <td >'.number_format($value[0]*$value[1],2).'</td>
+                        </tr>';
+                    }
+                    echo $tag;
+                    echo'</tbody>';
+
+                }    
+            echo '</table>';
+            echo'</div>'; 
+            echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
+            echo'<div style="background-color:dodgerblue;height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport('.json_encode($data['distributorName']).')">';
+            echo'Generate PDF</div>';
+            
+            echo'</div>';
+           
+        echo'</section>';
     }
     function reportsCompany(){
         $pdf = new FPDF('P','mm','A4');

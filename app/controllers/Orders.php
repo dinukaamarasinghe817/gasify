@@ -225,16 +225,12 @@ class Orders extends Controller{
             // $this -> select_products($brand,$city,$dealer);
             $this -> select_products();
        }
-       
-
-      
 
     }
 
      //display all products according to the selected dealer
      function select_products($error=null){
 
-    
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
       
@@ -284,9 +280,6 @@ class Orders extends Controller{
            $remaining_weight = $quota_detail['remaining_weight'];
         }
 
-       
-
-
         $selected_products = array();
 
         foreach($products as $product){
@@ -316,8 +309,7 @@ class Orders extends Controller{
             }else{
                 $this->select_payment_method();
             }
-           
-            
+               
         }
         else{
             $error = "You must select at least one product";
@@ -606,61 +598,45 @@ class Orders extends Controller{
     /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
     // distributor -> phurchase order interface
-     public function distributor() {
+     public function distributor($param=null, $error=null) {
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
-        /*
+
+        $data['tab'] = $param;
+
+        if($error !=null) {
+            $data['toast'] = $error;
+        }
+
+        $distributor_details = $this->model('Distributor')->getDistributor($this->user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+        $data['name'] = $row['first_name'].' '.$row['last_name'];
+
+        $data[$data['tab']] = $this->model('Distributor')-> distributorStock($this->user_id, $data['tab']);
+
+        $this->view('distributor/phurchase_orders',$data);       
+    }
+
+    public function purchase_order($param=null) {
+       
         $productid = $_SESSION['productarray'];
         $postproducts = [];
+
         for($i=0; $i<count($productid); $i++) {
             $postproducts[$productid[$i]] = $_POST[$productid[$i]];
         }
-        $data = $this->model("Distributor")->phurchaseOrders($this->$user_id, $productid, $postproducts);
+
+        $data = $this->model('Distributor')->distributorplaceorder($this->user_id, $productid, $postproducts);
         if(isset($data['toast'])) {
-            // $this->distributor("phurchase_orders", $data['toast']);
+            $this->distributor("purchaseorder", $data['toast']);
         }else {
-            $this->view('distributor/phurchase_orders',$data);      
-        } */
-
-        $data['productdetails'] = $this->model('Distributor')->productdetails();
-
-        $this->view('distributor/phurchase_orders',$data);      
-
-        // $data['placeorderpg'] = $this->model("Distributor")->phurchaseOrders($user_id);
-        // $this->view('distributor/phurchase_orders',$data);   
+            $this->view("/distributor/phurchase_orders", $data);
+        }  
     }
-
-    public function purchase_order() {
-        $user_id = $_SESSION['user_id'];
-
-        $quantities = array();
-        $result = $this->model('Distributor')->productdetails();
-
-        $records = mysqli_num_rows($result);
-        $isvalidity = false;
-        for($i=0; $i<$records; $i++) {
-            $product = mysqli_fetch_assoc($result);
-            $product_id = $product['product_id'];
-            $name = $product['name'];
-            $qty = $POST["$product_id"];
-            if($qty!=0) {
-                $isvalidity = true;
-            }
-            $quantities[$i] = array($product['product_id'], $qty);
-        }
-        
-
-      
-        
-
-
-
-    }
-
-
 
     // distributor current stock (Gas Orders)
     public function distributor_currentstock() {
@@ -676,8 +652,6 @@ class Orders extends Controller{
         
         $this->view('distributor/current_stock',$data);
         // $this->view('distributor/dashboard/distributor',$data);
-      
-
     }
     
     //Placed orders list (Gas Orders)
