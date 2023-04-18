@@ -12,5 +12,9 @@
                 $this->view('',$data);
             }
         }
+
+        // public function ebill(){
+        //     $this->model('Admin')->gever();
+        // }
     }
 ?>
