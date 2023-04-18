@@ -33,12 +33,13 @@ $sidebar = new Navigation('admin','distributors');
                             <?php
                                 $companies = $data['companies'];
                                 while($row = mysqli_fetch_assoc($companies)){
-                                if($row['company_id'] == $data['option2']){
-                                    echo '<option value="'.$row['company_id'].'" selected>'.$row['name'].'</option>';
-                                }else{
-                                    echo '<option value="'.$row['company_id'].'">'.$row['name'].'</option>';
+                                    if($row['company_id'] == $data['option2']){
+                                        echo '<option value="'.$row['company_id'].'" selected>'.$row['name'].'</option>';
+                                    }else{
+                                        echo '<option value="'.$row['company_id'].'">'.$row['name'].'</option>';
+                                    }
                                 }
-                            }?>
+                            ?>
                         </select>
                     </div>
                 </form>

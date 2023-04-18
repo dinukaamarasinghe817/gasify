@@ -43,7 +43,17 @@ class Users extends Controller{
     }
 
     function dealers(){
-        $data = $this->model("Admin")->dealers();
+        if(isset($_POST['option1'])){
+            $option1 = $_POST['option1'];
+        }else{
+            $option1 = "all";
+        }
+        if(isset($_POST['option2'])){
+            $option2 = $_POST['option2'];
+        }else{
+            $option2 = "all";
+        }
+        $data = $this->model("Admin")->dealers($option1, $option2);
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
@@ -51,7 +61,25 @@ class Users extends Controller{
     }
 
     function deliveries($tab=null){
-        $data = $this->model("Admin")->deliveries();
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = "all";
+        }
+        if($tab == null){
+            $data = $this->model("Admin")->deliveries($option);
+        }else{
+            if(isset($_POST['0'])){
+                $i = 0; $mindist = [];
+                while(isset($_POST[$i])){
+                    $mindist[$i] = $_POST[$i];
+                    $i+=10;
+                }
+                $data = $this->model("Admin")->deliverycharges($mindist);
+            }else{
+                $data = $this->model("Admin")->deliverycharges();
+            }
+        }
         $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];

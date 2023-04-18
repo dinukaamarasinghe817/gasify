@@ -12,6 +12,7 @@ class Admin extends Model
         $result = $this->Query("SELECT * FROM users u INNER JOIN admin a ON u.user_id = a.admin_id WHERE a.admin_id = $user_id");
         return $result;
     }
+
     public function companies($option){
         $data['option'] = $option;
         if($option == 'stock'){ $option = 'quantity'; }
@@ -44,7 +45,7 @@ class Admin extends Model
         LEFT JOIN company c ON d.company_id = c.company_id
         LEFT JOIN distributor_keep dk ON dk.distributor_id = d.distributor_id
         LEFT JOIN product p ON dk.product_id = p.product_id
-        LEFT JOIN distributor_vehicle v ON dk.distributor_id = v.distributor_id";
+        LEFT JOIN distributor_vehicle v ON d.distributor_id = v.distributor_id";
         if($option1 != 'all' && $option2 != 'all'){
             $sql .= " WHERE d.city = '$option1' AND c.company_id = $option2";
         }else if($option1 != 'all'){
@@ -57,16 +58,59 @@ class Admin extends Model
         $data['companies'] = $this->read('company');
         return $data;
     }
-    public function dealers(){
-        $data['company'] = $this->Query("SELECT * FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id");
+    public function dealers($option1,$option2){
+        $data['option1'] = $option1;
+        $data['option2'] = $option2;
+        $sql = "SELECT d.dealer_id as user_id,
+        CONCAT(u.first_name,' ',u.last_name) as name,
+        d.city as city,
+        c.name as company,
+        IFNULL(COUNT(DISTINCT(r.order_id)),0) as orders_count,
+        IFNULL(SUM(dk.quantity*p.weight),0) as quantity
+        FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id
+        LEFT JOIN company c ON d.company_id = c.company_id
+        LEFT JOIN dealer_keep dk ON dk.dealer_id = d.distributor_id
+        LEFT JOIN product p ON dk.product_id = p.product_id
+        LEFT JOIN (SELECT * FROM reservation WHERE order_state = 'Completed') r ON d.dealer_id = r.dealer_id";
+        if($option1 != 'all' && $option2 != 'all'){
+            $sql .= " WHERE d.city = '$option1' AND c.company_id = $option2";
+        }else if($option1 != 'all'){
+            $sql .= " WHERE d.city = '$option1'";
+        }else if($option2 != 'all'){
+            $sql .= " WHERE c.company_id = $option2";
+        }
+        $sql .= " GROUP BY d.dealer_id";
+        $data['dealers'] = $this->Query($sql);
+        $data['companies'] = $this->read('company');
         return $data;
     }
-    public function deliveries(){
-        $data['company'] = $this->Query("SELECT * FROM users u INNER JOIN delivery_person d ON u.user_id = d.delivery_id");
+    public function deliveries($option){
+        $data['option'] = $option;
+        $sql = "SELECT d.delivery_id as user_id,
+        CONCAT(u.first_name,' ',u.last_name) as name,
+        d.city as city,
+        IFNULL(COUNT(DISTINCT(r.order_id)),0) as orders_count
+        FROM delivery_person d INNER JOIN users u ON d.delivery_id = u.user_id
+        LEFT JOIN (SELECT * FROM reservation WHERE order_state = 'Completed') r ON d.delivery_id = r.delivery_id";
+        if($option != 'all'){
+            $sql .= " WHERE d.city = '$option'";
+        }
+        $sql .= " GROUP BY d.delivery_id";
+        $data['delivery_people'] = $this->Query($sql);
+        return $data;
+    }
+    public function deliverycharges($mindist=null){
+        if($mindist != null){
+            foreach($mindist as $key => $value){
+                $this->update('delivery_charge',['charge_per_kg' => $value],"min_distance = $key");
+            }
+            $data['toast'] = ['type' => 'success', 'message' => 'Successfully updated delivery charges!'];
+        }
+        $data['delivery_charges'] = $this->read('delivery_charge');
         return $data;
     }
     public function customers(){
-        $data['customers'] = $this->Query("SELECT * FROM users u INNER JOIN customer c ON u.user_id = c.customer_id");
+        $data['customers'] = $this->Query("SELECT * FROM users u INNER JOIN customer c ON u.user_id = c.customer_id WHERE c.verification_state = 'pending'");
         return $data;
     }
 

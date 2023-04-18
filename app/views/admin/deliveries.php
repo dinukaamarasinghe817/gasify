@@ -17,14 +17,18 @@ $sidebar = new Navigation('admin','delivery');
                 <li><a href="<?php echo BASEURL; ?>/users/deliveries/charges" class="current">Delivery Charges</a></li>
             </ul>
         </div>
-        <form action="" class="filters">
+        <form action="<?php echo BASEURL?>/users/deliveries" class="filters" method='post'>
             <div class="input half select"><label>Filter By City</label>
                 <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">
                     <?php
                         $cities = CITIES;
-                        echo '<option  value="none" selected hidden>Select a city</option>';
+                        echo '<option  value="all" selected>All</option>';
                         foreach($cities as $city){
-                            echo '<option  value="'.$city.'">'.$city.'</option>';
+                            if($city == $data['option']){
+                                echo '<option  value="'.$city.'" selected>'.$city.'</option>';
+                            }else{
+                                echo '<option  value="'.$city.'">'.$city.'</option>';
+                            }
                         }
                     ?>
                 </select>
@@ -43,20 +47,20 @@ $sidebar = new Navigation('admin','delivery');
                 </thead>
                 <tbody>
                     <?php
-                    echo '<tr>
-                            <td>3</td>
-                            <td>Kamal Satharasinghe</td>
-                            <td>Homagama</td>
-                            <td>5</td>
-                            <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/delivery/12/profile/admin/deliveryprofile" >View Profile</a></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Kamal Satharasinghe</td>
-                            <td>Homagama</td>
-                            <td>5</td>
-                            <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/delivery/12/profile/admin/deliveryprofile" >View Profile</a></td>
-                        </tr>';
+                        $delivery_people = $data['delivery_people'];
+                        if(mysqli_num_rows($delivery_people) > 0){
+                            while($row = mysqli_fetch_assoc($delivery_people)){
+                                echo '<tr>
+                                        <td>'.$row['user_id'].'</td>
+                                        <td>'.$row['name'].'</td>
+                                        <td>'.$row['city'].'</td>
+                                        <td>'.$row['orders_count'].'</td>
+                                        <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/admin/deliveryprofile" >View Profile</a></td>
+                                    </tr>';
+                            }
+                        }else{
+                            echo '<tr><td colspan="7" style="text-align: center">No records found</td></tr>';
+                        }
                     ?>
                 </tbody>
             </table>
