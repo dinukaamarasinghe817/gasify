@@ -504,6 +504,15 @@ class Orders extends Controller{
 
         // $this->view('customer/place_reservation/collecting_method',$data);
 
+
+        //unset session variables of place_reservation
+        unset($_SESSION['company_id']);
+        unset($_SESSION['city']);
+        unset($_SESSION['dealer_id']);
+        unset($_SESSION['order_products']);
+        unset($_SESSION['collecting_method']);
+
+
     }
 
 
