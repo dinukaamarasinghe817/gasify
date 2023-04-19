@@ -206,8 +206,6 @@
         }
 
 
-
-
         public function customer($error=null){
             // if any errors to be printed
             $data['error'] = $error;
@@ -291,6 +289,54 @@
         }
         public function deliveryperson(){
             $this->view('signup/deliveryperson');
+        }
+
+        public function distributor($error=null) {
+
+            $data['error'] = $error;
+            if($error != null){
+                switch($error){
+                    case '1':
+                        $data['toast'] = ['type' => 'error', 'message' =>'fill all the fields'];
+                        break;
+                    case '2':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid email'];
+                        break;
+                    case '3':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Email already exists'];
+                        break;
+                    case '4':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Passwords do not match'];
+                        break;
+                    case '5':
+                        $data['toast'] = ['type' => 'error', 'message' =>'password should at least 8 characters long and include atleast one uppercase, lowercase, number and a special character'];
+                        break;
+                    case '6':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Select a city'];
+                        break;
+                    case '7':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid capacity'];
+                        break;
+                    // case '8':
+                    //     $data['toast'] = ['type' => 'error', 'message' =>'Select a distributor'];
+                    //     break;
+                    case '9':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Server Error, please try again'];
+                        break;
+                    case '10':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid image type'];
+                        break;
+                }
+            }
+              $this->view('signup/distributor', $data);
+        }
+
+        public function distributorsignup() {
+
+            $data['productresult'] = $this->model("Distributor")->productdetails();
+
+            $this->view('signup/distributor', $data);
+
         }
 
 

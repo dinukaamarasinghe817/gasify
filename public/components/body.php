@@ -508,7 +508,7 @@ class Body{
                                                     <tr>
                                                         <th>Item ID</th>
                                                         <th>Quantity</th>
-                                                        <th>Subtotal</th>
+                                                        <th>Subtotal (Rs.)</th>
                                                     </tr>
                                                 </thread>
 
@@ -525,15 +525,15 @@ class Body{
                                                         <tr>
                                                             <td>'.$row3['product_id'].'</td>
                                                             <td>'.$row3['quantity'].'</td>
-                                                            <td>'.$subtotal.'</td>
+                                                            <td>'.$subtotal.'.00</td>
                                                         </tr>'; 
                                                         $total += $subtotal;           
                                                 }
                                                 $output1 .= '
                                                 <tr>
-                                                    <td><b>Total Amount</b></td>
+                                                    <td><b>Total Amount (Rs.)</b></td>
                                                     <td></td>
-                                                    <td><b>'.$total.'</b></td>
+                                                    <td><b>'.$total.'.00</b></td>
                                                 </tr>
                                                 </tbody>
                                             </table>

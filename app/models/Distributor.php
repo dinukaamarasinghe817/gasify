@@ -411,13 +411,14 @@ class Distributor extends Model
         }
 
         $completed = array();
-        $query1 = $this->Query("SELECT po_id, dealer_id, place_date FROM purchase_order WHERE distributor_id = '{$user_id}' and po_state='completed' AND place_date >= '$start_date' AND place_date <= '$end_date';");
+        $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time FROM purchase_order WHERE distributor_id = '{$user_id}' and po_state='completed' AND place_date >= '$start_date' AND place_date <= '$end_date';");
 
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['po_id'];
                 $dealer_id = $row1['dealer_id'];
                 $date = $row1['place_date'];
+                $time = $row1['place_time'];
 
                 $capacities = array();
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
