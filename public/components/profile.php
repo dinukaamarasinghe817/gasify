@@ -152,9 +152,9 @@ class ProfileHTML{
                             <ul>
                                 <li>';
                                 if($data['tab']=='profile'){
-                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/company/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
                                 }else{
-                                    echo '<a class="" href="'.BASEURL.'/profile/preview/company/'.$row['user_id'].'/profile/company/profile" onclick="profile()">Profile</a>';
+                                    echo '<a class="" href="'.BASEURL.'/profile/preview/company/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
                                 }
                                 echo '</li>
                             </ul>
@@ -201,9 +201,9 @@ class ProfileHTML{
                             <ul>
                                 <li>';
                                 if($data['tab']=='profile'){
-                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/delivery/profile" onclick="profile()">Profile</a>';
+                                    echo '<a class="active" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
                                 }else{
-                                    echo '<a class="" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/delivery/profile" onclick="profile()">Profile</a>';
+                                    echo '<a class="" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/'.$data['viewfolder'].'/'.$data['viewfile'].'" onclick="profile()">Profile</a>';
                                 }
                                 echo '</li>
                             </ul>
