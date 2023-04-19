@@ -103,7 +103,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                                 <td>'.$row2['product_id'].'</td>
                                                 <td>'.$row2['unit_price'].'</td>
                                                 <td>'.$row2['quantity'].'</td>
-                                                <td>'.$subtotal.'</td>    
+                                                <td>'.$subtotal.'.00</td>    
                                             </tr>';
                                             $total += $subtotal;
 
@@ -113,7 +113,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             <td><b>Total Amount</b></td>
                                             <td></td>
                                             <td></td>
-                                            <td><b>'.$total.'</b></td>
+                                            <td><b>'.$total.'.00</b></td>
                                         </tr>';
 
                                         $output .= '
