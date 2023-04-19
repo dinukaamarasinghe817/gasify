@@ -332,7 +332,10 @@ body{
 #product .pro:hover{
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px -1px, rgba(0, 0, 0, 0.15) 0px 2px 12px -1px;
 }
-
+#product .pro .productimg{
+    background-color: #3a3a3a14;
+    border-radius: 5px;
+}
 #product .pro img{
     width: 100%;
     border-radius: 5px;
