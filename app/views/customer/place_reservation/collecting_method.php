@@ -7,7 +7,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        $order_id = $data['order_id'];
+        $order_id = $_SESSION['order_id'];
     ?>
 
     <div class="under_topbar">

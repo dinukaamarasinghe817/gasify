@@ -30,6 +30,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     $row1 = $order['order'];
                     $products = $order['products'];
                     $total_amount = $order['total_amount'];
+                    $delivery_charge = $order['delivery_charge'];
+                   
                     
                     $place_time = $row1['place_time'];
                     $new_time = date('H:i:s', strtotime($place_time . ' + 1 hour')); // Add 1 hour to the place time and format the result as a time string
@@ -94,12 +96,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>';
                                 //if collecting method is delivery then display delivery charge
                                 if($row1['collecting_method']== "Delivery"){
+                                    $delivery_charge = $order['delivery_charge'];
                                     echo  '<div class="top_content">
                                             <div>
                                                 <strong>Delivery Charge</strong>
                                             </div>
                                             <div>
-                                                <span>Rs.234.00</span>   
+                                            Rs.'.number_format($delivery_charge).'.00   
                                             </div>
                                         </div>';
                                 }
