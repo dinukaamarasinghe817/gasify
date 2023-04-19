@@ -1037,8 +1037,14 @@ class Body{
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/dealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Dealers</div></a>
-            <a href="../Compny/regDealer" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()" style="width:100%;height:100%">Register New Dealer</div></a>
+            <a href="../Compny/dealer" style="width:97%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Dealers</div></a>
+            </div>
+            <div style="width:97%;height:10%;display:flex;align-items:center;align-content:center;border-left-style:solid;border-right-style:solid;box-sizing:border-box;border-color:var(--navmenu-orange-dark);">
+                <div style="margin-left:5%;width:15%;height:80%;background-color:dodgerblue;border-radius:40px;display:flex;align-items:center;align-content:center">
+                    <div style="color:white;width:40%;display:flex;align-items:center;align-content:center;justify-content:center;font-size:2em">+</div> 
+                    <div style="color:white;font-size:1.5em">Add</div>   
+                </div>
+            
             </div>
             <div class="DealerTables" id="DealerTables" style="margin:0">';
                 echo '<table class="styled-table">

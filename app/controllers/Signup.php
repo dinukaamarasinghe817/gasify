@@ -280,6 +280,12 @@
 
         
         }
+        public function company(){
+            $this->view('signup/company');
+        }
+        public function deliveryperson(){
+            $this->view('signup/deliveryperson');
+        }
 
 
 
