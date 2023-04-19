@@ -71,17 +71,35 @@
 
     <section id="tx-banner">
         <div class="banner-box">
-            <h1>2+</h1>
-            <h2>Major Brands</h2>
+            <?php 
+            if(isset($data['company']) && $data['company'] >= 0){
+                echo '<h1>'.count($data['company']).'</h1>';
+            }else{
+                echo '<h1>0</h1>';
+            }
+            ?>
+            <h2>Gas Companies</h2>
             <button class="details">Details</button>
         </div>
         <div class="banner-box">
-            <h1>12+</h1>
+            <?php 
+                if(isset($data['distributor']) && $data['distributor'] >= 0){
+                    echo '<h1>'.count($data['distributor']).'</h1>';
+                }else{
+                    echo '<h1>0</h1>';
+                }
+            ?>
             <h2>Distribution Points</h2>
             <button class="details">Details</button>
         </div>
         <div class="banner-box">
-            <h1>112+</h1>
+            <?php 
+                if(isset($data['dealer']) && $data['dealer'] >= 0){
+                    echo '<h1>'.count($data['dealer']).'</h1>';
+                }else{
+                    echo '<h1>0</h1>';
+                }
+            ?>
             <h2>Dealer Points</h2>
             <button class="details">Details</button>
         </div>
@@ -163,85 +181,22 @@
         <h2>Featured Products</h2>
         <p>All products of all brands with lates price</p>
         <div class="pro-container">
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f1.png" alt="">
-                <div class="des">
-                    <span>litro</span>
-                    <h5>Buddy 2.3 Kg (Re-fill)</h5>
-                    <!-- <div class="star">
-                        <img src="<?php echo BASEURL ?>/public/icons/star.svg" alt="">
-                        <img src="<?php echo BASEURL ?>/public/icons/star.svg" alt="">
-                        <img src="<?php echo BASEURL ?>/public/icons/star.svg" alt="">
-                        <img src="<?php echo BASEURL ?>/public/icons/star.svg" alt="">
-                        <img src="<?php echo BASEURL ?>/public/icons/star.svg" alt="">
-                    </div> -->
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 815.00</h4>
-                </div>
-            </div>
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f2.png" alt="">
-                <div class="des">
-                    <span>litro</span>
-                    <h5>Budget 5 Kg (Re-fill)</h5>
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 1750.00</h4>
-                </div>
-            </div>
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f3.png" alt="">
-                <div class="des">
-                    <span>litro</span>
-                    <h5>Regular 12.5 Kg (Re-fill)</h5>
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 4360.00</h4>
-                </div>
-            </div>
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f4.png" alt="">
-                <div class="des">
-                    <span>litro</span>
-                    <h5>Regulator Pack</h5>
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 1875.00</h4>
-                </div>
-            </div>
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f5.png" alt="">
-                <div class="des">
-                    <span>laugfs</span>
-                    <h5>Buddy 2 Kg (Re-fill)</h5>
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 795.00</h4>
-                </div>
-            </div>
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f6.png" alt="">
-                <div class="des">
-                    <span>laugfs</span>
-                    <h5>Budget 5 Kg (Re-fill)</h5>
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 2120.00</h4>
-                </div>
-            </div>
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f7.png" alt="">
-                <div class="des">
-                    <span>laugfs</span>
-                    <h5>Regular 12.5 Kg (Re-fill)</h5>
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 5300.00</h4>
-                </div>
-            </div>
-            <div class="pro">
-                <img src="<?php echo BASEURL ?>/public/img/products/f8.png" alt="">
-                <div class="des">
-                    <span>laugfs</span>
-                    <h5>Regulator Pack</h5>
-                    <div class="star">(22) sold</div>
-                    <h4>Rs. 2810.00</h4>
-                </div>
-            </div>
+            <?php if(isset($data['products']) && mysqli_num_rows($data['products']) > 0) :?>
+                <?php $products = $data['products'];?>
+                <?php while($row = mysqli_fetch_assoc($products)) : ?>
+                        <div class="pro">
+                            <div class="productimg">
+                            <img src="<?php echo BASEURL ?>/public/img/products/<?=$row['image']?>" alt=""></div>
+                            <div class="des">
+                                <span><?=$row['company_name']?></span>
+                                <h5><?=$row['name']?> <?=$row['weight']?> Kg</h5>
+                                <div class="star">(<?=$row['soldcount']?>) sold</div>
+                                <h4>Rs. <?=$row['unit_price']?>.00</h4>
+                            </div>
+                        </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+            <?php endif; ?>
         </div>
     </section>
 

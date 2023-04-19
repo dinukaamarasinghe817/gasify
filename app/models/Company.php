@@ -25,6 +25,18 @@ class Company extends Model
         }
         return $data['company'];
     }
+    public function getAllProducts(){
+        $sql = "SELECT c.name AS company_name,
+        p.name AS name,
+        p.weight AS weight,
+        p.image AS image,
+        p.unit_price AS unit_price,
+        IFNULL(r.soldcount,0) AS soldcount FROM product p INNER JOIN company c ON p.company_id = c.company_id
+        LEFT JOIN (SELECT SUM(quantity) as soldcount,product_id FROM reservation_include GROUP BY product_id) r
+        ON p.product_id = r.product_id;";
+        $result = $this->Query($sql);
+        return $result;
+    }
     public function getCompanyImage($company_id){
         $result = $this->Query("SELECT * FROM users u INNER JOIN company c ON u.user_id = c.company_id WHERE u.user_id = '$company_id' ");
         // $result = $this->read('company', "company_id = $company_id");

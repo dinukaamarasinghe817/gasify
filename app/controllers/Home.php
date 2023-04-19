@@ -13,6 +13,7 @@
             $data["company"] = $this->model("Company")->getAllCompanies();
             $data["distributor"] = $this->model("Distributor")->getAllDistributors();
             $data["dealer"] = $this->model("Dealer")->getAllDealers();
+            $data['products'] = $this->model("Company")->getAllProducts();
             $this->view('home/index',$data);
         }
 
