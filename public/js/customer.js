@@ -62,7 +62,6 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         </div>`;
     }else if(variant == 'deliveryaddress'){
 
-    
         body = `<h2>Change Delivery Address</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
         <p>Check your current delivery address is correct.If you need to change your delivery address around selected city,change it!</p>

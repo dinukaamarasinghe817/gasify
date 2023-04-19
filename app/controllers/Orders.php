@@ -396,6 +396,7 @@ class Orders extends Controller{
                 $dealer_id = $_SESSION['dealer_id'];
                 $products = $_SESSION['order_products'];
                 $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Bank Deposit');
+                $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
                 $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
                 $data['confirmation'] = '';
                 $this->view('customer/place_reservation/collecting_method',$data);
@@ -424,6 +425,7 @@ class Orders extends Controller{
             //successfully charged
             $products = $_SESSION['order_products'];
             $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Credit card');
+            $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
             $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
             $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
             $data['confirmation'] = '';
@@ -440,12 +442,11 @@ class Orders extends Controller{
     function select_collecting_method(){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
-
+        
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
         $data['confirmation'] = '';
 
         $this->view('customer/place_reservation/collecting_method',$data);
@@ -477,13 +478,7 @@ class Orders extends Controller{
             $data['street'] = $row1['street'];
         }
 
-        $distance = 9;   //********************** *have to take distance using maps ******************************************
-        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$distance);   //insert delivery street  and distance range to reservation table
-
-
-        // $data['delivery_charge'] = $this->
-       
-
+        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$data['city']);   //insert delivery street  and distance range to reservation table
         $data['confirmation'] = '';
 
         $this->view('customer/place_reservation/delivery_collecting_method',$data);
@@ -506,6 +501,7 @@ class Orders extends Controller{
 
 
         //unset session variables of place_reservation
+        unset($_SESSION['order_id']);
         unset($_SESSION['company_id']);
         unset($_SESSION['city']);
         unset($_SESSION['dealer_id']);
