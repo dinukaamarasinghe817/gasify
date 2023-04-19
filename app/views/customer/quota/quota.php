@@ -98,35 +98,34 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 }
                                 //if qouata is inactivated
                                 else{
-                                
                                     echo  '<div class="one_company">
-                                            <div class="company_details">
-                                                <div class="name">'.$company_name.'</div>
-                                                <div class="date"><span> &nbsp </span></div>
-                                            </div>
-                                            <div class="company_quota" >
-                                                <div class="quota-bars">
-                                            
-                                                    <div class="bar">
-                                                        <div class="total_dropdown">
-                                                            <div class="total">
-                                                                <span style="color:#0047AB;"><strong></strong></strong></span><span id="total_cylinders" style="color:#0047AB;"><strong> </strong></span><span style="color:#0047AB;"><strong> &nbsp </strong></span> 
-                                                            </div>        
-                                                        </div>
-                                                        <div class="quota_logo">
-                                                            <div class="logo">
-                                                                <img src= " '.BASEURL.'/public/img/profile/'.$company_logo.'" alt="">
+                                                <div class="company_details">
+                                                    <div class="name">'.$company_name.'</div>
+                                                    <div class="date"><span> &nbsp </span></div>
+                                                </div>
+                                                <div class="company_quota" >
+                                                    <div class="quota-bars">
+                                                
+                                                        <div class="bar">
+                                                            <div class="total_dropdown">
+                                                                <div class="total">
+                                                                    <span style="color:#0047AB;"><strong></strong></strong></span><span id="total_cylinders" style="color:#0047AB;"><strong> </strong></span><span style="color:#0047AB;"><strong> &nbsp </strong></span> 
+                                                                </div>        
                                                             </div>
-                                                            <div id="'.$company_id.'">
-                                                                <div id ="progress_bar">
+                                                            <div class="quota_logo">
+                                                                <div class="logo">
+                                                                    <img src= " '.BASEURL.'/public/img/profile/'.$company_logo.'" alt="">
                                                                 </div>
-                                                               <div class="remaining"><span style="color:#f20202;"><strong>Quota Disabled!</strong></span></div>
-                                                            </div>
-                                                        </div> 
+                                                                <div id="'.$company_id.'">
+                                                                    <div id ="progress_bar">
+                                                                    </div>
+                                                                <div class="remaining"><span style="color:#f20202;"><strong>Quota Disabled!</strong></span></div>
+                                                                </div>
+                                                            </div> 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>';
+                                            </div>';
                 
                                     
                                    

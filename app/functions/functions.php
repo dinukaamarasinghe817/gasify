@@ -122,6 +122,7 @@ use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Facebook\WebDriver\Exception\TimeOutException;
+use Facebook\WebDriver\Exception\NoSuchElementException;
 
 function verify_ebill($bill_no){
     // set the return value
@@ -139,16 +140,10 @@ function verify_ebill($bill_no){
     $driver = RemoteWebDriver::create($host, $capabilities);
 
     try{
-        // Navigate to Google.com
+        // Navigate to website
         $driver->get('https://payment.ceb.lk/instantpay');
-
-        // Find the search box by its name attribute
         $searchBox = $driver->findElement(WebDriverBy::id('account_no'));
-
-        // Type a search query
         $searchBox->sendKeys($bill_no);
-
-        // Submit the form by pressing Enter key
         $searchBox->submit();
 
         // Wait for the results page to load
@@ -156,9 +151,8 @@ function verify_ebill($bill_no){
             WebDriverExpectedCondition::urlContains('/instantpay/payment/')
         );
 
-        // Check if the user has successfully logged in or not
-        if (strpos($driver->getCurrentURL(), '/payment') !== false) {
-            // Find the search box by its name attribute
+        // Check if the ebill has successfully verified in or not
+        if (strpos($driver->getCurrentURL(), '/instantpay/payment') !== false) {
             $email = $driver->findElement(WebDriverBy::id('email'));
             if($email){
                 $flag = true;
@@ -166,12 +160,32 @@ function verify_ebill($bill_no){
         }
 
     }catch(TimeOutException $e){
-        $flag = false;
+        // 
+        try{
+            // Navigate to website
+            $driver->get('https://lecoapp.leco.lk/OnlineBillPay/Instant_Pay.aspx');
+            $searchBox = $driver->findElement(WebDriverBy::id('MainContent_TxtAccount_number'));
+            $searchBox->sendKeys($bill_no);
+            $btn = $driver->findElement(WebDriverBy::id('MainContent_BtnCheck1'));
+            $btn->click();
+
+            // Wait for the results page to load
+            $driver->wait(2)->until(
+                WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('MainContent_BtnPayNow'))
+            );
+            $button = $driver->findElement(WebDriverBy::id('MainContent_BtnPayNow'));
+            if(!empty($button)){
+                $flag = true;
+                if (strpos($driver->getCurrentURL(), 'aspxerrorpath') !== false) {
+                    $flag = false;
+                }
+            }else{
+                $flag = false;
+            }
+        }catch(NoSuchElementException | TimeOutException $e){
+            $flag = false;
+        }
     }
-
-    // Print the title of the results page
-    //echo $driver->getTitle();
-
     // Close the browser window
     $driver->quit();
     return $flag;

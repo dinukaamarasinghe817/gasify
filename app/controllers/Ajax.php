@@ -13,8 +13,14 @@
             }
         }
 
-        // public function ebill(){
-        //     $this->model('Admin')->gever();
-        // }
+        public function ebill($bill_no){
+            // $this->model('Admin')->gever();
+            if(verify_ebill($bill_no)){
+                echo "good";
+            }else{
+                echo "bad";
+            }
+            // echo getDistance("No 43, Lional Jayasinghe Mawatha, Godagama","No 43, Lional Jayasinghe Mawatha, Godagama");
+        }
     }
 ?>

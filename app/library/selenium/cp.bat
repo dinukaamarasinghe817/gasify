@@ -1,2 +1,2 @@
 @ECHO OFF
-java -jar selenium-server-4.8.3.jar
+java -jar selenium-server-standalone-3.5.3.jar

@@ -31,7 +31,7 @@
                         <p class="forgotpwd" ><a href="<?php echo BASEURL ;?>/signin/forgetpassword/reset" >Forgot password?</a><br></p>
                     </div>
                     <button type="submit" name="submit">Login</button><br>
-                    <p>Not Registered? <a href="<?php echo BASEURL;?>/signup/dealer">Create Account</a></p>
+                    <p>Not Registered? <a href="<?php echo BASEURL;?>/signup/user">Create Account</a></p>
                 </form>
             </div>
         </div>
