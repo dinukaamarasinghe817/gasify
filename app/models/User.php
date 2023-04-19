@@ -462,7 +462,7 @@ class User extends Model
         $row = mysqli_fetch_assoc($query2);
         $customer_id = $row['user_id'];
         $query3 = $this->insert('customer', ['customer_id'=>$customer_id,'city'=> $city, 'street'=> $street,'type'=>$type,'contact_no'=>$contact_no,'ebill_no'=>$ebill_no,'ebill_verification_state'=>'verified']);
-       // $query3;
+       
 
        //insert intial record into customer_quota table
         $query5 = $this->read('company');

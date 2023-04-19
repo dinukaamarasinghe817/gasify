@@ -158,6 +158,24 @@ a,button{
 }
 
 
+/* if all quotas inactive */
+.inactive_img img{
+    width: 150px;
+    height: 150px;
+}
+
+.inactive_img{
+    display: flex;
+    justify-content: center;
+    width: 1200px;
+    align-items: center;
+    margin-left: 30px;
+    padding: 100px 75px 100px 75px;
+    border: 2px solid var(--navmenu-orange-dark);
+    border-radius: 10px;
+
+}
+
 
 
  
