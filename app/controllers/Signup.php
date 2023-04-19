@@ -240,6 +240,12 @@
                     case '9':
                         $data['toast'] = ['type' => 'error', 'message' =>'Invalid image type'];
                         break;
+                    case '10':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Invalid ebill number'];
+                        break;
+                    case '11':
+                        $data['toast'] = ['type' => 'error', 'message' =>'Ebill number already exists'];
+                        break;
                 }
             }
             // load the view with error messages
