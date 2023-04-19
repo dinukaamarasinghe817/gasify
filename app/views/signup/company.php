@@ -7,13 +7,75 @@
     // }
     $header = new Header("login",$data);
 ?>
+<script>
+    function CompanySignUp(){
+        var idArr = ["companyname","fname","lname","email","password","confirmpassword","city","street"]
+        var isOk=true;
+        for (let index = 0; index < idArr.length; index++) {
+            if(idArr[index]=="city"){
+                if(document.getElementById(idArr[index]).value==-1){
+                    isOk=false;
+                    document.getElementById("addresserr").innerHTML="Enter address";
+                }else{
+                    document.getElementById("addresserr").innerHTML="";
+                }
+            }else if(idArr[index]=="password" || idArr[index]=="confirmpassword"){
+                if((document.getElementById("password").value.length==0 || document.getElementById("confirmpassword").value.length==0) ||(document.getElementById("password").value !=document.getElementById("confirmpassword").value) ){
+                    isOk=false;
+                    document.getElementById("passworderr").innerHTML="Check password";
+                }else{
+                    document.getElementById("passworderr").innerHTML="";
+                }
+
+            }else{
+                if(document.getElementById(idArr[index]).value.length==0){
+                    isOk=false;
+                    if(idArr[index]=="companyname"){
+                        document.getElementById("companynameerr").innerHTML="Enter company name";
+                    }else if(idArr[index]=="fname"){
+                        document.getElementById("fnameerr").innerHTML="Enter first name";
+                    }else if(idArr[index]=="lname"){
+                        document.getElementById("lnameerr").innerHTML="Enter last name";
+                    }else if(idArr[index]=="email"){
+                        document.getElementById("emailerr").innerHTML="Enter email";
+                    }else if(idArr[index]=="street"){
+                        document.getElementById("addresserr").innerHTML="Enter address";
+                    }
+                    
+                }else{
+                    if(idArr[index]=="companyname"){
+                        document.getElementById("companynameerr").innerHTML="";
+                    }else if(idArr[index]=="fname"){
+                        document.getElementById("fnameerr").innerHTML="";
+                    }else if(idArr[index]=="lname"){
+                        document.getElementById("lnameerr").innerHTML="";
+                    }else if(idArr[index]=="email"){
+                        document.getElementById("emailerr").innerHTML="";
+                    }else if(idArr[index]=="street"){
+                        document.getElementById("addresserr").innerHTML="";
+                    } 
+                }
+            }
+            //console.log(idArr[index]+"---->"+document.getElementById(idArr[index]).value)
+            //const element = idArr[index];
+            
+        }
+        if(isOk){
+            document.getElementById("companySignUp").submit();
+        }
+        /*if(document.getElementById("confirmPassword").value==document.getElementById("password").value){
+            
+        }*/
+    }
+
+</script>
     <div class="container">
         <div class="wrapper">
             <div class="logo">
                 <img src="<?php echo BASEURL; ?>/public/img/login.png" alt="company logo">
             </div>
             <div class="form" >
-                <form action="#" method="post" enctype="multipart/form-data" id="companySignUp" class="companySignUp">
+                <form action="<?php echo BASEURL;?>/signup/companySignUp" method="post" enctype="multipart/form-data" id="companySignUp" class="companySignUp">
                     <h1>Signup</h1>
                         <p></p>
                         <a>
@@ -28,21 +90,28 @@
                         <div class="info">
                             <label for="" class="part">Company Info</label>
                             <div class="address owner">
-                                <input name="Companyname" type="text" placeholder="Company name" required>
+                                <input name="Companyname" type="text" placeholder="Company name" id="companyname"required>
+                            </div>
+                            <div id="companynameerr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                            <div class="address password">
+                                <input name="fname" class="half" type="text" placeholder="First name" style="width:42.5%;margin-right:0px" id="fname"required><br>
+                                <input name="lname" class="half" type="text" placeholder="Last name" style="width:42.5%;margin-right:0px;margin-left:5%" id="lname" required><br>
                             </div>
                             <div class="address password">
-                                <input name="fname" class="half" type="text" placeholder="First name" style="width:42.5%;margin-right:0px" required><br>
-                                <input name="lname" class="half" type="text" placeholder="Last name" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
+                                <div id="fnameerr" style="width:42.5%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                                <div id="lnameerr" style="width:42.5%;margin-right:0px;margin-left:5%;text-align:center;color:red;font-size:smaller"></div>
                             </div>
-                            <input name="email" type="text" placeholder="Email address" required><br>
+                            <input name="email" type="email" placeholder="Email address" id="email" required><br>
+                            <div id="emailerr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
 
                             <div class="address password">
-                                <input name="password" class="half" type="password" placeholder="Password" style="width:42.5%;margin-right:0px" required><br>
-                                <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
+                                <input name="password" class="half" type="password" placeholder="Password" style="width:42.5%;margin-right:0px" id="password" required><br>
+                                <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" style="width:42.5%;margin-right:0px;margin-left:5%" id="confirmpassword" required><br>
                             </div>
+                            <div id="passworderr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
                             <div class="address">
                                     <select id="city" name="city" class="half" data-dropup-auto="false" style="width:42.5%;margin-right:0px">
-                                        <option value="-1" selected disabled hidden>Select your city</option>
+                                        <option  value="-1" selected disabled hidden>Select your city</option>
                                         <?php 
                                             // include_once '../../model/functions/functions.php';
                                             foreach (CITIES as $city){
@@ -50,8 +119,9 @@
                                             }
                                         ?>
                                     </select>
-                                <input name="street" class="half" type="text" placeholder="Street" style="width:42.5%;margin-right:0px;margin-left:5%" required>
+                                <input name="street" id="street" class="half" type="text" placeholder="Street" style="width:42.5%;margin-right:0px;margin-left:5%" required>
                             </div>
+                            <div id="addresserr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
                             <label for="image">
                                 <svg width="20" height="20" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M29.0299 2.44482H5.69661C3.85567 2.44482 2.36328 3.93721 2.36328 5.77816V29.1115C2.36328 30.9524 3.85567 32.4448 5.69661 32.4448H29.0299C30.8709 32.4448 32.3633 30.9524 32.3633 29.1115V5.77816C32.3633 3.93721 30.8709 2.44482 29.0299 2.44482Z" stroke="black"  stroke-linecap="round" stroke-linejoin="round"/>
@@ -64,7 +134,7 @@
                             
                         </div>
                     </div>
-                    <input type="submit" name="Sign Up" value="Sign Up" class="submit" onClick="CompanySignUp()" style="background-color: var(--button-blue);font-family: 'Poppins', sans-serif;font-size:1.1em;color:white;cursor:pointer"><br>
+                    <input type="button" name="Sign Up" value="Sign Up" class="submit" onClick="CompanySignUp()" style="background-color: var(--button-blue);font-family: 'Poppins', sans-serif;font-size:1.1em;color:white;cursor:pointer"><br>
                     <p>Already Registered? <a href="login.php" style="font-family: 'Poppins', sans-serif">Login now</a></p>
                 </form>
             </div>

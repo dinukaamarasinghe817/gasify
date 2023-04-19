@@ -1189,6 +1189,18 @@ class User extends Model
         }
         return $data;
     }
+    public function CompanySignup($data){
+        $hashed_pwd=password_hash($data['password'],PASSWORD_DEFAULT);
+        $email=$data['email'];
+        $token = md5(rand());
+        $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$data['fname'],'last_name'=>$data['lname'],'type'=>'company','verification_code'=>$token,'verification_state'=>'pending','date_joined'=>date('Y-m-d')]);
+        $query2 = $this->read('users', "email = '$email'");
+        $row = mysqli_fetch_assoc($query2);
+        $company_id = $row['user_id'];
+        $query3 = $this->insert('company', ['company_id'=>$company_id,'name'=> $data['companyname'], 'city'=> $data['city'],'street'=>$data['street']]);
+    
+    
+    }
 
 }
 ?>

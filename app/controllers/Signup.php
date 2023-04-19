@@ -290,6 +290,31 @@
         public function deliveryperson(){
             $this->view('signup/deliveryperson');
         }
+        public function companySignUp(){
+            $data = [];
+            $data['companyname']=$_POST['Companyname'];
+            $data['fname'] = $_POST['fname']; 
+            $data['lname'] = $_POST['lname']; 
+            $data['email'] = $_POST['email'];
+            $data['city'] = $_POST['city'];
+            $data['street'] = $_POST['street'];
+            $data['password'] = $_POST['password'];
+            $image_name = '';
+            $tmp_name = '';
+            /*if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                $image_name = $_FILES['image']['name'];
+                $tmp_name = $_FILES['image']['tmp_name'];
+            }*/
+            
+            // password hashing
+            $data = $this->model("User")->CompanySignup($data);
+            /*if(isset($data['error'])){
+                $error = $data['error'];
+                header("Location: ".BASEURL."/signup/customer/$error");
+            }else{
+                header("Location: ".BASEURL."/signin/user");
+            }*/
+        }
 
         public function distributor($error=null) {
 
