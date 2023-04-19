@@ -46,7 +46,7 @@
 
                             <div class="address owner">
                                 <input name="fname" class="half" type="text" placeholder="First name" required>
-                                <input name="lname" class="half" type="text" placeholder="First name" required><br>
+                                <input name="lname" class="half" type="text" placeholder="Last name" required><br>
                             </div>
 
                             <input name="email" type="text" placeholder="Email address" required><br>
@@ -86,15 +86,18 @@
                                 <div class="capacity">
                                     <?php 
                                         // include_once "../../model/distributor/products.php";
-                                        $result = $data['productresult'];
-                                        while($product = mysqli_fetch_assoc($result)) {
-                                            $productid = $product['product_id'];
-                                            $productname = $product['name'];
-                                            echo '<div class="span"> 
-                                                    <p>'.$productname.':</p>
-                                                    <input class="half" name="'.$productid.'" type= "number" min="0" placeholder="store capacity">
-                                                </div>';
-                                        }
+                                        // $result = $data['productresult'];
+                                        // while($product = mysqli_fetch_assoc($result)) {
+                                        //     $productid = $product['product_id'];
+                                        //     $productname = $product['name'];
+                                        //     echo '<div class="span"> 
+                                        //             <p>'.$productname.':</p>
+                                        //             <input class="half" name="'.$productid.'" type= "number" min="0" placeholder="store capacity">
+                                        //         </div>';
+                                        // }
+                                        echo 'product name :
+                                        <input class="half" placeholder="store capacity">
+                                        '
                                     ?>
                                 </div>
                             <!-- </div> -->

@@ -1190,5 +1190,133 @@ class User extends Model
         return $data;
     }
 
+    
+    public function distributorSignup($first_name,$last_name,$email,
+        $city,$street,$contact,$password,$confirmpassword,$image_name,$tmp_name,
+        $capacity,$isvalidqty){
+        $data = [];
+        $hashed_pwd = password_hash($password,PASSWORD_DEFAULT);
+        $query2 = $this->read('users', "email = '$email'");
+        if(mysqli_num_rows($query2) > 0){
+            $row = mysqli_fetch_assoc($query2);
+            $distributor_id = $row['user_id'];
+        }else{
+            $distributor_id = NULL;
+        }
+        
+        // check all fields are filled or not
+        if(isEmpty(array($first_name,$last_name,$email,
+        $city,$street,$contact,$password,$confirmpassword,$image_name,$tmp_name,
+        $capacity,$isvalidqty))){
+            $data['error'] = '1';
+        }
+
+        //check validity of email
+        else if(isNotValidEmail($email)){
+            $data['error'] = '2';
+        }
+
+        //check if user already exists
+        else if($distributor_id != NULL){
+            $data['error'] = "3";
+        }
+        
+        //check if two passwords matching
+        else if(isNotConfirmedpwd($password, $confirmpassword)){
+            $data['error'] = "4";
+        }
+        
+        //check the password strength is enough
+        else if(isPasswordNotStrength($password)){
+            $data['error'] = "5";
+        }
+        
+        //check if distributor assigned
+        else if($city == -1){
+            $data['error'] = "6";
+        }
+        
+        else if(!$isvalidqty){
+            $data['error'] = "7";
+        }
+        
+        //check if distributor assigned
+        // else if($distributor_id == -1){
+        //     $data['error'] = "8";
+        // }
+
+        if(!empty($image_name) && !empty($tmp_name)){
+            // image type validity jpg png jpeg
+            if(isNotValidImageFormat($image_name)){
+                $data['error'] = "10";
+            }
+        }
+
+        //redirect if any error occured
+        if(isset($data['error'])){
+            return $data;
+        }
+        $token = md5(rand());
+        //add the distributor to database without image
+        $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$first_name,'last_name'=>$last_name,'type'=>'distributor','verification_code'=>$token,'verification_state'=>'pending','date_joined'=>date('Y-m-d')]);
+        //get distributor_id of newly inserted distributor
+        $query2 = $this->read('users', "email = '$email'");
+        $row = mysqli_fetch_assoc($query2);
+        $distributor_id = $row['user_id'];
+        $query1 = $this->insert('distributor', ['distributor_id'=>$distributor_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=>2, 'contact_no'=>$contact_no]);
+        $query3;
+
+        // set the capacity of the dealer
+        for($i = 0; $i<count($capacity); $i++){
+            $product = $capacity[$i][0];
+            $qty = $capacity[$i][1];
+            $query3 = $this->insert('distributor_capacity',['distributor_id'=> $distributor_id,'product_id'=>$product,'capacity'=>$qty]);
+        }
+
+        // sending account verification codes
+        $reciepName = $first_name.' '.$last_name;
+        $from = 'admin@gasify.com';
+        $to = $email;
+        $subject = "Gasify: Verify your account";
+        $message = "Please use below link to verify your account.";
+        $link = BASEURL."/signup/verifyemail/$dealer_id/$token";
+        //$link = BASEURL."/controller/method/params";
+        // sendResetLink($name, $row['email'], $token);
+        //Create an instance; passing `true` enables exceptions
+        $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
+        $data = $mail->send();
+
+        // optional image uploaded
+        if(!empty($image_name) && !empty($tmp_name)){
+
+            $image = getImageRename($image_name,$tmp_name);
+            $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+            // echo $path;
+            if(move_uploaded_file($tmp_name, $path.($image))){
+                $query4 = $this->update('distributor', ['image'=>$image],"distributor_id = $distributor_id");
+            }
+        }
+
+        // send notifications to setup stripe public and restricted keys
+        date_default_timezone_set("Asia/Colombo");
+        $time = date('H:i');
+        $date = date('Y-m-d');
+        $message = "Hi $first_name $last_name, Before any further processing please setup your stripe public and restricted
+        keys on your <strong>Profile -> Bank Details</strong> section.";
+        // sending notification
+        $this->insert('notifications',['user_id' => $distributor_id,'date'=> $date,'time'=> $time,'type' => 'Setup Stripe details','message' => $message,'state' => 'delivered']);
+        
+        // if successfully registred and set capacity
+        if($query1 && $query3){
+            // $_SESSION['user_id'] = $dealer_id;
+            // $_SESSION['role'] = 'dealer';
+            // $data['error'] = "success";
+        }else{
+            $data['error'] = "9";
+        }
+        return $data;
+
+    }
+
 }
 ?>

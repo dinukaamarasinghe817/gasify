@@ -633,7 +633,15 @@ class Distributor extends Model
                 return $purchase_orders;
                 break;
         }
-    }   
+    } 
+    
+    // signup
+    public function getProducts($company_id){
+        $result = $this->read('product', 'company_id = '.$company_id);
+        return $result;
+    }
+
+
     
 }
 
