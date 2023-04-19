@@ -71,7 +71,7 @@ $details = $details['details'];
     
     $subtotal = $product['unit_price'] * $product['quantity'];
     // $subtotal = number_format($subtotal).'.00';
-    $pdf->Cell(50,5,"{$subtotal}",0,0,'R');
+    $pdf->Cell(50,5,"{$subtotal}.00",0,0,'R');
     $pdf->Ln();
     $total += $subtotal;
 }
@@ -89,7 +89,7 @@ $pdf->Cell(40,5,'Total Amount',0,0,'C');
 $pdf->Cell(40,5,' ',0,0,'L');
 $pdf->Cell(40,5,' ',0,0,'L');
 // $total = number_format($data['total']).'.00';
-$pdf->Cell(30,5,"{$total}",0,0,'R');
+$pdf->Cell(30,5,"{$total}.00",0,0,'R');
 $pdf->Ln();
 
 $x = $pdf->GetX();

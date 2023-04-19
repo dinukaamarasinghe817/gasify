@@ -167,14 +167,14 @@ class Customer extends Model{
             $reviews = array();
 
             //query for get details about selected reservation
-            $result1 = $this->Query("SELECT r.order_id,r.order_state,r.place_date,r.place_time,r.collecting_method,d.name as dealer_name, r.dealer_id,r.delivery_id,
-            r.cancel_date,r.cancel_time,r.payment_method,r.deliver_date,r.deliver_time,r.bank,r.acc_no,r.refund_date,r.refund_time,r.refund_verification
+            $result1 = $this->Query("SELECT r.order_id,r.order_state,r.place_date,r.place_time,r.collecting_method, r.dealer_id,r.delivery_id,
+            r.cancel_date,r.cancel_time,r.payment_method,r.deliver_date,r.deliver_time,r.bank,r.acc_no,r.refund_date,r.refund_time,r.refund_verification,r.min_distance,r.max_distance,d.name as dealer_name,d.city as dealer_city,d.street as dealer_street
             FROM reservation r
             INNER JOIN dealer d ON r.dealer_id = d.dealer_id
             WHERE r.customer_id = '{$customer_id}' and r.order_id = '{$order_id}'");
 
             if(mysqli_num_rows($result1) > 0){
-                while($row1=mysqli_fetch_assoc($result1)){
+                    $row1=mysqli_fetch_assoc($result1);
                     //get products details for selected order
                     $result2 = $this->Query("SELECT p.name as product_name, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price,p.image as product_image,p.weight as product_weight 
                     FROM reservation_include r 
@@ -183,15 +183,40 @@ class Customer extends Model{
                     WHERE r.order_id = '{$order_id}'");
 
                     $total_amount = 0;
+                    $sum_of_weights = 0;
                     $products = array();
                     while($row2 = mysqli_fetch_assoc($result2)){
                         $quantity = $row2['quantity'];
                         $unit_price = $row2['unit_price'];
+                        $item_weight = $row2['product_weight'];
                         $amount = $quantity * $unit_price;
                         $total_amount = $total_amount + $amount;
+                        $product_total_weight = $quantity * $item_weight;
+                        $sum_of_weights = $sum_of_weights + $product_total_weight;
                         array_push($products,$row2);
                     
                         
+                    }
+
+                    //calculate delivery charges
+                    if($row1['collecting_method'] == "Pickup"){
+                        $delivery_charge = NULL;
+                    }else{
+                        $order_min_distance = $row1['min_distance'];  //get minimum and maximum distance in reservation table
+                        $order_max_distance = $row1['max_distance'];
+                    
+                        //get delivery charges details from delivery_charge table
+                        $result6 = $this->Query("SELECT * FROM delivery_charge");
+                        while($row6 = mysqli_fetch_assoc($result6)){
+                            $min_distance = $row6['min_distance']; 
+                            $max_distance = $row6['max_distance'];
+                            $charge_per_kilo = $row6['charge_per_kg'];
+
+                            //check customer distance range
+                            if($order_min_distance==$min_distance && $order_max_distance == $max_distance){  
+                                $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
+                            }
+                        }
                     }
 
                     //get reviews for selected order
@@ -213,8 +238,8 @@ class Customer extends Model{
                     }
                 
                 
-                array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews,'delivery'=>$delivery]);
-            }
+                    array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews,'delivery'=>$delivery,'delivery_charge'=>$delivery_charge]);
+                
         
         }
 
@@ -460,13 +485,9 @@ class Customer extends Model{
                     $row5 = mysqli_fetch_assoc($query5);
                     $remaining_quota = $row5['remaining_amount'];
 
-
-
-
-
                     $allproducts = array();
                 
-                    //check whether there is any selected produce on that company
+                    //check whether there is any selected product on that company
                     if(isset($_POST[$company_id])){
                         $selected_pid = $_POST[$company_id];
                     }else{
@@ -478,7 +499,7 @@ class Customer extends Model{
                             $row2 = mysqli_fetch_assoc($query2);
                             $selected_pid = $row2['product_id'];
                         }else{
-                            // means no produc selected and no product to select at random
+                            // means no product selected and no product to select at random
                             //think
                         }
                     }
@@ -506,12 +527,9 @@ class Customer extends Model{
                     $element = ['company_id'=>$company_id, 'name'=>$row['name'], 'logo'=>$row['logo'],'selected_pid'=>$selected_pid, 'total_cyl'=>$total_cyl, 'remaining_cyl'=>$remaining_cyl,'all_products'=>$allproducts,'quota_state'=>'ON'];
                     array_push($companies,$element);
                     
-                }else{
-                    // the quota is not set. then you don't want to display this in customer quota section
-                    $element = ['company_id'=>$company_id, 'name'=>$row['name'], 'logo'=>$row['logo'],'quota_state'=>'OFF'];
-                    array_push($companies,$element);
-                    
-                }
+                
+                 }
+             
             }
 
                
@@ -845,12 +863,20 @@ class Customer extends Model{
 
     /*=======================================select delivery method========================================================================= */
     //insert delivery distance ranges to reservation table and return delivery charge  
-    function insertdelivery_street($order_id,$new_street = null,$distance){
-        // $customer_id = $_SESSION['user_id'];
-        // $dealer_id = $_SESSION['dealer_id'];
-        // $order_state = 'Pending';
-        // $place_time = $_SESSION['place_time'];
-        // $place_date = $_SESSION['place_date'];
+    function insertdelivery_street($order_id,$customer_street,$customer_city){
+       
+        //get dealer address as origin of delivery
+        $dealer_id = $_SESSION['dealer_id'];
+        $result1 = $this->Query("SELECT * FROM dealer WHERE dealer_id = $dealer_id");
+        $row1 = mysqli_fetch_assoc($result1);
+        $dealer_city = $row1['city'];
+        $dealer_street = $row1['street'];
+        $dealer_address = $dealer_street .$dealer_city;
+
+        $customer_address = $customer_street .$customer_city;
+        $distance = getDistance($dealer_address,$customer_address);  //take distance between customer and dealer address using google maps
+       
+
         $order_products = $_SESSION['order_products'];
 
         $sum_of_weights = 0;
@@ -867,12 +893,6 @@ class Customer extends Model{
             $sum_of_weights = $sum_of_weights + $product_total_weight;  //calculate sum of selected products weights
 
         }
-
-        //get order id from reservation table
-        // $result1 = $this->Query("SELECT order_id FROM reservation 
-        // WHERE customer_id = '$customer_id' AND order_state = '$order_state' AND place_date = '$place_date' AND place_time = '$place_time' AND dealer_id = '$dealer_id' ");
-        // $row = mysqli_fetch_assoc($result1);
-        // $order_id =  $row['order_id'] ;
         
         //get delivery charges details from delivery_charge table
         $result2 = $this->Query("SELECT * FROM delivery_charge");
@@ -882,7 +902,7 @@ class Customer extends Model{
             $charge_per_kilo = $row2['charge_per_kg'];
 
             //check customer distance range
-            if($distance>=$min_distance && $distance<=$max_distance){   /*******************check this ****************** */
+            if($distance>=$min_distance && $distance<=$max_distance){  
                 $order_min_distance = $min_distance;
                 $order_max_distance = $max_distance;
                 

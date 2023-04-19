@@ -60,10 +60,10 @@ $user_id = $_SESSION['user_id'];
                         <table class="styled-table">
                         <thead>
                             <tr>
-                                <th>Distributed Date</th>
                                 <th>Distribution ID</th>
                                 <th>Dealer ID</th>
-                                <th>Total Amount</th> 
+                                <th>Distributed Date</th>
+                                <th>Distributed Time</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -74,15 +74,16 @@ $user_id = $_SESSION['user_id'];
                                 $capacities = $record['capacities'];
 
                                     $date = $row1['place_date'];
+                                    $time = $row1['place_time'];
                                     $distribution_num = $row1['po_id'];
                                     $dealer_id = $row1['dealer_id'];
 
                                 $output .= '
                                     <tr>
-                                        <td>'. $date.'</td>
                                         <td>'.$distribution_num.'</td>
                                         <td>'.$dealer_id.'</td>
-                                        <td>10 000.00</td>
+                                        <td>'. $date.'</td>
+                                        <td>'. $time.'</td>
                                         <td>
                                             <button class="btn" onclick = "document.location.href=\''.BASEURL.'/reports/distributor_pdf/'.$distribution_num.'\'">Generate PDF</button>
                                         </td>                                                                      
