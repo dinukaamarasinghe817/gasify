@@ -377,7 +377,7 @@
              // capacity should be taken as product breakdown
             $capacity = array();
             $isvalidqty = false;
-            $result = $this->model("Distributor")->getProducts($company_id);
+            $result = $this->model("Distributor")->productdetails();
             $records = mysqli_num_rows($result);
             for($i = 0; $i < $records; $i++){
                 $product = mysqli_fetch_assoc($result); // this is a query
@@ -388,6 +388,7 @@
                 }
                 $capacity[$i] = array($product['product_id'],$qty);
             }
+
 
             // password hashing
             $data = $this->model("User")->distributorSignup($first_name,$last_name,$email,

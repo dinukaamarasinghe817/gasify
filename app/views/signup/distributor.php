@@ -87,17 +87,16 @@
                                     <?php 
                                         // include_once "../../model/distributor/products.php";
                                         // $result = $data['productresult'];
-                                        // while($product = mysqli_fetch_assoc($result)) {
-                                        //     $productid = $product['product_id'];
-                                        //     $productname = $product['name'];
-                                        //     echo '<div class="span"> 
-                                        //             <p>'.$productname.':</p>
-                                        //             <input class="half" name="'.$productid.'" type= "number" min="0" placeholder="store capacity">
-                                        //         </div>';
-                                        // }
-                                        echo 'product name :
-                                        <input class="half" placeholder="store capacity">
-                                        '
+                                        $result = $data['productdetails'];
+                                        while($product = mysqli_fetch_assoc($result)) {
+                                            $productid = $product['product_id'];
+                                            $productname = $product['name'];
+                                            echo '<div class="span"> 
+                                                    <p>'.$productname.':</p>
+                                                    <input class="half" name="'.$productid.'" type= "number" min="0" placeholder="store capacity">
+                                                </div>';
+                                        }
+                                       
                                     ?>
                                 </div>
                             <!-- </div> -->
