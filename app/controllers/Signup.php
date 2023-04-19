@@ -357,10 +357,50 @@
         }
 
         public function distributorsignup() {
+            // take post inputs
+            $daa = [];
 
-            $data['productresult'] = $this->model("Distributor")->productdetails();
+            $first_name = $_POST['fname'];
+            $last_name = $_POST['lname'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $confirmpassword = $_POST['confirmpassword'];
+            $contact = $_POST['contact'];
+            if(isset($_POST['city']) ? $city = $_POST['city'] : $city = -1);
+            $street = $_POST['street'];
+            $image_name = '';$tmp_name = '';
+            if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                $image_name = $_FILES['image']['name'];
+                $tmp_name = $_FILES['image']['tmp_name'];
+            }
 
-            $this->view('signup/distributor', $data);
+             // capacity should be taken as product breakdown
+            $capacity = array();
+            $isvalidqty = false;
+            $result = $this->model("Distributor")->getProducts($company_id);
+            $records = mysqli_num_rows($result);
+            for($i = 0; $i < $records; $i++){
+                $product = mysqli_fetch_assoc($result); // this is a query
+                $product_id = $product['product_id'];
+                $qty = $_POST["$product_id"];
+                if($qty != 0){
+                    $isvalidqty = true;
+                }
+                $capacity[$i] = array($product['product_id'],$qty);
+            }
+
+            // password hashing
+            $data = $this->model("User")->distributorSignup($first_name,$last_name,$email,
+            $city,$street,$contact,$password,$confirmpassword,$image_name,$tmp_name,
+            $capacity,$isvalidqty);
+
+
+            if(isset($data['error'])) {
+                $error = $data['error'];
+                header("Location: ".BASEURL."/signup/distributor/$error");
+            }else{
+                header("Location: ".BASEURL."/signin/user");
+            }
 
         }
 
