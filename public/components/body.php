@@ -1792,8 +1792,8 @@ class Body{
         </section>
         </section>';
     }
-    function companyAnalysis($data){
-        echo 
+    function companyAnalysis($data){    
+        echo
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#d8ca30;color:white">Analysis</div></a>
@@ -1802,32 +1802,123 @@ class Body{
                 <div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
                 <form action="'. BASEURL.'/Compny/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
                     <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
-                        if(isset($data['distNames'])){
+                        if(isset($data['distNames']) && isset($data['currentdistributor'])){
+                            $result=$data['distNames'];
+                            echo'<select name="distNames" id="distNames" onchange="addYearsToSelectBoxes(this)">
+                            <option value="" disabled >Select distributor</option>';
+                            $tag='';
+                            foreach ($result as $row) {
+                                if($row['id']==$data['currentdistributor']){
+                                    $tag.='<option value="'.$row['id'].'"selected>'.$row['names'].'</option>';
+                                }else{
+                                    $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
+                                }
+                            }
+                            $tag.='</select></div>';
+                            echo $tag;
+                        }else if(isset($data['distNames'])){
                             $result=$data['distNames'];
                             echo'<select name="distNames" id="distNames" onchange="addYearsToSelectBoxes(this)">
                             <option value="" disabled selected>Select distributor</option>';
                             $tag='';
                             foreach ($result as $row) {
                                 $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
+                                
                             }
                             $tag.='</select></div>';
                             echo $tag;
                         }
                         echo'<div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
-                                From <select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
-                                    <option value="" disabled selected>Year</option>
-                                </select>
-                                <select name="monthFrom" id="monthFrom">
-                                    <option value="" disabled selected>Month</option>
-                                </select>
+                                From<select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">';
+                                    if(isset($data['joineddate'])){
+                                        echo'<option value="" disabled >Year</option>';
+                                        $tag='';
+                                        for ($i=intval($data['joineddate'][0]); $i < intval($data['currentdate'][0])+1; $i++) { 
+                                            if(intval($data['fromyearandmonth'][0])==$i){
+                                                $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                            }else{
+                                                $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                            }
+                                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        $tag.='</select>';
+                                        echo $tag;
+
+                                    }else{
+                                        echo'<option value="" disabled selected>Year</option></select>';
+                                    }
+                                echo'<select name="monthFrom" id="monthFrom">';
+                                if(isset($data['currentdate'])){
+                                    echo'<option value="" disabled >Month</option>';
+                                    $tag='';
+                                    $to=0;
+                                    if(intval($data['fromyearandmonth'][0])==intval($data['currentdate'][0])){
+                                        $to=intval($data['currentdate'][1])+1;
+                                    }else{
+                                        $to=13;
+                                    }
+                                    for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                                        if($i==$data['fromyearandmonth'][1]){
+                                            $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                        }else{
+                                            $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                    }
+                                    $tag.='</select>';
+                                    echo $tag;
+
+                                }else{
+                                    echo'<option value="" disabled selected>Month</option>
+                                    </select>';
+                                }
+                            echo'
                             </div>
                             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
-                                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
-                                    <option value="" disabled selected>Year</option>
-                                </select>
-                                <select name="monthTo" id="monthTo">
-                                    <option value="" disabled selected>Month</option>
-                                </select>
+                                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">';
+                                if(isset($data['toyearandmonth'])){
+                                    echo'<option value="" disabled >Year</option>';
+                                    $tag='';
+                                        for ($i=intval($data['joineddate'][0]); $i < intval($data['currentdate'][0])+1; $i++) { 
+                                            if(intval($data['toyearandmonth'][0])==$i){
+                                                $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                            }else{
+                                                $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                            }
+                                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        $tag.='</select>';
+                                        echo $tag;
+
+                                    }else{
+                                        echo'<option value="" disabled selected>Year</option></select>';
+                                    }
+                                
+                                echo'
+                                <select name="monthTo" id="monthTo">';
+                                    if(isset($data['currentdate'])){
+                                        echo'<option value="" disabled >Month</option>';
+                                        $tag='';
+                                        $to=0;
+                                        if(intval($data['toyearandmonth'][0])==intval($data['currentdate'][0])){
+                                            $to=intval($data['currentdate'][1])+1;
+                                        }else{
+                                            $to=13;
+                                        }
+                                        for ($i=(intval($data['joineddate'][0])==intval($data['toyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                                            if($i==$data['toyearandmonth'][1]){
+                                                $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                            }else{
+                                                $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                            }
+                                        }
+                                        $tag.='</select>';
+                                        echo $tag;
+
+                                    }else{
+                                        echo'<option value="" disabled selected>Month</option>
+                                        </select>';
+                                    }
+                                echo'</select>
                             </div>
                             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
                                 <input type="submit" name="sub" value="submit">
@@ -1889,39 +1980,129 @@ class Body{
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
                 <form action="'. BASEURL.'/Compny/companyReports" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
-                    <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
-                        if(isset($data['distNames'])){
-                            $result=$data['distNames'];
-                            echo'<select name="distNames" id="distNames" onchange="addYearsToSelectBoxes(this)">
-                            <option value="" disabled selected>Select distributor</option>';
-                            $tag='';
-                            foreach ($result as $row) {
-                                $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
-                            }
-                            $tag.='</select></div>';
-                            echo $tag;
-                            
+                <div class="selectBox" style="width:20%;height:100%;background-color:white;margin-right:2%;margin-left:5%">';
+                if(isset($data['distNames']) && isset($data['currentdistributor'])){
+                    $result=$data['distNames'];
+                    echo'<select name="distNames" id="distNames" onchange="addYearsToSelectBoxes(this)">
+                    <option value="" disabled >Select distributor</option>';
+                    $tag='';
+                    foreach ($result as $row) {
+                        if($row['id']==$data['currentdistributor']){
+                            $tag.='<option value="'.$row['id'].'"selected>'.$row['names'].'</option>';
+                        }else{
+                            $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
                         }
-                        echo'<div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
-                                From <select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
-                                    <option value="" disabled selected>Year</option>
-                                </select>
-                                <select name="monthFrom" id="monthFrom">
-                                    <option value="" disabled selected>Month</option>
-                                </select>
-                            </div>
-                            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
-                                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">
-                                    <option value="" disabled selected>Year</option>
-                                </select>
-                                <select name="monthTo" id="monthTo">
-                                    <option value="" disabled selected>Month</option>
-                                </select>
-                            </div>
-                            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
-                                <input type="submit" name="sub" value="submit">
-                            </div></form>';                                     
-                    //echo'</div>';
+                    }
+                    $tag.='</select></div>';
+                    echo $tag;
+                }else if(isset($data['distNames'])){
+                    $result=$data['distNames'];
+                    echo'<select name="distNames" id="distNames" onchange="addYearsToSelectBoxes(this)">
+                    <option value="" disabled selected>Select distributor</option>';
+                    $tag='';
+                    foreach ($result as $row) {
+                        $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
+                        
+                    }
+                    $tag.='</select></div>';
+                    echo $tag;
+                }
+                echo'<div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                        From<select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">';
+                            if(isset($data['joineddate'])){
+                                echo'<option value="" disabled >Year</option>';
+                                $tag='';
+                                for ($i=intval($data['joineddate'][0]); $i < intval($data['currentdate'][0])+1; $i++) { 
+                                    if(intval($data['fromyearandmonth'][0])==$i){
+                                        $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                    }else{
+                                        $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                    }
+                                    //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                                }
+                                $tag.='</select>';
+                                echo $tag;
+
+                            }else{
+                                echo'<option value="" disabled selected>Year</option></select>';
+                            }
+                        echo'<select name="monthFrom" id="monthFrom">';
+                        if(isset($data['currentdate'])){
+                            echo'<option value="" disabled >Month</option>';
+                            $tag='';
+                            $to=0;
+                            if(intval($data['fromyearandmonth'][0])==intval($data['currentdate'][0])){
+                                $to=intval($data['currentdate'][1])+1;
+                            }else{
+                                $to=13;
+                            }
+                            for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                                if($i==$data['fromyearandmonth'][1]){
+                                    $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                }else{
+                                    $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                }
+                            }
+                            $tag.='</select>';
+                            echo $tag;
+
+                        }else{
+                            echo'<option value="" disabled selected>Month</option>
+                            </select>';
+                        }
+                    echo'
+                    </div>
+                    <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                        To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this)">';
+                        if(isset($data['toyearandmonth'])){
+                            echo'<option value="" disabled >Year</option>';
+                            $tag='';
+                                for ($i=intval($data['joineddate'][0]); $i < intval($data['currentdate'][0])+1; $i++) { 
+                                    if(intval($data['toyearandmonth'][0])==$i){
+                                        $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                    }else{
+                                        $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                    }
+                                    //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                                }
+                                $tag.='</select>';
+                                echo $tag;
+
+                            }else{
+                                echo'<option value="" disabled selected>Year</option></select>';
+                            }
+                        
+                        echo'
+                        <select name="monthTo" id="monthTo">';
+                            if(isset($data['currentdate'])){
+                                echo'<option value="" disabled >Month</option>';
+                                $tag='';
+                                $to=0;
+                                if(intval($data['toyearandmonth'][0])==intval($data['currentdate'][0])){
+                                    $to=intval($data['currentdate'][1])+1;
+                                }else{
+                                    $to=13;
+                                }
+                                for ($i=(intval($data['joineddate'][0])==intval($data['toyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                                    if($i==$data['toyearandmonth'][1]){
+                                        $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                                    }else{
+                                        $tag.='<option value="'.$i.'">'.$i.'</option>';
+                                    }
+                                }
+                                $tag.='</select>';
+                                echo $tag;
+
+                            }else{
+                                echo'<option value="" disabled selected>Month</option>
+                                </select>';
+                            }
+                        echo'</select>
+                    </div>
+                    <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
+                        <input type="submit" name="sub" value="submit">
+                    </div></form>';                                     
+            //echo'</div>';
                     echo'
                 </div>
             <table class="styled-table">
@@ -1953,7 +2134,7 @@ class Body{
             echo '</table>';
             echo'</div>'; 
             echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
-            echo'<div style="background-color:dodgerblue;height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport('.json_encode($data['distributorName']).')">';
+            echo'<div style="background-color:dodgerblue;height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport(this)">';
             echo'Generate PDF</div>';
             
             echo'</div>';

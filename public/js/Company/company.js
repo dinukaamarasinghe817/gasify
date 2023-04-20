@@ -210,6 +210,8 @@ function addMonthsToSelectBoxes(selectObject) {
         monthBox = "monthTo";
     }
     var selectedYear = document.getElementById(yearSelectName).value;
+    var currentYear = new Date().getFullYear();
+    var currentMonth = new Date().getMonth();
     var formData = new FormData();
     formData.append("ID", document.getElementById("distNames").value);
     var xmlhttp = new XMLHttpRequest();
@@ -237,6 +239,15 @@ function addMonthsToSelectBoxes(selectObject) {
                     selectMonth.add(option);
                     //yearTo.add(option);
                 }
+            } else if (currentYear == selectedYear) {
+                for (i = 1; i <= currentMonth + 1; i += 1) {
+                    console.log("hello");
+                    option = document.createElement('option');
+                    option.value = i;
+                    option.text = i;
+                    selectMonth.add(option);
+                    //yearTo.add(option);
+                }
             } else {
                 for (i = 1; i <= 12; i += 1) {
                     console.log("hello");
@@ -246,6 +257,7 @@ function addMonthsToSelectBoxes(selectObject) {
                     selectMonth.add(option);
                     //yearTo.add(option);
                 }
+
             }
 
 
