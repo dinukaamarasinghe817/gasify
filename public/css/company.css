@@ -1496,6 +1496,20 @@ input[type="text"]::placeholder{
   .slider.round:before {
     border-radius: 50%;
   }
+  .dealerAddButton{
+    margin-left:83%;
+    width:15%;
+    height:80%;
+    background-color:var(--button-blue);
+    border-radius:40px;
+    display:flex;
+    align-items:center;
+    align-content:center;
+    cursor:pointer
+  }
+  .dealerAddButton:hover{
+    background-color: var(--button-blue-hover);
+  }
 
 /*=========================================================================================================*/
 
