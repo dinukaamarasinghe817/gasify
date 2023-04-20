@@ -1035,12 +1035,19 @@ class Body{
     }
     function companyDealers($data){
         echo 
-        '<section class="body-content">
+        '
+        <script>
+            function dealerSignup(){
+                location.href = \'http://localhost/mvc/signup/dealer\';
+            }
+        </script>
+        
+        <section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Compny/dealer" style="width:97%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Dealers</div></a>
             </div>
             <div style="width:97%;height:10%;display:flex;align-items:center;align-content:center;border-left-style:solid;border-right-style:solid;box-sizing:border-box;border-color:var(--navmenu-orange-dark);">
-                <div class="dealerAddButton" style="">
+                <div class="dealerAddButton" onClick="dealerSignup()">
                     <div style="color:white;width:40%;display:flex;align-items:center;align-content:center;justify-content:center;font-size:2em">+</div> 
                     <div style="color:white;font-size:1.5em">Add</div>   
                 </div>

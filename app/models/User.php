@@ -1198,6 +1198,7 @@ class User extends Model
         $row = mysqli_fetch_assoc($query2);
         $company_id = $row['user_id'];
         $query3 = $this->insert('company', ['company_id'=>$company_id,'name'=> $data['companyname'], 'city'=> $data['city'],'street'=>$data['street']]);
+        //$query4 = 
     
     
     }
