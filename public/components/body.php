@@ -1040,7 +1040,7 @@ class Body{
             <a href="../Compny/dealer" style="width:97%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()" style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Dealers</div></a>
             </div>
             <div style="width:97%;height:10%;display:flex;align-items:center;align-content:center;border-left-style:solid;border-right-style:solid;box-sizing:border-box;border-color:var(--navmenu-orange-dark);">
-                <div style="margin-left:5%;width:15%;height:80%;background-color:dodgerblue;border-radius:40px;display:flex;align-items:center;align-content:center">
+                <div class="dealerAddButton" style="">
                     <div style="color:white;width:40%;display:flex;align-items:center;align-content:center;justify-content:center;font-size:2em">+</div> 
                     <div style="color:white;font-size:1.5em">Add</div>   
                 </div>
@@ -1841,20 +1841,27 @@ class Body{
                             
                         echo'</div>
                         <div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                            $chart_3['vector']=$data['lineChart']['values'];
-                            $chart_3['labels']=$data['lineChart']['names'];
-                            $chart_3['color']="rgba(30, 105, 176, 1)";
-                            $chart_3['y']='Revenue';
-                            $chart_3 = new Chart('line',$chart_3,4);                 
+                           if(isset($data['lineChart'])){
+                                $chart_3['vector']=$data['lineChart']['values'];
+                                $chart_3['labels']=$data['lineChart']['names'];
+                                $chart_3['color']="rgba(30, 105, 176, 1)";
+                                $chart_3['y']='Revenue';
+                                $chart_3 = new Chart('line',$chart_3,4);     
+                           }
+                                    
                         echo'</div>
                     </div>
                     <div class="rightAnalysis" style="width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                            $chart_2['vector']=$data['doughNut']['values'];
-                            $chart_2['labels']=$data['doughNut']['products'];
-                            $chart_2['color']=$data['doughnutColors'];
-                            $chart_2['y']='Stock sold';
-                            $chart_2['main']="fgdff";
-                            $chart_2 = new Chart('doughnut',$chart_2,3);
+                            if(isset($data['doughNut'])){
+                                $chart_2['vector']=$data['doughNut']['values'];
+                                $chart_2['labels']=$data['doughNut']['products'];
+                                $chart_2['color']=$data['doughnutColors'];
+                                $chart_2['y']='Stock sold';
+                                $chart_2['main']="fgdff";
+                                $chart_2 = new Chart('doughnut',$chart_2,3);
+                            }
+                    
+                    
                     
                     echo'</div>
                 
