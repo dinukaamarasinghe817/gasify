@@ -1280,7 +1280,7 @@ class User extends Model
         $query2 = $this->read('users', "email = '$email'");
         $row = mysqli_fetch_assoc($query2);
         $distributor_id = $row['user_id'];
-        $query1 = $this->insert('distributor', ['distributor_id'=>$distributor_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=>2, 'contact_no'=>$contact_no]);
+        $query1 = $this->insert('distributor', ['distributor_id'=>$distributor_id, 'city'=> $city, 'street'=> $street, 'company_id'=>2, 'contact_no'=>$contact]);
         $query3;
 
         // set the capacity of the dealer
