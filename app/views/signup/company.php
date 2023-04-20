@@ -19,12 +19,41 @@
                 }else{
                     document.getElementById("addresserr").innerHTML="";
                 }
-            }else if(idArr[index]=="password" || idArr[index]=="confirmpassword"){
+            }else if(idArr[index]=="email"){
+                var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                var email=document.getElementById("email").value;
+                if(email.match(regex)){
+                    document.getElementById("emailerr").innerHTML="";
+                }else{
+                    isOk=false;
+                    document.getElementById("emailerr").innerHTML="Invalid email";
+                }
+
+            }
+            else if(idArr[index]=="password" || idArr[index]=="confirmpassword"){
                 if((document.getElementById("password").value.length==0 || document.getElementById("confirmpassword").value.length==0) ||(document.getElementById("password").value !=document.getElementById("confirmpassword").value) ){
                     isOk=false;
                     document.getElementById("passworderr").innerHTML="Check password";
                 }else{
-                    document.getElementById("passworderr").innerHTML="";
+                    let parameters = {
+                        count : false,
+                        letters : false,
+                        numbers : false,
+                        special : false
+                    }
+                    let password = document.getElementById("password").value;
+                    parameters.letters = (/[A-Za-z]+/.test(password))?true:false;
+                    parameters.numbers = (/[0-9]+/.test(password))?true:false;
+                    parameters.special = (/[!\”$%&/()=?@~`\\.\’;:+=^*_-]+/.test(password))?true:false;
+                    parameters.count = (password.length > 7)?true:false;
+                    let exists = Object.values(parameters).includes(false);
+                    if(exists){
+                        document.getElementById("passworderr").innerHTML="password should at least 8 characters long and include atleast one uppercase, lowercase, number and a special character";
+                        isOk=false;
+                    }else{
+                        document.getElementById("passworderr").innerHTML="";
+                    }
+
                 }
 
             }else{
@@ -140,8 +169,6 @@
             </div>
         </div>
     </div>
-
-    <script src="../../controller/Company/companyLogin.js"></script>
     
 <?php
 $footer = new Footer("signin");

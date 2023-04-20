@@ -7,6 +7,111 @@
     // }
     $header = new Header("login",$data);
 ?>
+<script>
+    function DeliverySignUp(){
+        var idArr = ["fname","lname","email","password","confirmpassword","city","street","vtype","vno","weight","costperkm"];
+        var isOk=true;
+        for (let index = 0; index < idArr.length; index++) {
+            console.log(index)
+            if(idArr[index]=="city"){
+                if(document.getElementById(idArr[index]).value==-1){
+                    isOk=false;
+                    document.getElementById("addresserr").innerHTML="Enter address";
+                }else{
+                    document.getElementById("addresserr").innerHTML="";
+                }
+            }else if(idArr[index]=="email"){
+                var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                var email=document.getElementById("email").value;
+                if(email.match(regex)){
+                    document.getElementById("emailerr").innerHTML="";
+                }else{
+                    isOk=false;
+                    document.getElementById("emailerr").innerHTML="Invalid email";
+                }
+
+            }
+            else if(idArr[index]=="password" || idArr[index]=="confirmpassword"){
+                if((document.getElementById("password").value.length==0 || document.getElementById("confirmpassword").value.length==0) ||(document.getElementById("password").value !=document.getElementById("confirmpassword").value) ){
+                    isOk=false;
+                    document.getElementById("passworderr").innerHTML="Check password";
+                }else{
+                    let parameters = {
+                        count : false,
+                        letters : false,
+                        numbers : false,
+                        special : false
+                    }
+                    let password = document.getElementById("password").value;
+                    parameters.letters = (/[A-Za-z]+/.test(password))?true:false;
+                    parameters.numbers = (/[0-9]+/.test(password))?true:false;
+                    parameters.special = (/[!\”$%&/()=?@~`\\.\’;:+=^*_-]+/.test(password))?true:false;
+                    parameters.count = (password.length > 7)?true:false;
+                    console.log(parameters)
+                    let exists = Object.values(parameters).includes(false);
+                    
+                    if(exists){
+                        document.getElementById("passworderr").innerHTML="password should at least 8 characters long and include atleast one uppercase, lowercase, number and a special character";
+                        isOk=false;
+                    }else{
+                        document.getElementById("passworderr").innerHTML="";
+                    }
+                    //
+                    console.log(exists);
+
+                }
+
+            }else{
+                if(document.getElementById(idArr[index]).value.length==0){
+                    isOk=false;
+                    if(idArr[index]=="fname"){
+                        document.getElementById("fnameerr").innerHTML="Enter first name";
+                    }else if(idArr[index]=="lname"){
+                        document.getElementById("lnameerr").innerHTML="Enter last name";
+                    }else if(idArr[index]=="email"){
+                        document.getElementById("emailerr").innerHTML="Enter email";
+                    }else if(idArr[index]=="street"){
+                        document.getElementById("addresserr").innerHTML="Enter address";
+                    }else if(idArr[index]=="vno"){
+                        document.getElementById("vnoerr").innerHTML="Enter vehicle number";
+                    }else if(idArr[index]=="weight"){
+                        document.getElementById("weighterr").innerHTML="Enter weight limit";
+                    }else if(idArr[index]=="costperkm"){
+                        document.getElementById("costperkmerr").innerHTML="Enter cost per KM";
+                    }
+                    
+                }else{
+                    if(idArr[index]=="fname"){
+                        document.getElementById("fnameerr").innerHTML="";
+                    }else if(idArr[index]=="lname"){
+                        document.getElementById("lnameerr").innerHTML="";
+                    }else if(idArr[index]=="email"){
+                        document.getElementById("emailerr").innerHTML="";
+                    }else if(idArr[index]=="street"){
+                        document.getElementById("addresserr").innerHTML="";
+                    }else if(idArr[index]=="vno"){
+                        document.getElementById("vnoerr").innerHTML="";
+                    }else if(idArr[index]=="weight"){
+                        document.getElementById("weighterr").innerHTML="";
+                    }else if(idArr[index]=="costperkm"){
+                        document.getElementById("costperkmerr").innerHTML="";
+                    }
+                }
+            }
+            //console.log(idArr[index]+"---->"+document.getElementById(idArr[index]).value)
+            //const element = idArr[index];
+            
+        }
+        
+        /*if(isOk){
+            document.getElementById("companySignUp").submit();
+        }*/
+        /*if(document.getElementById("confirmPassword").value==document.getElementById("password").value){
+            
+        }*/
+    }
+
+</script>
     <div class="container">
         <div class="wrapper">
             <div class="logo">
@@ -28,15 +133,20 @@
                         <div class="info">
                             <label for="" class="part">Delivery person Info</label>
                             <div class="address password">
-                                <input name="fname" class="half" type="text" placeholder="First name" style="width:42.5%;margin-right:0px" required><br>
-                                <input name="lname" class="half" type="text" placeholder="Last name" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
+                                <input name="fname" class="half" type="text" placeholder="First name" style="width:42.5%;margin-right:0px" id="fname" required><br>
+                                <input name="lname" class="half" type="text" placeholder="Last name" style="width:42.5%;margin-right:0px;margin-left:5%" id="lname" required><br>
                             </div>
-                            <input name="email" type="text" placeholder="Email address" required><br>
-
                             <div class="address password">
-                                <input name="password" class="half" type="password" placeholder="Password" style="width:42.5%;margin-right:0px" required><br>
-                                <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
+                                <div id="fnameerr" style="width:42.5%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                                <div id="lnameerr" style="width:42.5%;margin-right:0px;margin-left:5%;text-align:center;color:red;font-size:smaller"></div>
                             </div>
+                            <input name="email" type="text" placeholder="Email address" id="email" required><br>
+                            <div id="emailerr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                            <div class="address password">
+                                <input name="password" class="half" type="password" placeholder="Password" style="width:42.5%;margin-right:0px" id="password" required><br>
+                                <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" style="width:42.5%;margin-right:0px;margin-left:5%" id="confirmpassword" required><br>
+                            </div>
+                            <div id="passworderr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
                             <div class="address">
                                     <select id="city" name="city" class="half" data-dropup-auto="false" style="width:42.5%;margin-right:0px">
                                         <option value="-1" selected disabled hidden>Select your city</option>
@@ -47,8 +157,9 @@
                                             }
                                         ?>
                                     </select>
-                                <input name="street" class="half" type="text" placeholder="Street" style="width:42.5%;margin-right:0px;margin-left:5%" required>
+                                <input id="street" name="street" class="half" type="text" placeholder="Street" style="width:42.5%;margin-right:0px;margin-left:5%" required>
                             </div>
+                            <div id="addresserr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
                             <label for="image">
                                 <svg width="20" height="20" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M29.0299 2.44482H5.69661C3.85567 2.44482 2.36328 3.93721 2.36328 5.77816V29.1115C2.36328 30.9524 3.85567 32.4448 5.69661 32.4448H29.0299C30.8709 32.4448 32.3633 30.9524 32.3633 29.1115V5.77816C32.3633 3.93721 30.8709 2.44482 29.0299 2.44482Z" stroke="black"  stroke-linecap="round" stroke-linejoin="round"/>
@@ -60,7 +171,7 @@
                             <input name="imageupload" id="image" type="file" value="Upload Company logo">
                             <label for="" class="part">Vehicle Info</label>
                             <div class="address password">
-                            <select id="city" name="vehicletype" class="half" style="width:42.5%;margin-right:0px">
+                            <select id="vtype" name="vehicletype" class="half" style="width:42.5%;margin-right:0px">
                                         <option value="-1" selected disabled hidden>Select vehicle type</option>
                                         <?php 
                                             // include_once '../../model/functions/functions.php';
@@ -69,23 +180,29 @@
                                             }
                                         ?>
                                     </select>
-                                <input name="vno" class="half" type="text" placeholder="Vehicle no" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
+                                <input id="vno" name="vno" class="half" type="text" placeholder="Vehicle no" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
                             </div>
                             <div class="address password">
-                                <input name="weight" class="half" type="text" placeholder="Weight limit" style="width:42.5%;margin-right:0px" required><br>
-                                <input name="costperkm" class="half" type="text" placeholder="Cost per KM" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
+                                <div id="vtypeerr" style="width:42.5%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                                <div id="vnoerr" style="width:42.5%;margin-right:0px;margin-left:5%;text-align:center;color:red;font-size:smaller"></div>
+                            </div>
+                            <div class="address password">
+                                <input id="weight" name="weight" class="half" type="text" placeholder="Weight limit" style="width:42.5%;margin-right:0px" required><br>
+                                <input id="costperkm" name="costperkm" class="half" type="text" placeholder="Cost per KM" style="width:42.5%;margin-right:0px;margin-left:5%" required><br>
+                            </div>
+                            <div class="address password">
+                                <div id="weighterr" style="width:42.5%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                                <div id="costperkmerr" style="width:42.5%;margin-right:0px;margin-left:5%;text-align:center;color:red;font-size:smaller"></div>
                             </div>
                         </div>
                             
                     </div>
-                    <input type="submit" name="Sign Up" value="Sign Up" class="submit" onClick="CompanySignUp()" style="background-color: var(--button-blue);font-family: 'Poppins', sans-serif;font-size:1.1em;color:white;cursor:pointer"><br>
+                    <input type="button" name="Sign Up" value="Sign Up" class="submit" onClick="DeliverySignUp()" style="background-color: var(--button-blue);font-family: 'Poppins', sans-serif;font-size:1.1em;color:white;cursor:pointer"><br>
                     <p>Already Registered? <a href="login.php" style="font-family: 'Poppins', sans-serif">Login now</a></p>
                 </form>
             </div>
         </div>
     </div>
-
-    <script src="../../controller/Company/companyLogin.js"></script>
     
 <?php
 $footer = new Footer("signin");
