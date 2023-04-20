@@ -1198,7 +1198,11 @@ class User extends Model
         $row = mysqli_fetch_assoc($query2);
         $company_id = $row['user_id'];
         $query3 = $this->insert('company', ['company_id'=>$company_id,'name'=> $data['companyname'], 'city'=> $data['city'],'street'=>$data['street']]);
-        //$query4 = 
+        $customerArray= array("Domestic","Small Scale Business","Large Scale Business");
+        foreach ($customerArray as $customer) {
+            $query4 = $this->insert('quota',['company_id'=>$company_id,'customer_type'=>$customer, 'monthly_limit'=>0, 'state'=>"OFF"]);
+        }
+        
     
     
     }
@@ -1337,8 +1341,8 @@ class User extends Model
         $query1 = $this->insert('users',['email'=>$email,'password'=>$hashed_pwd,'first_name'=>$data['fname'],'last_name'=>$data['lname'],'type'=>'company','verification_code'=>$token,'verification_state'=>'pending','date_joined'=>date('Y-m-d')]);
         $query2 = $this->read('users', "email = '$email'");
         $row = mysqli_fetch_assoc($query2);
-        $company_id = $row['user_id'];
-        $query3 = $this->insert('company', ['company_id'=>$company_id,'name'=> $data['companyname'], 'city'=> $data['city'],'street'=>$data['street']]);
+        $delivery_id = $row['user_id'];
+        $query3 = $this->insert('delivery_person', ['delivery_id'=>$delivery_id,'contact_no'=> $data['cno'], 'city'=> $data['city'],'street'=>$data['street'], 'vehicle_no'=> $data['vno'], 'vehicle_type'=> $data['vehicletype'], 'weight_limit'=> $data['weight'], 'cost_per_km'=> $data['costperkm']]);
         //$query4 = 
     
     

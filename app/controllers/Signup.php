@@ -403,6 +403,29 @@
             }
 
         }
+        public function DeliverySignup(){
+            $data = [];
+            $data['fname'] = $_POST['fname']; 
+            $data['lname'] = $_POST['lname']; 
+            $data['email'] = $_POST['email'];
+            $data['cno'] = $_POST['cno'];
+            $data['city'] = $_POST['city'];
+            $data['street'] = $_POST['street'];
+            $data['password'] = $_POST['password'];
+            $data['vehicletype'] = $_POST['vehicletype'];
+            $data['vno'] = $_POST['vno'];
+            $data['weight'] = $_POST['weight'];
+            $data['costperkm'] = $_POST['costperkm'];
+            $image_name = '';
+            $tmp_name = '';
+            /*if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                $image_name = $_FILES['image']['name'];
+                $tmp_name = $_FILES['image']['tmp_name'];
+            }*/
+            
+            // password hashing
+            $data = $this->model("User")->DeliverySignup($data);
+        }
 
 
 
