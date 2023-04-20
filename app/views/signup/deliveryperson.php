@@ -9,7 +9,7 @@
 ?>
 <script>
     function DeliverySignUp(){
-        var idArr = ["fname","lname","email","password","confirmpassword","city","street","vtype","vno","weight","costperkm"];
+        var idArr = ["fname","lname","email","cno","password","confirmpassword","city","street","vtype","vno","weight","costperkm"];
         var isOk=true;
         for (let index = 0; index < idArr.length; index++) {
             console.log(index)
@@ -70,6 +70,8 @@
                         document.getElementById("lnameerr").innerHTML="Enter last name";
                     }else if(idArr[index]=="email"){
                         document.getElementById("emailerr").innerHTML="Enter email";
+                    }else if(idArr[index]=="cno"){
+                        document.getElementById("cnoerr").innerHTML="Enter contact no";
                     }else if(idArr[index]=="street"){
                         document.getElementById("addresserr").innerHTML="Enter address";
                     }else if(idArr[index]=="vno"){
@@ -87,6 +89,8 @@
                         document.getElementById("lnameerr").innerHTML="";
                     }else if(idArr[index]=="email"){
                         document.getElementById("emailerr").innerHTML="";
+                    }else if(idArr[index]=="cno"){
+                        document.getElementById("cnoerr").innerHTML="";
                     }else if(idArr[index]=="street"){
                         document.getElementById("addresserr").innerHTML="";
                     }else if(idArr[index]=="vno"){
@@ -103,9 +107,9 @@
             
         }
         
-        /*if(isOk){
-            document.getElementById("companySignUp").submit();
-        }*/
+        if(isOk){
+            document.getElementById("deliverySignUp").submit();
+        }
         /*if(document.getElementById("confirmPassword").value==document.getElementById("password").value){
             
         }*/
@@ -118,7 +122,7 @@
                 <img src="<?php echo BASEURL; ?>/public/img/login.png" alt="company logo">
             </div>
             <div class="form" >
-                <form action="#" method="post" enctype="multipart/form-data" id="companySignUp" class="companySignUp">
+                <form action="<?php echo BASEURL;?>/signup/DeliverySignup" method="post" enctype="multipart/form-data" id="deliverySignUp" class="companySignUp">
                     <h1>Signup</h1>
                         <p></p>
                         <a>
@@ -142,6 +146,8 @@
                             </div>
                             <input name="email" type="text" placeholder="Email address" id="email" required><br>
                             <div id="emailerr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                            <input name="cno" type="text" placeholder="Contact no" id="cno" required><br>
+                            <div id="cnoerr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
                             <div class="address password">
                                 <input name="password" class="half" type="password" placeholder="Password" style="width:42.5%;margin-right:0px" id="password" required><br>
                                 <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" style="width:42.5%;margin-right:0px;margin-left:5%" id="confirmpassword" required><br>
