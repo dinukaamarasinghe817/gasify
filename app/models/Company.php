@@ -248,5 +248,13 @@ class Company extends Model
             return $info;
         }
     }
+    public function getDateJoined($distributorID){
+        $result=$this->Query("SELECT date_joined AS date FROM users WHERE users.user_id=$distributorID");
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                return explode("-",$row['date']);
+            }
+        }
+    }
     
 }

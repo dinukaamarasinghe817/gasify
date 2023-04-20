@@ -1239,8 +1239,9 @@ input[type="text"]::placeholder{
     padding: 8px;
 }
 .orderButtons{
+    cursor: pointer;
     margin-left: 10%;
-    background-color:var(--accept-blue) ;
+    background-color:var(--button-blue) ;
     border-radius: 5px;
     display: flex;
     align-items: center;
