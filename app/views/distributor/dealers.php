@@ -113,6 +113,7 @@ $user_id = $_SESSION['user_id'];
                         echo $output;
                     }
                     }else {
+                        $output ='';
                         $output .= '</table>';
                         $output .= '<p class="nofoundtxt">No records found</p>';
                         echo $output;

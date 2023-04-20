@@ -23,7 +23,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="logo">
-                <img src="images/img.jpg" alt="distributor photo">
+                <img src="<?php echo BASEURL; ?>/public/img/login.png" alt="company logo">
             </div>
             <div class="form">
                 <form action="<?php echo BASEURL;?>/signup/distributorsignup" method="post" enctype="multipart/form-data">
@@ -86,8 +86,7 @@
                                 <div class="capacity">
                                     <?php 
                                         // include_once "../../model/distributor/products.php";
-                                        // $result = $data['productresult'];
-                                        $result = $data['productdetails'];
+                                        $result = $data['productresult'];
                                         while($product = mysqli_fetch_assoc($result)) {
                                             $productid = $product['product_id'];
                                             $productname = $product['name'];

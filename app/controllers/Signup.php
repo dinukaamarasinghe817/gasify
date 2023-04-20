@@ -24,7 +24,6 @@
         }
 
         public function dealer($error=null){
-
             $company_id = $_SESSION['user_id']; // company_id should be taken from session
             // prduct breakdown
             $data = $this->model("Dealer")->dealerSignupForm($company_id);
@@ -317,6 +316,9 @@
         }
 
         public function distributor($error=null) {
+            // $company_id = $_SESSION['user_id']; // company_id should be taken from session
+            $company_id=2;
+            $data = $this->model("Distributor")->distributorSignupForm($company_id);
 
             $data['error'] = $error;
             if($error != null){
@@ -358,8 +360,8 @@
 
         public function distributorsignup() {
             // take post inputs
-            $daa = [];
-
+            $data = [];
+            $company_id=2;
             $first_name = $_POST['fname'];
             $last_name = $_POST['lname'];
             $email = $_POST['email'];
@@ -377,7 +379,7 @@
              // capacity should be taken as product breakdown
             $capacity = array();
             $isvalidqty = false;
-            $result = $this->model("Distributor")->productdetails();
+            $result = $this->model("Distributor")->getProducts($company_id);
             $records = mysqli_num_rows($result);
             for($i = 0; $i < $records; $i++){
                 $product = mysqli_fetch_assoc($result); // this is a query

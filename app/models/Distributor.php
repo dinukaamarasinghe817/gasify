@@ -636,11 +636,16 @@ class Distributor extends Model
     } 
     
     // signup
-    // public function getProducts($company_id){
-    //     $company_id =2;
-    //     $result = $this->read('product', 'company_id = '.$company_id);
-    //     return $result;
-    // }
+    public function getProducts($company_id){
+        $result = $this->read('product', 'company_id = '.$company_id);     
+        return $result;
+    }
+
+    public function distributorSignupForm($company_id){
+        $data['productresult'] = $this->read('product', 'company_id = '.$company_id);
+        // $data['distributorresult'] = $this->read('distributor', "company_id = $company_id", "city");
+        return $data;
+    }
 
 
     

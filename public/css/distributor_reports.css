@@ -642,7 +642,7 @@ table tr:hover {
     text-align: center;
     width: 100%;
     margin-top: 30px;
-    font-size: var(--medium);
+    font-size: var(--mediums);
     background-color: var(--navmenu-orange);
 
 }
