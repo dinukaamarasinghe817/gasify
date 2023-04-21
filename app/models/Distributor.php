@@ -510,6 +510,7 @@ class Distributor extends Model
         return $products;
     }
 
+    // distributor purchase order
     public function distributorplaceorder($user_id, $prodcutid,$postproducts) {
         $data =[];
         $flag = false;
@@ -608,7 +609,7 @@ class Distributor extends Model
                 break;
 
             case "pohistory":
-                // get the dealer's stock information
+                // get the distributor's stock information
                 $query2 = $this->Query("SELECT * FROM stock_request WHERE  distributor_id = '{$distributor_id}' ORDER BY stock_req_id DESC");
                 $purchase_orders = array();
 
