@@ -282,8 +282,31 @@ function showCharts() {
     xmlhttp.send();
 
 }
-function submitReport(r) {
-    console.log(r);
+function submitReport() {
+    var formData = new FormData();
+    formData.append("distID", document.getElementById('distNames').value);
+    formData.append("from", document.getElementById('yearFrom').value + "-" + document.getElementById('monthFrom').value);
+    formData.append("to", document.getElementById('yearTo').value + "-" + document.getElementById('monthTo').value);
+    var table = document.getElementById("reporttable")
+    var tableArr = [];
+    for (let row of table.rows) {
+        var tempArr = []
+        for (let cell of row.cells) {
+            tempArr.push(cell.innerText)
+            //console.log(cell.innerText);
+        }
+        tableArr.push(tempArr);
+    }
+    formData.append("tableArr", JSON.stringify(tableArr));
+    console.log(formData.get("tableArr"));
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log((this.responseText));
+        }
+    };
+    xmlhttp.open("POST", "../Reports/salesCompany");
+    //xmlhttp.send(formData);
 }
 function ooo() {
     console.log("hello world");

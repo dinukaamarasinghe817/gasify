@@ -37,8 +37,9 @@
             $bodycontent = new Body('companyAnalysis', $data);
         }elseif($data['navigation']=='reports'|| $data['navigation']=='reportsCompany'){
             $bodycontent = new Body('companyReports', $data);
-        }elseif($data['navigation']=='reports' ){
-            $bodycontent = new Body('reportsCompany', $data);
+        }elseif($data['navigation']=='rep' ){
+            //print_r("sds");
+            $bodycontent = new Body('rr', $data);
         }elseif($data['navigation']=='issuedorders'){
             $bodycontent = new Body('issuedOrdersCompany', $data);
         }elseif($data['navigation']=='delayedorders'){

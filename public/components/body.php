@@ -1988,9 +1988,9 @@ class Body{
                     $tag='';
                     foreach ($result as $row) {
                         if($row['id']==$data['currentdistributor']){
-                            $tag.='<option value="'.$row['id'].'"selected>'.$row['names'].'</option>';
+                            $tag.='<option value="'.$row['id'].'" key="'.$row['names'].'" selected>'.$row['names'].'</option>';
                         }else{
-                            $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
+                            $tag.='<option value="'.$row['id'].'" key="'.$row['names'].'">'.$row['names'].'</option>';
                         }
                     }
                     $tag.='</select></div>';
@@ -2001,7 +2001,7 @@ class Body{
                     <option value="" disabled selected>Select distributor</option>';
                     $tag='';
                     foreach ($result as $row) {
-                        $tag.='<option value="'.$row['id'].'">'.$row['names'].'</option>';
+                        $tag.='<option value="'.$row['id'].'" key="'.$row['names'].'">'.$row['names'].'</option>';
                         
                     }
                     $tag.='</select></div>';
@@ -2105,7 +2105,7 @@ class Body{
             //echo'</div>';
                     echo'
                 </div>
-            <table class="styled-table">
+            <table class="styled-table" id="reporttable">
                 <thead>
                     <tr>
                         <th>Product name</th>
@@ -2134,7 +2134,8 @@ class Body{
             echo '</table>';
             echo'</div>'; 
             echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
-            echo'<div style="background-color:dodgerblue;height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport(this)">';
+            echo'<div style="background-color:dodgerblue;height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport()">';
+            //echo'<a href="../Reports/salesCompany">Generate PDF</a></div>';
             echo'Generate PDF</div>';
             
             echo'</div>';
@@ -2435,5 +2436,15 @@ class Body{
 
             }
             
+    }
+    function rr(){
+        //require('fpdf.php');
+        $pdf = new FPDF('P','mm','A4');
+        $pdf->SetAutoPageBreak(true,10);
+        $pdf->SetMargins(23,24,23);
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(40,10,'Hello World!');
+        $pdf->Output();
     }
 }
