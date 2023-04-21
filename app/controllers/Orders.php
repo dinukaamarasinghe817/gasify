@@ -604,26 +604,42 @@ class Orders extends Controller{
 
     // distributor -> phurchase order interface
      public function distributor($param=null, $error=null) {
-        $user_id = $_SESSION['user_id'];
+        // $user_id = $_SESSION['user_id'];
+        // $data['navigation'] = 'orders';
+        // $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        // $row = mysqli_fetch_assoc($distributor_details);
+        // $data['image'] = $row['image'];
+
+        // $data['tab'] = $param;
+
+        // if($error !=null) {
+        //     $data['toast'] = $error;
+        // }
+
+        // $distributor_details = $this->model('Distributor')->getDistributor($this->user_id);
+        // $row = mysqli_fetch_assoc($distributor_details);
+        // $data['image'] = $row['image'];
+        // $data['name'] = $row['first_name'].' '.$row['last_name'];
+
+        // $data[$data['tab']] = $this->model('Distributor')-> distributorStock($this->user_id, $data['tab']);
+
+        // $this->view('distributor/phurchase_orders',$data);  
+
+        // navigation and active tab in body
         $data['navigation'] = 'orders';
-        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-        $row = mysqli_fetch_assoc($distributor_details);
-        $data['image'] = $row['image'];
-
         $data['tab'] = $param;
+        if($error != null) {
+            $data['toast'] = $error;}
 
-        if($error !=null) {
-            $data['toast'] = $error;
-        }
-
+        // profile picture & notifications
         $distributor_details = $this->model('Distributor')->getDistributor($this->user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $data[$data['tab']] = $this->model('Distributor')->distributorStock($this->user_id, $data['tab']);
+        // $this->view('dealer/', $data);  
+        $this->view('distributor/phurchase_orders',$data);  
 
-        $data[$data['tab']] = $this->model('Distributor')-> distributorStock($this->user_id, $data['tab']);
-
-        $this->view('distributor/phurchase_orders',$data);       
     }
 
     public function purchase_order($param=null) {
@@ -639,7 +655,7 @@ class Orders extends Controller{
         if(isset($data['toast'])) {
             $this->distributor("purchaseorder", $data['toast']);
         }else {
-            $this->view("/distributor/phurchase_orders", $data);
+            $this->view("/distributor/reports/purchaseorder", $data);
         }  
     }
 
