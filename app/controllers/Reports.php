@@ -103,6 +103,19 @@ class Reports extends Controller{
         $data = [];
         $this->view('admin/reports/salesreport',$data);
     }
+    public function salesCompany(){
+        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $data=[];
+        $distID = mysqli_real_escape_string($conn,$_POST["distID"]);
+        $from = mysqli_real_escape_string($conn,$_POST["from"]);
+        $to = mysqli_real_escape_string($conn,$_POST["to"]);
+        $tableArr = json_decode(mysqli_real_escape_string($conn,$_POST["tableArr"]));
+        foreach($tableArr as$r){
+            echo $r;
+        }
+
+        //$this->view('company/reports/salesreport',$data);
+    }
 
 }
 

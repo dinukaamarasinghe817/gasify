@@ -616,6 +616,17 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);*/
         //print_r($order_details);
     }
+    function rep(){
+        //print_r("fdfd");
+        $data['navigation'] = 'rep';
+        $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
+        $row = mysqli_fetch_assoc($company_details);
+        $data['image'] = $row['logo'];
+        $data['distNames'] = $distributor_details;
+        $this->view('dashboard/company', $data);
+    }
 
 }
 ?>
