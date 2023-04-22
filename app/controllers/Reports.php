@@ -104,17 +104,21 @@ class Reports extends Controller{
         $this->view('admin/reports/salesreport',$data);
     }
     public function salesCompany(){
-        $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        //$conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $data=[];
-        $distID = mysqli_real_escape_string($conn,$_POST["distID"]);
-        $from = mysqli_real_escape_string($conn,$_POST["from"]);
-        $to = mysqli_real_escape_string($conn,$_POST["to"]);
-        $tableArr = json_decode(mysqli_real_escape_string($conn,$_POST["tableArr"]));
-        foreach($tableArr as$r){
-            echo $r;
-        }
+        $distID = $_POST["distID"];
+        $from = $_POST["from"];
+        $to = $_POST["to"];
+        $tableArr = $_POST["tableArr"];
+        $arr=json_decode($tableArr,true);
+        $data['distID']=$distID;
+        $data['from']=$from;
+        $data['tableArr']=$arr;
+        $data['distributorName']=$this->model('Company')->getDistributorName($distID);
+        //echo count($arr) ;
 
-        //$this->view('company/reports/salesreport',$data);
+        $res =$this->view('company/reports/salesreport',$data);
+        //echo $res;
     }
 
 }

@@ -2109,9 +2109,9 @@ class Body{
                 <thead>
                     <tr>
                         <th>Product name</th>
-                        <th>Unit price (Rs.)</th>
-                        <th>Quantity</th>
-                        <th>Total (Rs.)</th>
+                        <th style="text-align:center">Unit price (Rs.)</th>
+                        <th style="text-align:center">Quantity</th>
+                        <th style="text-align:right">Total (Rs.)</th>
                     </tr>
                 </thead>';
                 if(isset($data['products'])){
@@ -2119,14 +2119,22 @@ class Body{
                     //print_r($data['products']) ;
                     $result=$data['products'];
                     $tag="";
+                    $sum=0;
                     foreach($result as $key=>$value){
                         $tag.='<tr>
                         <td >'.$key.'</td>
-                        <td >'.$value[0].'</td>
-                        <td >'.$value[1].'</td>
-                        <td >'.number_format($value[0]*$value[1],2).'</td>
+                        <td style="text-align:center">'.$value[0].'</td>
+                        <td style="text-align:center">'.$value[1].'</td>
+                        <td style="text-align:right" >'.number_format($value[0]*$value[1],2).'</td>
                         </tr>';
+                        $sum+=$value[0]*$value[1];
                     }
+                    $tag.='<tr>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td style="text-align:right" >'.number_format($sum,2).'</td>
+                    </tr>';
                     echo $tag;
                     echo'</tbody>';
 

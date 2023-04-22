@@ -33,10 +33,10 @@ $pdf->Cell(0,5,": ".date("Y/m/d"),0,1,'l');
 $pdf->Ln(10);
 
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(25,5,'Product ID',0,0,'L');
-$pdf->Cell(30,5,'Product Name',0,0,'L');
-$pdf->Cell(38,5,'Sold Quantity',0,0,'C');
-$pdf->Cell(38,5,'Total Amount (Rs)',0,0,'R');
+$pdf->Cell(25,5,'Product name',0,0,'L');
+$pdf->Cell(40,5,'Unit price (Rs)',0,0,'C');
+$pdf->Cell(45,5,'Sold Quantity',0,0,'C');
+$pdf->Cell(50,5,'Total Amount (Rs)',0,0,'R');
 //$pdf->Cell(33,5,'Percentage',0,0,'R');
 $pdf->Ln();
 $pdf->Ln();
@@ -58,29 +58,28 @@ $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 $pdf->Ln();
-
-$pdf->Cell(25,5,'LT002',0,0,'L');
-$pdf->Cell(30,5,'Buddy(Refill)',0,0,'L');
-$pdf->Cell(38,5,'12',0,0,'C');
-$pdf->Cell(38,5,'7,200',0,0,'R');
-$pdf->Ln();
-$pdf->Cell(25,5,'LT003',0,0,'L');
-$pdf->Cell(30,5,'Regular(Refill)',0,0,'L');
-$pdf->Cell(38,5,'30',0,0,'C');
-$pdf->Cell(38,5,'58,500',0,0,'R');
-$pdf->Ln();
-$pdf->Cell(25,5,'LT004',0,0,'L');
-$pdf->Cell(30,5,'Commercial(Refill)',0,0,'L');
-$pdf->Cell(38,5,'15',0,0,'C');
-$pdf->Cell(38,5,'112,500',0,0,'R');
+$sum=0;
+for ($i=0; $i <count($data['tableArr'])-1 ; $i++) { 
+    if($i==0){
+        continue;
+    }else{
+        $pdf->Cell(25,5,$data['tableArr'][$i][0],0,0,'L');
+        $pdf->Cell(40,5,$data['tableArr'][$i][1],0,0,'C');
+        $pdf->Cell(45,5,$data['tableArr'][$i][2],0,0,'C');
+        $pdf->Cell(50,5,$data['tableArr'][$i][3],0,0,'R');
+        $pdf->Ln();
+        $sum +=floatval(str_replace(',','',$data['tableArr'][$i][3]));
+    }
+    
+}
 $pdf->Ln();
 $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 $pdf->Cell(25,5,'',0,0,'L');
-$pdf->Cell(30,5,'',0,0,'L');
-$pdf->Cell(38,5,'',0,0,'C');
-$pdf->Cell(38,5,'178,200',0,0,'R');
+$pdf->Cell(40,5,'',0,0,'L');
+$pdf->Cell(45,5,'',0,0,'C');
+$pdf->Cell(50,5,number_format($sum,2),0,0,'R');
 //$pdf->Cell(33,5,'Percentage',0,0,'R');
 
 // $total = number_format($data['total']).'.00';
