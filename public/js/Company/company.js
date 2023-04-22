@@ -285,8 +285,8 @@ function showCharts() {
 function submitReport() {
     var formData = new FormData();
     formData.append("distID", document.getElementById('distNames').value);
-    formData.append("from", document.getElementById('yearFrom').value + "-" + document.getElementById('monthFrom').value);
-    formData.append("to", document.getElementById('yearTo').value + "-" + document.getElementById('monthTo').value);
+    formData.append("from", document.getElementById('yearFrom').value + "." + document.getElementById('monthFrom').value);
+    formData.append("to", document.getElementById('yearTo').value + "." + document.getElementById('monthTo').value);
     var table = document.getElementById("reporttable")
     var tableArr = [];
     for (let row of table.rows) {
