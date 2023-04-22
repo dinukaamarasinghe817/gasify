@@ -298,15 +298,16 @@ function submitReport() {
         tableArr.push(tempArr);
     }
     formData.append("tableArr", JSON.stringify(tableArr));
-    console.log(formData.get("tableArr"));
+    //console.log(formData.get("tableArr"));
+    //console.log(typeof (tableArr));
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log((this.responseText));
+            console.log(this.responseText);
         }
     };
     xmlhttp.open("POST", "../Reports/salesCompany");
-    //xmlhttp.send(formData);
+    xmlhttp.send(formData);
 }
 function ooo() {
     console.log("hello world");
