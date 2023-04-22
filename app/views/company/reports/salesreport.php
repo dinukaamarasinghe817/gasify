@@ -29,6 +29,9 @@ $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(20,5,'Date',0,0,'l');
 $pdf->SetFont('Times', '', 12);
 $pdf->Cell(0,5,": ".date("Y/m/d"),0,1,'l');
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$pdf->Line($x, $y, $x+165, $y);
 
 $pdf->Ln(10);
 
@@ -93,5 +96,5 @@ $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 
-$pdf->Output();
+$pdf->Output('',$data['distname'].' Report'.'('.$data['from'].'-'.$data['to'].')');
 ?>

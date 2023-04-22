@@ -113,9 +113,15 @@ class Reports extends Controller{
         $arr=json_decode($tableArr,true);
         $data['distID']=$distID;
         $data['from']=$from;
+        $data['to']=$to;
         $data['tableArr']=$arr;
-        $data['distributorName']=$this->model('Company')->getDistributorName($distID);
-        //echo count($arr) ;
+        $distname=$this->model('Company')->getDistributorName($distID);
+        $distributor='';
+        foreach($distname as $key=>$value){
+            $distributor= $value;
+        };
+        //$data['distname']=$distributor;
+        $data['distname']=$distributor['name'] ;
 
         $res =$this->view('company/reports/salesreport',$data);
         //echo $res;
