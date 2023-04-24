@@ -1622,12 +1622,12 @@ class Body{
                                 </tr>
                             </thead>
                             <tbody style="display:legacy">';
-                    
+                    $total=0;
                     foreach ($result as $row_2) {
                         if ($row_2['stock_req_id']==$orderID) {
                             foreach ($product_array as $row_3) {
                                 if($row_3['product_id']==$row_2['product_id']){
-                                $orders.='<tr>
+                                $orders.='<tr style="height:1%">
                                 <td>'.$row_3['name'].'</td>
                                     <td style="text-align:center">'.number_format($row_2['unit_price']).'</td>
                                     <td style="text-align:center"><input type="number" class="qtyInput" value="'.$row_2['quantity'].'" id="'.$orderID.$imgIndex."1".'" key="'.$row_3['product_id'].'"';
@@ -1641,8 +1641,9 @@ class Body{
                                         $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/warning.png'.' width="32px" height="32px" title="Current Stock is '.$row_3['quantity'].' Cylinders" id="'.$orderID.$imgIndex."2".'" class="stateImg"></td>';
                                     }
                                     
-                                    $orders.='<td id="'.$row_2['product_id']."3".'" style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
+                                    $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" value='.$row_2['unit_price']*$row_2['quantity'].' style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
                                 </tr>';
+                                $total+=$row_2['unit_price']*$row_2['quantity'];
                                 $imgIndex+=1;
                                 }
                             }
@@ -1650,11 +1651,14 @@ class Body{
 
                     }
                     array_push($processedOrders,$orderID);
-
                     $orders.='</tbody>      
                     </table>
+                    
                     </div>
-                        <div class="orderRow">';
+                    <div class="orderRow" style="height:8%">
+                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
+                    </div>
+                        <div class="orderRow" style="margin-top:1%">';
                         if($isEnabled){
                             $orders.='<div class="orderButtons" onClick="issueOrder(this)" key="'.$orderID.'" id="'.$orderID.'issue" style="background-color:dodgerblue"><label>Issue</label></div>';
                         }else{
@@ -1921,7 +1925,7 @@ class Body{
                                 echo'</select>
                             </div>
                             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
-                                <input type="submit" name="sub" value="submit">
+                                <input type="submit" name="sub" value="Submit" style="font-family:poppins" class="getAnalysisButton">
                             </div></form>';                                     
                     //echo'</div>';
                     echo'
@@ -2100,7 +2104,7 @@ class Body{
                         echo'</select>
                     </div>
                     <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
-                        <input type="submit" name="sub" value="submit">
+                        <input type="submit" name="sub" value="Submit" class="getAnalysisButton">
                     </div></form>';                                     
             //echo'</div>';
                     echo'
@@ -2299,7 +2303,7 @@ class Body{
                                 </tr>
                             </thead>
                             <tbody style="display:legacy">';
-                    
+                            $total=0;
                             foreach ($result as $row_2) {
                                 if ($row_2['stock_req_id']==$orderID) {
                                     foreach ($product_array as $row_3) {
@@ -2310,6 +2314,7 @@ class Body{
                                             <td style="text-align:center">'.$row_2['quantity'].'</td>';
                                             $orders.='<td id="'.$row_2['product_id']."3".'" style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
                                         </tr>';
+                                        $total+=$row_2['unit_price']*$row_2['quantity'];
                                         $imgIndex+=1;
                                         }
                                     }
@@ -2320,13 +2325,15 @@ class Body{
 
                     $orders.='</tbody>      
                     </table>
+                    </div>';
+                    $orders.='<div class="orderRow" style="height:8%">
+                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
                     </div>
                     </div>';
                     }
                 }
                 echo $orders;
                 echo ' 
-                
                 </div>
                 </section>';
 
@@ -2391,7 +2398,7 @@ class Body{
                                 </tr>
                             </thead>
                             <tbody style="display:legacy">';
-                    
+                            $total=0;
                             foreach ($result as $row_2) {
                                 if ($row_2['stock_req_id']==$orderID) {
                                     foreach ($product_array as $row_3) {
@@ -2410,9 +2417,10 @@ class Body{
                                                 $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/warning.png'.' width="32px" height="32px" title="Current Stock is '.$row_3['quantity'].' Cylinders" id="'.$orderID.$imgIndex."2".'"></td>';
                                             }
                                             
-                                            $orders.='<td id="'.$row_2['product_id']."3".'" style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
+                                            $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
                                         </tr>';
                                         $imgIndex+=1;
+                                        $total+=$row_2['unit_price']*$row_2['quantity'];
                                         }
                                     }
                                 }
@@ -2422,8 +2430,13 @@ class Body{
 
                     $orders.='</tbody>      
                     </table>
+                    </div>';
+                    $orders.='<div class="orderRow" style="height:8%">
+                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
                     </div>
-                        <div class="orderRow">';
+                    </div>';
+                        $orders.='<div class="orderRow">';
+                    
                         if($isEnabled){
                             $orders.='<div class="orderButtons" style="margin-left:28.5%;background-color:dodgerblue" onClick="issueOrder(this)" key="'.$orderID.'" id="'.$orderID.'issue"><label>Issue</label></div>';
                         }else{
