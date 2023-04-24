@@ -44,7 +44,14 @@ class Orders extends Controller{
 
     /*.................Customer my reservation...............*/
     //customer all past reservtions
-    function customer_allreservations(){
+    function customer_allreservations($error = null){
+
+        switch($error){
+            case "1":
+                $data['toast'] = ['type' => 'success', 'message' => "You've successfully cancelled you order."];
+                break;
+        }
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -157,7 +164,7 @@ class Orders extends Controller{
         }
         else{
             // $this->customer_cancelreservation($order_id);
-            $this->customer_allreservations();
+            $this->customer_allreservations(1);
         }    
     }
 
@@ -172,12 +179,12 @@ class Orders extends Controller{
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
-        $data['brands'] = $this->model('Customer')->getCompanyBrand();
-        $data['dealers'] = $this->model('Customer')->getdealers();
-        $data['city'] = $this->model('Customer')->getCustomer($customer_id);
+        $data['brands'] = $this->model('Customer')->getCompanyBrand();      //get all gas companies for display
+        $data['dealers'] = $this->model('Customer')->getdealers();          //get all dealers for display
+        $data['city'] = $this->model('Customer')->getCustomer($customer_id);  //get all cities for display
 
+        //not selected brand,city,dealer error
         if($error != null){
-            // $data['error'] = $error;
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
 
@@ -189,8 +196,7 @@ class Orders extends Controller{
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
-
-        $data['dealers'] = $this->model('Customer')->getdealers($company_id,$city);
+        $data['dealers'] = $this->model('Customer')->getdealers($company_id,$city);  //get dealers according to selected company and city
         
         $this -> view('customer/place_reservation/filter_dealers',$data);
 

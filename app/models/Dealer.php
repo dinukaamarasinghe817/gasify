@@ -468,14 +468,15 @@ class Dealer extends Model
                     $message = rtrim($message,',');
                     $message .= " please hurry up and place a purchase order. Otherwise you will not be having enough stock to sell.";
                     $this->insert('notifications',['user_id' => $dealer_id, 'date'=>$place_date, 'time'=>$place_time, 'type'=> 'Re-order Level Alert', 'message' => $message, 'state'=>'delivered']);
+                    
+                    // send a mail as well
+                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
+                    $dealer_email = $q['email'];
+                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+                    $customer_Name = $q['first_name'].' '.$q['last_name'];
+                    $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
+                    $mail->send();
                 }
-                // send a mail as well
-                $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
-                $dealer_email = $q['email'];
-                $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
-                $customer_Name = $q['first_name'].' '.$q['last_name'];
-                $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
-                $mail->send();
 
             }
             // placing the reservation but pending because of payslip need to verify by admin

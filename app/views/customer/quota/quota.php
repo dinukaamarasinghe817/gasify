@@ -30,7 +30,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                echo '<div class="inactive_img">
                                         <center>
                                             <img src="../img/placeholders/inactive_quota.png">
-                                            <h4>No Active Quota available.</h4>
+                                            <h3>No Active Quota available.</h3>
+                                            <h4 class="gray">No Limits! You can shop as you wish.</h4>
                                         </center>
                                     </div>';
                             }

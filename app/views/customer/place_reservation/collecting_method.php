@@ -11,7 +11,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
     ?>
 
     <div class="under_topbar">
-         
+    <script>
+        // window.onload = function() {
+        //     customerprompt('deliverymethod','/Orders/getcollecting_method/Pickup/','/Orders/getcollecting_method/Pickup/');
+        // };
+    </script>
         <div class="subtitle">
             <h3>Collecting Method</h3>
         </div> 

@@ -1,5 +1,5 @@
 <?php
-$header = new Header("customer/customer_allmyreservation");
+$header = new Header("customer/customer_allmyreservation",$data);
 $sidebar = new Navigation('customer',$data['navigation']);
 ?>
 
