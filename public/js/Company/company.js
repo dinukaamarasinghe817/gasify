@@ -123,7 +123,7 @@ function delayOrder(div) {
 
 }
 function changeOrderDetails(imgIndex, imgCount, orderID, productID, unitPrice, stockQty, orderID, resultArray) {
-
+    var preTotal = document.getElementById(orderID.toString() + productID.toString() + "3").getAttribute("value");
     var quantity = document.getElementById(orderID + String(imgIndex) + "1").value;
     if (quantity.length == 0) {
         document.getElementById(orderID + String(imgIndex) + "1").value = 0;
@@ -134,9 +134,9 @@ function changeOrderDetails(imgIndex, imgCount, orderID, productID, unitPrice, s
     } else {
         document.getElementById(orderID + String(imgIndex) + "2").src = "http://localhost/mvc/public/icons/warning.png";
     }
-    document.getElementById(productID + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us');
+    document.getElementById(orderID.toString() + productID.toString() + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us');
+    document.getElementById(orderID + "total").innerHTML = (document.getElementById(orderID + "total").getAttribute("value") - preTotal + (quantity * unitPrice)).toLocaleString('en-us');
     checkIFOrderIsClean(orderID, resultArray, imgCount);
-
 }
 function checkIFOrderIsClean(orderID, resultArray, imgCount) {
     var imageIDs = resultArray.split(" ");

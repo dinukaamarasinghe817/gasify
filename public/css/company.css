@@ -1207,7 +1207,7 @@ input[type="text"]::placeholder{
     border-radius: 5px;
     margin-top: 1%;
     width: 96%;
-    height: 90%;
+    height: 95%;
     background-color: #fdfdfd;
     outline: 5px solid var(--navmenu-orange-dark);
     margin-bottom: 3%;
@@ -1244,7 +1244,7 @@ input[type="text"]::placeholder{
     background-color:var(--button-blue) ;
     border-radius: 5px;
     display: flex;
-    align-items: center;
+    align-items:center;
     align-content: center;
     justify-content: center;
     width: 40%;
@@ -1514,7 +1514,18 @@ input[type="text"]::placeholder{
   .dealerAddButton:hover{
     background-color: var(--button-blue-hover);
   }
-
+  .getAnalysisButton{
+    color: white;
+    height: 80%;
+    width: 40%;
+    background-color: var(--button-blue);
+    border-radius: 3em;
+    font-family: poppins;
+  }
+  .getAnalysisButton:hover{
+    background-color: var(--button-blue-hover);
+    cursor: pointer;
+  }
 /*=========================================================================================================*/
 
 
