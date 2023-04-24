@@ -2292,7 +2292,7 @@ class Body{
                         <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
                         <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
                     </div>
-                    <div class="orderTbl">
+                    <div class="orderTbl" style="height:45%">
                         <table class="styled-table">
                             <thead>
                                 <tr>
@@ -2328,6 +2328,9 @@ class Body{
                     </div>';
                     $orders.='<div class="orderRow" style="height:8%">
                         <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
+                    </div>
+                    <div class="orderRow" style="height:8%">
+                        <div class="orderColumn" style="width:100%;display:flex;align-items:center;justify-content:center"><div class="getAnalysisButton" style="width:20%;display:flex;align-items:center;justify-content:center">Generate Report</div></div>
                     </div>
                     </div>';
                     }
@@ -2417,10 +2420,10 @@ class Body{
                                                 $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/warning.png'.' width="32px" height="32px" title="Current Stock is '.$row_3['quantity'].' Cylinders" id="'.$orderID.$imgIndex."2".'"></td>';
                                             }
                                             
-                                            $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
+                                            $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" value='.$row_2['unit_price']*$row_2['quantity'].' style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
                                         </tr>';
-                                        $imgIndex+=1;
                                         $total+=$row_2['unit_price']*$row_2['quantity'];
+                                        $imgIndex+=1;
                                         }
                                     }
                                 }
@@ -2430,12 +2433,11 @@ class Body{
 
                     $orders.='</tbody>      
                     </table>
-                    </div>';
-                    $orders.='<div class="orderRow" style="height:8%">
+                    </div>
+                    <div class="orderRow" style="height:8%">
                         <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
                     </div>
-                    </div>';
-                        $orders.='<div class="orderRow">';
+                        <div class="orderRow">';
                     
                         if($isEnabled){
                             $orders.='<div class="orderButtons" style="margin-left:28.5%;background-color:dodgerblue" onClick="issueOrder(this)" key="'.$orderID.'" id="'.$orderID.'issue"><label>Issue</label></div>';
