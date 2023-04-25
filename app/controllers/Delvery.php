@@ -50,9 +50,6 @@ class Delvery extends Controller{
 
     public function getdeliverypeople($option){
         $data = $this->model("Dealer")->getdeliverypeople($option,$this->user_id);
-        $row = mysqli_fetch_assoc($this->model('Dealer')->getDealer($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['navigation'] = 'delivery';
         $data['option'] = $option;
         $this->view('dealer/deliverypeople',$data);

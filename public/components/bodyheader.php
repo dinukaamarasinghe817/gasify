@@ -1,7 +1,7 @@
 <?php
 class BodyHeader{
     public function __construct($data){
-        $image = BASEURL.'/public/img/profile/'.$data['image'];
+        $image = BASEURL.'/public/img/profile/'.$_SESSION['profile_image'];
         //echo $image;
         date_default_timezone_set("Asia/Colombo");
         $date = date('j M Y');
@@ -56,7 +56,7 @@ class BodyHeader{
         echo '<section class="body-header">
                 <div class="body-header-left">
                    
-                <p class="date">'.$data['name'].'</p>
+                <p class="date">'.$_SESSION['user_name'].'</p>
                 <p class="today">'.userRole().'</p>
                 </div>
                 <div class="body-header-right">

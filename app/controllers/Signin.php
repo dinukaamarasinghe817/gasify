@@ -145,7 +145,7 @@
             $password = $_POST['password'];
             
             // check if user is already registered
-            $result = $this->model('User')->getUser($email);
+            // $result = $this->model('User')->getUser($email);
             $data = $this->model('User')->userSignin($email,$password);
             if($data['success']){
                 header('Location: '.BASEURL.'/dashboard/'.$_SESSION['role']);
