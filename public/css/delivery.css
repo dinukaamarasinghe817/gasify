@@ -1190,6 +1190,12 @@ select{
     border-radius: 5px;
     background-color: dodgerblue;
 }
+.accept_btn:hover{
+    cursor: pointer;
+}
+.delete_btn:hover{
+    cursor: pointer;
+}
 .delivered_btn,.cancel_btn{
     margin-bottom: -3%;
     text-align: center;

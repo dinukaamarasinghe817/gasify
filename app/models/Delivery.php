@@ -42,6 +42,52 @@ class Delivery extends Model
         $result=$this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name FROM reservation INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Dispatched' AND reservation.collecting_method='delivery' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN users ON users.user_id=customer.customer_id");
         return $result;
     }
+    public function getPendingDeliveryCount(){
+        $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Dispatched' AND reservation.delivery_id='{$_SESSION['user_id']}'");
+        $info=mysqli_fetch_assoc($result);
+        return $info;
+    }
+    public function getDeliveredOrdersCount(){
+        $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
+        $info=mysqli_fetch_assoc($result);
+        return $info;
+    }
+    public function getReviewDetails(){
+        $result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['order_id'=>$row['order_id'],'date'=>$row['date'],'time'=>$row['time'],'message'=>$row['message']]);
+            }
+            return $info;
+        }
+    
+    }
+    public function getReviewCount(){
+        $result=$this->Query("SELECT COUNT(review.order_id) AS count FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
+        $info=mysqli_fetch_assoc($result);
+        return $info;
+    }
+    public function acceptDelivery($orderID){
+        if($this->Query(("UPDATE `reservation` SET order_state='Dispatched' WHERE order_id=$orderID;"))){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    public function cancelDelivery($orderID){
+        if($this->Query(("UPDATE `reservation` SET order_state='Pending' WHERE order_id=$orderID;"))){
+            return 1;
+        }else{
+            return 0;
+        }
+    }public function setReservationStateDelivered($orderID){
+        if($this->Query(("UPDATE `reservation` SET order_state='Completed' WHERE order_id=$orderID;"))){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
     
     
 }

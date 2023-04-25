@@ -1234,15 +1234,15 @@ class Body{
         ' <section class="body-content">
                 <div class="Top" id="Top">
                     <div class="card">
-                        <div class="cmValue">5</div>
+                        <div class="cmValue">'.$data['dispatched_count'].'</div>
                         <div class="cmTitle">Pending Deliveries</div>
                     </div>
                     <div class="card">
-                        <div class="cmValue">4</div>
+                        <div class="cmValue">'.$data['completed_count'].'</div>
                         <div class="cmTitle">Orders Delivered</div>
                     </div>
                     <div class="card">
-                        <div class="cmValue">1</div>
+                        <div class="cmValue">'.$data['review_count'].'</div>
                         <div class="cmTitle">Review</div>
                     </div>
                     <div class="card">
@@ -1253,10 +1253,10 @@ class Body{
                 <div class="bottom">
                     <div class="vehicleCard">
                         <div class="vehicleTitle" style="width:100%;height:10%">My Vehicle</div>
-                        <div class="vehicleNo" style="width:100%;height:50%">PD-6547</div>
+                        <div class="vehicleNo" style="width:100%;height:50%">'.$data['vehicle_no'].'</div>
                         <div class="btm" style="display:flex;justify-content: space-between">
-                            <div class="vehicleProp">500KG</div>
-                            <div class="vehicleProp">Rs.45/KM</div>
+                            <div class="vehicleProp">'.$data['weight_limit'].'KG</div>
+                            <div class="vehicleProp">Rs.'.$data['cost_per_km'].'/KM</div>
                         </div>
                     </div>
                     <div class="salesChart">';
@@ -1358,7 +1358,7 @@ class Body{
                     <td>'.$row['contact_no'].'</td>
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
-                    <td><div class="accept_btn" id="col" onClick="takeJob(this)" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a href="../Delvery/acceptDelivery" style="color:white" >Accept</a></div></td>
+                    <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
                 </tr>';
             }
             echo $pool;
@@ -1396,6 +1396,7 @@ class Body{
                             <th>Placed date</th>
                             <th>Placed time</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                 <tbody style="overflow-y:auto;height:100%">';
@@ -1409,7 +1410,8 @@ class Body{
                     <td>'.$row['contact_no'].'</td>
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
-                    <td><div class="delete_btn" id="delete_btn" onClick="takeJob(this)" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
+                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
+                    <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
                 </tr>';
             }
             echo $pool;
@@ -1727,25 +1729,28 @@ class Body{
          <a href="../Delvery/reviews" style="width:97%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:white">Reviews</div></a>
          </div>
         <div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
-        echo '
+        $reviews=$data['reviews'];
+        $tag='';
+        foreach($reviews as $row){
+            $tag.='<div class="reviewRow" >
+            <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
+                <div class="messageRow">'.$row['message'].'</div>
+                <div class="dateTimeRow">
+                    <div class="reviewTime">Time -'.$row['time'].'</div>
+                    <div class="reviewDate">Date -'.$row['date'].'</div> 
+                </div>        
+            </div>';
+        }
+        echo $tag;
+        /*echo '
         <div class="reviewRow" >
-        <div class="orderIDRow"><div>GS014</div></div>
-        <div class="messageRow">Delivered fast!.Great service.Thumbs up</div>
-        <div class="dateTimeRow">
-        <div class="reviewTime">04:23PM</div>
-        <div class="reviewDate">2023/01/18</div>
-        
-        
-        </div>        
-        </div>
-        
-        
-        
-        
-        
-        
-        
-        ';
+            <div class="orderIDRow"><div>Order ID : </div></div>
+            <div class="messageRow">Delivered fast!.Great service.Thumbs up</div>
+            <div class="dateTimeRow">
+                <div class="reviewTime">04:23PM</div>
+                <div class="reviewDate">2023/01/18</div> 
+            </div>        
+        </div>';*/
 
         echo
         '</div>

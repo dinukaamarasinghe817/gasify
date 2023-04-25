@@ -28,8 +28,9 @@ class Delvery extends Controller{
         $this->view('dashboard/delivery', $data);
     }
     function acceptDelivery(){
-        
-
+        $orderID = $_POST["orderID"];
+        $message=$this->model('Delivery')->acceptDelivery($orderID);
+        echo $message;
     }
     function reviews(){
         $data['navigation'] = 'reviews';
@@ -39,6 +40,7 @@ class Delvery extends Controller{
         $row = mysqli_fetch_assoc($delivery_details);
         //$data['current']=$current_reliveries;
         $data['image'] = $row['image'];
+        $data['reviews']=$this->model('Delivery')->getReviewDetails();
             //$data=[];
         $this->view('dashboard/delivery', $data);
     }
@@ -71,6 +73,16 @@ class Delvery extends Controller{
         //$data['current']=$current_reliveries;
         $data['image'] = $row['image'];
         $this->view('dashboard/delivery',$data);
+    }
+    function cancelDelivery(){
+        $orderID = $_POST["orderID"];
+        $message=$this->model('Delivery')->cancelDelivery($orderID);
+        return $message;
+    }
+    function deliverJob(){
+        $orderID = $_POST["orderID"];
+        $message=$this->model('Delivery')->setReservationStateDelivered($orderID);
+        return $message;
     }
     
 }
