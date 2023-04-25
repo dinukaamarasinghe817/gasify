@@ -316,8 +316,8 @@
         }
 
         public function distributor($error=null) {
-            // $company_id = $_SESSION['user_id']; // company_id should be taken from session
-            $company_id=2;
+            $company_id = $_SESSION['user_id']; // company_id should be taken from session
+            // $company_id=2;
             $data = $this->model("Distributor")->distributorSignupForm($company_id);
 
             $data['error'] = $error;
