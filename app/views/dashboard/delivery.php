@@ -3,6 +3,7 @@
         $sidebar = new Navigation('delivery',$data['navigation']);
     ?>
     <section class="body">
+    <script src="http://localhost/mvc/public/js/Delivery/delivery.js"></script>
         <?php 
         $bodyheader = new BodyHeader($data);
         if ($data['navigation']=='dashboard') {

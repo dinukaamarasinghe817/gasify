@@ -73,6 +73,8 @@
             $data=[];
             $delivery_id=$_SESSION['user_id'];
             $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+            //$dispatched_delivery_count=$this->model('Delivery')->getPendingDeliveryCount();
+            //$completed_delivery_count=$this->model('Delivery')->getDeliveredOrdersCount();
             $row = mysqli_fetch_assoc($delivery_details);
             $data['navigation'] = 'dashboard';
             $data['image'] = $row['image'];
@@ -80,6 +82,9 @@
             $data['vehicle_type']=$row['vehicle_type'];
             $data['weight_limit']=$row['weight_limit'];
             $data['cost_per_km']=$row['cost_per_km'];
+            $data['dispatched_count']=$this->model('Delivery')->getPendingDeliveryCount()['count'];
+            $data['completed_count']=$this->model('Delivery')->getDeliveredOrdersCount()['count'];
+            $data['review_count']=$this->model('Delivery')->getReviewCount()['count'];
             //$data=[];
             $this->view('dashboard/delivery', $data);
         }
