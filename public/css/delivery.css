@@ -585,6 +585,7 @@ td button:hover{
 body {
     background: #fdfdfd;
 }
+
 label{
     font-family: poppins;
 }
@@ -1371,4 +1372,14 @@ select{
     height: 100%;
     padding: 15px;
     /* background-color: #31B857; */
+}
+.tt{
+    width: 40%;
+    height: 30%;
+    background-color: #02ff2c;
+}
+@media screen and(max-width: 500px) {
+    .tt{
+        background-color: #fb02ff;
+    }
 }

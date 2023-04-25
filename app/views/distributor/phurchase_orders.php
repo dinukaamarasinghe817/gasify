@@ -58,14 +58,14 @@ $user_id = $_SESSION['user_id'];
                                 $product_array[$j] = $product_id;
                                 $j++;
                                 $unit_price = number_format($row['unit_price']);
-                                
+
                                 $output .= '
                                 <tr class="data'.$row['product_id'].'">
                                     <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                     <td>'.$row['name'].'</td>
                                     <td>'.$unit_price.'.00</td>
                                     <td><input type="number" step="1" value=0 name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
-                                    <td class="subtotal">0</td>
+                                    <td class="subtotal">0.00</td>
                                 </tr>';
                             }
 
@@ -103,5 +103,5 @@ $user_id = $_SESSION['user_id'];
 </section>
 
 <?php
-$footer = new Footer();
+$footer = new Footer("distributor");
 ?>

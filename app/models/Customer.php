@@ -863,7 +863,7 @@ class Customer extends Model{
 
     /*=======================================select delivery method========================================================================= */
     //insert delivery distance ranges to reservation table and return delivery charge  
-    function insertdelivery_street($order_id,$customer_street,$customer_city){
+    function insertdelivery_street($order_id,$delivery_street,$delivery_city){
        
         //get dealer address as origin of delivery
         $dealer_id = $_SESSION['dealer_id'];
@@ -873,8 +873,8 @@ class Customer extends Model{
         $dealer_street = $row1['street'];
         $dealer_address = $dealer_street .$dealer_city;
 
-        $customer_address = $customer_street .$customer_city;
-        $distance = getDistance($dealer_address,$customer_address);  //take distance between customer and dealer address using google maps
+        $delivery_address = $delivery_street .$delivery_city;
+        $distance = getDistance($dealer_address,$delivery_address);  //take distance between customer and dealer address using google maps
        
 
         $order_products = $_SESSION['order_products'];
@@ -911,7 +911,7 @@ class Customer extends Model{
         }
         
         //update reservation table with delivery charge
-        $this ->update('reservation',['min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
+        $this ->update('reservation',['delivery_city'=>$delivery_city,'delivery_street'=>$delivery_city,'min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
 
         return $delivery_charge;
     }

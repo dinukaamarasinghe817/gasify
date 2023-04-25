@@ -13,9 +13,11 @@ class Compny extends Controller{
         $data['navigation'] = 'dealer';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['dealer']=$dealer_details;
         //$data['cc']=$row['account_no'];
@@ -27,56 +29,68 @@ class Compny extends Controller{
         $data['navigation'] = 'distributor';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $distributor_details = $this->model('Company')->getRegisteredDistributors($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $data['distributor']=$distributor_details;
         $this->view('dashboard/company', $data);
     }function products(){
         $data['navigation'] = 'products';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $product_details = $this->model('Company')->getProductDetails($company_id);
         $data['products']=$product_details;
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
             //$data=[];
         $this->view('dashboard/company', $data);
     }function regproducts(){
         $data['navigation'] = 'regproducts';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
             //$data=[];
         $this->view('dashboard/company', $data);
     }function regDealer(){
         $data['navigation'] = 'regDealer';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         //$product_details = $this->model('Company')->getProductDetails($company_id);
         //$data['products']=$product_details;
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $this->view('dashboard/company', $data);
     }function regDistributor(){
         $data['navigation'] = 'regDistributor';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         //$product_details = $this->model('Company')->getProductDetails($company_id);
         //$data['products']=$product_details;
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $this->view('dashboard/company', $data);
     }function updateProducts(){
         $data['navigation'] = 'updateProducts';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $product_details = $this->model('Company')->getProductDetails($company_id);
         //print_r($product_details);
         $data['products']=$product_details;
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $this->view('dashboard/company', $data);
     }
     function registerProducts(){
@@ -184,10 +198,12 @@ class Compny extends Controller{
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
         $dealer_details = $this->model('Company')->getRegisteredDealers($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $order_details=$this->model('Company')->getStockReqDetails($company_id);
         $product_details = $this->model('Company')->getProductDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['dealer']=$dealer_details;
         $data['order_details']=$order_details;
@@ -202,9 +218,11 @@ class Compny extends Controller{
         $data['navigation'] = 'limitquota';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $product_details = $this->model('Company')->getQuotaDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['quotaDetails']=$product_details;
         //$data['cc']=$row['account_no'];
@@ -233,9 +251,11 @@ class Compny extends Controller{
         $data['navigation'] = 'analysis';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $data['distNames'] = $distributor_details;
         $this->view('dashboard/company', $data);
     }
@@ -243,16 +263,21 @@ class Compny extends Controller{
         $data['navigation'] = 'reports';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
         $data['distNames'] = $distributor_details;
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $this->view('dashboard/company', $data);
     }
     public function companyReports(){
         $data['navigation'] = 'reportsCompany';
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $company_id=$_SESSION['user_id'];
+        $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $distributorID=mysqli_real_escape_string($conn,$_POST["distNames"]);
         $yearFrom=mysqli_real_escape_string($conn,$_POST['yearFrom']);
         $monthFrom=mysqli_real_escape_string($conn,$_POST['monthFrom']);
@@ -372,10 +397,9 @@ class Compny extends Controller{
         $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
         $data['distNames'] = $distributor_details;
         $company_id=$_SESSION['user_id'];
-        $company_details = $this->model('Company')->getCompanyImage($company_id);
         $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $data['distNames'] = $distributor_details;
         $this->view('dashboard/company',$data);
     }
@@ -383,10 +407,12 @@ class Compny extends Controller{
         $data['navigation'] = 'issuedorders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $order_details=$this->model('Company')->getIssuedStockReqDetails($company_id);
         $product_details = $this->model('Company')->getProductDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $data['order_details']=$order_details;
         $data['product_details']=$product_details;
         //$row = mysqli_fetch_assoc($dealer_details);
@@ -400,10 +426,12 @@ class Compny extends Controller{
         $data['navigation'] = 'delayedorders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $order_details=$this->model('Company')->getDelayedStockReqDetails($company_id);
         $product_details = $this->model('Company')->getProductDetails($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['order_details']=$order_details;
         $data['product_details']=$product_details;
@@ -595,9 +623,11 @@ class Compny extends Controller{
         $data['navigation'] = 'analysis';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
+        $user_id=mysqli_fetch_assoc($company_details);
+        $data['name']=$user_id['first_name'].' '.$user_id['last_name']; 
         $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
         $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
+        $data['image'] = $user_id['logo'];
         $data['distNames'] = $distributor_details;
         $this->view('dashboard/company', $data);  
         
