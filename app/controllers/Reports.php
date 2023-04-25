@@ -126,6 +126,21 @@ class Reports extends Controller{
         $res =$this->view('company/reports/salesreport',$data);
         //echo $res;
     }
+    public function companySale(){
+        $data=[];
+        $orderID= $_POST["orderID"];
+        $distID = $_POST["distID"];
+        $placedDate = $_POST["placedDate"];
+        $placedTime = $_POST["placedTime"];
+        $tableArr = $_POST["tableArr"];
+        $arr=json_decode($tableArr,true);
+        $data['orderID']=$orderID;
+        $data['distID']=$distID;
+        $data['placedDate']=$placedDate;
+        $data['placedTime']=$placedTime;
+        $data['tableArr']=$arr;
+        $res =$this->view('company/reports/purchaseorder',$data);
+    }
 
 }
 

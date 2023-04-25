@@ -2146,9 +2146,9 @@ class Body{
             echo '</table>';
             echo'</div>'; 
             echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
-            echo'<div style="background-color:dodgerblue;height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport()">';
+            echo'<div style="height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport()" class="generatePDF">';
             //echo'<a href="../Reports/salesCompany">Generate PDF</a></div>';
-            echo'Generate PDF</div>';
+            echo'Generate Report</div>';
             
             echo'</div>';
            
@@ -2285,15 +2285,15 @@ class Body{
                     if(!in_array($orderID,$processedOrders)){
                     $orders .=  '<div class="orderCard" >
                     <div class="orderRow">
-                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label>'.$orderID.'</div>
-                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Order ID :</label><label id="'.$orderID.'issued" value="'.$orderID.'">'.$orderID.'</label></div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label><label id="'.$orderID.'dist" value="'.$distName.'">'.$distName.'</label></div>
                     </div>
                     <div class="orderRow">
-                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
-                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label><label id="'.$orderID.'placedDate" value="'.$placedDate.'">'.$placedDate.'</label></div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label><label id="'.$orderID.'placedTime" value="'.$placedTime.'">'.$placedTime.'</label></div>
                     </div>
                     <div class="orderTbl" style="height:45%">
-                        <table class="styled-table">
+                        <table class="styled-table" id="'.$orderID.'table">
                             <thead>
                                 <tr>
                                     <th>Product name</th>
@@ -2330,7 +2330,7 @@ class Body{
                         <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
                     </div>
                     <div class="orderRow" style="height:8%">
-                        <div class="orderColumn" style="width:100%;display:flex;align-items:center;justify-content:center"><div class="getAnalysisButton" style="width:20%;display:flex;align-items:center;justify-content:center">Generate Report</div></div>
+                        <div class="orderColumn" style="width:100%;display:flex;align-items:center;justify-content:center"><div class="getAnalysisButton" style="width:20%;display:flex;align-items:center;justify-content:center" onClick="issueReport('.$orderID.')">Generate Report</div></div>
                     </div>
                     </div>';
                     }

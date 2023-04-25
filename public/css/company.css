@@ -1526,6 +1526,13 @@ input[type="text"]::placeholder{
     background-color: var(--button-blue-hover);
     cursor: pointer;
   }
+  .generatePDF{
+    background-color: var(--button-blue);
+  }
+  .generatePDF:hover{
+    cursor: pointer;
+    background-color: var(--button-blue-hover);
+  }
 /*=========================================================================================================*/
 
 

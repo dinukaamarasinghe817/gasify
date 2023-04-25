@@ -312,6 +312,36 @@ function submitReport() {
     xmlhttp.open("POST", "../Reports/salesCompany");
     xmlhttp.send(formData);
 }
-function ooo() {
-    console.log("hello world");
+function issueReport(orderID) {
+    var formData = new FormData();
+    //console.log(document.getElementById(orderID + "placedTime"))
+    formData.append("orderID", document.getElementById(orderID + "issued").getAttribute("value"));
+    formData.append("distID", document.getElementById(orderID + "dist").getAttribute("value"));
+    formData.append("placedDate", document.getElementById(orderID + "placedDate").getAttribute("value"));
+    formData.append("placedTime", document.getElementById(orderID + "placedTime").getAttribute("value"));
+    var table = document.getElementById(orderID + "table")
+    var tableArr = []
+    console.log(formData.get("orderID"))
+    console.log(formData.get("distID"))
+    console.log(formData.get("placedDate"))
+    console.log(formData.get("placedTime"))
+    for (let row of table.rows) {
+        var tempArr = []
+        for (let cell of row.cells) {
+            tempArr.push(cell.innerText)
+            console.log(cell.innerText);
+        }
+        tableArr.push(tempArr);
+    }
+    formData.append("tableArr", JSON.stringify(tableArr));
+    //console.log(formData.get("tableArr"));
+    //console.log(typeof (tableArr));
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    };
+    xmlhttp.open("POST", "../Reports/companySale");
+    xmlhttp.send(formData);
 }
