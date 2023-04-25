@@ -48,7 +48,7 @@ class Orders extends Controller{
 
         switch($error){
             case "1":
-                $data['toast'] = ['type' => 'success', 'message' => "You've successfully cancelled you order."];
+                $data['toast'] = ['type' => 'success', 'message' => "You've successfully cancelled your order."];
                 break;
         }
 
@@ -404,6 +404,7 @@ class Orders extends Controller{
                 $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Bank Deposit');
                 $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
                 $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
+                $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
                 $data['confirmation'] = '';
                 $this->view('customer/place_reservation/collecting_method',$data);
             }
@@ -459,8 +460,9 @@ class Orders extends Controller{
 
     }
 
-    //select delivery as collecting method
-    function select_delivery_method($order_id){
+    //select delivery as collecting method then get delivery address and display delivery charge
+    function select_delivery_method(){
+        $order_id = $_SESSION['order_id'];
         $data['order_id'] = $order_id;
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -484,13 +486,14 @@ class Orders extends Controller{
             $data['street'] = $row1['street'];
         }
 
-        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$data['city']);   //insert delivery street  and distance range to reservation table
+        // $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$data['city']);   //insert delivery street  and distance range to reservation table
+        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,45454,888888);   //insert delivery street  and distance range to reservation table
         $data['confirmation'] = '';
 
-        $this->view('customer/place_reservation/delivery_collecting_method',$data);
+        // $this->view('customer/place_reservation/delivery_collecting_method',$data);
     }
 
-    function getcollecting_method($collecting_method,$order_id){
+    function getcollecting_method($collecting_method){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -498,8 +501,8 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['image'] = $row1['image'];
         $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
         $_SESSION['collecting_method'] = $collecting_method;
+        $order_id = $_SESSION['order_id']; 
         $this -> model('Customer')->insertcollectingmethod($order_id);
         header('LOCATION:'.BASEURL.'/Dashboard/customer');
 

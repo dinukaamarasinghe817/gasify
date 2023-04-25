@@ -88,6 +88,14 @@
 
         //customer dashboard 
         public function customer($error = null){
+
+            //toast for place reservation
+            switch($error){
+                case "1":
+                    $data['toast'] = ['type' => 'success', 'message' => "You've successfully placed order."];
+                    break;
+            }
+
             $customer_id = $_SESSION['user_id'];
             //profile image
             $customer_details = $this->model('Customer')->getCustomerImage($customer_id);

@@ -1067,6 +1067,7 @@ label{
     background-color: #e53131;
 }
 
+
 .btn-blue:hover,
 .anchor-button:hover{
     background-color: var(--button-blue-hover);
@@ -1203,6 +1204,13 @@ label{
     gap: 20px;
 }
 
+.confirmation .delivery_charge_label{
+   width: 400px;
+}
+.confirmation .delivery_charge_textbox{
+    width: 400px;
+ }
+
 /* change delivery address pop up css */
 /* .confirmation .delivery_address{
     display: flex;
@@ -1224,6 +1232,7 @@ label{
     color: white;
     border-radius: 10px;
 }
+
 .confirmation .buttons button:last-child{
     background-color: var(--button-blue);
 }
