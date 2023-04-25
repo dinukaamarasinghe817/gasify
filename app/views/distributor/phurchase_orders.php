@@ -40,14 +40,13 @@ $user_id = $_SESSION['user_id'];
                     <table class="po styled-table">
                         <thead>
                             <tr>
-                                <th>Product ID</th>
+                                <th>Product</th>
                                 <th>Product Name</th>
                                 <th>Unit Price(Rs.)</th>
                                 <th>Quantity</th>
                                 <th>Subtotal(Rs.)</th>
                             </tr>
                         </thead>
-
                         <tbody>';
 
                         if(mysqli_num_rows($data['purchaseorder'])>0) {
@@ -58,13 +57,15 @@ $user_id = $_SESSION['user_id'];
                                 $product_id = $row['product_id'];
                                 $product_array[$j] = $product_id;
                                 $j++;
-
+                                $unit_price = number_format($row['unit_price']);
+                                
                                 $output .= '
                                 <tr class="data'.$row['product_id'].'">
                                     <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                     <td>'.$row['name'].'</td>
+                                    <td>'.$unit_price.'.00</td>
                                     <td><input type="number" step="1" value=0 name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
-                                    <td class="subtotal">Rs. 0</td>
+                                    <td class="subtotal">0</td>
                                 </tr>';
                             }
 
@@ -72,12 +73,14 @@ $user_id = $_SESSION['user_id'];
 
                             $output .= '
                                 <tr class="total">
+                                    <td>Total Amount</td>
                                     <td></td>
                                     <td></td>
-                                    <td>Total</td>
+                                    <td></td>
                                     <td class="amount">Rs. 0.00</td>
                                 </tr>
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
