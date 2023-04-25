@@ -29,6 +29,9 @@ $sidebar = new Navigation('admin','companies');
                             <?php endif; ?>
                         </select>
                     </div>
+                    <?php 
+                        $search = new Search([0,1]);
+                    ?>
                 </form>
                 <div class="content-data">
                     <table class="styled-table">

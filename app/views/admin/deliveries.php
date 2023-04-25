@@ -33,6 +33,9 @@ $sidebar = new Navigation('admin','delivery');
                     ?>
                 </select>
             </div>
+            <?php 
+                $search = new Search([0,1,2]);
+            ?>
         </form>
         <div class="content-data">
             <table class="styled-table">

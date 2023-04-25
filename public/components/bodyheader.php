@@ -56,8 +56,8 @@ class BodyHeader{
         echo '<section class="body-header">
                 <div class="body-header-left">
                    
-                    <p class="today">Today</p>
-                    <p class="date">'.$date.'</p>
+                <p class="date">'.$data['name'].'</p>
+                <p class="today">'.userRole().'</p>
                 </div>
                 <div class="body-header-right">
                     <button class="bell" onclick="location.href=\''.BASEURL.'/notification\'">

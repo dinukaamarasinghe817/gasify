@@ -119,7 +119,7 @@ class Admin extends Model
         return $data;
     }
     public function customers(){
-        $data['customers'] = $this->Query("SELECT * FROM users u INNER JOIN customer c ON u.user_id = c.customer_id WHERE c.verification_state = 'pending'");
+        $data['customers'] = $this->Query("SELECT * FROM users u INNER JOIN customer c ON u.user_id = c.customer_id WHERE c.ebill_verification_state = 'pending'");
         return $data;
     }
 
