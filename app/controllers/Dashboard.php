@@ -55,6 +55,9 @@
         public function company($error=null){
             $company_id=$_SESSION['user_id'];
             $company_details = $this->model('Company')->getCompanyImage($company_id);
+            $user_id=mysqli_fetch_assoc($company_details);
+            $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
+            //print_r( $user_id);
             $product_details = $this->model('Company')->getProductCount($company_id);
             $pendingReq = $this->model('Company')->getPendingReqCount($company_id);
             $distCount= $this->model('Company')->getDistributorCount($company_id);
@@ -63,9 +66,10 @@
             $data['reqCount']=$pendingReq;
             $data['distCount']=$distCount;
             $data['dealerCount']=$dealerCount;
+            //$data['name']="ffg";
             $row = mysqli_fetch_assoc($company_details);
             $data['navigation'] = 'dashboard';
-            $data['image'] = $row['logo'];
+            $data['image'] = $user_id['logo'];
             //$data=[];
             $this->view('dashboard/company', $data);
         }
@@ -82,6 +86,7 @@
             $data['vehicle_type']=$row['vehicle_type'];
             $data['weight_limit']=$row['weight_limit'];
             $data['cost_per_km']=$row['cost_per_km'];
+            $data['name']=$row['first_name'].' '.$row['last_name'];
             $data['dispatched_count']=$this->model('Delivery')->getPendingDeliveryCount()['count'];
             $data['completed_count']=$this->model('Delivery')->getDeliveredOrdersCount()['count'];
             $data['review_count']=$this->model('Delivery')->getReviewCount()['count'];

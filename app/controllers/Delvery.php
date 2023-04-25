@@ -12,6 +12,7 @@ class Delvery extends Controller{
         $pool_details=$this->model('Delivery')->getPoolDetails();
         $row = mysqli_fetch_assoc($delivery_details);
         $data['image'] = $row['image'];
+        $data['name']=$row['first_name'].' '.$row['last_name'];
         $data['pool']=$pool_details;
             //$data=[];
         $this->view('dashboard/delivery', $data);
@@ -24,6 +25,7 @@ class Delvery extends Controller{
         $row = mysqli_fetch_assoc($delivery_details);
         $data['current']=$current_reliveries;
         $data['image'] = $row['image'];
+        $data['name']=$row['first_name'].' '.$row['last_name'];
             //$data=[];
         $this->view('dashboard/delivery', $data);
     }
@@ -40,6 +42,7 @@ class Delvery extends Controller{
         $row = mysqli_fetch_assoc($delivery_details);
         //$data['current']=$current_reliveries;
         $data['image'] = $row['image'];
+        $data['name']=$row['first_name'].' '.$row['last_name'];
         $data['reviews']=$this->model('Delivery')->getReviewDetails();
             //$data=[];
         $this->view('dashboard/delivery', $data);
@@ -60,6 +63,7 @@ class Delvery extends Controller{
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
         //$current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
         $row = mysqli_fetch_assoc($delivery_details);
+        $data['name']=$row['first_name'].' '.$row['last_name'];
         //$data['current']=$current_reliveries;
         $data['image'] = $row['image'];
         $this->view('dashboard/delivery', $data);
@@ -70,6 +74,7 @@ class Delvery extends Controller{
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
         //$current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
         $row = mysqli_fetch_assoc($delivery_details);
+        $data['name']=$row['first_name'].' '.$row['last_name'];
         //$data['current']=$current_reliveries;
         $data['image'] = $row['image'];
         $this->view('dashboard/delivery',$data);
