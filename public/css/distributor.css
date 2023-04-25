@@ -341,8 +341,6 @@ body.blur > *::before{
     border: 2px solid var(--navmenu-gray-dark);
 } */
 
-
-
 .accordion .box{
     box-sizing: border-box;
     position: relative;
@@ -751,9 +749,7 @@ table tr:hover {
     width: 69.5%;
 }
 
-
 /* toggle button */
-
 .togglemain {
     /* position: absolute; */
     left: 7%;
@@ -764,7 +760,6 @@ table tr:hover {
     /* display: flex; */
     /* flex-direction: row; */
     /* justify-content:space-between; */
-
 }
 
 .togglemain .toggle {
@@ -776,7 +771,6 @@ table tr:hover {
     border-radius: 30px;
     transition: 0.3s;
     /* align-items: center; */
-
 }
 
 .togglemain .toggle .toggle-button {
@@ -789,7 +783,6 @@ table tr:hover {
     border-radius: 50%;
     cursor: pointer;
     transition: 0.3s;
-
 }
 
 .togglemain .toggle.active {
@@ -798,7 +791,6 @@ table tr:hover {
 
 .togglemain .toggle.active .toggle-button {
     left: 60%;
-
 }
 
 .togglemain .text {
@@ -811,6 +803,9 @@ table tr:hover {
     margin-top: 30px;
     font-size: var(--mediums);
     background-color: var(--navmenu-orange);
-
 }
 
+.littleproduct{
+    width: 40%;
+    height: auto;
+}

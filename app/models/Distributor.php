@@ -433,9 +433,7 @@ class Distributor extends Model
         return $completed;
     }
     
-
     //get details of distribution report
-
     public function reportdetails($distribution_no) {
         // $reportdata = array();
         // $query1 = $this->Query("SELECT * from purchase_order where distribution_id = '{$user_id}' and po_state='completed' );
@@ -591,6 +589,14 @@ class Distributor extends Model
         return $data;
     }
 
+    public function distributorstock() {
+        $query = $this->Query("SELECT product_id, name, unit_price, image
+        FROM product 
+        WHERE company_id  = 2");
+        return $query;
+    }
+
+    /*
     public function distributorStock($distributor_id,$tab){
         switch($tab){
             case "currentstock":
@@ -601,7 +607,7 @@ class Distributor extends Model
                 break;
 
             case "purchaseorder":
-                $result = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price, p.image as image
+                $query = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price, p.image as image
                 FROM distributor_capacity d INNER JOIN product p
                 ON d.product_id = p.product_id 
                 WHERE distributor_id = '$distributor_id'");
@@ -609,7 +615,6 @@ class Distributor extends Model
                 break;
 
             case "pohistory":
-                // get the distributor's stock information
                 $query2 = $this->Query("SELECT * FROM stock_request WHERE  distributor_id = '{$distributor_id}' ORDER BY stock_req_id DESC");
                 $purchase_orders = array();
 
@@ -635,6 +640,7 @@ class Distributor extends Model
                 break;
         }
     } 
+    */
     
     // signup
     public function getProducts($company_id){
