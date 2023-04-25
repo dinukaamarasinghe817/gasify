@@ -991,11 +991,12 @@ div div.input{
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 5px;
+    /* margin-top: 5px; */
 }
 div div.input.half{
     width: 48%;
 }
+
 input,select{
     /* position: relative; */
     padding: 10px;
@@ -1006,6 +1007,34 @@ input,select{
     box-sizing: border-box;
     border: 2px solid var(--table-gray);
     /* font-family: Poppins; */
+}
+.filters{
+    margin-top: 5px;
+}
+.filters div.input{
+    display: flex;
+    flex-direction: column;
+}
+.searchbox{
+    margin-left: auto;
+    display: flex;
+}
+.searchbox .searchbar{
+    margin-top: auto;
+    margin-left: 0px;
+    border-left: none;
+}
+.searchbar:focus{
+    outline: none;
+}
+.searchbox img{
+    margin-top: auto;
+    margin-bottom: 10px;
+    background-color: var(--navmenu-orange-dark);
+    height: 20px;
+    padding: 10px;
+    width: 20px;
+    border-radius: 5px 0px 0px 5px;
 }
 .button{
     padding: 10px;

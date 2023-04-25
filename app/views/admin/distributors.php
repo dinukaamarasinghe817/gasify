@@ -42,6 +42,9 @@ $sidebar = new Navigation('admin','distributors');
                             ?>
                         </select>
                     </div>
+                    <?php 
+                        $search = new Search([0,1]);
+                    ?>
                 </form>
                 <div class="content-data">
                     <table class="styled-table">
@@ -68,7 +71,7 @@ $sidebar = new Navigation('admin','distributors');
                                             <td>'.$row['company'].'</td>
                                             <td>'.$row['vehicle_count'].'</td>
                                             <td>'.number_format($row['quantity'],2).' Kg</td>
-                                            <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/distributor/'.$row['user_id'].'/profile/admin/distributorprofile" >View Profile</a></td>
+                                            <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/distributor/'.$row['user_id'].'/profile/admin/distributorprofile" >Profile</a></td>
                                         </tr>';
                                 }
                             }else{

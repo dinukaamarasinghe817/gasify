@@ -204,4 +204,29 @@ function getDistance($origin, $destination) {
         return false;
     }
 }
+
+function userRole(){
+    $role = $_SESSION['role'];
+    switch($role){
+        case 'admin':
+            $output = "Administrator";
+            break;
+        case 'customer':
+            $output = "Customer";
+            break;
+        case 'dealer':
+            $output = "Dealer";
+            break;
+        case 'distributor':
+            $output = "Distributor";
+            break;
+        case 'company':
+            $output = "Company";
+            break;
+        case 'delivery':
+            $output = "Delivery";
+            break;
+    }
+    return $output;
+}
 ?>

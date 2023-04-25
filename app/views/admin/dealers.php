@@ -42,6 +42,9 @@ $sidebar = new Navigation('admin','dealers');
                             ?>
                         </select>
                     </div>
+                    <?php 
+                        $search = new Search([0,1,2,3]);
+                    ?>
                 </form>
                 <div class="content-data">
                     <table class="styled-table">
