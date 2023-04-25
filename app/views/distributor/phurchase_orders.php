@@ -58,7 +58,7 @@ $user_id = $_SESSION['user_id'];
                                 $product_array[$j] = $product_id;
                                 $j++;
                                 $unit_price = number_format($row['unit_price']);
-                                
+
                                 $output .= '
                                 <tr class="data'.$row['product_id'].'">
                                     <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
@@ -103,5 +103,5 @@ $user_id = $_SESSION['user_id'];
 </section>
 
 <?php
-$footer = new Footer();
+$footer = new Footer("distributor");
 ?>
