@@ -65,7 +65,7 @@ $user_id = $_SESSION['user_id'];
                                     <td>'.$row['name'].'</td>
                                     <td>'.$unit_price.'.00</td>
                                     <td><input type="number" step="1" value=0 name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
-                                    <td class="subtotal">0</td>
+                                    <td class="subtotal">0.00</td>
                                 </tr>';
                             }
 
