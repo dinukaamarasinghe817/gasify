@@ -8,13 +8,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
         $order_id = $_SESSION['order_id'];
+        
     ?>
 
     <div class="under_topbar">
     <script>
-        // window.onload = function() {
-        //     customerprompt('deliverymethod','/Orders/getcollecting_method/Pickup/','/Orders/getcollecting_method/Pickup/');
-        // };
+        window.onload = function() {
+            customerprompt('deliverymethod','<?php $order_id?>','/Orders/getcollecting_method/Pickup/');
+        };
     </script>
         <div class="subtitle">
             <h3>Collecting Method</h3>
