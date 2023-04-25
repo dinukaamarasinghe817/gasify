@@ -52,44 +52,10 @@
             // for the profile component at the front end
             $data['mode'] = 'edit';
             $data['user'] = $role;
-            
-            // for body header details of the accessor
-            switch($role){
-                case 'dealer':
-                    $model = "Dealer";
-                    $func = "getDealer";
-                    break;
-                case 'customer':
-                    $model = "Customer";
-                    $func = "getCustomerImage";
-                    break;
-                case 'distributor':
-                    $model = "Distributor";
-                    $func = "getDistributorImage";
-                    break;
-                case 'delivery':
-                    $model = "Delivery";
-                    $func = "getDeliveryImage";
-                    break;
-                case 'company':
-                    $model = "Company";
-                    $func = "getCompanyImage";
-                    break;
-                case 'admin':
-                    $model = "Admin";
-                    $func = "getAdmin";
-                    break;
-            }
-            $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
-            // $data['image'] = $row['image'];
-            if(isset($row['image'])){$data['image'] = $row['image'];}
-            else if(isset($row['logo'])){$data['image'] = $row['logo'];}
-            else{}
-            $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
-            // if($toast != null){
-            //     $data['toast'] = $toast;
-            // }
+            if($toast != null){
+                $data['toast'] = $toast;
+            }
             $this->view($viewfolder.'/'.$viewfile,$data);
         }
 
@@ -109,44 +75,7 @@
             // for the profile component at the front end
             $data['mode'] = 'preview';
             $data['user'] = $role;
-            
-            // for body header details of the accessor
-            switch($_SESSION['role']){
-                case 'dealer':
-                    $model = "Dealer";
-                    $func = "getDealer";
-                    break;
-                case 'customer':
-                    $model = "Customer";
-                    $func = "getCustomerImage";
-                    break;
-                case 'distributor':
-                    $model = "Distributor";
-                    $func = "getDistributorImage";
-                    break;
-                case 'delivery':
-                    $model = "Delivery";
-                    $func = "getDeliveryImage";
-                    break;
-                case 'company':
-                    $model = "Company";
-                    $func = "getCompanyImage";
-                    break;
-                case 'admin':
-                    $model = "Admin";
-                    $func = "getAdmin";
-                    break;
-            }
-            $row = mysqli_fetch_assoc($this->model($model)->$func($this->user_id));
-            // $data['image'] = $row['image'];
-            if(isset($row['image'])){$data['image'] = $row['image'];}
-            else if(isset($row['logo'])){$data['image'] = $row['logo'];}
-            else{}
-            $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
-            // if($toast != null){
-            //     $data['toast'] = $toast;
-            // }
             $data['viewfolder'] = $viewfolder;
             $data['viewfile'] = $viewfile;
             $this->view($viewfolder.'/'.$viewfile,$data);

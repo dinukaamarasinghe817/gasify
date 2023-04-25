@@ -14,10 +14,6 @@ class Orders extends Controller{
     function dealer($tab1, $tab2=null){
         $dealer_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
-        $dealer_details = $this->model('Dealer')->getDealer($dealer_id);
-        $row = mysqli_fetch_assoc($dealer_details);
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['orders'] = $this->model('Dealer')->dealerOrders($dealer_id,$tab1,$tab2);
         // var_dump($data);
         $data['verification'] = '';
@@ -755,9 +751,6 @@ class Orders extends Controller{
     /*****************************************************************************************************/
 
     public function validatepayments($tab){
-        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
-        $data['image'] = $row['image'];
         $data['activetab'] = $tab;
         $this->view('admin/payments',$data);
     }

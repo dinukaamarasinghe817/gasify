@@ -145,6 +145,8 @@ class User extends Model
                 $user_id = $row['user_id'];
                 $_SESSION['user_id'] = "$user_id";
                 $_SESSION['role'] = $row['type'];
+                $_SESSION['user_name'] = $row['first_name'].' '.$row['last_name'];
+                $_SESSION['profile_image'] = $this->getProfileImage();
                 $data['success'] = true;
             }else{
                 if(!isset($_SESSION['login_attempt'])){
@@ -161,6 +163,37 @@ class User extends Model
             $data['error'] = "4";
         }
         return $data;
+    }
+
+    public function getProfileImage(){
+        $output;
+        switch($_SESSION['role']){
+            case 'admin':
+                $output = mysqli_fetch_assoc($this->read('admin',"admin_id = ".$_SESSION['user_id']));
+                $output = $output['image'];
+                break;
+            case 'dealer':
+                $output = mysqli_fetch_assoc($this->read('dealer',"dealer_id = ".$_SESSION['user_id']));
+                $output = $output['image'];
+                break;
+            case 'customer':
+                $output = mysqli_fetch_assoc($this->read('customer',"customer_id = ".$_SESSION['user_id']));
+                $output = $output['image'];
+                break;
+            case 'distributor':
+                $output = mysqli_fetch_assoc($this->read('dealer',"dealer_id = ".$_SESSION['user_id']));
+                $output = $output['image'];
+                break;
+            case 'company':
+                $output = mysqli_fetch_assoc($this->read('dealer',"dealer_id = ".$_SESSION['user_id']));
+                $output = $output['logo'];
+                break;
+            case 'delivery':
+                $output = mysqli_fetch_assoc($this->read('dealer',"dealer_id = ".$_SESSION['user_id']));
+                $output = $output['image'];
+                break;
+        }
+        return $output;
     }
 
     public function dealerSignup($name,$first_name,$last_name,$email,
@@ -643,6 +676,7 @@ class User extends Model
     public function setdealerprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            $_SESSION['user_name'] = $data['first_name'].' '.$data['last_name'];
             // image type validity jpg png jpeg
             if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
                 $data['toast'] = '1';
@@ -656,6 +690,7 @@ class User extends Model
                 if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
                     echo "image uploaded\n";
                     $result2 = $this->update('dealer',array('name'=>$data['name'],'city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image']),"dealer_id = $user_id");
+                    $_SESSION['profile_image'] = $data['image'];
                     // echo "hello\n";
                 }else{
                     $data['toast'] = '2';
@@ -703,6 +738,7 @@ class User extends Model
     public function setdistributorprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            $_SESSION['user_name'] = $data['first_name'].' '.$data['last_name'];
             // image type validity jpg png jpeg
             if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
                 $data['toast'] = '1';
@@ -716,6 +752,7 @@ class User extends Model
                 if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
                     // echo "image uploaded\n";
                     $result2 = $this->update('distributor',array('city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image'],'hold_time'=>$data['hold_time']),"distributor_id = $user_id");
+                    $_SESSION['profile_image'] = $data['image'];
                     // echo "hello\n";
                 }else{
                     $data['toast'] = '2';
@@ -755,6 +792,7 @@ class User extends Model
     public function setcompanyprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            $_SESSION['user_name'] = $data['first_name'].' '.$data['last_name'];
             // image type validity jpg png jpeg
             if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
                 $data['toast'] = '1';
@@ -768,6 +806,7 @@ class User extends Model
                 if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
                     // echo "image uploaded\n";
                     $result2 = $this->update('company',array('city'=>$data['city'],'street'=>$data['street'],'logo'=>$data['image'],'name'=>$data['company_name']),"company_id = $user_id");
+                    $_SESSION['profile_image'] = $data['image'];
                     // echo "hello\n";
                 }else{
                     $data['toast'] = '2';
@@ -793,6 +832,7 @@ class User extends Model
     public function setdeliveryprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            $_SESSION['user_name'] = $data['first_name'].' '.$data['last_name'];
             // image type validity jpg png jpeg
             if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
                 $data['toast'] = '1';
@@ -806,6 +846,7 @@ class User extends Model
                 if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
                     // echo "image uploaded\n";
                     $result2 = $this->update('delivery_person',array('city'=>$data['city'],'street'=>$data['street'],'image'=>$data['image'],'vehicle_type'=>$data['vehicle_type'],'vehicle_no'=>$data['vehicle_no'],'weight_limit'=>$data['weight_limit'],'cost_per_km'=>$data['cost_per_km']),"delivery_id = $user_id");
+                    $_SESSION['profile_image'] = $data['image'];
                     // echo "hello\n";
                 }else{
                     $data['toast'] = '2';
@@ -831,6 +872,7 @@ class User extends Model
     public function setcustomerprofile($user_id,$tab,$data){
         if($tab == 'profile'){
             $result1 = $this->update('users',array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']),"user_id = $user_id");
+            $_SESSION['user_name'] = $data['first_name'].' '.$data['last_name'];
             // image type validity jpg png jpeg
             if(isset($data['image_name']) && isNotValidImageFormat($data['image_name'])){
                 $data['toast'] = '1';
@@ -840,10 +882,11 @@ class User extends Model
             if(isset($data['image_name'])){
                 $data['image'] = getImageRename($data['image_name'],$data['tmp_name']);
                 $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
-                echo $data['image']."\n";
+                // echo $data['image']."\n";
                 if(move_uploaded_file($data['tmp_name'], $path.($data['image']))){
-                    echo "image uploaded\n";
+                    // echo "image uploaded\n";
                     $result2 = $this->update('customer',array('city'=>$data['city'],'street'=>$data['street'],'contact_no'=>$data['contact_no'],'image'=>$data['image'],'type'=>$data['type']),"customer_id = $user_id");
+                    $_SESSION['profile_image'] = $data['image'];
                     // echo "hello\n";
                 }else{
                     $data['toast'] = '2';

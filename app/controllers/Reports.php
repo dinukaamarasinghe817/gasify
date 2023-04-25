@@ -61,8 +61,6 @@ class Reports extends Controller{
         
         $data = $this->model("Dealer")->getReportInfo($start_date,$end_date,$order_by);
         $row = mysqli_fetch_assoc($this->model('Dealer')->getDealer($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['date_joined'] = $row['date_joined'];
         $this->view('dealer/reports',$data);
     }
@@ -93,9 +91,6 @@ class Reports extends Controller{
         $to_date = '';
         $order_by = '';
         $data = $this->model("Admin")->getReportInfo($start_date,$to_date,$order_by);
-        $row = mysqli_fetch_assoc($this->model('Admin')->getAdmin($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $this->view('admin/reports',$data);
     }
 

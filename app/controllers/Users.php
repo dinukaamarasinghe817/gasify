@@ -18,9 +18,6 @@ class Users extends Controller{
             $option = "stock";
         }
         $data = $this->model("Admin")->companies($option);
-        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $this->view('admin/companies', $data);
     }
     
@@ -36,9 +33,6 @@ class Users extends Controller{
             $option2 = "all";
         }
         $data = $this->model("Admin")->distributors($option1, $option2);
-        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $this->view('admin/distributors', $data);
     }
 
@@ -54,9 +48,6 @@ class Users extends Controller{
             $option2 = "all";
         }
         $data = $this->model("Admin")->dealers($option1, $option2);
-        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $this->view('admin/dealers', $data);
     }
 
@@ -80,9 +71,6 @@ class Users extends Controller{
                 $data = $this->model("Admin")->deliverycharges();
             }
         }
-        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         if($tab != null){
             $this->view('admin/deliverycharges', $data);
         }else{
@@ -92,9 +80,6 @@ class Users extends Controller{
 
     function customers(){
         $data = $this->model("Admin")->customers();
-        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
-        $data['image'] = $row['image'];
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $this->view('admin/customers', $data);
     }
 

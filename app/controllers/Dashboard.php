@@ -18,8 +18,6 @@
             }else{
                 $option = 'today';
             }
-            $dealer_details = $this->model('Dealer')->getDealer($this->user_id);
-            $row = mysqli_fetch_assoc($dealer_details);
             
             $data = $this->model('Dealer')->dashboard($this->user_id,$option);
             // $data['stock'] = $result['stock'];
@@ -43,8 +41,6 @@
             //                         ]
             //             ]
             // ]
-            $data['image'] = $row['image'];
-            $data['name'] = $row['first_name'].' '.$row['last_name'];
             $data['navigation'] = 'dashboard';
 
             //echo $data['image'];
@@ -161,11 +157,7 @@
                 $option2 = 'all';
             }
             $data = $this->model('Admin')->dashboard($this->user_id,$option,$option2);
-            $row = mysqli_fetch_assoc($this->model('Admin')->getAdmin($this->user_id));
-            $data['name'] = $row['first_name'].' '.$row['last_name'];
-            $data['image'] = $row['image'];
             $data['navigation'] = 'dashboard';
-            // var_dump($data);
             $this->view('dashboard/admin', $data);
         }
 
