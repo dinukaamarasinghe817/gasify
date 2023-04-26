@@ -39,7 +39,9 @@ a,button{
 
 
 .middle_img img{
-    width: 700px;
+    width: 1350px;
+    height: 500px;
+    border-radius: 5px;
 }
 
 

@@ -482,8 +482,7 @@ class Orders extends Controller{
             $data['street'] = $row1['street'];
         }
 
-        // $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$data['city']);   //insert delivery street  and distance range to reservation table
-        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,45454,888888);   //insert delivery street  and distance range to reservation table
+        $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$data['city']);   //insert delivery street  and distance range to reservation table
         $data['confirmation'] = '';
 
         // $this->view('customer/place_reservation/delivery_collecting_method',$data);

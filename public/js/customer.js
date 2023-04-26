@@ -100,7 +100,7 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         <div class="buttons">
             <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverymethod');">Cancel</button>
             <button  class= "btn-blue" onclick="customerprompt();customerprompt('changedeliveryaddress','http://localhost/mvc/Orders/select_delivery_method');">Edit</button>
-            <button class="btn-blue" onclick="location.href='${forwardlink}'">Confirm</button>
+            <button class="btn-blue" onclick="customerprompt();customerprompt('selectdelivery','http://localhost/mvc/Orders/getcollecting_method/Delivery/');">Ok</button>
         </div> `;
 
     }
@@ -109,15 +109,24 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
     else if(variant == 'changedeliveryaddress'){
         body = `<h2>Change Delivery Address</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
-        <p>Check your current delivery address is correct.If you need to change your delivery address around selected city,change it!</p>
+        <p>If you need to change your delivery address around selected city,change it!</p>
         <form  id="myForm" action="${forwardlink}" method="POST"> 
-            <input id="street" name="address" placeholder="New Street" required>
+            <input id="new_street" name="address" placeholder="New Street" required>
             <input name="new_city" value ="Homagama" readonly > 
         </form>
         <div class="buttons">
-            <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverychargeandaddress','http://localhost/mvc/Orders/getcollecting_method/Delivery/');">Cancel</button>
-            <button class="btn-blue" onclick = "customerprompt();customerprompt('deliverychargeandaddress','http://localhost/mvc/Orders/getcollecting_method/Delivery/');">OK</button>
+            <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverychargeandaddress');">Cancel</button>
+            <button class="btn-blue" onclick = "customerprompt();customerprompt('deliverychargeandaddress');">OK</button>
         </div> `;
+
+    } else if(variant == 'selectdelivery'){
+        body = `<h2>Delivery Option</h2>
+        <img src="http://localhost/mvc/public/img/icons/deliverycar.png" alt="">
+        <p>Confirm delivery option as your collecting method!</p>
+        <div class="buttons">
+            <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverymethod');">Cancel</button>
+            <button class="btn-blue" onclick="location.href='${forwardlink}'">Confirm</button>   
+        </div>  `;
 
     }
     else{
