@@ -59,8 +59,8 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                 <div class="content">
                                     <div class="details">
                                         <span><strong>Dealer ID : '.$dealer_id.' </strong></span>
-                                        <span><strong>Date : '.$date.' </strong></span>
-                                        <span><strong>Time : '.$time.' </strong></span>
+                                        <span><strong>Placed Date : '.$date.' </strong></span>
+                                        <span><strong>Placed Time : '.$time.' </strong></span>
                                         <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button></span>
                                     </div>
                                     <hr>

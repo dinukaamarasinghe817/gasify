@@ -251,16 +251,13 @@ class Distributor extends Model
         return $pending;
     }
 
-    // finished a pending distribution -> change the state to "completed"
-    // public function finishpendingdistributions($user_id,$distribution_id) {
-    //     $user_id = $_SESSION['user_id'];
-
-    //     $distribution_id = $_SESSION['po_id'];
+     // accept a pending gas order -> change the state to "completed"
+     public function acceptGasOrders($order_id) {
+        $user_id = $_SESSION['user_id'];
         
-    //     $query = $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
-    //     return $query;
-    // }
-
+        $query = $this->Query("UPDATE stock_request SET stock_req_state = 'accepted' WHERE distributor_id = '{$user_id}' AND stock_req_id = '{$order_id}' ");
+        return $query;
+    }
 
     // Distributor - gas order list - Completed Orders
     public function completedGasOrders($user_id) {
@@ -310,6 +307,16 @@ class Distributor extends Model
         return $accepted;
     }
 
+    // complete accepted orders -> change the state to "completed"
+    public function completeAcceptOrders($order_id) {
+        $user_id = $_SESSION['user_id'];
+        
+        $query = $this->Query("UPDATE stock_request SET stock_req_state = 'completed' WHERE distributor_id = '{$user_id}' AND stock_req_id = '{$order_id}' ");
+        return $query;
+    }
+
+
+
     // count of received all gas orders
     public function countReceivedOrders($user_id, $option) {
         $today = date('Y-m-d');
@@ -356,6 +363,15 @@ class Distributor extends Model
             }
         }
         return $pending;
+    }
+
+     // finished a pending distribution -> change the state to "completed"
+    public function finishpendingdistributions($distribution_id) {
+        $user_id = $_SESSION['user_id'];
+        // $distribution_id = $_SESSION['po_id'];
+        
+        $query = $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+        return $query;
     }
 
     // dashboard -> count of pending distributions

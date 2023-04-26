@@ -688,6 +688,13 @@ class Orders extends Controller{
         $this->view('distributor/placed_pending',$data);
 
     }
+
+    // change the state of pending orders to accept orders
+    public function acceptorder($order_id) {
+        $this->model("Distributor")->acceptGasOrders($order_id);
+        $this->dis_placed_pending();
+    }
+
     // Gas Orders -> Places orders list , accepted gas orders
     public function dis_placed_accepted() {
         $user_id = $_SESSION['user_id'];
@@ -704,6 +711,12 @@ class Orders extends Controller{
 
     }
 
+    // complete accepted order -> change the state to "completed"
+    public function completeAcceptedOrder($order_id) {
+        $this->model("Distributor")->completeAcceptOrders($order_id);
+        $this->dis_placed_accepted();
+    }
+    
     // Gas Orders -> Places orders list , completed gas orders
     public function dis_placed_completed() {
         $user_id = $_SESSION['user_id'];
