@@ -738,8 +738,14 @@ class Orders extends Controller{
     /*****************************************************************************************************/
 
     public function validatepayments($tab){
-        $data['activetab'] = $tab;
+        $data = $this->model('Admin')->getPaymentVerifications($tab);
         $this->view('admin/payments',$data);
+    }
+
+    public function validatepaymentsubmit($validity,$tab,$order_id){
+        $validity = ($validity == 'valid') ? true : false;
+        $data = $this->model('Admin')->validatepaymentsubmit($validity,$tab,$order_id);
+        header('location:'.BASEURL.'/orders/validatepayments/'.$tab.'');
     }
 
 }

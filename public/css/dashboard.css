@@ -1322,3 +1322,11 @@ label{
     left: 0;
     rotate: -90deg;
 }
+
+.empty-state{
+    /* width: 100%; */
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 30px;
+}
