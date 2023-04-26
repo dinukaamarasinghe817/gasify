@@ -251,7 +251,15 @@ class Distributor extends Model
         return $pending;
     }
 
-    
+    // finished a pending distribution -> change the state to "completed"
+    // public function finishpendingdistributions($user_id,$distribution_id) {
+    //     $user_id = $_SESSION['user_id'];
+
+    //     $distribution_id = $_SESSION['po_id'];
+        
+    //     $query = $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+    //     return $query;
+    // }
 
 
     // Distributor - gas order list - Completed Orders

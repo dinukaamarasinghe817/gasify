@@ -693,17 +693,6 @@ table tr:hover {
     text-align: center;
 }
 
-.inside{
-    padding: 12px;
-    background-color: var(--button-orange-hover);
-    color: white;
-    border-radius: 10px;
-    border: none;
-    width: 15%;
-    margin-top: 10px;
-    margin-left: 85%;
-}
-
 .details {
     display: flex;
     /* flex-direction: column; */
@@ -823,3 +812,18 @@ table tr:hover {
     font-weight: bold;
     font-size: var(--small);
 }
+
+.inside {
+    width: 180px;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+    margin-top: 1%;
+    background-color: var(--button-orange-hover);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: var(--small);
+}
+
+

@@ -19,11 +19,14 @@ class GasDistributions extends Controller {
 
         $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
 
-
         $this->view('distributor/pending_distributions', $data);
-
-        
+   
     }
+
+    // public function donepending($user_id,$distribution_id) {
+    //     $this->model("Distributor")->finishpendingdistributions($user_id,$distribution_id);
+    //     $this->pending_distributions();
+    // }
 
     public function completed_distributions() {
         $user_id = $_SESSION['user_id'];
