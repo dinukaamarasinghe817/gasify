@@ -1339,7 +1339,7 @@ class User extends Model
         $to = $email;
         $subject = "Gasify: Verify your account";
         $message = "Please use below link to verify your account.";
-        $link = BASEURL."/signup/verifyemail/$dealer_id/$token";
+        $link = BASEURL."/signup/verifyemail/$distributor_id/$token";
         //$link = BASEURL."/controller/method/params";
         // sendResetLink($name, $row['email'], $token);
         //Create an instance; passing `true` enables exceptions
@@ -1361,10 +1361,10 @@ class User extends Model
         date_default_timezone_set("Asia/Colombo");
         $time = date('H:i');
         $date = date('Y-m-d');
-        $message = "Hi $first_name $last_name, Before any further processing please setup your stripe public and restricted
-        keys on your <strong>Profile -> Bank Details</strong> section.";
+        // $message = "Hi $first_name $last_name, Before any further processing please setup your stripe public and restricted
+        // keys on your <strong>Profile -> Bank Details</strong> section.";
         // sending notification
-        $this->insert('notifications',['user_id' => $distributor_id,'date'=> $date,'time'=> $time,'type' => 'Setup Stripe details','message' => $message,'state' => 'delivered']);
+        // $this->insert('notifications',['user_id' => $distributor_id,'date'=> $date,'time'=> $time,'type' => 'Setup Stripe details','message' => $message,'state' => 'delivered']);
         
         // if successfully registred and set capacity
         if($query1 && $query3){

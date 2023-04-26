@@ -58,6 +58,7 @@
             $pendingReq = $this->model('Company')->getPendingReqCount($company_id);
             $distCount= $this->model('Company')->getDistributorCount($company_id);
             $dealerCount= $this->model('Company')->getDealerCount($company_id);
+            $lowStockProducts = $this->model('Company')->getProductDetails($company_id);
             $data['products']=$product_details;
             $data['reqCount']=$pendingReq;
             $data['distCount']=$distCount;
