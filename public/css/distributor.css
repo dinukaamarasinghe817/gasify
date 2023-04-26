@@ -794,9 +794,12 @@ table tr:hover {
     background-color: var(--navmenu-orange);
 }
 
-.littleproduct{
-    width: 40%;
-    height: auto;
+.littleproduct {
+    height: 120px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: var(--table-gray);
+
 }
 
 .btn4 {
