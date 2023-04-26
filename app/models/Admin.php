@@ -78,7 +78,7 @@ class Admin extends Model
         IFNULL(SUM(dk.quantity*p.weight),0) as quantity
         FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id
         LEFT JOIN company c ON d.company_id = c.company_id
-        LEFT JOIN dealer_keep dk ON dk.dealer_id = d.distributor_id
+        LEFT JOIN dealer_keep dk ON dk.dealer_id = d.dealer_id
         LEFT JOIN product p ON dk.product_id = p.product_id
         LEFT JOIN (SELECT * FROM reservation WHERE order_state = 'Completed') r ON d.dealer_id = r.dealer_id";
         if($option1 != 'all' && $option2 != 'all'){
