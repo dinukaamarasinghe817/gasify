@@ -103,7 +103,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button class="btn4">Done</button>
+                                    <button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Done</button>
                                 </div>
                             </div>';
                                         echo $output;
