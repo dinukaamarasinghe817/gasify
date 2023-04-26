@@ -688,6 +688,7 @@ class Orders extends Controller{
         $this->view('distributor/placed_pending',$data);
 
     }
+
     // Gas Orders -> Places orders list , accepted gas orders
     public function dis_placed_accepted() {
         $user_id = $_SESSION['user_id'];
@@ -703,7 +704,7 @@ class Orders extends Controller{
         $this->view('distributor/placed_accepted',$data);
 
     }
-
+    
     // Gas Orders -> Places orders list , completed gas orders
     public function dis_placed_completed() {
         $user_id = $_SESSION['user_id'];

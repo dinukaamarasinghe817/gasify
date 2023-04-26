@@ -112,8 +112,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         </tr>          
                                         </tbody>
                                     </table>
-                                    <button class="btn4">Accept Order</button>
-
+                                   
                                 </div> 
                             </div>';
                             echo $output;

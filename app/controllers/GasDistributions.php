@@ -23,10 +23,10 @@ class GasDistributions extends Controller {
    
     }
 
-    // public function donepending($user_id,$distribution_id) {
-    //     $this->model("Distributor")->finishpendingdistributions($user_id,$distribution_id);
-    //     $this->pending_distributions();
-    // }
+    public function donepending($distribution_id) {
+        $this->model("Distributor")->finishpendingdistributions($distribution_id);
+        $this->pending_distributions();
+    }
 
     public function completed_distributions() {
         $user_id = $_SESSION['user_id'];
