@@ -112,7 +112,8 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         </tr>          
                                         </tbody>
                                     </table>
-                                    <button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button>
+                                    <button class="btn4">Accept Order</button>
+
                                 </div> 
                             </div>';
                             echo $output;

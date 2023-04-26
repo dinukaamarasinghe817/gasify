@@ -61,6 +61,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         <span><strong>Dealer ID : '.$dealer_id.' </strong></span>
                                         <span><strong>Date : '.$date.' </strong></span>
                                         <span><strong>Time : '.$time.' </strong></span>
+                                        <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button></span>
                                     </div>
                                     <hr>
 
@@ -102,7 +103,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button class="btn4">Done</button>
+                                    <button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Done</button>
                                 </div>
                             </div>';
                                         echo $output;
