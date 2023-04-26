@@ -624,22 +624,6 @@ class Orders extends Controller{
         $this->view('distributor/phurchase_orders',$data);  
 
     }
-    //  public function distributor($param=null, $error=null) {
-    //     // navigation and active tab in body
-    //     $data['navigation'] = 'orders';
-    //     $data['tab'] = $param;
-    //     if($error != null) {
-    //         $data['toast'] = $error;}
-
-    //     // profile picture & notifications
-    //     $distributor_details = $this->model('Distributor')->getDistributor($this->user_id);
-    //     $row = mysqli_fetch_assoc($distributor_details);
-    //     $data['image'] = $row['image'];
-    //     $data['name'] = $row['first_name'].' '.$row['last_name'];
-    //     $data[$data['tab']] = $this->model('Distributor')->distributorStock($this->user_id); 
-    //     $this->view('distributor/phurchase_orders',$data);  
-
-    // }
 
     public function purchase_order($param=null) {
         $productid = $_SESSION['productarray'];

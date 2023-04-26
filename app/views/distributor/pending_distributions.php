@@ -33,9 +33,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                     </div>
                 <br>
 
-
                 <div class="accordion new">
-
                     <?php 
                         $pendings = $data['pending_distributions'];
                         foreach($pendings as $pending) {
@@ -84,7 +82,6 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             $quantity = $row2['quantity'];
 
                                             $subtotal = $unit_price * $quantity;
-                                            // $subtotal = number_format($subtotal).'.00';
 
                                             $output .= '
                                                 <tr>
@@ -95,7 +92,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                 </tr>';
                                                 $total += $subtotal;           
                                         }
-                                        // $total = number_format($total).'.00';
+                                       
                                         $output.='
                                             <tr>
                                                 <td><b>Total Amount</b></td>
@@ -105,6 +102,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <button class="btn4">Done</button>
                                 </div>
                             </div>';
                                         echo $output;
