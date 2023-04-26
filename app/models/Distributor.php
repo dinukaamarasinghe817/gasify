@@ -251,6 +251,9 @@ class Distributor extends Model
         return $pending;
     }
 
+    
+
+
     // Distributor - gas order list - Completed Orders
     public function completedGasOrders($user_id) {
         $completed = array();
