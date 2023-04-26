@@ -1083,11 +1083,22 @@ class Body{
                 </table>';
     }
     function companyDistributors($data){
-        echo 
-        '<section class="body-content">
+        echo '
+            <script>
+                function dealerSignup(){
+                    location.href = \'http://localhost/mvc/signup/distributor\';
+                }
+            </script>
+        <section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-                <a href="../Compny/distributor" style="width:48.5%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Distributors</div></a>
-                <a href="../Compny/regDistributor" style="width:48.5%;" ><div class="DealerTableTopics" onClick="loadDistributorRegistrationForm()"style="width:100%;height:100%">Register New Distributor</div></a>
+                <a href="../Compny/distributor" style="width:97%" ><div class="DealerTableTopics" onClick="loadDistributorTableTopics()"style="width:100%;height:100%;background-color:#d8ca30;color:white">Registered Distributors</div></a>
+            </div>
+            <div style="width:97%;height:10%;display:flex;align-items:center;align-content:center;border-left-style:solid;border-right-style:solid;box-sizing:border-box;border-color:var(--navmenu-orange-dark);">
+                <div class="dealerAddButton" onClick="dealerSignup()">
+                    <div style="color:white;width:40%;display:flex;align-items:center;align-content:center;justify-content:center;font-size:2em">+</div> 
+                    <div style="color:white;font-size:1.5em">Add</div>   
+                </div>
+            
             </div>
             <div class="DealerTables" id="DealerTables" style="margin:0">';
                 echo '<table class="styled-table">

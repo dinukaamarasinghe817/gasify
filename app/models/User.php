@@ -185,11 +185,11 @@ class User extends Model
                 $output = $output['image'];
                 break;
             case 'company':
-                $output = mysqli_fetch_assoc($this->read('dealer',"dealer_id = ".$_SESSION['user_id']));
+                $output = mysqli_fetch_assoc($this->read('company',"company_id = ".$_SESSION['user_id']));
                 $output = $output['logo'];
                 break;
             case 'delivery':
-                $output = mysqli_fetch_assoc($this->read('dealer',"dealer_id = ".$_SESSION['user_id']));
+                $output = mysqli_fetch_assoc($this->read('delivery_person',"delivery_id = ".$_SESSION['user_id']));
                 $output = $output['image'];
                 break;
         }

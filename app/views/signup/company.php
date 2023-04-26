@@ -164,7 +164,7 @@
                         </div>
                     </div>
                     <input type="button" name="Sign Up" value="Sign Up" class="submit" onClick="CompanySignUp()" style="background-color: var(--button-blue);font-family: 'Poppins', sans-serif;font-size:1.1em;color:white;cursor:pointer"><br>
-                    <p>Already Registered? <a href="login.php" style="font-family: 'Poppins', sans-serif">Login now</a></p>
+                    <p>Already Registered? <a href="<?php echo BASEURL;?>/signin/user" style="font-family: 'Poppins', sans-serif">Login now</a></p>
                 </form>
             </div>
         </div>
