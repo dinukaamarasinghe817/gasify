@@ -30,6 +30,7 @@ table td{
     --error-red: #c91919;
     --error-background: #ffe0e0;
     --accept-blue: #80B3FF;
+    --active-low: #f7f7f7;
     --table-gray: #EBEBEB;
     --table-header: #008198;
     --navmenu-blue: #e8f6ff;
@@ -352,7 +353,7 @@ body.blur::before{
     border-left: 2px solid var(--button-orange-hover);
 }
 .top-panel ul li .active{
-    background-color: var(--white);
+    background-color: var(--active-low);
     color: var(--button-orange-hover);
     box-sizing: border-box;
     -moz-box-sizing: border-box;
