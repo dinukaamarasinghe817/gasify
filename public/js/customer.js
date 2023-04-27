@@ -120,8 +120,8 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
         <p>If you need to change your delivery address around selected city,change it!</p>
         <form  id="myForm" action="${forwardlink}" method="POST"> 
-            <input id="new_street" name="address" placeholder="New Street" value="${home_street}" required>
-            <select id="new_city">`;
+            <input id="new_street" name="new_street" placeholder="New Street" value="${home_street}" required>
+            <select id="new_city" name="new_city">`;
             cities.forEach(city => {
                 if(home_city == city) {
                     body += `<option value="${home_city}" selected>${home_city}</option>`;
@@ -135,7 +135,7 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         </form>
         <div class="buttons">
             <button class= "btn-red" onclick="customerprompt();customerprompt('deliverychargeandaddress');">Cancel</button>
-            <button class="btn-blue" onclick = "customerprompt();changechargeandaddress();">OK</button>
+            <button class="btn-blue" onclick = "changechargeandaddress();">OK</button>
         </div> `;
 
     } else if(variant == 'selectdelivery'){
@@ -181,28 +181,29 @@ function submitForm() {
 
 function changechargeandaddress(){
     console.log('change charge and address');
-    let form = document.getElementById("myForm");
-
+    let form = document.querySelector("#myForm");
+    // console.log(form);
     let city = document.querySelector("input.home_city");
     let street = document.querySelector("input.home_street");
+    let charge = document.querySelector("input.d_charge");
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost/mvc/Orders/select_delivery_method', true);
     xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
             let data = xhr.response;
             if(data){
-                // now we have the default address and the relevent charge
+                // now we have the new address and the relevent charge
+                data = JSON.parse(data);
                 console.log(data);
-                // data = JSON.parse(data.responseText);
-                // customerprompt();
-                // let street = document.querySelector("input.home_street");
-                // street.innerHTML = data;
-                // customerprompt('deliverychargeandaddress','http://localhost/mvc/Orders/getcollecting_method/Delivery/');
+                street.value = data['street'];
+                city.value = data['city'];
+                charge.value = data['delivery_charge'];
+                customerprompt();
+                customerprompt('deliverychargeandaddress','http://localhost/mvc/Orders/getcollecting_method/Delivery/');
             }
         }
     }
     let formData = new FormData(form);
-    console.log(formData);
     xhr.send(formData);
 }
 
