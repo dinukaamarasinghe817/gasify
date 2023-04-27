@@ -345,3 +345,61 @@ function issueReport(orderID) {
     xmlhttp.open("POST", "../Reports/companySale");
     xmlhttp.send(formData);
 }
+function addProducts() {
+    var form = document.querySelector(".productRegistrationForm");
+    form.onsubmit = (e) => {
+        e.preventDefault();
+    }
+    var idArr = ["prodName", "Producttype", "unitPrice", "weight", "productionTime", "quantity", "threshold", "productImage"]
+    var isOk = true;
+    for (let index = 0; index < idArr.length; index++) {
+        console.log(idArr[index]);
+        if (idArr[index] == "Producttype") {
+            if (document.getElementById(idArr[index]).value == -1) {
+                isOk = false;
+                document.getElementById("Producttypeerr").innerHTML = "Enter product type";
+            } else {
+                document.getElementById("addresserr").innerHTML = "";
+            }
+        } else {
+            if (document.getElementById(idArr[index]).value.length == 0) {
+                isOk = false;
+                if (idArr[index] == "prodName") {
+                    document.getElementById("prodNameerr").innerHTML = "Enter product name";
+                } else if (idArr[index] == "unitPrice") {
+                    document.getElementById("unitPriceerr").innerHTML = "Enter price";
+                } else if (idArr[index] == "weight") {
+                    document.getElementById("weighterr").innerHTML = "Enter weight";
+                } else if (idArr[index] == "productionTime") {
+                    document.getElementById("productionTimeerr").innerHTML = "Enter production time";
+                } else if (idArr[index] == "quantity") {
+                    document.getElementById("quantityerr").innerHTML = "Enter quantity";
+                } else if (idArr[index] == "threshold") {
+                    document.getElementById("thresholderr").innerHTML = "Enter threshold";
+                }
+
+            } else {
+                if (idArr[index] == "prodName") {
+                    document.getElementById("prodNameerr").innerHTML = "";
+                } else if (idArr[index] == "unitPrice") {
+                    document.getElementById("unitPriceerr").innerHTML = "";
+                } else if (idArr[index] == "weight") {
+                    document.getElementById("weighterr").innerHTML = "";
+                } else if (idArr[index] == "productionTime") {
+                    document.getElementById("productionTimeerr").innerHTML = "";
+                } else if (idArr[index] == "quantity") {
+                    document.getElementById("quantityerr").innerHTML = "";
+                } else if (idArr[index] == "threshold") {
+                    document.getElementById("thresholderr").innerHTML = "";
+                }
+            }
+        }
+
+    }
+    /*if (isOk) {
+        document.getElementById("productRegistrationForm").submit();
+    }*/
+    /*if(document.getElementById("confirmPassword").value==document.getElementById("password").value){
+        
+    }*/
+}

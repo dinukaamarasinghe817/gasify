@@ -986,32 +986,52 @@ class Body{
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%"">
                 <div class="left">
-                <form action="'. BASEURL.'/Compny/registerProducts" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
-                <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="Productname" placeholder="Enter product name" style="margin-bottom:3%;border:3px solid #d8ca30" required>
-                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">
-                <option value="cylinder">Cylinder</option>
-                <option value="support">Support</option>
-                </select>
+                    <form action="'. BASEURL.'/Compny/registerProducts" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                        <div class="product_reg_row">
+                            <input id="prodName" type="text" class="registerProduct" name="Productname" placeholder="Enter product name" style="margin-bottom:3%;border:3px solid #d8ca30" >
+                            <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">
+                                <option value="-1" selected disabled hidden>Select product type</option> 
+                                <option value="cylinder">Cylinder</option>
+                                <option value="support">Support</option>
+                            </select>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="prodNameerr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="Producttypeerr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input id="unitPrice" type="text" class="registerProduct" name="unitprice" placeholder="Enter price" style="margin-bottom:3%;border:3px solid #d8ca30" > <br>
+                            <input id="weight" type="text" class="registerProduct" name="weight" placeholder="Enter weight" style="margin-bottom:3%;border:3px solid #d8ca30" > <br>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="unitPriceerr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="weighterr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input id="productionTime" type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30" > <br>
+                            <input id="quantity" type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"  > <br>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="productionTimeerr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="quantityerr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input id="threshold" type="text" class="registerProduct" name="threshold" placeholder="Minimum threshold" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"  > <br>
+                            <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" > <br>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="thresholderr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="productImageerr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input type="submit" name="Sign In" value="Add product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                        </div>
+                    </form>
                 </div>
-                <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter price" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
-                <input type="text" class="registerProduct" name="weight" placeholder="Enter weight" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
-                </div>
-                <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
-                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins" required > <br>
-                </div>
-                <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" required> <br>
-                </div>
-                <div class="product_reg_row">
-                <input type="submit" name="Sign In" value="Add product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
-                </div>
-                </form></div><div class="right">
-                <div style="height:10vh"></div>
-                <label>Preview</label>
-                <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
+            <div class="right">
+                <div style="height:10vh"></div>';
+                /*<label>Preview</label>*/
+                echo'<div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius: 10px;outline:none">
                 </div></div>
             </div>
         </section>';
@@ -1337,10 +1357,11 @@ class Body{
                 <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"> <br>
                 </div>
                 <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="threshold" placeholder="Minimum threshold" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins" required > <br>
                 <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="submit" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                <input type="button" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
                 </div>
                 </form></div><div class="right">
                 <div style="height:10vh"></div>

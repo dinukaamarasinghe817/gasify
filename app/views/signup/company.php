@@ -60,7 +60,7 @@
                 if(document.getElementById(idArr[index]).value.length==0){
                     isOk=false;
                     if(idArr[index]=="companyname"){
-                        document.getElementById("companynameerr").innerHTML="Enter company name";
+                        document.getElementById("companynameerr").innerText="Enter company name";
                     }else if(idArr[index]=="fname"){
                         document.getElementById("fnameerr").innerHTML="Enter first name";
                     }else if(idArr[index]=="lname"){
@@ -73,7 +73,7 @@
                     
                 }else{
                     if(idArr[index]=="companyname"){
-                        document.getElementById("companynameerr").innerHTML="";
+                        document.getElementById("companynameerr").innerText="";
                     }else if(idArr[index]=="fname"){
                         document.getElementById("fnameerr").innerHTML="";
                     }else if(idArr[index]=="lname"){
