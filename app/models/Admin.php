@@ -147,14 +147,18 @@ class Admin extends Model
 
         $data['charts'] = array();
 
-        //chart 1
+        //chart 1 sold quantity of each product based on their weight
         $products = array();
-        $query1 = $this->read('product');
+        $query1 = $this->read('product',$company == 'all' ? '' : "company_id = $company");
         while($row = mysqli_fetch_assoc($query1)){
             $products[$row['weight']] = 0;
         }
+        $optional = ''; // if the company is given only show records belongs to that company
+        if($company != 'all'){
+            $optional = "dealer_id IN (SELECT dealer_id FROM dealer WHERE company_id = $company) AND ";
+        }
         $query1 = $this->read('reservation',
-        "place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
+        $optional."place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
         while($row = mysqli_fetch_assoc($query1)){
             $order_id = $row['order_id'];
             $query2 = $this->read('reservation_include',"order_id = $order_id");
@@ -176,7 +180,11 @@ class Admin extends Model
         $chart['color'] = 'rgba(245, 215, 39, 0.8)';
         array_push($data['charts'],$chart);
 
-        //chart 2
+        //chart 2 gas consumption grouped by city
+        $optional = "";
+        if($company != 'all'){
+            $optional = "dealer_id IN (SELECT dealer_id FROM dealer WHERE company_id = $company) AND";
+        }
         $chart['type'] = 'pie';
         $chart['labels'] = array();
         $chart['vector'] = array();
@@ -185,7 +193,7 @@ class Admin extends Model
         IF(SUM(ri.quantity*ri.unit_price)/total_revenue > 0.1, d.city, 'Other') AS city,
         SUM(ri.quantity*ri.unit_price) AS revenue,
         ROUND(SUM(ri.quantity*ri.unit_price)/total_revenue * 100) AS percentage
-        FROM (SELECT * FROM reservation WHERE order_state != 'Pending' AND order_state != 'Canceled') r INNER JOIN dealer d ON r.dealer_id = d.dealer_id
+        FROM (SELECT * FROM reservation WHERE ".$optional." order_state != 'Pending' AND order_state != 'Canceled') r INNER JOIN dealer d ON r.dealer_id = d.dealer_id
         INNER JOIN reservation_include ri ON r.order_id = ri.order_id
         CROSS JOIN (SELECT SUM(re.quantity*re.unit_price) AS total_revenue FROM reservation rn INNER JOIN reservation_include re ON rn.order_id = re.order_id WHERE rn.order_state != 'Pending' AND rn.order_state != 'Canceled') re
         GROUP BY city ORDER BY revenue DESC";
@@ -205,10 +213,14 @@ class Admin extends Model
             ]';
         array_push($data['charts'],$chart);
 
-        //chart 3
+        //chart 3 order count based on collecting method (pickup or delivery)
+        $optional = ''; // if the company is given only show records belongs to that company
+        if($company != 'all'){
+            $optional = "dealer_id IN (SELECT dealer_id FROM dealer WHERE company_id = $company) AND ";
+        }
         $deliverymode = array("Delivery"=>0,"Pickup"=>0);
         $query1 = $this->read('reservation',
-        "place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
+        $optional."place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
         while($row = mysqli_fetch_assoc($query1)){
             $deliverymode[$row['collecting_method']]++;
         }
@@ -223,10 +235,10 @@ class Admin extends Model
             ]';
         array_push($data['charts'],$chart);
 
-        //chart 4
+        //chart 4 order count based on customer type (domestic, small scale business, large scale business)
         $usertype = array("Domestic"=>0, "CommercialLarge"=>0, "CommercialSmall"=>0);
         $query1 = $this->read('reservation',
-        "place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        $optional."place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
         while($row = mysqli_fetch_assoc($query1)){
             $customer_id = $row['customer_id'];
             $row2 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
@@ -240,6 +252,9 @@ class Admin extends Model
         $chart['color'] = 'rgba(48, 39, 245, 0.8)';
         array_push($data['charts'],$chart);
         
+        // find all companies to show in the filter
+        $data['companies'] = $this->read('company');
+        $data['company'] = $company;
         $data['start_date'] = $start_date;
         $data['end_date'] = $end_date;
         return $data;
