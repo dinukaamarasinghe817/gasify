@@ -31,7 +31,8 @@ class Delvery extends Controller{
     }
     function acceptDelivery(){
         $orderID = $_POST["orderID"];
-        $message=$this->model('Delivery')->acceptDelivery($orderID);
+        $delivery_id=$_SESSION['user_id'];
+        $message=$this->model('Delivery')->acceptDelivery($orderID,$delivery_id);
         echo $message;
     }
     function reviews(){
@@ -54,21 +55,30 @@ class Delvery extends Controller{
         $data['option'] = $option;
         $this->view('dealer/deliverypeople',$data);
     }
-    function reports(){
+    /*function reports(){
         $data['navigation'] = 'reports';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+        $joinedDate = $this->model('Delivery')->getRegisteredDate($delivery_id);
+        $currentDate=explode("-",date('Y-m-d'));
         //$current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
         $row = mysqli_fetch_assoc($delivery_details);
         $data['name']=$row['first_name'].' '.$row['last_name'];
         //$data['current']=$current_reliveries;
+        //echo($joinedDate);
         $data['image'] = $row['image'];
+        $data['joinedDate']=$joinedDate;
+        $data['currentDate']=$currentDate;
         $this->view('dashboard/delivery', $data);
-    }
+    }*/
     public function deliveryReports(){
         $data['navigation'] = 'reports';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+        $joinedDate = $this->model('Delivery')->getRegisteredDate($delivery_id);
+        $currentDate=explode("-",date('Y-m-d'));
+        $data['joinedDate']=$joinedDate;
+        $data['currentDate']=$currentDate;
         //$current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
         $row = mysqli_fetch_assoc($delivery_details);
         $data['name']=$row['first_name'].' '.$row['last_name'];
@@ -85,7 +95,33 @@ class Delvery extends Controller{
         $orderID = $_POST["orderID"];
         $message=$this->model('Delivery')->setReservationStateDelivered($orderID);
         return $message;
+    }function getCharts(){
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+        $deliveryID=$_SESSION['user_id'];
+        $yearFrom=mysqli_real_escape_string($conn,$_POST['yearFrom']);
+        $monthFrom=mysqli_real_escape_string($conn,$_POST['monthFrom']);
+        $yearTo=mysqli_real_escape_string($conn,$_POST['yearTo']);
+        $monthTo=mysqli_real_escape_string($conn,$_POST['monthTo']);
+        $deliveredOrders = $this->model('Delivery')->getDeliveredOrders($deliveryID);
+        $processedDates=array();
+        foreach($deliveredOrders as $row){
+            $date=explode('-',$row);
+            if((intval($date[0])==intval($yearFrom)) || (intval($date[0])==intval($yearTo)) || (intval($date[0])<intval($yearTo) || intval($yearFrom)<intval($date[0])) ){
+                array_push($processedDates,$date[0].'-'.$date[1]);
+                foreach($deliveredOrders as $row2){
+                    $date2=explode('-',$row2);
+                    if(intval($date2[0])==intval($date[0])){
+                        if(intval()){
+
+                        }
+
+                    }elseif(intval($date2[0])==intval($date[0])){
+
+                    }
+
+                    }
+                }
+            }
     }
-    
 }
 ?>

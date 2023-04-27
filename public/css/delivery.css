@@ -1378,8 +1378,21 @@ select{
     height: 30%;
     background-color: #02ff2c;
 }
+.getAnalysisButton{
+    color: white;
+    height: 80%;
+    width: 40%;
+    background-color: var(--button-blue);
+    border-radius: 3em;
+    font-family: poppins;
+  }
+  .getAnalysisButton:hover{
+    background-color: var(--button-blue-hover);
+    cursor: pointer;
+  }
 @media screen and(max-width: 500px) {
     .tt{
         background-color: #fb02ff;
     }
 }
+

@@ -68,8 +68,8 @@ class Delivery extends Model
         $info=mysqli_fetch_assoc($result);
         return $info;
     }
-    public function acceptDelivery($orderID){
-        if($this->Query(("UPDATE `reservation` SET order_state='Dispatched' WHERE order_id=$orderID;"))){
+    public function acceptDelivery($orderID,$delivery_id){
+        if($this->Query(("UPDATE `reservation` SET order_state='Dispatched',delivery_id=$delivery_id WHERE order_id=$orderID;"))){
             return 1;
         }else{
             return 0;
@@ -87,6 +87,23 @@ class Delivery extends Model
         }else{
             return 0;
         }
+    }public function getRegisteredDate($delivery_id){
+        $result=$this->Query("SELECT date_joined AS date FROM users WHERE users.user_id=$delivery_id");
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                return explode("-",$row['date']);
+            }
+        }
+    }public function getDeliveredOrders($delivery_id){
+        $result=$this->Query("SELECT place_date AS date FROM reservation WHERE reservation.order_state='completed' AND reservation.delivery_id=$delivery_id ORDER BY date ");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,$row['date']);
+            }
+           return $info;
+        }
+        //print_r($info);
     }
     
     

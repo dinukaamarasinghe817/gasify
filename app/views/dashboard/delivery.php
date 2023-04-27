@@ -15,7 +15,7 @@
         }elseif($data['navigation']=='reviews'){
             $bodycontent = new Body('viewReviews', $data);
         }elseif($data['navigation']=='reports'){
-            $bodycontent = new Body('deliveryReports', $data);
+            $bodycontent = new Body('deliveryAnalysis', $data);
         }
         
         ?>
