@@ -893,7 +893,7 @@ class Body{
                         $distributor = "";
                         foreach ($result as $row) {
                             $distributor .=  '<tr>
-                                            <td>'.'Distributor'. '</td>
+                                            <td>'.$row['name']. '</td>
                                             <td>'.$row['city'].'</td>
                                             <td>'.$row['street'].'</td>
                                             <td>'.$row['contact_no'].'</td>
