@@ -103,7 +103,7 @@ a,button{
     background: #fff;
     box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
     border-radius: 10px;
-    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    background-image: linear-gradient(2.0944rad, #e6c662 0%, #f47265 100%)
 }
 
 .quota_logo{

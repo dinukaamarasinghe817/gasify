@@ -48,12 +48,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                     //display that exist brand as selected value in dropdown
                                                     if($brands["company_id"] == $old_c_id){
                                                         echo "<option class = 'company_id' value = '$old_c_id' id= $old_c_id selected> $name </option>";
-                                                        //after that unset all past session variables
+                                                        //after that unset past session variable
                                                         unset($_SESSION['company_id']);
-                                                        unset($_SESSION['city']);
-                                                        unset($_SESSION['dealer_id']);
-                                                        unset($_SESSION['order_products']);
-                                                        unset($_SESSION['collecting_method']);
                                                     }
                                                     //display other brands as options in dropdown list 
                                                     else{
@@ -111,50 +107,39 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                                     if(isset($data["city"])){
                                         $result1 = $data["city"];
+                                        $customer = mysqli_fetch_assoc($result1); 
+                                        $customer_current_city = $customer["city"];
+
                                         //check previous selected city is already exists
                                         if(isset($_SESSION['city'])){
-                                            $old_city = $_SESSION['city'];   //take exsit  from session
+                                            $old_city = $_SESSION['city'];   //take exsit city from session
+                            
+                                            //display that exist brand as selected value in dropdown
+                                            echo "<option value = '$old_city' id=$old_city selected hidden>$old_city</option>";
+                                            //after that unset past session variable
+                                            unset($_SESSION['city']);
                                             
-                                            while($customer_city = mysqli_fetch_assoc($result1)){           
-                                                $customer_current_city = $customer_city["city"];
-                                                //display that exist brand as selected value in dropdown
-                                                if($customer_current_city == $old_city){
-                                                    echo "<option value = '$old_city' id=$old_city selected hidden>$old_city</option>";
-                                                    //after that unset all past session variables
-                                                    unset($_SESSION['company_id']);
-                                                    unset($_SESSION['city']);
-                                                    unset($_SESSION['dealer_id']);
-                                                    unset($_SESSION['order_products']);
-                                                    unset($_SESSION['collecting_method']);
-                                                }
-                                                //display other brands as options in dropdown list 
-                                                else{
-                                                    foreach (CITIES as $city){
-                                                        if($city != $data['city']){
-                
-                                                                echo "<option value=$city id=$city >$city</option>";
-                                                        }
-                                                    }
-                                                }
-                                            
-                                            }
-                                        }
-                                        //if there is no previous selected brand
-                                        else{
-                                            echo '<option value="-1" selected disabled hidden>Select Gas Brand</option>';
-                                            while($customer_city = mysqli_fetch_assoc($result1)){           
-                                                $customer_current_city = $customer_city["city"];
-                                                echo "<option value = '$customer_current_city' id=$customer_current_city selected hidden>$customer_current_city</option>";
-                                            }
-
+                                            //display other brands as options in dropdown list 
                                             foreach (CITIES as $city){
                                                 if($city != $data['city']){
         
                                                         echo "<option value=$city id=$city >$city</option>";
                                                 }
                                             }
-
-                                        
+                                        }
+                                       
+                                        //if there is no previous selected brand
+                                        else{
+                                            echo '<option value="-1" selected disabled hidden>Select Gas Brand</option>';
+                                            echo "<option value = '$customer_current_city' id=$customer_current_city selected hidden>$customer_current_city</option>";
+                                           
+                                            foreach (CITIES as $city){
+                                                if($city != $data['city']){
+        
+                                                        echo "<option value=$city id=$city >$city</option>";
+                                                }
+                                            }
+                                            
                                         }
 
                                     }
@@ -164,7 +149,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
 
 
-
+                                    //old correct one
                                     // if(isset($data["city"])){
                                     //     $result1 = $data["city"];
                                     //     while($customer_city = mysqli_fetch_assoc($result1)){           
@@ -197,24 +182,63 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         <div class="drop-down">
                             <div class="dealer_dropdown">
                                 <select name="dealer" id="dealer" class="dealerdropdown dropdowndate" onchange = "get_dealer_value('dealer');">
-                                    <option value="-1" selected disabled hidden>Select Dealer</option>
+                                   
                                     <?php 
+
+                                        // if(isset($data["dealers"])){
+                                        //     $result1 = $data["dealers"];
+                                        //     //if no dealers found selected city and brand
+                                        //     if(mysqli_num_rows($result1)==0){
+                                        //         echo '<option value="-1" disabled >No Dealers Found</option>';
+                                        //     }
+                                        //     while($dealers = mysqli_fetch_assoc($result1)){
+                                        //         $name = $dealers["d_name"];
+                                        //         $dealer_id = $dealers["dealer_id"];
+                                        //         echo "<option value = $dealer_id id= $dealer_id> $name </option>";
+                                        //     }
+
+                                            
+
+                                            
+                                        // }
 
                                         if(isset($data["dealers"])){
                                             $result1 = $data["dealers"];
-                                            //if no dealers found selected city and brand
-                                            if(mysqli_num_rows($result1)==0){
-                                                echo '<option value="-1" disabled >No Dealers Found</option>';
+                                             //check previous selected city is already exists
+                                            if(isset($_SESSION['dealer_id'])){
+                                                $old_dealer_id = $_SESSION['dealer_id'];  //take exist dealer_id from session
+                                                while($dealers = mysqli_fetch_assoc($result1)){    
+                                                    $name = $dealers["d_name"];
+                                                    $dealer_id = $dealers["dealer_id"];
+                                                    //display that exist brand as selected value in dropdown
+                                                    if($dealer_id==$old_dealer_id){
+                                                        echo "<option value = $old_dealer_id id= $old_dealer_id> $name </option>";
+                                                        //after that unset past session variable
+                                                        unset($_SESSION['dealer_id']);
+                                                    }
+                                                    //display other brands as options in dropdown list 
+                                                    else{
+                                                        $dealer_id = $dealers["dealer_id"];
+                                                        echo "<option value = $dealer_id id= $dealer_id> $name </option>"; 
+                                                    }
+                        
+                                                }
+                        
                                             }
-                                            while($dealers = mysqli_fetch_assoc($result1)){
-                                                $name = $dealers["d_name"];
-                                                $dealer_id = $dealers["dealer_id"];
-                                                echo "<option value = $dealer_id id= $dealer_id> $name </option>";
+                                            //if there is no previous selected brand
+                                            else{
+                                                echo '<option value="-1" selected disabled hidden>Select Dealer</option>';
+                                                //if no dealers found according to selected city and brand(no previous selected dealer also)
+                                                if(mysqli_num_rows($result1)==0){
+                                                    echo '<option value="-1" disabled>No Dealers Found!</option>';
+                                                }else{
+                                                    while($dealers = mysqli_fetch_assoc($result1)){    
+                                                        $name = $dealers["d_name"];
+                                                        $dealer_id = $dealers["dealer_id"];
+                                                        echo "<option value = $dealer_id id= $dealer_id> $name </option>";
+                                                    }
+                                                }
                                             }
-
-                                            
-
-                                            
                                         }
                                         
                                     ?>

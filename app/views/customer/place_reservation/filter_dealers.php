@@ -8,18 +8,44 @@
 <div class="drop-down">
     <div class="dealer_dropdown">
         <select name="dealer" id="dealer" class="dealerdropdown dropdowndate" onchange = "get_dealer_value('dealer');">
-            <option value="-1" selected disabled hidden>Select Dealer</option>
-            <?php 
+            
+            <?php
                 if(isset($data["dealers"])){
                     $result1 = $data["dealers"];
-                    //if no dealers found selected city and brand
-                    if(mysqli_num_rows($result1)==0){
-                        echo '<option value="-1" disabled>No Dealers Found!</option>';
+                    //check previous selected city is already exists
+                    if(isset($_SESSION['dealer_id'])){
+                        $old_dealer_id = $_SESSION['dealer_id'];  //take exist dealer_id from session
+                        while($dealers = mysqli_fetch_assoc($result1)){    
+                            $name = $dealers["d_name"];
+                            $dealer_id = $dealers["dealer_id"];
+                            //display that exist brand as selected value in dropdown
+                            if($dealer_id==$old_dealer_id){
+                                echo "<option value = $old_dealer_id id= $old_dealer_id> $name </option>";
+                                //after that unset past session variable
+                                unset($_SESSION['dealer_id']);
+                            }
+                            //display other brands as options in dropdown list 
+                            else{
+                                $dealer_id = $dealers["dealer_id"];
+                                echo "<option value = $dealer_id id= $dealer_id> $name </option>"; 
+                            }
+
+                        }
+
                     }
-                    while($dealers = mysqli_fetch_assoc($result1)){    
-                        $name = $dealers["d_name"];
-                        $dealer_id = $dealers["dealer_id"];
-                        echo "<option value = $dealer_id id= $dealer_id> $name </option>";
+                    //if there is no previous selected brand
+                    else{
+                        echo '<option value="-1" selected disabled hidden>Select Dealer</option>';
+                        //if no dealers found according to selected city and brand(no previous selected dealer also)
+                        if(mysqli_num_rows($result1)==0){
+                            echo '<option value="-1" disabled>No Dealers Found!</option>';
+                        }else{
+                            while($dealers = mysqli_fetch_assoc($result1)){    
+                                $name = $dealers["d_name"];
+                                $dealer_id = $dealers["dealer_id"];
+                                echo "<option value = $dealer_id id= $dealer_id> $name </option>";
+                            }
+                        }
                     }
                 }
             ?>
