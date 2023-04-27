@@ -301,7 +301,7 @@ function submitReport() {
         tableArr.push(tempArr);
     }
     formData.append("tableArr", JSON.stringify(tableArr));
-    //console.log(formData.get("tableArr"));
+    console.log(formData.get("tableArr"));
     //console.log(typeof (tableArr));
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {

@@ -992,7 +992,7 @@ class Body{
                             <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">
                                 <option value="-1" selected disabled hidden>Select product type</option> 
                                 <option value="cylinder">Cylinder</option>
-                                <option value="support">Support</option>
+                                <option value="accessory">Accessory</option>
                             </select>
                         </div>
                         <div class="product_reg_row" style="margin-left:6%">
@@ -1029,7 +1029,7 @@ class Body{
                     </form>
                 </div>
             <div class="right">
-                <div style="height:10vh"></div>';
+                <div style="height:18vh"></div>';
                 /*<label>Preview</label>*/
                 echo'<div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius: 10px;outline:none">
                 </div></div>
@@ -1042,7 +1042,7 @@ class Body{
                 <div class="Top" id="Top">
                     <div class="card">
                         <div class="cmValue">'.$data['dispatched_count'].'</div>
-                        <div class="cmTitle">Pending Deliveries</div>
+                        <div class="cmTitle">Ongoing Deliveries</div>
                     </div>
                     <div class="card">
                         <div class="cmValue">'.$data['completed_count'].'</div>
@@ -1369,8 +1369,7 @@ class Body{
                 <input type="button" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="updateProducts()" style="width:65%">
                 </div>
                 </form></div><div class="right">
-                <div style="height:10vh"></div>
-                <label>Preview</label>
+                <div style="height:18vh"></div>
                 <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
                 </div></div>
             </div>
@@ -1749,9 +1748,14 @@ class Body{
                     echo'
                 </div>
                 <div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
-                    <div class="leftAnalysis" style="width:50%;height:100%">
-                        <div class="barChart" id="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                    <div class="leftAnalysis" style="width:50%;height:100%">';
+                    if(isset($data['barChart'])){
+                        echo'<h4 style="margin-left:5%">Total Deliveries</h4>';
+                    }
+                    
+                        echo'<div class="barChart" id="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             if(isset($data['barChart'])){
+                                
                                 $chart['vector']=$data['barChart']['values'];
                                 $chart['labels']=$data['barChart']['dates'];
                                 $chart['color']=$data['barColor'];
@@ -1759,8 +1763,12 @@ class Body{
                                 $chart = new Chart('bar',$chart,1);
                             }
                             
-                        echo'</div>
-                        <div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                        echo'</div>';
+                        if(isset($data['lineChart'])){
+                            echo'<h4 style="margin-left:5%">Total Revenue</h4>';
+                        }
+                        
+                        echo'<div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                            if(isset($data['lineChart'])){
                                 $chart_3['vector']=$data['lineChart']['values'];
                                 $chart_3['labels']=$data['lineChart']['names'];
@@ -1770,8 +1778,12 @@ class Body{
                            }
                                     
                         echo'</div>
-                    </div>
-                    <div class="rightAnalysis" style="width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                    </div>';
+                    if(isset($data['lineChart'])){
+                        echo'<h4 style="margin-left:5%">Sold stock</h4>';
+                    }
+                    
+                    echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             if(isset($data['doughNut'])){
                                 $chart_2['vector']=$data['doughNut']['values'];
                                 $chart_2['labels']=$data['doughNut']['products'];
