@@ -21,6 +21,12 @@ $sidebar = new Navigation('customer',$data['navigation']);
             <h3>Collecting Method</h3>
         </div> 
         <div class="middle">
+            <input type="text" class="home_city" name="city" value="<?= $data['city'] ?>" hidden>
+            <input type="text" class="home_street" name="street" value="<?= $data['street'] ?>" hidden>
+            <input type="number" step= 0.01 class="d_charge" name="d_charge" value="<?= $data['delivery_charge'] ?>" hidden>
+            <input type="text" class="cities" name="cities" value='<?=json_encode(CITIES); ?>' hidden>
+           
+
             <!-- <div class="middle_content"> -->
                     <div class="middle_img"><img src="<?php echo BASEURL;?>/public/img/banner/collecting_method.jpg" alt=""></div>
                     <!-- <div class="c_methods">
