@@ -14,6 +14,10 @@ class Orders extends Controller{
     function dealer($tab1, $tab2=null){
         $dealer_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
+        $dealer_details = $this->model('Dealer')->getDealer($dealer_id);
+        $row = mysqli_fetch_assoc($dealer_details);
+        $data['image'] = $row['image'];
+        $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['orders'] = $this->model('Dealer')->dealerOrders($dealer_id,$tab1,$tab2);
         // var_dump($data);
         $data['verification'] = '';
@@ -51,12 +55,6 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
-
         $data['allmyreservations'] = $this->model('Customer')->getAllmyreservations($customer_id);
        
         $this->view('customer/my_reservation/allmyreservation', $data);
@@ -67,11 +65,7 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-        
+       
 
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
         $data['confirmation'] = '';
@@ -84,10 +78,7 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+       
 
 
         $data['collecting_method'] = $this->model('Customer')->getcollecting_method($order_id,$customer_id);
@@ -127,10 +118,7 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+       
         $data['order_id'] = $order_id;
 
         if($error != null){
@@ -170,14 +158,10 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
 
         $data['brands'] = $this->model('Customer')->getCompanyBrand();      //get all gas companies for display
         $data['dealers'] = $this->model('Customer')->getdealers();          //get all dealers for display
-        $data['city'] = $this->model('Customer')->getCustomer($customer_id);  //get all cities for display
+        $data['city'] = $this->model('Customer')->getCustomer($customer_id);  //get customer city for display
 
         //not selected brand,city,dealer error
         if($error != null){
@@ -204,10 +188,7 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+        
 
         if(isset($_POST['brand'])){$brand = $_POST['brand'];}else{$brand = null;}
         $city = $_POST['city'];
@@ -236,10 +217,7 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
       
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+       
 
         $company_id = $_SESSION['company_id'];
 
@@ -327,8 +305,6 @@ class Orders extends Controller{
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
         $data['email'] = $row1['email'];
        
         $data['selected_products']= $this ->model('Customer')->getSelectedProducts();
@@ -347,10 +323,7 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+     
 
         $data['bank_details'] = $this->model('Customer')->getDealerBankDetails();
         $data['confirmation'] = '';
@@ -368,8 +341,6 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $customer_type = $row1['type'];
 
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
         $data['navigation'] = 'placereservation';
         
         if(isset($_POST['submit_btn'])){
@@ -400,9 +371,11 @@ class Orders extends Controller{
                 $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Bank Deposit');
                 $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
                 $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
-                $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
-                $data['confirmation'] = '';
-                $this->view('customer/place_reservation/collecting_method',$data);
+                // $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
+                // $data['confirmation'] = '';
+                // $this->view('customer/place_reservation/collecting_method',$data);
+                header('LOCATION:'.BASEURL.'/Orders/select_collecting_method');
+
             }
             
         } 
@@ -416,8 +389,7 @@ class Orders extends Controller{
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
         $customer_type = $row1['type'];
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+       
         //check customer quota
         //post data from payment component
         $dealer_id = $_POST['dealer_id'];
@@ -430,9 +402,10 @@ class Orders extends Controller{
             $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Credit card');
             $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
             $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
-            $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
-            $data['confirmation'] = '';
-            $this->view('customer/place_reservation/collecting_method',$data);
+            // $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
+            // $data['confirmation'] = '';
+            header('LOCATION:'.BASEURL.'/Orders/select_collecting_method');
+
         }else{
             //charging unsuccess
             $data['toast'] = ['type' => 'error', 'message' => "Payment failed, Please check you card details"];
@@ -446,15 +419,36 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
         
+        
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-        $data['confirmation'] = '';
+        
+        $order_id = $_SESSION['order_id'];
+        $data['selected_city'] = $_SESSION['city'];
+        $data['home_city'] = $row1['city'];
+        
+        if(isset($_POST['new_street'])){
+            $data['street'] = $_POST['new_street'];
+            if(isset($_POST['new_city'])){
+                $data['city'] = $_POST['new_city'];
+            }
 
+        }else{
+            $data['city'] = $row1['city'];
+            $data['street'] = $row1['street'];
+        }
+
+        $data['delivery_charge']= number_format($this->model('Customer')->insertdelivery_street($order_id,$data['street'],$data['city']),2);
+
+        $data['confirmation'] = '';
+        $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
+        $data['confirmation'] = '';
         $this->view('customer/place_reservation/collecting_method',$data);
 
+        
     }
+
+
 
     //select delivery as collecting method then get delivery address and display delivery charge
     function select_delivery_method(){
@@ -465,8 +459,7 @@ class Orders extends Controller{
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+        
 
         $data['selected_city'] = $_SESSION['city'];
         $data['home_city'] = $row1['city'];
@@ -483,19 +476,19 @@ class Orders extends Controller{
         }
 
         $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,$data['street'],$data['city']);   //insert delivery street  and distance range to reservation table
+        // $data['delivery_charge']= $this->model('Customer')->insertdelivery_street($order_id,,4545454);   //insert delivery street  and distance range to reservation table
         $data['confirmation'] = '';
 
         // $this->view('customer/place_reservation/delivery_collecting_method',$data);
+        echo json_encode($data);
     }
 
     function getcollecting_method($collecting_method){
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+       
+        
         $_SESSION['collecting_method'] = $collecting_method;
         $order_id = $_SESSION['order_id']; 
         $this -> model('Customer')->insertcollectingmethod($order_id);
@@ -527,10 +520,6 @@ class Orders extends Controller{
         $data['companies_array'] = $this->model('Customer')->getcustomerquota($customer_id);
 
         // get customer personal information and naviagation
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
         $data['navigation'] = 'quota';
         $this->view('customer/quota/quota',$data);
     }
@@ -607,10 +596,31 @@ class Orders extends Controller{
     /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
 
     // distributor -> phurchase order interface
-     public function distributor($error=null) {
+     public function distributor($param=null, $error=null) {
+        // $user_id = $_SESSION['user_id'];
+        // $data['navigation'] = 'orders';
+        // $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        // $row = mysqli_fetch_assoc($distributor_details);
+        // $data['image'] = $row['image'];
+
+        // $data['tab'] = $param;
+
+        // if($error !=null) {
+        //     $data['toast'] = $error;
+        // }
+
+        // $distributor_details = $this->model('Distributor')->getDistributor($this->user_id);
+        // $row = mysqli_fetch_assoc($distributor_details);
+        // $data['image'] = $row['image'];
+        // $data['name'] = $row['first_name'].' '.$row['last_name'];
+
+        // $data[$data['tab']] = $this->model('Distributor')-> distributorStock($this->user_id, $data['tab']);
+
+        // $this->view('distributor/phurchase_orders',$data);  
+
         // navigation and active tab in body
         $data['navigation'] = 'orders';
-        // $data['tab'] = $param;
+        $data['tab'] = $param;
         if($error != null) {
             $data['toast'] = $error;}
 
@@ -619,12 +629,14 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
-        $data['purchaseorder'] = $this->model('Distributor')->distributorStock(); 
+        $data[$data['tab']] = $this->model('Distributor')->distributorStock($this->user_id, $data['tab']);
+        // $this->view('dealer/', $data);  
         $this->view('distributor/phurchase_orders',$data);  
 
     }
 
     public function purchase_order($param=null) {
+       
         $productid = $_SESSION['productarray'];
         $postproducts = [];
 

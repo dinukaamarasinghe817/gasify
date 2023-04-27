@@ -59,14 +59,19 @@
             $distCount= $this->model('Company')->getDistributorCount($company_id);
             $dealerCount= $this->model('Company')->getDealerCount($company_id);
             $lowStockProducts = $this->model('Company')->getProductDetails($company_id);
+            $order_details=$this->model('Company')->getStockReqDetails($company_id);
+            $productDetails = $this->model('Company')->getProductDetails($company_id);
             $data['products']=$product_details;
             $data['reqCount']=$pendingReq;
             $data['distCount']=$distCount;
             $data['dealerCount']=$dealerCount;
+            $data['order_details']=$order_details;
+            $data['product_details']=$productDetails;
             //$data['name']="ffg";
             $row = mysqli_fetch_assoc($company_details);
             $data['navigation'] = 'dashboard';
             $data['image'] = $user_id['logo'];
+            $data['lowStock']=$lowStockProducts;
             //$data=[];
             $this->view('dashboard/company', $data);
         }
@@ -104,14 +109,7 @@
             }
 
             $customer_id = $_SESSION['user_id'];
-            //profile image
-            $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-            $row1 = mysqli_fetch_assoc($customer_details);
-            $data['image'] = $row1['image'];
-            $data['name'] = $row1['first_name'].' '.$row1['last_name'];
-
-
-
+            
             // get registered company brands
             $brand = $this->model('Customer')->getCompanyBrand(); 
             $data['brand'] = $brand;

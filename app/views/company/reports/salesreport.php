@@ -62,7 +62,7 @@ $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 $pdf->Ln();
 $sum=0;
-for ($i=0; $i <count($data['tableArr']) ; $i++) { 
+for ($i=0; $i <count($data['tableArr'])-1; $i++) { 
     if($i==0){
         continue;
     }else{
@@ -96,5 +96,7 @@ $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 
-$pdf->Output('',$data['distname'].' Report'.'('.$data['from'].'-'.$data['to'].')');
+//$pdf->Output('',$data['distname'].' Report'.'('.$data['from'].'-'.$data['to'].')');
+$pdf->Output();
+
 ?>

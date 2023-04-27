@@ -61,18 +61,18 @@ class Company extends Model
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
-                array_push($info,['product_id'=>$row['product_id'], 'name'=>$row['name'], 'type'=>$row['type'], 'unit_price'=>$row['unit_price'],'weight'=>$row['weight'],'production_time'=>$row['production_time'],'last_updated_date'=>$row['last_updated_date'],'quantity'=>$row['quantity']]);
+                array_push($info,['product_id'=>$row['product_id'], 'name'=>$row['name'], 'type'=>$row['type'], 'unit_price'=>$row['unit_price'],'weight'=>$row['weight'],'production_time'=>$row['production_time'],'last_updated_date'=>$row['last_updated_date'],'quantity'=>$row['quantity'],'cylinder_limit'=>$row['cylinder_limit']]);
             }
             return $info;
         }
 
     }
     public function getRegisteredDistributors($company_id){
-        $result = $this->read('distributor', "company_id = $company_id");
+        $result = $this->Query("SELECT CONCAT(users.first_name,' ',users.last_name) AS name,distributor.contact_no,distributor.hold_time,distributor.city,distributor.street FROM users INNER JOIN distributor ON users.user_id=distributor.distributor_id AND distributor.company_id=$company_id;");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
-                array_push($info,['contact_no'=>$row['contact_no'], 'hold_time'=>$row['hold_time'], 'city'=>$row['city'], 'street'=>$row['street']]);
+                array_push($info,['name'=>$row['name'],'contact_no'=>$row['contact_no'], 'hold_time'=>$row['hold_time'], 'city'=>$row['city'], 'street'=>$row['street']]);
             }
             return $info;
         }
