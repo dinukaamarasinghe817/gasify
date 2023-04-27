@@ -11,7 +11,7 @@ $user_id = $_SESSION['user_id'];
     ?>
  
     <section class="body-content">
-        <h2>Suitable Vehicle List for Gas Orders</h2>
+        <h2>Suitable Vehicles for Gas Orders</h2>
 
         <?php 
         //   $result = new Vehicles_Comp("view");
