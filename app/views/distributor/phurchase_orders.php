@@ -16,10 +16,10 @@ $user_id = $_SESSION['user_id'];
             
             <h2>Gas Orders</h2>
 
-            <div class="top">
+            <div class="top-panel">
                 <ul>
                     <li>
-                        <a href="<?php echo BASEURL ?>/orders/distributor" class="place"><b>Place an Order</b></a>
+                        <a href="<?php echo BASEURL ?>/orders/distributor" class="place active"><b>Place an Order</b></a>
                     </li>
                     
                     <li>

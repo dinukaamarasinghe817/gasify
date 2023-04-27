@@ -14,7 +14,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
             
             <h2>Gas Orders</h2>
 
-            <div class="top">
+            <div class="top-panel">
                 <ul>
                     <li>
                         <a href="<?php echo BASEURL ?>/orders/distributor" class="place"><b>Place an Order</b></a>
@@ -23,7 +23,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <a href="<?php echo BASEURL ?>/orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
                     </li>
                     <li>
-                        <a href="<?php echo BASEURL ?>/orders/dis_placed_pending" class="placedlist"><b>Placed Order List</b></a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_pending" class="placedlist active"><b>Placed Order List</b></a>
                     </li>
                 </ul>
             </div>
@@ -37,10 +37,10 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted"><b>Accepted Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed"><b>Completed Gas Orders</b><a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed active"><b>Completed Gas Orders</b><a>
                     </li>
-
                 </ul>
+            <!-- </div> -->
 
                 <div class="accordion new">
 
