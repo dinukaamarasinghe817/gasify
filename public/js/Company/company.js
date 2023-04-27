@@ -359,7 +359,16 @@ function addProducts() {
                 isOk = false;
                 document.getElementById("Producttypeerr").innerHTML = "Enter product type";
             } else {
-                document.getElementById("addresserr").innerHTML = "";
+                document.getElementById("Producttypeerr").innerHTML = "";
+            }
+        } else if (idArr[index] == "productImage") {
+            let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+            let type = document.getElementById('productImage').files[0].type;
+            if (allowedExtensions.indexOf(type) > -1) {
+                document.getElementById("productImageerr").innerHTML = "";
+            } else {
+                isOk = false;
+                document.getElementById("productImageerr").innerHTML = "Invalid image type";
             }
         } else {
             if (document.getElementById(idArr[index]).value.length == 0) {
@@ -396,10 +405,13 @@ function addProducts() {
         }
 
     }
-    /*if (isOk) {
+    if (isOk) {
         document.getElementById("productRegistrationForm").submit();
-    }*/
+    }
     /*if(document.getElementById("confirmPassword").value==document.getElementById("password").value){
         
     }*/
+}
+function updateProducts() {
+    document.getElementById("productUpdateForm").submit();
 }

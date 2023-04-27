@@ -1232,7 +1232,7 @@ class User extends Model
         }
         return $data;
     }
-    public function CompanySignup($data){
+    public function CompanySignup($data,$image_name,$tmp_name){
         $hashed_pwd=password_hash($data['password'],PASSWORD_DEFAULT);
         $email=$data['email'];
         $token = md5(rand());
@@ -1244,6 +1244,15 @@ class User extends Model
         $customerArray= array("Domestic","Small Scale Business","Large Scale Business");
         foreach ($customerArray as $customer) {
             $query4 = $this->insert('quota',['company_id'=>$company_id,'customer_type'=>$customer, 'monthly_limit'=>0, 'state'=>"OFF"]);
+        }
+        if(!empty($image_name) && !empty($tmp_name)){
+
+            $image = getImageRename($image_name,$tmp_name);
+            $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+            // echo $path;
+            if(move_uploaded_file($tmp_name, $path.($image))){
+                $query4 = $this->update('company', ['logo'=>$image],"company_id = $company_id");
+            }
         }
         
     
@@ -1377,7 +1386,7 @@ class User extends Model
         return $data;
 
     }
-    public function DeliverySignup($data){
+    public function DeliverySignup($data,$image_name,$tmp_name){
         $hashed_pwd=password_hash($data['password'],PASSWORD_DEFAULT);
         $email=$data['email'];
         $token = md5(rand());
@@ -1386,7 +1395,15 @@ class User extends Model
         $row = mysqli_fetch_assoc($query2);
         $delivery_id = $row['user_id'];
         $query3 = $this->insert('delivery_person', ['delivery_id'=>$delivery_id,'contact_no'=> $data['cno'], 'city'=> $data['city'],'street'=>$data['street'], 'vehicle_no'=> $data['vno'], 'vehicle_type'=> $data['vehicletype'], 'weight_limit'=> $data['weight'], 'cost_per_km'=> $data['costperkm']]);
-        //$query4 = 
+        if(!empty($image_name) && !empty($tmp_name)){
+
+            $image = getImageRename($image_name,$tmp_name);
+            $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'profile'.DIRECTORY_SEPARATOR;
+            // echo $path;
+            if(move_uploaded_file($tmp_name, $path.($image))){
+                $query4 = $this->update('delivery_person', ['image'=>$image],"delivery_id = $delivery_id");
+            }
+        }
     
     
     }

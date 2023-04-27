@@ -1049,8 +1049,13 @@ class Body{
                         <div class="cmTitle">Orders Delivered</div>
                     </div>
                     <div class="card">
-                        <div class="cmValue">'.$data['review_count'].'</div>
-                        <div class="cmTitle">Review</div>
+                        <div class="cmValue">'.$data['review_count'].'</div>';
+                        if($data['review_count']>1 ||$data['review_count']==0 ){
+                            echo'<div class="cmTitle">Reviews</div>';
+                        }else{
+                            echo'<div class="cmTitle">Review</div>';
+                        }
+                    echo'    
                     </div>
                     <div class="card">
                         <div class="cmValue" style="font-size:3vw">LKR.14350</div>
@@ -1341,7 +1346,7 @@ class Body{
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%">
                 <div class="left">
-                <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productUpdateForm" class="productRegistrationForm">
                 <div class="product_reg_row">
                 <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">';
                 $result=$data['products'];
@@ -1361,7 +1366,7 @@ class Body{
                 <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="button" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                <input type="button" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="updateProducts()" style="width:65%">
                 </div>
                 </form></div><div class="right">
                 <div style="height:10vh"></div>
