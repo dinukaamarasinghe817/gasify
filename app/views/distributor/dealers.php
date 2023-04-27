@@ -15,10 +15,10 @@ $user_id = $_SESSION['user_id'];
         
         <h2>Dealers</h2>
 
-        <div class="top">
+        <div class="top-panel">
             <ul>
                 <li>
-                    <a href="../dealers/distributor_dealers" class="dealers"><b>Allocated Dealers' Details</b></a>
+                    <a href="../dealers/distributor_dealers" class="dealers"><b>Allocated Dealers</b></a>
                 </li>
             </ul>
         </div>

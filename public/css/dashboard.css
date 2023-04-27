@@ -362,9 +362,11 @@ body.blur::before{
     border-right: 2px solid var(--button-orange-hover);
     border-left: 2px solid var(--button-orange-hover);
 }
+
 .top-panel ul li:first-child a{
     border-radius: 10px 0px 0px 0px;
 }
+
 .top-panel ul li:last-child a{
     border-radius: 0px 10px 0px 0px;
 }

@@ -14,13 +14,13 @@ $user_id = $_SESSION['user_id'];
         <div class="split right">
             <h2>Gas Orders</h2>
 
-            <div class="top">
+            <div class="top-panel">
                 <ul>
                     <li>
                         <a href="../orders/distributor" class="place"><b>Place an Order</b></a>
                     </li>
                     <li>
-                        <a href="../orders/distributor_currentstock" class="stock"><b>Current Stock</b></a>
+                        <a href="../orders/distributor_currentstock" class="stock active"><b>Current Stock</b></a>
                     </li>
                     <li>
                         <a href="../orders/dis_placed_pending" class="placedlist"><b>Placed Order List</b></a>
