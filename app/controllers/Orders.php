@@ -161,7 +161,7 @@ class Orders extends Controller{
 
         $data['brands'] = $this->model('Customer')->getCompanyBrand();      //get all gas companies for display
         $data['dealers'] = $this->model('Customer')->getdealers();          //get all dealers for display
-        $data['city'] = $this->model('Customer')->getCustomer($customer_id);  //get all cities for display
+        $data['city'] = $this->model('Customer')->getCustomer($customer_id);  //get customer city for display
 
         //not selected brand,city,dealer error
         if($error != null){
