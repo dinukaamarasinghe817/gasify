@@ -943,7 +943,7 @@ class Customer extends Model{
         }
         
         //update reservation table with delivery charge
-        $this ->update('reservation',['delivery_city'=>$delivery_city,'delivery_street'=>$delivery_city,'min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
+        $this ->update('reservation',['deliver_city'=>$delivery_city,'deliver_street'=>$delivery_street,'min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
 
         return $delivery_charge;
     }
