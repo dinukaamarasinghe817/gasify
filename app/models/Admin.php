@@ -138,12 +138,39 @@ class Admin extends Model
         return $data;
     }
 
-    public function getanalysis($user_id,$start_date,$end_date){
-        //chart 1
+    public function getanalysis($user_id,$start_date,$end_date,$company){
+        $row = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+        $data['date_joined'] = $row['date_joined'];
+        if($start_date == null){
+            $start_date = $row['date_joined'];
+        }
+
         $data['charts'] = array();
-        $chart['type'] = 'line';
-        $chart['labels'] = array('Buddy','Budget','Regualr','Commercial');
-        $chart['vector'] = array(7,10,2,5);
+
+        //chart 1
+        $products = array();
+        $query1 = $this->read('product');
+        while($row = mysqli_fetch_assoc($query1)){
+            $products[$row['weight']] = 0;
+        }
+        $query1 = $this->read('reservation',
+        "place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $order_id = $row['order_id'];
+            $query2 = $this->read('reservation_include',"order_id = $order_id");
+            while($row2 = mysqli_fetch_assoc($query2)){
+                $pinfo = mysqli_fetch_assoc($this->read('product',"product_id = ".$row2['product_id']));
+                $products[$pinfo['weight']] += $row2['quantity'];
+            }
+        }
+        $chart['labels'] = array();
+        $chart['vector'] = array();
+        foreach($products as $id => $quantity){
+            // $row = mysqli_fetch_assoc($this->read('product',"product_id = $id"));
+            array_push($chart['labels'], $id." Kg");
+            array_push($chart['vector'], $quantity);
+        }
+        $chart['type'] = 'bar';
         $chart['main'] = 'Based on Product';
         $chart['y'] = 'Number of sold items';
         $chart['color'] = 'rgba(245, 215, 39, 0.8)';
@@ -151,10 +178,24 @@ class Admin extends Model
 
         //chart 2
         $chart['type'] = 'pie';
-        $chart['labels'] = array('Homagama','Maharagma','Kesbewa','Colombo','Moratuwa');
-        $chart['vector'] = array(7,10,12,5,7,8,3);
+        $chart['labels'] = array();
+        $chart['vector'] = array();
+        $sql = "SELECT
+        re.total_revenue,
+        IF(SUM(ri.quantity*ri.unit_price)/total_revenue > 0.1, d.city, 'Other') AS city,
+        SUM(ri.quantity*ri.unit_price) AS revenue,
+        ROUND(SUM(ri.quantity*ri.unit_price)/total_revenue * 100) AS percentage
+        FROM (SELECT * FROM reservation WHERE order_state != 'Pending' AND order_state != 'Canceled') r INNER JOIN dealer d ON r.dealer_id = d.dealer_id
+        INNER JOIN reservation_include ri ON r.order_id = ri.order_id
+        CROSS JOIN (SELECT SUM(re.quantity*re.unit_price) AS total_revenue FROM reservation rn INNER JOIN reservation_include re ON rn.order_id = re.order_id WHERE rn.order_state != 'Pending' AND rn.order_state != 'Canceled') re
+        GROUP BY city ORDER BY revenue DESC";
+        $query1 = $this->Query($sql);
+        while($row = mysqli_fetch_assoc($query1)){
+            array_push($chart['labels'], $row['city']);
+            array_push($chart['vector'], $row['percentage']);
+        }
         $chart['main'] = 'Based on the city';
-        $chart['y'] = 'Number of Orders';
+        $chart['y'] = 'Percentage (%)';
         $chart['color'] = '[
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
@@ -165,34 +206,42 @@ class Admin extends Model
         array_push($data['charts'],$chart);
 
         //chart 3
-        // $chart['type'] = 'doughnut';
-        // $chart['labels'] = array('Delivery','Pickup');
-        // $chart['vector'] = array(60,40);
-        // $chart['main'] = 'Based on Collecting Method';
-        // $chart['y'] = 'Number of orders';
-        // $chart['color'] = '[
-        //     "rgb(205, 99, 132)",
-        //     "rgb(54, 162, 235)"
-        //     ]';
-        // array_push($data['charts'],$chart);
+        $deliverymode = array("Delivery"=>0,"Pickup"=>0);
+        $query1 = $this->read('reservation',
+        "place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $deliverymode[$row['collecting_method']]++;
+        }
+        $chart['type'] = 'doughnut';
+        $chart['labels'] = array_keys($deliverymode);
+        $chart['vector'] = array_values($deliverymode);
+        $chart['main'] = 'Based on Collecting Method';
+        $chart['y'] = 'Number of orders';
+        $chart['color'] = '[
+            "rgb(205, 99, 132)",
+            "rgb(54, 162, 235)"
+            ]';
+        array_push($data['charts'],$chart);
 
         //chart 4
+        $usertype = array("Domestic"=>0, "CommercialLarge"=>0, "CommercialSmall"=>0);
+        $query1 = $this->read('reservation',
+        "place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        while($row = mysqli_fetch_assoc($query1)){
+            $customer_id = $row['customer_id'];
+            $row2 = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
+            $usertype[$row2['type']]++;
+        }
         $chart['type'] = 'bar';
-        $chart['labels'] = array('Domestic','LargeScale','SmallScale');
-        $chart['vector'] = array(22,65,45);
-        $chart['main'] = 'Based on Customer Type';
-        $chart['y'] = 'Number of Orders';
-        $chart['color'] = 'rgba(48, 39, 245, 0.8)';
-        array_push($data['charts'],$chart);
-        //chart 4
-        $chart['type'] = 'bar';
-        $chart['labels'] = array('Domestic','LargeScale','SmallScale');
-        $chart['vector'] = array(22,65,45);
+        $chart['labels'] = array_keys($usertype);
+        $chart['vector'] = array_values($usertype);
         $chart['main'] = 'Based on Customer Type';
         $chart['y'] = 'Number of Orders';
         $chart['color'] = 'rgba(48, 39, 245, 0.8)';
         array_push($data['charts'],$chart);
         
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
         return $data;
     }
 

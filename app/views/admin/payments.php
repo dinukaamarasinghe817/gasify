@@ -59,8 +59,8 @@ $sidebar = new Navigation('admin','payments');
                                         <p><strong>Total amount : </strong>Rs.<?=number_format($row['amount'],2)?></p>
                                         <div>
                                             <a class="yellow" href="<?=BASEURL?>/public/img/payslips/<?=$row['pay_slip']?>" target="_top" Download>Download pay slip</a>
-                                            <button onclick="adminprompt('confirmation',<?php echo 'location.href='.BASEURL.'/orders/validatepaymentsubmit/valid/regular/'.$row['order_id']?>,'')" class="btn-blue">Valid</button>
-                                            <button onclick="adminprompt('confirmation',<?php echo 'location.href='.BASEURL.'/orders/validatepaymentsubmit/valid/regular/'.$row['order_id']?>,'')" class="btn-blue red">Invalid</button>
+                                            <button onclick="adminprompt('confirmation','<?php echo BASEURL.'/orders/validatepaymentsubmit/valid/regular/'.$row['order_id']?>','')" class="btn-blue">Valid</button>
+                                            <button onclick="adminprompt('confirmation','<?php echo BASEURL.'/orders/validatepaymentsubmit/invalid/regular/'.$row['order_id']?>','')" class="btn-blue red">Invalid</button>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ $sidebar = new Navigation('admin','payments');
                                         <div>
                                             <a class="yellow" href="<?=BASEURL?>/public/img/payslips/<?=$row['pay_slip']?>" target="_top" Download>Download pay slip</a>
                                             <button onclick="adminprompt('confirmation','<?php echo BASEURL.'/orders/validatepaymentsubmit/valid/refund/'.$row['order_id']?>','')" class="btn-blue">Valid</button>
-                                            <button onclick="adminprompt('confirmation',<?php echo 'location.href='.BASEURL.'/orders/validatepaymentsubmit/invalid/refund/'.$row['order_id']?>,'')" class="btn-blue red">Invalid</button>
+                                            <button onclick="adminprompt('confirmation','<?php echo BASEURL.'/orders/validatepaymentsubmit/invalid/refund/'.$row['order_id']?>','')" class="btn-blue red">Invalid</button>
                                         </div>
                                     </div>
                                 </div>
