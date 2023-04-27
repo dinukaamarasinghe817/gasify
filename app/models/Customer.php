@@ -872,30 +872,12 @@ class Customer extends Model{
 
 
 
-    /*===================================================select collecting method=========================================================== */
-    //insert collecting method in to reservation table
-    public function insertcollectingmethod($order_id){
-        // $customer_id = $_SESSION['user_id'];
-        // $dealer_id = $_SESSION['dealer_id'];
-        // $order_state = 'Pending';
-        // $place_time = $_SESSION['place_time'];
-        // $place_date = $_SESSION['place_date'];
-        $collecting_method = $_SESSION['collecting_method'];
-
-        //get order id from reservation table
-        // $result1 = $this->Query("SELECT order_id FROM reservation
-        // WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
-        // $row = mysqli_fetch_assoc($result1);
-        // $order_id =  $row['order_id'] ;
-
-        //update reservation table with collecting method
-        $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
-    }
+   
 
 
     /*=======================================select delivery method========================================================================= */
     //insert delivery distance ranges to reservation table and return delivery charge  
-    function insertdelivery_street($order_id,$delivery_street,$delivery_city){
+    function get_delivery_charge($order_id,$delivery_street,$delivery_city){
        
         //get dealer address as origin of delivery
         $dealer_id = $_SESSION['dealer_id'];
@@ -935,17 +917,54 @@ class Customer extends Model{
 
             //check customer distance range
             if($distance>=$min_distance && $distance<=$max_distance){  
-                $order_min_distance = $min_distance;
-                $order_max_distance = $max_distance;
-                
                 $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
             }
         }
         
-        //update reservation table with delivery charge
-        $this ->update('reservation',['deliver_city'=>$delivery_city,'deliver_street'=>$delivery_street,'min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
-
         return $delivery_charge;
+    }
+
+     /*===================================================select collecting method=========================================================== */
+    //insert collecting method in to reservation table
+    public function insertcollectingmethod($order_id,$delivery_city=null,$delivery_street=null){
+        
+        $collecting_method = $_SESSION['collecting_method'];
+
+        //get dealer address as origin of delivery
+        $dealer_id = $_SESSION['dealer_id'];
+        $result1 = $this->Query("SELECT * FROM dealer WHERE dealer_id = $dealer_id");
+        $row1 = mysqli_fetch_assoc($result1);
+        $dealer_city = $row1['city'];
+        $dealer_street = $row1['street'];
+        $dealer_address = $dealer_street.', '.$dealer_city;
+
+        $delivery_address = $delivery_street.', '.$delivery_city;
+        $distance = getDistance($dealer_address,$delivery_address);  //take distance between customer and dealer address using google maps
+       
+
+         //get delivery charges details from delivery_charge table
+         $result2 = $this->Query("SELECT * FROM delivery_charge");
+         while($row2 = mysqli_fetch_assoc($result2)){
+             $min_distance = $row2['min_distance']; 
+             $max_distance = $row2['max_distance'];
+             $charge_per_kilo = $row2['charge_per_kg'];
+ 
+             //check customer distance range
+             if($distance>=$min_distance && $distance<=$max_distance){  
+                 $order_min_distance = $min_distance;
+                 $order_max_distance = $max_distance;
+             }
+         }
+         
+
+        //update reservation table with collecting method
+        if($collecting_method == "Delivery"){
+            $this ->update('reservation',['collecting_method'=>$collecting_method,'deliver_city'=>$delivery_city,'deliver_street'=>$delivery_street,'min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
+        }
+        else{
+            $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
+        }
+        
     }
 
     function getdealerpubkey($dealer_id){
