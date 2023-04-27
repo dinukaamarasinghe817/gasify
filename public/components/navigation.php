@@ -599,10 +599,11 @@ class Navigation {
                     echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile orders">';
                 }
 
-                        echo '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21.6667 22.75V20.5833C21.6667 19.4341 21.2101 18.3319 20.3975 17.5192C19.5848 16.7065 18.4826 16.25 17.3333 16.25H8.66666C7.51739 16.25 6.41519 16.7065 5.60253 17.5192C4.78987 18.3319 4.33333 19.4341 4.33333 20.5833V22.75" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M13 11.9167C15.3932 11.9167 17.3333 9.97657 17.3333 7.58333C17.3333 5.1901 15.3932 3.25 13 3.25C10.6068 3.25 8.66667 5.1901 8.66667 7.58333C8.66667 9.97657 10.6068 11.9167 13 11.9167Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        echo '<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.1639 21.5966V19.5966C20.1639 18.5357 19.7425 17.5183 18.9924 16.7681C18.2422 16.018 17.2248 15.5966 16.1639 15.5966H8.16394C7.10307 15.5966 6.08566 16.018 5.33551 16.7681C4.58537 17.5183 4.16394 18.5357 4.16394 19.5966V21.5966" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.1639 11.5966C14.3731 11.5966 16.1639 9.8057 16.1639 7.59656C16.1639 5.38742 14.3731 3.59656 12.1639 3.59656C9.9548 3.59656 8.16394 5.38742 8.16394 7.59656C8.16394 9.8057 9.9548 11.5966 12.1639 11.5966Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
+                        
                         
                             <h3>Dealer</h3>
                         </a>
@@ -658,10 +659,18 @@ class Navigation {
                 }
                         
                         echo '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22.75 8.66663V22.75H3.25V8.66663" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M24.9167 3.25H1.08333V8.66667H24.9167V3.25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M10.8333 13H15.1667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <g clip-path="url(#clip0_101_10)">
+                        <path d="M22.75 8.66663V22.75H3.25V8.66663" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M24.9167 3.25H1.08333V8.66667H24.9167V3.25Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.8333 13H15.1667" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_101_10">
+                        <rect width="26" height="26" fill="white"/>
+                        </clipPath>
+                        </defs>
                         </svg>
+                        
                         
                             <h3>Products</h3>
                         </a>
