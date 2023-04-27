@@ -1151,6 +1151,7 @@ class Body{
         echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
                             <tr>
+                                <th>Order ID</th>
                                 <th>Customer name</th>
                                 <th>Address</th>
                                 <th>Contact no</th>
@@ -1165,6 +1166,7 @@ class Body{
             $pool = "";
             foreach ($result as $row) {
                 $pool .=  '<tr>
+                    <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
@@ -1202,6 +1204,7 @@ class Body{
         echo '<table class="styled-table" style="margin-top:0.3%">
                     <thead style="background-color:#dbb1f9">
                         <tr>
+                            <th>Order ID</th>
                             <th>Customer name</th>
                             <th>Address</th>
                             <th>Contact no</th>
@@ -1217,6 +1220,7 @@ class Body{
             $pool = "";
             foreach ($result as $row) {
                 $pool .=  '<tr>
+                    <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
@@ -2043,6 +2047,7 @@ class Body{
             <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Analysis</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0; display:flex; flex-direction:row;">
+            
                 <div class="analysis_top" style="flex-direction:column;">
                     <div class="graph" style="width:500px; padding:20px;">
                         <h4>Last Week</h4>';
@@ -2290,14 +2295,161 @@ class Body{
             }
             
     }
-    function rr(){
-        //require('fpdf.php');
-        $pdf = new FPDF('P','mm','A4');
-        $pdf->SetAutoPageBreak(true,10);
-        $pdf->SetMargins(23,24,23);
-        $pdf->AddPage();
-        $pdf->SetFont('Arial','B',16);
-        $pdf->Cell(40,10,'Hello World!');
-        $pdf->Output();
+    function deliveryAnalysis($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Delvery/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Analysis</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;">'; 
+                echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
+                <form action="'. BASEURL.'/Delvery/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
+                <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                From<select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
+                    if(isset($data['joinedDate'])){
+                        echo'<option value="" disabled selected >Year</option>';
+                        $tag='';
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                            
+                            if($i==intval($data['joinedDate'][0])){
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }
+                                
+                            
+                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Year</option></select>';
+                    }
+                echo'<select name="monthFrom" id="monthFrom">';
+                if(isset($data['currentdate'])){
+                    echo'<option value="" disabled >Month</option>';
+                    $tag='';
+                    $to=0;
+                    if(intval($data['fromyearandmonth'][0])==intval($data['currentdate'][0])){
+                        $to=intval($data['currentdate'][1])+1;
+                    }else{
+                        $to=13;
+                    }
+                    for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                        if($i==$data['fromyearandmonth'][1]){
+                            $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                        }else{
+                            $tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                    }
+                    $tag.='</select>';
+                    echo $tag;
+
+                }else{
+                    echo'<option value="" disabled selected>Month</option>
+                    </select>';
+                }
+            echo'
+            </div>
+            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
+                if(isset($data['joinedDate'])){
+                    echo'<option value="" disabled selected>Year</option>';
+                    $tag='';
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                            if($i==intval($data['joinedDate'][0])){
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }
+                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Year</option></select>';
+                    }
+                
+                echo'
+                <select name="monthTo" id="monthTo">';
+                    if(isset($data['currentdate'])){
+                        echo'<option value="" disabled >Month</option>';
+                        $tag='';
+                        $to=0;
+                        if(intval($data['toyearandmonth'][0])==intval($data['currentdate'][0])){
+                            $to=intval($data['currentdate'][1])+1;
+                        }else{
+                            $to=13;
+                        }
+                        for ($i=(intval($data['joineddate'][0])==intval($data['toyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                            if($i==$data['toyearandmonth'][1]){
+                                $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'">'.$i.'</option>';
+                            }
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Month</option>
+                        </select>';
+                    }
+                echo'</select>
+            </div>
+            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
+                <input type="submit" name="sub" value="Submit" style="font-family:poppins" class="getAnalysisButton">
+            </div></form></div>'; 
+            echo'<div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
+                    <div class="leftAnalysis" style="width:50%;height:100%">';
+                    if(isset($data['barChart'])){
+                        echo'<h4 style="margin-left:5%">Total Deliveries</h4>';
+                    }
+                    
+                        echo'<div class="barChart" id="barChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                        $chart['vector']=[12,18,23,15,17];
+                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart['color']="rgba(30, 105, 176, 1)";
+                        $chart['y']='Deliveries-Last week';
+                        $chart = new Chart('bar',$chart,1);  
+                            
+                        echo'</div>';
+                        if(isset($data['lineChart'])){
+                            echo'<h4 style="margin-left:5%">Total Revenue</h4>';
+                        }
+                        
+                        echo'<div class="lineChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                        $chart_3['vector']=[5500,3250,4800,4130,3900];
+                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
+                        $chart_3['color']="rgba(30, 105, 176, 1)";
+                        $chart_3['y']='Revenue-Last week(Rs)';
+                        $chart_3 = new Chart('line',$chart_3,4);
+                                    
+                        echo'</div>
+                    </div>';
+                    if(isset($data['lineChart'])){
+                        echo'<h4 style="margin-left:5%">Sold stock</h4>';
+                    }
+                    
+                    echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                    $chart_2['vector']=array(20,80);
+                    $chart_2['labels']=array('Canceled','Delivered');
+                    $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                    $chart_2['y']='Last month deliveries';
+                    $chart_2['main']="fgdff";
+                    $chart_2 = new Chart('doughnut',$chart_2,3);
+                    
+                    
+                    
+                    echo'</div>
+                
+                
+                </div>';
+                
+
+        echo ' 
+        </section>';
     }
 }
