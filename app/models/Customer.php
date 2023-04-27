@@ -903,9 +903,9 @@ class Customer extends Model{
         $row1 = mysqli_fetch_assoc($result1);
         $dealer_city = $row1['city'];
         $dealer_street = $row1['street'];
-        $dealer_address = $dealer_street .$dealer_city;
+        $dealer_address = $dealer_street.', '.$dealer_city;
 
-        $delivery_address = $delivery_street .$delivery_city;
+        $delivery_address = $delivery_street.', '.$delivery_city;
         $distance = getDistance($dealer_address,$delivery_address);  //take distance between customer and dealer address using google maps
        
 

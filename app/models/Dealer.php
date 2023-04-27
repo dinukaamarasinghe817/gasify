@@ -716,7 +716,7 @@ class Dealer extends Model
             $products[$row['product_id']] = 0;
         }
         $query1 = $this->read('reservation',
-        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
         while($row = mysqli_fetch_assoc($query1)){
             $order_id = $row['order_id'];
             $query2 = $this->read('reservation_include',"order_id = $order_id");
@@ -741,7 +741,7 @@ class Dealer extends Model
         $days = array("Mon"=>0,"Tue"=>0,"Wed"=>0,"Thu"=>0,"Fri"=>0,"Sat"=>0,"Sun"=>0);
         $deliverymode = array("Delivery"=>0,"Pickup"=>0);
         $query1 = $this->read('reservation',
-        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
         while($row = mysqli_fetch_assoc($query1)){
             $day = date('D', strtotime($row['place_date']));
             $days[$day]++;

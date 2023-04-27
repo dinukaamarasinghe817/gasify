@@ -75,10 +75,10 @@ class Chart{
     }
 
     public function doughnut($data,$index){
-        echo '<canvas id="bargraph'.$index.'"></canvas>
+        echo '<canvas id="bargraph'.$index.'" class="doughnut"></canvas>
         <script>
-        let ctx = document.getElementById("bargraph'.$index.'")
-        new Chart(ctx, {
+        let ctx'.$index.' = document.getElementById("bargraph'.$index.'")
+        new Chart(ctx'.$index.', {
             type: "doughnut",
             data: {
                 
@@ -96,17 +96,18 @@ class Chart{
                         display: true,
                         position: "right"
                     }
-                }
+                },
+                maintainAspectRatio: true
             }
         });
         </script>';
     }
 
     public function pie($data,$index){
-        echo '<canvas id="bargraph'.$index.'"></canvas>
+        echo '<canvas id="bargraph'.$index.'" class="pie"></canvas>
         <script>
-        let ctx = document.getElementById("bargraph'.$index.'")
-        new Chart(ctx, {
+        let ctx'.$index.' = document.getElementById("bargraph'.$index.'")
+        new Chart(ctx'.$index.', {
             type: "pie",
             data: {
                 
@@ -124,7 +125,8 @@ class Chart{
                         display: true,
                         position: "right"
                     }
-                }
+                },
+                maintainAspectRatio: true
             }
         });
         </script>';
