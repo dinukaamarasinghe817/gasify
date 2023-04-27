@@ -477,3 +477,63 @@ margin: 0;
     margin: 0px;
     padding: 5px;
 }
+
+.verification{
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    /* width: 350px;
+    height: 250px; */
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    gap: 10px;
+    transition: 0.5s ease-in-out;
+    z-index: 2;
+}
+
+.verification .box{
+    width: 90%;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.verification h1{
+    font-size: var(--large);
+    color: #000000;
+}
+.verification button{
+    padding: 10px 30px;
+    background-color: var(--button-blue);
+    border-radius: 5px;
+    color: white;
+    transition: 0.3s;
+}
+.verification button:hover{
+    background-color: var(--button-blue-hover);
+}
+.verification .box img{
+    margin-left: auto;
+    width: 70px;
+    height: auto;
+}
+.verification.active{
+    transition: 1.5s ease-in-out;
+    display: flex;
+}
+.verification form{
+    width: 90%;
+    padding: 10px;
+}
+.verification .buttons{
+    width: 100%;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

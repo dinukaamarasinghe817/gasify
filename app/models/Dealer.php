@@ -404,10 +404,10 @@ class Dealer extends Model
                     
                     // send a mail as well
                     $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
-                    $dealer_email = $q['email'];
-                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
-                    $customer_Name = $q['first_name'].' '.$q['last_name'];
-                    $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
+                    // $dealer_email = $q['email'];
+                    // $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+                    // $customer_Name = $q['first_name'].' '.$q['last_name'];
+                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$message,$link=null);
                     $mail->send();
                 }
 
@@ -418,7 +418,8 @@ class Dealer extends Model
             }else{
                 // order is pending due to low stock but place the reservation
                 return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
-
+                // should handle the reduction of stock when the dealer gets a new stock
+                // consider customer orders on fcfs
             }
         }else{
             // payment method payslip
@@ -471,17 +472,19 @@ class Dealer extends Model
                     
                     // send a mail as well
                     $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
-                    $dealer_email = $q['email'];
-                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
-                    $customer_Name = $q['first_name'].' '.$q['last_name'];
-                    $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
+                    // $dealer_email = $q['email'];
+                    // $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+                    // $customer_Name = $q['first_name'].' '.$q['last_name'];
+                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$message,$link=null);
                     $mail->send();
                 }
 
             }
             // placing the reservation but pending because of payslip need to verify by admin
             $order_id = $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
-
+            // should handle the reduction of stock when the dealer gets a new stock
+            // consider customer orders on fcfs
+            
             // update and upload the payslip
             $payslip = $_SESSION['slip_img'];
             $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'payslips'.DIRECTORY_SEPARATOR;

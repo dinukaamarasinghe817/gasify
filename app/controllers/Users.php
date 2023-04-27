@@ -79,7 +79,12 @@ class Users extends Controller{
     }
 
     function customers(){
-        $data = $this->model("Admin")->customers();
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = "all";
+        }
+        $data = $this->model("Admin")->customers($option);
         $this->view('admin/customers', $data);
     }
 

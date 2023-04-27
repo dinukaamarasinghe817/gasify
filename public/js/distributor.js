@@ -28,3 +28,4 @@ function gettotal() {
     return total.toLocaleString('en-US');
     // return total;
 }
+

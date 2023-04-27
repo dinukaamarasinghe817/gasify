@@ -58,14 +58,20 @@
             $pendingReq = $this->model('Company')->getPendingReqCount($company_id);
             $distCount= $this->model('Company')->getDistributorCount($company_id);
             $dealerCount= $this->model('Company')->getDealerCount($company_id);
+            $lowStockProducts = $this->model('Company')->getProductDetails($company_id);
+            $order_details=$this->model('Company')->getStockReqDetails($company_id);
+            $productDetails = $this->model('Company')->getProductDetails($company_id);
             $data['products']=$product_details;
             $data['reqCount']=$pendingReq;
             $data['distCount']=$distCount;
             $data['dealerCount']=$dealerCount;
+            $data['order_details']=$order_details;
+            $data['product_details']=$productDetails;
             //$data['name']="ffg";
             $row = mysqli_fetch_assoc($company_details);
             $data['navigation'] = 'dashboard';
             $data['image'] = $user_id['logo'];
+            $data['lowStock']=$lowStockProducts;
             //$data=[];
             $this->view('dashboard/company', $data);
         }

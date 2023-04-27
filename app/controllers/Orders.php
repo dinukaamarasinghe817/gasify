@@ -676,6 +676,7 @@ class Orders extends Controller{
         $this->view('distributor/placed_pending',$data);
 
     }
+
     // Gas Orders -> Places orders list , accepted gas orders
     public function dis_placed_accepted() {
         $user_id = $_SESSION['user_id'];
@@ -691,7 +692,7 @@ class Orders extends Controller{
         $this->view('distributor/placed_accepted',$data);
 
     }
-
+    
     // Gas Orders -> Places orders list , completed gas orders
     public function dis_placed_completed() {
         $user_id = $_SESSION['user_id'];
@@ -725,11 +726,14 @@ class Orders extends Controller{
     /*****************************************************************************************************/
 
     public function validatepayments($tab){
-        $row = mysqli_fetch_assoc($this->model("Admin")->getAdmin($this->user_id));
-        $data['name'] = $row['first_name'].' '.$row['last_name'];
-        $data['image'] = $row['image'];
-        $data['activetab'] = $tab;
+        $data = $this->model('Admin')->getPaymentVerifications($tab);
         $this->view('admin/payments',$data);
+    }
+
+    public function validatepaymentsubmit($validity,$tab,$order_id){
+        $validity = ($validity == 'valid') ? true : false;
+        $data = $this->model('Admin')->validatepaymentsubmit($validity,$tab,$order_id);
+        header('location:'.BASEURL.'/orders/validatepayments/'.$tab.'');
     }
 
 }

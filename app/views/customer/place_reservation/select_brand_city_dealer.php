@@ -111,9 +111,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                                     if(isset($data["city"])){
                                         $result1 = $data["city"];
-                                        //check previous selected brand is already exists
+                                        //check previous selected city is already exists
                                         if(isset($_SESSION['city'])){
-                                            $old_city = $_SESSION['city'];   //take exsit brand company id from session
+                                            $old_city = $_SESSION['city'];   //take exsit  from session
                                             
                                             while($customer_city = mysqli_fetch_assoc($result1)){           
                                                 $customer_current_city = $customer_city["city"];

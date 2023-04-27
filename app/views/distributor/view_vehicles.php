@@ -53,16 +53,15 @@ $user_id = $_SESSION['user_id'];
                                                 <td>'.$row2['fuel_consumption'].' L</td>
                                                 <td>'.$row2['availability'].'</td>';
                                     if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
-                                        // $output .= '<td><button type="button" class="btn4" style="background-color: B4AAFF" onclick="document.location.href=\''/BASEURL.'/vehicles/releasing/'.$row2['vehicle_no'].'\'">Release</button></td>';
                                         $output .= '<td><button type="button" class="btn4" style="background-color: B4AAFF" onclick="document.location.href=\''.BASEURL.'/vehicles/releasing/'.$row2['vehicle_no'].'\'">Release</button></td>';
                                     }else{
-                                        // $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="deleteVehicle('.$row2['vehicle_no'].')";">Remove</button></td>';
                                         $output .= '<td><button type="button" class="btn4" style="background-color: red" onclick="location.href=\''.BASEURL .'/vehicles/removeVehicle/'.$row2['vehicle_no'].'\'">Remove</button></td>';
+
                                     }
                                     $output .= '<td><button type="button" class="btn4" style="background-color: #9c6109" onclick="document.location.href=\''.BASEURL .'/vehicles/updateVehiclePage/'.$row2['vehicle_no'].'\'">Update</button></td>';                                                              
                                     
                                     $output .=  '
-                                            </tr>';
+                                    </tr>';
                     }
                 
                     $output .= '</tbody></table>';
