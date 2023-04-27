@@ -22,55 +22,6 @@ a,button{
     color: var(--navmenu-orange-dark);
 }
 
-/* .order_detail_table{
-    margin-left: 40px;
-    margin-right: 90px;
-   
-}
-
-.order_table_header{
-    display:flex;
-    flex-direction: row;
-    box-sizing: border-box;
-
-    column-gap: 40px;
-    padding: 20px 40px 20px 40px; 
-    justify-content: space-between; 
-    padding-left: 50px;
-
-    font-size: var(--mediums);
-    font-weight: 900;
-     background-color: var(--table-gray);
-    
-} */
-
-
-/* .order_table_row {
-     display: flex;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    
-
-     justify-content: space-between;
-    border-bottom: 2px solid var(--table-gray);
-}  */
-
-
-
-
-
-/* .order_table_row .product img{
-    width: 200px;
-    height: 200px;
-}
-
-.order_table_row div{
-    display: flexbox;
-    flex-direction: column;
-    justify-content: left;
-} */
-
 
 
 
@@ -235,4 +186,31 @@ a,button{
 
 .p_btn button:hover svg{
     fill: var(--white);
+}
+
+/* bottom back button css */
+.bottom{
+    padding-bottom: 20px;
+}
+
+.bottom .btn{ 
+    display: flex;
+    width: 150px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: var(--mediums);
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    color: black;
+}
+
+#back_btn{
+    border: 3px solid var(--navmenu-gray-dark);
+}
+
+#back_btn:hover{
+    color: var(--white);
+    background-color:var(--navmenu-gray-dark);
 }

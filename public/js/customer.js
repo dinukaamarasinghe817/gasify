@@ -62,7 +62,7 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         </div>`;
     }else if(variant == 'deliverymethod'){
         body = `<h2>Select Collecting Method</h2>
-        <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
+        <img src="http://localhost/mvc/public/img/icons/collecting_method.png" alt="">
         <p>Select the collecting method you need</p>
         <div class="buttons">
             <button onclick="customerprompt();customerprompt('selectpickup','http://localhost/mvc/Orders/getcollecting_method/Pickup/');">

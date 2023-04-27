@@ -30,8 +30,7 @@ class Dealers extends Controller {
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
-        $data['image'] = $row1['image'];
-        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
+    
         $data['mycity'] = $row1['city'];
 
         $data['brands']= $this->model("Customer")->getCompanyBrand();

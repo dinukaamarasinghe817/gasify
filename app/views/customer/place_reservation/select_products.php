@@ -23,6 +23,19 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="middle">
         <?php
 
+            if(isset($_SESSION['order_products'])){
+                $old_selected_products = $_SESSION['order_products'];
+                foreach($old_selected_products as $old_selected_product){
+                    $product_id = $old_selected_product['product_id'];
+                    $qty = $old_selected_product['qty'];
+                }
+            }
+
+
+
+
+
+
             $company_id = $data['company_id'];
             $city = $data['city'];
             $dealer_id = $data['dealer_id'];
