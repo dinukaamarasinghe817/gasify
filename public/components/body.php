@@ -141,8 +141,11 @@ class Body{
             $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/pohistory" class="current" onclick="historyclicked(); return false;">Order History</a></li>';
         }
         $stockheader .= '</ul>';
-        echo '<section class="body-content">
-        <div class="top-panel">
+        echo '<section class="body-content">';
+        echo "<form action='' class='filters' method='post'>";
+        $search = new Search(($data['tab'] == "currentstock" || $data['tab'] == "currentstock") ? [1] : [1,2,3]);
+        echo "</form>";
+        echo '<div class="top-panel">
             '.$stockheader.'
         </div>
         <div class="content-data">';
