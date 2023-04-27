@@ -139,16 +139,16 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         </svg>Bank Deposit</button>
                     </div>
 
+                    
 
                 </div>
 
             </div>
         </div>
         
-
-        <!-- <div class="bottom">
-            <a href="<?php echo BASEURL; ?>/Products/select_products/2" class="btn">Next</a>
-        </div> -->
+        <div class="bottom">
+            <a href=" <?php echo BASEURL ;?>/Orders/select_products" class="btn" id="back_btn" >Back</a>
+        </div>
         <script>
             function paynow(orderId){
             // Payment completed. It can be a successful failure.
