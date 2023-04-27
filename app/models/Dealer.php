@@ -292,7 +292,12 @@ class Dealer extends Model
                 break;
             case "pohistory":
                 // get the dealer's stock information
-                $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$dealer_id}' ORDER BY po_id DESC");
+                $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$dealer_id}' ORDER BY CASE po_state
+                WHEN 'pending' THEN 1
+                WHEN 'accepted' THEN 2
+                WHEN 'completed' THEN 3
+                ELSE 4
+              END, po_id DESC");
                 $purchase_orders = array();
 
                 if(mysqli_num_rows($query2) > 0){

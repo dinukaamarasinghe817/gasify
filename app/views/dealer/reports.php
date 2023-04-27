@@ -21,13 +21,12 @@ $sidebar = new Navigation('dealer','reports');
                     <?php
                         if($data['filter'] == 'soldquantity'){
                             echo '<option value="soldquantity" selected >Sold Quantity</option>
-                            <option value="totalearnings">Total Amount</option>';
+                            <option value="totalearnings">Total Revenue</option>';
                         }else{
                             echo '<option value="soldquantity">Sold Quantity</option>
-                            <option value="totalearnings" selected>Total Amount</option>';
+                            <option value="totalearnings" selected>Total Revenue</option>';
                         }
                     ?>
-                    
                 </select>
             </div>
         </form>
