@@ -220,13 +220,18 @@
             $data['password'] = $_POST['password'];
             $image_name = '';
             $tmp_name = '';
+            if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+                $image_name = $_FILES['image']['name'];
+                $tmp_name = $_FILES['image']['tmp_name'];
+            }
             /*if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
                 $image_name = $_FILES['image']['name'];
                 $tmp_name = $_FILES['image']['tmp_name'];
             }*/
             
             // password hashing
-            $data = $this->model("User")->CompanySignup($data);
+            $data = $this->model("User")->CompanySignup($data,$image_name,$tmp_name);
+            header("Location: ".BASEURL."/signin/user");
             /*if(isset($data['error'])){
                 $error = $data['error'];
                 header("Location: ".BASEURL."/signup/customer/$error");
@@ -341,13 +346,14 @@
             $data['costperkm'] = $_POST['costperkm'];
             $image_name = '';
             $tmp_name = '';
-            /*if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+            if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
                 $image_name = $_FILES['image']['name'];
                 $tmp_name = $_FILES['image']['tmp_name'];
-            }*/
+            }
             
             // password hashing
-            $data = $this->model("User")->DeliverySignup($data);
+            $data = $this->model("User")->DeliverySignup($data,$image_name,$tmp_name);
+            header("Location: ".BASEURL."/signin/user");
         }
 
 
