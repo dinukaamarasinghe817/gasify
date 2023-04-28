@@ -93,35 +93,160 @@ class Delvery extends Controller{
     }
     function deliverJob(){
         $orderID = $_POST["orderID"];
+        $date=date('Y-m-d');
+        //$data=$date[0].'-'.$date[1].'-'.$date[2];
+        //print_r($data);
         $message=$this->model('Delivery')->setReservationStateDelivered($orderID);
         return $message;
     }function getCharts(){
+        $delivery_id=$_SESSION['user_id'];
+        $joinedDate = $this->model('Delivery')->getRegisteredDate($delivery_id);
+        $currentDate=explode("-",date('Y-m-d'));
+        $data['joinedDate']=$joinedDate;
+        $data['currentDate']=$currentDate;
+        $data['navigation'] = 'reports';
         $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $deliveryID=$_SESSION['user_id'];
         $yearFrom=mysqli_real_escape_string($conn,$_POST['yearFrom']);
         $monthFrom=mysqli_real_escape_string($conn,$_POST['monthFrom']);
         $yearTo=mysqli_real_escape_string($conn,$_POST['yearTo']);
         $monthTo=mysqli_real_escape_string($conn,$_POST['monthTo']);
+        $currentDate=explode("-",date('Y-m-d'));
         $deliveredOrders = $this->model('Delivery')->getDeliveredOrders($deliveryID);
+        $deliveredProducts = $this->model('Delivery')->getDeliveredProducts($deliveryID);
+        $productCharges = $this->model('Delivery')->getRevenueForAnalysis($deliveryID);
         $processedDates=array();
+        $orderCount=array();
+        $deliveredProduct=array();
+        $deliveredProductNames=array();
+        $deliveredQty=array();
+        $revenueArray=array();
+        $revenueDate=array();
+        $revenueAmount=array();
+        $colors=array("green","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)","rgb(255, 128, 0)","rgb(0, 0, 255)","rgb(255, 0, 191)","rgb(102, 204, 255)");
+        for ($i=0; $i <50 ; $i++) { 
+            shuffle($colors);
+        }
+        $data['doughnutColors']='[';
+        foreach($colors as $item){
+            $data['doughnutColors'].="\"".$item."\",";
+            
+        }
+        $data['doughnutColors']=rtrim($data['doughnutColors'],",");
+        $data['doughnutColors'].="]";
+        /*doughnut colors*/
+        /*bar chart colors*/
+        for ($i=0; $i <50 ; $i++) { 
+            $rand_color=array_rand($colors);
+        }
+        $data['barColor']=$colors[$rand_color];
         foreach($deliveredOrders as $row){
             $date=explode('-',$row);
-            if((intval($date[0])==intval($yearFrom)) || (intval($date[0])==intval($yearTo)) || (intval($date[0])<intval($yearTo) || intval($yearFrom)<intval($date[0])) ){
+            if(!(in_array($date[0].'-'.$date[1],$processedDates))){
+                $d=$date[0].'-'.$date[1];
+                //print_r(intval($date[0]).'--'.$yearFrom.'\n');
                 array_push($processedDates,$date[0].'-'.$date[1]);
-                foreach($deliveredOrders as $row2){
-                    $date2=explode('-',$row2);
-                    if(intval($date2[0])==intval($date[0])){
-                        if(intval()){
-
+                if((intval($date[0])==intval($yearFrom)) ){
+                    $count=0;//array_push($processedDates,$date[0].'-'.$date[1]);
+                    //print_r("gdf");
+                    foreach($deliveredOrders as $row2){
+                        $date2=explode('-',$row2);
+                        if(($date2[0])==intval($date[0])){
+                            if(intval($date2[1]==$date[1]) && (intval($date2[1])>=intval($monthFrom))){
+                                $count=$count+1;
+                                //break;
+                            }
+    
                         }
-
-                    }elseif(intval($date2[0])==intval($date[0])){
-
+    
                     }
-
+                    array_push($orderCount,$count);
+                    $orderCount+=array($d=>$count);
+                }else if((intval($date[0])==intval($yearTo)) ){
+                    $count=0;
+                    foreach($deliveredOrders as $row2){
+                        $date2=explode('-',$row2);
+                        if(($date2[0])==intval($date[0])){
+                            if((intval($date2[1])==intval($date[1])) && (intval($date2[1])<=intval($monthTo))){
+                                $count=$count+1;
+                                //break;
+                            }
+    
+                        }
+    
                     }
+                    array_push($orderCount,$count);
+
+                }else if((intval($date[0])<intval($yearTo))&& (intval($date[0])>intval($yearFrom))){
+                    $count=0;
+                    foreach($deliveredOrders as $row2){
+                        $date2=explode('-',$row2);
+                        if(($date2[0])==intval($date[0])){
+                            if((intval($date2[1])==intval($date[1]))){
+                                $count=$count+1;
+                                //break;
+                            }
+    
+                        }
+    
+                    }
+                    array_push($orderCount,$count);
+
+                }
+
+            }
+            
+        }
+        foreach($deliveredProducts as $row){
+            $date=explode('-',$row['deliver_date']);
+            if(in_array($date[0].'-'.$date[1],$processedDates)){
+                if(array_key_exists($row['name'],$deliveredProduct)){
+                    $newQty=(int)$row['quantity']+$deliveredProduct[$row['name']];
+                    unset($deliveredProduct[$row['name']]);
+                    $deliveredProduct+=array($row['name']=>$newQty);
+                }else{
+                    $deliveredProduct+=array($row['name']=>(int)$row['quantity']);
                 }
             }
+        }
+        foreach($deliveredProduct as $key=>$value){
+            array_push($deliveredProductNames,$key);
+            array_push($deliveredQty,$value);
+        }foreach($productCharges as $row){
+            $date=explode('-',$row['deliver_date']);
+            if(in_array($date[0].'-'.$date[1],$processedDates)){
+                //print_r("yes");
+                if(array_key_exists($date[0].'-'.$date[1],$revenueArray)){
+                    $newRevenue=(int)$row['max_distance']*(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']+$revenueArray[$date[0].'-'.$date[1]];
+                    unset($revenueArray[$date[0].'-'.$date[1]]);
+                    $revenueArray+=array($date[0].'-'.$date[1]=>$newRevenue);
+                }else{
+                    $revenueArray+=array($date[0].'-'.$date[1]=>(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']);
+                }
+            }
+        }
+        foreach($revenueArray as $key=>$value){
+            array_push($revenueDate,$key);
+            array_push($revenueAmount,$value);
+        }
+        $barChart=array();
+        $barChart['dates']=$processedDates;
+        $barChart['values']=$orderCount;
+        $data['barChart']=$barChart;
+        $doughNut=array();
+        $doughNut['products']=$deliveredProductNames;
+        $doughNut['values']=$deliveredQty;
+        $data['doughNut']=$doughNut;
+        $lineChart=array();
+        $lineChart['values']=$revenueAmount;
+        $lineChart['names']=$revenueDate;
+        $data['lineChart']=$lineChart;
+        $this->view('dashboard/delivery', $data);  
+        //print_r($deliveredProductNames);
+        //print_r($processedDates);
+        //print_r($revenueArray);
+        //print_r("---------------------");
+        //print_r($orderCount);
     }
 }
 ?>

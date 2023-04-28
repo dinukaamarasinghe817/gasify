@@ -82,11 +82,16 @@ class Delivery extends Model
             return 0;
         }
     }public function setReservationStateDelivered($orderID){
-        if($this->Query(("UPDATE `reservation` SET order_state='Completed' WHERE order_id=$orderID;"))){
+        date_default_timezone_set("Asia/Colombo");
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+        //echo($date);
+        $this->update('reservation',['order_state'=>"Completed",'deliver_date'=>$date,'deliver_time'=>$time],'order_id='.$orderID);
+        /*if($this->Query(("UPDATE `reservation` SET order_state='Completed',deliver_date=$date WHERE order_id=$orderID;"))){
             return 1;
         }else{
             return 0;
-        }
+        }*/
     }public function getRegisteredDate($delivery_id){
         $result=$this->Query("SELECT date_joined AS date FROM users WHERE users.user_id=$delivery_id");
         if(mysqli_num_rows($result)>0){
@@ -95,7 +100,7 @@ class Delivery extends Model
             }
         }
     }public function getDeliveredOrders($delivery_id){
-        $result=$this->Query("SELECT place_date AS date FROM reservation WHERE reservation.order_state='completed' AND reservation.delivery_id=$delivery_id ORDER BY date ");
+        $result=$this->Query("SELECT deliver_date AS date FROM reservation WHERE reservation.order_state='completed' AND reservation.delivery_id=$delivery_id ORDER BY date ");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -104,6 +109,36 @@ class Delivery extends Model
            return $info;
         }
         //print_r($info);
+    }public function getRevenue($delivery_id){
+        $result=$this->Query("SELECT reservation.order_id,reservation.max_distance,reservation_include.product_id,reservation_include.quantity,product.weight,delivery_charge.charge_per_kg FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Completed' INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN delivery_charge ON reservation.min_distance=delivery_charge.max_distance;");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['order_id'=>$row['order_id'],'max_distance'=>$row['max_distance'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'weight'=>$row['weight'],'charge_per_kg'=>$row['charge_per_kg']]);
+            }
+            return $info;
+        }
+    
+    
+    }public function getDeliveredProducts($delivery_id){
+        $result=$this->Query("SELECT reservation.order_id,reservation.deliver_date,reservation_include.product_id,reservation_include.quantity,product.name FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Completed' INNER JOIN product ON reservation_include.product_id=product.product_id;");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['order_id'=>$row['order_id'],'deliver_date'=>$row['deliver_date'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'name'=>$row['name']]);
+            }
+            return $info;
+        }
+
+    }public function getRevenueForAnalysis($delivery_id){
+        $result=$this->Query("SELECT reservation.deliver_date,reservation.max_distance,reservation_include.product_id,reservation_include.quantity,product.weight,delivery_charge.charge_per_kg FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Completed' INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN delivery_charge ON reservation.min_distance=delivery_charge.max_distance ORDER BY deliver_date");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['deliver_date'=>$row['deliver_date'],'max_distance'=>$row['max_distance'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'weight'=>$row['weight'],'charge'=>$row['charge_per_kg']]);
+            }
+            return $info;
+        }
     }
     
     

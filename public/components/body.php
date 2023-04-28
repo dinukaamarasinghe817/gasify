@@ -1061,7 +1061,7 @@ class Body{
                     echo'    
                     </div>
                     <div class="card">
-                        <div class="cmValue" style="font-size:3vw">LKR.14350</div>
+                        <div class="cmValue" style="font-size:3vw">LKR.'.$data['revenue'].'</div>
                         <div class="cmTitle">Earned</div>
                     </div>
                 </div>
@@ -2412,11 +2412,14 @@ class Body{
                     }
                     
                         echo'<div class="barChart" id="barChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                        $chart['vector']=[12,18,23,15,17];
-                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart['color']="rgba(30, 105, 176, 1)";
-                        $chart['y']='Deliveries-Last week';
-                        $chart = new Chart('bar',$chart,1);  
+                        if(isset($data['barChart'])){
+                                
+                            $chart['vector']=$data['barChart']['values'];
+                            $chart['labels']=$data['barChart']['dates'];
+                            $chart['color']=$data['barColor'];
+                            $chart['y']='Deliveries';
+                            $chart = new Chart('bar',$chart,1);
+                        } 
                             
                         echo'</div>';
                         if(isset($data['lineChart'])){
@@ -2424,25 +2427,31 @@ class Body{
                         }
                         
                         echo'<div class="lineChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                        $chart_3['vector']=[5500,3250,4800,4130,3900];
-                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart_3['color']="rgba(30, 105, 176, 1)";
-                        $chart_3['y']='Revenue-Last week(Rs)';
-                        $chart_3 = new Chart('line',$chart_3,4);
+                        if(isset($data['lineChart'])){
+                            $chart_3['vector']=$data['lineChart']['values'];
+                            $chart_3['labels']=$data['lineChart']['names'];
+                            $chart_3['color']="rgba(30, 105, 176, 1)";
+                            $chart_3['y']='Revenue (Rs)';
+                            $chart_3 = new Chart('line',$chart_3,4);
+                        }
+                        
                                     
                         echo'</div>
                     </div>';
-                    if(isset($data['lineChart'])){
-                        echo'<h4 style="margin-left:5%">Sold stock</h4>';
+                    if(isset($data['doughNut'])){
+                        echo'<h4 style="margin-left:5%">Delivered quantity</h4>';
                     }
                     
                     echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                    $chart_2['vector']=array(20,80);
-                    $chart_2['labels']=array('Canceled','Delivered');
-                    $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
-                    $chart_2['y']='Last month deliveries';
-                    $chart_2['main']="fgdff";
-                    $chart_2 = new Chart('doughnut',$chart_2,3);
+                    if(isset($data['doughNut'])){
+                        $chart_2['vector']=$data['doughNut']['values'];
+                        $chart_2['labels']=$data['doughNut']['products'];
+                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                        $chart_2['y']='Delivered';
+                        $chart_2['main']="fgdff";
+                        $chart_2 = new Chart('doughnut',$chart_2,3);
+                    }
+                    
                     
                     
                     
