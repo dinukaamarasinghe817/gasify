@@ -5,7 +5,7 @@
     }*/
     ?>
     <?php 
-        $header = new Header("company");
+        $header = new Header("company",$data);
         $sidebar = new Navigation('company',$data['navigation']);
     ?>
     <section class="body">
