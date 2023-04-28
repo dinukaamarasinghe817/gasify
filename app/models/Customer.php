@@ -317,7 +317,7 @@ class Customer extends Model{
         //check bank and acc no fields are empty or not
         if($bank != -1 && !empty($Acc_no)){
             //update reservation table with status and refund details relevant order
-            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Cancelled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time,'refund_verification'=>'Pending'],
+            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time,'refund_verification'=>'Pending'],
             'order_id='.$order_id);
 
             //check and update the quota if it is active and canceled reservation is placed during this month
