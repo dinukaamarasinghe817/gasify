@@ -100,7 +100,7 @@
                 if(!(in_array($orderID,$processedOrders))){
                     foreach($data['completed_orders'] as $row2){
                         if($row2['order_id']==$orderID){
-                            $revenue+=intval($row2['quantity'])*intval($row2['weight']*$row['charge_per_kg']);
+                            $revenue+=intval($row2['quantity'])*intval($row2['weight']*$row['charge_per_kg']*$row2['max_distance']);
                         }
                     }
                     array_push($processedOrders,$orderID);
