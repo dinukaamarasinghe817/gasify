@@ -114,7 +114,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             foreach ($deliveries as $delivery){
                                 $delivery_person_details.= '<div class="profile_details">
                                                                 <strong>Delivery Person: </strong>
-                                                                <button class="d_btn" onclick = "location.href=\''.$url_delivery.'\'">'.$delivery['delivery_name'].'</button>
+                                                                <a href="'.$url_delivery.'"><strong>'.$delivery['delivery_name'].'</strong></a>
                                                             </div>';                  
                             }
 
@@ -140,8 +140,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     echo '<div class = "dealer_details">
                                              <div  class="profile_details">
                                                 <strong>Dealer : </strong>
-                                               
-                                                <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'"> '.$row1['dealer_name'].'</button>
+                                                <a href="'.$url_dealer.'"><strong>'.$row1['dealer_name'].'</strong></a>
+                                                
                                             </div>
                                          </div>
                                          <div class="delivery_person_details">
@@ -155,7 +155,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     echo '<div class = "dealer_details">
                                              <div  class="profile_details">
                                                 <strong>Dealer : </strong>
-                                                <button class="d_btn" onclick = "location.href=\''.$url_dealer.'\'"> '.$row1['dealer_name'].'</button>
+                                                <a href="'.$url_dealer.'"><strong>'.$row1['dealer_name'].'</strong></a>
                                             </div>
                                          </div>';
                                 }
