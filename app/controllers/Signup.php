@@ -118,7 +118,7 @@
                 $error = $data['error'];
                 header("Location: ".BASEURL."/signup/dealer/$error");
             }else{
-                header("Location: ".BASEURL."/signin/user");
+                header("Location: ".BASEURL."/Compny/dealer/1");
             }
 
             
@@ -327,7 +327,7 @@
                 $error = $data['error'];
                 header("Location: ".BASEURL."/signup/distributor/$error");
             }else{
-                header("Location: ".BASEURL."/signin/user");
+                header("Location: ".BASEURL."/Compny/distributor/1");
             }
 
         }

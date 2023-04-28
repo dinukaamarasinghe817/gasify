@@ -9,7 +9,14 @@ class Compny extends Controller{
         
     }
 
-    function dealer(){
+    function dealer($error=null){
+        if($error!=null){
+            switch($error){
+                case '1':
+                    $data['toast'] = ['type' => 'success', 'message' =>'Successfully created user account!'];
+                    break;
+            }
+        }
         $data['navigation'] = 'dealer';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -25,7 +32,14 @@ class Compny extends Controller{
             //$data=[];
         $this->view('dashboard/company', $data);
     }
-    function distributor(){
+    function distributor($error=null){
+        if($error!=null){
+            switch($error){
+                case '1':
+                    $data['toast'] = ['type' => 'success', 'message' =>'Successfully created user account!'];
+                    break;
+            }
+        }
         $data['navigation'] = 'distributor';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);

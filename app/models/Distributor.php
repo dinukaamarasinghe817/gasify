@@ -663,7 +663,32 @@ class Distributor extends Model
         return $data;
     }
 
+    public function eligibleVechicles($po_id){
+        $query1 = $this->read('distributor_vehicle',"distributor_id = ".$_SESSION['user_id']);
+        if(mysqli_num_rows($query1) > 0){
+            while($row1 = mysqli_fetch_assoc($query1)){
+                // intializing the session for the vehicle
+                $_SESSION['eligibility'.$row1['vehicle_no']] = [];
+                $query2 = $this->read('distributor_vehicle_capacity',"distributor_id = ".$_SESSION['user_id']." AND vehicle_no = '".$row1['vehicle_no']."'");
+                if(mysqli_num_rows($query2) > 0){
+                    // push the remainging eligibility into the session (check this not sure)
+                    while($row2 = mysqli_fetch_assoc($query2)){
+                        $_SESSION['eligibility'.$row1['vehicle_no']][$row2['product_id']] = $row2['remain_eligibility'];
+                    }
 
+                    // take product ids of po
+                    $query3 = $this->read('purchase_include',"po_id = $po_id");
+                    if(mysqli_num_rows($query3) > 0){
+                        while($row3 = mysqli_fetch_assoc($query3)){
+                            
+                        }
+                    }
+                }
+            }
+        }else{
+            // have to show that he has no vehicles to distribute
+        }
+    }
     
 }
 
