@@ -105,24 +105,35 @@ class Delvery extends Controller{
         $monthTo=mysqli_real_escape_string($conn,$_POST['monthTo']);
         $deliveredOrders = $this->model('Delivery')->getDeliveredOrders($deliveryID);
         $processedDates=array();
+        $orderCount=array();
         foreach($deliveredOrders as $row){
             $date=explode('-',$row);
-            if((intval($date[0])==intval($yearFrom)) /*|| (intval($date[0])==intval($yearTo)) || (intval($date[0])<intval($yearTo) || intval($yearFrom)<intval($date[0])) */){
+            if(!(in_array($date,$processedDates))){
+                $d=$date[0].'-'.$date[1];
                 array_push($processedDates,$date[0].'-'.$date[1]);
-                foreach($deliveredOrders as $row2){
-                    $date2=explode('-',$row2);
-                    if(intval($date2[0])==intval($date[0])){
-                        if(intval()){
-
+                if((intval($date[0])==intval($yearFrom)) /*|| (intval($date[0])==intval($yearTo)) || (intval($date[0])<intval($yearTo) || intval($yearFrom)<intval($date[0])) */){
+                    $count=0;//array_push($processedDates,$date[0].'-'.$date[1]);
+                    print_r("gdf");
+                    foreach($deliveredOrders as $row2){
+                        $date2=explode('-',$row2);
+                        if(($date2[0])==intval($date[0])){
+                            if(intval($date2[1]==$date[1])){
+                                $count=$count+1
+                                //break;
+                            }
+    
+                        }elseif(intval($date2[0])==intval($date[0])){
+    
                         }
-
-                    }elseif(intval($date2[0])==intval($date[0])){
-
+    
                     }
-
-                    }
+                    $orderCount+=array($d=>$count);
                 }
+
             }
+            
+        }
+        print_r($orderCount);
     }
 }
 ?>
