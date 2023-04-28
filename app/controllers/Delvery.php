@@ -142,6 +142,40 @@ class Delvery extends Controller{
         $data['barColor']=$colors[$rand_color];
         foreach($deliveredOrders as $row){
             $date=explode('-',$row);
+            if(intval($date[0])>=intval($yearFrom) && intval($date[0])<=intval($yearTo)){
+                if(intval($date[0])==intval($yearFrom) && intval($date[1])>=intval($monthFrom)){
+                    if(!(in_array($date[0].'-'.$date[1],$processedDates))){
+                        array_push($processedDates,$date[0].'-'.$date[1]);
+
+                    }
+                }elseif(intval($date[0])==intval($yearTo) && intval($date[1])<=intval($monthTo)){
+                    if(!(in_array($date[0].'-'.$date[1],$processedDates))){
+                        array_push($processedDates,$date[0].'-'.$date[1]);
+
+                    } 
+                }elseif(intval($date[0])>intval($yearFrom) && intval($date[0])<intval($yearTo)){
+                    if(!(in_array($date[0].'-'.$date[1],$processedDates))){
+                        array_push($processedDates,$date[0].'-'.$date[1]);
+
+                    }  
+                }
+
+            }
+        }
+        foreach($processedDates as $date){
+            $count=0;
+            foreach($deliveredOrders as $row){
+                $dates=explode('-',$row);
+                if($date==$dates[0].'-'.$dates[1]){
+                    $count+=1;
+                }
+            }
+        array_push($orderCount,$count);
+        //$orderCount+=array($date=>$count);
+
+        }
+        /*foreach($deliveredOrders as $row){
+            $date=explode('-',$row);
             if(!(in_array($date[0].'-'.$date[1],$processedDates))){
                 $d=$date[0].'-'.$date[1];
                 //print_r(intval($date[0]).'--'.$yearFrom.'\n');
@@ -196,7 +230,7 @@ class Delvery extends Controller{
 
             }
             
-        }
+        }*/
         foreach($deliveredProducts as $row){
             $date=explode('-',$row['deliver_date']);
             if(in_array($date[0].'-'.$date[1],$processedDates)){
@@ -242,7 +276,7 @@ class Delvery extends Controller{
         $lineChart['names']=$revenueDate;
         $data['lineChart']=$lineChart;
         $this->view('dashboard/delivery', $data);  
-        //print_r($deliveredProductNames);
+        //print_r($orderCount);
         //print_r($processedDates);
         //print_r($revenueArray);
         //print_r("---------------------");
