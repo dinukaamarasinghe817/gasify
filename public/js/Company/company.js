@@ -21,7 +21,14 @@ function resetQuota(div) {
     var cutomerType = div.getAttribute("key");
     if (div.checked) {
         var formData = new FormData();
-        formData.append("customer", cutomerType);
+        if (cutomerType == "Large") {
+            formData.append("customer", "Large Scale Business");
+        } else if (cutomerType == "Small") {
+            formData.append("customer", "Small Scale Business");
+        } else {
+            formData.append("customer", cutomerType);
+        }
+
         formData.append("state", "ON");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
@@ -33,7 +40,13 @@ function resetQuota(div) {
         xmlhttp.send(formData);
     } else {
         var formData = new FormData();
-        formData.append("customer", cutomerType);
+        if (cutomerType == "Large") {
+            formData.append("customer", "Large Scale Business");
+        } else if (cutomerType == "Small") {
+            formData.append("customer", "Small Scale Business");
+        } else {
+            formData.append("customer", cutomerType);
+        }
         formData.append("state", "OFF");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
