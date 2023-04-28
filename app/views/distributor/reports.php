@@ -15,10 +15,13 @@ $user_id = $_SESSION['user_id'];
         
             <h2>Reports</h2>
 
-            <div class="main">
-
-                <div class="header">
-                    <h2>Summary of Past Distributions</h2>
+            <!-- <div class="main"> -->
+                <div class="top-panel">
+                    <ul>
+                        <li>
+                            <a href=""><b>Summary of Past Distributions</b></a>
+                        </li>
+                    </ul>
                 </div>
         
                 <div class="middle">
@@ -102,7 +105,7 @@ $user_id = $_SESSION['user_id'];
                     ?>
                    
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
     </section>
 </section>
