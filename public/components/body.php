@@ -2412,11 +2412,14 @@ class Body{
                     }
                     
                         echo'<div class="barChart" id="barChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                        $chart['vector']=[12,18,23,15,17];
-                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart['color']="rgba(30, 105, 176, 1)";
-                        $chart['y']='Deliveries-Last week';
-                        $chart = new Chart('bar',$chart,1);  
+                        if(isset($data['barChart'])){
+                                
+                            $chart['vector']=$data['barChart']['values'];
+                            $chart['labels']=$data['barChart']['dates'];
+                            $chart['color']=$data['barColor'];
+                            $chart['y']='Deliveries';
+                            $chart = new Chart('bar',$chart,1);
+                        } 
                             
                         echo'</div>';
                         if(isset($data['lineChart'])){
