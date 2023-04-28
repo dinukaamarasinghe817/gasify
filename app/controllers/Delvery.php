@@ -276,7 +276,7 @@ class Delvery extends Controller{
         $lineChart['names']=$revenueDate;
         $data['lineChart']=$lineChart;
         $this->view('dashboard/delivery', $data);  
-        //print_r($orderCount);
+        //print_r($deliveredOrders);
         //print_r($processedDates);
         //print_r($revenueArray);
         //print_r("---------------------");
