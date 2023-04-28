@@ -163,7 +163,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             
                             //display delivery details and canceled details(cancelled orders) and refund details(refunded orders)
                             echo'<div class = "after_dealer_delivery_details">';
-                                if($row1['order_state'] == "Cancelled" || $row1['order_state'] == "Refunded"){
+                                if($row1['order_state'] == "Canceled" || $row1['order_state'] == "Refunded"){
                                     echo '<div class="cancel_details">
                                             <div>
                                                 <strong>Cancelled Date : </strong> 
@@ -285,7 +285,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                     }
                     //check status is dispatched or cancelled or refunded ,there is no cancel and review options
-                    else if($row1['order_state'] == "Dispatched" || $row1['order_state'] == "Cancelled" || $row1['order_state'] == "Refunded"){
+                    else if($row1['order_state'] == "Dispatched" || $row1['order_state'] == "Canceled" || $row1['order_state'] == "Refunded"){
                         echo'<div class="cancel_card_bottom">
                                 <div class="cancel_item_side">
                                     '.$output.' 
