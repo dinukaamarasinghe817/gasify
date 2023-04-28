@@ -87,17 +87,13 @@ $user_id = $_SESSION['user_id'];
                                     <td><Button  type="submit">Submit</Button></td>
                                 </tr>';
                         }
-
                         $output .='
                         </tbody>
                     </table>
-                    </form>
-                    ';
+                    </form>';
                     echo $output;
-                ?>
-                                        
+                ?>                           
             </div>
-            
         </div>
     </section>
 </section>
