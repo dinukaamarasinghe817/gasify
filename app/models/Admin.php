@@ -416,4 +416,37 @@ class Admin extends Model
             }
         }
     }
+
+    public function takebackup(){
+        date_default_timezone_set("Asia/Colombo");
+        $datetime = date('Ymd');
+
+        $filename = dirname(getcwd()).DIRECTORY_SEPERATOR.'app'.DIRECTORY_SEPERATOR.'backup'.DIRECTORY_SEPERATOR.DB_NAME . '-' . $datetime . '.sql';
+        echo $filename;
+        $hostname = DB_HOST;
+        $database = DB_NAME;
+        $username = DB_USER;
+        $password = DB_PASSWORD;
+        // Execute the mysqldump command
+        $command = "mysqldump --opt -h $hostname -u $username -p$password $database > $filename";
+        system($command);
+        echo "success";
+    }
+
+    public function restorebackup(){
+        $datetime = $_POST['date'];
+        // Set the backup filename
+        $filename = dirname(getcwd()).DIRECTORY_SEPERATOR.'app'.DIRECTORY_SEPERATOR.'backup'.DIRECTORY_SEPERATOR.DB_NAME . '-' . $datetime . '.sql';
+        $hostname = DB_HOST;
+        $database = DB_NAME;
+        $username = DB_USER;
+        $password = DB_PASSWORD;
+
+        // Execute the mysql command to restore the database
+        $command = "mysql -h $hostname -u $username -p$password $database < $filename";
+        system($command);
+
+        // Output a message to the user
+        echo "success";
+    }
 }
