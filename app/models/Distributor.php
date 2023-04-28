@@ -527,6 +527,8 @@ class Distributor extends Model
                 $notvalidquantity = false;
             };
         }
+        // echo var_dump($postproducts);
+        // echo var_dump("Hi");
         
         if($notvalidquantity) {
             $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
@@ -598,11 +600,16 @@ class Distributor extends Model
         return $data;
     }
 
-    public function distributorstock() {
-        $query = $this->Query("SELECT product_id, name, unit_price, image
+    public function distributorstock($user_id) {
+        $query1 = $this->getDistributor($user_id);
+        $row1 = mysqli_fetch_assoc($query1);
+        $company_id = $row1['company_id'];
+
+        $query2 = $this->Query("SELECT product_id, name, unit_price, image
         FROM product 
-        WHERE company_id  = 2");
-        return $query;
+        WHERE company_id  = $company_id");
+
+        return $query2;
     }
 
     /*
