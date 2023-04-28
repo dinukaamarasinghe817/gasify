@@ -93,7 +93,8 @@ class Delvery extends Controller{
     }
     function deliverJob(){
         $orderID = $_POST["orderID"];
-        $message=$this->model('Delivery')->setReservationStateDelivered($orderID);
+        $data['date']=date('Y-m-d');
+        $message=$this->model('Delivery')->setReservationStateDelivered($orderID,$data['date']);
         return $message;
     }function getCharts(){
         $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -106,7 +107,7 @@ class Delvery extends Controller{
         $processedDates=array();
         foreach($deliveredOrders as $row){
             $date=explode('-',$row);
-            if((intval($date[0])==intval($yearFrom)) || (intval($date[0])==intval($yearTo)) || (intval($date[0])<intval($yearTo) || intval($yearFrom)<intval($date[0])) ){
+            if((intval($date[0])==intval($yearFrom)) /*|| (intval($date[0])==intval($yearTo)) || (intval($date[0])<intval($yearTo) || intval($yearFrom)<intval($date[0])) */){
                 array_push($processedDates,$date[0].'-'.$date[1]);
                 foreach($deliveredOrders as $row2){
                     $date2=explode('-',$row2);
