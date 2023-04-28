@@ -1259,8 +1259,7 @@ class User extends Model
         $to = $email;
         $subject = "Gasify: Verify your account";
         $message = "Please use below link to verify your account.";
-        $link="dsd";
-        //$link = BASEURL."/signup/verifyemail/$company_id/$token";
+        $link = BASEURL."/signup/verifyemail/$company_id/$token";
         //$link = BASEURL."/controller/method/params";
         // sendResetLink($name, $row['email'], $token);
         //Create an instance; passing `true` enables exceptions
@@ -1416,6 +1415,17 @@ class User extends Model
                 $query4 = $this->update('delivery_person', ['image'=>$image],"delivery_id = $delivery_id");
             }
         }
+        $reciepName = $data['fname'].' '.$data['lname'];
+        $from = 'admin@gasify.com';
+        $to = $email;
+        $subject = "Gasify: Verify your account";
+        $message = "Please use below link to verify your account.";
+        $link = BASEURL."/signup/verifyemail/$delivery_id/$token";
+        //$link = BASEURL."/controller/method/params";
+        // sendResetLink($name, $row['email'], $token);
+        //Create an instance; passing `true` enables exceptions
+        $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
+        $data = $mail->send();
     
     
     }
