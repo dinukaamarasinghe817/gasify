@@ -619,6 +619,8 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
+        $data['purchaseorder'] = $this->model('Distributor')->distributorstock($this->user_id); 
+        $this->view('distributor/phurchase_orders',$data); 
      
     }
 
