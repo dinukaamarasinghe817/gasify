@@ -93,8 +93,10 @@ class Delvery extends Controller{
     }
     function deliverJob(){
         $orderID = $_POST["orderID"];
-        $data['date']=date('Y-m-d');
-        $message=$this->model('Delivery')->setReservationStateDelivered($orderID,$data['date']);
+        $date=date('Y-m-d');
+        //$data=$date[0].'-'.$date[1].'-'.$date[2];
+        //print_r($data);
+        $message=$this->model('Delivery')->setReservationStateDelivered($orderID);
         return $message;
     }function getCharts(){
         $delivery_id=$_SESSION['user_id'];
@@ -111,8 +113,12 @@ class Delvery extends Controller{
         $monthTo=mysqli_real_escape_string($conn,$_POST['monthTo']);
         $currentDate=explode("-",date('Y-m-d'));
         $deliveredOrders = $this->model('Delivery')->getDeliveredOrders($deliveryID);
+        $deliveredProducts = $this->model('Delivery')->getDeliveredProducts($deliveryID);
         $processedDates=array();
         $orderCount=array();
+        $deliveredProduct=array();
+        $deliveredProductNames=array();
+        $deliveredQty=array();
         $colors=array("green","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)","rgb(255, 128, 0)","rgb(0, 0, 255)","rgb(255, 0, 191)","rgb(102, 204, 255)");
         for ($i=0; $i <50 ; $i++) { 
             shuffle($colors);
@@ -187,12 +193,33 @@ class Delvery extends Controller{
             }
             
         }
+        foreach($deliveredProducts as $row){
+            $date=explode('-',$row['deliver_date']);
+            if(in_array($date[0].'-'.$date[1],$processedDates)){
+                if(array_key_exists($row['name'],$deliveredProduct)){
+                    $newQty=(int)$row['quantity']+$deliveredProduct[$row['name']];
+                    unset($deliveredProduct[$row['name']]);
+                    $deliveredProduct+=array($row['name']=>$newQty);
+                }else{
+                    $deliveredProduct+=array($row['name']=>(int)$row['quantity']);
+                }
+            }
+        }
+        foreach($deliveredProduct as $key=>$value){
+            array_push($deliveredProductNames,$key);
+            array_push($deliveredQty,$value);
+        }
         $barChart=array();
         $barChart['dates']=$processedDates;
         $barChart['values']=$orderCount;
         $data['barChart']=$barChart;
+        $doughNut=array();
+        $doughNut['products']=$deliveredProductNames;
+        $doughNut['values']=$deliveredQty;
+        $data['doughNut']=$doughNut;
         $this->view('dashboard/delivery', $data);  
-        //print_r($processedDates);
+        //print_r($deliveredProductNames);
+        //print_r($deliveredQty);
         //print_r("---------------------");
         //print_r($orderCount);
     }

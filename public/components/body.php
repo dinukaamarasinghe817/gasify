@@ -2435,17 +2435,20 @@ class Body{
                                     
                         echo'</div>
                     </div>';
-                    if(isset($data['lineChart'])){
-                        echo'<h4 style="margin-left:5%">Sold stock</h4>';
+                    if(isset($data['doughNut'])){
+                        echo'<h4 style="margin-left:5%">Delivered quantity</h4>';
                     }
                     
                     echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                    $chart_2['vector']=array(20,80);
-                    $chart_2['labels']=array('Canceled','Delivered');
-                    $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
-                    $chart_2['y']='Last month deliveries';
-                    $chart_2['main']="fgdff";
-                    $chart_2 = new Chart('doughnut',$chart_2,3);
+                    if(isset($data['doughNut'])){
+                        $chart_2['vector']=$data['doughNut']['values'];
+                        $chart_2['labels']=$data['doughNut']['products'];
+                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                        $chart_2['y']='Delivered';
+                        $chart_2['main']="fgdff";
+                        $chart_2 = new Chart('doughnut',$chart_2,3);
+                    }
+                    
                     
                     
                     
