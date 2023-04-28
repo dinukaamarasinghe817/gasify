@@ -599,13 +599,12 @@ class Navigation {
                     echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile orders">';
                 }
 
-                        echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M25.2499 15.5999V29.0621H4.58325V15.5999" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M27.8333 8.86914H2V15.6003H27.8333V8.86914Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M14.9167 29.0625V8.86914" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M14.9167 8.86905H9.10417C8.24774 8.86905 7.42639 8.51447 6.8208 7.8833C6.21521 7.25214 5.875 6.3961 5.875 5.50349C5.875 4.61089 6.21521 3.75485 6.8208 3.12369C7.42639 2.49252 8.24774 2.13794 9.10417 2.13794C13.625 2.13794 14.9167 8.86905 14.9167 8.86905Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M15 8.61759H20.8125C21.6689 8.61759 22.4903 8.263 23.0959 7.63184C23.7015 7.00067 24.0417 6.14463 24.0417 5.25203C24.0417 4.35943 23.7015 3.50339 23.0959 2.87222C22.4903 2.24106 21.6689 1.88647 20.8125 1.88647C16.2917 1.88647 15 8.61759 15 8.61759Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                        echo '<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.1639 21.5966V19.5966C20.1639 18.5357 19.7425 17.5183 18.9924 16.7681C18.2422 16.018 17.2248 15.5966 16.1639 15.5966H8.16394C7.10307 15.5966 6.08566 16.018 5.33551 16.7681C4.58537 17.5183 4.16394 18.5357 4.16394 19.5966V21.5966" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.1639 11.5966C14.3731 11.5966 16.1639 9.8057 16.1639 7.59656C16.1639 5.38742 14.3731 3.59656 12.1639 3.59656C9.9548 3.59656 8.16394 5.38742 8.16394 7.59656C8.16394 9.8057 9.9548 11.5966 12.1639 11.5966Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        
+                        
                             <h3>Dealer</h3>
                         </a>
                     </li>
@@ -659,9 +658,20 @@ class Navigation {
                     echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile notifications">';
                 }
                         
-                        echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.2083 14.4402V9.27352M20.6667 14.4402V9.27352M27.125 2.81519H3.875V23.4819H10.3333V28.6485L15.5 23.4819H21.9583L27.125 18.3152V2.81519Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                        echo '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_101_10)">
+                        <path d="M22.75 8.66663V22.75H3.25V8.66663" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M24.9167 3.25H1.08333V8.66667H24.9167V3.25Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.8333 13H15.1667" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_101_10">
+                        <rect width="26" height="26" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                        
+                        
                             <h3>Products</h3>
                         </a>
                     </li>

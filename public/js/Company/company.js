@@ -301,7 +301,7 @@ function submitReport() {
         tableArr.push(tempArr);
     }
     formData.append("tableArr", JSON.stringify(tableArr));
-    //console.log(formData.get("tableArr"));
+    console.log(formData.get("tableArr"));
     //console.log(typeof (tableArr));
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -344,4 +344,74 @@ function issueReport(orderID) {
     };
     xmlhttp.open("POST", "../Reports/companySale");
     xmlhttp.send(formData);
+}
+function addProducts() {
+    var form = document.querySelector(".productRegistrationForm");
+    form.onsubmit = (e) => {
+        e.preventDefault();
+    }
+    var idArr = ["prodName", "Producttype", "unitPrice", "weight", "productionTime", "quantity", "threshold", "productImage"]
+    var isOk = true;
+    for (let index = 0; index < idArr.length; index++) {
+        console.log(idArr[index]);
+        if (idArr[index] == "Producttype") {
+            if (document.getElementById(idArr[index]).value == -1) {
+                isOk = false;
+                document.getElementById("Producttypeerr").innerHTML = "Enter product type";
+            } else {
+                document.getElementById("Producttypeerr").innerHTML = "";
+            }
+        } else if (idArr[index] == "productImage") {
+            let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+            let type = document.getElementById('productImage').files[0].type;
+            if (allowedExtensions.indexOf(type) > -1) {
+                document.getElementById("productImageerr").innerHTML = "";
+            } else {
+                isOk = false;
+                document.getElementById("productImageerr").innerHTML = "Invalid image type";
+            }
+        } else {
+            if (document.getElementById(idArr[index]).value.length == 0) {
+                isOk = false;
+                if (idArr[index] == "prodName") {
+                    document.getElementById("prodNameerr").innerHTML = "Enter product name";
+                } else if (idArr[index] == "unitPrice") {
+                    document.getElementById("unitPriceerr").innerHTML = "Enter price";
+                } else if (idArr[index] == "weight") {
+                    document.getElementById("weighterr").innerHTML = "Enter weight";
+                } else if (idArr[index] == "productionTime") {
+                    document.getElementById("productionTimeerr").innerHTML = "Enter production time";
+                } else if (idArr[index] == "quantity") {
+                    document.getElementById("quantityerr").innerHTML = "Enter quantity";
+                } else if (idArr[index] == "threshold") {
+                    document.getElementById("thresholderr").innerHTML = "Enter threshold";
+                }
+
+            } else {
+                if (idArr[index] == "prodName") {
+                    document.getElementById("prodNameerr").innerHTML = "";
+                } else if (idArr[index] == "unitPrice") {
+                    document.getElementById("unitPriceerr").innerHTML = "";
+                } else if (idArr[index] == "weight") {
+                    document.getElementById("weighterr").innerHTML = "";
+                } else if (idArr[index] == "productionTime") {
+                    document.getElementById("productionTimeerr").innerHTML = "";
+                } else if (idArr[index] == "quantity") {
+                    document.getElementById("quantityerr").innerHTML = "";
+                } else if (idArr[index] == "threshold") {
+                    document.getElementById("thresholderr").innerHTML = "";
+                }
+            }
+        }
+
+    }
+    if (isOk) {
+        document.getElementById("productRegistrationForm").submit();
+    }
+    /*if(document.getElementById("confirmPassword").value==document.getElementById("password").value){
+        
+    }*/
+}
+function updateProducts() {
+    document.getElementById("productUpdateForm").submit();
 }

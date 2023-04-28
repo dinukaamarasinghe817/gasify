@@ -292,7 +292,12 @@ class Dealer extends Model
                 break;
             case "pohistory":
                 // get the dealer's stock information
-                $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$dealer_id}' ORDER BY po_id DESC");
+                $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$dealer_id}' ORDER BY CASE po_state
+                WHEN 'pending' THEN 1
+                WHEN 'accepted' THEN 2
+                WHEN 'completed' THEN 3
+                ELSE 4
+              END, po_id DESC");
                 $purchase_orders = array();
 
                 if(mysqli_num_rows($query2) > 0){
@@ -404,10 +409,10 @@ class Dealer extends Model
                     
                     // send a mail as well
                     $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
-                    $dealer_email = $q['email'];
-                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
-                    $customer_Name = $q['first_name'].' '.$q['last_name'];
-                    $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
+                    // $dealer_email = $q['email'];
+                    // $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+                    // $customer_Name = $q['first_name'].' '.$q['last_name'];
+                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$message,$link=null);
                     $mail->send();
                 }
 
@@ -418,7 +423,8 @@ class Dealer extends Model
             }else{
                 // order is pending due to low stock but place the reservation
                 return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
-
+                // should handle the reduction of stock when the dealer gets a new stock
+                // consider customer orders on fcfs
             }
         }else{
             // payment method payslip
@@ -471,17 +477,19 @@ class Dealer extends Model
                     
                     // send a mail as well
                     $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
-                    $dealer_email = $q['email'];
-                    $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
-                    $customer_Name = $q['first_name'].' '.$q['last_name'];
-                    $mail = new Mail('admin@gasify.com',$dealer_email,$customer_Name,'Re-Order Alert',$message,$link=null);
+                    // $dealer_email = $q['email'];
+                    // $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+                    // $customer_Name = $q['first_name'].' '.$q['last_name'];
+                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$message,$link=null);
                     $mail->send();
                 }
 
             }
             // placing the reservation but pending because of payslip need to verify by admin
             $order_id = $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
-
+            // should handle the reduction of stock when the dealer gets a new stock
+            // consider customer orders on fcfs
+            
             // update and upload the payslip
             $payslip = $_SESSION['slip_img'];
             $path = getcwd().DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPERATOR.'payslips'.DIRECTORY_SEPARATOR;
@@ -713,7 +721,7 @@ class Dealer extends Model
             $products[$row['product_id']] = 0;
         }
         $query1 = $this->read('reservation',
-        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
         while($row = mysqli_fetch_assoc($query1)){
             $order_id = $row['order_id'];
             $query2 = $this->read('reservation_include',"order_id = $order_id");
@@ -738,7 +746,7 @@ class Dealer extends Model
         $days = array("Mon"=>0,"Tue"=>0,"Wed"=>0,"Thu"=>0,"Fri"=>0,"Sat"=>0,"Sun"=>0);
         $deliverymode = array("Delivery"=>0,"Pickup"=>0);
         $query1 = $this->read('reservation',
-        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' OR order_state != 'canceled')");
+        "dealer_id = $user_id AND place_date >= '$start_date' AND place_date <= '$end_date' AND (order_state != 'pending' AND order_state != 'canceled')");
         while($row = mysqli_fetch_assoc($query1)){
             $day = date('D', strtotime($row['place_date']));
             $days[$day]++;

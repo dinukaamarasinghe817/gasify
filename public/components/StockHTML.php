@@ -111,12 +111,11 @@ class StockHTML{
 
     public function dealerpohistory($data){
         // get the dealer's stock information
-        // $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$unique_id}' ORDER BY po_id DESC");
-        // $purchase_orders = array();
         $results = $data['pohistory'];
         $output = '<table class="history styled-table">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Purchase Order ID</th>
                                 <th>Purchase Order State</th>
                                 <th>Place Date</th>
@@ -132,9 +131,24 @@ class StockHTML{
                 $poid = $row2['po_id'];
                 $time = $row2['place_time']; 
                 $time = date('h:i a', strtotime($time)); 
+                switch($row2['po_state']){
+                    case 'pending':
+                        $color = "#F1C40F";
+                        break;
+                    case 'accepted':
+                        $color = "#F39C12";
+                        break;
+                    case 'completed':
+                        $color = "#239B56";
+                        break;
+                    default:
+                        $color = "#8A8B9F";
+                        break;
+                }
                 $output .= "<tr>
+                                <td><div style='height: 20px; width: 20px; border-radius: 50%; background-color: $color;'></div></td>
                                 <td>".$row2['po_id']."</td>
-                                <td>".$row2['po_state']."</td>
+                                <td style='color: $color;'>".$row2['po_state']."</td>
                                 <td>".$row2['place_date']."</td>
                                 <td>".$time."</td>
                                 <td><button onclick='poinfo($poid); return false;'>View</button></td>
@@ -147,58 +161,6 @@ class StockHTML{
             $output .= '<p style="text-align: center; width: 100%;">no records found</p>';
         }
         echo $output;
-        // if(mysqli_num_rows($query2) > 0){
-        //     while($row2 = mysqli_fetch_assoc($query2)){
-        //             // $output .= '<tr>
-        //             //                 <td>'.$row2['po_id'].'</td>
-        //             //                 <td>';
-                    
-        //             // $output .= '<table class = "innertable">
-        //             //                 <tr>
-        //             //                 <th>Product Name</th>
-        //             //                 <th>Quantity</th>
-        //             //                 </tr>';
-                    
-        //             $sql = "SELECT pi.product_id AS product_id, pi.quantity AS quantity, pr.name AS name 
-        //                     FROM purchase_include pi 
-        //                     INNER JOIN product pr 
-        //                     ON pi.product_id = pr.product_id 
-        //                     WHERE pi.po_id = '{$row2['po_id']}'";
-        //             $result3 = $this->Query($sql);
-        //             $products = array();
-        //             if(mysqli_num_rows($result3)>0){
-        //                 while($row3 = mysqli_fetch_assoc($result3)){
-        //                     // $output .= $row3['name'].' - '.$row3['quantity'].'<br>';
-        //                     array_push($products, $row3);
-        //                     $output .= '<tr>
-        //                                     <td>'.$row3['name'].'</td>
-        //                                     <td>'.$row3['quantity'].'</td>  
-        //                                 </tr>';
-        //                 }
-        //                 array_push($purchase_orders, ['purchase_order' => $row2, 'products' => $products]);
-        //             }else{
-        //                 // $output .= 'unsuccess';
-        //             }
-
-        //             $output .= '</table>';
-                                    
-        //             $output .=      '</td>
-        //                             <td>'.$row2['po_state'].'</td>
-        //                             <td>'.$row2['place_date'].'</td>
-        //                             <td>'.$row2['place_time'].'</td>
-        //                         </tr>'; // change subtotal manually when input changes.
-        //         // }
-        //     }
-
-        //     // $_SESSION["productarray"] = $product_array;
-
-        //     $output .= '</table>'; // static html
-        // }else{
-        //     $output .= '</table>'; // static html
-        //     $output .= '<p style="text-align: center; width: 100%;">no records found</p>';
-        //     // echo $output;
-        // }
-        // echo $output;
     }
 
 }

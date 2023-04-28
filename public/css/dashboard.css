@@ -586,9 +586,18 @@ td button:hover{
     justify-content: center;
     align-items: center;
 }
-
+.chart canvas{
+    max-height: 300px;
+}
+.chart canvas.doughnut,
+.chart canvas.pie{
+    max-width: 380px;
+}
 .chart #bargraph{
     height: 100%;
+}
+.chart h4{
+    margin-bottom: auto;
 }
 
 .body-left table{
@@ -1323,4 +1332,17 @@ label{
     top: 0;
     left: 0;
     rotate: -90deg;
+}
+
+.empty-state{
+    /* width: 100%; */
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.placeholderimg{
+    height: 200px;
+    width: auto;
 }

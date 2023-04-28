@@ -9,7 +9,7 @@
 ?>
 <script>
     function CompanySignUp(){
-        var idArr = ["companyname","fname","lname","email","password","confirmpassword","city","street"]
+        var idArr = ["companyname","fname","lname","email","password","confirmpassword","city","street","image"]
         var isOk=true;
         for (let index = 0; index < idArr.length; index++) {
             if(idArr[index]=="city"){
@@ -56,11 +56,20 @@
 
                 }
 
+            }else if (idArr[index] == "image") {
+                let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+                let type = document.getElementById('image').files[0].type;
+                if (allowedExtensions.indexOf(type) > -1) {
+                    document.getElementById("imageerr").innerHTML = "";
+                } else {
+                    isOk = false;
+                    document.getElementById("imageerr").innerHTML = "Invalid image type";
+                }
             }else{
                 if(document.getElementById(idArr[index]).value.length==0){
                     isOk=false;
                     if(idArr[index]=="companyname"){
-                        document.getElementById("companynameerr").innerHTML="Enter company name";
+                        document.getElementById("companynameerr").innerText="Enter company name";
                     }else if(idArr[index]=="fname"){
                         document.getElementById("fnameerr").innerHTML="Enter first name";
                     }else if(idArr[index]=="lname"){
@@ -73,7 +82,7 @@
                     
                 }else{
                     if(idArr[index]=="companyname"){
-                        document.getElementById("companynameerr").innerHTML="";
+                        document.getElementById("companynameerr").innerText="";
                     }else if(idArr[index]=="fname"){
                         document.getElementById("fnameerr").innerHTML="";
                     }else if(idArr[index]=="lname"){
@@ -159,8 +168,10 @@
                                 </svg>
                                 &nbsp; Upload your photo
                             </label>
-                            <input name="imageupload" id="image" type="file" value="Upload Company logo">
-                            
+                            <input name="image" id="image" type="file" value="Upload Company logo">
+                            <div class="address password">
+                            <div id="imageerr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
+                            </div>
                         </div>
                     </div>
                     <input type="button" name="Sign Up" value="Sign Up" class="submit" onClick="CompanySignUp()" style="background-color: var(--button-blue);font-family: 'Poppins', sans-serif;font-size:1.1em;color:white;cursor:pointer"><br>

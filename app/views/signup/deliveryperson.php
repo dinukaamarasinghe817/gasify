@@ -9,7 +9,7 @@
 ?>
 <script>
     function DeliverySignUp(){
-        var idArr = ["fname","lname","email","cno","password","confirmpassword","city","street","vtype","vno","weight","costperkm"];
+        var idArr = ["fname","lname","email","cno","password","confirmpassword","city","street","vtype","vno","weight","costperkm","image"];
         var isOk=true;
         for (let index = 0; index < idArr.length; index++) {
             console.log(index)
@@ -30,8 +30,16 @@
                     document.getElementById("emailerr").innerHTML="Invalid email";
                 }
 
-            }
-            else if(idArr[index]=="password" || idArr[index]=="confirmpassword"){
+            }else if (idArr[index] == "image") {
+                let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+                let type = document.getElementById('image').files[0].type;
+                if (allowedExtensions.indexOf(type) > -1) {
+                    document.getElementById("imageerr").innerHTML = "";
+                } else {
+                    isOk = false;
+                    document.getElementById("imageerr").innerHTML = "Invalid image type";
+                }
+            }else if(idArr[index]=="password" || idArr[index]=="confirmpassword"){
                 if((document.getElementById("password").value.length==0 || document.getElementById("confirmpassword").value.length==0) ||(document.getElementById("password").value !=document.getElementById("confirmpassword").value) ){
                     isOk=false;
                     document.getElementById("passworderr").innerHTML="Check password";
@@ -174,7 +182,8 @@
                                 </svg>
                                 &nbsp; Upload your photo
                             </label>
-                            <input name="imageupload" id="image" type="file" value="Upload Company logo">
+                            <input name="image" id="image" type="file" value="Upload Company logo">
+                            <div id="imageerr" style="width:90%;margin-right:0px;text-align:center;color:red;font-size:smaller"></div>
                             <label for="" class="part">Vehicle Info</label>
                             <div class="address password">
                             <select id="vtype" name="vehicletype" class="half" style="width:42.5%;margin-right:0px">

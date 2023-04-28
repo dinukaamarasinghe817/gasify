@@ -168,7 +168,7 @@ a,button{
     
   }
 
-  #back_btn{
+  /* #back_btn{
     
     background-color: var(--navmenu-gray-dark);
     margin-right: 850px;
@@ -183,7 +183,17 @@ a,button{
     background-color: var(--white);
     color: var(--black);
     
-  }
+  } */
+
+  #back_btn{
+    border: 3px solid var(--navmenu-gray-dark);
+    margin-bottom: 20px;
+}
+
+#back_btn:hover{
+    color: var(--white);
+    background-color:var(--navmenu-gray-dark);
+}
 
 
   .buttons{

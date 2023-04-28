@@ -141,8 +141,11 @@ class Body{
             $stockheader .= '<li><a href="'.BASEURL.'/stock/dealer/pohistory" class="current" onclick="historyclicked(); return false;">Order History</a></li>';
         }
         $stockheader .= '</ul>';
-        echo '<section class="body-content">
-        <div class="top-panel">
+        echo '<section class="body-content">';
+        echo "<form action='' class='filters' method='post'>";
+        $search = new Search(($data['tab'] == "currentstock" || $data['tab'] == "currentstock") ? [1] : [1,2,3]);
+        echo "</form>";
+        echo '<div class="top-panel">
             '.$stockheader.'
         </div>
         <div class="content-data">';
@@ -680,6 +683,7 @@ class Body{
         $reqCount=$data['reqCount'];
         $distCount=$data['distCount'];
         $dealerCount=$data['dealerCount'];
+        $products = $data['lowStock'];
         foreach($prod as $row){
             $prod=$row['count'];
         }
@@ -717,321 +721,96 @@ class Body{
             <div class="recentRequestTableTitle">Recent Orders</div>
             </div>
             <div class="tables">
-            <table class="styled-table" style="width:45%">
-                <thead>
-                    <tr>
-                        <th>Product name</th>
-                        <th>Quantity</th>
-                    </tr>
-                </thead>
-                <tbody style="overflow-y:auto;height:100px" >
-                    <tr>
-                        <td class="tdCenter">Buddy</td>
-                        <td class="tdRight">130</td>
-                    </tr>
-                    <tr>
-                        <td class="tdCenter">Regular</td>
-                        <td class="tdRight">30</td>
-                    </tr>                
-                </tbody>      
-            </table>
-            <table class="styled-table" style="width:45%;margin-left:5%">
-                <thead>
-                    <tr>
-                        <th>Dsitributor name</th>
-                        <th>Products</th>
-                    </tr>
-                </thead>
-                <tbody style="overflow-y:auto;height:100px">
-                    <tr>
-                        <td class="tdCenter">AJ Agencies</td>
-                        <td class="tdCenter">
-                            <table class="requestProducts" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Product name</th>
-                                        <th>Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="overflow-y:auto;height:100px">
-                                    <tr>
-                                        <td class="tdCenter">Buddy</td>
-                                        <td class="tdRight">130</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tdCenter">Regular</td>
-                                        <td class="tdRight">30</td>
-                                    </tr>                
-                                </tbody>      
-                            </table>
-                        </td>
-                    </tr>
-                    
-                </tbody>      
-            </table>
-            </div>
-            
-            ';
-            /*echo 
-            '<section class="body-content">
-                <div class="Top" id="Top">
-                <div class="Col_1" id="Col_1">
-                    <div class="Title_1">
-                    <div class="ChartTitle">Revenue(LKR Millions)</div><br>
-                    <div class="ChartTitle">Last five months</div>
-                    </div>
-                    <div class="Content_1"></div>
-                </div>
-                <div class="Col_2" id="Col_2">
-                    <div class="Title_2">
-                    <div class="ChartTitle">Today</div>
-                    </div>
-                    <div class="Content_2" id="Content_2"></div>
-                
-                </div>
-                <div class="Col_3" id="Col_3">
-                    <div class="Title_3">
-                    <div class="ChartTitle">Current stock</div>
-                    </div>
-                    <div class="Content_3" id="Content_3">
-                    <div class="Content_3_tableHead_row" id="Content_3_tableHead_row"><div class="product_type" style="margin-left: 4%;margin-top:3.5%">Product</div><div class="product_stock" style="margin-top:3.5%">Stock</div></div>';
-                   $result=$data['products'];
-                    //echo $result;
-                    foreach($result as $results){
-                        echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">'.$results['name'].'</div><div class="data_value" style="margin-right: 10%;">'.$results['quantity'].'</div></div>';
-                    }
-                    
-                    
-                    
-                    
-                    
-                    echo'</div>
-                    </div>
-                </div>';*/
-            /*'<div class="DistributorTableHeadings" id="DistributorTableHeadings">
-                <div class="Distributor_table_name" id="Distributor_table_name">
-                    <div class="distibutor_title">Distributor</div>
-                </div>
-                <div class="tableTitles" id="tableTitles">
-                    <div class="distributor_name" id="col">Name</div>
-                    <div class="distributor_location" id="col">Location</div>
-                    <div class="distributor_contactno" id="col">Contact no</div>
-                    <div class="distributor_email" id="col" style="font-size: 12pt">Email</div>
-                </div>       
-            </div> 
-            <div class="DistributorTable" id="DistributorTable">
-
-            </div> 
-            <div class="DealerTableHeadings" id="DealerTableHeadings">
-                <div class="Dealer_table_name" id=\"Dealer_table_name\">
-                    <div class="distibutor_title">Dealer</div>
-                    </div>
-                    <div class="tableTitles" id="tableTitles">
-                    <div class="Dealer_name" id="col">Name</div>
-                    <div class="Dealer_location" id="col">Location</div>
-                    <div class="Dealer_contactno" id="col">Contact no</div>
-                    <div class="Dealer_email" id="col" style="font-size: 12pt">Email</div>
-                    <div class="Dealer_accountno" id="col">Account no</div>
-                    <div class="Dealer_capacity" id="col">Capacity</div>
-                </div>
-            </div>  
-            <div class="DealerTable" id="DealerTable"></div>*/
-        echo'</section>';
-        /*echo '<section class="body-content">
-        <div class="body-left">
-            <div class="variable">
-                <div class="topic">
-                    <h3>Analytic Overview</h3>
-                    <!-- drop down component -->
-                    <form action="#">
-                        <select id="period" onchange="updatechart()" class="dropdowndate">
-                            <option value="today" selected>To day</option>
-                            <option  value="30day">Last 30 days</option>
-                        </select>
-                    </form>
-                </div>
-                <div class="tiles">
-                    <div class="tile">
-                        <h1>12</h1>
-                        <p>Orders Recieved</p>
-                    </div>
-                    <div class="tile">
-                        <h1>12</h1>
-                        <p>Orders Recieved</p>
-                    </div>
-                    <div class="tile">
-                        <h1>12</h1>
-                        <p>Orders Recieved</p>
-                    </div>
-                </div>
-                <div class="chart">
-
-                </div>
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Current Stock</th>
-                    </tr>
-                </thead>
-                <tbody>';
-                    
-                        if(isset($data["stock"])){
-                            $result = $data["stock"];
-                            $stock = "";
-                            while($row = mysqli_fetch_assoc($result)){
-                                $name = $row["name"];
-                                $qty = $row["quantity"];
-                                $stock .=   '<tr>
-                                                <td>'.$name.'</td>
-                                                <td>'.$qty.'</td>
-                                            </tr>';
-                            
+                <div class="productTable">
+                    <table class="styled-table" style="width:45%">
+                        <thead>
+                            <tr>
+                                <th class="tdLeft">Product name</th>
+                                <th class="tdRight">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-y:auto;height:100px" >';
+                        $tag="";
+                        foreach($products as $row){
+                            if($row['quantity']<=$row['cylinder_limit']){
+                                $tag.=' <tr>
+                                        <td class="tdLeft">'.$row['name'].'</td>
+                                        <td class="tdRight">'.$row['quantity'].'</td>
+                                    </tr>';
                             }
-                            echo $stock;
-
+                            
                         }
-                    
-                echo '</tbody>
-            </table>
-        </div>
-        <div class="body-right">
-            <div class="accordion new">
-                <h3>New Orders</h3>';
-                
-                    if(isset($data["pending"])){
-                        $results = $data["pending"];
-                        foreach($results as $result){
-                            $newpending = new NewOrder($result);
-                        }
-
-                        echo "<script>
-                                let accordion = document.querySelectorAll('.accordion .box');
-                                for(i=0; i<accordion.length; i++) {
-                                    accordion[i].addEventListener('click', function(){
-                                        this.classList.toggle('active')
-                                    })
+                        echo $tag;              
+                        echo '</tbody>      
+                    </table>
+            </div>';
+            echo'<div class="recentRequestTable">
+                        <table class="styled-table" style="margin-left:5%">
+                <thead>
+                    <tr>
+                        <th style="z-index:2">Distributor name</th>
+                        <th style="z-index:2" class="tdCenter">Products</th>
+                    </tr>
+                </thead>
+                <tbody style="overflow-y:auto;height:100px">';
+                if (isset($data['order_details'])){
+                    $result = $data["order_details"];
+                    $product_array=$data['product_details'];
+                    $orders='';
+                    $processedOrders=array();
+                    $orderID='';
+                    $distName='';
+                    $placedDate='';
+                    $placedTime='';
+                    $orderArray=array();
+                    foreach ($result as $row){
+                        
+                        
+                        foreach($result as $row2){
+                            $orderID=$row['stock_req_id'];
+                            $distName=$row['first_name'].' '.$row['last_name'];
+                            if(!in_array($orderID,$processedOrders)){
+                                $info=array();
+                                foreach($result as $row3){
+                                    if($row3['stock_req_id']==$orderID){
+                                        $info+=array($row3['product_id']=>$row3['quantity']);
+                                        //array_push($info,[$row2['product_id']=>$row2['quantity']]);
+                                    }
                                 }
-                            </script>";
-                    }else{
-                        echo "No pending orders";
+                                array_push($orderArray,[$distName=>$info]);
+                                array_push($processedOrders,$orderID);
+                            }
+                        }
+                        
                     }
-                
-            echo '</div>
-            <div class="accordion dispatched">
-                <h3>Deliveries</h3>
-                <div class="box">
-                    <div class="label">Order ID : 1
-                        <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                        </svg>
-                    </div>
-                    <div class="content">
-                        <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                        <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                        <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                        <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                        <hr>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Buddy</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>Budget</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>Regular</td>
-                                    <td>3</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="label">Order ID : 1
-                        <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                        </svg>
-                    </div>
-                    <div class="content">
-                        <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                        <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                        <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                        <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                        <hr>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Buddy</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>Budget</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>Regular</td>
-                                    <td>3</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="label">Order ID : 1
-                        <svg class="img" width="30" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.7514 15.8985C17.1825 15.8993 16.6312 15.7201 16.1932 15.3918L1.58692 4.38418C1.08977 4.01049 0.777187 3.47366 0.717923 2.89179C0.65866 2.30991 0.857574 1.73066 1.27091 1.28145C1.68424 0.832243 2.27813 0.54988 2.92193 0.496478C3.56574 0.443076 4.20671 0.623009 4.70385 0.996694L17.7522 10.8596L30.8036 1.35865C31.0527 1.17596 31.3392 1.03958 31.6468 0.957326C31.9545 0.875077 32.277 0.848587 32.596 0.87938C32.915 0.910173 33.2242 0.99764 33.5057 1.13676C33.7872 1.27587 34.0356 1.46389 34.2364 1.69001C34.4594 1.91635 34.6282 2.18184 34.7323 2.46986C34.8365 2.75788 34.8737 3.06221 34.8416 3.3638C34.8096 3.66538 34.709 3.95772 34.5461 4.2225C34.3832 4.48727 34.1616 4.71878 33.8951 4.90251L19.2853 15.525C18.8346 15.8011 18.2945 15.9326 17.7514 15.8985Z" fill="#F9896B"/>
-                        </svg>
-                    </div>
-                    <div class="content">
-                        <span><strong>Customer ID :</strong> 11</span> &nbsp;
-                        <span><strong>Customer Name :</strong> Kamal Abeynayake</span><br>
-                        <span><strong>Delivery Person ID :</strong> 11</span> &nbsp;
-                        <span><strong>Delivery Person Name :</strong> Kamal Abeynayake</span>
-                        <hr>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Buddy</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>Budget</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>Regular</td>
-                                    <td>3</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>';*/
+                    $orders='';
+                    foreach($orderArray as $key=>$value ){
+                        foreach($value as $key_2=>$value_2){
+                            $orders.='<tr>
+                                    <td class="tdCenter">'.$key_2.'</td>
+                                    <td class="tdCenter">
+                                        <table class="requestProducts" style="margin-top:1%;width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="z-index:1">Product name</th>
+                                                    <th style="z-index:1">Quantity</th>
+                                                </tr>
+                                            </thead>
+                                        <tbody style="overflow-y:auto;height:100px">';
+                            foreach($value_2 as $key_3=>$value_3){
+                                $orders.='<tr>
+                                            <td class="tdCenter">'.$key_3.'</td>
+                                            <td class="tdRight">'.$value_3.'</td>
+                                        </tr>';
+                                }
+                            }
+                            $orders.='</tbody></table></td></tr>';
+                    }
+                    echo $orders;
+                echo'</div>';
+                echo '</div></section>';
+                }
+    
     }
     function companyDealers($data){
         echo 
@@ -1117,7 +896,7 @@ class Body{
                         $distributor = "";
                         foreach ($result as $row) {
                             $distributor .=  '<tr>
-                                            <td>'.'Distributor'. '</td>
+                                            <td>'.$row['name']. '</td>
                                             <td>'.$row['city'].'</td>
                                             <td>'.$row['street'].'</td>
                                             <td>'.$row['contact_no'].'</td>
@@ -1210,32 +989,52 @@ class Body{
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%"">
                 <div class="left">
-                <form action="'. BASEURL.'/Compny/registerProducts" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
-                <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="Productname" placeholder="Enter product name" style="margin-bottom:3%;border:3px solid #d8ca30" required>
-                <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">
-                <option value="cylinder">Cylinder</option>
-                <option value="support">Support</option>
-                </select>
+                    <form action="'. BASEURL.'/Compny/registerProducts" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                        <div class="product_reg_row">
+                            <input id="prodName" type="text" class="registerProduct" name="Productname" placeholder="Enter product name" style="margin-bottom:3%;border:3px solid #d8ca30" >
+                            <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">
+                                <option value="-1" selected disabled hidden>Select product type</option> 
+                                <option value="cylinder">Cylinder</option>
+                                <option value="accessory">Accessory</option>
+                            </select>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="prodNameerr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="Producttypeerr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input id="unitPrice" type="text" class="registerProduct" name="unitprice" placeholder="Enter price" style="margin-bottom:3%;border:3px solid #d8ca30" > <br>
+                            <input id="weight" type="text" class="registerProduct" name="weight" placeholder="Enter weight" style="margin-bottom:3%;border:3px solid #d8ca30" > <br>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="unitPriceerr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="weighterr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input id="productionTime" type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30" > <br>
+                            <input id="quantity" type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"  > <br>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="productionTimeerr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="quantityerr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input id="threshold" type="text" class="registerProduct" name="threshold" placeholder="Minimum threshold" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"  > <br>
+                            <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" > <br>
+                        </div>
+                        <div class="product_reg_row" style="margin-left:6%">
+                                <div id="thresholderr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                                <div id="productImageerr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
+                        </div>
+                        <div class="product_reg_row">
+                            <input type="submit" name="Sign In" value="Add product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                        </div>
+                    </form>
                 </div>
-                <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="unitprice" placeholder="Enter price" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
-                <input type="text" class="registerProduct" name="weight" placeholder="Enter weight" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
-                </div>
-                <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30" required> <br>
-                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins" required > <br>
-                </div>
-                <div class="product_reg_row">
-                <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" required> <br>
-                </div>
-                <div class="product_reg_row">
-                <input type="submit" name="Sign In" value="Add product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
-                </div>
-                </form></div><div class="right">
-                <div style="height:10vh"></div>
-                <label>Preview</label>
-                <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
+            <div class="right">
+                <div style="height:18vh"></div>';
+                /*<label>Preview</label>*/
+                echo'<div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius: 10px;outline:none">
                 </div></div>
             </div>
         </section>';
@@ -1246,18 +1045,23 @@ class Body{
                 <div class="Top" id="Top">
                     <div class="card">
                         <div class="cmValue">'.$data['dispatched_count'].'</div>
-                        <div class="cmTitle">Pending Deliveries</div>
+                        <div class="cmTitle">Ongoing Deliveries</div>
                     </div>
                     <div class="card">
                         <div class="cmValue">'.$data['completed_count'].'</div>
                         <div class="cmTitle">Orders Delivered</div>
                     </div>
                     <div class="card">
-                        <div class="cmValue">'.$data['review_count'].'</div>
-                        <div class="cmTitle">Review</div>
+                        <div class="cmValue">'.$data['review_count'].'</div>';
+                        if($data['review_count']>1 ||$data['review_count']==0 ){
+                            echo'<div class="cmTitle">Reviews</div>';
+                        }else{
+                            echo'<div class="cmTitle">Review</div>';
+                        }
+                    echo'    
                     </div>
                     <div class="card">
-                        <div class="cmValue" style="font-size:3vw">LKR.14350</div>
+                        <div class="cmValue" style="font-size:3vw">LKR.'.$data['revenue'].'</div>
                         <div class="cmTitle">Earned</div>
                     </div>
                 </div>
@@ -1350,6 +1154,7 @@ class Body{
         echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
                             <tr>
+                                <th>Order ID</th>
                                 <th>Customer name</th>
                                 <th>Address</th>
                                 <th>Contact no</th>
@@ -1364,6 +1169,7 @@ class Body{
             $pool = "";
             foreach ($result as $row) {
                 $pool .=  '<tr>
+                    <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
@@ -1401,6 +1207,7 @@ class Body{
         echo '<table class="styled-table" style="margin-top:0.3%">
                     <thead style="background-color:#dbb1f9">
                         <tr>
+                            <th>Order ID</th>
                             <th>Customer name</th>
                             <th>Address</th>
                             <th>Contact no</th>
@@ -1416,6 +1223,7 @@ class Body{
             $pool = "";
             foreach ($result as $row) {
                 $pool .=  '<tr>
+                    <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
@@ -1545,7 +1353,7 @@ class Body{
              </div>
             <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%">
                 <div class="left">
-                <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productRegistrationForm" class="productRegistrationForm">
+                <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productUpdateForm" class="productRegistrationForm">
                 <div class="product_reg_row">
                 <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">';
                 $result=$data['products'];
@@ -1561,14 +1369,14 @@ class Body{
                 <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"> <br>
                 </div>
                 <div class="product_reg_row">
+                <input type="text" class="registerProduct" name="threshold" placeholder="Minimum threshold" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins" required > <br>
                 <input type="file" class="registerProduct" name="productImage" id="productImage" style="margin-bottom:3%;border:3px solid #d8ca30" onchange="showImage(this)" > <br>
                 </div>
                 <div class="product_reg_row">
-                <input type="submit" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="addProducts()" style="width:65%">
+                <input type="button" name="Sign In" value="Update product" class="submitRegisterProduct" onClick="updateProducts()" style="width:65%">
                 </div>
                 </form></div><div class="right">
-                <div style="height:10vh"></div>
-                <label>Preview</label>
+                <div style="height:18vh"></div>
                 <div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius:100%;outline:none">
                 </div></div>
             </div>
@@ -1711,7 +1519,7 @@ class Body{
                         <div class="poductQuota">
                             <div class="productQuotaName" style="font-size: large"><lable>'.$row['customer_type'].'</lable></div>
                             <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>'.$row['monthly_limit'].'KG</label></div>
-                            <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'"></div>
+                            <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" style="width:70%"></div>
                             <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>
                             <div class="productQuotaSetNew">
                             <label class="switch">';
@@ -1947,9 +1755,14 @@ class Body{
                     echo'
                 </div>
                 <div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
-                    <div class="leftAnalysis" style="width:50%;height:100%">
-                        <div class="barChart" id="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                    <div class="leftAnalysis" style="width:50%;height:100%">';
+                    if(isset($data['barChart'])){
+                        echo'<h4 style="margin-left:5%">Total Deliveries</h4>';
+                    }
+                    
+                        echo'<div class="barChart" id="barChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             if(isset($data['barChart'])){
+                                
                                 $chart['vector']=$data['barChart']['values'];
                                 $chart['labels']=$data['barChart']['dates'];
                                 $chart['color']=$data['barColor'];
@@ -1957,8 +1770,12 @@ class Body{
                                 $chart = new Chart('bar',$chart,1);
                             }
                             
-                        echo'</div>
-                        <div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                        echo'</div>';
+                        if(isset($data['lineChart'])){
+                            echo'<h4 style="margin-left:5%">Total Revenue</h4>';
+                        }
+                        
+                        echo'<div class="lineChart" style="width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                            if(isset($data['lineChart'])){
                                 $chart_3['vector']=$data['lineChart']['values'];
                                 $chart_3['labels']=$data['lineChart']['names'];
@@ -1968,8 +1785,12 @@ class Body{
                            }
                                     
                         echo'</div>
-                    </div>
-                    <div class="rightAnalysis" style="width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                    </div>';
+                    if(isset($data['lineChart'])){
+                        echo'<h4 style="margin-left:5%">Sold stock</h4>';
+                    }
+                    
+                    echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
                             if(isset($data['doughNut'])){
                                 $chart_2['vector']=$data['doughNut']['values'];
                                 $chart_2['labels']=$data['doughNut']['products'];
@@ -2229,6 +2050,7 @@ class Body{
             <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Analysis</div></a>
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0; display:flex; flex-direction:row;">
+            
                 <div class="analysis_top" style="flex-direction:column;">
                     <div class="graph" style="width:500px; padding:20px;">
                         <h4>Last Week</h4>';
@@ -2476,14 +2298,170 @@ class Body{
             }
             
     }
-    function rr(){
-        //require('fpdf.php');
-        $pdf = new FPDF('P','mm','A4');
-        $pdf->SetAutoPageBreak(true,10);
-        $pdf->SetMargins(23,24,23);
-        $pdf->AddPage();
-        $pdf->SetFont('Arial','B',16);
-        $pdf->Cell(40,10,'Hello World!');
-        $pdf->Output();
+    function deliveryAnalysis($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Delvery/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Analysis</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;">'; 
+                echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
+                <form action="'. BASEURL.'/Delvery/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
+                <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                From<select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
+                    if(isset($data['joinedDate'])){
+                        echo'<option value="" disabled selected >Year</option>';
+                        $tag='';
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                            
+                            if($i==intval($data['joinedDate'][0])){
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }
+                                
+                            
+                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Year</option></select>';
+                    }
+                echo'<select name="monthFrom" id="monthFrom">';
+                if(isset($data['currentdate'])){
+                    echo'<option value="" disabled >Month</option>';
+                    $tag='';
+                    $to=0;
+                    if(intval($data['fromyearandmonth'][0])==intval($data['currentdate'][0])){
+                        $to=intval($data['currentdate'][1])+1;
+                    }else{
+                        $to=13;
+                    }
+                    for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                        if($i==$data['fromyearandmonth'][1]){
+                            $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                        }else{
+                            $tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                    }
+                    $tag.='</select>';
+                    echo $tag;
+
+                }else{
+                    echo'<option value="" disabled selected>Month</option>
+                    </select>';
+                }
+            echo'
+            </div>
+            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
+                if(isset($data['joinedDate'])){
+                    echo'<option value="" disabled selected>Year</option>';
+                    $tag='';
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                            if($i==intval($data['joinedDate'][0])){
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }
+                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Year</option></select>';
+                    }
+                
+                echo'
+                <select name="monthTo" id="monthTo">';
+                    if(isset($data['currentdate'])){
+                        echo'<option value="" disabled >Month</option>';
+                        $tag='';
+                        $to=0;
+                        if(intval($data['toyearandmonth'][0])==intval($data['currentdate'][0])){
+                            $to=intval($data['currentdate'][1])+1;
+                        }else{
+                            $to=13;
+                        }
+                        for ($i=(intval($data['joineddate'][0])==intval($data['toyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                            if($i==$data['toyearandmonth'][1]){
+                                $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'">'.$i.'</option>';
+                            }
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Month</option>
+                        </select>';
+                    }
+                echo'</select>
+            </div>
+            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
+                <input type="submit" name="sub" value="Submit" style="font-family:poppins" class="getAnalysisButton">
+            </div></form></div>'; 
+            echo'<div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
+                    <div class="leftAnalysis" style="width:50%;height:100%">';
+                    if(isset($data['barChart'])){
+                        echo'<h4 style="margin-left:5%">Total Deliveries</h4>';
+                    }
+                    
+                        echo'<div class="barChart" id="barChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                        if(isset($data['barChart'])){
+                                
+                            $chart['vector']=$data['barChart']['values'];
+                            $chart['labels']=$data['barChart']['dates'];
+                            $chart['color']=$data['barColor'];
+                            $chart['y']='Deliveries';
+                            $chart = new Chart('bar',$chart,1);
+                        } 
+                            
+                        echo'</div>';
+                        if(isset($data['lineChart'])){
+                            echo'<h4 style="margin-left:5%">Total Revenue</h4>';
+                        }
+                        
+                        echo'<div class="lineChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                        if(isset($data['lineChart'])){
+                            $chart_3['vector']=$data['lineChart']['values'];
+                            $chart_3['labels']=$data['lineChart']['names'];
+                            $chart_3['color']="rgba(30, 105, 176, 1)";
+                            $chart_3['y']='Revenue (Rs)';
+                            $chart_3 = new Chart('line',$chart_3,4);
+                        }
+                        
+                                    
+                        echo'</div>
+                    </div>';
+                    if(isset($data['doughNut'])){
+                        echo'<h4 style="margin-left:5%">Delivered quantity</h4>';
+                    }
+                    
+                    echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
+                    if(isset($data['doughNut'])){
+                        $chart_2['vector']=$data['doughNut']['values'];
+                        $chart_2['labels']=$data['doughNut']['products'];
+                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
+                        $chart_2['y']='Delivered';
+                        $chart_2['main']="fgdff";
+                        $chart_2 = new Chart('doughnut',$chart_2,3);
+                    }
+                    
+                    
+                    
+                    
+                    echo'</div>
+                
+                
+                </div>';
+                
+
+        echo ' 
+        </section>';
     }
 }
