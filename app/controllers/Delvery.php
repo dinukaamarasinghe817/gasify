@@ -114,11 +114,15 @@ class Delvery extends Controller{
         $currentDate=explode("-",date('Y-m-d'));
         $deliveredOrders = $this->model('Delivery')->getDeliveredOrders($deliveryID);
         $deliveredProducts = $this->model('Delivery')->getDeliveredProducts($deliveryID);
+        $productCharges = $this->model('Delivery')->getRevenueForAnalysis($deliveryID);
         $processedDates=array();
         $orderCount=array();
         $deliveredProduct=array();
         $deliveredProductNames=array();
         $deliveredQty=array();
+        $revenueArray=array();
+        $revenueDate=array();
+        $revenueAmount=array();
         $colors=array("green","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)","rgb(255, 128, 0)","rgb(0, 0, 255)","rgb(255, 0, 191)","rgb(102, 204, 255)");
         for ($i=0; $i <50 ; $i++) { 
             shuffle($colors);
@@ -208,6 +212,22 @@ class Delvery extends Controller{
         foreach($deliveredProduct as $key=>$value){
             array_push($deliveredProductNames,$key);
             array_push($deliveredQty,$value);
+        }foreach($productCharges as $row){
+            $date=explode('-',$row['deliver_date']);
+            if(in_array($date[0].'-'.$date[1],$processedDates)){
+                //print_r("yes");
+                if(array_key_exists($date[0].'-'.$date[1],$revenueArray)){
+                    $newRevenue=(int)$row['max_distance']*(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']+$revenueArray[$date[0].'-'.$date[1]];
+                    unset($revenueArray[$date[0].'-'.$date[1]]);
+                    $revenueArray+=array($date[0].'-'.$date[1]=>$newRevenue);
+                }else{
+                    $revenueArray+=array($date[0].'-'.$date[1]=>(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']);
+                }
+            }
+        }
+        foreach($revenueArray as $key=>$value){
+            array_push($revenueDate,$key);
+            array_push($revenueAmount,$value);
         }
         $barChart=array();
         $barChart['dates']=$processedDates;
@@ -217,9 +237,14 @@ class Delvery extends Controller{
         $doughNut['products']=$deliveredProductNames;
         $doughNut['values']=$deliveredQty;
         $data['doughNut']=$doughNut;
+        $lineChart=array();
+        $lineChart['values']=$revenueAmount;
+        $lineChart['names']=$revenueDate;
+        $data['lineChart']=$lineChart;
         $this->view('dashboard/delivery', $data);  
         //print_r($deliveredProductNames);
-        //print_r($deliveredQty);
+        //print_r($processedDates);
+        //print_r($revenueArray);
         //print_r("---------------------");
         //print_r($orderCount);
     }

@@ -2427,11 +2427,14 @@ class Body{
                         }
                         
                         echo'<div class="lineChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                        $chart_3['vector']=[5500,3250,4800,4130,3900];
-                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart_3['color']="rgba(30, 105, 176, 1)";
-                        $chart_3['y']='Revenue-Last week(Rs)';
-                        $chart_3 = new Chart('line',$chart_3,4);
+                        if(isset($data['lineChart'])){
+                            $chart_3['vector']=$data['lineChart']['values'];
+                            $chart_3['labels']=$data['lineChart']['names'];
+                            $chart_3['color']="rgba(30, 105, 176, 1)";
+                            $chart_3['y']='Revenue (Rs)';
+                            $chart_3 = new Chart('line',$chart_3,4);
+                        }
+                        
                                     
                         echo'</div>
                     </div>';
