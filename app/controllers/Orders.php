@@ -505,27 +505,6 @@ class Orders extends Controller{
 
     // distributor -> phurchase order interface
      public function distributor($param=null, $error=null) {
-        // $user_id = $_SESSION['user_id'];
-        // $data['navigation'] = 'orders';
-        // $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-        // $row = mysqli_fetch_assoc($distributor_details);
-        // $data['image'] = $row['image'];
-
-        // $data['tab'] = $param;
-
-        // if($error !=null) {
-        //     $data['toast'] = $error;
-        // }
-
-        // $distributor_details = $this->model('Distributor')->getDistributor($this->user_id);
-        // $row = mysqli_fetch_assoc($distributor_details);
-        // $data['image'] = $row['image'];
-        // $data['name'] = $row['first_name'].' '.$row['last_name'];
-
-        // $data[$data['tab']] = $this->model('Distributor')-> distributorStock($this->user_id, $data['tab']);
-
-        // $this->view('distributor/phurchase_orders',$data);  
-
         // navigation and active tab in body
         $data['navigation'] = 'orders';
         $data['tab'] = $param;
@@ -537,14 +516,12 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
         $data['name'] = $row['first_name'].' '.$row['last_name'];
-        $data[$data['tab']] = $this->model('Distributor')->distributorStock($this->user_id, $data['tab']);
-        // $this->view('dealer/', $data);  
-        $this->view('distributor/phurchase_orders',$data);  
-
+        $data['purchaseorder'] = $this->model('Distributor')->distributorstock($this->user_id); 
+        $this->view('distributor/phurchase_orders',$data); 
+     
     }
 
     public function purchase_order($param=null) {
-       
         $productid = $_SESSION['productarray'];
         $postproducts = [];
 
