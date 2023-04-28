@@ -118,7 +118,7 @@ class Delvery extends Controller{
                         $date2=explode('-',$row2);
                         if(($date2[0])==intval($date[0])){
                             if(intval($date2[1]==$date[1])){
-                                $count+=1;
+                                $count=$count+1
                                 //break;
                             }
     
