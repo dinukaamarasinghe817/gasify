@@ -78,9 +78,6 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
-       
-
-
         $data['collecting_method'] = $this->model('Customer')->getcollecting_method($order_id,$customer_id);
         $data['order_id'] = $order_id;
         $data['customer_id'] = $customer_id;
@@ -100,7 +97,7 @@ class Orders extends Controller{
         if(isset($_POST['review_type'])){
             $review_type = $_POST['review_type'];
         }
-        $data['add_review_error'] = $this->model('Customer')->AddReviw($order_id,$customer_id,$reviews,$review_type);
+        $data['add_review_error'] = $this->model('Customer')->AddReview($order_id,$customer_id,$reviews,$review_type);
         if(!empty($data['add_review_error'])){
             $this->customer_reviewform($order_id,$data['add_review_error']);
         }
@@ -449,16 +446,23 @@ class Orders extends Controller{
 
         $data['selected_city'] = $_SESSION['city'];
         $data['home_city'] = $row1['city'];
-        
+
+        $data['city'] = $row1['city'];
+        $data['street'] = $row1['street'];
         if(isset($_POST['new_street'])){
-            $data['street'] = $_POST['new_street'];
-            if(isset($_POST['new_city'])){
-                $data['city'] = $_POST['new_city'];
+            if($_POST['new_street']==null){
+                $data['error'] = 'Please enter your street';
+                
+            }else{
+                $data['street'] = $_POST['new_street'];
+                if(isset($_POST['new_city'])){
+                    // if($_POST['new_city'] == null){
+                    //     $data['error'] = 'Please enter your city';
+                    // }
+                    $data['city'] = $_POST['new_city'];
+                }
             }
 
-        }else{
-            $data['city'] = $row1['city'];
-            $data['street'] = $row1['street'];
         }
 
         $data['delivery_charge']= number_format($this->model('Customer')->get_delivery_charge($order_id,$data['street'],$data['city']),2);   //take delivery charge

@@ -259,7 +259,7 @@ class Customer extends Model{
     }
 
     //insert added new review for selected reservation
-    public function AddReviw($order_id,$customer_id,$reviews,$review_type){
+    public function AddReview($order_id,$customer_id,$reviews,$review_type){
         $add_review_errors =array();
         $error = "";
         
@@ -277,7 +277,7 @@ class Customer extends Model{
         $result2 = "";
 
         //check collecting method , Pick up orders only has review_type 'Dealer' and Delivery orders have both review types
-        if($collecting_method == 'Pick up'){
+        if($collecting_method == 'Pickup'){
             $review_type = 'Dealer';
 
             //check fields are empty
