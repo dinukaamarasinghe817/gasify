@@ -593,7 +593,7 @@ class Navigation {
                     </li>
                     <li class="nav-tile">';
 
-                if($active == 'dealer'|| $active == 'companyRegDealer'){
+                if($active == 'dealer'|| $active == 'regDealer'){
                     echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile active orders">';
                 }else{
                     echo '<a href="'.BASEURL.'/Compny/dealer" class="panel-tile orders">';
@@ -634,7 +634,7 @@ class Navigation {
                     </li>
                     <li class="nav-tile">';
 
-                if($active == 'orders' || $active == 'companyLimitQuota'){
+                if($active == 'orders' || $active == 'delayedorders'|| $active == 'issuedorders'|| $active == 'limitquota'){
                     echo '<a href="'.BASEURL.'/Compny/orders" class="panel-tile active stock">';
                 }else{
                     echo '<a href="'.BASEURL.'/Compny/orders" class="panel-tile stock">';
@@ -652,7 +652,7 @@ class Navigation {
                     <li class="nav-tile">';
 
 
-                if($active == 'companyProducts'){
+                if($active == 'products' || $active == 'updateProducts' || $active == 'regproducts'){
                     echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile active notifications">';
                 }else{
                     echo '<a href="'.BASEURL.'/Compny/products" class="panel-tile notifications">';
@@ -731,7 +731,7 @@ class Navigation {
                     </li>
                     <li class="nav-tile">';
 
-                if($active == 'orders'){
+                if($active == 'deliveries'||$active == 'currentgasdeliveries'){
                     echo '<a href="'.BASEURL.'/Delvery/deliveries" class="panel-tile active orders">';
                 }else{
                     echo '<a href="'.BASEURL.'/Delvery/deliveries" class="panel-tile orders">';
@@ -750,7 +750,7 @@ class Navigation {
                     </li>
                     <li class="nav-tile">';
 
-                if($active == 'notifications'){
+                if($active == 'reviews'){
                     echo '<a href="'.BASEURL.'/Delvery/reviews" class="panel-tile active notifications">';
                 }else{
                     echo '<a href="'.BASEURL.'/Delvery/reviews" class="panel-tile notifications">';
