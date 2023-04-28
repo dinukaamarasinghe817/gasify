@@ -313,6 +313,7 @@ function submitReport() {
     xmlhttp.send(formData);
 }
 function issueReport(orderID) {
+    //console.log("hello");
     var formData = new FormData();
     //console.log(document.getElementById(orderID + "placedTime"))
     formData.append("orderID", document.getElementById(orderID + "issued").getAttribute("value"));
@@ -321,15 +322,10 @@ function issueReport(orderID) {
     formData.append("placedTime", document.getElementById(orderID + "placedTime").getAttribute("value"));
     var table = document.getElementById(orderID + "table")
     var tableArr = []
-    console.log(formData.get("orderID"))
-    console.log(formData.get("distID"))
-    console.log(formData.get("placedDate"))
-    console.log(formData.get("placedTime"))
     for (let row of table.rows) {
         var tempArr = []
         for (let cell of row.cells) {
             tempArr.push(cell.innerText)
-            console.log(cell.innerText);
         }
         tableArr.push(tempArr);
     }
@@ -339,7 +335,7 @@ function issueReport(orderID) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            //console.log(this.responseText);
         }
     };
     xmlhttp.open("POST", "../Reports/companySale");
