@@ -60,7 +60,9 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         <div class="buttons">
             <button onclick="location.href='${forwardlink}'">OK</button>
         </div>`;
-    }else if(variant == 'deliverymethod'){
+    }
+    //pop up for select collecting method pickup or delivery 
+    else if(variant == 'deliverymethod'){
         body = `<h2>Select Collecting Method</h2>
         <img src="http://localhost/mvc/public/img/icons/collecting_method.png" alt="">
         <p>Select the collecting method you need</p>
@@ -76,7 +78,9 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
             </svg>
             <div>Delivery</div></button>
         </div>`;
-    }else if(variant == 'selectpickup'){
+    }
+    //confirm pop up for pickup collecting method
+    else if(variant == 'selectpickup'){
         body = `<h2>Pick Up Option</h2>
         <img src="http://localhost/mvc/public/img/icons/pickup.jpg" alt="">
         <p>Confirm pick up option as your collecting method!</p>
@@ -86,40 +90,58 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         </div> `; 
     }
     //dashbord toast
-    //display current delivery address and charge
-    //have to get customer default address 
+    //pop up after select delivery method with delivery address and charge 
     else if (variant == 'deliverychargeandaddress') {
+        let home_city = document.querySelector("input.home_city").value;
+        let home_street = document.querySelector("input.home_street").value;
+        let d_charge = document.querySelector("input.d_charge").value;
+        console.log(d_charge);
         body = `<h2>Delivery Address And Charges</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
          
         <label class="delivery_charge_label">Delivery Address:</label>
-        <input class="delivery_charge_textbox" name="new_street" value ="No,175/2,Abeyrathna Mw Boralesgamuwa" readonly>
+        <input class="delivery_charge_textbox" name="new_street" value ="${home_street}, ${home_city}" readonly>
         <label class="delivery_charge_label">Delivery Charge:</label>
-        <input class="delivery_charge_textbox" name="dcharge" value ="Rs.250.00" readonly >
+        <input class="delivery_charge_textbox" name="dcharge" value ="Rs.${d_charge}" readonly >
         <p style="color:green;">If you need to edit delivery address click Edit.</p>
         <div class="buttons">
             <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverymethod');">Cancel</button>
-            <button  class= "btn-blue" onclick="customerprompt();customerprompt('changedeliveryaddress','http://localhost/mvc/Orders/select_delivery_method');">Edit</button>
-            <button class="btn-blue" onclick="customerprompt();customerprompt('selectdelivery','http://localhost/mvc/Orders/getcollecting_method/Delivery/');">Ok</button>
+            <button  class= "btn-blue" onclick="customerprompt();customerprompt('changedeliveryaddress','http://localhost/mvc/Orders/change_delivery_address');">Edit</button>
+            <button class="btn-blue" onclick="customerprompt();customerprompt('selectdelivery','http://localhost/mvc/Orders/getcollecting_method/Delivery/${home_city}/${home_street}');">Ok</button>
         </div> `;
 
     }
     //change delivery address pop up
     //have to take selected city as new city and store new city and street
     else if(variant == 'changedeliveryaddress'){
+        let cities = JSON.parse(document.querySelector("input.cities").value);
+        console.log(cities);
+        let home_city = document.querySelector("input.home_city").value;
+        let home_street = document.querySelector("input.home_street").value;
+
         body = `<h2>Change Delivery Address</h2>
         <img src="http://localhost/mvc/public/img/icons/delivery.png" alt="">
-        <p>If you need to change your delivery address around selected city,change it!</p>
-        <form  id="myForm" action="${forwardlink}" method="POST"> 
-            <input id="new_street" name="address" placeholder="New Street" required>
-            <input name="new_city" value ="Homagama" readonly > 
+        <p>Give your new delivery address,Enter correct street and cty!</p>
+        <form  id="delivery_details_form" action="${forwardlink}" method="POST"> 
+            <input id="new_street" name="new_street" placeholder="New Street" value="${home_street}" required>
+            <select id="new_city" name="new_city">`;
+            cities.forEach(city => {
+                if(home_city == city) {
+                    body += `<option value="${home_city}" selected>${home_city}</option>`;
+                }else{
+                    body += `<option value="${city}">${city}</option>`;
+                }
+            });  
+        body +=  `</select> 
         </form>
         <div class="buttons">
-            <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverychargeandaddress');">Cancel</button>
-            <button class="btn-blue" onclick = "customerprompt();customerprompt('deliverychargeandaddress');">OK</button>
+            <button class= "btn-red" onclick="customerprompt();customerprompt('deliverychargeandaddress');">Cancel</button>
+            <button class="btn-blue" onclick = "changechargeandaddress();">OK</button>
         </div> `;
 
-    } else if(variant == 'selectdelivery'){
+    } 
+     //confirm pop up for pickup collecting method 
+    else if(variant == 'selectdelivery'){
         body = `<h2>Delivery Option</h2>
         <img src="http://localhost/mvc/public/img/icons/deliverycar.png" alt="">
         <p>Confirm delivery option as your collecting method!</p>
@@ -127,7 +149,6 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
             <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverymethod');">Cancel</button>
             <button class="btn-blue" onclick="location.href='${forwardlink}'">Confirm</button>   
         </div>  `;
-
     }
     else{
         body = ``;
@@ -144,36 +165,35 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
 }
 
 
-function submitForm() {
+
+
+function changechargeandaddress(){
+    let form = document.querySelector("#delivery_details_form");
+    let city = document.querySelector("input.home_city");
+    let street = document.querySelector("input.home_street");
+    let charge = document.querySelector("input.d_charge");
     
-    var streetInput = document.getElementById("new_street");
-    // streetInput.setAttribute("required", true);
-
-    if(streetInput.value == ""){
-        return false;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/mvc/Orders/change_delivery_address', true);
+    xhr.onload = ()=>{
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+            let data = xhr.response;
+            if(data){
+                // now we have the new address and the relevent charge
+                data = JSON.parse(data);
+                console.log(data);
+                street.value = data['street'];
+                city.value = data['city'];
+                charge.value = data['delivery_charge'];
+                console.log(data['delivery_charge']);
+                customerprompt();
+                customerprompt('deliverychargeandaddress');
+            }
+        }
     }
-
-    var form = document.getElementById("myForm");
-    form.submit();
-    // console.log('form');
-
-
+    let formData = new FormData(form);
+    xhr.send(formData);
 }
-
-// function displaychargeandaddress(){
-//     let xhr = new XMLHttpRequest();
-//     xhr.open('POST', 'http://localhost/mvc/Orders/select_delivery_method', true);
-//     xhr.onload = ()=>{
-//         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
-//             let data = xhr.response;
-//             if(data){
-//                 // now we have the default address and the relevent charge
-//                 customerprompt('deliverychargeandaddress','http://localhost/mvc/Orders/getcollecting_method/Delivery/');
-//             }
-//         }
-//     }
-//     xhr.send();
-// }
 
 function submitcancelorder(){
     document.getElementById("bank_details_form").submit();

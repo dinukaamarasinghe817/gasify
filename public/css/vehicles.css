@@ -433,7 +433,7 @@ a,button,input[type="button"],input[type="file"]{
     color: white;
     margin-left: 5%;
 }
-
+/* 
 .top ul {
     display: inline-flex;
     width: 100%;
@@ -460,7 +460,7 @@ a,button,input[type="button"],input[type="file"]{
     border-bottom: solid transparent;
     border-right: solid transparent;
     border-left: solid transparent;
-}
+} */
 
 .emptytxt {
     text-align: center;

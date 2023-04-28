@@ -5,28 +5,31 @@ class Vehicles_Comp {
         $output = '';
 
         if($active == "add") {
-            $output .= '<li><a href="'.BASEURL.'/vehicles/distributor" class="add active"><b>Add Vehicle</b></a></li>'; 
+            $output .= '<li>
+                            <a href="'.BASEURL.'/vehicles/distributor" class="add active"><b>Add Vehicle</b></a>
+                        </li>'; 
         }else {
-            $output .= '<li><a href="'.BASEURL.'/vehicles/distributor" class="add"><b>Add Vehicle</b></a></li>'; 
+            $output .= '<li>
+                            <a href="'.BASEURL.'/vehicles/distributor" class="add"><b>Add Vehicle</b></a>
+                        </li>'; 
         }
 
         if($active == "view") { 
-            $output .= '<li><a href="'.BASEURL.'/vehicles/viewvehicle" class="view active"><b>View Vehicle</b></a></li>'; 
+            $output .= '<li>
+                            <a href="'.BASEURL.'/vehicles/viewvehicle" class="view active"><b>View Vehicle</b></a>
+                        </li>'; 
         }else {
-            $output .= '<li><a href="'.BASEURL.'/vehicles/viewvehicle" class="view"><b>View Vehicle</b></a></li>'; 
+            $output .= '<li>
+                            <a href="'.BASEURL.'/vehicles/viewvehicle" class="view"><b>View Vehicle</b></a>
+                        </li>'; 
         }
 
         echo '
-            <div class="top">
+            <div class="top-panel">
                 <ul>'.$output.'</ul>
             </div> 
         ';
     }
 }
-
-
-
-
-
 
 ?>

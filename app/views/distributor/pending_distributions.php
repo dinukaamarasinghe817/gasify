@@ -11,10 +11,10 @@ $sidebar = new Navigation('distributor', $data['navigation']);
         <div class="split right">
             <h2>Pending Gas Distributions</h2>
 
-            <div class="top">
+            <div class="top-panel">
                 <ul>
-                    <li>
-                        <a href="<?php echo BASEURL ?>/gasdistributions/pending_distributions" class="pending"><b>Pending Gas Distributions</b></a>
+                    <li class="active">
+                        <a href="<?php echo BASEURL ?>/gasdistributions/pending_distributions" class="pending active"><b>Pending Gas Distributions</b></a>
                     </li>
                     <li>
                         <a href="<?php echo BASEURL ?>/gasdistributions/completed_distributions" class="completed"><b>Completed Gas Distributions</b></a>
