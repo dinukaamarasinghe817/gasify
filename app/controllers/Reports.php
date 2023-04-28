@@ -134,7 +134,8 @@ class Reports extends Controller{
         $data['placedDate']=$placedDate;
         $data['placedTime']=$placedTime;
         $data['tableArr']=$arr;
-        $res =$this->view('company/reports/purchaseorder',$data);
+        //echo json_encode($data);
+        $this->view('company/reports/purchaseorder',$data);
     }
 
 }

@@ -1553,6 +1553,10 @@ input[type="text"]::placeholder{
     cursor: pointer;
     background-color: var(--button-blue-hover);
   }
+  .selectBoxes > div :hover{
+    background-color: #1672fc;
+  }
+  
 /*=========================================================================================================*/
 
 

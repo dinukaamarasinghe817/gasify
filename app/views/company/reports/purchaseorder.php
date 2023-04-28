@@ -32,7 +32,6 @@ $pdf->Cell(0,5,": ".date("Y/m/d"),0,1,'l');
 $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
-
 $pdf->Ln(10);
 
 $pdf->SetFont('Times', 'B', 12);
@@ -46,17 +45,6 @@ $pdf->Ln();
 
 // $products = $data['products'];
 $pdf->SetFont('Times', '', 12);
-// foreach($products as $product){
-//     $pdf->Cell(33,5,"{$product['product_id']}",0,0,'L');
-//     $pdf->Cell(33,5,"{$product['product_name']}",0,0,'L');
-//     $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
-//     $unit_price = number_format($product['unit_price']).'.00';
-//     $pdf->Cell(33,5,"{$unit_price}",0,0,'R');
-//     $subtotal = number_format($product['subtotal']).'.00';
-//     $pdf->Cell(33,5,"{$subtotal}",0,0,'R');
-//     $pdf->Ln();
-// }
-
 $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
@@ -96,5 +84,5 @@ $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 
-$pdf->Output('',$data['distID'].' Report'.'('.$data['placedDate'].'-'.$data['placedTime'].')');
+$pdf->Output();
 ?>
