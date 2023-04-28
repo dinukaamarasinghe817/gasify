@@ -1251,6 +1251,12 @@ label{
 .confirmation .delivery_charge_textbox{
     width: 400px;
  }
+ .confirmation #delivery_details_form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 10px;
+ }
 
 /* change delivery address pop up css */
 /* .confirmation .delivery_address{
