@@ -149,7 +149,7 @@ class Admin extends Model
 
         //chart 1 sold quantity of each product based on their weight
         $products = array();
-        $query1 = $this->read('product',$company == 'all' ? '' : "company_id = $company");
+        $query1 = $this->read('product',$company == 'all' ? "type = 'cylinder'" : "type = 'cylinder' AND company_id = $company");
         while($row = mysqli_fetch_assoc($query1)){
             $products[$row['weight']] = 0;
         }
@@ -164,7 +164,9 @@ class Admin extends Model
             $query2 = $this->read('reservation_include',"order_id = $order_id");
             while($row2 = mysqli_fetch_assoc($query2)){
                 $pinfo = mysqli_fetch_assoc($this->read('product',"product_id = ".$row2['product_id']));
-                $products[$pinfo['weight']] += $row2['quantity'];
+                if($pinfo['type'] == 'cylinder'){
+                    $products[$pinfo['weight']] += $row2['quantity'];
+                }
             }
         }
         $chart['labels'] = array();
