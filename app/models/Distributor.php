@@ -527,8 +527,6 @@ class Distributor extends Model
                 $notvalidquantity = false;
             };
         }
-        // echo var_dump($postproducts);
-        // echo var_dump("Hi");
         
         if($notvalidquantity) {
             $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
@@ -611,52 +609,6 @@ class Distributor extends Model
 
         return $query2;
     }
-
-    /*
-    public function distributorStock($distributor_id,$tab){
-        switch($tab){
-            case "currentstock":
-                $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
-                p.weight as product_weight,p.unit_price as unit_price,d.quantity as quantity
-                FROM product p INNER JOIN distributor_keep d ON p.product_id = d.product_id WHERE d.distributor_id = $distributor_id");
-                return $result;
-                break;
-
-            case "purchaseorder":
-                $query = $this->Query("SELECT d.product_id as product_id, p.name as name, p.unit_price as unit_price, p.image as image
-                FROM distributor_capacity d INNER JOIN product p
-                ON d.product_id = p.product_id 
-                WHERE distributor_id = '$distributor_id'");
-                return $result;
-                break;
-
-            case "pohistory":
-                $query2 = $this->Query("SELECT * FROM stock_request WHERE  distributor_id = '{$distributor_id}' ORDER BY stock_req_id DESC");
-                $purchase_orders = array();
-
-                if(mysqli_num_rows($query2) > 0){
-                    while($row2 = mysqli_fetch_assoc($query2)){
-                            
-                            $sql = "SELECT si.product_id AS product_id, si.quantity AS quantity, pr.name AS name 
-                                    FROM stock_include si 
-                                    INNER JOIN product pr 
-                                    ON si.product_id = pr.product_id 
-                                    WHERE si.po_id = '{$row2['stock_req_id']}'";
-                            $result3 = $this->Query($sql);
-                            $products = array();
-                            if(mysqli_num_rows($result3)>0){
-                                while($row3 = mysqli_fetch_assoc($result3)){
-                                    array_push($products, $row3);
-                                }
-                                array_push($purchase_orders, ['purchase_order' => $row2, 'products' => $products]);
-                            }
-                    }
-                }
-                return $purchase_orders;
-                break;
-        }
-    } 
-    */
     
     // signup
     public function getProducts($company_id){
@@ -669,8 +621,6 @@ class Distributor extends Model
         // $data['distributorresult'] = $this->read('distributor', "company_id = $company_id", "city");
         return $data;
     }
-
-
-    
+   
 }
 
