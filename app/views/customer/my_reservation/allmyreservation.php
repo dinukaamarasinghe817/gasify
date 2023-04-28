@@ -16,11 +16,13 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="subtitle">
             <h3>My Reservations</h3>
         </div>
+            <?php 
+            $search = new Search([1,3]);
+            ?>
         <div class="table">
             <?php   
                 //display all reservations
                 $allmyreservations = $data['allmyreservations'];
-            
                 if(count($allmyreservations)==0){
                     // echo '<table><tr id="first_row"><th><h3><center>No reservations Found!</center></h3></td></tr></table>';
                     echo '<table class="styled-table"><div class="table_header">
@@ -30,7 +32,15 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 }else{
                     if(isset($data['allmyreservations'])){
                         echo '<table class="styled-table"><div class="table_header">
-                        <thead><tr id="first_row"><th>Order ID</th><th id="place_date_header">Placed Date</th><th id="tot_amount_header">Total Amount</th><th>Status</th><th></th></tr></thead></div><tbody>';
+                        <thead>
+                            <tr id="first_row">
+                                <th>Order ID</th>
+                                <th id="place_date_header">Placed Date</th>
+                                <th id="tot_amount_header">Total Amount</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead></div><tbody>';
                         
                         foreach($allmyreservations as $order){
                             $row1 = $order['order'];

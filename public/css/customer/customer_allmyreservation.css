@@ -142,4 +142,26 @@ td button:hover{
 } */
 
 
-
+.searchbox{
+    margin-left: auto;
+    display: flex;
+    max-width: fit-content;
+    margin-right: 90px;
+}
+.searchbox .searchbar{
+    margin-top: auto;
+    margin-left: 0px;
+    border-left: none;
+}
+.searchbar:focus{
+    outline: none;
+}
+.searchbox img{
+    margin-top: auto;
+    margin-bottom: 10px;
+    background-color: var(--navmenu-orange-dark);
+    height: 20px;
+    padding: 10px;
+    width: 20px;
+    border-radius: 5px 0px 0px 5px;
+}
