@@ -946,14 +946,14 @@ class Body{
                 echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
                             <tr>
-                                <th>Product ID</th>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Unit Price</th>
-                                <th>Weight</th>
-                                <th>Production Time</th>
-                                <th>Last Updated</th>
-                                <th>Quantity</th>
+                                <th class="tdLeft">Product ID</th>
+                                <th class="tdCenter">Name</th>
+                                <th class="tdCenter">Type</th>
+                                <th class="tdCenter">Unit Price (Rs)</th>
+                                <th class="tdCenter">Weight (KG)</th>
+                                <th class="tdCenter">Production Time</th>
+                                <th class="tdCenter">Last Updated</th>
+                                <th class="tdRight">Quantity</th>
                             </tr>
                         </thead>
                         <tbody style="overflow-y:auto;height:100px">';
@@ -962,14 +962,14 @@ class Body{
                                 $products = "";
                                 foreach ($result as $row) {
                                     $products .=  '<tr>
-                                                    <td>'.$row['product_id']. '</td>
-                                                    <td>'.$row['name'].'</td>
-                                                    <td>'.$row['type'].'</td>
-                                                    <td>'.$row['unit_price'].'</td>
-                                                    <td>'.$row['weight'].'</td>
-                                                    <td>'.$row['production_time']. '</td>
-                                                    <td>'.$row['last_updated_date'].'</td>
-                                                    <td>'.$row['quantity'].'</td>
+                                                    <td class="tdLeft">'.$row['product_id']. '</td>
+                                                    <td class="tdCenter">'.$row['name'].'</td>
+                                                    <td class="tdCenter">'.$row['type'].'</td>
+                                                    <td class="tdCenter">'.$row['unit_price'].'</td>
+                                                    <td class="tdCenter">'.$row['weight'].'</td>
+                                                    <td class="tdCenter">'.$row['production_time']. '</td>
+                                                    <td class="tdCenter">'.$row['last_updated_date'].'</td>
+                                                    <td class="tdRight">'.$row['quantity'].'</td>
                                                 </tr>';
                                 }
                                 echo $products;
