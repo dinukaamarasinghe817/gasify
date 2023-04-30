@@ -16,7 +16,7 @@ $user_id = $_SESSION['user_id'];
         <h2>Vehicles</h2> <br>
 
         <?php 
-          $result = new Vehicles_Comp("update");
+          $result = new Vehicles_Comp("view");
         ?>
 
         <div class="main2">
