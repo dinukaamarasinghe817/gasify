@@ -24,7 +24,7 @@ class Dealer extends Model
 
     public function dealerSignupForm($company_id){
         $data['productresult'] = $this->read('product', 'company_id = '.$company_id);
-        $data['distributorresult'] = $this->read('distributor', "company_id = $company_id", "city");
+        $data['distributorresult'] = $this->Query('SELECT * FROM users u INNER JOIN distributor d ON u.user_id = d.distributor_id AND d.company_id = '.$company_id.' ORDER BY d.city');
         return $data;
     }//
 
