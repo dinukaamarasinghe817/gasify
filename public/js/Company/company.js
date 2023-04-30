@@ -148,7 +148,7 @@ function changeOrderDetails(imgIndex, imgCount, orderID, productID, unitPrice, s
     } else {
         document.getElementById(orderID + String(imgIndex) + "2").src = "http://localhost/mvc/public/icons/warning.png";
     }
-    document.getElementById(orderID.toString() + productID.toString() + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us');
+    document.getElementById(orderID.toString() + productID.toString() + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us', { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
     document.getElementById(orderID.toString() + productID.toString() + "3").setAttribute("value", quantity * unitPrice);
     document.getElementById(orderID + "total").innerHTML = (document.getElementById(orderID + "total").getAttribute("value") - preTotal + (quantity * unitPrice)).toLocaleString('en-us');
     document.getElementById(orderID + "total").setAttribute("value", (document.getElementById(orderID + "total").getAttribute("value") - preTotal + (quantity * unitPrice)))
