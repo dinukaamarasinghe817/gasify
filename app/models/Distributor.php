@@ -350,11 +350,25 @@ class Distributor extends Model
      // finished a pending distribution -> change the state to "completed"
     public function finishpendingdistributions($distribution_id) {
         $user_id = $_SESSION['user_id'];
-        // $distribution_id = $_SESSION['po_id'];
         
         $query = $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
         return $query;
     }
+
+     // finished a pending distribution -> change the state to "completed"
+    // pending distribution done => update dealer's capacities, update distributor's capacities
+    // public function finishpendingdistributions($distribution_id, $product_id) {
+    //     $user_id = $_SESSION['user_id'];
+        
+    //     // get the distributor's current capacities
+    //     $current_stock =0;
+    //     $query1 = $this->Query("SELECT * FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
+
+
+        
+    //     $query = $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+    //     return $query;
+    // }
 
     // dashboard -> count of pending distributions
     public function sumpendingdistirbutions($user_id, $option) {
