@@ -18,6 +18,7 @@ function setQuota(div) {
     xmlhttp.send(formData);
 }
 function resetQuota(div) {
+    console.log("hello");
     var cutomerType = div.getAttribute("key");
     if (div.checked) {
         var formData = new FormData();
