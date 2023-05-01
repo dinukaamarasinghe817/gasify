@@ -23,7 +23,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             </div>
 
             <div class="middle">
-                    <p>Delay Time</p>
+                    <!-- <p>Delay Time</p>
                     <div class = "togglemain">
                        
                         <div class="text">Disable</div>
@@ -31,7 +31,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                             <div class="toggle-button" onclick = "Animatedtoggle()"></div>
                         </div> <br>
                     </div>
-                <br>
+                <br> -->
 
                 <div class="accordion new">
                     <?php 

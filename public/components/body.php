@@ -528,7 +528,7 @@ class Body{
                                                         <tr>
                                                             <td>'.$row3['product_id'].'</td>
                                                             <td>'.$row3['quantity'].'</td>
-                                                            <td>'.$subtotal.'.00</td>
+                                                            <td>'.number_format($subtotal,2).'</td>
                                                         </tr>'; 
                                                         $total += $subtotal;           
                                                 }
@@ -536,7 +536,7 @@ class Body{
                                                 <tr>
                                                     <td><b>Total Amount (Rs.)</b></td>
                                                     <td></td>
-                                                    <td><b>'.$total.'.00</b></td>
+                                                    <td><b>'.number_format($total,2).'</b></td>
                                                 </tr>
                                                 </tbody>
                                             </table>

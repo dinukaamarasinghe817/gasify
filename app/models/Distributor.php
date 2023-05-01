@@ -373,11 +373,13 @@ class Distributor extends Model
                     $this->Query("UPDATE dealer_keep SET quantity = '{$dealer_quantity}' WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
 
                 } else {
+                    // if dealer keeping is empty
+                    $dealer_quantity = $o_quantity;
                     $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
                 }
                 
                 // update distributor keeping capacities
-                $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}'");
+                $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
                 if(mysqli_num_rows($query4)>0) {
                     $row4 = mysqli_fetch_assoc($query4);
                     $distributor_quantity = $row4['quantity'];
@@ -387,8 +389,11 @@ class Distributor extends Model
                         $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not enough gas stock!"];
                         return $data;
                     }else {
+                        $com_date = date('Y-m-d');
+                        $com_time = date("H:i:s");
+
                         $this->Query("UPDATE distributor_keep SET quantity = '{$distributor_quantity}' WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
-                        $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+                        $this->Query("UPDATE purchase_order SET po_state = 'completed', place_date = '{$com_date}', place_time = '{$com_time}'  WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
                     }
                 }else {
                     $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas stock is empty!"];
