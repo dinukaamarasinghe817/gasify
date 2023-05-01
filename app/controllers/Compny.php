@@ -464,8 +464,10 @@ class Compny extends Controller{
         $key = mysqli_real_escape_string($conn,$_POST["key"]);
         $qty = mysqli_real_escape_string($conn,$_POST[$key]);
         $company_id=$_SESSION['user_id'];
+        $distributorID = $this->model('Company')->getDistributorID($orderID);
         $this->model('Company')->issueOrder($orderID);
         $this->model('Company')->reduceStock($key,$qty);
+        $this->model('Company')->addStockToDistributor($distributorID,$key,$qty);
     }
     public function delayOrder(){
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);

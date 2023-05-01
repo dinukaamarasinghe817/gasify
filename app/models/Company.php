@@ -256,5 +256,17 @@ class Company extends Model
             }
         }
     }
-    
+    public function getDistributorID($orderID){
+        $result = $this->Query("SELECT stock_request.distributor_id FROM stock_request WHERE stock_request.stock_req_id=$orderID");
+        if(mysqli_num_rows($result)>0){
+            $info = "";
+            while($row = mysqli_fetch_assoc($result)){
+                $info=$row['distributor_id'];
+            }
+            return $info;
+        }
+    }
+    public function addStockToDistributor($distributorID,$productID,$qty){
+        $this->Query("UPDATE distributor_keep SET distributor_keep.quantity=quantity+$qty WHERE distributor_keep.product_id=$productID AND distributor_keep.distributor_id=$distributorID");
+    }
 }
