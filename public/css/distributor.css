@@ -244,6 +244,8 @@ body.blur > *::before{
 
 /* body content css */
  .body-content{
+    /* overflow-x:hidden; */
+    /* overflow-y:hidden; */
     /* display: flex;
     flex-direction: row;
     box-sizing: border-box;
@@ -538,6 +540,7 @@ select, input{
     background-color: var(--navmenu-orange);
 }
 
+
 .middle ul {
     display: inline-flex;
     width: 100%;
@@ -632,6 +635,13 @@ table tr:nth-child(even) {
 table tr:hover {
     background-color: #ddd;
 } */
+
+
+.styled-table thead tr th{
+    overflow-x:hidden;
+    overflow-y:hidden;
+
+}
 
 .main{
     margin-top: 10px;

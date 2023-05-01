@@ -310,6 +310,7 @@ body.blur::before{
     width: 100%;
     display: flex;
     flex-direction: row;
+    
 }
 .top-panel ul li{
     float: left;
