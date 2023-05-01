@@ -373,6 +373,8 @@ class Distributor extends Model
                     $this->Query("UPDATE dealer_keep SET quantity = '{$dealer_quantity}' WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
 
                 } else {
+                    // if dealer keeping is empty
+                    $dealer_quantity = $o_quantity;
                     $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
                 }
                 
