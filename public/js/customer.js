@@ -107,7 +107,7 @@ function customerprompt(variant=null,forwardlink=null,backwardlink=null){
         <div class="buttons">
             <button  class= "btn-red" onclick="customerprompt();customerprompt('deliverymethod');">Cancel</button>
             <button  class= "btn-blue" onclick="customerprompt();customerprompt('changedeliveryaddress','http://localhost/mvc/Orders/change_delivery_address');">Edit</button>
-            <button class="btn-blue" onclick="customerprompt();customerprompt('selectdelivery','http://localhost/mvc/Orders/getcollecting_method/Delivery/${home_city}/${home_street}');">Ok</button>
+            <button class="btn-blue" onclick="customerprompt();customerprompt('selectdelivery','http://localhost/mvc/Orders/getcollecting_method/Delivery/${home_city}/${home_street}/${d_charge}');">Ok</button>
         </div> `;
 
     }

@@ -17,7 +17,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             <h3>My Reservations</h3>
         </div>
             <?php 
-            $search = new Search([1,3]);
+            $search = new Search([0,1,2,3]);
             ?>
         <div class="table">
             <?php   

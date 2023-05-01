@@ -456,9 +456,6 @@ class Orders extends Controller{
             }else{
                 $data['street'] = $_POST['new_street'];
                 if(isset($_POST['new_city'])){
-                    // if($_POST['new_city'] == null){
-                    //     $data['error'] = 'Please enter your city';
-                    // }
                     $data['city'] = $_POST['new_city'];
                 }
             }
@@ -475,7 +472,7 @@ class Orders extends Controller{
         $_SESSION['collecting_method'] = $collecting_method;
         $order_id = $_SESSION['order_id']; 
 
-        $this -> model('Customer')->insertcollectingmethod($order_id,$delivery_city,$delivery_street);
+        $this -> model('Customer')->insertcollectingmethod($order_id,$delivery_city,$delivery_street,$delivery_charge);
         header('LOCATION:'.BASEURL.'/Dashboard/customer');
 
         //unset session variables of place_reservation
