@@ -323,14 +323,14 @@ class Dealer extends Model
         }
     }//
 
-    public function addtoReservation($customer_id,$dealer_id,$products,$payment_method,$order_state,$place_date,$place_time){
+    public function addtoReservation($customer_id,$dealer_id,$products,$payment_method,$stock_verification,$place_date,$place_time){
         if($payment_method == 'Credit card'){
             $payment_verification = 'verified';
         }else{
             $payment_verification = 'pending';
         }
         // placing the reservation then
-        $record = ['customer_id'=>$customer_id, 'order_state'=>$order_state,'payment_method'=>$payment_method, 'payment_verification'=>$payment_verification,'place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id];
+        $record = ['customer_id'=>$customer_id,'order_state'=>'Pending', 'stock_verification'=>$stock_verification,'payment_method'=>$payment_method, 'payment_verification'=>$payment_verification,'place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id];
         $this->insert('reservation',$record);
 
         // taking the order_id
@@ -360,7 +360,7 @@ class Dealer extends Model
         //checking payment method
         if($payment_method == 'Credit card'){
             //checking the availability of the stock
-            $ok = true;
+            $ok = true; $stock_ok_flag = 0;
             foreach($products as $product){
                 $product_id = $product['product_id'];
                 $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
@@ -372,6 +372,7 @@ class Dealer extends Model
 
             if($ok){
                 // order accepted automatically
+                $stock_ok_flag = 1;
 
                 // immediately reducing the stock of the dealer first
                 foreach($products as $product){
@@ -417,7 +418,7 @@ class Dealer extends Model
                 }
 
                 // placing the reservation then
-                return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Accepted',$place_date,$place_time);
+                return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,$stock_ok_flag,$place_date,$place_time);
                 
                 
             }else{
@@ -429,7 +430,7 @@ class Dealer extends Model
         }else{
             // payment method payslip
             //checking the availability of the stock
-            $ok = true;
+            $ok = true; $stock_ok_flag = 0;
             foreach($products as $product){
                 $product_id = $product['product_id'];
                 $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
@@ -441,6 +442,7 @@ class Dealer extends Model
 
             if($ok){
                 // order accepted automatically
+                $stock_ok_flag = 1;
 
                 // immediately reducing the stock of the dealer first
                 foreach($products as $product){
@@ -485,8 +487,8 @@ class Dealer extends Model
                 }
 
             }
-            // placing the reservation but pending because of payslip need to verify by admin
-            $order_id = $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
+            // placing the reservation payslip need to verify by admin
+            $order_id = $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,$stock_ok_flag,$place_date,$place_time);
             // should handle the reduction of stock when the dealer gets a new stock
             // consider customer orders on fcfs
             
