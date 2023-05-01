@@ -347,28 +347,57 @@ class Distributor extends Model
         return $pending;
     }
 
-     // finished a pending distribution -> change the state to "completed"
+    // pending distribution done => update dealer keeping capacities, update distributor keeping capacities, change the po_state to "completed"
     public function finishpendingdistributions($distribution_id) {
         $user_id = $_SESSION['user_id'];
+        $data = [];
         
-        $query = $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
-        return $query;
+        $query2 = $this->Query("SELECT i.product_id as product_id, i.quantity as quantity, o.dealer_id as dealer_id
+        FROM purchase_order o inner join purchase_include i
+        ON o.po_id = i.po_id 
+        WHERE o.distributor_id='{$user_id}' AND o.po_id = '{$distribution_id}'");
+
+        if(mysqli_num_rows($query2)>0) {
+            while($row2 = mysqli_fetch_assoc($query2)) {
+                $dealer_id = $row2['dealer_id'];
+                $product_id = $row2['product_id'];
+                $o_quantity = $row2['quantity'];
+
+                // update dealer keeping stock according to the order capacities
+                $query3 = $this->Query("SELECT product_id, quantity FROM dealer_keep WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
+                if(mysqli_num_rows($query3)>0) {
+                    $row3 = mysqli_fetch_assoc($query3);
+                    $dealer_quantity = $row3['quantity'];
+                    $dealer_quantity = $dealer_quantity + $o_quantity;
+
+                    $this->Query("UPDATE dealer_keep SET quantity = '{$dealer_quantity}' WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
+
+                } else {
+                    $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
+                }
+                
+                // update distributor keeping capacities
+                $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}'");
+                if(mysqli_num_rows($query4)>0) {
+                    $row4 = mysqli_fetch_assoc($query4);
+                    $distributor_quantity = $row4['quantity'];
+                    $distributor_quantity = $distributor_quantity - $o_quantity;
+
+                    if($row4['quantity'] < $o_quantity) {
+                        $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not enough gas stock!"];
+                        return $data;
+                    }else {
+                        $this->Query("UPDATE distributor_keep SET quantity = '{$distributor_quantity}' WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
+                        $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+                    }
+                }else {
+                    $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas stock is empty!"];
+                    return $data;
+                }
+            }
+        }
+        return $data;
     }
-
-     // finished a pending distribution -> change the state to "completed"
-    // pending distribution done => update dealer's capacities, update distributor's capacities
-    // public function finishpendingdistributions($distribution_id, $product_id) {
-    //     $user_id = $_SESSION['user_id'];
-        
-    //     // get the distributor's current capacities
-    //     $current_stock =0;
-    //     $query1 = $this->Query("SELECT * FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
-
-
-        
-    //     $query = $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
-    //     return $query;
-    // }
 
     // dashboard -> count of pending distributions
     public function sumpendingdistirbutions($user_id, $option) {
