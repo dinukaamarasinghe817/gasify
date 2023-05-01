@@ -379,7 +379,7 @@ class Distributor extends Model
                 }
                 
                 // update distributor keeping capacities
-                $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}'");
+                $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
                 if(mysqli_num_rows($query4)>0) {
                     $row4 = mysqli_fetch_assoc($query4);
                     $distributor_quantity = $row4['quantity'];
