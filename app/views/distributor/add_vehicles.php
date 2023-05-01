@@ -77,14 +77,24 @@ $user_id = $_SESSION['user_id'];
 
                 <div>
                     <button class="btn2" type="submit" name ="submit"><b>Submit</b></button>
+                    <!-- <button class="btn2" type="submit" name ="submit" onclick="openPopup();"><b>Submit</b></button> -->
                 </div>
-        
             </form>
 
+                    
+                    <!-- popup box -->
+                    <!-- <div class="popup" id="popup">
+                        <?php echo '
+                        <img src="'.BASEURL.'/public/img/tick.png" alt="tick img" class="img"> ';
+                        ?>
+                       
+                        <p>Your vehicle successfully added!!</p>
+                        <button type="button" onclick="closePopup();">OK</button>
+                    </div> -->
         </div>
         </section>
 </section>
 
 <?php
-$footer = new Footer();
+$footer = new Footer("distributor");
 ?>
