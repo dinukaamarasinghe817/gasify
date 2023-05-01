@@ -20,8 +20,6 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-             echo "Your Vehicles' Details : ".'<br><br>'; 
-
                 $output = '
                 <table class="styled-table">
                     <thead>
