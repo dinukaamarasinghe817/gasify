@@ -665,8 +665,12 @@ class Distributor extends Model
                             }
                         }
 
+                        // init final remain products array
+                        $final_remain_products = [];
                         foreach($_SESSION['eligibility'.$row1['vehicle_no']] as $key => $value){
                             if($value >= 0){
+                                // put into remain products
+                                $final_remain_products[$key] = $value;
                                 // put that vid into a set
                                 $cost = getCostforVehicle($po_id,$row1['vehicle_no']);
                                 $eligible_vehicles[$row1['vehicle_no']] = $cost;
@@ -677,6 +681,11 @@ class Distributor extends Model
                                 break;
                             }
                         }
+
+                        if(count($final_remain_products) > 0){
+                            $final_eligibility[$row1['vehicle_no']] = $final_remain_products;
+                            // make sure to unset after used
+                        }
                     }
                 }
             }
@@ -686,7 +695,7 @@ class Distributor extends Model
 
         // order the vehicles based on cost and return them
         asort($eligible_vehicles);
-        return $eligible_vehicles;
+        return ['eligible_vehicles'=>$eligible_vehicles,'final_eligibility'=>$final_eligibility];
     }
 
     public function getCostforVehicle($po_id,$vehicle_no){

@@ -44,8 +44,9 @@ class ProfileHTML{
                             echo '<form class="bank" action="#" method="post">
                                 <div>
                                     <div class="input half"><label>Bank</label><input type="text" name="bank" placeholder="bank" value="'.$row['bank'].'" readonly></div>
-                                    <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'" readonly></div>
+                                    <div class="input half"><label>Bank Branch</label><input type="text" name="branch" placeholder="bank branch" value="'.$row['branch'].'" readonly></div>
                                 </div>
+                                <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'" readonly></div>
                             </form>';
                         }else if($data['tab']=='profile'){
                             echo '<form class="profile" action="#" enctype="multipart/form-data" method="post">
@@ -346,8 +347,9 @@ class ProfileHTML{
                                         }
                                 echo '</select>
                                     </div>
-                                    <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'"></div>
-                                </div>
+                                    <div class="input half"><label>Bank Branch</label><input type="text" name="branch" placeholder="bank branch" value="'.$row['branch'].'"></div>
+                                    </div>
+                                <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'"></div>
                                 <div class="input"><label>Stripe Public Key</label><input type="text" name="pub_key" placeholder="public key" value="'.$row['pub_key'].'"></div>
                                 <div class="input"><label>Stripe Restricted Key</label><input type="text" name="rest_key" placeholder="restricted key" value="'.$row['rest_key'].'"></div>
                                 <button class="button" type="submit">Save</button>
