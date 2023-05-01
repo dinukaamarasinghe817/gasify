@@ -108,7 +108,7 @@ function issue(productCount, orderID) {
 
 }
 function issueOrder(div) {
-    var orderID = div.getAttribute("key");
+    /*var orderID = div.getAttribute("key");
     var productCountArray = [];
     var productCount = 0;
     var xmlhttp = new XMLHttpRequest();
@@ -120,7 +120,16 @@ function issueOrder(div) {
         }
     };
     xmlhttp.open("POST", "../Compny/ProductCount");
-    xmlhttp.send();
+    xmlhttp.send();*/
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            productCountArray = JSON.parse(this.responseText);
+            productCount = parseInt(productCountArray[0].count) + 1;
+            issue(productCount, orderID);
+        }
+    };
+    xmlhttp.open("POST", "../Compny/ProductCount");
 }
 function delayOrder(div) {
     var orderID = div.getAttribute("key");
