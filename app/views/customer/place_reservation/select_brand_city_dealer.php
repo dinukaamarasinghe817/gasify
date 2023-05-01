@@ -204,19 +204,19 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                                         if(isset($data["dealers"])){
                                             $result1 = $data["dealers"];
-                                             //check previous selected city is already exists
+                                             //check previous selected dealer is already exists
                                             if(isset($_SESSION['dealer_id'])){
                                                 $old_dealer_id = $_SESSION['dealer_id'];  //take exist dealer_id from session
                                                 while($dealers = mysqli_fetch_assoc($result1)){    
                                                     $name = $dealers["d_name"];
                                                     $dealer_id = $dealers["dealer_id"];
-                                                    //display that exist brand as selected value in dropdown
+                                                    //display that exist dealer as selected value in dropdown
                                                     if($dealer_id==$old_dealer_id){
-                                                        echo "<option value = $old_dealer_id id= $old_dealer_id> $name </option>";
+                                                        echo "<option value = $old_dealer_id id= $old_dealer_id selected> $name </option>";
                                                         //after that unset past session variable
                                                         unset($_SESSION['dealer_id']);
                                                     }
-                                                    //display other brands as options in dropdown list 
+                                                    //display other dealers as options in dropdown list 
                                                     else{
                                                         $dealer_id = $dealers["dealer_id"];
                                                         echo "<option value = $dealer_id id= $dealer_id> $name </option>"; 

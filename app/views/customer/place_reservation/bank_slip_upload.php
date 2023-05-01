@@ -22,6 +22,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             if(isset($data['bank_details'])){
                 while( $row = mysqli_fetch_assoc($data['bank_details'])){
                     $bank_name = $row['bank'];
+                    $branch = $row['branch'];
                     $acc_no = $row['account_no'];
                     $acc_holder_name = $row['full_name'];
 
@@ -34,6 +35,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 <?php
                     echo "<span><strong>Account Holder's Name :</strong> $acc_holder_name</span>
                           <span><strong>Dealer's Bank Name :</strong> $bank_name</span>
+                          <span><strong>Dealer's Bank Branch :</strong> $branch</span>
                           <span><strong>Dealer's Bank Account No :</strong> $acc_no</span>";
                 ?>
                 </div>

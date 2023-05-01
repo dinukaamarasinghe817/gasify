@@ -168,7 +168,7 @@ class Customer extends Model{
 
             //query for get details about selected reservation
             $result1 = $this->Query("SELECT r.order_id,r.order_state,r.place_date,r.place_time,r.collecting_method, r.dealer_id,r.delivery_id,
-            r.cancel_date,r.cancel_time,r.payment_method,r.deliver_date,r.deliver_time,r.bank,r.acc_no,r.refund_date,r.refund_time,r.refund_verification,r.min_distance,r.max_distance,d.name as dealer_name,d.city as dealer_city,d.street as dealer_street
+            r.cancel_date,r.cancel_time,r.payment_method,r.deliver_city,r.deliver_street,r.deliver_charge,r.deliver_date,r.deliver_time,r.bank,r.acc_no,r.refund_date,r.refund_time,r.refund_verification,d.name as dealer_name,d.city as dealer_city,d.street as dealer_street
             FROM reservation r
             INNER JOIN dealer d ON r.dealer_id = d.dealer_id
             WHERE r.customer_id = '{$customer_id}' and r.order_id = '{$order_id}'");
@@ -198,26 +198,26 @@ class Customer extends Model{
                         
                     }
 
-                    //calculate delivery charges
-                    if($row1['collecting_method'] == "Pickup"){
-                        $delivery_charge = NULL;
-                    }else{
-                        $order_min_distance = $row1['min_distance'];  //get minimum and maximum distance in reservation table
-                        $order_max_distance = $row1['max_distance'];
+                    // //calculate delivery charges
+                    // if($row1['collecting_method'] == "Pickup"){
+                    //     $delivery_charge = NULL;
+                    // }else{
+                    //     $order_min_distance = $row1['min_distance'];  //get minimum and maximum distance in reservation table
+                    //     $order_max_distance = $row1['max_distance'];
                     
-                        //get delivery charges details from delivery_charge table
-                        $result6 = $this->Query("SELECT * FROM delivery_charge");
-                        while($row6 = mysqli_fetch_assoc($result6)){
-                            $min_distance = $row6['min_distance']; 
-                            $max_distance = $row6['max_distance'];
-                            $charge_per_kilo = $row6['charge_per_kg'];
+                    //     //get delivery charges details from delivery_charge table
+                    //     $result6 = $this->Query("SELECT * FROM delivery_charge");
+                    //     while($row6 = mysqli_fetch_assoc($result6)){
+                    //         $min_distance = $row6['min_distance']; 
+                    //         $max_distance = $row6['max_distance'];
+                    //         $charge_per_kilo = $row6['charge_per_kg'];
 
-                            //check customer distance range
-                            if($order_min_distance==$min_distance && $order_max_distance == $max_distance){  
-                                $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
-                            }
-                        }
-                    }
+                    //         //check customer distance range
+                    //         if($order_min_distance==$min_distance && $order_max_distance == $max_distance){  
+                    //             $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
+                    //         }
+                    //     }
+                    // }
 
                     //get reviews for selected order
                     $result3 = $this->Query("SELECT * FROM review WHERE  order_id = '{$order_id}' ORDER BY date DESC LIMIT 3");
@@ -238,7 +238,7 @@ class Customer extends Model{
                     }
                 
                 
-                    array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews,'delivery'=>$delivery,'delivery_charge'=>$delivery_charge]);
+                    array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews,'delivery'=>$delivery]);
                 
         
         }
@@ -700,134 +700,19 @@ class Customer extends Model{
     //display dealer bank details for bank deposit payments slip upload page
     public function getDealerBankDetails(){
         $dealer_id = $_SESSION['dealer_id'];    //get dealer id in session
-        $result = $this->Query("SELECT d.bank,d.account_no,CONCAT(u.first_name ,'  ' ,u.last_name) as full_name FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE dealer_id = '{$dealer_id}'");
+        $result = $this->Query("SELECT d.bank,d.branch,d.account_no,CONCAT(u.first_name ,'  ' ,u.last_name) as full_name FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE dealer_id = '{$dealer_id}'");
         return $result;
 
     }
 
 
 
-    /*====================================insert reservation details and selected product details to database============================== */
-    //insert place reservation details for reservation table
-    // public function place_reservation($customer_type){
-    //     $customer_id = $_SESSION['user_id'];
-    //     $dealer_id = $_SESSION['dealer_id'];
-    //     $company_id = $_SESSION['company_id'];
-    //     $order_products = $_SESSION['order_products'];
-    //     $order_state = 'Pending';
-    //     $payslip = $_SESSION['slip_img'];
-    //     //set current date and time 
-    //     date_default_timezone_set("Asia/Colombo");
-    //     $place_time = date('H:i:s');
-    //     $place_date = date('Y-m-d');
-       
-    //     $_SESSION['place_time'] = $place_time;
-    //     $_SESSION['place_date'] = $place_date;
-        
-    //     //check payment method
-    //     if(isset($payslip)){
-    //         $payment_method = 'Bank Deposit';
-    //     }else{
-    //         $payment_method = 'Credit Card';
-    //     }
-
-    //     //query to get quota details
-    //     $result2 = $this->Query("SELECT * FROM quota WHERE company_id = '{$company_id}' AND customer_type = '{$customer_type}'");
-    //     $row2 = mysqli_fetch_assoc($result2);
-    //     $quota_state = $row2['state'];
-    //     $monthly_limit = $row2['monthly_limit'];
-
-    //     //query to get remaining quota for relevant customer
-    //     $result3 = $this->Query("SELECT * FROM customer_quota WHERE company_id = '{$company_id}' AND customer_id = '{$customer_id}'");
-    //     $row3 = mysqli_fetch_assoc($result3);
-    //     $remaining_weight = $row3['remaining_amount'];
+    /*======insert reservation details and selected product details to database in Dealer controller and return order_id==================== */
+  
 
 
-    //     //check quota is active ,then reduce the remaining quota amount 
-    //     if($quota_state == 'ON'){
-    //          $sum_of_weights = 0;
-    //         foreach ($order_products as $order_product){
-    //             $product_id = $order_product['product_id'];
-    //             $qty = $order_product['qty'];
-    //             //get products weight
-    //             $result1 = $this->Query("SELECT * FROM product WHERE product_id = $product_id");
-    //             $row1 = mysqli_fetch_assoc($result1);
-    //             $product_type = $row1['type'];
-    //             //check product type is cylinder or not
-    //             if($product_type == 'cylinder'){
-    //                 $item_weight = $row1['weight'];
-    //                 $product_total_weight = $item_weight * $qty;
-    //                 $sum_of_weights = $sum_of_weights + $product_total_weight;  //calculate all cylinder type selected products total weight
-    //             }
-    //         }
-
-    //         $new_remaining_weight = $remaining_weight - $sum_of_weights;  //new remainig quota amount
-
-    //         //check if total weight exceed the remaining available quota
-    //         if($sum_of_weights <= $remaining_weight){
-    //             if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
-    //                 $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
-    //                 $this->insertproducts();    //insert selected products to reservation include table
-    //                 //update remaining quota
-    //                 $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
-    //             }else{
-    //                 $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
-    //                 $this->insertproducts();    //insert selected products to reservation include table
-    //                 //update remaining quota
-    //                 $this->update('customer_quota',['remaining_amount'=>$new_remaining_weight],'customer_id= '.$customer_id.' AND company_id='.$company_id.'');
-    //             } 
-
-    //         }
-
-    //     }   
-    //     //if quota is not active then customer is allowed to buy any amount of items 
-    //     else{
-    //         if(isset($customer_id) && isset($dealer_id) && isset($company_id) && isset($payslip)){
-    //             $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'pay_slip'=>$payslip,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]);
-    //             $this->insertproducts();    //insert selected products to reservation include table     
-    //         }else{
-    //             $this->insert('reservation',['order_id'=>'','customer_id'=>$customer_id,'order_state'=>$order_state,'payment_method'=>$payment_method,'payment_verification'=>'pending','collecting_method'=>'','place_date'=>$place_date,'place_time'=>$place_time,'dealer_id'=>$dealer_id]); 
-    //             $this->insertproducts();    //insert selected products to reservation include table 
-    //         } 
-    //     }
-
-    // }
-
-   
-
-    //insert selected products to reservation include table
-    // public function insertproducts(){
-
-    //     $customer_id = $_SESSION['user_id'];
-    //     $dealer_id = $_SESSION['dealer_id'];
-    //     $order_state = 'Pending';
-    //     $place_time = $_SESSION['place_time'];
-    //     $place_date = $_SESSION['place_date'];
-    //     $order_products = $_SESSION['order_products'];
-
-    //     //get order id from reservation table
-    //     $result1 = $this->Query("SELECT order_id FROM reservation 
-    //     WHERE customer_id = '{$customer_id}' AND order_state = '{$order_state}' AND place_date = '{$place_date}' AND place_time = '{$place_time}' AND dealer_id = '{$dealer_id}'");
-    //     $row = mysqli_fetch_assoc($result1);
-    //     $order_id =  $row['order_id'] ;
-
-    //     foreach ($order_products as $order_product){
-    //         $product_id = $order_product['product_id'];
-    //         $qty = $order_product['qty'];
-    //         $unit_price = $order_product['unit_price'];
-    //         //check selected products quantity is greater than 0 
-    //         if($qty>0){
-    //             //insert products to reservation include table
-    //             $this->insert('reservation_include',['order_id'=>$order_id,'product_id'=>$product_id,'quantity'=>$qty,'unit_price'=>$unit_price]);
-    //         }
-    //     }
-
-    //     return $order_id;
-    // }
-
-
-     //check the quota status and update remaining weight after place reservation if it is active
-     public function update_remaining_weight($customer_type){
+    //check the quota status and update remaining weight after place reservation if it is active
+    public function update_remaining_weight($customer_type){
         $customer_id = $_SESSION['user_id'];
         $company_id = $_SESSION['company_id'];
         $order_products = $_SESSION['order_products'];
@@ -926,40 +811,13 @@ class Customer extends Model{
 
      /*===================================================select collecting method=========================================================== */
     //insert collecting method in to reservation table
-    public function insertcollectingmethod($order_id,$delivery_city=null,$delivery_street=null){
+    public function insertcollectingmethod($order_id,$delivery_city=null,$delivery_street=null,$delivery_charge=null){
         
         $collecting_method = $_SESSION['collecting_method'];
-
-        //get dealer address as origin of delivery
-        $dealer_id = $_SESSION['dealer_id'];
-        $result1 = $this->Query("SELECT * FROM dealer WHERE dealer_id = $dealer_id");
-        $row1 = mysqli_fetch_assoc($result1);
-        $dealer_city = $row1['city'];
-        $dealer_street = $row1['street'];
-        $dealer_address = $dealer_street.', '.$dealer_city;
-
-        $delivery_address = $delivery_street.', '.$delivery_city;
-        $distance = getDistance($dealer_address,$delivery_address);  //take distance between customer and dealer address using google maps
-       
-
-         //get delivery charges details from delivery_charge table
-         $result2 = $this->Query("SELECT * FROM delivery_charge");
-         while($row2 = mysqli_fetch_assoc($result2)){
-             $min_distance = $row2['min_distance']; 
-             $max_distance = $row2['max_distance'];
-             $charge_per_kilo = $row2['charge_per_kg'];
- 
-             //check customer distance range
-             if($distance>=$min_distance && $distance<=$max_distance){  
-                 $order_min_distance = $min_distance;
-                 $order_max_distance = $max_distance;
-             }
-         }
-         
-
+        $delivery_charge = doubleval($delivery_charge);
         //update reservation table with collecting method
         if($collecting_method == "Delivery"){
-            $this ->update('reservation',['collecting_method'=>$collecting_method,'deliver_city'=>$delivery_city,'deliver_street'=>$delivery_street,'min_distance'=>$order_min_distance,'max_distance'=>$order_max_distance],'order_id='.$order_id);
+            $this ->update('reservation',['collecting_method'=>$collecting_method,'deliver_city'=>$delivery_city,'deliver_street'=>$delivery_street,'deliver_charge'=>$delivery_charge],'order_id='.$order_id);
         }
         else{
             $this ->update('reservation',['collecting_method'=>$collecting_method],'order_id='.$order_id);
