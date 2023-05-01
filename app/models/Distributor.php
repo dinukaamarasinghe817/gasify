@@ -389,8 +389,11 @@ class Distributor extends Model
                         $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not enough gas stock!"];
                         return $data;
                     }else {
+                        $com_date = date('Y-m-d');
+                        $com_time = date("H:i:s");
+
                         $this->Query("UPDATE distributor_keep SET quantity = '{$distributor_quantity}' WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
-                        $this->Query("UPDATE purchase_order SET po_state = 'completed' WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+                        $this->Query("UPDATE purchase_order SET po_state = 'completed', place_date = '{$com_date}', place_time = '{$com_time}'  WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
                     }
                 }else {
                     $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas stock is empty!"];
