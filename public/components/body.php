@@ -744,15 +744,18 @@ class Body{
                         echo '</tbody>      
                     </table>
             </div>';
-            echo'<div class="recentRequestTable">
-                        <table class="styled-table" style="margin-left:5%">
-                <thead>
-                    <tr>
-                        <th style="z-index:2">Distributor name</th>
-                        <th style="z-index:2" class="tdCenter">Products</th>
-                    </tr>
-                </thead>
-                <tbody style="overflow-y:auto;height:100px">';
+            echo'<div class="recentRequestTable">';
+                if (isset($data['order_details'])){
+                    echo'<table class="styled-table" style="margin-left:5%">
+                    <thead>
+                        <tr>
+                            <th style="z-index:2">Distributor name</th>
+                            <th style="z-index:2" class="tdCenter">Products</th>
+                        </tr>
+                    </thead>
+                    <tbody style="overflow-y:auto;height:100px">';
+
+                } 
                 if (isset($data['order_details'])){
                     $result = $data["order_details"];
                     $product_array=$data['product_details'];
@@ -807,8 +810,8 @@ class Body{
                             $orders.='</tbody></table></td></tr>';
                     }
                     echo $orders;
-                echo'</div>';
-                echo '</div></section>';
+                    echo'</div>';
+                    echo '</div></section>';
                 }
     
     }
