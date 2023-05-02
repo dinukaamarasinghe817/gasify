@@ -215,7 +215,7 @@ class Compny extends Controller{
         $this->products();
 
     }
-    function orders(){
+    function orders($error=null){
         $data['navigation'] = 'orders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -258,8 +258,8 @@ class Compny extends Controller{
         $quota = mysqli_real_escape_string($conn,$_POST["quota"]);
         $customer = mysqli_real_escape_string($conn,$_POST["customer"]);
         $company_id=$_SESSION['user_id'];
-        $this->model('Company')->setQuota($company_id,$customer,$quota);
-        die();
+        $r=$this->model('Company')->setQuota($company_id,$customer,$quota);
+        echo $r;
     }
     function resetQuota(){
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
