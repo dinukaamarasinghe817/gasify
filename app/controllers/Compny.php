@@ -60,8 +60,10 @@ class Compny extends Controller{
         $data['products']=$product_details;
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $user_id['logo'];
-        if($error!=null){
-            $data['toast'] = ['type' => 'success', 'message' => "Product added successfully"];
+        if($error=='updateSuccessful'){
+            $data['toast'] = ['type' => 'success', 'message' => "Product updated successfully"];
+        }else if($error=='registeredSuccessful'){
+            $data['toast'] = ['type' => 'success', 'message' => "Product registered successfully"];
         }
         
             //$data=[];
@@ -119,7 +121,7 @@ class Compny extends Controller{
         move_uploaded_file($_FILES['productImage']['tmp_name'],$_SERVER["DOCUMENT_ROOT"]."/mvc/public/img/products/".$img_name);
         $data=array('company_id'=>$_SESSION['user_id'],'name'=>$_POST['Productname'],'type'=>$_POST['Producttype'],'unit_price'=>$_POST['unitprice'],'weight'=>$_POST['weight'],'image'=>$img_name,'production_time'=>$_POST['productiontime'],'last_updated_date'=>$lastUpdatedDate,'quantity'=>$_POST['quantity'],'cylinder_limit'=>$_POST['threshold']);
         $this->model('Company')->registerNewProduct($data);
-        $this->products('success');
+        $this->products('registeredSuccessful');
     }
     function registerDealer(){
         $img_name = $_FILES['productImage']['name'];
@@ -212,7 +214,7 @@ class Compny extends Controller{
             $this->model('Company')->updateProduct($data,$_POST['Producttype'],$_SESSION['user_id']);
         }
 
-        $this->products();
+        $this->products('updateSuccessful');
 
     }
     function orders($error=null){
@@ -232,11 +234,15 @@ class Compny extends Controller{
         $data['product_details']=$product_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
-            //$data=[];
+        if($error=='issuedSucessfully'){
+            $data['toast'] = ['type' => 'success', 'message' => "Order issued successfully"];
+        }else if($error=='delayedSucessfully'){
+            $data['toast'] = ['type' => 'success', 'message' => "Order delayed successfully"];
+        }
         $this->view('dashboard/company', $data);
 
     }
-    function limitquota(){
+    function limitquota($error=null){
         $data['navigation'] = 'limitquota';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -249,7 +255,13 @@ class Compny extends Controller{
         $data['quotaDetails']=$product_details;
         //$data['cc']=$row['account_no'];
         //echo $data['cc'];
-            //$data=[];
+        if($error=='quotaChanged'){
+            $data['toast'] = ['type' => 'success', 'message' => "Quota changed successfully"];
+        }else if($error=='quotaoff'){
+            $data['toast'] = ['type' => 'success', 'message' => "Quota turned off successfully"];
+        }else if($error=='quotaon'){
+            $data['toast'] = ['type' => 'success', 'message' => "Quota turned on successfully"];
+        }
         $this->view('dashboard/company', $data);
 
     }
@@ -670,16 +682,17 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);*/
         //print_r($order_details);
     }
-    function rep(){
-        //print_r("fdfd");
-        $data['navigation'] = 'rep';
-        $company_id=$_SESSION['user_id'];
-        $company_details = $this->model('Company')->getCompanyImage($company_id);
-        $distributor_details = $this->model('Company')->getDistributorNamesOnly($company_id);
-        $row = mysqli_fetch_assoc($company_details);
-        $data['image'] = $row['logo'];
-        $data['distNames'] = $distributor_details;
-        $this->view('dashboard/company', $data);
+    function redirectToOrdersFromIssued(){
+        $this->orders('issuedSucessfully');
+    }
+    function redirectToOrdersFromDelayed(){
+        $this->orders('delayedSucessfully');
+    }function redirectToLimitQuotaFromSetQuota(){
+        $this->limitquota('quotaChanged');
+    }function redirectToLimitQuotaFromQuotaStateOff(){
+        $this->limitquota('quotaoff');
+    }function redirectToLimitQuotaFromQuotaStateOn(){
+        $this->limitquota('quotaon');
     }
 
 }

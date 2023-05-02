@@ -12,7 +12,7 @@ function setQuota(div) {
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             //console.log(this.responseText);
-            location.href = "../Compny/limitquota";
+            location.href = "../Compny/redirectToLimitQuotaFromSetQuota";
         }
     };
     xmlhttp.open("POST", "../Compny/setQuota");
@@ -35,7 +35,9 @@ function resetQuota(div) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                location.href = "../Compny/limitquota";
+                if (formData.get("state") == "ON") {
+                    location.href = "../Compny/redirectToLimitQuotaFromQuotaStateOn";
+                };
             }
         };
         xmlhttp.open("POST", "../Compny/resetQuota");
@@ -53,7 +55,10 @@ function resetQuota(div) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                location.href = "../Compny/limitquota";
+                if (formData.get("state") == "OFF") {
+                    location.href = "../Compny/redirectToLimitQuotaFromQuotaStateOff";
+                }
+
             }
         };
         xmlhttp.open("POST", "../Compny/resetQuota");
@@ -99,7 +104,7 @@ function issue(productCount, orderID) {
             if (this.readyState == 4 && this.status == 200) {
                 count += 1;
                 if (count == length) {
-                    location.href = "../Compny/orders";
+                    location.href = "../Compny/redirectToOrdersFromIssued";
                 }
             }
         };
@@ -130,7 +135,7 @@ function delayOrder(div) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            location.href = "../Compny/orders";
+            location.href = "../Compny/redirectToOrdersFromDelayed";
         }
     };
     xmlhttp.open("POST", "../Compny/delayOrder");
