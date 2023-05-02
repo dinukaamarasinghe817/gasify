@@ -15,7 +15,7 @@ class Company extends Model
 
     public function getAllCompanies(){ 
         $result = $this->Query("SELECT c.name AS name, u.email AS email, CONCAT(c.street,', ',c.city) AS address FROM company c INNER JOIN users u ON c.company_id = u.user_id");
-        $data = [];
+        $data['company'] = array();
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){

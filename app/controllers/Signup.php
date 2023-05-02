@@ -72,8 +72,8 @@
 
             // take post inputs
             $data = [];
-            // $company_id = $_SESSION['user_id']; // user who register a dealer
-            $company_id = 2;
+            $company_id = $_SESSION['user_id']; // user who register a dealer
+            // $company_id = 2;
             $name = $_POST['name'];
             $first_name = $_POST['fname']; //
             $last_name = $_POST['lname']; //
@@ -287,7 +287,7 @@
         public function distributorsignup() {
             // take post inputs
             $data = [];
-            $company_id=2;
+            $company_id=$_SESSION['user_id'];
             $first_name = $_POST['fname'];
             $last_name = $_POST['lname'];
             $email = $_POST['email'];

@@ -114,14 +114,20 @@
                     </tr>
                     <?php
                     $companies = $data['company'];
-                    foreach($companies as $company){
-                        echo '
-                        <tr>
-                            <td>'.$company["name"].'</td>
-                            <td>'.$company["email"].'</td>
-                            <td>'.$company["address"].'</td>
-                        </tr>
-                        ';
+                    if(count($companies) > 0){
+                        foreach($companies as $company){
+                            echo '
+                            <tr>
+                                <td>'.$company["name"].'</td>
+                                <td>'.$company["email"].'</td>
+                                <td>'.$company["address"].'</td>
+                            </tr>
+                            ';
+                        }
+                    }else{
+                        echo '<tr>
+                        <td colspan="3" style="text-align: center;">The result is empty</td>
+                        </tr>';
                     }
                     ?>
             </table>
@@ -137,15 +143,21 @@
                     </tr>
                     <?php
                     $distributors = $data['distributor'];
-                    foreach($distributors as $distributor){
-                        echo '
-                        <tr>
-                            <td>'.$distributor["name"].'</td>
-                            <td>'.$distributor["email"].'</td>
-                            <td>'.$distributor["contact"].'</td>
-                            <td>'.$distributor["address"].'</td>
-                        </tr>
-                        ';
+                    if(count($distributors) > 0){
+                        foreach($distributors as $distributor){
+                            echo '
+                            <tr>
+                                <td>'.$distributor["name"].'</td>
+                                <td>'.$distributor["email"].'</td>
+                                <td>'.$distributor["contact"].'</td>
+                                <td>'.$distributor["address"].'</td>
+                            </tr>
+                            ';
+                        }
+                    }else{
+                        echo '<tr>
+                        <td colspan="4" style="text-align: center;">The result is empty</td>
+                        </tr>';
                     }
                     ?>
             </table>
@@ -161,15 +173,21 @@
                     </tr>
                     <?php
                     $dealers = $data['dealer'];
-                    foreach($dealers as $dealer){
-                        echo '
-                        <tr>
-                            <td>'.$dealer["name"].'</td>
-                            <td>'.$dealer["email"].'</td>
-                            <td>'.$dealer["contact"].'</td>
-                            <td>'.$dealer["address"].'</td>
-                        </tr>
-                        ';
+                    if(count($dealers) > 0){
+                        foreach($dealers as $dealer){
+                            echo '
+                            <tr>
+                                <td>'.$dealer["name"].'</td>
+                                <td>'.$dealer["email"].'</td>
+                                <td>'.$dealer["contact"].'</td>
+                                <td>'.$dealer["address"].'</td>
+                            </tr>
+                            ';
+                        }
+                    }else{
+                        echo '<tr>
+                        <td colspan="4" style="text-align: center;">The result is empty</td>
+                        </tr>';
                     }
                     ?>
             </table>
@@ -196,6 +214,7 @@
                         </div>
                 <?php endwhile; ?>
             <?php else: ?>
+                <p style="width: 100%; align-items: center; justify-content: center;">We do not have any product currently</p>
             <?php endif; ?>
         </div>
     </section>

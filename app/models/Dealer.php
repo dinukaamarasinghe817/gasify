@@ -11,7 +11,7 @@ class Dealer extends Model
 
     public function getAllDealers(){ 
         $result = $this->Query("SELECT CONCAT(u.first_name,' ',u.last_name) AS name, u.email AS email, CONCAT(d.street,', ',d.city) AS address, d.contact_no AS contact FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id");
-        $data = [];
+        $data['dealer'] = array();
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -177,7 +177,7 @@ class Dealer extends Model
             }
             // take previously ordered but still pending amount
             $pending_stock = 0;
-            $result = $this->Query("SELECT * FROM purchase_order WHERE dealer_id = '{$user_id}' AND po_state = 'pending'");
+            $result = $this->Query("SELECT * FROM purchase_order WHERE dealer_id = '{$user_id}' AND po_state = 'Pending'");
             if(mysqli_num_rows($result)>0){
                 while($row = mysqli_fetch_assoc($result)){
                     $po_id = $row['po_id'];
@@ -230,7 +230,9 @@ class Dealer extends Model
             $query7 = $this->Query("SELECT unit_price FROM product WHERE product_id = '$product'");
             $row7 = mysqli_fetch_assoc($query7);
             $unit_price = $row7['unit_price'];
-            $query7 = $this->Query("INSERT INTO purchase_include (po_id, product_id, quantity, unit_price) VALUES ($po_id,'$product',$quantity,$unit_price)");
+            if($quantity > 0){
+                $query7 = $this->Query("INSERT INTO purchase_include (po_id, product_id, quantity, unit_price) VALUES ($po_id,'$product',$quantity,$unit_price)");
+            }
             // if($query5){
             //     echo "success";
             // }

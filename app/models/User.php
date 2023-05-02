@@ -271,11 +271,12 @@ class User extends Model
         $query1 = $this->insert('dealer', ['dealer_id'=>$dealer_id,'name'=> $name, 'city'=> $city, 'street'=> $street, 'company_id'=> $company_id, 'distributor_id'=> $distributor_id, 'bank'=> $bank,'branch'=>$branch, 'account_no'=>$account_no, 'contact_no'=>$contact_no]);
         $query3;
 
-        // set the capacity of the dealer
+        // set the capacity and initial stock of the dealer
         for($i = 0; $i<count($capacity); $i++){
             $product = $capacity[$i][0];
             $qty = $capacity[$i][1];
             $query3 = $this->insert('dealer_capacity',['dealer_id'=> $dealer_id,'product_id'=>$product,'capacity'=>$qty]);
+            $query4 = $this->insert('dealer_keep',['dealer_id'=> $dealer_id,'product_id'=>$product,'quantity'=>0]);
         }
 
         // sending account verification codes
@@ -312,7 +313,7 @@ class User extends Model
         $this->insert('notifications',['user_id' => $dealer_id,'date'=> $date,'time'=> $time,'type' => 'Setup Stripe details','message' => $message,'state' => 'delivered']);
         
         // if successfully registred and set capacity
-        if($query1 && $query3){
+        if($query1 && $query3 && $query4){
         }else{
             $data['error'] = "9";
         }
@@ -1250,7 +1251,7 @@ class User extends Model
         $query2 = $this->read('users', "email = '$email'");
         $row = mysqli_fetch_assoc($query2);
         $distributor_id = $row['user_id'];
-        $query1 = $this->insert('distributor', ['distributor_id'=>$distributor_id, 'city'=> $city, 'street'=> $street, 'company_id'=>2, 'contact_no'=>$contact]);
+        $query1 = $this->insert('distributor', ['distributor_id'=>$distributor_id, 'city'=> $city, 'street'=> $street, 'company_id'=>$_SESSION['user_id'], 'contact_no'=>$contact]);
         $query3;
 
         // set the capacity of the dealer
