@@ -103,8 +103,34 @@ class Company extends Model
     }public function updateProduct($data,$productID,$companyID){
         //print_r("tu");
         $this->update("product",$data,"company_id=".$companyID." AND product_id=".$productID);
-    }public function setQuota($companyID,$customer,$quota){
+    }
+    public function setQuota($companyID,$customer,$quota){
+
+        // //take the previous quota monthly limit 
+        // $query1 = $this->Query("SELECT * FROM quota WHERE company_id = $companyID AND customer_type = $customer");
+        // $row1 = mysqli_fetch_assoc($query1);
+        // $old_monthly_limit = $row1['monthly_limit'];
+
+        // //all relavant customer type customers remaing_quota_limit
+        // $query2 = $this->Query("SELECT * FROM customer_quota WHERE company_id = $companyID AND customer_type= $customer");
+        // while($row2 = mysqli_fetch_assoc($query2)){
+        //     $customer_id = $row2['customer_id'];
+        //     $old_remaining_amount = $row2['remaining_amount'];
+        //     $used_quota =$old_monthly_limit-$old_remaining_amount;
+        //     $new_remaining_amount = $quota - $used_quota;
+            
+        //     if($new_remaining_amount <= 0){
+        //         $new_remaining_amount = 0;
+        //     }  
+        //     //update new remaining amount after update new monthly limit in quota table
+        //     $this ->update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id= '.$customer_id.' AND company_id='.$companyID.'');
+        // }
+
+        
+        //update quota table with new quota monthly limit
         $this->Query("UPDATE quota SET monthly_limit=$quota WHERE (company_id=$companyID AND customer_type='$customer')");
+
+
     }
     public function resetQuota($companyID,$customer,$state){
         $this->Query("UPDATE quota SET state='$state' WHERE (company_id=$companyID AND customer_type='$customer');");
