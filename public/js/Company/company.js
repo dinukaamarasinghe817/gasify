@@ -11,8 +11,8 @@ function setQuota(div) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-            //location.href = "../Compny/limitquota";
+            //console.log(this.responseText);
+            location.href = "../Compny/limitquota";
         }
     };
     xmlhttp.open("POST", "../Compny/setQuota");
