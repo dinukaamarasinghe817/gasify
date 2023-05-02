@@ -5,7 +5,7 @@ class Delvery extends Controller{
     function __construct(){
         $this->user_id = $_SESSION['user_id'];
     }
-    function deliveries(){
+    function deliveries($error=null){
         $data['navigation'] = 'deliveries';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
@@ -15,6 +15,13 @@ class Delvery extends Controller{
         $data['name']=$row['first_name'].' '.$row['last_name'];
         $data['pool']=$pool_details;
             //$data=[];
+        if($error=='dispatched'){
+            $data['toast'] = ['type' => 'success', 'message' => "Order accepted"];
+        }if($error=='delivered'){
+            $data['toast'] = ['type' => 'success', 'message' => "Order delivered"];
+        }if($error=='cancelled'){
+            $data['toast'] = ['type' => 'success', 'message' => "Order cancelled"];
+        }    
         $this->view('dashboard/delivery', $data);
     }
     function currentdeliveries(){
@@ -281,6 +288,15 @@ class Delvery extends Controller{
         //print_r($revenueArray);
         //print_r("---------------------");
         //print_r($orderCount);
+    }function redirectToPoolFromOrderDispatched(){
+        $this->deliveries('dispatched');
+
+    }function redirectToPoolFromOrderDelivered(){
+        $this->deliveries('delivered');
+
+    }function redirectToPoolFromOrderCancelled(){
+        $this->deliveries('cancelled');
+
     }
 }
 ?>
