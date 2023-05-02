@@ -1527,7 +1527,7 @@ class Body{
                                 <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>';
                             }else{
                                 $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" style="width:70%" disabled></div>
-                                <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" style="pointer-events:none"><label>Set Quota</label></div></div>';
+                                <div class="productQuotaResetCurrent"  key="'.$row['customer_type'].'"><div class="quotaButtons" style="pointer-events:none"><label>Set Quota</label></div></div>';
                             }
                             
                             $quota.='

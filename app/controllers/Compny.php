@@ -258,8 +258,8 @@ class Compny extends Controller{
         $quota = mysqli_real_escape_string($conn,$_POST["quota"]);
         $customer = mysqli_real_escape_string($conn,$_POST["customer"]);
         $company_id=$_SESSION['user_id'];
-        $r=$this->model('Company')->setQuota($company_id,$customer,$quota);
-        echo $r;
+        $this->model('Company')->setQuota($company_id,$customer,$quota);
+        //echo $r;
     }
     function resetQuota(){
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
