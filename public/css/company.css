@@ -1559,7 +1559,12 @@ input[type="text"]::placeholder{
   .selectBoxes > div :hover{
     background-color: #1672fc;
   }
-  
+  .littleproduct{
+    height: 120px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: var(--table-gray);
+}
 /*=========================================================================================================*/
 
 
