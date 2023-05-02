@@ -683,7 +683,6 @@ class Body{
         $reqCount=$data['reqCount'];
         $distCount=$data['distCount'];
         $dealerCount=$data['dealerCount'];
-        $products = $data['lowStock'];
         foreach($prod as $row){
             $prod=$row['count'];
         }
@@ -721,29 +720,33 @@ class Body{
             <div class="recentRequestTableTitle">Recent Orders</div>
             </div>
             <div class="tables">
-                <div class="productTable">
-                    <table class="styled-table" style="width:45%">
-                        <thead>
-                            <tr>
-                                <th class="tdLeft">Product name</th>
-                                <th class="tdRight">Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody style="overflow-y:auto;height:100px" >';
-                        $tag="";
-                        foreach($products as $row){
-                            if($row['quantity']<=$row['cylinder_limit']){
-                                $tag.=' <tr>
-                                        <td class="tdLeft">'.$row['name'].'</td>
-                                        <td class="tdRight">'.$row['quantity'].'</td>
-                                    </tr>';
-                            }
+                <div class="productTable">';
+                    if(isset($data['lowStock'])){
+
+                        echo '<table class="styled-table" style="width:45%">
+                            <thead>
+                                <tr>
+                                    <th class="tdLeft">Product name</th>
+                                    <th class="tdRight">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:auto;height:100px" >';
+                            $tag="";
                             
-                        }
-                        echo $tag;              
-                        echo '</tbody>      
-                    </table>
-            </div>';
+                            foreach($data['lowStock'] as $row){
+                                if($row['quantity']<=$row['cylinder_limit']){
+                                    $tag.=' <tr>
+                                            <td class="tdLeft">'.$row['name'].'</td>
+                                            <td class="tdRight">'.$row['quantity'].'</td>
+                                        </tr>';
+                                }
+                                    
+                            }
+                            echo $tag;              
+                            echo '</tbody>      
+                        </table>';
+                    }
+            echo'</div>';
             echo'<div class="recentRequestTable">';
                 if (isset($data['order_details'])){
                     echo'<table class="styled-table" style="margin-left:5%">
@@ -949,7 +952,7 @@ class Body{
                 echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
                             <tr>
-                                <th class="tdLeft">Product ID</th>
+                                <th class="tdLeft">Product</th>
                                 <th class="tdLeft">Name</th>
                                 <th class="tdLeft">Type</th>
                                 <th class="tdRight">Unit Price (Rs)</th>
@@ -965,7 +968,7 @@ class Body{
                                 $products = "";
                                 foreach ($result as $row) {
                                     $products .=  '<tr>
-                                                    <td class="tdLeft">'.$row['product_id']. '</td>
+                                                    <td class="tdLeft"><img class="littleproduct" src="http://localhost/mvc/public/img/products/'.$row['image'].'"></td>
                                                     <td class="tdLeft">'.$row['name'].'</td>
                                                     <td class="tdLeft">'.$row['type'].'</td>
                                                     <td class="tdRight">'.number_format($row['unit_price'],2).'</td>
@@ -1158,11 +1161,12 @@ class Body{
                         <thead>
                             <tr>
                                 <th>Order ID</th>
-                                <th>Customer name</th>
+                                <th>Customer</th>
                                 <th>Address</th>
                                 <th>Contact no</th>
                                 <th>Placed date</th>
                                 <th>Placed time</th>
+                                <th>Distance</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -1178,6 +1182,7 @@ class Body{
                     <td>'.$row['contact_no'].'</td>
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
+                    <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
                     <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
                 </tr>';
             }
@@ -1211,11 +1216,13 @@ class Body{
                     <thead style="background-color:#dbb1f9">
                         <tr>
                             <th>Order ID</th>
-                            <th>Customer name</th>
+                            <th>Customer</th>
                             <th>Address</th>
                             <th>Contact no</th>
                             <th>Placed date</th>
                             <th>Placed time</th>
+                            <th>Distance</th>
+                            <th>Charge</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -1225,6 +1232,7 @@ class Body{
             $result=$data['current'];
             $pool = "";
             foreach ($result as $row) {
+                
                 $pool .=  '<tr>
                     <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
@@ -1232,6 +1240,8 @@ class Body{
                     <td>'.$row['contact_no'].'</td>
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
+                    <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
+                    <td>'.$row['deliver_charge'].'</td>
                     <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
                     <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
                 </tr>';
