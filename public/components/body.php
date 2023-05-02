@@ -528,7 +528,7 @@ class Body{
                                                         <tr>
                                                             <td>'.$row3['product_id'].'</td>
                                                             <td>'.$row3['quantity'].'</td>
-                                                            <td>'.$subtotal.'.00</td>
+                                                            <td>'.number_format($subtotal,2).'</td>
                                                         </tr>'; 
                                                         $total += $subtotal;           
                                                 }
@@ -536,7 +536,7 @@ class Body{
                                                 <tr>
                                                     <td><b>Total Amount (Rs.)</b></td>
                                                     <td></td>
-                                                    <td><b>'.$total.'.00</b></td>
+                                                    <td><b>'.number_format($total,2).'</b></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -744,15 +744,18 @@ class Body{
                         echo '</tbody>      
                     </table>
             </div>';
-            echo'<div class="recentRequestTable">
-                        <table class="styled-table" style="margin-left:5%">
-                <thead>
-                    <tr>
-                        <th style="z-index:2">Distributor name</th>
-                        <th style="z-index:2" class="tdCenter">Products</th>
-                    </tr>
-                </thead>
-                <tbody style="overflow-y:auto;height:100px">';
+            echo'<div class="recentRequestTable">';
+                if (isset($data['order_details'])){
+                    echo'<table class="styled-table" style="margin-left:5%">
+                    <thead>
+                        <tr>
+                            <th style="z-index:2">Distributor name</th>
+                            <th style="z-index:2" class="tdCenter">Products</th>
+                        </tr>
+                    </thead>
+                    <tbody style="overflow-y:auto;height:100px">';
+
+                } 
                 if (isset($data['order_details'])){
                     $result = $data["order_details"];
                     $product_array=$data['product_details'];
@@ -792,7 +795,7 @@ class Body{
                                         <table class="requestProducts" style="margin-top:1%;width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="z-index:1">Product name</th>
+                                                    <th style="z-index:1">Product ID </th>
                                                     <th style="z-index:1">Quantity</th>
                                                 </tr>
                                             </thead>
@@ -807,8 +810,8 @@ class Body{
                             $orders.='</tbody></table></td></tr>';
                     }
                     echo $orders;
-                echo'</div>';
-                echo '</div></section>';
+                    echo'</div>';
+                    echo '</div></section>';
                 }
     
     }
@@ -947,12 +950,12 @@ class Body{
                         <thead>
                             <tr>
                                 <th class="tdLeft">Product ID</th>
-                                <th class="tdCenter">Name</th>
-                                <th class="tdCenter">Type</th>
-                                <th class="tdCenter">Unit Price (Rs)</th>
-                                <th class="tdCenter">Weight (KG)</th>
-                                <th class="tdCenter">Production Time</th>
-                                <th class="tdCenter">Last Updated</th>
+                                <th class="tdLeft">Name</th>
+                                <th class="tdLeft">Type</th>
+                                <th class="tdRight">Unit Price (Rs)</th>
+                                <th class="tdRight">Weight (KG)</th>
+                                <th class="tdRight">Production Time</th>
+                                <th class="tdRight">Last Updated</th>
                                 <th class="tdRight">Quantity</th>
                             </tr>
                         </thead>
@@ -963,12 +966,12 @@ class Body{
                                 foreach ($result as $row) {
                                     $products .=  '<tr>
                                                     <td class="tdLeft">'.$row['product_id']. '</td>
-                                                    <td class="tdCenter">'.$row['name'].'</td>
-                                                    <td class="tdCenter">'.$row['type'].'</td>
-                                                    <td class="tdCenter">'.$row['unit_price'].'</td>
-                                                    <td class="tdCenter">'.$row['weight'].'</td>
-                                                    <td class="tdCenter">'.$row['production_time']. '</td>
-                                                    <td class="tdCenter">'.$row['last_updated_date'].'</td>
+                                                    <td class="tdLeft">'.$row['name'].'</td>
+                                                    <td class="tdLeft">'.$row['type'].'</td>
+                                                    <td class="tdRight">'.number_format($row['unit_price'],2).'</td>
+                                                    <td class="tdRight">'.$row['weight'].'</td>
+                                                    <td class="tdRight">'.$row['production_time']. '</td>
+                                                    <td class="tdRight">'.$row['last_updated_date'].'</td>
                                                     <td class="tdRight">'.$row['quantity'].'</td>
                                                 </tr>';
                                 }
@@ -1450,7 +1453,7 @@ class Body{
                                 if($row_3['product_id']==$row_2['product_id']){
                                 $orders.='<tr style="height:1%">
                                 <td>'.$row_3['name'].'</td>
-                                    <td style="text-align:center">'.number_format($row_2['unit_price']).'</td>
+                                    <td style="text-align:center">'.number_format($row_2['unit_price'],2).'</td>
                                     <td style="text-align:center"><input type="number" class="qtyInput" value="'.$row_2['quantity'].'" id="'.$orderID.$imgIndex."1".'" key="'.$row_3['product_id'].'"';
                                     if($row_2['quantity']<=$row_3['quantity']){
                                         $orders.='disabled></td>';
@@ -1462,7 +1465,7 @@ class Body{
                                         $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/warning.png'.' width="32px" height="32px" title="Current Stock is '.$row_3['quantity'].' Cylinders" id="'.$orderID.$imgIndex."2".'" class="stateImg"></td>';
                                     }
                                     
-                                    $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" value='.$row_2['unit_price']*$row_2['quantity'].' style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
+                                    $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" value='.$row_2['unit_price']*$row_2['quantity'].' style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity'],2).'</td>
                                 </tr>';
                                 $total+=$row_2['unit_price']*$row_2['quantity'];
                                 $imgIndex+=1;
@@ -1477,7 +1480,7 @@ class Body{
                     
                     </div>
                     <div class="orderRow" style="height:8%">
-                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
+                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total,2).'</label></div></div>
                     </div>
                         <div class="orderRow" style="margin-top:1%">';
                         if($isEnabled){
@@ -1518,9 +1521,16 @@ class Body{
                     $quota.='
                         <div class="poductQuota">
                             <div class="productQuotaName" style="font-size: large"><lable>'.$row['customer_type'].'</lable></div>
-                            <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>'.$row['monthly_limit'].'KG</label></div>
-                            <div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" style="width:70%"></div>
-                            <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>
+                            <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>'.$row['monthly_limit'].'KG</label></div>';
+                            if($row['state']=="ON"){
+                                $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" style="width:70%"></div>
+                                <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>';
+                            }else{
+                                $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" style="width:70%" disabled></div>
+                                <div class="productQuotaResetCurrent"  key="'.$row['customer_type'].'"><div class="quotaButtons" style="pointer-events:none"><label>Set Quota</label></div></div>';
+                            }
+                            
+                            $quota.='
                             <div class="productQuotaSetNew">
                             <label class="switch">';
                                 if($row['state']=="ON"){
@@ -2148,9 +2158,9 @@ class Body{
                                         if($row_3['product_id']==$row_2['product_id']){
                                         $orders.='<tr>
                                         <td>'.$row_3['name'].'</td>
-                                            <td style="text-align:center">'.number_format($row_2['unit_price']).'</td>
+                                            <td style="text-align:center">'.number_format($row_2['unit_price'],2).'</td>
                                             <td style="text-align:center">'.$row_2['quantity'].'</td>';
-                                            $orders.='<td id="'.$row_2['product_id']."3".'" style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
+                                            $orders.='<td id="'.$row_2['product_id']."3".'" style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity'],2).'</td>
                                         </tr>';
                                         $total+=$row_2['unit_price']*$row_2['quantity'];
                                         $imgIndex+=1;
@@ -2165,7 +2175,7 @@ class Body{
                     </table>
                     </div>';
                     $orders.='<div class="orderRow" style="height:8%">
-                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
+                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total,2).'</label></div></div>
                     </div>
                     <div class="orderRow" style="height:8%">
                         <div class="orderColumn" style="width:100%;display:flex;align-items:center;justify-content:center"><div class="getAnalysisButton" style="width:20%;display:flex;align-items:center;justify-content:center" onClick="issueReport('.$orderID.')">Generate Report</div></div>
@@ -2246,7 +2256,7 @@ class Body{
                                         if($row_3['product_id']==$row_2['product_id']){
                                         $orders.='<tr>
                                         <td>'.$row_3['name'].'</td>
-                                            <td style="text-align:center">'.number_format($row_2['unit_price']).'</td>
+                                            <td style="text-align:center">'.number_format($row_2['unit_price'],2).'</td>
                                             <td style="text-align:center"><input type="number" class="qtyInput" value="'.$row_2['quantity'].'" id="'.$orderID.$imgIndex."1".'" key="'.$row_3['product_id'].'"';
                                             if($row_2['quantity']<$row_3['quantity']){
                                                 $orders.='disabled></td>';
@@ -2258,7 +2268,7 @@ class Body{
                                                 $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/warning.png'.' width="32px" height="32px" title="Current Stock is '.$row_3['quantity'].' Cylinders" id="'.$orderID.$imgIndex."2".'"></td>';
                                             }
                                             
-                                            $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" value='.$row_2['unit_price']*$row_2['quantity'].' style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity']).'</td>
+                                            $orders.='<td id="'.$orderID.$row_2['product_id']."3".'" value='.$row_2['unit_price']*$row_2['quantity'].' style="text-align:end">'.number_format($row_2['unit_price']*$row_2['quantity'],2).'</td>
                                         </tr>';
                                         $total+=$row_2['unit_price']*$row_2['quantity'];
                                         $imgIndex+=1;
@@ -2273,7 +2283,7 @@ class Body{
                     </table>
                     </div>
                     <div class="orderRow" style="height:8%">
-                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total).'</label></div></div>
+                        <div class="orderColumn" style="display:flex;"><div style="min-width:46%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white" id="'.$orderID.'total" value='.$total.'>'.' '.number_format($total,2).'</label></div></div>
                     </div>
                         <div class="orderRow">';
                     

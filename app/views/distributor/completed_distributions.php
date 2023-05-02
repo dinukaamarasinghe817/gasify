@@ -24,9 +24,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             </div>
 
             <div class="middle">
-
                 <div class="accordion new">
-
                     <!-- <div class="box"> -->
                     <?php 
                         $completes = $data['completed_distributions'];
@@ -54,8 +52,8 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                 <div class="content">
                                     <div class="details">
                                         <span><strong>Dealer ID : '.$dealer_id.' </strong></span>
-                                        <span><strong>Placed Date : '.$date.' </strong></span>
-                                        <span><strong>Placed Time : '.$time.' </strong></span>
+                                        <span><strong>Completed Date : '.$date.' </strong></span>
+                                        <span><strong>Completed Time : '.$time.' </strong></span>
                                         
                                     </div>
                                     <hr>
@@ -64,28 +62,27 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         <thead>
                                             <tr>
                                                 <th>Product ID</th>
-                                                <th>Unit Price</th>
+                                                <th>Unit Price (Rs.)</th>
                                                 <th>Quantity</th>
                                                 <th>Total (Rs.)</th>
                                             </tr>
                                         </thead>
                                         <tbody>';
 
-                                        $total =0;
+                                        $total = 0;
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
+                                            
                                             $unit_price = $row2['unit_price'];
                                             $quantity = $row2['quantity'];
-
                                             $subtotal = $unit_price * $quantity;
-                                            // $subtotal = number_format($subtotal).'.00';
 
                                             $output .= '
                                                 <tr>
                                                     <td>'.$row2['product_id'].'</td>
-                                                    <td>'.$row2['unit_price'].'</td>
+                                                    <td>'.number_format($unit_price,2).'</td>
                                                     <td>'.$row2['quantity'].'</td>
-                                                    <td>'.$subtotal.'.00</td>
+                                                    <td>'.number_format($subtotal,2).'</td>
                                                 </tr>';  
                                                 $total += $subtotal;
                                         }
@@ -94,7 +91,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             <td><b>Total Amount</b></td>
                                             <td></td>
                                             <td></td>
-                                            <td><b>'.$total.'.00</b></td>
+                                            <td><b>'.number_format($total,2).'</b></td>
                                         </tr>
                                         </tbody>
                                     </table>

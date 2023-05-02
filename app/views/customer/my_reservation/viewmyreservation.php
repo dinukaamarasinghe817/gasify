@@ -30,8 +30,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     $row1 = $order['order'];
                     $products = $order['products'];
                     $total_amount = $order['total_amount'];
-                    $delivery_charge = $order['delivery_charge'];
-                   
                     
                     $place_time = $row1['place_time'];
                     $new_time = date('H:i:s', strtotime($place_time . ' + 1 hour')); // Add 1 hour to the place time and format the result as a time string
@@ -67,7 +65,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         <strong>Total Amount</strong>
                                     </div>
                                     <div>
-                                        Rs.'.number_format($total_amount).'.00
+                                        Rs.'.number_format($total_amount,2).'
                                     </div>
                                 </div>
                                 <div class="top_content">
@@ -96,18 +94,18 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 </div>';
                                 //if collecting method is delivery then display delivery charge
                                 if($row1['collecting_method']== "Delivery"){
-                                    $delivery_charge = $order['delivery_charge'];
                                     echo  '<div class="top_content">
                                             <div>
                                                 <strong>Delivery Charge</strong>
                                             </div>
                                             <div>
-                                            Rs.'.number_format($delivery_charge).'.00   
+                                            Rs.'.number_format($row1['deliver_charge'],2).'   
                                             </div>
                                         </div>';
+
                                 }
 
-                            echo '</div>';
+                            echo '</div><div class="bottom_all">';
 
                               //take delivery persons name 
                              $delivery_person_details = " ";
@@ -146,6 +144,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                          </div>
                                          <div class="delivery_person_details">
                                             '.$delivery_person_details.'
+                                        </div>
+                                        <div>
+                                            <strong>Deliverey Address: </strong>
+                                            '.$row1['deliver_street'].', '.$row1['deliver_city'].'
                                         </div>';
                                         if($row1['order_state'] == "Delivered" || $row1['order_state'] == "Completed"){
                                             echo '<div>'.$delivery_details.'</div>';
@@ -228,6 +230,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     }
                                     echo '<div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
                                     </div>
+                                </div>
                                 </div>';
                         
                     }

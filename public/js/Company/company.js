@@ -11,13 +11,15 @@ function setQuota(div) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            location.href = "../Compny/limitquota";
+            //console.log(this.responseText);
+            location.href = "../Compny/redirectToLimitQuotaFromSetQuota";
         }
     };
     xmlhttp.open("POST", "../Compny/setQuota");
     xmlhttp.send(formData);
 }
 function resetQuota(div) {
+    console.log("hello");
     var cutomerType = div.getAttribute("key");
     if (div.checked) {
         var formData = new FormData();
@@ -33,7 +35,9 @@ function resetQuota(div) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                location.href = "../Compny/limitquota";
+                if (formData.get("state") == "ON") {
+                    location.href = "../Compny/redirectToLimitQuotaFromQuotaStateOn";
+                };
             }
         };
         xmlhttp.open("POST", "../Compny/resetQuota");
@@ -51,7 +55,10 @@ function resetQuota(div) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                location.href = "../Compny/limitquota";
+                if (formData.get("state") == "OFF") {
+                    location.href = "../Compny/redirectToLimitQuotaFromQuotaStateOff";
+                }
+
             }
         };
         xmlhttp.open("POST", "../Compny/resetQuota");
@@ -97,7 +104,7 @@ function issue(productCount, orderID) {
             if (this.readyState == 4 && this.status == 200) {
                 count += 1;
                 if (count == length) {
-                    location.href = "../Compny/orders";
+                    location.href = "../Compny/redirectToOrdersFromIssued";
                 }
             }
         };
@@ -128,7 +135,7 @@ function delayOrder(div) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            location.href = "../Compny/orders";
+            location.href = "../Compny/redirectToOrdersFromDelayed";
         }
     };
     xmlhttp.open("POST", "../Compny/delayOrder");
@@ -148,7 +155,7 @@ function changeOrderDetails(imgIndex, imgCount, orderID, productID, unitPrice, s
     } else {
         document.getElementById(orderID + String(imgIndex) + "2").src = "http://localhost/mvc/public/icons/warning.png";
     }
-    document.getElementById(orderID.toString() + productID.toString() + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us');
+    document.getElementById(orderID.toString() + productID.toString() + "3").innerHTML = (quantity * unitPrice).toLocaleString('en-us', { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
     document.getElementById(orderID.toString() + productID.toString() + "3").setAttribute("value", quantity * unitPrice);
     document.getElementById(orderID + "total").innerHTML = (document.getElementById(orderID + "total").getAttribute("value") - preTotal + (quantity * unitPrice)).toLocaleString('en-us');
     document.getElementById(orderID + "total").setAttribute("value", (document.getElementById(orderID + "total").getAttribute("value") - preTotal + (quantity * unitPrice)))

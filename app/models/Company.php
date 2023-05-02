@@ -103,7 +103,31 @@ class Company extends Model
     }public function updateProduct($data,$productID,$companyID){
         //print_r("tu");
         $this->update("product",$data,"company_id=".$companyID." AND product_id=".$productID);
-    }public function setQuota($companyID,$customer,$quota){
+    }
+    //update quota and customer_quota table when updated the quota limit
+    public function setQuota($companyID,$customer,$quota){
+        //take the previous quota monthly limit 
+        $query1 = $this->Query("SELECT * FROM quota WHERE company_id = $companyID AND customer_type='$customer'");
+        $row1 = mysqli_fetch_assoc($query1);
+        $old_monthly_limit = intval($row1['monthly_limit']);
+
+        //all relavant customer type customers remaing_quota_limit
+        $query2 = $this->Query("SELECT * FROM customer_quota WHERE company_id = $companyID AND customer_type= '$customer'");
+        //print_r($old_monthly_limit);
+        while($row2 = mysqli_fetch_assoc($query2)){
+            $customer_id = $row2['customer_id'];
+            $old_remaining_amount = intval($row2['remaining_amount']);
+            $used_quota =$old_monthly_limit-$old_remaining_amount;
+            $new_remaining_amount = intval($quota) - $used_quota;
+            
+            if($new_remaining_amount <= 0){
+                $new_remaining_amount = 0;
+            }  
+            //update new remaining amount after update new monthly limit in quota table
+            $this ->update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id= '.$customer_id.' AND company_id='.$companyID.'');
+        }
+
+        // //update quota table with new quota monthly limit
         $this->Query("UPDATE quota SET monthly_limit=$quota WHERE (company_id=$companyID AND customer_type='$customer')");
     }
     public function resetQuota($companyID,$customer,$state){
@@ -117,6 +141,8 @@ class Company extends Model
                 array_push($info,['first_name'=>$row['first_name'], 'last_name'=>$row['last_name'], 'place_date'=>$row['place_date'], 'place_time'=>$row['place_time'], 'stock_req_id'=>$row['stock_req_id'], 'distributor_id'=>$row['distributor_id'], 'product_id'=>$row['product_id'], 'quantity'=>$row['quantity'], 'unit_price'=>$row['unit_price']]);
             }
             return $info;
+        }else{
+            return null;
         }
         
         
@@ -256,5 +282,17 @@ class Company extends Model
             }
         }
     }
-    
+    public function getDistributorID($orderID){
+        $result = $this->Query("SELECT stock_request.distributor_id FROM stock_request WHERE stock_request.stock_req_id=$orderID");
+        if(mysqli_num_rows($result)>0){
+            $info = "";
+            while($row = mysqli_fetch_assoc($result)){
+                $info=$row['distributor_id'];
+            }
+            return $info;
+        }
+    }
+    public function addStockToDistributor($distributorID,$productID,$qty){
+        $this->Query("UPDATE distributor_keep SET distributor_keep.quantity=quantity+$qty WHERE distributor_keep.product_id=$productID AND distributor_keep.distributor_id=$distributorID");
+    }
 }

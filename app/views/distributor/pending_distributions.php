@@ -23,15 +23,15 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             </div>
 
             <div class="middle">
-                    <p>Delay Time</p>
+                    <!-- <p>Delay Time</p>
                     <div class = "togglemain">
-                        <!-- <p>Delay Time</p> -->
+                       
                         <div class="text">Disable</div>
                         <div class="toggle">
                             <div class="toggle-button" onclick = "Animatedtoggle()"></div>
                         </div> <br>
                     </div>
-                <br>
+                <br> -->
 
                 <div class="accordion new">
                     <?php 
@@ -79,31 +79,30 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         $total = 0;
                                         foreach($capacities as $capacity) {
                                             $row2 = $capacity;
+
                                             $unit_price = $row2['unit_price'];
                                             $quantity = $row2['quantity'];
-
                                             $subtotal = $unit_price * $quantity;
 
                                             $output .= '
                                                 <tr>
                                                     <td>'.$row2['product_id'].'</td>
-                                                    <td>'.$row2['unit_price'].'</td>
+                                                    <td>'.number_format($unit_price,2).'</td>
                                                     <td>'.$row2['quantity'].'</td>
-                                                    <td>'.$subtotal.'.00</td>
+                                                    <td>'.number_format($subtotal,2).'</td>
                                                 </tr>';
                                                 $total += $subtotal;           
                                         }
-                                       
                                         $output.='
                                             <tr>
                                                 <td><b>Total Amount</b></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><b>'.$total.'.00</b></td>
+                                                <td><b>'.number_format($total,2).'</b></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Done</button>
+                                    <button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Distribution Done</button>
                                 </div>
                             </div>';
                                         echo $output;
@@ -116,20 +115,6 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 </section>
 
 <script>
-    // toggle button js
-    let toggle = document.querySelector('.toggle');
-    let text = document.querySelector('.text');
-
-    function Animatedtoggle() {
-        toggle.classList.toggle('active');
-
-        if(toggle.classList.contains('active')) {
-            text.innerHTML = "Enable";
-        }else {
-            text.innerHTML = "Disable";
-        }
-    }
-
     // accordion box js
     let accordion = document.querySelectorAll('.accordion .box');
     for(i=0; i<accordion.length; i++) {
@@ -141,5 +126,5 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 
 
 <?php
-$footer = new Footer();
+$footer = new Footer("distributor");
 ?>

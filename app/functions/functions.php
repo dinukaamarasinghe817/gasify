@@ -1,7 +1,7 @@
 <?php
-$cities = ['Navala', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
+$cities = ['Navala','Nugegoda', 'Rajagiriya', 'Angoda', 'Athurugiriya', 'Battaramulla', 'Biyagama', 'Boralesgamuwa', 'Dehiwala', 'Kadawatha', 'Kelaniya', 'Kaduwela', 'Kalubowila', 'Kandana', 'Kesbewa', 'Kiribathgoda', 'Kolonnawa', 'Koswatte', 'Kotikawatta', 'Kottawa', 'Gothatuwa', 'Hokandara', 'Homagama', 'Ja-Ela', 'Maharagama', 'Malabe', 'Moratuwa', 'Mount Lavinia', 'Pannipitiya', 'Pelawatte', 'Peliyagoda', 'Piliyandala', 'Ragama', 'Ratmalana', 'Thalawathugoda', 'Wattala'];
 sort($cities);
-$banks = ['Bank Of Ceylon', 'Commercial Bank', 'DFCC Bank', 'Hatton National Bank', 'Nation Trus Bank', 'Peoples Bank', 'Sampath Bank', 'Seylan Bank', 'National Saving Bank'];
+$banks = ['Bank Of Ceylon', 'Commercial Bank', 'DFCC Bank', 'Hatton National Bank', 'Nation Trust Bank', 'Peoples Bank', 'Sampath Bank', 'Seylan Bank', 'National Saving Bank'];
 sort($banks);
 $vehicles = ['Car','Van','Mini Truck','Bike','Bicycle','Three Wheel'];
 sort($vehicles);

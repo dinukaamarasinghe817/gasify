@@ -66,7 +66,7 @@ $user_id = $_SESSION['user_id'];
                                 <th>Distribution ID</th>
                                 <th>Dealer ID</th>
                                 <th>Distributed Date</th>
-                                <th>Distributed Time</th>
+                                <th>Order Placed Time</th>
                             </tr>
                         </thead>
                         <tbody>';
