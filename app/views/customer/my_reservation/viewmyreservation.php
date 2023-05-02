@@ -105,7 +105,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                                 }
 
-                            echo '</div>';
+                            echo '</div><div class="bottom_all">';
 
                               //take delivery persons name 
                              $delivery_person_details = " ";
@@ -230,6 +230,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     }
                                     echo '<div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
                                     </div>
+                                </div>
                                 </div>';
                         
                     }
