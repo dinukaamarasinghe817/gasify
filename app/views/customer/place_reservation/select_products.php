@@ -29,128 +29,128 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
             $products = $data['products'];
 
-            if(isset($_SESSION['order_products'])){
-                $old_selected_products = $_SESSION['order_products'];
-                foreach($old_selected_products as $old_selected_product){
-                    $old_product_id = $old_selected_product['product_id'];
-                    $old_qty = (int)$old_selected_product['qty'];
-                    $old_subtotal = (int)$old_selected_product['unit_price'] * $old_qty;
-                    foreach($products as $product){
-                        $product_id = $product['p_id'];
-                        if($product_id == $old_product_id){
-                            $product['p_id'] = $old_product_id;
+            // if(isset($_SESSION['order_products'])){
+            //     $old_selected_products = $_SESSION['order_products'];
+            //     foreach($old_selected_products as $old_selected_product){
+            //         $old_product_id = $old_selected_product['product_id'];
+            //         $old_qty = (int)$old_selected_product['qty'];
+            //         $old_subtotal = (int)$old_selected_product['unit_price'] * $old_qty;
+            //         foreach($products as $product){
+            //             $product_id = $product['p_id'];
+            //             if($product_id == $old_product_id){
+            //                 $product['p_id'] = $old_product_id;
                             
-                            echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
+            //                 echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
                             
-                            //check if there are any refill cylinder products available in company 
-                            $r_cylinder_count = 0;
-                                foreach($products as $product){
-                                    if($product['type'] == 'cylinder'){
-                                        $r_cylinder_count = $r_cylinder_count + 1;
-                                    }
-                                }
+            //                 //check if there are any refill cylinder products available in company 
+            //                 $r_cylinder_count = 0;
+            //                     foreach($products as $product){
+            //                         if($product['type'] == 'cylinder'){
+            //                             $r_cylinder_count = $r_cylinder_count + 1;
+            //                         }
+            //                     }
 
-                                //check if there are any accessories available in company 
-                                $accessory_count = 0;
-                                foreach($products as $product){
-                                    if($product['type'] == 'accessory'){
-                                        $accessory_count = $accessory_count + 1;
-                                    }
-                                }
+            //                     //check if there are any accessories available in company 
+            //                     $accessory_count = 0;
+            //                     foreach($products as $product){
+            //                         if($product['type'] == 'accessory'){
+            //                             $accessory_count = $accessory_count + 1;
+            //                         }
+            //                     }
 
-                            //if there are refill cylinder products available in company
-                            if($r_cylinder_count > 0){
-                                echo '
-                                <div class="gas_cylinder">
-                                    <div class="subtitle">
-                                        <h4>Re-Fill Cylinders</h4>
-                                    </div>
-                                    <div class="product_list">';
+            //                 //if there are refill cylinder products available in company
+            //                 if($r_cylinder_count > 0){
+            //                     echo '
+            //                     <div class="gas_cylinder">
+            //                         <div class="subtitle">
+            //                             <h4>Re-Fill Cylinders</h4>
+            //                         </div>
+            //                         <div class="product_list">';
 
-                                foreach($products as $product){
-                                    if($product['type']=="cylinder"){
-                                        echo '
-                                                <div class="product_card">
-                                                    <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                                    <div class="product_details">
-                                                        <div class="brand_name">'.$product['c_name'].'</div>
-                                                        <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                                        <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                                    </div>
-                                                    <div class="increment_box">
-                                                        <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                                        <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
-                                                        <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                                    </div>
-                                                    <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.'.$old_subtotal.'.00 </h4></div>
-                                                </div>
-                                            ';
-                                    }
-                                }
+            //                     foreach($products as $product){
+            //                         if($product['type']=="cylinder"){
+            //                             echo '
+            //                                     <div class="product_card">
+            //                                         <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+            //                                         <div class="product_details">
+            //                                             <div class="brand_name">'.$product['c_name'].'</div>
+            //                                             <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+            //                                             <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+            //                                         </div>
+            //                                         <div class="increment_box">
+            //                                             <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+            //                                             <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
+            //                                             <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+            //                                         </div>
+            //                                         <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.'.$old_subtotal.'.00 </h4></div>
+            //                                     </div>
+            //                                 ';
+            //                         }
+            //                     }
 
-                                echo '</div>';
+            //                     echo '</div>';
 
-                            }
+            //                 }
                             
-                            //if there are accessory products available in company
-                            if($accessory_count > 0){
-                                echo '<div class="accessories">
-                                <div class="subtitle">
-                                    <h4>Accessories</h4>
-                                </div>
-                                <div class="product_list">';
+            //                 //if there are accessory products available in company
+            //                 if($accessory_count > 0){
+            //                     echo '<div class="accessories">
+            //                     <div class="subtitle">
+            //                         <h4>Accessories</h4>
+            //                     </div>
+            //                     <div class="product_list">';
                             
-                                foreach($products as $product){
-                                    if($product['type']=="accessory"){
-                                        echo '
-                                                <div class="product_card">
-                                                    <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                                    <div class="product_details">
-                                                        <div class="brand_name">'.$product['c_name'].'</div>
-                                                        <div class="name"><h5>'.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                                        <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                                    </div> 
-                                                    <div class="increment_box">
-                                                        <div class="minus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                                        <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
-                                                        <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                                    </div>
-                                                    <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.'.$old_subtotal.'.00 </h4></div>
-                                                </div>
-                                            ';
-                                    }
-                                } 
-                                echo '</div>
-                                </div>'; 
-                            }
+            //                     foreach($products as $product){
+            //                         if($product['type']=="accessory"){
+            //                             echo '
+            //                                     <div class="product_card">
+            //                                         <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+            //                                         <div class="product_details">
+            //                                             <div class="brand_name">'.$product['c_name'].'</div>
+            //                                             <div class="name"><h5>'.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+            //                                             <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+            //                                         </div> 
+            //                                         <div class="increment_box">
+            //                                             <div class="minus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+            //                                             <input type="text" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
+            //                                             <div class="plus"  onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+            //                                         </div>
+            //                                         <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs.'.$old_subtotal.'.00 </h4></div>
+            //                                     </div>
+            //                                 ';
+            //                         }
+            //                     } 
+            //                     echo '</div>
+            //                     </div>'; 
+            //                 }
 
                             
                             
                         
                                 
                         
-                            echo '<!-- <div class="total"> -->
-                                <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
-                            <!-- </div> -->
-                            <div class="total"> 
-                                <h3>Total Amount : </h3><h3 class="amount"> Rs. 0.00</h3>
-                            </div>
+            //                 echo '<!-- <div class="total"> -->
+            //                     <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
+            //                 <!-- </div> -->
+            //                 <div class="total"> 
+            //                     <h3>Total Amount : </h3><h3 class="amount"> Rs. 0.00</h3>
+            //                 </div>
 
-                            <div class="bottom">
-                                <a href=" '.BASEURL.'/Orders/select_brand_city_dealer" class="btn" id="back_btn" >Back</a>
-                                <!-- <a href="<?php echo BASEURL; ?>/Orders/select_payment_method" class="btn" id="next_btn">Next</a> -->
-                                <button type="submit" class="btn" id="next_btn" >Next</button>
-                            </div>
-                            </form>
+            //                 <div class="bottom">
+            //                     <a href=" '.BASEURL.'/Orders/select_brand_city_dealer" class="btn" id="back_btn" >Back</a>
+            //                    
+            //                     <button type="submit" class="btn" id="next_btn" >Next</button>
+            //                 </div>
+            //                 </form>
                         
-                            </div>';
-                        }
-                    }
-                }
+            //                 </div>';
+            //             }
+            //         }
+            //     }
 
-                unset($_SESSION['order_products']);
-            }
-            else{
+            //     unset($_SESSION['order_products']);
+            // } 
+            // else{ 
 
                 echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
                 
@@ -256,8 +256,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     </form>
                 
                 </div>';
-            }
-    ?>
+             // } 
+        ?>
 
 
 </section>
