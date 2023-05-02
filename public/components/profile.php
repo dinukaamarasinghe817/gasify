@@ -350,8 +350,8 @@ class ProfileHTML{
                                     <div class="input half"><label>Bank Branch</label><input type="text" name="branch" placeholder="bank branch" value="'.$row['branch'].'"></div>
                                     </div>
                                 <div class="input half"><label>Account Number</label><input type="text" name="account_no" placeholder="account number" value="'.$row['account_no'].'"></div>
-                                <div class="input"><label>Stripe Public Key</label><input type="text" name="pub_key" placeholder="public key" value="'.$row['pub_key'].'"></div>
-                                <div class="input"><label>Stripe Restricted Key</label><input type="text" name="rest_key" placeholder="restricted key" value="'.$row['rest_key'].'"></div>
+                                <div class="input"><label>Stripe Public Key</label><input type="text" name="pub_key" placeholder="public key" value="'.decryptStripeKey($row['pub_key']).'"></div>
+                                <div class="input"><label>Stripe Restricted Key</label><input type="text" name="rest_key" placeholder="restricted key" value="'.decryptStripeKey($row['rest_key']).'"></div>
                                 <button class="button" type="submit">Save</button>
                             </form>';
                         }else if($data['tab']=='profile'){

@@ -614,7 +614,7 @@ class User extends Model
             }
 
         }else if($tab == 'bank'){
-            $result = $this->update('dealer',array('bank'=>$data['bank'],'branch'=>$data['branch'],'account_no'=>$data['account_no'],'pub_key'=>$data['pub_key'],'rest_key'=>$data['rest_key']),"dealer_id = $user_id");
+            $result = $this->update('dealer',array('bank'=>$data['bank'],'branch'=>$data['branch'],'account_no'=>$data['account_no'],'pub_key'=>encryptStripeKey($data['pub_key']),'rest_key'=>encryptStripeKey($data['rest_key'])),"dealer_id = $user_id");
             if($result){
                 $data['toast'] = '3';
             }else{
