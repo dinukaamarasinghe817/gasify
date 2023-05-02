@@ -13,14 +13,18 @@
             }
         }
 
-        public function ebill($bill_no){
-            // $this->model('Admin')->gever();
-            if(verify_ebill($bill_no)){
-                echo "good";
-            }else{
-                echo "bad";
-            }
-            // echo getDistance("No 43, Lional Jayasinghe Mawatha, Godagama","No 43, Lional Jayasinghe Mawatha, Godagama");
+        public function vehicle(){
+            $data = $this->model('Distributor')->eligibleVechicles(49);
+            var_dump($data);
+        }
+
+        public function just(){
+            $stripeKey = 'hello world';
+            echo $stripeKey;
+            echo '<br>';
+            echo encryptStripeKey($stripeKey);
+            echo '<br>';
+            echo decryptStripeKey(encryptStripeKey($stripeKey));
         }
     }
 ?>

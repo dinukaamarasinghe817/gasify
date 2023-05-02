@@ -229,4 +229,33 @@ function userRole(){
     }
     return $output;
 }
+
+function deleteFile($file_name,$type){
+    $primary_path = BASEURL.'/public/img/'.$type.'/'.$file_name;
+    if((strpos($file_name, 'default') === false) && file_exists($primary)){
+        unlink($file_path);
+    }
+}
+
+// Encrypt the Stripe key
+function encryptStripeKey($stripeKey) {
+    $secretKey = getenv('STRIPE_SECRET_KEY');
+    $cipher = "aes-256-cbc";
+    $ivlen = openssl_cipher_iv_length($cipher);
+    $iv = openssl_random_pseudo_bytes($ivlen);
+    $encrypted = openssl_encrypt($stripeKey, $cipher, $secretKey, $options=0, $iv);
+    return base64_encode($iv . $encrypted);
+}
+
+// Decrypt the Stripe key
+function decryptStripeKey($encryptedStripeKey) {
+    $secretKey = getenv('STRIPE_SECRET_KEY');
+    $cipher = "aes-256-cbc";
+    $iv_with_ciphertext = base64_decode($encryptedStripeKey);
+    $ivlen = openssl_cipher_iv_length($cipher);
+    $iv = substr($iv_with_ciphertext, 0, $ivlen);
+    $ciphertext = substr($iv_with_ciphertext, $ivlen);
+    $decrypted = openssl_decrypt($ciphertext, $cipher, $secretKey, $options=0, $iv);
+    return $decrypted;
+}
 ?>

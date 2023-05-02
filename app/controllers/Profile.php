@@ -53,9 +53,9 @@
             $data['mode'] = 'edit';
             $data['user'] = $role;
             $data['navigation'] = 'dashboard';
-            if($toast != null){
-                $data['toast'] = $toast;
-            }
+            // if($toast != null){
+            //     $data['toast'] = $toast;
+            // }
             $this->view($viewfolder.'/'.$viewfile,$data);
         }
 
@@ -98,6 +98,7 @@
                 // echo "controller";
             }else if($tab == 'bank'){
                 $data['bank'] = $_POST['bank'];
+                $data['branch'] = $_POST['branch'];
                 $data['account_no'] = $_POST['account_no'];
                 $data['pub_key'] = $_POST['pub_key'];
                 $data['rest_key'] = $_POST['rest_key'];

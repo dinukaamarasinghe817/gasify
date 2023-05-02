@@ -84,8 +84,9 @@
                                         }
                                     ?>
                                 </select>
-                                <input name="account_no" class="half" type="number" placeholder="Bank Account No" required><br>
+                                <input name="branch" class="half" type="text" placeholder="Bank Branch" required><br>
                             </div>
+                            <input name="account_no" class="half" type="number" placeholder="Bank Account No" required><br>
                             <!-- <input class="acc_no" name="merchant_id" type="number" placeholder="Payhere Merchant ID"> -->
 
                             <label for="image">
@@ -122,7 +123,7 @@
                                     while($distributor = mysqli_fetch_assoc($result)){
                                         $distributor_id = $distributor['distributor_id'];
                                         $distributor_city = $distributor['city'];
-                                        $distributor_name = $distributor['name'];
+                                        $distributor_name = $distributor['first_name'].' '.$distributor['last_name'];
                                         $option = "$distributor_city - $distributor_name";
                                         echo "<option value=$distributor_id>$option</option>";
                                     } 

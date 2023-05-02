@@ -6,11 +6,11 @@ class Payment{
                 <input type="text" name="customer_email" value="'.$customer_email.'" hidden>
                 <input type="number" name="amount" value="'.$amount.'" step="0.01" hidden>
                 <input type="number" name="dealer_id" value="'.$dealer_id.'" hidden>
-                <input type="text" name="rest_key" value="'.$restkey.'" hidden>
+                <input type="text" name="rest_key" value="'.decryptStripeKey($restkey).'" hidden>
                 <script
                     src="https://checkout.stripe.com/checkout.js"
                     class="stripe-button"
-                    data-key="'.$pubkey.'"
+                    data-key="'.decryptStripeKey($pubkey).'"
                     data-name="Online Payment"
                     data-description="gasify"
                     data-amount="'.$total.'"
@@ -28,7 +28,7 @@ class Charge{
     private $amount;
 
     public function __construct($restkey,$description,$amount){
-        $this->restkey = $restkey;
+        $this->restkey = decryptStripeKey($restkey);
         $this->description = $description;
         $this->amount = $amount*100;
     }

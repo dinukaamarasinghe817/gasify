@@ -83,6 +83,7 @@
             if(isset($_POST['distributor']) ? $distributor_id = (int)$_POST['distributor'] : $distributor_id = -1);
             $contact_no = $_POST['contactno'];
             if(isset($_POST['bank']) ? $bank = $_POST['bank'] : $bank = -1);
+            $branch = $_POST['branch'];
             $account_no = $_POST['account_no'];
             // $merchant_id = $_POST['merchant_id'];
             $merchant_id = '';
@@ -110,7 +111,7 @@
             
             // password hashing
             $data = $this->model("User")->dealerSignup($name,$first_name,$last_name,$email,
-            $city,$street,$company_id,$distributor_id,$contact_no,$bank,$account_no,$merchant_id,
+            $city,$street,$company_id,$distributor_id,$contact_no,$bank,$branch,$account_no,$merchant_id,
             $password,$confirmpassword,$image_name,$tmp_name,$capacity,$isvalidqty);
             
 
