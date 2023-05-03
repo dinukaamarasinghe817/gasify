@@ -1151,12 +1151,24 @@ class Body{
         echo'</section>';
     }
     function gasdeliveries($data){
+        $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         echo
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" style="width:100%;height:100%;color:white">Pool</div></a>
             <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" style="width:100%;height:100%;color:black;" >Current deliveries</div></a>
             </div>
+            <div  class="bar" style="width:97%;height:7%;display:flex;flex-direction:row-reverse;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            <div class="container">
+                <div class="progress-bar__container">
+                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
+                    <label class="progress-text">'.(($data['total_weight']/$data['weight_limit'])*100).'%</label>
+                </div>
+            </div>
+         
+         </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
         echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
@@ -1224,13 +1236,26 @@ class Body{
         </section>';
     }   
     function currentgasdeliveries($data){
+        $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         echo
         '<section class="body-content">
          <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
          <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:black;background-color:white;box-sizing: border-box;border:3px solid #2d77bc;">Pool</div></a>
          <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" id="temp" style="width:100%;height:100%;color:white;background-color:#2d77bc">Current deliveries</div></a>
          </div>
-        <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
+         <div  class="bar" style="width:97%;height:7%;display:flex;flex-direction:row-reverse;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+         <div class="container">
+         <div class="progress-bar__container">
+             <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
+             <label class="progress-text">'.(($data['total_weight']/$data['weight_limit'])*100).'%</label>
+         </div>
+     </div>
+         
+         </div>
+        <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">
+        ';
         echo '<table class="styled-table" style="margin-top:0.3%">
                     <thead style="background-color:#dbb1f9">
                         <tr>
@@ -1275,13 +1300,23 @@ class Body{
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
-                    <td>'.$row['place_date'].'</td>
+                    <td>'.($row['place_date']).'</td>
                     <td>'.$row['place_time'].'</td>
                     <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
                     <td>Rs.'.$charge*$weight.'</td>
-                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
-                    <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
-                    </tr>';
+                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>';
+                    $str_time = $row['place_time'];
+                    $time = date('H:i:s');
+                    sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+                    $placedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                    sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
+                    $currentTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                    if(($currentTime-$placedTime)<=900){
+                        $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
+                    }else{
+                        $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto;background-color:transparent" key="data[index].order_id "></div></td>';
+                    }
+                    $pool.='</tr>';
                     
                 }
                 
