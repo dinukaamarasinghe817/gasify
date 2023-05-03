@@ -76,7 +76,8 @@ class Delivery extends Model
         return $info;
     }
     public function getDeliveredOrdersCount(){
-        $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
+        $date = date('Y-m-d');
+        $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}' AND reservation.deliver_date='$date'");
         $info=mysqli_fetch_assoc($result);
         return $info;
     }
@@ -137,8 +138,16 @@ class Delivery extends Model
            return $info;
         }
         //print_r($info);
-    }public function getRevenue($delivery_id){
-        $result=$this->Query("SELECT reservation.order_id,reservation.max_distance,reservation_include.product_id,reservation_include.quantity,product.weight,delivery_charge.charge_per_kg FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Completed' INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN delivery_charge ON reservation.min_distance=delivery_charge.max_distance;");
+    }
+    public function getTodayRevenue($delivery_id){
+        $date = date('Y-m-d');
+        $result=$this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,reservation.deliver_charge,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Completed' AND reservation.collecting_method='delivery' AND reservation.delivery_id='{$_SESSION['user_id']}' AND reservation.deliver_date='$date' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id;");
+        return $result;
+    }
+    
+    public function getRevenue($delivery_id){
+        $result=$this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Completed' AND reservation.collecting_method='delivery' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id;");
+        return $result;
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
