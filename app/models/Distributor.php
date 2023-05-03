@@ -804,6 +804,14 @@ class Distributor extends Model
         $cost = $row['cost_per_km']*$distance*$total_weight;
         return $cost;
     }
+
+    // reports - get totals of each product from dealer received orders(sell to dealers)
+
+    // reports - get totals of each product to company purchase orders
+
+    // reports - income
+
+    // reprots - expendition
     
 }
 
