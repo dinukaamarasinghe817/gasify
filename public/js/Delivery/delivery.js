@@ -24,9 +24,10 @@ function cancelJob(orderID) {
     xmlhttp.send(formData);
 
 }
-function deliverJob(orderID) {
+function deliverJob(orderID,charge) {
     var formData = new FormData();
     formData.append("orderID", orderID);
+    formData.append("charge",charge);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
