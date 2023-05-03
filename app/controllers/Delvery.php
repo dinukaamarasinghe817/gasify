@@ -258,16 +258,17 @@ class Delvery extends Controller{
             array_push($deliveredQty,$value);
         }foreach($productCharges as $row){
             $date=explode('-',$row['deliver_date']);
+            //print_r($row);
             if(in_array($date[0].'-'.$date[1],$processedDates)){
-                //print_r("yes");
                 if(array_key_exists($date[0].'-'.$date[1],$revenueArray)){
-                    $newRevenue=(int)$row['max_distance']*(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']+$revenueArray[$date[0].'-'.$date[1]];
+                    $newRevenue=(int)$row['deliver_charge']+$revenueArray[$date[0].'-'.$date[1]];
                     unset($revenueArray[$date[0].'-'.$date[1]]);
                     $revenueArray+=array($date[0].'-'.$date[1]=>$newRevenue);
                 }else{
-                    $revenueArray+=array($date[0].'-'.$date[1]=>(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']);
+                    $revenueArray+=array($date[0].'-'.$date[1]=>(int)$row['deliver_charge']);
                 }
             }
+            
         }
         foreach($revenueArray as $key=>$value){
             array_push($revenueDate,$key);
@@ -285,6 +286,7 @@ class Delvery extends Controller{
         $lineChart['values']=$revenueAmount;
         $lineChart['names']=$revenueDate;
         $data['lineChart']=$lineChart;
+        //print_r($lineChart['values']);
         $this->view('dashboard/delivery', $data);  
         //print_r($deliveredOrders);
         //print_r($processedDates);

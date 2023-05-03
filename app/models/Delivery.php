@@ -71,6 +71,12 @@ class Delivery extends Model
         return $result;
     }
     public function getPendingDeliveryCount(){
+        $delivery_id=$_SESSION['user_id'];
+        $result = $this->getMyDetails($delivery_id);
+        $city='';
+        foreach($result as $row){
+            $city=$row['city'];
+        }
         $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Dispatched' AND reservation.delivery_id='{$_SESSION['user_id']}'");
         $info=mysqli_fetch_assoc($result);
         return $info;
@@ -168,11 +174,11 @@ class Delivery extends Model
         }
 
     }public function getRevenueForAnalysis($delivery_id){
-        $result=$this->Query("SELECT reservation.deliver_date,reservation.max_distance,reservation_include.product_id,reservation_include.quantity,product.weight,delivery_charge.charge_per_kg FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Completed' INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN delivery_charge ON reservation.min_distance=delivery_charge.max_distance ORDER BY deliver_date");
+        $result=$this->Query("SELECT reservation.deliver_date,reservation.deliver_charge FROM reservation WHERE reservation.order_state='Completed' AND reservation.delivery_id=$delivery_id ORDER BY deliver_date");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
-                array_push($info,['deliver_date'=>$row['deliver_date'],'max_distance'=>$row['max_distance'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'weight'=>$row['weight'],'charge'=>$row['charge_per_kg']]);
+                array_push($info,['deliver_date'=>$row['deliver_date'],'deliver_charge'=>$row['deliver_charge']]);
             }
             return $info;
         }
