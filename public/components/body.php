@@ -1288,9 +1288,9 @@ class Body{
                 
                 
             }
-            print_r($processedOrders);
+            //print_r($processedOrders);
             //echo($processedOrders);
-            //echo $pool;
+            echo $pool;
             //print_r($result);
             /*foreach ($result as $row) {
                 echo

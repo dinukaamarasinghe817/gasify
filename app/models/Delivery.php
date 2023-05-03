@@ -56,7 +56,14 @@ class Delivery extends Model
         }
         //print_r(gettype($city));
         $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Accepted' AND reservation.collecting_method='Delivery' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id AND dealer.city='$city'");
-        return $result;
+        /*if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['order_id'=>$row['order_id'], 'place_date'=>$row['place_date'], 'place_time'=>$row['place_time'],'customer_id'=>$row['customer_id'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'weight'=>$row['weight'],'city'=>$row['city'],'street'=>$row['street'],'contact_no'=>$row['contact_no'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'dcity'=>$row['dcity'],'dstreet'=>$row['dstreet']]);
+            }
+            $data['company'] = $info;
+        }*/
+        //return $result;
     }
     public function getCurrentDeliveries(){
         $delivery_id=$_SESSION['user_id'];
