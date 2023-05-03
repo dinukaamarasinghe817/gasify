@@ -51,7 +51,6 @@ $user_id = $_SESSION['user_id'];
                                 echo "<option value=$type>$type</option>";
                             }
                         ?>
-
                     </select>
                 </div>
 
@@ -74,6 +73,17 @@ $user_id = $_SESSION['user_id'];
                     <label>Fuel Consumption </label>
                     <input type="number" name = "consumption" min="0" placeholder="Fuel Consumption" required>
                 </div>
+
+                <!-- <div class="part1">
+                    <label>Driver Name </label>
+                    <input type="text" name="drivername" placeholder="Driver Name" required>
+                </div> -->
+
+                <!-- <div class="part1">
+                    <label>Driver Contact Number </label>
+                    <input type="number" name="contact" placeholder="Contact Number" required>
+                </div> -->
+                
 
                 <div>
                     <button class="btn2" type="submit" name ="submit"><b>Submit</b></button>

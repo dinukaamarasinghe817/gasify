@@ -1,7 +1,5 @@
 <?php
 
-// echo "This is purchase order report";
-
 $pdf = new FPDF('P','mm','A4');
 $pdf->SetAutoPageBreak(true,10);
 $pdf->SetMargins(23,24,23);
@@ -34,16 +32,6 @@ $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(20,5,'Time',0,0,'l');
 $pdf->SetFont('Times', '', 12);
 $pdf->Cell(0,5,": {$data['time']}",0,1,'l');
-
-// $pdf->SetFont('Times', 'B', 12);
-// $pdf->Cell(30,5,'Business Name',0,0,'l');
-// $pdf->SetFont('Times', '', 12);
-// $pdf->Cell(90,5,": {$data['business_name']}",0,1,'l');
-
-// $pdf->SetFont('Times', 'B', 12);
-// $pdf->Cell(30,5,'Distributor ID',0,0,'l');
-// $pdf->SetFont('Times', '', 12);
-// $pdf->Cell(90,5,": {$data['distributor_id']}",0,1,'l');
 
 $pdf->Ln(10);
 
@@ -88,7 +76,4 @@ $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 
 $pdf->Output();
-?>
-
-
 ?>

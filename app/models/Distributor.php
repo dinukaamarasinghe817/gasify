@@ -389,7 +389,7 @@ class Distributor extends Model
                     $distributor_quantity = $distributor_quantity - $o_quantity;
 
                     if($row4['quantity'] < $o_quantity) {
-                        $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not enough gas stock!"];
+                        $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not Enough Gas Stock in Your Stock!"];
                         return $data;
                     }else {
                         $com_date = date('Y-m-d');
@@ -397,9 +397,11 @@ class Distributor extends Model
 
                         $this->Query("UPDATE distributor_keep SET quantity = '{$distributor_quantity}' WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
                         $this->Query("UPDATE purchase_order SET po_state = 'completed', place_date = '{$com_date}', place_time = '{$com_time}'  WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+                        // echo "success";
+                        $data['success'] = ['type'=>"success", 'message'=>"Gas Distribution Successfully Done!"];
                     }
                 }else {
-                    $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas stock is empty!"];
+                    $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas Stock is Empty!"];
                     return $data;
                 }
             }
