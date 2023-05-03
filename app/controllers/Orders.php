@@ -535,7 +535,8 @@ class Orders extends Controller{
         if(isset($data['toast'])) {
             $this->distributor("purchaseorder", $data['toast']);
         }else {
-            $this->view("/distributor/reports/purchaseorder", $data);
+            // $this->view("/distributor/reports/purchaseorder", $data);
+            $this->view("/distributor/phurchase_orders", $data);
         }  
     }
 
