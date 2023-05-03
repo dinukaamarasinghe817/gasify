@@ -1412,15 +1412,6 @@ select{
     border-radius: 2rem;
     background-color: #d0e2e7;
   }
-  @keyframes slideInFromLeft {
-    0% {
-      transform: translateX(-100%);
-      width: :0%;
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
   .cprogress {
     display: flex;
     flex-direction: row;
