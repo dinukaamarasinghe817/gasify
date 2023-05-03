@@ -532,11 +532,11 @@ class Orders extends Controller{
         }
 
         $data = $this->model('Distributor')->distributorplaceorder($this->user_id, $productid, $postproducts);
+
         if(isset($data['toast'])) {
             $this->distributor("purchaseorder", $data['toast']);
         }else {
             $this->view("/distributor/reports/purchaseorder", $data);
-            // $this->view("/distributor/phurchase_orders", $data);
         }  
     }
 

@@ -40,6 +40,37 @@ class Reports extends Controller{
         $this->view('distributor/reports/report_pdf',$data);
     }
 
+    // all sold products report
+    public function allsellproducts() {
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'reports';
+
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = 'today';
+        }
+        // profile picture
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        $data['allproductsquantity'] = $this->model("Distributor")-> AllSellProducts($option);
+       
+        $data['option'] = $option;
+        $this->view('distributor/report2',$data);
+
+    }
+
+    public function allsellproducts_pdf($user_id) {
+        $data = [];
+        // $data['details'] = $this->model("Distributor")->AllSellProducts($user_id);
+
+        $this->view('distributor/reports/allsellproducts',$data);
+    }
+
+    /*-------------------------------------------------------------------------------------------------------------------*/
+
     public function dealer(){
         if(isset($_POST['start_date'])){
             $start_date = $_POST['start_date'];

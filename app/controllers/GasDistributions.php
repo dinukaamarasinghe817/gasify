@@ -9,25 +9,7 @@ class GasDistributions extends Controller {
         parent::__construct();
     }
 
-    // public function pending_distributions($error=NULL) {
-    //     $user_id = $_SESSION['user_id'];
-    //     $data['navigation'] = 'distributions';
-
-    //     if($error!= NULL) {
-    //         $data['toast'] = $error;
-    //     }
-
-    //     $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-    //     $row = mysqli_fetch_assoc($distributor_details);
-    //     $data['image'] = $row['image'];
-
-    //     $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
-
-    //     $this->view('distributor/pending_distributions', $data);
-   
-    // }
-
-    public function pending_distributions() {
+    public function pending_distributions($error=null, $success=null) {
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'distributions';
 
@@ -35,24 +17,36 @@ class GasDistributions extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
+        if($error != null) {
+            $data['toast'] = $error;
+        }
+        if($success != null) {
+            $data['success'] = $success;
+        }
 
+        $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
         $this->view('distributor/pending_distributions', $data);
    
     }
 
     public function donepending($distribution_id) {
        
-        // $data = $this->model("Distributor")->finishpendingdistributions($distribution_id);
+        $data = $this->model("Distributor")->finishpendingdistributions($distribution_id);
 
-        // if(isset($result['toast'])) {
-        //     // $toast = $result['toast'];
+        if(isset($data['toast'])) {
+            $this->pending_distributions($data['toast']);
+        }elseif(isset($data['success'])) {
+            $this->pending_distributions($data['success']);
+        }
+        $this->pending_distributions();
+
+        // if(isset($data['toast'])) {
         //     $this->pending_distributions($data['toast']);
         // }
         // $this->pending_distributions();
 
-        $this->model("Distributor")->finishpendingdistributions($distribution_id);
-        $this->pending_distributions();
+        // $this->model("Distributor")->finishpendingdistributions($distribution_id);
+        // $this->pending_distributions();
     }
 
     public function completed_distributions() {
