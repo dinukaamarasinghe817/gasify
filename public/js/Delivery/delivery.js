@@ -57,7 +57,7 @@ function addMonthsToSelectBoxes(div, joinedDate, joinedMonth) {
         option.setAttribute('selected', true);
         option.setAttribute('disabled', true);
         selectMonth.add(option);
-        for (i = joinedMonth; i <= currentMonth; i++) {
+        for (i = joinedMonth; i <= currentMonth+1; i++) {
             option = document.createElement('option');
             option.value = i;
             option.text = i;

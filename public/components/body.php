@@ -1183,12 +1183,12 @@ class Body{
                     $charge=0;
                     foreach($result as $row2){
                         if($row['order_id']==$row2['order_id']){
-                            $weight+=intval($row2['quantity']*intval($row2['weight']));
+                            $weight+=$row2['quantity']*$row2['weight'];
                         }
                     }
                     foreach($data['charges'] as $row3){
                         if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet'])) ){
-                            $charge=intval($row3['charge_per_kg']);
+                            $charge=$row3['charge_per_kg'];
                         }
                     }
                     array_push($processedOrders,$row['order_id']);
@@ -1261,12 +1261,13 @@ class Body{
                     $charge=0;
                     foreach($result as $row2){
                         if($row['order_id']==$row2['order_id']){
-                            $weight+=intval($row2['quantity']*intval($row2['weight']));
+                            $weight+=$row2['quantity']*$row2['weight'];
+                            //$weight+=intval($row2['quantity']*floatval($row2['weight']));
                         }
                     }
                     foreach($data['charges'] as $row3){
                         if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet'])) ){
-                            $charge=intval($row3['charge_per_kg']);
+                            $charge=$row3['charge_per_kg'];
                         }
                     }
                     $pool .=  '<tr>
@@ -1278,12 +1279,10 @@ class Body{
                     <td>'.$row['place_time'].'</td>
                     <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
                     <td>Rs.'.$charge*$weight.'</td>
-                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.$charge*$weight.')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
+                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
                     <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
                     </tr>';
                     
-                }else{
-                    print_r($row['order_id']);
                 }
                 
                 
