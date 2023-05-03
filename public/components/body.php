@@ -1068,7 +1068,7 @@ class Body{
                     echo'    
                     </div>
                     <div class="card">
-                        <div class="cmValue" style="font-size:3vw">LKR.'.$data['revenue'].'</div>
+                        <div class="cmValue" style="font-size:3vw">LKR.'.number_format($data['revenue'],2).'</div>
                         <div class="cmTitle">Earned Today</div>
                     </div>
                 </div>
