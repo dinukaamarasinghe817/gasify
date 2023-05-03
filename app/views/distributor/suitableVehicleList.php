@@ -26,8 +26,8 @@ $user_id = $_SESSION['user_id'];
                     <thead>
                         <tr>
                             <th>Vehicle Number</th>
-                            <th>Vehicle Type</th>
-                            <th>Fuel Consumption</th>
+                            <th>Vehicle Type(axels)</th>
+                            <th>Fuel Consumption(L/Km)</th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -41,7 +41,7 @@ $user_id = $_SESSION['user_id'];
                                 <tr>
                                     <td>'.$row2['vehicle_no'].'</td>
                                     <td>'.$row2['type'].' </td>
-                                    <td>'.$row2['fuel_consumption'].'</td>
+                                    <td>'.$row2['fuel_consumption'].' L</td>
                                     ';
 
                                 // if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
