@@ -385,6 +385,7 @@ class Orders extends Controller{
         $data['navigation'] = 'placereservation';
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
+        $data['name'] = $row1['first_name'].' '.$row1['last_name'];
         $customer_type = $row1['type'];
        
         //check customer quota
