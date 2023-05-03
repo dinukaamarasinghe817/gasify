@@ -1167,6 +1167,7 @@ class Body{
                                 <th>Placed date</th>
                                 <th>Placed time</th>
                                 <th>Distance</th>
+                                <th>Charge</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -1174,17 +1175,34 @@ class Body{
         if(isset($data["pool"])){
             $result=$data['pool'];
             $pool = "";
+            $processedOrders=array();
             foreach ($result as $row) {
-                $pool .=  '<tr>
+                if(!(in_array($row['order_id'],$processedOrders))){
+                    $weight=0;
+                    $charge=0;
+                    foreach($result as $row2){
+                        if($row['order_id']==$row2['order_id']){
+                            $weight+=intval($row2['quantity']*intval($row2['weight']));
+                        }
+                    }
+                    foreach($data['charges'] as $row3){
+                        if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet'])) ){
+                            $charge=intval($row3['charge_per_kg']);
+                        }
+                    }
+                    array_push($processedOrders,$row['order_id']);
+                    $pool .=  '<tr>
                     <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
-                    <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
+                    <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
+                    <td>Rs.'.$weight * $charge.'</td>
                     <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
-                </tr>';
+                    </tr>';
+                }
             }
             echo $pool;
             /*foreach($result as $row){
@@ -1231,9 +1249,23 @@ class Body{
         if (isset($data["current"])) {
             $result=$data['current'];
             $pool = "";
+            $processedOrders=array();
             foreach ($result as $row) {
-                
-                $pool .=  '<tr>
+                if(!(in_array($row['order_id'],$processedOrders))){
+                    array_push($processedOrders,$row['order_id']);
+                    $weight=0;
+                    $charge=0;
+                    foreach($result as $row2){
+                        if($row['order_id']==$row2['order_id']){
+                            $weight+=intval($row2['quantity']*intval($row2['weight']));
+                        }
+                    }
+                    foreach($data['charges'] as $row3){
+                        if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet'])) ){
+                            $charge=intval($row3['charge_per_kg']);
+                        }
+                    }
+                    $pool .=  '<tr>
                     <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
@@ -1241,11 +1273,16 @@ class Body{
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
                     <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
-                    <td>'.$row['deliver_charge'].'</td>
-                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
+                    <td>Rs.'.$charge*$weight.'</td>
+                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.$charge*$weight.')" style="width:80%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
                     <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
-                </tr>';
+                    </tr>';
+                    
+                }
+                
+                
             }
+            //echo($processedOrders);
             echo $pool;
             /*foreach ($result as $row) {
                 echo

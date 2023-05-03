@@ -14,6 +14,7 @@ class Delvery extends Controller{
         $data['image'] = $row['image'];
         $data['name']=$row['first_name'].' '.$row['last_name'];
         $data['pool']=$pool_details;
+        $data['charges']=$this->model('Delivery')->getDeliveryCharges();
             //$data=[];
         if($error=='dispatched'){
             $data['toast'] = ['type' => 'success', 'message' => "Order accepted"];
@@ -33,6 +34,7 @@ class Delvery extends Controller{
         $data['current']=$current_reliveries;
         $data['image'] = $row['image'];
         $data['name']=$row['first_name'].' '.$row['last_name'];
+        $data['charges']=$this->model('Delivery')->getDeliveryCharges();
             //$data=[];
         $this->view('dashboard/delivery', $data);
     }
@@ -100,10 +102,11 @@ class Delvery extends Controller{
     }
     function deliverJob(){
         $orderID = $_POST["orderID"];
+        $charge = $_POST['charge'];
         $date=date('Y-m-d');
         //$data=$date[0].'-'.$date[1].'-'.$date[2];
         //print_r($data);
-        $message=$this->model('Delivery')->setReservationStateDelivered($orderID);
+        $message=$this->model('Delivery')->setReservationStateDelivered($orderID,$charge);
         return $message;
     }function getCharts(){
         $delivery_id=$_SESSION['user_id'];
