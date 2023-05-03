@@ -1194,8 +1194,7 @@ class User extends Model
         
         // check all fields are filled or not
         if(isEmpty(array($first_name,$last_name,$email,
-        $city,$street,$contact,$password,$confirmpassword,$image_name,$tmp_name,
-        $capacity,$isvalidqty))){
+        $city,$street,$contact,$password,$confirmpassword,$capacity,$isvalidqty))){
             $data['error'] = '1';
         }
 
