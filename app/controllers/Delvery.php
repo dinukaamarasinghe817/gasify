@@ -272,7 +272,9 @@ class Delvery extends Controller{
         }
         foreach($revenueArray as $key=>$value){
             array_push($revenueDate,$key);
-            array_push($revenueAmount,$value);
+            //array_push($revenueAmount,intval(number_format($value)));
+            array_push($revenueAmount,(float)$value);
+            //print_r(gettype(intval(number_format($value,2))));
         }
         $barChart=array();
         $barChart['dates']=$processedDates;

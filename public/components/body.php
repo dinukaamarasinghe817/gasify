@@ -745,6 +745,8 @@ class Body{
                             echo $tag;              
                             echo '</tbody>      
                         </table>';
+                    }else{
+                        echo'<img src="../img/placeholders/2.png" alt="">';
                     }
             echo'</div>';
             echo'<div class="recentRequestTable">';
