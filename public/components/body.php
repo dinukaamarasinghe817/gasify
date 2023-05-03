@@ -719,11 +719,10 @@ class Body{
             <div class="productTableTitle">Products (Low stock)</div>
             <div class="recentRequestTableTitle">Recent Orders</div>
             </div>
-            <div class="tables">
-                <div class="productTable">';
-                    if(isset($data['lowStock'])){
-
-                        echo '<table class="styled-table" style="width:45%">
+            <div class="tables">';
+                if(isset($data['lowStock'])){
+                    echo '<div class="productTable">
+                        <table class="styled-table" style="width:45%">
                             <thead>
                                 <tr>
                                     <th class="tdLeft">Product name</th>
@@ -1607,19 +1606,22 @@ class Body{
          <a href="../Delvery/reviews" style="width:97%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:white">Reviews</div></a>
          </div>
         <div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
-        $reviews=$data['reviews'];
-        $tag='';
-        foreach($reviews as $row){
-            $tag.='<div class="reviewRow" >
-            <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
-                <div class="messageRow">'.$row['message'].'</div>
-                <div class="dateTimeRow">
-                    <div class="reviewTime">Time -'.$row['time'].'</div>
-                    <div class="reviewDate">Date -'.$row['date'].'</div> 
-                </div>        
-            </div>';
+        if(isset($data['reviews'])){
+            $reviews=$data['reviews'];
+            $tag='';
+            foreach($reviews as $row){
+                $tag.='<div class="reviewRow" >
+                <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
+                    <div class="messageRow">'.$row['message'].'</div>
+                    <div class="dateTimeRow">
+                        <div class="reviewTime">Time -'.$row['time'].'</div>
+                        <div class="reviewDate">Date -'.$row['date'].'</div> 
+                    </div>        
+                </div>';
+            }
+            echo $tag;
         }
-        echo $tag;
+        
         /*echo '
         <div class="reviewRow" >
             <div class="orderIDRow"><div>Order ID : </div></div>
