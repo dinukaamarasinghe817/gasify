@@ -93,22 +93,18 @@
             $data['dispatched_count']=$this->model('Delivery')->getPendingDeliveryCount()['count'];
             $data['completed_count']=$this->model('Delivery')->getDeliveredOrdersCount()['count'];
             $data['review_count']=$this->model('Delivery')->getReviewCount()['count'];
-            // $data['completed_orders']=$this->model('Delivery')->getRevenue($delivery_id);
-            // $processedOrders = array();
-            // $revenue=0;
-            // foreach($data['completed_orders'] as $row){
-            //     $orderID = $row['order_id'];
-            //     if(!(in_array($orderID,$processedOrders))){
-            //         foreach($data['completed_orders'] as $row2){
-            //             if($row2['order_id']==$orderID){
-            //                 $revenue+=intval($row2['quantity'])*intval($row2['weight']*$row['charge_per_kg']*$row2['max_distance']);
-            //             }
-            //         }
-            //         array_push($processedOrders,$orderID);
-            //     }
+            $data['completed_orders']=$this->model('Delivery')->getTodayRevenue($delivery_id);
+            $processedOrders = array();
+            $revenue=0;
+            foreach($data['completed_orders'] as $row){
+                $orderID = $row['order_id'];
+                if(!(in_array($orderID,$processedOrders))){
+                    $revenue+=intval($row['deliver_charge']);
+                    array_push($processedOrders,$orderID);
+                }
                 
-            // }
-            // $data['revenue']=$revenue;
+            }
+            $data['revenue']=$revenue;
             //$data=[];
             $this->view('dashboard/delivery', $data);
         }

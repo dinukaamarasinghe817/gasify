@@ -1055,7 +1055,7 @@ class Body{
                     </div>
                     <div class="card">
                         <div class="cmValue">'.$data['completed_count'].'</div>
-                        <div class="cmTitle">Orders Delivered</div>
+                        <div class="cmTitle">Orders Delivered Today</div>
                     </div>
                     <div class="card">
                         <div class="cmValue">'.$data['review_count'].'</div>';
@@ -1068,7 +1068,7 @@ class Body{
                     </div>
                     <div class="card">
                         <div class="cmValue" style="font-size:3vw">LKR.'.$data['revenue'].'</div>
-                        <div class="cmTitle">Earned</div>
+                        <div class="cmTitle">Earned Today</div>
                     </div>
                 </div>
                 <div class="bottom">
