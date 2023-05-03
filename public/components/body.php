@@ -1251,8 +1251,11 @@ class Body{
             $result=$data['current'];
             $pool = "";
             $processedOrders=array();
+            //print_r()
             foreach ($result as $row) {
+                //print_r($row);
                 if(!(in_array($row['order_id'],$processedOrders))){
+                    //print_r($row['order_id']);
                     array_push($processedOrders,$row['order_id']);
                     $weight=0;
                     $charge=0;
@@ -1279,12 +1282,16 @@ class Body{
                     <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
                     </tr>';
                     
+                }else{
+                    print_r($row['order_id']);
                 }
                 
                 
             }
+            print_r($processedOrders);
             //echo($processedOrders);
-            echo $pool;
+            //echo $pool;
+            //print_r($result);
             /*foreach ($result as $row) {
                 echo
                 '<div class="Distributor_tableHead_row" id="Distributor_tableHead_row" style="background-color: transparent;height:10%;border:3px solid #90CAFF;">
