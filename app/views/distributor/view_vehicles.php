@@ -34,8 +34,6 @@ $user_id = $_SESSION['user_id'];
                     </thead>
                     <tbody>';
                 
-                
-                
                 $vehicles = $data['vehicles'];
                 if(count($vehicles)>0) {
 

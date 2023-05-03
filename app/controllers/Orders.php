@@ -517,6 +517,16 @@ class Orders extends Controller{
         $distributor_details = $this->model('Distributor')->getDistributor($this->user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
+
+        // $data['confirmation'] = '';
+        // if($error != null){
+        //     $data['toast'] = ['type' => 'error', 'message' => $error];
+        // }
+        // if($success != null){
+        //     $data['toast'] = ['type' => 'success', 'message' => $success];  
+        // }
+
+
         $data['name'] = $row['first_name'].' '.$row['last_name'];
         $data['purchaseorder'] = $this->model('Distributor')->distributorstock($this->user_id); 
         $this->view('distributor/phurchase_orders',$data); 
@@ -532,11 +542,11 @@ class Orders extends Controller{
         }
 
         $data = $this->model('Distributor')->distributorplaceorder($this->user_id, $productid, $postproducts);
+
         if(isset($data['toast'])) {
             $this->distributor("purchaseorder", $data['toast']);
         }else {
             $this->view("/distributor/reports/purchaseorder", $data);
-            // $this->view("/distributor/phurchase_orders", $data);
         }  
     }
 
