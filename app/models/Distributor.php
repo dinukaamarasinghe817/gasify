@@ -594,30 +594,46 @@ class Distributor extends Model
 
             // take previously ordered but still pending amount
 
-            // $pending_stock =0;
-            // $result = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' AND stock_req_state = 'pending'");
-            // if(mysqli_num_rows($result)>0) {
-            //     while($row = mysqli_fetch_assoc($result)) {
-            //         $req_id = $row['stock_req_id'];
-            //         $result = $this->Query("SELECT * FROM stock_include WHERE stock_req_id ='{$req_id}' AND product_id = '{$product}'");
-            //         $row2 = mysqli_fetch_assoc($result);
-            //         $pending_stock += $row2['quantity'];
-            //     }
-            // }
-
             $pending_stock =0;
-            $result2 = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' AND stock_req_state = 'pending'");
-            if(mysqli_num_rows($result2)>0) {
-                while($row2 = mysqli_fetch_assoc($result2)) {
-                    $req_id = $row2['stock_req_id'];
-
-                    $result3 = $this->Query("SELECT * FROM stock_include WHERE stock_req_id ='{$req_id}' AND product_id = '{$product}'");
-                    if(mysqli_num_rows($result3)>0) {
-                        $row3 = mysqli_fetch_assoc($result3);
-                        $pending_stock += $row3['quantity'];
+            $result = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' AND stock_req_state = 'pending'");
+            if(mysqli_num_rows($result)>0) {
+                while($row = mysqli_fetch_assoc($result)) {
+                    $req_id = $row['stock_req_id'];
+                    $result2 = $this->Query("SELECT * FROM stock_include WHERE stock_req_id =$req_id AND product_id = $product");
+                    if(mysqli_num_rows($result2)>0){
+                        $row2 = mysqli_fetch_assoc($result2);
+                        // print_r($row2['quantity']);
+                        $pending_stock += $row2['quantity'];
+                        // print_r(is_null($pending_stock));
+                        // $pending_stock = $pending_stock + $row2['quantity'];
                     }
+                    
+                    
+                    //print_r(array_keys($row2));
+                    //print_r($row['quantity']);
+                    // if(mysqli_fetch_assoc($result2)){
+                    //     $row2 = mysqli_fetch_assoc($result2);
+                    //     print_r($row2);
+                    // }
+                    //print_r(gettype($row2));
+                    //print_r(intval($row2['quantity']));
+                    //$pending_stock += intval($row2['quantity']);
                 }
             }
+
+            // $pending_stock =0;
+            // $result2 = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' AND stock_req_state = 'pending'");
+            // if(mysqli_num_rows($result2)>0) {
+            //     while($row2 = mysqli_fetch_assoc($result2)) {
+            //         $req_id = $row2['stock_req_id'];
+
+            //         $result3 = $this->Query("SELECT * FROM stock_include WHERE stock_req_id ='{$req_id}' AND product_id = '{$product}'");
+            //         if(mysqli_num_rows($result3)>0) {
+            //             $row3 = mysqli_fetch_assoc($result3);
+            //             $pending_stock += $row3['quantity'];
+            //         }
+            //     }
+            // }
 
             // take capacity
             $capacity = 0;
@@ -656,7 +672,7 @@ class Distributor extends Model
             $product = $productid[$i];
             $quantity = $postproducts[$product];
             $query5 = $this->Query("SELECT unit_price FROM product WHERE product_id = '$product'");
-            $row7 = myqsli_fetch_assoc($query5);
+            $row7 = mysqli_fetch_assoc($query5);
             $unit_price = $row7['unit_price'];
             $query5 = $this->Query("INSERT INTO stock_include (stock_req_id, product_id, quantity, unit_price) VALUES ($req_id, '$product', $quantity, $unit_price)");
         }
