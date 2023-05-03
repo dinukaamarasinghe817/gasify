@@ -1395,4 +1395,44 @@ select{
         background-color: #fb02ff;
     }
 }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 40%;
+  }
+  
+  .progress-bar__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    height: 2rem;
+    border-radius: 2rem;
+    background-color: #d0e2e7;
+  }
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      width: :0%;
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  .cprogress {
+    display: flex;
+    flex-direction: row;
+    border-radius: 2rem;
+    height: 100%;
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+    
+  }
+  
+  .progress-text{
+    color: white;
+    position:absolute;
+    margin-left: 100px;
+  }
 

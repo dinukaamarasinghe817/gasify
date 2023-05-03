@@ -9,11 +9,18 @@ class Delvery extends Controller{
         $data['navigation'] = 'deliveries';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+        $current_deliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
+        $total_weight=0;
+        foreach($current_deliveries as $row){
+            $total_weight+=floatval($row['quantity']*floatval($row['weight']));
+        }
         $pool_details=$this->model('Delivery')->getPoolDetails();
         $row = mysqli_fetch_assoc($delivery_details);
         $data['image'] = $row['image'];
         $data['name']=$row['first_name'].' '.$row['last_name'];
         $data['pool']=$pool_details;
+        $data['weight_limit']=floatval($row['weight_limit']);
+        $data['total_weight']=$total_weight;
         $data['charges']=$this->model('Delivery')->getDeliveryCharges();
             //$data=[];
         if($error=='dispatched'){
@@ -29,9 +36,16 @@ class Delvery extends Controller{
         $data['navigation'] = 'currentgasdeliveries';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
-        $current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
+        $current_deliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
+        $total_weight=0;
+        foreach($current_deliveries as $row){
+            $total_weight+=floatval($row['quantity']*floatval($row['weight']));
+        }
+        
         $row = mysqli_fetch_assoc($delivery_details);
-        $data['current']=$current_reliveries;
+        $data['weight_limit']=floatval($row['weight_limit']);
+        $data['total_weight']=$total_weight;
+        $data['current']=$current_deliveries;
         $data['image'] = $row['image'];
         $data['name']=$row['first_name'].' '.$row['last_name'];
         $data['charges']=$this->model('Delivery')->getDeliveryCharges();
