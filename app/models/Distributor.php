@@ -844,6 +844,42 @@ class Distributor extends Model
     }
 
     // reports - get totals of each product from dealer received orders(sell to dealers)
+    // product break down
+    public function AllSellProducts($option) {
+        $user_id = $_SESSION['user_id'];  //distirbutor id
+
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+
+        }elseif($option == '7day'){
+            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
+        $product_quantites = array();
+
+        $query1 = $this->Query("SELECT pi.product_id as product_id, count(pi.quantity) as quantity
+        FROM purchase_include pi INNER JOIN purchase_order po
+        ON pi.po_id = po.po_id WHERE po.distributor_id = '{$user_id}'");
+
+        if(mysqli_num_rows($query1)>0) {
+            while($row1=mysqli_fetch_assoc($query1)) {
+                $product_id = $row1['product_id'];
+                $quantity = $row1['quantity'];
+                array_push($product_quantites, ['quantites'=>$row1]);
+            }
+        }
+        return $product_quantites;
+    }
+
+
+
 
     // reports - get totals of each product to company purchase orders
 
