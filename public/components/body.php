@@ -1201,7 +1201,7 @@ class Body{
                     <td>'.$row['place_time'].'</td>
                     <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                     <td>Rs.'.$weight * $charge.'</td>
-                    <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
+                    <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:103%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
                     </tr>';
                 }
             }
@@ -1275,8 +1275,8 @@ class Body{
                     <td>'.$row['place_time'].'</td>
                     <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
                     <td>Rs.'.$charge*$weight.'</td>
-                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.$charge*$weight.')" style="width:80%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
-                    <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
+                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.$charge*$weight.')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
+                    <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
                     </tr>';
                     
                 }
