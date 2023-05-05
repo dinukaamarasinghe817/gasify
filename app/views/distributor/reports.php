@@ -24,6 +24,9 @@ $user_id = $_SESSION['user_id'];
                         <li>
                             <a href="<?php echo BASEURL ?>/reports/allsellproducts" class="allsold"><b>Summary of Sold Products</b></a>
                         </li>
+                        <li>
+                            <a href="<?php echo BASEURL ?>/reports/allrequestedproducts" class="allrequested"><b>Summary of Requested Products</b></a>
+                        </li>
                     </ul>
                 </div>
         
@@ -69,7 +72,7 @@ $user_id = $_SESSION['user_id'];
                                 <th>Distribution ID</th>
                                 <th>Dealer ID</th>
                                 <th>Distributed Date</th>
-                                <th>Order Placed Time</th>
+                                <th>Order Completed Time</th>
                             </tr>
                         </thead>
                         <tbody>';
