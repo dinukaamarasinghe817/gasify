@@ -65,9 +65,16 @@ class Reports extends Controller{
 
     public function allsellproducts_pdf() {
         $data = [];
+
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = 'today';
+        }
+
         $data['details'] = $this->model("Distributor")->AllSellProducts($option);
 
-        $this->view('distributor/reports/allsellproducts',$data);
+        $this->view('distributor/reports/allsellproducts_pdf',$data);
     }
 
     // all requested products  [report3]

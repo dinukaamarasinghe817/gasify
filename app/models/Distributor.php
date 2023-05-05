@@ -844,7 +844,6 @@ class Distributor extends Model
     }
 
     // reports - get totals of each product from dealer received orders(sell to dealers)
-    // product break down
     public function AllSellProducts($option) {
         $user_id = $_SESSION['user_id'];  //distirbutor id
 
@@ -882,6 +881,7 @@ class Distributor extends Model
         return $product_quantites;
     }
 
+
     // reports - get totals of each product to company purchase orders
     public function AllRequestedProducts($option) {
         $user_id = $_SESSION['user_id'];  //distirbutor id
@@ -914,7 +914,7 @@ class Distributor extends Model
                 $product_id = $row1['product_id'];
                 $product_name = $row1['name'];
                 $quantity = $row1['quantity'];
-                array_push($product_quantites, ['quantites'=>$row1]);
+                array_push($product_quantites, ['quantity'=>$row1]);
             }
         }
         return $product_quantites;
