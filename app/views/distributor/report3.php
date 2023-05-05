@@ -27,17 +27,17 @@ $user_id = $_SESSION['user_id'];
                             <a href="<?php echo BASEURL ?>/reports/distributor" class="pastdistributions"><b>Summary of Past Distributions</b></a>
                         </li>
                         <li>
-                            <a href="<?php echo BASEURL ?>/reports/allsellproducts" class="allsold active"><b>Summary of Sold Products</b></a>
+                            <a href="<?php echo BASEURL ?>/reports/allsellproducts" class="allsold"><b>Summary of Sold Products</b></a>
                         </li>
                         <li>
-                            <a href="<?php echo BASEURL ?>/reports/allrequestedproducts" class="allrequested"><b>Summary of Requested Products</b></a>
+                            <a href="<?php echo BASEURL ?>/reports/allrequestedproducts" class="allrequested active"><b>Summary of Requested Products</b></a>
                         </li>
                     </ul>
                 </div>
         
                 <div class="middle">
                     <?php echo'
-                    <form action ="'.BASEURL.'/reports/allsellproducts" method="POST">
+                    <form action ="'.BASEURL.'/reports/allrequestedproducts" method="POST">
                     
                         <select id="period" name="option" onchange="this.form.submit()" class="dropdowndate">';
                        
@@ -84,6 +84,12 @@ $user_id = $_SESSION['user_id'];
                         if(count($records)>0) {
                             foreach($records as $record) {
                                 $row1 = $record['quantites'];
+                                // $capacities = $record['capacities'];
+
+                                    // $date = $row1['place_date'];
+                                    // $time = $row1['place_time'];
+                                    // $distribution_num = $row1['po_id'];
+                                    // $dealer_id = $row1['dealer_id'];
                                     $product_id = $row1['product_id'];
                                     $name = $row1['name'];
                                     $quantity = $row1['quantity'];
@@ -98,7 +104,7 @@ $user_id = $_SESSION['user_id'];
                             $output .= '
                             </tbody></table>
 
-                            <button class="pdfbtn" onclick="document.location.href=\''.BASEURL.'/reports/allsellproducts_pdf\'">Generate a report</button>
+                            <button class="pdfbtn" onclick="document.location.href=\''.BASEURL.'/reports/allrequestedproducts_pdf\'">Generate a report</button>
                             
                             ';
                         }else {

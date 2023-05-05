@@ -864,13 +864,17 @@ class Distributor extends Model
 
         $product_quantites = array();
 
-        $query1 = $this->Query("SELECT pi.product_id as product_id, count(pi.quantity) as quantity
-        FROM purchase_include pi INNER JOIN purchase_order po
-        ON pi.po_id = po.po_id WHERE po.distributor_id = '{$user_id}'");
+        $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
+        FROM purchase_include pi INNER JOIN product p 
+        ON pi.product_id = p.product_id WHERE po_id IN 
+            (SELECT po_id FROM purchase_order 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND po_state != 'pending') 
+            GROUP BY product_id");
 
         if(mysqli_num_rows($query1)>0) {
             while($row1=mysqli_fetch_assoc($query1)) {
                 $product_id = $row1['product_id'];
+                $product_name = $row1['name'];
                 $quantity = $row1['quantity'];
                 array_push($product_quantites, ['quantites'=>$row1]);
             }
@@ -878,10 +882,44 @@ class Distributor extends Model
         return $product_quantites;
     }
 
-
-
-
     // reports - get totals of each product to company purchase orders
+    public function AllRequestedProducts($option) {
+        $user_id = $_SESSION['user_id'];  //distirbutor id
+
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+
+        }elseif($option == '7day'){
+            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
+        $product_quantites = array();
+
+        $query1 = $this->Query("SELECT p.product_id, SUM(s.quantity) as quantity, p.name as name
+        FROM stock_include s INNER JOIN product p 
+        ON s.product_id = p.product_id WHERE stock_req_id IN 
+            (SELECT stock_req_id FROM stock_request 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND stock_req_state = 'completed' ) 
+            GROUP BY product_id");
+
+        if(mysqli_num_rows($query1)>0) {
+            while($row1=mysqli_fetch_assoc($query1)) {
+                $product_id = $row1['product_id'];
+                $product_name = $row1['name'];
+                $quantity = $row1['quantity'];
+                array_push($product_quantites, ['quantites'=>$row1]);
+            }
+        }
+        return $product_quantites;
+    }
+
 
     // reports - income
 

@@ -9,7 +9,8 @@ class Reports extends Controller{
         $this->user_id = $_SESSION['user_id'];
     }
 
-    public function distributor() {
+    // summary of past distirbutions [report1]
+    public function distributor() {   
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'reports';
 
@@ -40,7 +41,7 @@ class Reports extends Controller{
         $this->view('distributor/reports/report_pdf',$data);
     }
 
-    // all sold products report
+    // all sold products report  [report2]
     public function allsellproducts() {
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'reports';
@@ -62,9 +63,38 @@ class Reports extends Controller{
 
     }
 
-    public function allsellproducts_pdf($user_id) {
+    public function allsellproducts_pdf() {
         $data = [];
-        // $data['details'] = $this->model("Distributor")->AllSellProducts($user_id);
+        $data['details'] = $this->model("Distributor")->AllSellProducts($option);
+
+        $this->view('distributor/reports/allsellproducts',$data);
+    }
+
+    // all requested products  [report3]
+    public function allrequestedproducts() {
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'reports';
+
+        if(isset($_POST['option'])){
+            $option = $_POST['option'];
+        }else{
+            $option = 'today';
+        }
+        // profile picture
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        $data['allproductsquantity'] = $this->model("Distributor")-> AllRequestedProducts($option);
+       
+        $data['option'] = $option;
+        $this->view('distributor/report3',$data);
+
+    }
+
+    public function allrequestedproducts_pdf() {
+        $data = [];
+        $data['details'] = $this->model("Distributor")->AllRequestedProducts($option);
 
         $this->view('distributor/reports/allsellproducts',$data);
     }
