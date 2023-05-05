@@ -19,13 +19,14 @@ class Mail{
         $this->mail->addAddress($to);
         
         //message
-        $body = "
-        <h2>Hello $reciepName,</h2>
-        <h3>".$message."</h3>
-        <br/><br/>";
-        if($link != null){
-            $body .= "<a href='$link'>Click Here</a>";
-        }
+        // $body = "
+        // <h2>Hello $reciepName,</h2>
+        // <h3>".$message."</h3>
+        // <br/><br/>";
+        // if($link != null){
+        //     $body .= "<a href='$link'>Click Here</a>";
+        // }
+        $body = $message;
         
         //Content
         $this->mail->isHTML(true);                                  //Set email format to HTML

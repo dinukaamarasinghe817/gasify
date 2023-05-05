@@ -31,71 +31,6 @@
             }
         }
 
-        // public function dealer($error = null){
-        //     $data = [];
-
-        //     if($error != null){
-        //         switch($error){
-        //             case '1':
-        //                 $data['error'] = 'fill all the fields';
-        //                 break;
-        //             case '2':
-        //                 $data['error'] = 'too many login attempts, recommend reset your password';
-        //                 break;
-        //             case '3':
-        //                 $data['error'] = 'password missmatch';
-        //                 break;
-        //             case '4':
-        //                 $data['error'] = 'invalid email';
-        //                 break;
-        //         }
-                
-        //     }
-        //     $this->view('signin/dealer', $data);
-        // }
-
-        // public function dealersignin(){
-        //     session_start();
-        //     $email = $_POST['email'];
-        //     $password = $_POST['password'];
-
-        //     if(isEmpty(array($email, $password))){
-        //         echo "fill all fields";
-        //         $error = "1";
-        //         header("Location: ./dealer/$error");
-        //         return;
-        //     }
-            
-        //     $result = $this->model('Dealer')->getDealer($email);
-            
-        //     if(mysqli_num_rows($result) > 0){
-        //         $row = mysqli_fetch_assoc($result);
-        //         if(password_verify($password, $row['password'])){
-        //             if(isset($_SESSION['login_attempt'])){
-        //                 $_SESSION['login_attempt'] = 0;
-        //             }
-        //             $dealer_id = $row['user_id'];
-        //             $_SESSION['user_id'] = "$dealer_id";
-        //             $_SESSION['role'] = 'dealer';
-        //             header('Location: '.BASEURL.'/dashboard/dealer');
-        //         }else{
-        //             if(!isset($_SESSION['login_attempt'])){
-        //                 $_SESSION['login_attempt'] = 0;
-        //             }
-        //             $_SESSION['login_attempt'] += 1;
-        //             if($_SESSION['login_attempt'] > 5){
-        //                 $error = "2";
-        //             }else{
-        //                 $error = "3";
-        //             }
-        //             header("Location: ./dealer/$error");
-        //         }
-        //     }else{
-        //         $error = "4";
-        //         header("Location: ./dealer/$error");
-        //     }
-
-        // }
 
 
         public function user($error = null){
@@ -141,8 +76,8 @@
 
             // form information
 
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $email = mysqli_real_escape_string(CONN,$_POST['email']);
+            $password = mysqli_real_escape_string(CONN,$_POST['password']);
             
             // check if user is already registered
             // $result = $this->model('User')->getUser($email);
@@ -163,7 +98,7 @@
         }
 
         public function resetpassword(){
-            $email = $_POST['email'];
+            $email = mysqli_real_escape_string(CONN,$_POST['email']);
 
             $data = $this->model('User')->resetPassword($email);
             if(isset($data['toast'])){
@@ -186,8 +121,8 @@
         }
 
         public function passwordverifyinput($token='',$email=''){
-            $password = $_POST['password'];
-            $confirmpassword = $_POST['confirmpassword'];
+            $password = mysqli_real_escape_string(CONN,$_POST['password']);
+            $confirmpassword = mysqli_real_escape_string(CONN,$_POST['confirmpassword']);
             $data = $this->model('User')->passwordverify($password,$confirmpassword,$token,$email);
             if(isset($data['toast'])){
                 $toast = $data['toast'];

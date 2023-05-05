@@ -198,7 +198,7 @@ class User extends Model
 
     public function dealerSignup($name,$first_name,$last_name,$email,
         $city,$street,$company_id,$distributor_id,$contact_no,$bank,$branch,$account_no,$merchant_id,
-        $password,$confirmpassword,$image_name,$tmp_name,$capacity,$isvalidqty){
+        $password,$image_name,$tmp_name,$capacity,$isvalidqty){
         $data = [];
         $hashed_pwd = password_hash($password,PASSWORD_DEFAULT);
         $query2 = $this->read('users', "email = '$email'");
@@ -212,7 +212,7 @@ class User extends Model
         // check all fields are filled or not
         if(isEmpty(array($name,$first_name,$last_name,$email,
         $city,$street,$company_id,$distributor_id,$contact_no,$bank,$branch,$account_no,
-        $password,$confirmpassword,$isvalidqty))){
+        $password,$isvalidqty))){
             $data['error'] = '1';
         }
 
@@ -227,9 +227,9 @@ class User extends Model
         }
         
         //check if two passwords matching
-        else if(isNotConfirmedpwd($password, $confirmpassword)){
-            $data['error'] = "4";
-        }
+        // else if(isNotConfirmedpwd($password, $confirmpassword)){
+        //     $data['error'] = "4";
+        // }
         
         //check the password strength is enough
         else if(isPasswordNotStrength($password)){
@@ -284,10 +284,22 @@ class User extends Model
         $from = 'admin@gasify.com';
         $to = $email;
         $subject = "Gasify: Verify your account";
-        $message = "Please use below link to verify your account.";
         $link = BASEURL."/signup/verifyemail/$dealer_id/$token";
-        //$link = BASEURL."/controller/method/params";
-        // sendResetLink($name, $row['email'], $token);
+        // take the email template wanted
+        $message = file_get_contents('./emailTemplates/verify.php');
+        // replacements in the email template
+        $swap_var = array(
+            "{RECIEVER_NAME}"=>$reciepName,
+            "{VERIFICATION_URL}"=>$link,
+            "{RECIEVER_EMAIL}" => $to,
+            "{RECIEVER_PASSWORD}" => $password
+        );
+        // replace with actual content
+        foreach(array_keys($swap_var) as $key){
+            if(strlen($key) > 2 && trim($key) != ""){
+                $message = str_replace($key,$swap_var[$key],$message);
+            }
+        }
         //Create an instance; passing `true` enables exceptions
         $mail = new Mail($from,$to,$reciepName,$subject,$message,$link);
         $data = $mail->send();
@@ -1180,7 +1192,7 @@ class User extends Model
 
     
     public function distributorSignup($first_name,$last_name,$email,
-        $city,$street,$contact,$password,$confirmpassword,$image_name,$tmp_name,
+        $city,$street,$contact,$password,$image_name,$tmp_name,
         $capacity,$isvalidqty){
         $data = [];
         $hashed_pwd = password_hash($password,PASSWORD_DEFAULT);
@@ -1194,7 +1206,7 @@ class User extends Model
         
         // check all fields are filled or not
         if(isEmpty(array($first_name,$last_name,$email,
-        $city,$street,$contact,$password,$confirmpassword,$image_name,$tmp_name,
+        $city,$street,$contact,$password,
         $capacity,$isvalidqty))){
             $data['error'] = '1';
         }
@@ -1210,9 +1222,9 @@ class User extends Model
         }
         
         //check if two passwords matching
-        else if(isNotConfirmedpwd($password, $confirmpassword)){
-            $data['error'] = "4";
-        }
+        // else if(isNotConfirmedpwd($password, $confirmpassword)){
+        //     $data['error'] = "4";
+        // }
         
         //check the password strength is enough
         else if(isPasswordNotStrength($password)){
@@ -1268,6 +1280,21 @@ class User extends Model
         $subject = "Gasify: Verify your account";
         $message = "Please use below link to verify your account.";
         $link = BASEURL."/signup/verifyemail/$distributor_id/$token";
+        // take the email template wanted
+        $message = file_get_contents('./emailTemplates/verify.php');
+        // replacements in the email template
+        $swap_var = array(
+            "{RECIEVER_NAME}"=>$reciepName,
+            "{VERIFICATION_URL}"=>$link,
+            "{RECIEVER_EMAIL}" => $to,
+            "{RECIEVER_PASSWORD}" => $password
+        );
+        // replace with actual content
+        foreach(array_keys($swap_var) as $key){
+            if(strlen($key) > 2 && trim($key) != ""){
+                $message = str_replace($key,$swap_var[$key],$message);
+            }
+        }
         //$link = BASEURL."/controller/method/params";
         // sendResetLink($name, $row['email'], $token);
         //Create an instance; passing `true` enables exceptions
