@@ -122,7 +122,31 @@ class Delivery extends Model
         return $info;
     }
     public function acceptDelivery($orderID,$delivery_id){
+        
         if($this->Query(("UPDATE `reservation` SET order_state='Dispatched',delivery_id=$delivery_id WHERE order_id=$orderID;"))){
+            // order information
+            $order = mysqli_fetch_assoc($this->read('reservation',"order_id = $orderID"));
+            // customer information
+            $customer = mysqli_fetch_assoc($this->read('users',"user_id = ".$order['customer_id']));
+            
+            // sending email notification
+            // get template
+            $mailbody = file_get_contents('./emailTemplates/orderdispatched.php');
+            // prepare replacements
+            $swap_reorder = array(
+                "{RECIEVER_NAME}"=> $customer['first_name'].' '.$customer['last_name'],
+                "{ORDER_ID}"=> $order_id,
+                "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$order_id
+            );
+            // replace
+            foreach(array_keys($swap_reorder) as $key){
+                if(strlen($key) > 2 && trim($key) != ""){
+                    $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+                }
+            }
+            // create mail instance
+            $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+            $mail->send();
             return 1;
         }else{
             return 0;
@@ -140,6 +164,29 @@ class Delivery extends Model
         $time = date('H:i:s');
         //echo($date);
         $this->update('reservation',['order_state'=>"Completed",'deliver_date'=>$date,'deliver_time'=>$time,'deliver_charge'=>$charge],'order_id='.$orderID);
+        // order information
+        $order = mysqli_fetch_assoc($this->read('reservation',"order_id = $orderID"));
+        // customer information
+        $customer = mysqli_fetch_assoc($this->read('users',"user_id = ".$order['customer_id']));
+        
+        // sending email notification
+        // get template
+        $mailbody = file_get_contents('./emailTemplates/orderdelivered.php');
+        // prepare replacements
+        $swap_reorder = array(
+            "{RECIEVER_NAME}"=> $customer['first_name'].' '.$customer['last_name'],
+            "{ORDER_ID}"=> $order_id,
+            "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$order_id
+        );
+        // replace
+        foreach(array_keys($swap_reorder) as $key){
+            if(strlen($key) > 2 && trim($key) != ""){
+                $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+            }
+        }
+        // create mail instance
+        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+        $mail->send();
         /*if($this->Query(("UPDATE `reservation` SET order_state='Completed',deliver_date=$date WHERE order_id=$orderID;"))){
             return 1;
         }else{
