@@ -343,6 +343,37 @@ class Dealer extends Model
         foreach($products as $product){
             $this->insert('reservation_include',['order_id'=>$order_id, 'product_id'=>$product['product_id'], 'quantity'=>$product['qty'], 'unit_price'=>$product['unit_price']]);
         }
+
+        // order information
+        $order = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
+        // customer information
+        $customer = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
+        
+        // sending email notification
+        $mailbody = '';
+        // get template
+        if(strtoupper($order['order_state']) == 'ACCEPTED' && strtoupper($order['collecting_method']) == 'DELIVERY'){
+            $mailbody = file_get_contents('./emailTemplates/orderaccepteddelivery.php');
+        }elseif(strtoupper($order['order_state']) == 'ACCEPTED' && strtoupper($order['collecting_method']) == 'PICKUP'){
+            $mailbody = file_get_contents('./emailTemplates/orderacceptedpickup.php');
+        }else{
+            $mailbody = file_get_contents('./emailTemplates/orderplaced.php');
+        }
+        // prepare replacements
+        $swap_reorder = array(
+            "{RECIEVER_NAME}"=> $customer['first_name'].' '.$customer['last_name'],
+            "{ORDER_ID}"=> $order_id,
+            "{ORDER_LINK}"=> BASERURL.'/orders/customer_myreservation/'.$order_id
+        );
+        // replace
+        foreach(array_keys($swap_reorder) as $key){
+            if(strlen($key) > 2 && trim($key) != ""){
+                $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+            }
+        }
+        // create mail instance
+        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+        $mail->send();
         return $order_id;
     }
 
