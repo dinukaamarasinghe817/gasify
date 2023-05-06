@@ -1408,12 +1408,9 @@ input[type="text"]::placeholder{
 }
 .recentRequestTable{
     height: 100%;
-    overflow-y: auto;
     margin-right: 5%;
     width: 45%;
     display: flex;
-    align-items: center;
-    align-content: center;
     justify-content: center;
 }
 .productTable{

@@ -11,9 +11,9 @@ class Delvery extends Controller{
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
         $current_deliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
         $total_weight=0;
-        foreach($current_deliveries as $row){
+        /*foreach($current_deliveries as $row){
             $total_weight+=floatval($row['quantity']*floatval($row['weight']));
-        }
+        }*/
         $pool_details=$this->model('Delivery')->getPoolDetails();
         $row = mysqli_fetch_assoc($delivery_details);
         $data['image'] = $row['image'];
