@@ -73,7 +73,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         <div class="buttons">
                             <!-- <button onclick="defaultBtnActive()" id="custom_btn">Choose a file</button> -->
                             <label for="custom_btn" id="custom-btn">Choose File</label>
-                            <input id="custom_btn" type="file" accept=".png, .jpg, .jpeg"  name="slip_img" hidden>
+                            <input id="custom_btn" type="file" accept=".png, .jpg, .jpeg,.pdf"  name="slip_img" hidden>
                             <button  id="next_btn" type="submit" name="submit_btn">Submit</button>
                             <!-- <button  id="next_btn" type="submit" name="submit_btn" onclick="customerprompt('deliverymethod','<?php echo BASEURL;?>/dashboard/customer','<?php echo BASEURL;?>/Orders/get_bank_slip'); return false;">Submit</button> -->
                             
@@ -101,6 +101,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
          const customBtn = document.querySelector("#custom_btn");
          const cancelBtn = document.querySelector("#cancel-btn svg");
          const img = document.querySelector(".image img");
+       
          let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
          function customBtnActive(){
            customBtn.click();
@@ -111,7 +112,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
                const reader = new FileReader();
                reader.onload = function(){
                const result = reader.result;
-               img.src = result;
+               if(file["type"]=="application/pdf"){
+                    img.src = "http://localhost/mvc/img/placeholders/pdf2.png";
+               }else{
+                   img.src = result;
+               }
                wrapper.classList.add("active");
              }
              cancelBtn.addEventListener("click", function(){
