@@ -719,11 +719,10 @@ class Body{
             <div class="productTableTitle">Products (Low stock)</div>
             <div class="recentRequestTableTitle">Recent Orders</div>
             </div>
-            <div class="tables">
-                <div class="productTable">';
-                    if(isset($data['lowStock'])){
-
-                        echo '<table class="styled-table" style="width:45%">
+            <div class="tables">';
+                if(isset($data['lowStock'])){
+                    echo '<div class="productTable">
+                        <table class="styled-table" style="width:45%">
                             <thead>
                                 <tr>
                                     <th class="tdLeft">Product name</th>
@@ -745,6 +744,8 @@ class Body{
                             echo $tag;              
                             echo '</tbody>      
                         </table>';
+                    }else{
+                        echo'<img src="../img/placeholders/2.png" alt="">';
                     }
             echo'</div>';
             echo'<div class="recentRequestTable">';
@@ -1055,7 +1056,7 @@ class Body{
                     </div>
                     <div class="card">
                         <div class="cmValue">'.$data['completed_count'].'</div>
-                        <div class="cmTitle">Orders Delivered</div>
+                        <div class="cmTitle">Orders Delivered Today</div>
                     </div>
                     <div class="card">
                         <div class="cmValue">'.$data['review_count'].'</div>';
@@ -1067,8 +1068,8 @@ class Body{
                     echo'    
                     </div>
                     <div class="card">
-                        <div class="cmValue" style="font-size:3vw">LKR.'.$data['revenue'].'</div>
-                        <div class="cmTitle">Earned</div>
+                        <div class="cmValue" style="font-size:3vw">LKR.'.number_format($data['revenue'],2).'</div>
+                        <div class="cmTitle">Earned Today</div>
                     </div>
                 </div>
                 <div class="bottom">
@@ -1150,12 +1151,24 @@ class Body{
         echo'</section>';
     }
     function gasdeliveries($data){
+        $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         echo
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" style="width:100%;height:100%;color:white">Pool</div></a>
             <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" style="width:100%;height:100%;color:black;" >Current deliveries</div></a>
             </div>
+            <div  class="bar" style="width:97%;height:7%;display:flex;flex-direction:row-reverse;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            <div class="container">
+                <div class="progress-bar__container">
+                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
+                    <label class="progress-text">'.(($data['total_weight']/$data['weight_limit'])*100).'%</label>
+                </div>
+            </div>
+         
+         </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
         echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
@@ -1167,6 +1180,7 @@ class Body{
                                 <th>Placed date</th>
                                 <th>Placed time</th>
                                 <th>Distance</th>
+                                <th>Charge</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -1174,17 +1188,34 @@ class Body{
         if(isset($data["pool"])){
             $result=$data['pool'];
             $pool = "";
+            $processedOrders=array();
             foreach ($result as $row) {
-                $pool .=  '<tr>
+                if(!(in_array($row['order_id'],$processedOrders))){
+                    $weight=0;
+                    $charge=0;
+                    foreach($result as $row2){
+                        if($row['order_id']==$row2['order_id']){
+                            $weight+=$row2['quantity']*$row2['weight'];
+                        }
+                    }
+                    foreach($data['charges'] as $row3){
+                        if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet'])) ){
+                            $charge=$row3['charge_per_kg'];
+                        }
+                    }
+                    array_push($processedOrders,$row['order_id']);
+                    $pool .=  '<tr>
                     <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
-                    <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
-                    <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:80%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
-                </tr>';
+                    <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
+                    <td>Rs.'.$weight * $charge.'</td>
+                    <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:103%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
+                    </tr>';
+                }
             }
             echo $pool;
             /*foreach($result as $row){
@@ -1205,13 +1236,26 @@ class Body{
         </section>';
     }   
     function currentgasdeliveries($data){
+        $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         echo
         '<section class="body-content">
          <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
          <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:black;background-color:white;box-sizing: border-box;border:3px solid #2d77bc;">Pool</div></a>
          <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" id="temp" style="width:100%;height:100%;color:white;background-color:#2d77bc">Current deliveries</div></a>
          </div>
-        <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
+         <div  class="bar" style="width:97%;height:7%;display:flex;flex-direction:row-reverse;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+         <div class="container">
+         <div class="progress-bar__container">
+             <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
+             <label class="progress-text">'.(($data['total_weight']/$data['weight_limit'])*100).'%</label>
+         </div>
+     </div>
+         
+         </div>
+        <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">
+        ';
         echo '<table class="styled-table" style="margin-top:0.3%">
                     <thead style="background-color:#dbb1f9">
                         <tr>
@@ -1231,22 +1275,57 @@ class Body{
         if (isset($data["current"])) {
             $result=$data['current'];
             $pool = "";
+            $processedOrders=array();
+            //print_r()
             foreach ($result as $row) {
-                
-                $pool .=  '<tr>
+                //print_r($row);
+                if(!(in_array($row['order_id'],$processedOrders))){
+                    //print_r($row['order_id']);
+                    array_push($processedOrders,$row['order_id']);
+                    $weight=0;
+                    $charge=0;
+                    foreach($result as $row2){
+                        if($row['order_id']==$row2['order_id']){
+                            $weight+=$row2['quantity']*$row2['weight'];
+                            //$weight+=intval($row2['quantity']*floatval($row2['weight']));
+                        }
+                    }
+                    foreach($data['charges'] as $row3){
+                        if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet'])) ){
+                            $charge=$row3['charge_per_kg'];
+                        }
+                    }
+                    $pool .=  '<tr>
                     <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                     <td>'.$row['city'].','.$row['street'].'</td>
                     <td>'.$row['contact_no'].'</td>
-                    <td>'.$row['place_date'].'</td>
+                    <td>'.($row['place_date']).'</td>
                     <td>'.$row['place_time'].'</td>
                     <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
-                    <td>'.$row['deliver_charge'].'</td>
-                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>
-                    <td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:80%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>
-                </tr>';
+                    <td>Rs.'.$charge*$weight.'</td>
+                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>';
+                    $str_time = $row['place_time'];
+                    $time = date('H:i:s');
+                    sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+                    $placedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                    sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
+                    $currentTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                    if(($currentTime-$placedTime)<=900){
+                        $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
+                    }else{
+                        $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto;background-color:transparent" key="data[index].order_id "></div></td>';
+                    }
+                    $pool.='</tr>';
+                    
+                }
+                
+                
             }
+            //print_r($processedOrders);
+            //echo($processedOrders);
             echo $pool;
+            //print_r($result);
             /*foreach ($result as $row) {
                 echo
                 '<div class="Distributor_tableHead_row" id="Distributor_tableHead_row" style="background-color: transparent;height:10%;border:3px solid #90CAFF;">
@@ -1568,19 +1647,22 @@ class Body{
          <a href="../Delvery/reviews" style="width:97%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:white">Reviews</div></a>
          </div>
         <div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
-        $reviews=$data['reviews'];
-        $tag='';
-        foreach($reviews as $row){
-            $tag.='<div class="reviewRow" >
-            <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
-                <div class="messageRow">'.$row['message'].'</div>
-                <div class="dateTimeRow">
-                    <div class="reviewTime">Time -'.$row['time'].'</div>
-                    <div class="reviewDate">Date -'.$row['date'].'</div> 
-                </div>        
-            </div>';
+        if(isset($data['reviews'])){
+            $reviews=$data['reviews'];
+            $tag='';
+            foreach($reviews as $row){
+                $tag.='<div class="reviewRow" >
+                <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
+                    <div class="messageRow">'.$row['message'].'</div>
+                    <div class="dateTimeRow">
+                        <div class="reviewTime">Time -'.$row['time'].'</div>
+                        <div class="reviewDate">Date -'.$row['date'].'</div> 
+                    </div>        
+                </div>';
+            }
+            echo $tag;
         }
-        echo $tag;
+        
         /*echo '
         <div class="reviewRow" >
             <div class="orderIDRow"><div>Order ID : </div></div>

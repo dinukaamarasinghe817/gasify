@@ -647,6 +647,18 @@ table tr:hover {
 
 }
 
+.pdfbtn {
+    margin-top: 10px;
+    padding: 15px;
+    background-color:var(--button-orange-hover);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    margin-left: 80%;
+    width: 20%;
+    font-weight:bold;
+    cursor: pointer;
+}
 
 
 

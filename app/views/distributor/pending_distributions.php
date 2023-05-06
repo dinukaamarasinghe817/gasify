@@ -1,5 +1,5 @@
 <?php
-$header = new Header("distributor");
+$header = new Header("distributor", $data);
 $sidebar = new Navigation('distributor', $data['navigation']);
 ?>
 
@@ -69,7 +69,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         <thead>
                                             <tr>
                                                 <th>Product ID</th>
-                                                <th>Unit Price</th>
+                                                <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
                                                 <th>Total(Rs.)</th>
                                             </tr>

@@ -24,9 +24,10 @@ function cancelJob(orderID) {
     xmlhttp.send(formData);
 
 }
-function deliverJob(orderID) {
+function deliverJob(orderID, charge) {
     var formData = new FormData();
     formData.append("orderID", orderID);
+    formData.append("charge", charge);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -56,7 +57,7 @@ function addMonthsToSelectBoxes(div, joinedDate, joinedMonth) {
         option.setAttribute('selected', true);
         option.setAttribute('disabled', true);
         selectMonth.add(option);
-        for (i = joinedMonth; i <= currentMonth; i++) {
+        for (i = joinedMonth; i <= currentMonth + 1; i++) {
             option = document.createElement('option');
             option.value = i;
             option.text = i;
@@ -129,4 +130,9 @@ function showCharts() {
     xmlhttp.open("POST", "../Delvery/getCharts");
     xmlhttp.send();
 
+}
+function fillProgress() {
+    var width = document.getElementById('cprogress').clientWidth;
+    console.log(width + "%");
+    document.getElementById('cprogress').style.width = width + "%";
 }

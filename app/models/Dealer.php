@@ -671,7 +671,7 @@ class Dealer extends Model
         //     $product_quantity = $row['quantity'];
         //     $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
         // }
-        $this->update('reservation',['order_state' => 'Completed'],"order_id = $order_id");
+        $this->update('reservation',['order_state' => "Completed"],"order_id = $order_id");
         $this->dealerNofifycustomer($order_id,$user_id,'completed');
     }
 

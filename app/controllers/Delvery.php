@@ -9,11 +9,19 @@ class Delvery extends Controller{
         $data['navigation'] = 'deliveries';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
+        $current_deliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
+        $total_weight=0;
+        foreach($current_deliveries as $row){
+            $total_weight+=floatval($row['quantity']*floatval($row['weight']));
+        }
         $pool_details=$this->model('Delivery')->getPoolDetails();
         $row = mysqli_fetch_assoc($delivery_details);
         $data['image'] = $row['image'];
         $data['name']=$row['first_name'].' '.$row['last_name'];
         $data['pool']=$pool_details;
+        $data['weight_limit']=floatval($row['weight_limit']);
+        $data['total_weight']=$total_weight;
+        $data['charges']=$this->model('Delivery')->getDeliveryCharges();
             //$data=[];
         if($error=='dispatched'){
             $data['toast'] = ['type' => 'success', 'message' => "Order accepted"];
@@ -28,11 +36,19 @@ class Delvery extends Controller{
         $data['navigation'] = 'currentgasdeliveries';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
-        $current_reliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
+        $current_deliveries=$this->model('Delivery')->getCurrentDeliveries($delivery_id);
+        $total_weight=0;
+        foreach($current_deliveries as $row){
+            $total_weight+=floatval($row['quantity']*floatval($row['weight']));
+        }
+        
         $row = mysqli_fetch_assoc($delivery_details);
-        $data['current']=$current_reliveries;
+        $data['weight_limit']=floatval($row['weight_limit']);
+        $data['total_weight']=$total_weight;
+        $data['current']=$current_deliveries;
         $data['image'] = $row['image'];
         $data['name']=$row['first_name'].' '.$row['last_name'];
+        $data['charges']=$this->model('Delivery')->getDeliveryCharges();
             //$data=[];
         $this->view('dashboard/delivery', $data);
     }
@@ -100,10 +116,11 @@ class Delvery extends Controller{
     }
     function deliverJob(){
         $orderID = $_POST["orderID"];
+        $charge = $_POST['charge'];
         $date=date('Y-m-d');
         //$data=$date[0].'-'.$date[1].'-'.$date[2];
         //print_r($data);
-        $message=$this->model('Delivery')->setReservationStateDelivered($orderID);
+        $message=$this->model('Delivery')->setReservationStateDelivered($orderID,$charge);
         return $message;
     }function getCharts(){
         $delivery_id=$_SESSION['user_id'];
@@ -255,20 +272,23 @@ class Delvery extends Controller{
             array_push($deliveredQty,$value);
         }foreach($productCharges as $row){
             $date=explode('-',$row['deliver_date']);
+            //print_r($row);
             if(in_array($date[0].'-'.$date[1],$processedDates)){
-                //print_r("yes");
                 if(array_key_exists($date[0].'-'.$date[1],$revenueArray)){
-                    $newRevenue=(int)$row['max_distance']*(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']+$revenueArray[$date[0].'-'.$date[1]];
+                    $newRevenue=(int)$row['deliver_charge']+$revenueArray[$date[0].'-'.$date[1]];
                     unset($revenueArray[$date[0].'-'.$date[1]]);
                     $revenueArray+=array($date[0].'-'.$date[1]=>$newRevenue);
                 }else{
-                    $revenueArray+=array($date[0].'-'.$date[1]=>(int)$row['quantity']*(int)$row['charge']*(int)$row['weight']);
+                    $revenueArray+=array($date[0].'-'.$date[1]=>(int)$row['deliver_charge']);
                 }
             }
+            
         }
         foreach($revenueArray as $key=>$value){
             array_push($revenueDate,$key);
-            array_push($revenueAmount,$value);
+            //array_push($revenueAmount,intval(number_format($value)));
+            array_push($revenueAmount,(float)$value);
+            //print_r(gettype(intval(number_format($value,2))));
         }
         $barChart=array();
         $barChart['dates']=$processedDates;
@@ -282,6 +302,7 @@ class Delvery extends Controller{
         $lineChart['values']=$revenueAmount;
         $lineChart['names']=$revenueDate;
         $data['lineChart']=$lineChart;
+        //print_r($lineChart['values']);
         $this->view('dashboard/delivery', $data);  
         //print_r($deliveredOrders);
         //print_r($processedDates);

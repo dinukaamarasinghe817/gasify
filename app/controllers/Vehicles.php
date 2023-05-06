@@ -9,15 +9,21 @@ class Vehicles extends Controller{
         parent::__construct();
     }
 
-    public function distributor($error=null){
+    public function distributor($error=null,$success = null){
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'vehicles';
         // profile picture & notifications
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
+
+        $data['confirmation'] = '';
         if($error != null){
-            $data['error'] = $error;
+            $data['toast'] = ['type' => 'error', 'message' => $error];
+        }
+        if($success != null){
+            $data['toast'] = ['type' => 'success', 'message' => $success];
+            
         }
         // body data
         $data['vehicles'] = $this->model('Distributor')->getVehicleInfo($user_id);
@@ -49,7 +55,7 @@ class Vehicles extends Controller{
         if(!empty($number) && !empty($type) && !empty($fuelCon)) {
             $existance = $this->model('Distributor')->vehicleExistance($number);
             if(mysqli_num_rows($existance) > 0 ) { //if vehicle number already exists
-                echo "$number - This vehicle number already added";
+                $data['error'] =  "$number - This vehicle number already added";
 
             }else { 
                 $user_id = $_SESSION['user_id'];
@@ -69,6 +75,7 @@ class Vehicles extends Controller{
                         $row = mysqli_fetch_assoc($ifdatainserted);
                         $_SESSION['user_id'] = $row['distributor_id'];
                         // echo "success";
+                        $data['success'] = "Successsfully added vehicle!";
                     }
                 }else {
                     $data['error'] = "Something went wrong!";
@@ -79,7 +86,9 @@ class Vehicles extends Controller{
         }
 
         if(isset($data['error'])){
-            $this->distributor($data['error']);
+            $this->distributor($data['error'],null);
+        }else if(isset($data['success'])){
+            $this->distributor(null,$data['success']);
         }else{
             $this->distributor();
         }

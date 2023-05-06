@@ -190,11 +190,14 @@ class Distributor extends Model
     // remove e vehicle
     public function removeVehicle($vehicle_no) { 
         $user_id = $_SESSION['user_id'];
+        // $data=[];
 
         // $result = $this->delete('distributor_vehicle', "vehicle_no = '$vehicle_no' AND distributor_id = '$user_id'");  
         $sql = "DELETE FROM distributor_vehicle WHERE vehicle_no = '{$vehicle_no}' AND distributor_id = '{$user_id}'";
         $result = $this ->Query($sql);
-        return $result;
+        // $data = $this ->Query($sql);
+
+        return $data;
     }
 
     // view dealers
@@ -386,7 +389,7 @@ class Distributor extends Model
                     $distributor_quantity = $distributor_quantity - $o_quantity;
 
                     if($row4['quantity'] < $o_quantity) {
-                        $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not enough gas stock!"];
+                        $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not Enough Gas Stock in Your Stock!"];
                         return $data;
                     }else {
                         $com_date = date('Y-m-d');
@@ -394,9 +397,11 @@ class Distributor extends Model
 
                         $this->Query("UPDATE distributor_keep SET quantity = '{$distributor_quantity}' WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
                         $this->Query("UPDATE purchase_order SET po_state = 'completed', place_date = '{$com_date}', place_time = '{$com_time}'  WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+                        // echo "success";
+                        $data['success'] = ['type'=>"success", 'message'=>"Gas Distribution Successfully Done!"];
                     }
                 }else {
-                    $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas stock is empty!"];
+                    $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas Stock is Empty!"];
                     return $data;
                 }
             }
@@ -451,7 +456,7 @@ class Distributor extends Model
         return $completed;
     }
 
-    // details of completed distributions for reports (reports)
+    // details of completed distributions for reports - report tab interface
     public function reportpastdistributions($user_id, $option) {
         $today = date('Y-m-d');
         if($option == 'today'){
@@ -490,7 +495,7 @@ class Distributor extends Model
         return $completed;
     }
     
-    //get details of distribution report
+    //get details of distribution report - past distributions
     public function reportdetails($distribution_no) {
         // $reportdata = array();
         // $query1 = $this->Query("SELECT * from purchase_order where distribution_id = '{$user_id}' and po_state='completed' );
@@ -570,12 +575,13 @@ class Distributor extends Model
         $data =[];
         $flag = false;
         $notvalidquantity = true;
+        // validate the quantity of each product
         for($i=0; $i<count($productid); $i++) {
             if($postproducts[$productid[$i]] != 0) {
                 $notvalidquantity = false;
             };
         }
-        
+        // var_dump($postproducts);
         if($notvalidquantity) {
             $data['toast'] = ['type'=>"error", 'message'=>"Please insert a valid amount of products"];
             return $data;
@@ -585,34 +591,66 @@ class Distributor extends Model
 
             // take current stock
             $current_stock = 0;
-            $result = $this->Query("SELECT * FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product}'");
-            if(mysqli_num_rows($result)>0) {
-                $row = mysqli_fetch_assoc($result);
-                $current_stock = $row['quantity'];
+            $result1 = $this->Query("SELECT * FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product}'");
+            if(mysqli_num_rows($result1)>0) {
+                $row1 = mysqli_fetch_assoc($result1);
+                $current_stock = $row1['quantity'];
             }
 
             // take previously ordered but still pending amount
+
             $pending_stock =0;
             $result = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' AND stock_req_state = 'pending'");
             if(mysqli_num_rows($result)>0) {
                 while($row = mysqli_fetch_assoc($result)) {
                     $req_id = $row['stock_req_id'];
-                    $result = $this->Query("SELECT * FROM stock_include WHERE stock_req_id ='{$req_id}' AND product_id = '{$product}'");
-                    $row2 = mysqli_fetch_assoc($result);
-                    $pending_stock += $row2['quantity'];
+                    $result2 = $this->Query("SELECT * FROM stock_include WHERE stock_req_id =$req_id AND product_id = $product");
+                    if(mysqli_num_rows($result2)>0){
+                        $row2 = mysqli_fetch_assoc($result2);
+                        // print_r($row2['quantity']);
+                        $pending_stock += $row2['quantity'];
+                        // print_r(is_null($pending_stock));
+                        // $pending_stock = $pending_stock + $row2['quantity'];
+                    }
+                    
+                    
+                    //print_r(array_keys($row2));
+                    //print_r($row['quantity']);
+                    // if(mysqli_fetch_assoc($result2)){
+                    //     $row2 = mysqli_fetch_assoc($result2);
+                    //     print_r($row2);
+                    // }
+                    //print_r(gettype($row2));
+                    //print_r(intval($row2['quantity']));
+                    //$pending_stock += intval($row2['quantity']);
                 }
             }
 
+            // $pending_stock =0;
+            // $result2 = $this->Query("SELECT * FROM stock_request WHERE distributor_id='{$user_id}' AND stock_req_state = 'pending'");
+            // if(mysqli_num_rows($result2)>0) {
+            //     while($row2 = mysqli_fetch_assoc($result2)) {
+            //         $req_id = $row2['stock_req_id'];
+
+            //         $result3 = $this->Query("SELECT * FROM stock_include WHERE stock_req_id ='{$req_id}' AND product_id = '{$product}'");
+            //         if(mysqli_num_rows($result3)>0) {
+            //             $row3 = mysqli_fetch_assoc($result3);
+            //             $pending_stock += $row3['quantity'];
+            //         }
+            //     }
+            // }
+
             // take capacity
             $capacity = 0;
-            $result = $this->Query("SELECT * FROM distributor_capacity WHERE distributor_id = '{$user_id}' AND product_id = '{$product}'");
-            if(mysqli_num_rows($result)>0) {
-                $row = mysqli_fetch_assoc($result);
-                $capacity = $row['capacity'];
+            $result4 = $this->Query("SELECT * FROM distributor_capacity WHERE distributor_id = '{$user_id}' AND product_id = '{$product}'");
+            if(mysqli_num_rows($result4)>0) {
+                $row4 = mysqli_fetch_assoc($result4);
+                $capacity = $row4['capacity'];
             }
             if($postproducts[$product] > ($capacity - $current_stock - $pending_stock)) {
                 $flag=true;
             }
+            // post $productid <= capacity - current stock - pending stock
         }
 
         // if false 
@@ -623,8 +661,8 @@ class Distributor extends Model
 
         // get company details
         $query1 = $this->getDistributor($user_id);
-        $row1 = mysqli_fetch_assoc($query1);
-        $company_id = $row1['company_id'];
+        $row5 = mysqli_fetch_assoc($query1);
+        $company_id = $row5['company_id'];
 
         date_default_timezone_set("Asia/Colombo");
         $place_time = date('H:i');
@@ -632,17 +670,50 @@ class Distributor extends Model
 
         $query3 = $this->Query("INSERT INTO stock_request (distributor_id, stock_req_state, company_id, delay_time, place_date, place_time) VALUES ('{$user_id}', 'pending', '{$company_id}', 0, '{$place_date}', '{$place_time}')");
         $query4 = $this->Query("SELECT * FROM stock_request WHERE distributor_id = '{$user_id}' ORDER BY place_date DESC, place_time DESC LIMIT 1");
-        $row4 = mysqli_fetch_assoc($query4);
-        $req_id = $row4['stock_req_id'];
+        $row6 = mysqli_fetch_assoc($query4);
+        $req_id = $row6['stock_req_id'];
 
         for($i=0; $i<count($productid); $i++) {
             $product = $productid[$i];
             $quantity = $postproducts[$product];
             $query5 = $this->Query("SELECT unit_price FROM product WHERE product_id = '$product'");
-            $row5 = myqsli_fetch_assoc($query5);
-            $unit_price = $row5['unit_price'];
-            $query5 = $this->Query("INSERT INTO stock_include (stock_req_id, product_id, quantity, unit_price) VALUES ($req_id, '$product', $quantity, $unit_price)");
+            $row7 = mysqli_fetch_assoc($query5);
+            $unit_price = $row7['unit_price'];
+            if($quantity>0) {
+                $query5 = $this->Query("INSERT INTO stock_include (stock_req_id, product_id, quantity, unit_price) VALUES ($req_id, '$product', $quantity, $unit_price)");
+            }
         }
+
+        // rending the pdf
+        $result5 = $this->Query("SELECT * FROM stock_request WHERE distributor_id = '{$user_id}' ORDER BY stock_req_id DESC LIMIT 1");
+        if(mysqli_num_rows($result5)>0) {
+            $row = mysqli_fetch_assoc($result5);
+            $stock_req_id = $row['stock_req_id'];
+            $date = $row['place_date'];
+            $time = $row['place_time'];
+
+            $products = array();
+            $total = 0;
+
+            // stock request include table and product table
+            $result6 = $this->Query("SELECT  s.product_id as product_id,
+            p.name as product_name,
+            s.quantity as quantity,
+            s.unit_price as unit_price
+            FROM stock_include s INNER JOIN product p
+            ON s.product_id = p.product_id
+            WHERE stock_req_id = $stock_req_id");
+            if(mysqli_num_rows($result6)>0) {
+                while($row = mysqli_fetch_assoc($result6)) {
+                    array_push($products, ['product_id'=>$row['product_id'], 'product_name'=>$row['product_name'], 'quantity'=>$row['quantity'], 'unit_price'=>$row['unit_price'], 'subtotal'=>$row['unit_price']*$row['quantity']]);
+                    $total +=$row['unit_price']*$row['quantity'];
+                }
+            }
+
+            $data = ['stock_req_id'=>$stock_req_id,'distributor_id'=>$user_id, 'date'=>$date, 'time'=>$time, 'products'=>$products, 'total'=>$total];
+
+        }
+
         return $data;
     }
 
@@ -771,6 +842,88 @@ class Distributor extends Model
         $cost = $row['cost_per_km']*$distance*$total_weight;
         return $cost;
     }
+
+    // reports - get totals of each product from dealer received orders(sell to dealers)
+    public function AllSellProducts($option) {
+        $user_id = $_SESSION['user_id'];  //distirbutor id
+
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+
+        }elseif($option == '7day'){
+            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
+        $product_quantites = array();
+
+        $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
+        FROM purchase_include pi INNER JOIN product p 
+        ON pi.product_id = p.product_id WHERE po_id IN 
+            (SELECT po_id FROM purchase_order 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND po_state != 'pending') 
+            GROUP BY product_id");
+
+        if(mysqli_num_rows($query1)>0) {
+            while($row1=mysqli_fetch_assoc($query1)) {
+                $product_id = $row1['product_id'];
+                $product_name = $row1['name'];
+                $quantity = $row1['quantity'];
+                array_push($product_quantites, ['quantites'=>$row1]);
+            }
+        }
+        return $product_quantites;
+    }
+
+
+    // reports - get totals of each product to company purchase orders
+    public function AllRequestedProducts($option) {
+        $user_id = $_SESSION['user_id'];  //distirbutor id
+
+        $today = date('Y-m-d');
+        if($option == 'today'){
+            $start_date = $today;
+            $end_date = $today;
+
+        }elseif($option == '7day'){
+            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
+        $product_quantites = array();
+
+        $query1 = $this->Query("SELECT p.product_id, SUM(s.quantity) as quantity, p.name as name
+        FROM stock_include s INNER JOIN product p 
+        ON s.product_id = p.product_id WHERE stock_req_id IN 
+            (SELECT stock_req_id FROM stock_request 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND stock_req_state = 'completed' ) 
+            GROUP BY product_id");
+
+        if(mysqli_num_rows($query1)>0) {
+            while($row1=mysqli_fetch_assoc($query1)) {
+                $product_id = $row1['product_id'];
+                $product_name = $row1['name'];
+                $quantity = $row1['quantity'];
+                array_push($product_quantites, ['quantity'=>$row1]);
+            }
+        }
+        return $product_quantites;
+    }
+
+
+    // reports - income
+
+    // reprots - expendition
     
 }
 
