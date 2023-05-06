@@ -381,7 +381,7 @@ class Customer extends Model{
             }
         }
         // create mail instance
-        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify: Your order has been canceled!',$mailbody,$link=null);
         $mail->send();
         return $error;
     }

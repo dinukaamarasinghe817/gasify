@@ -354,9 +354,12 @@ class Dealer extends Model
         // get template
         if(strtoupper($order['order_state']) == 'ACCEPTED' && strtoupper($order['collecting_method']) == 'DELIVERY'){
             $mailbody = file_get_contents('./emailTemplates/orderaccepteddelivery.php');
+            $state = "accepted";
         }elseif(strtoupper($order['order_state']) == 'ACCEPTED' && strtoupper($order['collecting_method']) == 'PICKUP'){
             $mailbody = file_get_contents('./emailTemplates/orderacceptedpickup.php');
+            $state = "accepted";
         }else{
+            $state = "placed";
             $mailbody = file_get_contents('./emailTemplates/orderplaced.php');
         }
         // prepare replacements
@@ -372,7 +375,7 @@ class Dealer extends Model
             }
         }
         // create mail instance
-        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],"Gasify: Your order has been $state!",$mailbody,$link=null);
         $mail->send();
         return $order_id;
     }
@@ -533,8 +536,25 @@ class Dealer extends Model
                     }
 
                     $message = "Hey seems like you have a low stock on the following products :";
+                    $mailproducts = "";
                     foreach($risk_products as $product_id => $value){
+                        // take product image, ro-level, current stock
+                        $sql = "SELECT p.image AS image, dk.reorder_level AS threshold, dk.quantity AS quantity FROM dealer_keep dk INNER JOIN product p ON dk.product_id = p.product_id WHERE dk.dealer_id = $dealer_id AND dk.product_id = $product_id";
+                        $prow = mysqli_fetch_assoc($this->Query($sql));
+                        // prepare replacements
+                        $swap_products = array(
+                            "{PRODUCT_IMG}"=>$prow['image'], 
+                            "{THRESHOLD}"=>$prow['threshold'],
+                            "{CURRENT_STOCK}"=>$prow['quantity']);
+                        $prow = file_get_contents('./emailTemplates/reorderproduct.php');
+                        // replace
+                        foreach(array_keys($swap_products) as $key){
+                            if(strlen($key) > 2 && trim($key) != ""){
+                                $prow = str_replace($key,$swap_products[$key],$prow);
+                            }
+                        }
                         $message .= " $value,";
+                        $mailproducts .= $prow;
                     }
                     $message = rtrim($message,',');
                     $message .= " please hurry up and place a purchase order. Otherwise you will not be having enough stock to sell.";
@@ -542,10 +562,23 @@ class Dealer extends Model
                     
                     // send a mail as well
                     $q = mysqli_fetch_assoc($this->read('users',"user_id = $dealer_id"));
-                    // $dealer_email = $q['email'];
+                    // prepare replacements
+                    $swap_reorder = array(
+                        "{RECIEVER_NAME}"=> $q['first_name'].' '.$q['last_name'],
+                        "{STOCK_LINK}"=> BASERURL.'/stock/dealer/currentstock',
+                        "{PRODUCT_DETAILS}"=>$mailproducts
+                    );
+                    // template
+                    $mailbody = file_get_contents('./emailTemplates/reorderlevel.php');
+                    // replace
+                    foreach(array_keys($swap_reorder) as $key){
+                        if(strlen($key) > 2 && trim($key) != ""){
+                            $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+                        }
+                    }
                     // $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
                     // $customer_Name = $q['first_name'].' '.$q['last_name'];
-                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$message,$link=null);
+                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$mailbody,$link=null);
                     $mail->send();
                 }
 
@@ -654,7 +687,7 @@ class Dealer extends Model
         $reciepName = $row3['first_name'].' '.$row3['last_name'];
         $from = 'admin@gasify.com';
         $to = $row3['email'];
-        $subject = "Gasify: Your order has been $state";
+        $subject = "Gasify: Your order has been $state!";
         if($row1['collecting_method'] == 'Delivery'){
             if($state == 'accepted'){
                 $message = "Your recent order at $dealername has been accepted by the dealer and waiting for a delivery. Please stay standby";
@@ -668,10 +701,22 @@ class Dealer extends Model
                 $message = "Your recent order at $dealername has been completed. Hope you are satisfy with our service. Thank you for shopping. Stay with us";
             }
         }
-        //$link = BASEURL."/controller/method/params";
-        // sendResetLink($name, $row['email'], $token);
+        // get template
+        $mailbody = file_get_contents('./emailTemplates/orderdelivered.php');
+        // prepare replacements
+        $swap_reorder = array(
+            "{RECIEVER_NAME}"=> $reciepName,
+            "{ORDER_ID}"=> $order_id,
+            "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$order_id
+        );
+        // replace
+        foreach(array_keys($swap_reorder) as $key){
+            if(strlen($key) > 2 && trim($key) != ""){
+                $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+            }
+        }
         //Create an instance; passing `true` enables exceptions
-        $mail = new Mail($from,$to,$reciepName,$subject,$message);
+        $mail = new Mail($from,$to,$reciepName,$subject,$mailbody);
         $data = $mail->send();
 
         date_default_timezone_set("Asia/Colombo");

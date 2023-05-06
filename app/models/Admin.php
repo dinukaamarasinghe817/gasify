@@ -391,11 +391,25 @@ class Admin extends Model
                 $user_id = $row['customer_id'];
                 $customer = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
                 $user_name = $customer['first_name'].' '.$customer['last_name'];
-                $type = "Payment Verification failed";
+                $type = "Gasify: Payment Verification failed!";
                 $message = "Hi, $user_name, Your payment slip for the Order ID : $order_id was rejected. Please visit your recent orders and make the payment again or contact us via support section.";
                 $this->insert('notification',['user_id'=>$row['customer_id'],'type'=>$type,'message'=>$message,'date'=>date(),'time'=>time(),'state'=>'delivered']);
                 // send an email
-                $mail = new Mail('admin@gasify.com',$customer['email'],$user_name,$type,$message,$link=null);
+                // get template
+                $mailbody = file_get_contents('./emailTemplates/rejectedpayslip.php');
+                // prepare replacements
+                $swap_reorder = array(
+                    "{RECIEVER_NAME}"=> $user_name,
+                    "{ORDER_ID}"=> $order_id,
+                    "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$order_id
+                );
+                // replace
+                foreach(array_keys($swap_reorder) as $key){
+                    if(strlen($key) > 2 && trim($key) != ""){
+                        $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+                    }
+                }
+                $mail = new Mail('admin@gasify.com',$customer['email'],$user_name,$type,$mailbody,$link=null);
                 $mail->send();
             }
         }else{
@@ -407,13 +421,27 @@ class Admin extends Model
                 // send a notification to user
                 $row = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
                 $user_id = $row['dealer_id'];
-                $customer = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
-                $user_name = $customer['first_name'].' '.$customer['last_name'];
-                $type = "Refund Verification failed";
+                $dealer = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+                $user_name = $dealer['first_name'].' '.$dealer['last_name'];
+                $type = "Gasify: Refund Verification failed!";
                 $message = "Hi, $user_name, Your payment slip for the Order ID : $order_id was rejected. Please visit your canceled orders and make the payment again or contact us via support section.";
-                $this->insert('notification',['user_id'=>$row['customer_id'],'type'=>$type,'message'=>$message,'date'=>date(),'time'=>time(),'state'=>'delivered']);
+                $this->insert('notification',['user_id'=>$row['dealer_id'],'type'=>$type,'message'=>$message,'date'=>date(),'time'=>time(),'state'=>'delivered']);
                 // send an email
-                $mail = new Mail('admin@gasify.com',$customer['email'],$user_name,$type,$message,$link=null);
+                // get template
+                $mailbody = file_get_contents('./emailTemplates/rejectedpaysliprefund.php');
+                // prepare replacements
+                $swap_reorder = array(
+                    "{RECIEVER_NAME}"=> $user_name,
+                    "{ORDER_ID}"=> $order_id,
+                    "{ORDER_LINK}"=> BASEURL.'/orders/dealer/canceled'
+                );
+                // replace
+                foreach(array_keys($swap_reorder) as $key){
+                    if(strlen($key) > 2 && trim($key) != ""){
+                        $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+                    }
+                }
+                $mail = new Mail('admin@gasify.com',$dealer['email'],$user_name,$type,$mailbody,$link=null);
                 $mail->send();
             }
         }
