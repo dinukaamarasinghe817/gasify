@@ -87,8 +87,9 @@
             $account_no = $_POST['account_no'];
             // $merchant_id = $_POST['merchant_id'];
             $merchant_id = '';
-            $password = $_POST['password'];
-            $confirmpassword = $_POST['confirmpassword'];
+            // $password = $_POST['password'];
+            // $confirmpassword = $_POST['confirmpassword'];
+            $password = randomString();
             $image_name = '';$tmp_name = '';
             if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
                 $image_name = $_FILES['image']['name'];
@@ -112,7 +113,7 @@
             // password hashing
             $data = $this->model("User")->dealerSignup($name,$first_name,$last_name,$email,
             $city,$street,$company_id,$distributor_id,$contact_no,$bank,$branch,$account_no,$merchant_id,
-            $password,$confirmpassword,$image_name,$tmp_name,$capacity,$isvalidqty);
+            $password,$image_name,$tmp_name,$capacity,$isvalidqty);
             
 
             if(isset($data['error'])){
@@ -290,8 +291,9 @@
             $first_name = $_POST['fname'];
             $last_name = $_POST['lname'];
             $email = $_POST['email'];
-            $password = $_POST['password'];
-            $confirmpassword = $_POST['confirmpassword'];
+            // $password = $_POST['password'];
+            // $confirmpassword = $_POST['confirmpassword'];
+            $password = randomString();
             $contact = $_POST['contact'];
             if(isset($_POST['city']) ? $city = $_POST['city'] : $city = -1);
             $street = $_POST['street'];
@@ -319,7 +321,7 @@
 
             // password hashing
             $data = $this->model("User")->distributorSignup($first_name,$last_name,$email,
-            $city,$street,$contact,$password,$confirmpassword,$image_name,$tmp_name,
+            $city,$street,$contact,$password,$image_name,$tmp_name,
             $capacity,$isvalidqty);
 
 

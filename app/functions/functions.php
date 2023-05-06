@@ -86,6 +86,27 @@ function isNotValidImageFormat($image_name){
     }
 }
 
+function randomString(){
+    $length = 16 - 4;
+    $capital_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $simple_letters = "abcdefghijklmnopqrstuvwxyz";
+    $digits = "0123456789";
+    $special_chars = "@#$";
+    $all = $capital_letters.$simple_letters.$digits.$special_chars;
+
+    $string = "";
+    $string .= $capital_letters[random_int(0,strlen($capital_letters)-1)];
+    $string .= $simple_letters[random_int(0,strlen($simple_letters)-1)];
+    $string .= $digits[random_int(0,strlen($digits)-1)];
+    $string .= $special_chars[random_int(0,strlen($special_chars)-1)];
+
+    while($length--){
+        $string .= $all[random_int(0,strlen($all)-1)];
+    }
+    
+    return $string;
+}
+
 function isNotConfirmedpwd($password, $confirmpassword){
     if($password == $confirmpassword){
         return false;
@@ -239,7 +260,7 @@ function deleteFile($file_name,$type){
 
 // Encrypt the Stripe key
 function encryptStripeKey($stripeKey) {
-    $secretKey = getenv('STRIPE_SECRET_KEY');
+    $secretKey = STRIPE_SECRET_KEY;
     $cipher = "aes-256-cbc";
     $ivlen = openssl_cipher_iv_length($cipher);
     $iv = openssl_random_pseudo_bytes($ivlen);
@@ -249,7 +270,7 @@ function encryptStripeKey($stripeKey) {
 
 // Decrypt the Stripe key
 function decryptStripeKey($encryptedStripeKey) {
-    $secretKey = getenv('STRIPE_SECRET_KEY');
+    $secretKey = STRIPE_SECRET_KEY;
     $cipher = "aes-256-cbc";
     $iv_with_ciphertext = base64_decode($encryptedStripeKey);
     $ivlen = openssl_cipher_iv_length($cipher);
