@@ -716,13 +716,13 @@ class Body{
             </div>';
             echo'
             <div class="tabletitles">
-            <div class="productTableTitle">Products (Low stock)</div>
-            <div class="recentRequestTableTitle">Recent Orders</div>
+            <div class="productTableTitle" style="font-size:1.17em">Products (low stock)</div>
+            <div class="recentRequestTableTitle" style="font-size:1.17em">Recent Orders</div>
             </div>
-            <div class="tables">';
-                if(isset($data['lowStock'])){
-                    echo '<div class="productTable">
-                        <table class="styled-table" style="width:45%">
+            <div class="tables">
+                    <div class="productTable">';
+                    if(isset($data['lowStock']) && count($data['lowStock'])>0){
+                        echo'<table class="styled-table" style="width:45%">
                             <thead>
                                 <tr>
                                     <th class="tdLeft">Product name</th>
@@ -731,14 +731,12 @@ class Body{
                             </thead>
                             <tbody style="overflow-y:auto;height:100px" >';
                             $tag="";
-                            
+                            //print_r($data['lowStock']);
                             foreach($data['lowStock'] as $row){
-                                if($row['quantity']<=$row['cylinder_limit']){
-                                    $tag.=' <tr>
-                                            <td class="tdLeft">'.$row['name'].'</td>
-                                            <td class="tdRight">'.$row['quantity'].'</td>
-                                        </tr>';
-                                }
+                                $tag.=' <tr>
+                                    <td class="tdLeft">'.$row['name'].'</td>
+                                    <td class="tdRight">'.$row['quantity'].'</td>
+                                </tr>';
                                     
                             }
                             echo $tag;              
@@ -748,8 +746,8 @@ class Body{
                         echo'<img src="../img/placeholders/2.png" alt="">';
                     }
             echo'</div>';
-            echo'<div class="recentRequestTable">';
-                if (isset($data['order_details'])){
+            if (isset($data['order_details'])){
+                echo'<div class="recentRequestTable" style="overflow-y: auto; align-items: center;align-content: center;">';
                     echo'<table class="styled-table" style="margin-left:5%">
                     <thead>
                         <tr>
@@ -758,9 +756,6 @@ class Body{
                         </tr>
                     </thead>
                     <tbody style="overflow-y:auto;height:100px">';
-
-                } 
-                if (isset($data['order_details'])){
                     $result = $data["order_details"];
                     $product_array=$data['product_details'];
                     $orders='';
@@ -816,6 +811,11 @@ class Body{
                     echo $orders;
                     echo'</div>';
                     echo '</div></section>';
+                }else{
+                    echo'<div class="recentRequestTable" style="height: 50%;" >';
+                    echo'<img src="../img/placeholders/2.png" >';
+                    echo'</div>';
+                    echo '</div></section>';
                 }
     
     }
@@ -838,10 +838,12 @@ class Body{
                     <div style="color:white;font-size:1.5em">Add</div>   
                 </div>
             
-            </div>
-            <div class="DealerTables" id="DealerTables" style="margin:0">';
-                echo '<table class="styled-table">
-                    <thead >
+            </div>';
+            
+            if (isset($data["dealer"])) {
+                echo '<div class="DealerTables" id="DealerTables" style="margin:0">
+                <table class="styled-table">
+                        <thead >
                         <tr>
                             <th>Name</th>
                             <th>Location</th>
@@ -849,24 +851,26 @@ class Body{
                             <th>Bank account</th>
                             <th>Bank</th>
                         </tr>
-                    </thead>
-                    <tbody style="overflow-y:auto;height:100px">';
-                        if (isset($data["dealer"])) {
+                        </thead>
+                        <tbody style="overflow-y:auto;height:100px">';
                             $result = $data["dealer"];
                             $dealer = "";
                             foreach ($result as $row) {
                                 $dealer .=  '<tr>
-                                                <td>'.$row['name']. '</td>
-                                                <td>'.$row['city'].'</td>
-                                                <td>'.$row['contact_no'].'</td>
-                                                <td>'.$row['account_no'].'</td>
-                                                <td>'.$row['bank'].'</td>
-                                            </tr>';
+                                <td>'.$row['name']. '</td>
+                                <td>'.$row['city'].'</td>
+                                <td>'.$row['contact_no'].'</td>
+                                <td>'.$row['account_no'].'</td>
+                                <td>'.$row['bank'].'</td>
+                                </tr>';
                             }
-                            echo $dealer;
-}       
-                    echo '</tbody>      
-                </table>';
+                                echo $dealer;
+                                echo '</tbody>      
+                            </table>';
+            }else{
+                echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+            }       
     }
     function companyDistributors($data){
         echo '
@@ -885,8 +889,9 @@ class Body{
                     <div style="color:white;font-size:1.5em">Add</div>   
                 </div>
             
-            </div>
-            <div class="DealerTables" id="DealerTables" style="margin:0">';
+            </div>';
+            if (isset($data["distributor"])) {
+            echo'<div class="DealerTables" id="DealerTables" style="margin:0">';
                 echo '<table class="styled-table">
                 <thead style="background-color:#dbb1f9">
                     <tr>
@@ -898,7 +903,6 @@ class Body{
                     </tr>
                 </thead>
                 <tbody style="overflow-y:auto;height:100px">';
-                    if (isset($data["distributor"])) {
                         $result = $data["distributor"];
                         $distributor = "";
                         foreach ($result as $row) {
@@ -910,11 +914,13 @@ class Body{
                                             <td>'.$row['hold_time'].'</td>
                                         </tr>';
                         }
-                        echo $distributor;
-                    }       
+                        echo $distributor;       
                 echo '</tbody>      
             </table>';
-            
+        }else{
+            echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+            echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+        }
             
             
             
@@ -948,8 +954,9 @@ class Body{
                  <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#d8ca30;color:white">Current Products</div></a>
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#fff">Register New Product</div></a>
                  <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#fff">Update Product</div></a>
-             </div>
-             <div class="DealerTables" id="DealerTables" style="margin:0;width: 97.4%;height:80%"">';
+             </div>';
+             if (isset($data["products"])) {
+             echo'<div class="DealerTables" id="DealerTables" style="margin:0;width: 97.4%;height:80%"">';
                 echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
                             <tr>
@@ -985,6 +992,11 @@ class Body{
                                             </table>';   
                                     echo '</div>
                                 </section>';
+            }else{
+                echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div></section>';
+            }
     }
     function companyRegProducts($data){
         echo 
@@ -1239,8 +1251,31 @@ class Body{
         $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
-        echo
-        '<section class="body-content">
+        echo'
+        <script>
+                window.onload = function () {
+                    setTimeout(() => {
+                        for (let index = 0; index <100; index++) {
+                            //var width = document.getElementById(\'cprogress\').clientWidth;
+                            document.getElementById(\'cprogress\').style.width = index+"%";
+                                
+                        }
+                        
+                    }, 800);
+                        //document.getElementById(\'cprogress\').style.width = index/1000+"%";
+                        
+                    /*setTimeout(() => {
+                        for (let index = 0; index <100; index++) {
+                            //var width = document.getElementById(\'cprogress\').clientWidth;
+                            document.getElementById(\'cprogress\').style.width = index+"%";
+                            
+                        }
+                    
+                    }, 800);*/
+
+                }
+        </script>
+        <section class="body-content">
          <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
          <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:black;background-color:white;box-sizing: border-box;border:3px solid #2d77bc;">Pool</div></a>
          <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" id="temp" style="width:100%;height:100%;color:white;background-color:#2d77bc">Current deliveries</div></a>
@@ -1248,7 +1283,7 @@ class Body{
          <div  class="bar" style="width:97%;height:7%;display:flex;flex-direction:row-reverse;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
          <div class="container">
          <div class="progress-bar__container">
-             <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
+             <div class="cprogress" id="cprogress" onClick="fillProgress()" style="background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
              <label class="progress-text">'.(($data['total_weight']/$data['weight_limit'])*100).'%</label>
          </div>
      </div>
@@ -1272,7 +1307,7 @@ class Body{
                         </tr>
                     </thead>
                 <tbody style="overflow-y:auto;height:100%">';
-        if (isset($data["current"])) {
+        /*if (isset($data["current"])) {
             $result=$data['current'];
             $pool = "";
             $processedOrders=array();
@@ -1336,8 +1371,8 @@ class Body{
                 <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_time'].'</div>
                 <div class="delete_btn" id="delete_btn" onClick="takeJob(this)" style="width:10%;margin:auto" key="data[index].order_id ">Cancel</div>
                 </div>';
-            }*/
-        }
+            }
+        }*/
 
         echo
         '</div>
@@ -1442,8 +1477,9 @@ class Body{
                  <a href="../Compny/products" style="width:32.33%" ><div class="ProductTableTopics"onClick="location.href = "../Compny/dealer" style="background-color:#fff">Current Products</div></a>
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#fff">Register New Product</div></a>
                  <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#d8ca30;color:white">Update Product</div></a>
-             </div>
-            <div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%">
+             </div>';
+             if (isset($data["products"])) {
+            echo'<div class="DealerTables" id="DealerTables" style="display:flex;margin:0;width: 97.4%;height:80%">
                 <div class="left">
                 <form action="'. BASEURL.'/Compny/updateProduct" enctype="multipart/form-data" method="POST" id="productUpdateForm" class="productRegistrationForm">
                 <div class="product_reg_row">
@@ -1473,6 +1509,11 @@ class Body{
                 </div></div>
             </div>
         </section>';
+        }else{
+            echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+            echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+            echo '</div></section>';
+        }
     }
     function companyOrders($data){
         echo 
@@ -1483,8 +1524,8 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             if (isset($data['order_details'])){
+                echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
                 $result = $data["order_details"];
                 $product_array=$data['product_details'];
                 $orders='';
@@ -1584,13 +1625,11 @@ class Body{
                     }
                 }
                 echo $orders;
-                echo ' 
-                
-                </div>
-                </section>';
-
-
-
+                echo '</div></section>';
+            }else{
+                echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div></section>';
             }
     }
     function companyLimitQuota($data){
@@ -1636,6 +1675,10 @@ class Body{
 
                 }
                 echo $quota;
+            }else{
+                echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div>';
             }
         echo ' 
         </section>';
@@ -1851,7 +1894,7 @@ class Body{
                                 echo'</select>
                             </div>
                             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
-                                <input type="submit" name="sub" value="Submit" style="font-family:poppins" class="getAnalysisButton">
+                                <input type="submit" name="sub" value="View" style="font-family:poppins" class="getAnalysisButton">
                             </div></form>';                                     
                     //echo'</div>';
                     echo'
@@ -2043,7 +2086,7 @@ class Body{
                         echo'</select>
                     </div>
                     <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
-                        <input type="submit" name="sub" value="Submit" class="getAnalysisButton">
+                        <input type="submit" name="sub" value="View" class="getAnalysisButton">
                     </div></form>';                                     
             //echo'</div>';
                     echo'
@@ -2196,8 +2239,8 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             if (isset($data['order_details'])){
+                echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
                 $result = $data["order_details"];
                 $product_array=$data['product_details'];
                 $orders='';
@@ -2282,6 +2325,10 @@ class Body{
 
 
 
+            }else{
+                echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div></section>';
             }
     }
     function delayOrdersCompany($data){
@@ -2293,8 +2340,8 @@ class Body{
             <a href="../Compny/delayedOrders" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%;border-right:0px;background-color:#d8ca30;color:white">Delayed Orders</div></a>
             <a href="../Compny/limitquota" style="width:24.25%" ><div class="DealerTableTopics"  style="width:100%;height:100%">Limit Quota</div></a>
             </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             if (isset($data['order_details'])){
+                echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
                 $result = $data["order_details"];
                 $product_array=$data['product_details'];
                 $orders='';
@@ -2397,6 +2444,10 @@ class Body{
 
 
 
+            }else{
+                echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div></section>';
             }
             
     }

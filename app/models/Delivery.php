@@ -84,6 +84,8 @@ class Delivery extends Model
                 array_push($info,['order_id'=>$row['order_id'], 'place_date'=>$row['place_date'], 'place_time'=>$row['place_time'],'customer_id'=>$row['customer_id'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'weight'=>$row['weight'],'city'=>$row['city'],'street'=>$row['street'],'contact_no'=>$row['contact_no'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'dcity'=>$row['dcity'],'dstreet'=>$row['dstreet']]);
             }
             return $info;
+        }else{
+            return "sd";
         }
     }
     public function getPendingDeliveryCount(){

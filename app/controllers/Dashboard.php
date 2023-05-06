@@ -71,7 +71,14 @@
             $row = mysqli_fetch_assoc($company_details);
             $data['navigation'] = 'dashboard';
             $data['image'] = $user_id['logo'];
-            $data['lowStock']=$lowStockProducts;
+            $lowStock = array();
+            foreach($lowStockProducts as $row){
+                if($row['quantity']<=$row['cylinder_limit']){
+                    array_push($lowStock,['name'=>$row['name'],'quantity'=>$row['quantity']]);
+                   //$lowStock+=array($row['name']=>$row['quantity']);
+                }
+            }
+            $data['lowStock']=$lowStock;
             
             //$data=[];
             $this->view('dashboard/company', $data);
