@@ -145,7 +145,7 @@ class Delivery extends Model
                 }
             }
             // create mail instance
-            $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+            $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify: Your order has been dispatched!',$mailbody,$link=null);
             $mail->send();
             return 1;
         }else{
@@ -185,7 +185,7 @@ class Delivery extends Model
             }
         }
         // create mail instance
-        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify: Your order has been delivered!',$mailbody,$link=null);
         $mail->send();
         /*if($this->Query(("UPDATE `reservation` SET order_state='Completed',deliver_date=$date WHERE order_id=$orderID;"))){
             return 1;
