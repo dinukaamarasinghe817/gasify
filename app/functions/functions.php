@@ -260,7 +260,7 @@ function deleteFile($file_name,$type){
 
 // Encrypt the Stripe key
 function encryptStripeKey($stripeKey) {
-    $secretKey = getenv('STRIPE_SECRET_KEY');
+    $secretKey = STRIPE_SECRET_KEY;
     $cipher = "aes-256-cbc";
     $ivlen = openssl_cipher_iv_length($cipher);
     $iv = openssl_random_pseudo_bytes($ivlen);
@@ -270,7 +270,7 @@ function encryptStripeKey($stripeKey) {
 
 // Decrypt the Stripe key
 function decryptStripeKey($encryptedStripeKey) {
-    $secretKey = getenv('STRIPE_SECRET_KEY');
+    $secretKey = STRIPE_SECRET_KEY;
     $cipher = "aes-256-cbc";
     $iv_with_ciphertext = base64_decode($encryptedStripeKey);
     $ivlen = openssl_cipher_iv_length($cipher);

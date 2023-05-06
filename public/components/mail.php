@@ -11,9 +11,8 @@ class Mail{
         $this->mail->Host       = 'localhost';                     //Set the SMTP server to send through
         $this->mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $this->mail->Username   = 'admin@gasify.com';                     //SMTP username
-        $this->mail->Password   = '1234567';                               //SMTP password
+        $this->mail->Password   = DEFAULT_EMAIL_PWD;                               //SMTP password
         $this->mail->Port       = 25;                                    //TCP port (25) to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
         //Recipients
         $this->mail->setFrom($from, "Gasify (Pvt.Ltd.)");    //Add a recipient
         $this->mail->addAddress($to);

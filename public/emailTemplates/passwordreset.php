@@ -134,7 +134,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
-  <h1 style="margin: 0px; line-height: 140%; text-align: left; word-wrap: break-word; font-family: Bitter; font-size: 22px; font-weight: 400;">Hi John,</h1>
+  <h1 style="margin: 0px; line-height: 140%; text-align: left; word-wrap: break-word; font-family: Bitter; font-size: 22px; font-weight: 400;">Hi {RECIEVER_NAME},</h1>
 
       </td>
     </tr>
@@ -161,7 +161,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
 <div align="center">
-    <a href="https://localhost/mvc/verifymyemail/" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #fc9b44; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+    <a href="{RESET_LINK}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #fc9b44; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">Reset Your Password<br /></span></span>
     </a>
 </div>

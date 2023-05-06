@@ -194,8 +194,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <div style="font-family: 'Montserrat',sans-serif; font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
     <ul>
-<li style="line-height: 19.6px;"><strong>Email : </strong>{RECIEVER_EMAIL}</li>
-<li style="line-height: 19.6px;"><strong>password : </strong>{RECIEVER_PASSWORD}</li>
 </ul>
   </div>
 
