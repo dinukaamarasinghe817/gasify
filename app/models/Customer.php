@@ -656,8 +656,8 @@ class Customer extends Model{
     //selected products total weight(only cylinders) for check quota is exceed or not
     public function products_total_weight(){
         $order_products = $_SESSION['order_products'];      //customer selected products array in session
-
         $sum_of_weights = 0;
+
         foreach ($order_products as $order_product){
             $product_id = $order_product['product_id'];
             $qty = $order_product['qty'];
@@ -665,10 +665,12 @@ class Customer extends Model{
             //get details of each selected product
             $result3 = $this->Query("SELECT * FROM product WHERE product_id = $product_id AND type = 'cylinder'");
             $row3 = mysqli_fetch_assoc($result3);
-            $item_weight = $row3['weight'];
+            if($row3 != null){
+                $item_weight = $row3['weight'];
+                $product_total_weight = $item_weight * $qty;    //one product total weight
+                $sum_of_weights = $sum_of_weights + $product_total_weight;  //total products weight
+            }
 
-            $product_total_weight = $item_weight * $qty;    //one product total weight
-            $sum_of_weights = $sum_of_weights + $product_total_weight;  //total products weight
 
         }
 
