@@ -361,6 +361,28 @@ class Customer extends Model{
             $error = "All input fields are required!";
         }
 
+        // sending a mail notification
+        // order information
+        $order = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
+        // customer information
+        $customer = mysqli_fetch_assoc($this->read('users',"user_id = ".$order['customer_id']));
+        // get template
+        $mailbody = file_get_contents('./emailTemplates/ordercanceled.php');
+        // prepare replacements
+        $swap_reorder = array(
+            "{RECIEVER_NAME}"=> $customer['first_name'].' '.$customer['last_name'],
+            "{ORDER_ID}"=> $order_id,
+            "{ORDER_LINK}"=> BASERURL.'/orders/customer_myreservation/'.$order_id
+        );
+        // replace
+        foreach(array_keys($swap_reorder) as $key){
+            if(strlen($key) > 2 && trim($key) != ""){
+                $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+            }
+        }
+        // create mail instance
+        $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],'Gasify : Order Status',$mailbody,$link=null);
+        $mail->send();
         return $error;
     }
 
