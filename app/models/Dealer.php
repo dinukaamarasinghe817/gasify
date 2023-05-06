@@ -363,7 +363,7 @@ class Dealer extends Model
         $swap_reorder = array(
             "{RECIEVER_NAME}"=> $customer['first_name'].' '.$customer['last_name'],
             "{ORDER_ID}"=> $order_id,
-            "{ORDER_LINK}"=> BASERURL.'/orders/customer_myreservation/'.$order_id
+            "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$order_id
         );
         // replace
         foreach(array_keys($swap_reorder) as $key){
