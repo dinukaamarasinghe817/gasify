@@ -69,8 +69,19 @@ class Order{
                                 <td><strong>Total</strong></td>
                                 <td><strong>Rs.'.$totalamount.'</strong></td>
                             </tr>
-                            </tbody>
-                        </table>
+                            </tbody></table>';
+
+                            if(mysqli_num_rows($tuple['reviews']) > 0){
+                                echo "<h3 class='reviewhead'>Reviews</h3>";
+                                while($review = mysqli_fetch_assoc($tuple['reviews'])){
+                                    $time = date('Y, M j, h:i a',strtotime($review['date'].' '.$review['time']));
+                                    echo '<div class="review">
+                                    <p>'.$review['message'].'</p>
+                                    <p class="gray">'.$time.'</p>
+                                    </div>';
+                                }
+                            }
+                        echo '
                     </div>
                 </div>
             </li>';

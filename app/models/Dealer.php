@@ -670,7 +670,10 @@ class Dealer extends Model
                 array_push($products, $product);
                 $total_amount += $product['unit_price']*$product['quantity'];
             }
-            array_push($orders, ['order'=>$order, 'products'=>$products, 'payment'=>$order['payment_verification'], 'stock'=>$stockverification, 'total_amount'=>$total_amount]);
+
+            // get the reviews for the order
+            $reviews = $this->read('review',"order_id = $id AND review_type = 'Dealer'","date DESC, time DESC");
+            array_push($orders, ['order'=>$order, 'products'=>$products, 'reviews'=>$reviews, 'payment'=>$order['payment_verification'], 'stock'=>$stockverification, 'total_amount'=>$total_amount]);
         }
         return $orders;
     }//
