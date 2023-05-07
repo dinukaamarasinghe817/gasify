@@ -34,7 +34,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         echo "<option value=$bank id=$bank name='bank'>$bank</option>";
                                         
                                     }
-                 echo   '<input name="Acc_no" placeholder="Account No" onkeyup = "lettersOnly(this)" >
+                 echo   '<input name="branch" placeholder="Branch">
+                         <input name="Acc_no" placeholder="Account No" onkeyup = "lettersOnly(this)" >
                         <button type="submit" class="submit_btn" onclick ="customerprompt(\'confirmcancellation\',\''.BASEURL.'/Orders/refund_bank_details/'.$order_id.'\',\''.BASEURL.'/Orders/customer_myreservation/'.$order_id.'\'); return false;">Submit</button>
                     </form>
                 

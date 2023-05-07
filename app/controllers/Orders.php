@@ -65,8 +65,6 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
-       
-
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
         $data['confirmation'] = '';
 
@@ -136,10 +134,11 @@ class Orders extends Controller{
         }else{
             $bank = -1;
         } 
+        $branch = $_POST['branch'];
         $Acc_no = $_POST['Acc_no'];
         
        
-        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$Acc_no);
+        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
         if(!empty($data['refund_detail_error'])){
             $this->customer_cancelreservation($order_id,$data['refund_detail_error']);
         }

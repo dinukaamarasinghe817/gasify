@@ -174,74 +174,54 @@ class Customer extends Model{
             WHERE r.customer_id = '{$customer_id}' and r.order_id = '{$order_id}'");
 
             if(mysqli_num_rows($result1) > 0){
-                    $row1=mysqli_fetch_assoc($result1);
-                    //get products details for selected order
-                    $result2 = $this->Query("SELECT p.name as product_name, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price,p.image as product_image,p.weight as product_weight 
-                    FROM reservation_include r 
-                    INNER JOIN product p ON r.product_id = p.product_id 
-                    INNER JOIN company c ON p.company_id = c.company_id 
-                    WHERE r.order_id = '{$order_id}'");
+                $row1=mysqli_fetch_assoc($result1);
+                //get products details for selected order
+                $result2 = $this->Query("SELECT p.name as product_name, c.name as company_name, r.quantity as quantity, r.unit_price as unit_price,p.image as product_image,p.weight as product_weight 
+                FROM reservation_include r 
+                INNER JOIN product p ON r.product_id = p.product_id 
+                INNER JOIN company c ON p.company_id = c.company_id 
+                WHERE r.order_id = '{$order_id}'");
 
-                    $total_amount = 0;
-                    $sum_of_weights = 0;
-                    $products = array();
-                    while($row2 = mysqli_fetch_assoc($result2)){
-                        $quantity = $row2['quantity'];
-                        $unit_price = $row2['unit_price'];
-                        $item_weight = $row2['product_weight'];
-                        $amount = $quantity * $unit_price;
-                        $total_amount = $total_amount + $amount;
-                        $product_total_weight = $quantity * $item_weight;
-                        $sum_of_weights = $sum_of_weights + $product_total_weight;
-                        array_push($products,$row2);
+                $total_amount = 0;
+                $sum_of_weights = 0;
+                $products = array();
+                while($row2 = mysqli_fetch_assoc($result2)){
+                    $quantity = $row2['quantity'];
+                    $unit_price = $row2['unit_price'];
+                    $item_weight = $row2['product_weight'];
+                    $amount = $quantity * $unit_price;
+                    $total_amount = $total_amount + $amount;
+                    $product_total_weight = $quantity * $item_weight;
+                    $sum_of_weights = $sum_of_weights + $product_total_weight;
+                    array_push($products,$row2);
+                
                     
-                        
-                    }
+                }
 
-                    // //calculate delivery charges
-                    // if($row1['collecting_method'] == "Pickup"){
-                    //     $delivery_charge = NULL;
-                    // }else{
-                    //     $order_min_distance = $row1['min_distance'];  //get minimum and maximum distance in reservation table
-                    //     $order_max_distance = $row1['max_distance'];
-                    
-                    //     //get delivery charges details from delivery_charge table
-                    //     $result6 = $this->Query("SELECT * FROM delivery_charge");
-                    //     while($row6 = mysqli_fetch_assoc($result6)){
-                    //         $min_distance = $row6['min_distance']; 
-                    //         $max_distance = $row6['max_distance'];
-                    //         $charge_per_kilo = $row6['charge_per_kg'];
 
-                    //         //check customer distance range
-                    //         if($order_min_distance==$min_distance && $order_max_distance == $max_distance){  
-                    //             $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
-                    //         }
-                    //     }
-                    // }
+                //get reviews for selected order
+                $result3 = $this->Query("SELECT * FROM review WHERE  order_id = '{$order_id}' ORDER BY date DESC LIMIT 3");
+                while($row3 = mysqli_fetch_assoc($result3)){
+                    array_push($reviews,$row3);
+                }
 
-                    //get reviews for selected order
-                    $result3 = $this->Query("SELECT * FROM review WHERE  order_id = '{$order_id}' ORDER BY date DESC LIMIT 3");
-                    while($row3 = mysqli_fetch_assoc($result3)){
-                        array_push($reviews,$row3);
-                    }
+                //get delivery person details for selected order
+                $result4 =$this->Query("SELECT concat(users.first_name,' ' ,users.last_name ) as delivery_name
+                FROM reservation
+                INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
+                INNER JOIN users ON reservation.delivery_id = users.user_id
+                WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
 
-                    //get delivery person details for selected order
-                    $result4 =$this->Query("SELECT concat(users.first_name,' ' ,users.last_name ) as delivery_name
-                    FROM reservation
-                    INNER JOIN dealer ON reservation.dealer_id = dealer.dealer_id
-                    INNER JOIN users ON reservation.delivery_id = users.user_id
-                    WHERE reservation.customer_id = '{$customer_id}' and reservation.order_id = '{$order_id}'");
-
-                    $delivery = array();
-                    while($row4 = mysqli_fetch_assoc($result4)){
-                        array_push($delivery,$row4);
-                    }
+                $delivery = array();
+                while($row4 = mysqli_fetch_assoc($result4)){
+                    array_push($delivery,$row4);
+                }
                 
                 
-                    array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews,'delivery'=>$delivery]);
+                array_push($myreservation,['order'=>$row1,'products'=>$products,'total_amount'=>$total_amount,'reviews'=> $reviews,'delivery'=>$delivery]);
                 
         
-        }
+            }
 
         return $myreservation;
     }
@@ -306,7 +286,7 @@ class Customer extends Model{
     }
 
     //cancel reservation option(insert refund details and update reservation status)
-    public function add_refund_details($order_id, $bank,$Acc_no){
+    public function add_refund_details($order_id, $bank,$branch,$Acc_no){
        
         $error = "";
         //set current transaction
@@ -314,10 +294,10 @@ class Customer extends Model{
         $cancel_time = date('H:i:s');
         $cancel_date = date('Y-m-d');
        
-        //check bank and acc no fields are empty or not
-        if($bank != -1 && !empty($Acc_no)){
+        //check bank,branch and acc no fields are empty or not
+        if($bank != -1 && !empty($branch) && !empty($Acc_no)){
             //update reservation table with status and refund details relevant order
-            $this->update('reservation',['bank'=>$bank,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time,'refund_verification'=>'Pending'],
+            $this->update('reservation',['bank'=>$bank,'branch'=>$branch,'acc_no'=>$Acc_no,'order_state'=>"Canceled",'cancel_date'=>$cancel_date,'cancel_time'=>$cancel_time,'refund_verification'=>'Pending'],
             'order_id='.$order_id);
 
             //check and update the quota if it is active and canceled reservation is placed during this month
@@ -334,25 +314,31 @@ class Customer extends Model{
             //if the reservation is placed during the current month
             if (date('m-Y', strtotime($place_date)) === $current_month . '-' . $current_year) {
                 $result2 = $this->Query("SELECT r.quantity,r.product_id,p.company_id,p.weight FROM reservation_include r INNER JOIN product p ON p.product_id = r.product_id WHERE r.order_id = '{$order_id}' AND p.type = 'cylinder'");
-                $total_weight = 0;
-                while($row2 = mysqli_fetch_assoc($result2)){
-                    $company_id = $row2['company_id'];
-                    $qty = $row2['quantity'];
-                    $item_weight = $row2['weight'];
-                    $total_weight = $total_weight + $item_weight*$qty;
-                }
-                $result4 = $this->Query("SELECT state FROM quota WHERE company_id = '{$company_id}' AND customer_type='{$customer_type}'");
-                $row4 = mysqli_fetch_assoc($result4);
-                $quota_state = $row4['state'];
+                $row2 = mysqli_fetch_assoc($result2);
+                if($result2 != NULL){
+                    if($row2 != NULL){
+                        $total_weight = 0;
+                        while( $row2){
+                            $company_id = $row2['company_id'];
+                            $qty = $row2['quantity'];
+                            $item_weight = $row2['weight'];
+                            $total_weight = $total_weight + $item_weight*$qty;
+                            
+                        }
+                        $result4 = $this->Query("SELECT state FROM quota WHERE company_id = '{$company_id}' AND customer_type='{$customer_type}'");
+                        $row4 = mysqli_fetch_assoc($result4);
+                        $quota_state = $row4['state'];
 
-                //if quota is active then increase remaining amount according to reservation cylinder weight
-                if($quota_state == "ON"){
-                    $result5 = $this->Query("SELECT remaining_amount FROM customer_quota WHERE customer_id = '{$customer_id}' AND company_id = '{$company_id}'");
-                    $row5 = mysqli_fetch_assoc($result5);
-                    $remaining_amount = $row5['remaining_amount'];
-                    $new_remaining_amount =  $remaining_amount + $total_weight;
+                        //if quota is active then increase remaining amount according to reservation cylinder weight
+                        if($quota_state == "ON"){
+                            $result5 = $this->Query("SELECT remaining_amount FROM customer_quota WHERE customer_id = '{$customer_id}' AND company_id = '{$company_id}'");
+                            $row5 = mysqli_fetch_assoc($result5);
+                            $remaining_amount = $row5['remaining_amount'];
+                            $new_remaining_amount =  $remaining_amount + $total_weight;
 
-                    $this -> update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id=' .$customer_id , 'company_id=' .$company_id); 
+                            $this -> update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id=' .$customer_id , 'company_id=' .$company_id); 
+                        }
+                    }
                 }
 
             }
