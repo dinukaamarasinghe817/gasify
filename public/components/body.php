@@ -1219,7 +1219,7 @@ class Body{
                     $pool .=  '<tr>
                     <td>'.$row['order_id'].'</td>
                     <td>'.$row['first_name'].' '.$row['last_name'].'</td>
-                    <td>'.$row['city'].','.$row['street'].'</td>
+                    <td>'.$row['street'].','.$row['city'].'</td>
                     <td>'.$row['contact_no'].'</td>
                     <td>'.$row['place_date'].'</td>
                     <td>'.$row['place_time'].'</td>
