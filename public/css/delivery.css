@@ -1424,6 +1424,54 @@ select{
   .progress-text{
     color: white;
     position:absolute;
-    margin-left: 100px;
+    margin-left: 150px;
   }
-
+  .collapsible {
+    display: flex;
+    background-color:var(--button-orange-hover);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    margin-top: 1%;
+  }
+  .orderColumn{
+    width: 12.5%;
+    height: 100%;
+  }
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+  .currentContainer{
+    border-radius: 8px;
+    color:white;
+    justify-content: center;
+    display:flex;
+    align-items: center;
+    margin-left: 1%;
+    width: 30%;
+    height: 95%;
+    background-color: var(--navmenu-orange-dark);
+  }
+  .remainingContainer{
+    border-radius: 8px;
+    justify-content: center;
+    display:flex;
+    align-items: center;
+    margin-left: 1%;
+    width: 30%;
+    height: 95%;
+    background-color: var(--navmenu-orange-dark);
+  }
