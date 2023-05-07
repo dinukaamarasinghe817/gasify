@@ -242,7 +242,11 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                from stock_include i 
+                inner join stock_request r on i.stock_req_id = r.stock_req_id 
+                inner join product p on i.product_id = p.product_id
+                where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
                 if(mysqli_num_rows($query2)>0) {
                     while($row2=mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -266,7 +270,11 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                from stock_include i 
+                inner join stock_request r on i.stock_req_id = r.stock_req_id
+                inner join product p on i.product_id = p.product_id
+                where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
                 if(mysqli_num_rows($query2)>0) {
                     while($row2=mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -290,7 +298,11 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                from stock_include i 
+                inner join stock_request r on i.stock_req_id = r.stock_req_id
+                inner join product p on i.product_id = p.product_id
+                where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
                 if(mysqli_num_rows($query2)>0) {
                     while($row2=mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
