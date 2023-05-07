@@ -843,6 +843,9 @@ td button:hover{
     position: sticky;
     top: 0;
 }
+.styled-table .numbers{
+    text-align: right;
+}
 /* .styled-table thead td{
     display: table;
     width: 100%;
@@ -1198,6 +1201,8 @@ label{
     justify-content: center;
     align-items: center;
 }
+
+
 
 /* customer-order-confirmations */
 .confirmation{

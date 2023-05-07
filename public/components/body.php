@@ -654,22 +654,28 @@ class Body{
                 <h2>Recent Reviews</h2>
                 <div class="contents">';
                     $reviews = $data['reviews'];
-                    while($review = mysqli_fetch_assoc($reviews)){
-                        echo '<div class="review">
-                        <img src="'.BASEURL.'/img/profile/'.$review['image'].'" alt="">
-                        <div class="review-info">
-                            <div class="name-time">
-                                <h3>'.$review['customer_name'].'</h3>
-                                <span>'.date('F j, Y, g:i A', strtotime($review['date'].' '.$review['time'])).'</span>
-                            </div>
-                            <p>'.$review['message'].'</p>';
-                            if($review['review_type'] == 'Dealer'){
-                                echo '<p><strong>Dealer : </strong><a href="'.BASEURL.'/profile/preview/dealer/'.$review['dealer_id'].'/profile/admin/dealerprofile" style="color: #1672fc"><strong>'.$review['dealer_name'].'</strong></a></p>';
-                            }else{
-                                echo '<p><strong>Delivery : </strong><a href="'.BASEURL.'/profile/preview/delivery/'.$review['delivery_id'].'/profile/admin/deliveryprofile" style="color: #1672fc"><strong>'.$review['delivery_name'].'</strong></a></p>';
-                            }
-                        echo '</div>
-                    </div>';
+                    if(mysqli_num_rows($reviews) > 0){
+                        while($review = mysqli_fetch_assoc($reviews)){
+                            echo '<div class="review">
+                            <img src="'.BASEURL.'/img/profile/'.$review['image'].'" alt="">
+                            <div class="review-info">
+                                <div class="name-time">
+                                    <h3>'.$review['customer_name'].'</h3>
+                                    <span>'.date('F j, Y, g:i A', strtotime($review['date'].' '.$review['time'])).'</span>
+                                </div>
+                                <p>'.$review['message'].'</p>';
+                                if($review['review_type'] == 'Dealer'){
+                                    echo '<p><strong>Dealer : </strong><a href="'.BASEURL.'/profile/preview/dealer/'.$review['dealer_id'].'/profile/admin/dealerprofile" style="color: #1672fc"><strong>'.$review['dealer_name'].'</strong></a></p>';
+                                }else{
+                                    echo '<p><strong>Delivery : </strong><a href="'.BASEURL.'/profile/preview/delivery/'.$review['delivery_id'].'/profile/admin/deliveryprofile" style="color: #1672fc"><strong>'.$review['delivery_name'].'</strong></a></p>';
+                                }
+                            echo '</div>
+                        </div>';
+                        }
+                    }else{
+                        echo '<img src="'.BASEURL.'/public/img/placeholders/noreviews.jpg">';
+                        echo '<h3>No recent reviews to show</h3>';
+                        echo '<p class="gray">recent reviews will show up here. stay tuned!</p>';
                     }
                 echo '</div>
             </div>

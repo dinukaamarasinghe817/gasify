@@ -262,8 +262,66 @@ class Admin extends Model
         return $data;
     }
 
-    public function getReportInfo($start_date,$to_date,$order_by){
+    public function getReportInfo($start_date,$end_date,$filter_by){
+        // company name, product name, total sale (total revenue), current stock, monthly sale, enough time(months)
+        $user_id = $_SESSION['user_id'];
+        if($start_date == null){
+            $a = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+            $start_date = $a['date_joined'];
+        }
+        $products = array();
+        if($filter_by != 'all'){
+            $query1 = $this->read('product',"company_id = $filter_by");
+        }else{
+            $query1 = $this->read('product');
+        }
+        while($row1 = mysqli_fetch_assoc($query1)){
+            // stock of terminals
+            $row2 = mysqli_fetch_assoc($this->read('company',"company_id = ".$row1['company_id']));
+            $total_stock = $row1['quantity']; $total_sale = 0;
+            // stock of distributors
+            $query3 = $this->read('distributor_keep',"product_id = ".$row1['product_id']);
+            while($row3 = mysqli_fetch_assoc($query3)){
+                $total_stock += $row3['quantity'];
+            }
+            // stock of dealers
+            $query3 = $this->read('dealer_keep',"product_id = ".$row1['product_id']);
+            while($row3 = mysqli_fetch_assoc($query3)){
+                // $total_sale += $row3['total_sale'];
+                $total_stock += $row3['quantity'];
+            }
 
+            // total revenue
+            $total_revenue = 0;
+            $query6 = $this->read('reservation',"place_date >= '$start_date' AND place_date <= '$end_date'");
+            while($row6 = mysqli_fetch_assoc($query6)){
+                $query4 = $this->read('reservation_include',"product_id = ".$row1['product_id']." AND order_id = ".$row6['order_id']);
+                while($row4 = mysqli_fetch_assoc($query4)){
+                    $total_revenue += $row4['quantity']*$row4['unit_price'];
+                    $total_sale += $row4['quantity'];
+                }
+            }
+
+            // monthly sale
+            $timediff = strtotime($end_date) - strtotime($start_date);
+            $monthly_sale = floor($total_sale/($timediff/60*60*24*30));
+            
+            // enough time
+            if($monthly_sale != 0){
+                $enough_for = floor($total_stock/$monthly_sale);
+            }else{
+                $enough_for = PHP_INT_MAX;
+            }
+
+            array_push($products,['company'=>$row2['name'],'product_name'=>$row1['name'],'product_image'=>$row1['image'],'total_sale'=>$total_sale,'total_revenue'=>number_format($total_revenue,2),'current_stock'=>$total_stock,'monthly_sale'=>$monthly_sale,'availability'=>$enough_for]);
+            
+        }
+        $data['companies'] = $this->read('company');
+        $data['table_info'] = $products;
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['filter_by'] = $filter_by;
+        return $data;
     }
 
     public function dashboard($user_id,$option,$option2){

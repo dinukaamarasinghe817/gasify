@@ -77,6 +77,8 @@
 }
 .graph .reviews{
     padding-right: 0px;
+    border: 2px solid var(--navmenu-gray-dark);
+    border-radius: 5px;
 }
 .graph .variable .chart{
     /* width: 300px; */
@@ -86,9 +88,16 @@
     max-height: 400px;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    background-color: var(--table-gray);
+    display: flex;
+    flex-direction: column;
+    /* background-color: var(--table-gray); */
+    align-items: center;
+    justify-content: center;
 }
-
+.reviews .contents img{
+    width: 200px;
+    height: auto !important;
+}
 .reviews h2{
     margin: 5px;
 }
@@ -448,6 +457,14 @@ margin: 0;
     flex-direction: column;
     gap: 10px;
 }
+
+/* reports */
+.littleproduct{
+    height: 120px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: var(--table-gray);
+}
 /* .content-data .chart canvas#bargraph2,
 .content-data .chart canvas#bargraph1{
     max-height: 280px;
@@ -476,6 +493,18 @@ margin: 0;
     padding: 0px 0px;
     margin: 0px;
     padding: 5px;
+}
+/* Reports */
+.content-data.reports{
+    padding-top: 0px;
+}
+.content-data.reports .pdfform{
+    margin-top: 20px;
+    margin-right: 20px;
+    display: flex;
+}
+.content-data.reports .pdfform button{
+    margin-left: auto;
 }
 
 .verification{
