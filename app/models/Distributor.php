@@ -871,15 +871,13 @@ class Distributor extends Model
     public function AllSellProducts($option) {
         $user_id = $_SESSION['user_id'];  //distirbutor id
 
-        $today = date('Y-m-d');
+        // $today = date('Y-m-d');
         if($option == 'today'){
-            $start_date = $today;
-            $end_date = $today;
-
+            $start_date = date('Y-m-d');
+            $end_date = date('Y-m-d');
         }elseif($option == '7day'){
             $start_date = date('Y-m-d', strtotime('-7 days'));
-            $end_date = date('Y-m-d', strtotime('-1 days'));
-        
+            $end_date = date('Y-m-d', strtotime('-1 days'));        
         }else{
             $start_date = date('Y-m-d', strtotime('-30 days'));
             $end_date = date('Y-m-d', strtotime('-1 days'));
@@ -905,29 +903,31 @@ class Distributor extends Model
         return $product_quantites;
     }
 
-    // all sell products rpeort details 
+    // all sell products report details 
+    // public function AllSellProductsDetails($start_date, $end_date) {
     public function AllSellProductsDetails($option) {
         $user_id = $_SESSION['user_id'];  //distirbutor id
 
-        $today = date('Y-m-d');
-        // $duration = 0;
+        // if($start_date == 'today' && $end_date == 'today'){
+        //     $start_date = date('Y-m-d');
+        //     $end_date = date('Y-m-d');
+        // }elseif($start_date == '7day' && $end_date == '7day'){
+        //     $start_date = date('Y-m-d', strtotime('-7 days'));
+        //     $end_date = date('Y-m-d', strtotime('-1 days')); 
+        // }else{
+        //     $start_date = date('Y-m-d', strtotime('-30 days'));
+        //     $end_date = date('Y-m-d', strtotime('-1 days'));
+            
+        // }
         if($option == 'today'){
-            $start_date = $today;
-            $end_date = $today;
-
-            // $duration = $today;
-
+            $start_date = date('Y-m-d');
+            $end_date = date('Y-m-d');
         }elseif($option == '7day'){
             $start_date = date('Y-m-d', strtotime('-7 days'));
-            $end_date = date('Y-m-d', strtotime('-1 days'));
-
-            // $duration = $start_date + " - " + $end_date;
-        
+            $end_date = date('Y-m-d', strtotime('-1 days'));        
         }else{
             $start_date = date('Y-m-d', strtotime('-30 days'));
             $end_date = date('Y-m-d', strtotime('-1 days'));
-
-            // $duration = $start_date + " - " + $end_date;
         }
 
         $product_quantites = array();
@@ -940,14 +940,10 @@ class Distributor extends Model
 
         if(mysqli_num_rows($query1)>0) {
             while($row1=mysqli_fetch_assoc($query1)) {
-                $product_id = $row1['product_id'];
-                $product_name = $row1['name'];
-                $quantity = $row1['quantity'];
-                // array_push($product_quantites, ['quantites'=>$row1]);
                 array_push($product_quantites, $row1);
             }
         }
-        return ['duration'=> $option, 'quantites'=>$product_quantites];
+        return ['start'=> $start_date, 'end'=> $end_date, 'quantites'=>$product_quantites];
     }
 
 
