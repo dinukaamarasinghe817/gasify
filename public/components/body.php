@@ -1020,15 +1020,30 @@ class Body{
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
             <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" style="width:100%;height:100%;color:white">Pool</div></a>
             <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" style="width:100%;height:100%;color:black;" >Current deliveries</div></a>
+            </div>';
+            if(isset($data["pool"])){
+            echo'<div  class="bar" style="width:97%;height:7%;display:flex;align-items: center;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            <div class="currentContainer">
+                <label style="color:white;margin-right:2%">Total capacity : </label>
+                <label style="color:white">'.$data['weight_limit'].'KG</label>
             </div>
-            <div  class="bar" style="width:97%;height:7%;display:flex;flex-direction:row-reverse;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            <div class="remainingContainer">
+                <label style="color:white;margin-right:2%">Remaining capacity</label>
+                <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
+            </div>
             <div class="container">
-                <div class="progress-bar__container">
-                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
-                    <label class="progress-text">'.(($data['total_weight']/$data['weight_limit'])*100).'%</label>
+                <div class="progress-bar__container" style="overflow: hidden"">
+                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
+                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else{
+                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }
+                    echo'
                 </div>
-            </div>
-         
+            </div>         
          </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
         echo '<table class="styled-table" style="margin-top:0.3%">
@@ -1043,100 +1058,122 @@ class Body{
                                 <th>Distance</th>
                                 <th>Charge</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody style="overflow-y:auto;height:100%">';
-        if(isset($data["pool"])){
+                                <tbody style="overflow-y:auto;height:100%">';
+        if(isset($data["pool"])) {
             $result=$data['pool'];
             $pool = "";
+            /*$pool .=  '<button class="collapsible" ">
+                                    <div class="orderColumn">Name</div>
+                                    <div class="orderColumn">Address</div>
+                                    <div class="orderColumn">Contact no</div>
+                                    <div class="orderColumn">Placed date</div>
+                                    <div class="orderColumn">Placed time</div>
+                                    <div class="orderColumn">Distance</div>
+                                    <div class="orderColumn">Charge</div>
+                                    <div class="orderColumn"></div></div>
+                                    <label></label>
+                                </button>';*/
             $processedOrders=array();
+            $Count=1;
             foreach ($result as $row) {
-                if(!(in_array($row['order_id'],$processedOrders))){
+                
+                if(!(in_array($row['order_id'], $processedOrders))) {
                     $weight=0;
                     $charge=0;
-                    foreach($result as $row2){
-                        if($row['order_id']==$row2['order_id']){
+                    $products=array();
+                    foreach($result as $row2) {
+                        if($row['order_id']==$row2['order_id']) {
                             $weight+=$row2['quantity']*$row2['weight'];
+                            array_push($products,array($row2['name'],$row2['quantity']));
                         }
                     }
-                    foreach($data['charges'] as $row3){
-                        if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet'])) ){
+                    foreach($data['charges'] as $row3) {
+                        if(intval($row3['min_distance'])<=getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']) && $row3['max_distance']>=intval(getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']))) {
                             $charge=$row3['charge_per_kg'];
                         }
                     }
-                    array_push($processedOrders,$row['order_id']);
+
+                    array_push($processedOrders, $row['order_id']);
                     $pool .=  '<tr>
-                    <td>'.$row['order_id'].'</td>
-                    <td>'.$row['first_name'].' '.$row['last_name'].'</td>
-                    <td>'.$row['street'].','.$row['city'].'</td>
-                    <td>'.$row['contact_no'].'</td>
-                    <td>'.$row['place_date'].'</td>
-                    <td>'.$row['place_time'].'</td>
-                    <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
-                    <td>Rs.'.$weight * $charge.'</td>
-                    <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:103%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
-                    </tr>';
+                            <td>'.$row['order_id'].'</td>
+                            <td>'.$row['first_name'].' '.$row['last_name'].'</td>
+                            <td>'.$row['street'].','.$row['city'].'</td>
+                            <td>'.$row['contact_no'].'</td>
+                            <td>'.$row['place_date'].'</td>
+                            <td>'.$row['place_time'].'</td>
+                            <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
+                            <td>Rs.'.number_format($weight * $charge,2).'</td>
+                            <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:103%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
+                            <td><div onclick="collapse(this,'.$Count.')" style="width: 100%;height: 100%;color:white;border-radius:8px;text-align:center;background-color: var(--button-blue);">Show more</div></td>
+                            </tr><tr style="display:none" id="'.$Count.'row">
+                            <td colspan="10">
+                            <div class="content" id="'.$Count.'"style="display:flex;justify-content:center">';
+                                $pool.="<table class=\"styled-table\" style=\"margin-top:0.3%;width:30%\">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                        <tbody style=\"overflow-y:auto;height:100%\">";
+                            foreach($products as $prow){
+                                $pool.='<tr>
+                                    <td>'.$prow[0].'</td>
+                                    <td>'.$prow[1].'</td>
+                                </tr>';
+                            }
+                                $pool.='</tbody></table>
+                            </div>
+                            </td>
+                            </tr>';
+                    $Count+=1;
                 }
             }
             echo $pool;
-            /*foreach($result as $row){
-                //print_r($row);
-                echo
-                '<div class="Distributor_tableHead_row" id="Distributor_tableHead_row" style="background-color: transparent;height:10%;border:3px solid #90CAFF;">
-                <div class="distributor_name" id="col" style="width:25%;margin-top:1%">'.$row['first_name'].' '.$row['last_name'].'</div>
-                <div class="distributor_location" id="col" style="width:25%;margin-top:1%">'.$row['city'].$row['street'].'</div>
-                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['contact_no'].'</div>
-                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_date'].'</div>
-                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_time'].'</div>
-                <div class="accept_btn" id="col" onClick="takeJob(this)" style="width:10%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a href="../Delvery/acceptDelivery" >Accept</a></div>
-                </div>';
-            }*/
+            echo'</div></section>';
+            }
+        }else{
+            echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center;align-items:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div></section>';
         }
-        
-        echo'</div>
-        </section>';
     }   
     function currentgasdeliveries($data){
         $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         echo'
-        <script>
-                window.onload = function () {
-                    setTimeout(() => {
-                        for (let index = 0; index <100; index++) {
-                            //var width = document.getElementById(\'cprogress\').clientWidth;
-                            document.getElementById(\'cprogress\').style.width = index+"%";
-                                
-                        }
-                        
-                    }, 800);
-                        //document.getElementById(\'cprogress\').style.width = index/1000+"%";
-                        
-                    /*setTimeout(() => {
-                        for (let index = 0; index <100; index++) {
-                            //var width = document.getElementById(\'cprogress\').clientWidth;
-                            document.getElementById(\'cprogress\').style.width = index+"%";
-                            
-                        }
-                    
-                    }, 800);*/
-
-                }
-        </script>
         <section class="body-content">
          <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
          <a href="../Delvery/deliveries" style="width:48.5%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:black;background-color:white;box-sizing: border-box;border:3px solid #2d77bc;">Pool</div></a>
          <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" id="temp" style="width:100%;height:100%;color:white;background-color:#2d77bc">Current deliveries</div></a>
-         </div>
-         <div  class="bar" style="width:97%;height:7%;display:flex;flex-direction:row-reverse;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
-         <div class="container">
-         <div class="progress-bar__container">
-             <div class="cprogress" id="cprogress" onClick="fillProgress()" style="background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>
-             <label class="progress-text">'.(($data['total_weight']/$data['weight_limit'])*100).'%</label>
-         </div>
-     </div>
-         
+         </div>';
+         if(isset($data["current"])){
+         echo'<div  class="bar" style="width:97%;height:7%;display:flex;align-items: center;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            <div class="currentContainer">
+                <label style="color:white;margin-right:2%">Total capacity : </label>
+                <label style="color:white">'.$data['weight_limit'].'KG</label>
+            </div>
+            <div class="remainingContainer">
+                <label style="color:white;margin-right:2%">Remaining capacity</label>
+                <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
+            </div>
+            <div class="container">
+                <div class="progress-bar__container" style="overflow: hidden">
+                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
+                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else{
+                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }
+                    echo'
+                </div>
+            </div>
          </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">
         ';
@@ -1153,14 +1190,15 @@ class Body{
                             <th>Charge</th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                 <tbody style="overflow-y:auto;height:100%">';
-        /*if (isset($data["current"])) {
+        if (isset($data["current"])) {
             $result=$data['current'];
             $pool = "";
             $processedOrders=array();
-            //print_r()
+            $Count=0;
             foreach ($result as $row) {
                 //print_r($row);
                 if(!(in_array($row['order_id'],$processedOrders))){
@@ -1168,9 +1206,11 @@ class Body{
                     array_push($processedOrders,$row['order_id']);
                     $weight=0;
                     $charge=0;
+                    $products=array();
                     foreach($result as $row2){
                         if($row['order_id']==$row2['order_id']){
                             $weight+=$row2['quantity']*$row2['weight'];
+                            array_push($products,array($row2['name'],$row2['quantity']));
                             //$weight+=intval($row2['quantity']*floatval($row2['weight']));
                         }
                     }
@@ -1180,52 +1220,61 @@ class Body{
                         }
                     }
                     $pool .=  '<tr>
-                    <td>'.$row['order_id'].'</td>
-                    <td>'.$row['first_name'].' '.$row['last_name'].'</td>
-                    <td>'.$row['city'].','.$row['street'].'</td>
-                    <td>'.$row['contact_no'].'</td>
-                    <td>'.($row['place_date']).'</td>
-                    <td>'.$row['place_time'].'</td>
-                    <td>'.getDistance($row['city'].','.$row['street'],$row['dcity'].','.$row['dstreet']).'KM</td>
-                    <td>Rs.'.$charge*$weight.'</td>
-                    <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>';
-                    $str_time = $row['place_time'];
-                    $time = date('H:i:s');
-                    sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
-                    $placedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
-                    sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
-                    $currentTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
-                    if(($currentTime-$placedTime)<=900){
-                        $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
-                    }else{
-                        $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto;background-color:transparent" key="data[index].order_id "></div></td>';
-                    }
-                    $pool.='</tr>';
-                    
+                            <td>'.$row['order_id'].'</td>
+                            <td>'.$row['first_name'].' '.$row['last_name'].'</td>
+                            <td>'.$row['street'].','.$row['city'].'</td>
+                            <td>'.$row['contact_no'].'</td>
+                            <td>'.$row['place_date'].'</td>
+                            <td>'.$row['place_time'].'</td>
+                            <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
+                            <td>Rs.'.number_format($weight * $charge,2).'</td>
+                            <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>';
+                            $str_time = $row['place_time'];
+                            $time = date('H:i:s');
+                            sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+                            $placedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                            sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
+                            $currentTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                            if(($currentTime-$placedTime)<=900){
+                                $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
+                            }else{
+                                $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto;background-color:transparent" key="data[index].order_id "></div></td>';
+                            }
+                            $pool.='<td><div onclick="collapse(this,'.$Count.')" style="width: 100%;height: 100%;color:white;border-radius:8px;text-align:center;background-color: var(--button-blue);">Show more</div></td>
+                            </tr><tr style="display:none" id="'.$Count.'row">
+                            <td colspan="11">
+                            <div class="content" id="'.$Count.'"style="display:flex;justify-content:center">';
+                                $pool.="<table class=\"styled-table\" style=\"margin-top:0.3%;width:30%\">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                        <tbody style=\"overflow-y:auto;height:100%\">";
+                            foreach($products as $prow){
+                                $pool.='<tr>
+                                    <td>'.$prow[0].'</td>
+                                    <td>'.$prow[1].'</td>
+                                </tr>';
+                            }
+                                $pool.='</tbody></table>
+                            </div>
+                            </td>
+                            </tr>';
+                    $Count+=1;
                 }
-                
-                
             }
-            //print_r($processedOrders);
-            //echo($processedOrders);
             echo $pool;
-            //print_r($result);
-            /*foreach ($result as $row) {
-                echo
-                '<div class="Distributor_tableHead_row" id="Distributor_tableHead_row" style="background-color: transparent;height:10%;border:3px solid #90CAFF;">
-                <div class="distributor_name" id="col" style="width:25%;margin-top:1%">'.$row['first_name'].' '.$row['last_name'].'</div>
-                <div class="distributor_location" id="col" style="width:25%;margin-top:1%">'.$row['city'].$row['street'].'</div>
-                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['contact_no'].'</div>
-                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_date'].'</div>
-                <div class="distributor_contactno" id="col" style="width:15%;margin-top:1%">'.$row['place_time'].'</div>
-                <div class="delete_btn" id="delete_btn" onClick="takeJob(this)" style="width:10%;margin:auto" key="data[index].order_id ">Cancel</div>
-                </div>';
-            }
-        }*/
-
-        echo
-        '</div>
-        </section>';
+            echo'</div>';
+            echo'</section>';
+        }
+            
+        }else{
+            echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center;align-items:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div></section>';
+        }
     }
     function companyRegDealer($data){
         echo 
@@ -1537,9 +1586,9 @@ class Body{
         '<section class="body-content">
          <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
          <a href="../Delvery/reviews" style="width:97%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:white">Reviews</div></a>
-         </div>
-        <div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
+         </div>';
         if(isset($data['reviews'])){
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
             $reviews=$data['reviews'];
             $tag='';
             foreach($reviews as $row){
@@ -1553,6 +1602,11 @@ class Body{
                 </div>';
             }
             echo $tag;
+            echo'</div></section>';
+        }else{
+            echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center;align-items:center">';
+                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo '</div></section>';
         }
         
         /*echo '
@@ -1565,9 +1619,7 @@ class Body{
             </div>        
         </div>';*/
 
-        echo
-        '</div>
-        </section>';
+       
     }
 
     function notifications($data){
