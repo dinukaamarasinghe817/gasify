@@ -242,7 +242,11 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                from stock_include i 
+                inner join stock_request r on i.stock_req_id = r.stock_req_id 
+                inner join product p on i.product_id = p.product_id
+                where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
                 if(mysqli_num_rows($query2)>0) {
                     while($row2=mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -266,7 +270,11 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                from stock_include i 
+                inner join stock_request r on i.stock_req_id = r.stock_req_id
+                inner join product p on i.product_id = p.product_id
+                where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
                 if(mysqli_num_rows($query2)>0) {
                     while($row2=mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -290,7 +298,11 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price from stock_include i inner join stock_request r on i.stock_req_id = r.stock_req_id where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                from stock_include i 
+                inner join stock_request r on i.stock_req_id = r.stock_req_id
+                inner join product p on i.product_id = p.product_id
+                where r.distributor_id = '{$user_id}' and r.stock_req_id= '{$order_id}'; ");
                 if(mysqli_num_rows($query2)>0) {
                     while($row2=mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -338,7 +350,13 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
+                // $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name 
+                from purchase_include i 
+                inner join purchase_order o on i.po_id = o.po_id
+                inner join product p on i.product_id = p.product_id
+                where o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
+
                 if(mysqli_num_rows($query2)>0) {
                     while($row2= mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -444,7 +462,13 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
+                // $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name
+                from purchase_include i 
+                inner join purchase_order o on i.po_id = o.po_id 
+                inner join product p on i.product_id = p.product_id
+                where  o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
+
                 if(mysqli_num_rows($query2)>0) {
                     while($row2= mysqli_fetch_assoc($query2)) {
                         array_push($capacities, $row2);
@@ -847,15 +871,13 @@ class Distributor extends Model
     public function AllSellProducts($option) {
         $user_id = $_SESSION['user_id'];  //distirbutor id
 
-        $today = date('Y-m-d');
+        // $today = date('Y-m-d');
         if($option == 'today'){
-            $start_date = $today;
-            $end_date = $today;
-
+            $start_date = date('Y-m-d');
+            $end_date = date('Y-m-d');
         }elseif($option == '7day'){
             $start_date = date('Y-m-d', strtotime('-7 days'));
-            $end_date = date('Y-m-d', strtotime('-1 days'));
-        
+            $end_date = date('Y-m-d', strtotime('-1 days'));        
         }else{
             $start_date = date('Y-m-d', strtotime('-30 days'));
             $end_date = date('Y-m-d', strtotime('-1 days'));
@@ -880,6 +902,50 @@ class Distributor extends Model
         }
         return $product_quantites;
     }
+
+    // all sell products report details 
+    // public function AllSellProductsDetails($start_date, $end_date) {
+    public function AllSellProductsDetails($option) {
+        $user_id = $_SESSION['user_id'];  //distirbutor id
+
+        // if($start_date == 'today' && $end_date == 'today'){
+        //     $start_date = date('Y-m-d');
+        //     $end_date = date('Y-m-d');
+        // }elseif($start_date == '7day' && $end_date == '7day'){
+        //     $start_date = date('Y-m-d', strtotime('-7 days'));
+        //     $end_date = date('Y-m-d', strtotime('-1 days')); 
+        // }else{
+        //     $start_date = date('Y-m-d', strtotime('-30 days'));
+        //     $end_date = date('Y-m-d', strtotime('-1 days'));
+            
+        // }
+        if($option == 'today'){
+            $start_date = date('Y-m-d');
+            $end_date = date('Y-m-d');
+        }elseif($option == '7day'){
+            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));        
+        }else{
+            $start_date = date('Y-m-d', strtotime('-30 days'));
+            $end_date = date('Y-m-d', strtotime('-1 days'));
+        }
+
+        $product_quantites = array();
+        $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
+        FROM purchase_include pi INNER JOIN product p 
+        ON pi.product_id = p.product_id WHERE po_id IN 
+            (SELECT po_id FROM purchase_order 
+            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND po_state != 'pending') 
+            GROUP BY product_id");
+
+        if(mysqli_num_rows($query1)>0) {
+            while($row1=mysqli_fetch_assoc($query1)) {
+                array_push($product_quantites, $row1);
+            }
+        }
+        return ['start'=> $start_date, 'end'=> $end_date, 'quantites'=>$product_quantites];
+    }
+
 
 
     // reports - get totals of each product to company purchase orders
@@ -914,10 +980,11 @@ class Distributor extends Model
                 $product_id = $row1['product_id'];
                 $product_name = $row1['name'];
                 $quantity = $row1['quantity'];
-                array_push($product_quantites, ['quantity'=>$row1]);
+                array_push($product_quantites, $row1);
             }
         }
-        return $product_quantites;
+        // return $product_quantites;
+        return ['quantities'=>$product_quantites];
     }
 
 
