@@ -13,9 +13,9 @@ $sidebar = new Navigation('admin','reports');
     <div class="body-content">
         <h2>Sales Report</h2>
         <form action="<?php echo BASEURL;?>/reports/admin" class="filters" method="POST">
-                <div class="input half"><label>From</label><input type="date" name="start_date" value="<?=$data['start_date']?>"></div>
-                <div class="input half"><label>To</label><input type="date" name="end_date" value="<?=$data['end_date']?>"></div>
-                <div class="input half"><label>Filter by</label>
+                <div class="input half"><label>From</label><input type="date" name="start_date" onchange="this.form.submit()" value="<?=$data['start_date']?>" max="<?php echo $data['end_date']?>"  min="<?php echo $data['date_joined'] ?>"></div>
+                <div class="input half"><label>To</label><input type="date" name="end_date" onchange="this.form.submit()" value="<?=$data['end_date']?>" max="<?php echo date('Y-m-d')?>"  min="<?php echo $data['start_date'] ?>"></div>
+                <div class="input half"><label>Filter by Company</label>
                     <select id="city" class="dropdowndate" name="filter" class="half" onchange="this.form.submit()">';
                         <?php if($data['filter_by'] == 'all') :?>
                             <option value="all" selected >All</option>
@@ -30,6 +30,9 @@ $sidebar = new Navigation('admin','reports');
                         <?php endif; endwhile; ?>
                     </select>
                 </div>
+                <?php 
+                    $search = new Search([0,2]);
+                ?>
         </form>
         <div class="content-data reports">
             <!-- <div class="chart">
@@ -66,7 +69,7 @@ $sidebar = new Navigation('admin','reports');
                             <td>'.$row['product_name'].'</td>
                             <td class="numbers">'.$row['current_stock'].'</td>
                             <td class="numbers">'.$row['total_sale'].'</td>
-                            <td class="numbers">'.$row['total_revenue'].'</td>
+                            <td class="numbers">'.number_format($row['total_revenue'],2).'</td>
                             <td class="numbers">'.$row['monthly_sale'].'</td>
                             <td>'.$row['availability'].'</td>
                         </tr>';

@@ -265,8 +265,9 @@ class Admin extends Model
     public function getReportInfo($start_date,$end_date,$filter_by){
         // company name, product name, total sale (total revenue), current stock, monthly sale, enough time(months)
         $user_id = $_SESSION['user_id'];
+        $a = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+        $data['date_joined'] = $a['date_joined'];
         if($start_date == null){
-            $a = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
             $start_date = $a['date_joined'];
         }
         $products = array();
@@ -304,7 +305,11 @@ class Admin extends Model
 
             // monthly sale
             $timediff = strtotime($end_date) - strtotime($start_date);
-            $monthly_sale = floor($total_sale/($timediff/60*60*24*30));
+            if($timediff/60*60*24*30 == 0){
+                $monthly_sale = floor($total_sale);
+            }else{
+                $monthly_sale = floor($total_sale/($timediff/60*60*24*30));
+            }
             
             // enough time
             if($monthly_sale != 0){
@@ -313,14 +318,20 @@ class Admin extends Model
                 $enough_for = PHP_INT_MAX;
             }
 
-            array_push($products,['company'=>$row2['name'],'product_name'=>$row1['name'],'product_image'=>$row1['image'],'total_sale'=>$total_sale,'total_revenue'=>number_format($total_revenue,2),'current_stock'=>$total_stock,'monthly_sale'=>$monthly_sale,'availability'=>$enough_for]);
+            array_push($products,['product_id'=>$row1['product_id'],'company'=>$row2['name'],'product_name'=>$row1['name'],'product_image'=>$row1['image'],'total_sale'=>$total_sale,'total_revenue'=>$total_revenue,'current_stock'=>$total_stock,'monthly_sale'=>$monthly_sale,'availability'=>$enough_for]);
             
         }
+        // sorting based on the risk
+        usort($products,function($a,$b){
+            return $a['availability'] <=> $b['availability'];
+        });
+
         $data['companies'] = $this->read('company');
         $data['table_info'] = $products;
         $data['start_date'] = $start_date;
         $data['end_date'] = $end_date;
         $data['filter_by'] = $filter_by;
+        
         return $data;
     }
 
