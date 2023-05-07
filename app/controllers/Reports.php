@@ -157,15 +157,29 @@ class Reports extends Controller{
     }
 
     public function admin(){
-        $start_date = '';
-        $to_date = '';
-        $order_by = '';
-        $data = $this->model("Admin")->getReportInfo($start_date,$to_date,$order_by);
+        if(isset($_POST['start_date'])){
+            $start_date = $_POST['start_date'];
+        }else{
+            $start_date = null;
+        }
+
+        if(isset($_POST['end_date'])){
+            $end_date = $_POST['end_date'];
+        }else{
+            $end_date = date('Y-m-d');
+        }
+
+        if(isset($_POST['filter'])){
+            $filter_by = $_POST['filter'];
+        }else{
+            $filter_by = 'all';
+        }
+        $data = $this->model("Admin")->getReportInfo($start_date,$end_date,$filter_by);
         $this->view('admin/reports',$data);
     }
 
-    public function salesadmin(){
-        $data = [];
+    public function salesadmin($start_date,$end_date,$filter_by){
+        $data = $this->model("Admin")->getReportInfo($start_date,$end_date,$filter_by);
         $this->view('admin/reports/salesreport',$data);
     }
     public function salesCompany(){
