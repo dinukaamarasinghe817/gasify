@@ -18,15 +18,8 @@ $pdf->Ln();
 $pdf->Ln();
 
 $details = $data['details'];
-// $amount = $details['quantites'];
-// $amount = $details['quantites'];
-$total_quantity = 0;
-foreach ($details as $detail) {
-    $total_quantity += $detail['quantity'];
-}
-$amount = $total_quantity;
-
-
+$duration = $details['duration'];
+$quantities = $details['quantites'];
 
 $today = date('Y-m-d');
 $pdf->SetFont('Times', 'B', 12);
@@ -35,13 +28,12 @@ $pdf->SetFont('Times', '', 12);
 $pdf->Cell(90,5,": $today",0,0,'l');
 
 $current_time = date("H:i:s");
-// echo $current_time;
 
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(30,5,'Issued Time',0,0,'l');
 $pdf->SetFont('Times', '', 12);
 $pdf->Cell(0,5,": $current_time",0,0,'l');
-// $pdf->Cell(0,5,": {$details['date']}",0,0,'l');
+
 $pdf->Ln();
 $pdf->Ln();
 // $pdf->Ln();
@@ -49,7 +41,7 @@ $pdf->Ln();
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(30,5,'Time Duration',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": ",0,0,'l');
+$pdf->Cell(90,5,": $duration ",0,0,'l');
 $pdf->Ln();
 $pdf->Ln();
 $pdf->Ln();
@@ -58,11 +50,35 @@ $pdf->Ln();
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(40,5,'Product ID',0,0,'C');
 $pdf->Cell(40,5,'Product Name',0,0,'C');
-// $pdf->Cell(40,5,'Unit Price (Rs)',0,0,'C');
 $pdf->Cell(40,5,'Sold Quantity',0,0,'C');
-// $pdf->Cell(40,5,'Sub Total (Rs)',0,0,'C');
 $pdf->Ln();
 $pdf->Ln();
+
+$details = $data['details'];
+// $duration = $details['duration'];
+$quantities = $details['quantites'];
+// var_dump($quantities);
+
+
+
+$pdf->SetFont('Times', '', 12);
+foreach($quantities as $quantity){
+    $product_id = $capacity['product_id'];
+    // $product_name = $capacity['name'];
+    // $quantity = $capacity['quantity'];
+    
+
+    // $pdf->Cell(33,5,"{$capacity['product_id']}",0,0,'C');
+    $pdf->Cell(33,5,"{$product_id}",0,0,'C');
+    $pdf->Cell(33,5,"{$capacity['name']}",0,0,'C');
+    $pdf->Cell(33,5,"{$capacity['quantity']}",0,0,'R');
+    $pdf->Ln();
+}
+
+$pdf->Ln();
+
+
+
 
 
 
