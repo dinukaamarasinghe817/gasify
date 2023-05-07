@@ -72,7 +72,7 @@ class Reports extends Controller{
             $option = 'today';
         }
 
-        $data['details'] = $this->model("Distributor")->AllSellProducts($option);
+        $data['details'] = $this->model("Distributor")->AllSellProductsDetails($option);
 
         $this->view('distributor/reports/allsellproducts_pdf',$data);
     }

@@ -62,6 +62,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         <thead>
                                             <tr>
                                                 <th>Product ID</th>
+                                                <th>Product Name</th>
                                                 <th>Unit Price (Rs.)</th>
                                                 <th>Quantity</th>
                                                 <th>Total (Rs.)</th>
@@ -80,6 +81,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             $output .= '
                                                 <tr>
                                                     <td>'.$row2['product_id'].'</td>
+                                                    <td>'.$row2['product_name'].'</td>
                                                     <td>'.number_format($unit_price,2).'</td>
                                                     <td>'.$row2['quantity'].'</td>
                                                     <td>'.number_format($subtotal,2).'</td>
@@ -89,6 +91,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         $output.='
                                         <tr>
                                             <td><b>Total Amount</b></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td><b>'.number_format($total,2).'</b></td>
