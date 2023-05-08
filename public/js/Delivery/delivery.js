@@ -136,8 +136,28 @@ function fillProgress() {
     if (content.style.maxHeight) {
         content.style.maxHeight = null;
         document.getElementById(id + "row").style.display = "none";
+        const keyframes = [
+            { transform: "rotate(180deg)" },
+            { transform: "rotate(0deg)" },
+        ];
+        const options = {
+            duration: 500,
+            easing: "ease",
+            fill: "forwards",
+        };
+        const animation = div.animate(keyframes, options);
     } else {
         document.getElementById(id + "row").style.display = "table-row";
         content.style.maxHeight = content.scrollHeight + "px";
+        const keyframes = [
+            { transform: "rotate(0deg)" },
+            { transform: "rotate(180deg)" },
+        ];
+        const options = {
+            duration: 500,
+            easing: "ease",
+            fill: "forwards",
+        };
+        const animation = div.animate(keyframes, options);
     }
 }

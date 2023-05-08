@@ -1309,7 +1309,7 @@ class Body{
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                             <td>Rs.'.number_format($weight * $charge,2).'</td>
                             <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:103%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
-                            <td><img onclick="collapse(this,'.$Count.')" class="littleproduct" src="http://localhost/mvc/public/img/icons/down.png"></td>
+                            <td><img onclick="collapse(this,'.$Count.')" class="downArrow" src="http://localhost/mvc/public/img/icons/down.png"></td>
                             </tr><tr style="display:none" id="'.$Count.'row">
                             <td colspan="10">
                             <div class="content" id="'.$Count.'"style="display:flex;justify-content:center">';
