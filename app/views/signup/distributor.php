@@ -51,10 +51,10 @@
 
                             <input name="email" type="text" placeholder="Email address" required><br>
 
-                            <!-- <div class="address password">
+                            <div class="address password">
                                 <input name="password" class="half" type="password" placeholder="Password" required><br>
                                 <input name="confirmpassword" class="half" type="password" placeholder="Confirm password" required><br>
-                            </div> -->
+                            </div>
 
                             <input name="contact" type="tel" placeholder="Contact Number" required><br>
 
