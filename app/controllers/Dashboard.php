@@ -102,6 +102,7 @@
             $data['review_count']=$this->model('Delivery')->getReviewCount()['count'];
             $data['completed_orders']=$this->model('Delivery')->getTodayRevenue($delivery_id);
             $data['delivey_charge']=$this->model('Delivery')->getDeliveryCharges();
+            $data['reviews']=$this->model('Delivery')->getMostRecentReviews();
             $processedOrders = array();
             $revenue=0;
             foreach($data['completed_orders'] as $row){

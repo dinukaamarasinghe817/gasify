@@ -1063,15 +1063,17 @@ class Body{
         ' <section class="body-content">
                 <div class="Top" id="Top">
                     <div class="card">
-                        <div class="cmValue">'.$data['dispatched_count'].'</div>
-                        <div class="cmTitle">Ongoing Deliveries</div>
+                        <div class="cmValue"><h1>'.$data['dispatched_count'].'</h1></div>
+                        <div class="cmTitle">Ongoing</div>
+                        <div class="cmTitle">Deliveries</div>
                     </div>
                     <div class="card">
-                        <div class="cmValue">'.$data['completed_count'].'</div>
-                        <div class="cmTitle">Orders Delivered Today</div>
+                        <div class="cmValue"><h1>'.$data['completed_count'].'</h1></div>
+                        <div class="cmTitle">Orders Delivered</div>
+                        <div class="cmTitle">Today</div>
                     </div>
                     <div class="card">
-                        <div class="cmValue">'.$data['review_count'].'</div>';
+                        <div class="cmValue"><h1>'.$data['review_count'].'</h1></div>';
                         if($data['review_count']>1 ||$data['review_count']==0 ){
                             echo'<div class="cmTitle">Reviews</div>';
                         }else{
@@ -1080,18 +1082,38 @@ class Body{
                     echo'    
                     </div>
                     <div class="card">
-                        <div class="cmValue" style="font-size:3vw">LKR.'.number_format($data['revenue'],2).'</div>
+                        <div class="cmValue" ><h1>2423.00</h1></div>
+                        <div class="cmTitle">Rupeese</div>
                         <div class="cmTitle">Earned Today</div>
                     </div>
-                </div>
-                <div class="bottom">
+                </div>';
+                echo'<div class="bottom">
                     <div class="vehicleCard">
-                        <div class="vehicleTitle" style="width:100%;">My Vehicle</div>
-                        <div class="vehicleNo" style="width:100%;">'.$data['vehicle_no'].'</div>
-                        <div class="vehicleNo" >Weight limit : '.$data['weight_limit'].'KG'.'</div>
+                        <div class="recentReviewsTopic"><h2>Recent reviews</h2></div>';
+                        if(isset($data['reviews'])){
+                            $tag="";
+                            foreach($data['reviews'] as $row){
+                                $tag.='<div class="reviewContent">
+                                        <div class="review_row">
+                                            <img class="review_profile" src = "'.BASEURL.'/public/img/profile/'.$row['image'].'">
+                                            <div class="review_content">
+                                                <div class="name_time" >
+                                                    <h3 style="color:black">'.$row['name'].'</h3> 
+                                                    <span style="color:black">'.date('F j, Y, g:i A', strtotime($row['date'].' '.$row['time'])).'</span>   
+                                                </div>
+                                                <div class="review">'.$row['message'].'</div>
+                                            </div>
+                                        </div>
+                            
+                                    </div>';
+                            }
+                            echo $tag;
+                        }
+                        
+                    echo'
                     </div>
                     <div class="salesChart">';
-                        echo'<div class="deliveryChargesTopic">Delivery charges</div>';
+                        echo'<div class="deliveryChargesTopic"><h2>Delivery charges</h2></div>';
                         if(isset($data['delivey_charge'])) {
                             echo'<div class="deliveryChargeContainer">';
                             echo '<table class="styled-table" style="margin-top:0.3%">
@@ -1111,32 +1133,11 @@ class Body{
                                 </tr>';
                             }
                             echo $table;
-                        }
-                        /*echo '<table class="styled-table" style="margin-top:0.3%">
-                        <thead>
-                            <tr>
-                                <th>Distance range</th>
-                                <th>Charger per KG</th>
-                            </tr>
-                        </thead>
-                                <tbody style="overflow-y:auto;height:100%">';
-                                if(isset($data['delivey_charge'])) {
-                                    $result=$data['delivey_charge'];
-                                    $table = "";
-                                    foreach($result as $row){
-                                        $table.='<tr>
-                                            <td style="color:black">'.$row['min_distance'].'-'.$row['max_distance'].'</td>
-                                            <td style="color:black">'.$row['charge_per_kg'].'</td>
-                                        </tr>';
-                                    }
-                                    echo $table;
-                                }
-                                echo'</tbody></table>';*/
-                        
-                    echo '</tbody></table></div>   
+                        }                        
+                    /*echo '</tbody></table></div>   
                     </div>
-                </div>
-        </section>';
+                </div>';*/
+        echo'</section>';
         /*'<section class="body-content">
             <div class="Top" id="Top">
             <div class="Col_1" id="Col_1">
@@ -1304,7 +1305,7 @@ class Body{
                             <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                             <td>'.$row['street'].','.$row['city'].'</td>
                             <td>'.$row['contact_no'].'</td>
-                            <td>'.$row['place_date'].'</td>
+                            <td>'.date('F j, Y', strtotime($row['place_date'].' '.$row['place_time'])).'</td>
                             <td>'.$row['place_time'].'</td>
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                             <td>Rs.'.number_format($weight * $charge,2).'</td>
@@ -1483,7 +1484,7 @@ class Body{
                             }else{
                                 $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto;background-color:transparent" key="data[index].order_id "></div></td>';
                             }
-                            $pool.='<td><img onclick="collapse(this,'.$Count.')" class="littleproduct" src="http://localhost/mvc/public/img/icons/down.png"></td>
+                            $pool.='<td><img onclick="collapse(this,'.$Count.')" class="downArrow" src="http://localhost/mvc/public/img/icons/down.png"></td>
                             </tr><tr style="display:none" id="'.$Count.'row">
                             <td colspan="11">
                             <div class="content" id="'.$Count.'"style="display:flex;justify-content:center">';
