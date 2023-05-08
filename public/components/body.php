@@ -1086,17 +1086,54 @@ class Body{
                 </div>
                 <div class="bottom">
                     <div class="vehicleCard">
-                        <div class="vehicleTitle" style="width:100%;height:10%">My Vehicle</div>
-                        <div class="vehicleNo" style="width:100%;height:50%">'.$data['vehicle_no'].'</div>
-                        <div class="btm" style="display:flex;justify-content: space-between">
-                            <div class="vehicleProp">'.$data['weight_limit'].'KG</div>
-                            <div class="vehicleProp">Rs.'.$data['cost_per_km'].'/KM</div>
-                        </div>
+                        <div class="vehicleTitle" style="width:100%;">My Vehicle</div>
+                        <div class="vehicleNo" style="width:100%;">'.$data['vehicle_no'].'</div>
+                        <div class="vehicleNo" >Weight limit : '.$data['weight_limit'].'KG'.'</div>
                     </div>
                     <div class="salesChart">';
-                        echo '<img src="';echo BASEURL.'/public/img/delivery/del.png"';echo' width="65%" height="100%" ">';
+                        echo'<div class="deliveryChargesTopic">Delivery charges</div>';
+                        if(isset($data['delivey_charge'])) {
+                            echo'<div class="deliveryChargeContainer">';
+                            echo '<table class="styled-table" style="margin-top:0.3%">
+                            <thead>
+                                <tr>
+                                    <th>Distance range (Km)</th>
+                                    <th class="tdRight">Charger per KG (Rs.)</th>
+                                </tr>
+                            </thead>
+                                    <tbody style="overflow-y:auto;height:100%">';
+                            $result=$data['delivey_charge'];
+                            $table = "";
+                            foreach($result as $row){
+                                $table.='<tr>
+                                    <td style="color:black">'.$row['min_distance'].'-'.$row['max_distance'].'</td>
+                                    <td class="tdRight" style="color:black">'.number_format($row['charge_per_kg'],2).'</td>
+                                </tr>';
+                            }
+                            echo $table;
+                        }
+                        /*echo '<table class="styled-table" style="margin-top:0.3%">
+                        <thead>
+                            <tr>
+                                <th>Distance range</th>
+                                <th>Charger per KG</th>
+                            </tr>
+                        </thead>
+                                <tbody style="overflow-y:auto;height:100%">';
+                                if(isset($data['delivey_charge'])) {
+                                    $result=$data['delivey_charge'];
+                                    $table = "";
+                                    foreach($result as $row){
+                                        $table.='<tr>
+                                            <td style="color:black">'.$row['min_distance'].'-'.$row['max_distance'].'</td>
+                                            <td style="color:black">'.$row['charge_per_kg'].'</td>
+                                        </tr>';
+                                    }
+                                    echo $table;
+                                }
+                                echo'</tbody></table>';*/
                         
-                    echo '   
+                    echo '</tbody></table></div>   
                     </div>
                 </div>
         </section>';
@@ -1166,6 +1203,11 @@ class Body{
         $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
+        echo'<script>
+            console.log("hello world");
+        
+        
+        </script>';
         echo
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">

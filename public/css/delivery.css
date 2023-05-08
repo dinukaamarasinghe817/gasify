@@ -1329,22 +1329,28 @@ select{
     color: white;
     width: 45%;
     height: 80%;
-    background-image: linear-gradient(135deg, #2d77bc,#0f5ba3);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .vehicleNo{
     margin-top: 2%;
-    height: 50%;
-    font-size:5vw;
+    font-size:2vw;
+    color: black;
     text-align: center;
 }
 .vehicleProp{
     height: 30%;
     width: 40%;
-    font-size: 3vw;
+    font-size: 2vw;
+    color: black;
     text-align: center;
 }
 .vehicleTitle{
+    color: var(--navmenu-orange-dark);
     font-size:2vw;
     text-align: center;
 }
@@ -1480,4 +1486,36 @@ select{
     width: 40px;
     border-radius: 10px;
     background-color: var(--table-gray);
+}
+.salesChart{
+    color: white;
+    width: 45%;
+    height: 80%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}.deliveryChargesTopic{
+    margin-top: 1%;
+    font-size: 1.3vw;
+    text-align: center;
+    height: 10%;
+    color: var(--navmenu-orange-dark)
+}
+.deliveryChargeContainer{
+    height: 80%;
+    width: 80%;
+    overflow-y: auto;
+    
+}
+.chargeRow{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+.chargeProperties{
+    font-size: 1.3vw;
 }

@@ -101,6 +101,7 @@
             $data['completed_count']=$this->model('Delivery')->getDeliveredOrdersCount()['count'];
             $data['review_count']=$this->model('Delivery')->getReviewCount()['count'];
             $data['completed_orders']=$this->model('Delivery')->getTodayRevenue($delivery_id);
+            $data['delivey_charge']=$this->model('Delivery')->getDeliveryCharges();
             $processedOrders = array();
             $revenue=0;
             foreach($data['completed_orders'] as $row){
