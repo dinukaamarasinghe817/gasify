@@ -671,10 +671,22 @@ class User extends Model
                     array_push($capacity,['product_id' => $row['product_id'], 'quantity' => $quantity]);
                 }
             }
-            foreach($capacity as $cap){
-                $this->update('dealer_capacity',array('capacity'=>$cap['quantity']),"dealer_id = $user_id AND product_id = ".$cap['product_id']);
+            // check whether the given capacity is lower than the current stock of the dealer.
+            $query = $this->read('dealer_keep',"dealer_id = $user_id");
+            $flag = true;
+            while($row = $query->mysqli_fetch_assoc($query)){
+                if($row['quantity'] > $_POST[$row['product_id']]){
+                    $flag = false;
+                }
             }
-            $data['toast'] = '3';
+            if($flag){
+                foreach($capacity as $cap){
+                    $this->update('dealer_capacity',array('capacity'=>$cap['quantity']),"dealer_id = $user_id AND product_id = ".$cap['product_id']);
+                }
+                $data['toast'] = '3';
+            }else{
+                $data['toast'] = '4';
+            }
         }
         return $data;
     }
