@@ -941,17 +941,54 @@ class Body{
                 </div>
                 <div class="bottom">
                     <div class="vehicleCard">
-                        <div class="vehicleTitle" style="width:100%;height:10%">My Vehicle</div>
-                        <div class="vehicleNo" style="width:100%;height:50%">'.$data['vehicle_no'].'</div>
-                        <div class="btm" style="display:flex;justify-content: space-between">
-                            <div class="vehicleProp">'.$data['weight_limit'].'KG</div>
-                            <div class="vehicleProp">Rs.'.$data['cost_per_km'].'/KM</div>
-                        </div>
+                        <div class="vehicleTitle" style="width:100%;">My Vehicle</div>
+                        <div class="vehicleNo" style="width:100%;">'.$data['vehicle_no'].'</div>
+                        <div class="vehicleNo" >Weight limit : '.$data['weight_limit'].'KG'.'</div>
                     </div>
                     <div class="salesChart">';
-                        echo '<img src="';echo BASEURL.'/public/img/delivery/del.png"';echo' width="65%" height="100%" ">';
+                        echo'<div class="deliveryChargesTopic">Delivery charges</div>';
+                        if(isset($data['delivey_charge'])) {
+                            echo'<div class="deliveryChargeContainer">';
+                            echo '<table class="styled-table" style="margin-top:0.3%">
+                            <thead>
+                                <tr>
+                                    <th>Distance range (Km)</th>
+                                    <th class="tdRight">Charger per KG (Rs.)</th>
+                                </tr>
+                            </thead>
+                                    <tbody style="overflow-y:auto;height:100%">';
+                            $result=$data['delivey_charge'];
+                            $table = "";
+                            foreach($result as $row){
+                                $table.='<tr>
+                                    <td style="color:black">'.$row['min_distance'].'-'.$row['max_distance'].'</td>
+                                    <td class="tdRight" style="color:black">'.number_format($row['charge_per_kg'],2).'</td>
+                                </tr>';
+                            }
+                            echo $table;
+                        }
+                        /*echo '<table class="styled-table" style="margin-top:0.3%">
+                        <thead>
+                            <tr>
+                                <th>Distance range</th>
+                                <th>Charger per KG</th>
+                            </tr>
+                        </thead>
+                                <tbody style="overflow-y:auto;height:100%">';
+                                if(isset($data['delivey_charge'])) {
+                                    $result=$data['delivey_charge'];
+                                    $table = "";
+                                    foreach($result as $row){
+                                        $table.='<tr>
+                                            <td style="color:black">'.$row['min_distance'].'-'.$row['max_distance'].'</td>
+                                            <td style="color:black">'.$row['charge_per_kg'].'</td>
+                                        </tr>';
+                                    }
+                                    echo $table;
+                                }
+                                echo'</tbody></table>';*/
                         
-                    echo '   
+                    echo '</tbody></table></div>   
                     </div>
                 </div>
         </section>';
@@ -1034,12 +1071,12 @@ class Body{
                 <label style="color:white">'.$data['weight_limit'].'KG</label>
             </div>
             <div class="remainingContainer">
-                <label style="color:white;margin-right:2%">Remaining capacity</label>
+                <label style="color:white;margin-right:2%">Remaining capacity : </label>
                 <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
             </div>
             <div class="container">
                 <div class="progress-bar__container" style="overflow: hidden"">
-                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
+                    <div class="cprogress" id="cprogress" ></div>';
                     if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
                         echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
                     }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
@@ -1048,8 +1085,22 @@ class Body{
                         echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
                     }
                     echo'
-                </div>
-            </div>         
+                </div>';
+                /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
+                echo'<script>
+                    const myDiv = document.getElementById("cprogress");
+                    const keyframes = [
+                    { width: "0",backgroundColor: "rgb(45,119,188)" },
+                    { width: "'.(($data['total_weight']/$data['weight_limit'])*100).'%",backgroundColor: "rgb('.$redValue.','.$blueValue.','.$greenValue.')" }
+                    ];
+                    const options = {
+                    duration: 3000,
+                    easing: "ease",
+                    fill: "forwards"
+                    };
+                    const animation = myDiv.animate(keyframes, options);                           
+                </script>';
+            echo'</div>         
          </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
         echo '<table class="styled-table" style="margin-top:0.3%">
@@ -1093,7 +1144,7 @@ class Body{
                     foreach($result as $row2) {
                         if($row['order_id']==$row2['order_id']) {
                             $weight+=$row2['quantity']*$row2['weight'];
-                            array_push($products,array($row2['name'],$row2['quantity']));
+                            array_push($products,array($row2['image'],$row2['name'],$row2['quantity']));
                         }
                     }
                     foreach($data['charges'] as $row3) {
@@ -1113,22 +1164,24 @@ class Body{
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                             <td>Rs.'.number_format($weight * $charge,2).'</td>
                             <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:103%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
-                            <td><div onclick="collapse(this,'.$Count.')" style="width: 100%;height: 100%;color:white;border-radius:8px;text-align:center;background-color: var(--button-blue);">Show more</div></td>
+                            <td><img onclick="collapse(this,'.$Count.')" class="downArrow" src="http://localhost/mvc/public/img/icons/down.png"></td>
                             </tr><tr style="display:none" id="'.$Count.'row">
                             <td colspan="10">
                             <div class="content" id="'.$Count.'"style="display:flex;justify-content:center">';
-                                $pool.="<table class=\"styled-table\" style=\"margin-top:0.3%;width:30%\">
+                                $pool.="<table class=\"styled-table\" style=\"margin-top:0.3%;width:50%\">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Name</th>
-                                        <th>Quantity</th>
+                                        <th class=\"tdRight\">Quantity</th>
                                     </tr>
                                 </thead>
                                         <tbody style=\"overflow-y:auto;height:100%\">";
                             foreach($products as $prow){
                                 $pool.='<tr>
-                                    <td>'.$prow[0].'</td>
+                                    <td><img class="littleproduct" src="http://localhost/mvc/public/img/products/'.$prow[0].'"></td>
                                     <td>'.$prow[1].'</td>
+                                    <td class="tdRight">'.$prow[2].'</td>
                                 </tr>';
                             }
                                 $pool.='</tbody></table>
@@ -1142,6 +1195,29 @@ class Body{
             echo'</div></section>';
             }
         }else{
+            echo'<div  class="bar" style="width:97%;height:7%;display:flex;align-items: center;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            <div class="currentContainer">
+                <label style="color:white;margin-right:2%">Total capacity : </label>
+                <label style="color:white">'.$data['weight_limit'].'KG</label>
+            </div>
+            <div class="remainingContainer">
+                <label style="color:white;margin-right:2%">Remaining capacity : </label>
+                <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
+            </div>
+            <div class="container">
+                <div class="progress-bar__container" style="overflow: hidden"">
+                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
+                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else{
+                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }
+                    echo'
+                </div>
+            </div>         
+         </div>';
             echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center;align-items:center">';
                 echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
                 echo '</div></section>';
@@ -1164,19 +1240,35 @@ class Body{
                 <label style="color:white">'.$data['weight_limit'].'KG</label>
             </div>
             <div class="remainingContainer">
-                <label style="color:white;margin-right:2%">Remaining capacity</label>
+                <label style="color:white;margin-right:2%">Remaining capacity : </label>
                 <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
             </div>
             <div class="container">
-                <div class="progress-bar__container" style="overflow: hidden">
-                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
-                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
-                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
-                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else{
-                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }
+                <div class="progress-bar__container" style="overflow: hidden"">
+                <div class="cprogress" id="cprogress" ></div>';
+                if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                    echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                    echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                }else{
+                    echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                }
+                echo'
+            </div>';
+            /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
+            echo'<script>
+                const myDiv = document.getElementById("cprogress");
+                const keyframes = [
+                    { width: "0",backgroundColor: "rgb(45,119,188)" },
+                    { width: "'.(($data['total_weight']/$data['weight_limit'])*100).'%",backgroundColor: "rgb('.$redValue.','.$blueValue.','.$greenValue.')" }
+                ];
+                const options = {
+                    duration: 3000,
+                    easing: "ease",
+                    fill: "forwards"
+                };
+                const animation = myDiv.animate(keyframes, options);
+                </script>';
                     echo'
                 </div>
             </div>
@@ -1216,7 +1308,7 @@ class Body{
                     foreach($result as $row2){
                         if($row['order_id']==$row2['order_id']){
                             $weight+=$row2['quantity']*$row2['weight'];
-                            array_push($products,array($row2['name'],$row2['quantity']));
+                            array_push($products,array($row2['image'],$row2['name'],$row2['quantity']));
                             //$weight+=intval($row2['quantity']*floatval($row2['weight']));
                         }
                     }
@@ -1246,22 +1338,24 @@ class Body{
                             }else{
                                 $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto;background-color:transparent" key="data[index].order_id "></div></td>';
                             }
-                            $pool.='<td><div onclick="collapse(this,'.$Count.')" style="width: 100%;height: 100%;color:white;border-radius:8px;text-align:center;background-color: var(--button-blue);">Show more</div></td>
+                            $pool.='<td><img onclick="collapse(this,'.$Count.')" class="littleproduct" src="http://localhost/mvc/public/img/icons/down.png"></td>
                             </tr><tr style="display:none" id="'.$Count.'row">
                             <td colspan="11">
                             <div class="content" id="'.$Count.'"style="display:flex;justify-content:center">';
                                 $pool.="<table class=\"styled-table\" style=\"margin-top:0.3%;width:30%\">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Name</th>
-                                        <th>Quantity</th>
+                                        <th  class=\"tdRight\">Quantity</th>
                                     </tr>
                                 </thead>
                                         <tbody style=\"overflow-y:auto;height:100%\">";
                             foreach($products as $prow){
                                 $pool.='<tr>
-                                    <td>'.$prow[0].'</td>
+                                    <td><img class="littleproduct" src="http://localhost/mvc/public/img/products/'.$prow[0].'"></td>
                                     <td>'.$prow[1].'</td>
+                                    <td  class="tdRight">'.$prow[2].'</td>
                                 </tr>';
                             }
                                 $pool.='</tbody></table>
@@ -1277,6 +1371,29 @@ class Body{
         }
             
         }else{
+            echo'<div  class="bar" style="width:97%;height:7%;display:flex;align-items: center;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            <div class="currentContainer">
+                <label style="color:white;margin-right:2%">Total capacity : </label>
+                <label style="color:white">'.$data['weight_limit'].'KG</label>
+            </div>
+            <div class="remainingContainer">
+                <label style="color:white;margin-right:2%">Remaining capacity : </label>
+                <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
+            </div>
+            <div class="container">
+                <div class="progress-bar__container" style="overflow: hidden"">
+                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
+                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else{
+                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }
+                    echo'
+                </div>
+            </div>         
+         </div>';
             echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center;align-items:center">';
                 echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
                 echo '</div></section>';
