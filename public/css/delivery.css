@@ -1486,6 +1486,9 @@ select{
     width: 40px;
     border-radius: 10px;
     background-color: var(--table-gray);
+}.downArrow{
+    height: 32px;
+    width: 32px;
 }
 .salesChart{
     color: white;
