@@ -1203,11 +1203,6 @@ class Body{
         $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
-        echo'<script>
-            console.log("hello world");
-        
-        
-        </script>';
         echo
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
@@ -1226,7 +1221,7 @@ class Body{
             </div>
             <div class="container">
                 <div class="progress-bar__container" style="overflow: hidden"">
-                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
+                    <div class="cprogress" id="cprogress" ></div>';
                     if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
                         echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
                     }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
@@ -1235,8 +1230,22 @@ class Body{
                         echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
                     }
                     echo'
-                </div>
-            </div>         
+                </div>';
+                /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
+                echo'<script>
+                    const myDiv = document.getElementById("cprogress");
+                    const keyframes = [
+                    { width: "0",backgroundColor: "rgb(45,119,188)" },
+                    { width: "'.(($data['total_weight']/$data['weight_limit'])*100).'%",backgroundColor: "rgb('.$redValue.','.$blueValue.','.$greenValue.')" }
+                    ];
+                    const options = {
+                    duration: 3000,
+                    easing: "ease",
+                    fill: "forwards"
+                    };
+                    const animation = myDiv.animate(keyframes, options);                           
+                </script>';
+            echo'</div>         
          </div>
         <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
         echo '<table class="styled-table" style="margin-top:0.3%">
@@ -1380,15 +1389,31 @@ class Body{
                 <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
             </div>
             <div class="container">
-                <div class="progress-bar__container" style="overflow: hidden">
-                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
-                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
-                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
-                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else{
-                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }
+                <div class="progress-bar__container" style="overflow: hidden"">
+                <div class="cprogress" id="cprogress" ></div>';
+                if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                    echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                    echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                }else{
+                    echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                }
+                echo'
+            </div>';
+            /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
+            echo'<script>
+                const myDiv = document.getElementById("cprogress");
+                const keyframes = [
+                    { width: "0",backgroundColor: "rgb(45,119,188)" },
+                    { width: "'.(($data['total_weight']/$data['weight_limit'])*100).'%",backgroundColor: "rgb('.$redValue.','.$blueValue.','.$greenValue.')" }
+                ];
+                const options = {
+                    duration: 3000,
+                    easing: "ease",
+                    fill: "forwards"
+                };
+                const animation = myDiv.animate(keyframes, options);
+                </script>';
                     echo'
                 </div>
             </div>
