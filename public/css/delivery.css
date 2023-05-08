@@ -1443,9 +1443,9 @@ select{
     width: 12.5%;
     height: 100%;
   }
-  .active, .collapsible:hover {
+  /*.active, .collapsible:hover {
     background-color: #555;
-  }
+  }*/
   
   .content {
     padding: 0 18px;
