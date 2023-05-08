@@ -95,8 +95,8 @@
     justify-content: center;
 }
 .reviews .contents img{
-    width: 200px;
-    height: auto !important;
+    /* width: 200px;
+    height: auto !important; */
 }
 .reviews h2{
     margin: 5px;
@@ -109,6 +109,7 @@
     margin: 5px;
     display: flex;
     flex-direction: row;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .review img{

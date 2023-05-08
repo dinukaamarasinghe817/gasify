@@ -114,6 +114,45 @@ class Admin extends Model
                 $this->update('delivery_charge',['charge_per_kg' => $value],"min_distance = $key");
             }
             $data['toast'] = ['type' => 'success', 'message' => 'Successfully updated delivery charges!'];
+            // notify the delivery people about updated delivery charges through an email
+            $query = $this->read('users',"type = 'delivery'");
+            while ($row = $query->mysqli_fetch_assoc($query)){
+                $to = $row['email'];
+                $recipientName = $row['first_name'].' '.$row['last_name'];
+                $subject = "Gasify: New update about delivery charges";
+                $mailbody = file_get_contents('./emailTemplates/deliverycharges.php');
+                $charges = '';
+                $dcharges = $this->read('delivery_charge');
+                while($dchargrow = mysqli_fetch_assoc($dcharges)){
+                    $charge = file_get_contents('./emailTemplates/deliverychargerow.php');
+                    $swap_charge = array(
+                        '{MIN}' => $charge['min_distance'],
+                        '{MAX}' => $charge['max_distance'],
+                        '{DELIVERY_CHARGE}'=>$dchargrow['charge_per_kg']
+                    );
+                    foreach(array_keys($swap_charge) as $key){
+                        if(strlen($key) > 2 && trim($key) != ""){
+                            $charge = str_replace($key,$swap_charge[$key],$charge);
+                        }
+                    }
+                    $charges .= $charge;
+                }
+                $swap_body = array(
+                    '{RECIEVER_NAME}'=>$recipientName,
+                    '{DELIVERY_CHARGES_URL}'=>$url,
+                    '{DELIVERY_CHARGES}'=>$charges
+                );
+                foreach(array_keys($swap_body) as $key){
+                    if(strlen($key) > 2 && trim($key) != ""){
+                        $mailbody = str_replace($key,$swap_body[$key],$mailbody);
+                    }
+                }
+                // create mail instance
+                $mail = new Mail('admin@gasify.com',$to,$recipientName,$subject,$mailbody,$link=null);
+                $mail->send();
+
+            }
+
         }
         $data['delivery_charges'] = $this->read('delivery_charge');
         return $data;
