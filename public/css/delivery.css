@@ -1475,3 +1475,9 @@ select{
     height: 95%;
     background-color: var(--navmenu-orange-dark);
   }
+  .littleproduct{
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    background-color: var(--table-gray);
+}
