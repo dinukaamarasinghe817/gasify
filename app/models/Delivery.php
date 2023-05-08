@@ -257,8 +257,8 @@ class Delivery extends Model
                 array_push($info,['min_distance'=>$row['min_distance'],'max_distance'=>$row['max_distance'],'charge_per_kg'=>$row['charge_per_kg']]);
             }
             return $info;
+        }else{
+            return null;
         }
     }
-    
-    
 }
