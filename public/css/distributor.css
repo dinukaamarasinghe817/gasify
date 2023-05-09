@@ -404,6 +404,7 @@ body.blur > *::before{
 .accordion .box.active .label{
     background-color: var(--navmenu-orange-dark);
     color: white;
+    /* color: black; */
 }
 
 .accordion .box .content hr{

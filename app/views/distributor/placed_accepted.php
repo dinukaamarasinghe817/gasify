@@ -2,7 +2,7 @@
 $header = new Header("distributor");
 $sidebar = new Navigation('distributor',$data['navigation']);
 ?>
-
+<!-- delayed gas orders interface -->
 <section class="body">
     <?php 
     $bodyheader = new BodyHeader($data);
@@ -34,7 +34,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_pending" class="pending"><b>Pending Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted active"><b>Accepted Gas Orders</b><a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted active"><b>Delayed Gas Orders</b><a>
                     </li>
                     <li>
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed"><b>Completed Gas Orders</b><a>
