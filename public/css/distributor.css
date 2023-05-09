@@ -371,6 +371,9 @@ body.blur > *::before{
     align-items: center;
     justify-content: space-between;
     padding: 25px 10px;
+    /* background-color: var(--navmenu-orange-light); */
+    background-color: var(--navmenu-orange-dark);
+    /* background-color: var(--navmenu-orange); */
 }
 
 .accordion .box .label{
@@ -384,6 +387,7 @@ body.blur > *::before{
     align-items: center;
     justify-content: space-between;
     padding: 25px 10px;
+    color: white;
 }
 
 .accordion .box .label svg{
@@ -391,6 +395,8 @@ body.blur > *::before{
     height: 40px;
     margin-right: 5px;
     margin-bottom: 10px;
+    background-color: white;
+    
 }
 
 .accordion .box.active .label svg{
