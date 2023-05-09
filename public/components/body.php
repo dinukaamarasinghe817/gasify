@@ -1211,14 +1211,14 @@ class Body{
             <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" style="width:100%;height:100%;color:black;" >Current deliveries</div></a>
             </div>';
             if(isset($data["pool"])){
-            echo'<div  class="bar" style="width:97%;height:7%;display:flex;align-items: center;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+            echo'<div  class="bar">
             <div class="currentContainer">
-                <label style="color:white;margin-right:2%">Total capacity : </label>
-                <label style="color:white">'.$data['weight_limit'].'KG</label>
+                <label class="capacityTitle" style="color:white;margin-right:2%">Total capacity : </label>
+                <label class="capacityVlue" style="color:white">'.$data['weight_limit'].'KG</label>
             </div>
             <div class="remainingContainer">
-                <label style="color:white;margin-right:2%">Remaining capacity : </label>
-                <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
+                <label class="capacityTitle" style="color:white;margin-right:2%">Remaining capacity : </label>
+                <label class="capacityVlue" style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
             </div>
             <div class="container">
                 <div class="progress-bar__container" style="overflow: hidden"">

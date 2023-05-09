@@ -32,12 +32,14 @@
 
             }else if (idArr[index] == "image") {
                 let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
-                let type = document.getElementById('image').files[0].type;
-                if (allowedExtensions.indexOf(type) > -1) {
+                if(document.getElementById("image").value != "") {
+                    let type = document.getElementById('image').files[0].type;
+                    if (allowedExtensions.indexOf(type) > -1) {
                     document.getElementById("imageerr").innerHTML = "";
-                } else {
-                    isOk = false;
-                    document.getElementById("imageerr").innerHTML = "Invalid image type";
+                    } else {
+                        isOk = false;
+                        document.getElementById("imageerr").innerHTML = "Invalid image type";
+                    }
                 }
             }else if(idArr[index]=="password" || idArr[index]=="confirmpassword"){
                 if((document.getElementById("password").value.length==0 || document.getElementById("confirmpassword").value.length==0) ||(document.getElementById("password").value !=document.getElementById("confirmpassword").value) ){

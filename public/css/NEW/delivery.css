@@ -1,0 +1,475 @@
+*,*::after,::before{
+    margin: 0;
+    padding: 0;
+}
+
+a,button,input[type="button"],input[type="file"]{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+ul li{
+    list-style-type: none;
+}
+
+table td{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    /* colors */
+    --button-orange: #ffbb96;
+    --cancel-red: #FF4D4D;
+    --error-red: #c91919;
+    --accept-blue: #80B3FF;
+    --table-gray: #EBEBEB;
+    /* --navmenu-orange: #d5e8fa; */
+    --navmenu-blue: #e8f6ff;
+    --navmenu-orange: #f1f1fd;
+    --navmenu-orange-dark: #2d77bc;
+    --button-orange-hover: #0f5ba3;
+    --navmenu-gray-dark: #8A8B9F;
+    --button-blue: #3E8CFF;
+    --button-blue-hover: #1672fc;
+    --white: #ffffff;
+    --black: #000000;
+    --logo-background: #ffde59;
+    --shadow-wide: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --shadow-3d: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    --input-border: rgb(201, 201, 201) solid 1px;
+
+
+    /* font sizes */
+    --larger: 28px;
+    --large:23px;
+    --medium: 18px;
+    --mediums: 16px;
+    --small: 14px;
+    --exsmall: 12px;
+    --xxsmall:10px;
+    --xxxsmall:10px;
+}
+@font-face{
+    src: url(../fonts/Poppins-Medium.ttf);
+    font-family: poppins;
+}
+div{
+    -webkit-user-select: none;
+}
+/* .body-content{
+    flex-wrap: wrap;
+} */
+.styled-table {
+    border-collapse: collapse;
+    /* margin: 20px 0; */
+    font-size: var(--small);
+    width: 100%;
+    min-width: 400px;
+    /* table-layout: fixed; */
+}
+.styled-table thead{
+    table-layout: fixed;
+}
+.styled-table thead tr {
+    /* background-color: var(--table-header); */
+    /* background-color: black;; */
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table thead tr th{
+    z-index: 1;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    width: auto;
+}
+.styled-table tbody{
+    /* display:block; */
+    width: 100%;
+    overflow: auto;
+    height: 100px;
+    table-layout: fixed;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    transition: 0.3s;
+}
+.styled-table tbody tr:hover{
+    background-color: #e9e9e9;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--table-header);
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+}
+.styled-table button,
+.styled-table input{
+    padding: 10px;
+    border-radius: 10px;
+    border: var(--button-blue-hover) 2px solid;
+}
+.styled-table thead th{
+    background-color: var(--table-header);
+    position: sticky;
+    top: 0;
+}
+.tdCenter{
+    text-align: center;
+}
+.tdRight{
+    text-align: right;
+}
+/* ==========================================================Dashboard CSS begins===============================================================*/
+.Top{
+    width: 100%;
+    height: 30%;
+    margin-top: 1%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.card{
+    color: green;
+    width: 20%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+}.cmValue{
+    margin-top: 8%;
+    width: 100%;
+    font-size: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:var(--navmenu-orange-dark);
+}
+.cmTitle{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #000000;
+}.bottom{
+    display: flex;
+    margin-top: 4%;
+    height: 60%;
+}.vehicleCard{
+    color: white;
+    width: 45%;
+    height: 80%;
+}.recentReviewsTopic{
+    margin-top: 1%;
+    height: 10%;
+    color: black;
+    margin-bottom: 5%;
+}.reviewContent{
+    margin-bottom: 2%;
+}.review_row{
+    width: 100%;
+    height:30%;
+    margin-bottom: 1%;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    outline: 3px solid var(--navmenu-orange-dark);
+}.review_profile{
+    margin-left: 5px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+}
+.review_content{
+    margin-left: 1%;
+    width: 80%;
+    height: 100%;
+}.review{
+    color: var(--navmenu-gray-dark);
+}
+.name_time{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}.salesChart{
+    color: white;
+    width: 45%;
+    height: 80%;
+    outline: 2px solid var(--navmenu-orange-dark);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}.deliveryChargesTopic{
+    margin-top: 1%;
+    text-align: center;
+    height: 10%;
+    color: black;
+}.deliveryChargeContainer{
+    margin-top: 2%;
+    height: 80%;
+    width: 80%;
+    overflow-y: auto;
+    
+ }
+ /* ==========================================================Dashboard CSS ends===============================================================*/
+
+ /* ==========================================================Gas delivery CSS begins===============================================================*/
+ .Distributor_table_name{
+    font-family: poppins;
+    width: 100%;
+    height: 10%;
+    border-radius: 10px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+}
+.deliveries_link:nth-child(2) div{
+    background-color: #31B857;
+    box-sizing: border-box;
+    border:3px solid #2d77bc;
+    background-color: transparent;
+}
+.DealerTableTopics{
+    width: 48.5%;
+    color: black;
+    background-color: #DBD8FC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.DealerTableTopics:first-child{
+    background-color: #2d77bc;
+}
+.bar{
+    width:97%;
+    height:7%;
+    display:flex;
+    align-items: center;
+    border-left-style:solid;
+    border-right-style:solid;
+    border-color: #2d77bc;
+    box-sizing:border-box;
+}
+.capacityTitle{
+    color:white;margin-right:2%
+}
+.capacityVlue{
+    color:white;
+}
+ 
+ 
+ 
+ @media(min-width:1201px) {
+    .Top:after{
+        content: "";
+        display: table;
+        clear: both;
+        
+    }
+    .salesChart{
+        margin-left: 5%;
+    }
+    .card{
+        margin-bottom: 2%;
+        width: 20%;
+        height: 100%;
+    }
+    
+ } 
+ @media(max-width:1200px) {
+    .Top{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .card{
+        margin-bottom: 2%;
+        width: 40%;
+        height: 100%;
+    }
+    .cmValue{
+        font-size: var(--larger);
+    }
+    .cmTitle{
+        font-size: var(--medium);
+    }
+    .bottom{
+        margin-top: 30%;
+        justify-content: space-around;
+    }
+    .vehicleCard{
+        width: 40%;
+    }
+    .recentReviewsTopic{
+        font-size: var(--large);
+        margin-top: 0%;
+        
+    }.review_profile{
+        height: 48px;
+        width: 48px;
+    }.name_time{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: var(--smaller);
+    }.salesChart{
+        width: 40%;
+    }.styled-table{
+        min-width: 0px;
+    }.deliveryChargesTopic{
+        margin-bottom: 4%;
+        font-size: var(--large);
+    }
+}
+ @media(max-width:1024px) {
+    .Top{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .card{
+        margin-bottom: 2%;
+        width: 40%;
+        height: 100%;
+    }
+    .bottom{
+        margin-top: 30%;
+        justify-content: space-around;
+    }
+    .vehicleCard{
+        width: 40%;
+    }
+    .recentReviewsTopic{
+        font-size: var(--medium);
+        margin-top: 0%;
+        
+    }.review_profile{
+        height: 48px;
+        width: 48px;
+    }.name_time{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: var(--smaller);
+    }.salesChart{
+        width: 40%;
+    }.styled-table{
+        min-width: 0px;
+    }.deliveryChargesTopic{
+        font-size: var(--medium);
+        margin-bottom: 4%;
+    }.cmTitle{
+        font-size: var(--medium);
+    }
+} 
+ @media(max-width:768px) {
+    .Top{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .card{
+        margin-bottom: 2%;
+        width: 40%;
+        height: 100%;
+    }
+    .bottom{
+        margin-top: 45%;
+        justify-content: space-around;
+    }
+    .vehicleCard{
+        width: 40%;
+    }
+    .recentReviewsTopic{
+        font-size: var(--medium);
+        margin-top: 0%;
+        
+    }.review_profile{
+        height: 48px;
+        width: 48px;
+    }.name_time{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: var(--smaller);
+    }.salesChart{
+        width: 40%;
+    }.styled-table{
+        min-width: 0px;
+    }.deliveryChargesTopic{
+        font-size: var(--medium);
+        margin-bottom: 4%;
+    }.cmValue{
+        font-size: 32px;
+    }.cmTitle{
+        font-size: var(--medium);
+    }.styled-table th{
+        padding: 5px;
+        font-size: var(--exsmall);
+    }
+}
+ @media(max-width:480px) {
+    .Top{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .bottom{
+        margin-top:50% ;
+        flex-direction: column-reverse;
+        justify-content: space-around;
+    }
+    .card{
+        margin-bottom: 2%;
+        width: 40%;
+        height: 70%;
+    }
+    .cmValue{
+        font-size: var(--larger);
+    }
+    .cmTitle{
+        font-size: var(--exsmall);
+    }
+    .card:nth-child(4) .cmValue{
+        font-size: var(--large);
+    }
+    .vehicleCard{
+        width: 90%;
+        margin-left: 5%;
+    }
+    .salesChart{
+        width: 90%;
+        margin-left: 5%;
+    }
+    .recentReviewsTopic{
+        font-size: var(--small);
+        margin-top: 0%;
+        
+    }.deliveryChargesTopic{
+        font-size: var(--small);
+    }.name_time{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: var(--xxsmall);
+    }
+    .review{
+        font-size: var(--xxxsmall);
+    }
+} 
+
+
+  
