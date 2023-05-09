@@ -314,33 +314,29 @@ class Customer extends Model{
             //if the reservation is placed during the current month
             if (date('m-Y', strtotime($place_date)) === $current_month . '-' . $current_year) {
                 $result2 = $this->Query("SELECT r.quantity,r.product_id,p.company_id,p.weight FROM reservation_include r INNER JOIN product p ON p.product_id = r.product_id WHERE r.order_id = '{$order_id}' AND p.type = 'cylinder'");
-                $row2 = mysqli_fetch_assoc($result2);
-                if($result2 != NULL){
-                    if($row2 != NULL){
-                        $total_weight = 0;
-                        while( $row2){
-                            $company_id = $row2['company_id'];
-                            $qty = $row2['quantity'];
-                            $item_weight = $row2['weight'];
-                            $total_weight = $total_weight + $item_weight*$qty;
-                            
-                        }
-                        $result4 = $this->Query("SELECT state FROM quota WHERE company_id = '{$company_id}' AND customer_type='{$customer_type}'");
-                        $row4 = mysqli_fetch_assoc($result4);
-                        $quota_state = $row4['state'];
+     
+                $total_weight = 0;
+                while( $row2 = mysqli_fetch_assoc($result2)){
+                    $company_id = $row2['company_id'];
+                    $qty = $row2['quantity'];
+                    $item_weight = $row2['weight'];
+                    $total_weight = $total_weight + $item_weight*$qty;
+
+                    $result4 = $this->Query("SELECT state FROM quota WHERE company_id = '{$company_id}' AND customer_type='{$customer_type}'");
+                    $row4 = mysqli_fetch_assoc($result4);
+                    $quota_state = $row4['state'];
 
                         //if quota is active then increase remaining amount according to reservation cylinder weight
                         if($quota_state == "ON"){
-                            $result5 = $this->Query("SELECT remaining_amount FROM customer_quota WHERE customer_id = '{$customer_id}' AND company_id = '{$company_id}'");
-                            $row5 = mysqli_fetch_assoc($result5);
-                            $remaining_amount = $row5['remaining_amount'];
-                            $new_remaining_amount =  $remaining_amount + $total_weight;
+                        $result5 = $this->Query("SELECT remaining_amount FROM customer_quota WHERE customer_id = '{$customer_id}' AND company_id = '{$company_id}'");
+                        $row5 = mysqli_fetch_assoc($result5);
+                        $remaining_amount = $row5['remaining_amount'];
+                        $new_remaining_amount =  $remaining_amount + $total_weight;
 
-                            $this -> update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id=' .$customer_id , 'company_id=' .$company_id); 
-                        }
+                        $this -> update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id=' .$customer_id , 'company_id=' .$company_id); 
                     }
                 }
-
+                        
             }
         }
         else{
