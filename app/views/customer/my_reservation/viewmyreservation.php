@@ -223,20 +223,24 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             echo'<div class="cancel_card_bottom">
                                     <div class="cancel_item_side">
                                         '.$output.'';
-                                    if($row1['place_date'] == date('Y-m-d')){
-                                        if($current_time <= $new_time){
-                                            echo    '<div class="cancel_btn"><button onclick = "location.href=\''.$url_cancel.'\'">Cancel Reservation</button></div>';
-                                        }
-                                    }else{
-                                        if($row1['place_date'] == date('Y-m-d', strtotime('-1 day'))){
-                                            if($row1['place_time'] >= '23:00:00'){
-                                                if($current_time <= $new_time){
-                                                  echo    '<div class="cancel_btn"><button onclick = "location.href=\''.$url_cancel.'\'">Cancel Reservation</button></div>';
-                                            
+                                        if($row1['place_date'] == date('Y-m-d')){
+                                            if($current_time <= $new_time){
+                                                echo    '<div class="cancel_btn"><button onclick = "location.href=\''.$url_cancel.'\'">Cancel Reservation</button></div>';
+                                            }else{
+                                                if($row1['place_time'] >= '23:00:00'){  
+                                                    echo    '<div class="cancel_btn"><button onclick = "location.href=\''.$url_cancel.'\'">Cancel Reservation</button></div>';
                                                 }
                                             }
                                         }
-                                    }
+                                        else{
+                                            if($row1['place_date'] == date('Y-m-d', strtotime('-1 day'))){
+                                                if($row1['place_time'] >= '23:00:00'){
+                                                    if($current_time <= $new_time){
+                                                        echo    '<div class="cancel_btn"><button onclick = "location.href=\''.$url_cancel.'\'">Cancel Reservation</button></div>';
+                                                    }
+                                                }
+                                            }
+                                        }
                                     echo '<div class="back_btn"><a href="'.BASEURL.'/Orders/customer_allreservations"><button class="bbtn">Back</button></a></div>
                                     </div>
                                 </div>
