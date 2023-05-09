@@ -140,9 +140,10 @@ class Vehicles extends Controller{
     }
 
     // remove a vehicle
-    public function removeVehicle($vehicle_no) {
+    public function removeVehicle($vehicle_no) {        
         $this->model("Distributor")->removeVehicle($vehicle_no);
-        $this->viewvehicle();     
+        $this->viewvehicle();  
+
     }
 
     public function updatesinglevehicle($number){
