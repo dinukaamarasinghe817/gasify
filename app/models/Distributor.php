@@ -8,6 +8,7 @@ class Distributor extends Model
         parent::__construct();
     }
 
+    // get all distributors from user table
     public function getAllDistributors(){  
         $result = $this->Query("SELECT CONCAT(u.first_name,' ',u.last_name) AS name, u.email AS email, CONCAT(d.street,', ',d.city) AS address, d.contact_no AS contact FROM distributor d INNER JOIN users u ON d.distributor_id = u.user_id");
         $data['distributor'] = array();
@@ -21,6 +22,7 @@ class Distributor extends Model
         return $data['distributor'];
     }
 
+    
     public function getDistributorImage($distributor_id){
         // $result = $this->read('distributor', "distributor_id = $distributor_id");
         $result = $this->Query("SELECT * FROM users u INNER JOIN distributor d ON u.user_id = d.distributor_id WHERE u.user_id = $distributor_id");
@@ -31,6 +33,7 @@ class Distributor extends Model
     public function dashboard($distributor_id,$option){
         $data = [];
 
+        // date break down
         $today = date('Y-m-d');
             if($option == 'today'){
                 $start_date = $today;
@@ -40,8 +43,7 @@ class Distributor extends Model
                 $end_date = date('Y-m-d', strtotime('-1 days'));
             }
 
-
-            // chart
+            // chart => get quantities of each products in completed gas distributions
             $sql = "SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
             FROM purchase_include pi INNER JOIN product p 
             ON pi.product_id = p.product_id WHERE po_id IN 

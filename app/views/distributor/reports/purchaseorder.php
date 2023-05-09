@@ -62,7 +62,8 @@ $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 
 $pdf->Ln();
-$pdf->Cell(132,5,'Total',0,0,'R');
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(132,5,'Total Amount (Rs)',0,0,'R');
 $total = number_format($data['total']).'.00';
 $pdf->Cell(33,5,"{$total}",0,0,'R');
 $pdf->Ln();
