@@ -919,6 +919,7 @@ class Distributor extends Model
         //     $end_date = date('Y-m-d', strtotime('-1 days'));
             
         // }
+
         if($option == 'today'){
             $start_date = date('Y-m-d');
             $end_date = date('Y-m-d');

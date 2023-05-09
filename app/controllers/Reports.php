@@ -72,7 +72,7 @@ class Reports extends Controller{
         }else{
             $option = 'today';
         }
-
+        
         $data['details'] = $this->model("Distributor")->AllSellProductsDetails($option);
         // $data['details'] = $this->model("Distributor")->AllSellProductsDetails($start_date, $end_date);
 
