@@ -878,6 +878,7 @@ class Distributor extends Model
         }elseif($option == '7day'){
             $start_date = date('Y-m-d', strtotime('-7 days'));
             $end_date = date('Y-m-d', strtotime('-1 days'));        
+            // $end_date = date('Y-m-d');        
         }else{
             $start_date = date('Y-m-d', strtotime('-30 days'));
             $end_date = date('Y-m-d', strtotime('-1 days'));
