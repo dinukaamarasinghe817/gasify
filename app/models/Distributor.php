@@ -71,14 +71,14 @@ class Distributor extends Model
         return $result;
     }
 
-    // public function vehicleExistance($distributor_id) {
+    // get vehicle 
     public function vehicleExistance($number) {
         $sql = "SELECT vehicle_no FROM distributor_vehicle WHERE vehicle_no= '{$number}'";
         $result = $this->Query($sql);
         return $result;
     }
 
-    // insert to distributor_vehicle table
+    // insert details to distributor_vehicle table
     public function distributorVehicle($user_id, $number, $type, $fuelCon){
         return $this->insert('distributor_vehicle', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'type'=>$type, 'fuel_consumption'=> $fuelCon, 'availability'=>"Yes"]);   
     }
@@ -87,15 +87,17 @@ class Distributor extends Model
     public function vehicleCapacity($user_id, $number, $product, $qty){
         return $this->insert('distributor_vehicle_capacity', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'product_id'=>$product, 'capacity'=> $qty]);   
     }
-
+    // get vehicle (after inserting)
     public function ifDataInserted($number){
         $sql = "SELECT * FROM distributor_vehicle WHERE vehicle_no='{$number}' ";
         $result = $this->Query($sql);
         return $result;   
     }
 
+    // view vehicle 
     public function viewvehicle($dis_id){
         $vehicles = array();
+        // get all vehicles that owned by selected dsitributor
         $query2= $this->Query("SELECT * FROM distributor_vehicle WHERE distributor_id = '{$dis_id}' ");
             
             if(mysqli_num_rows($query2)>0) {
