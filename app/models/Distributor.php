@@ -286,11 +286,11 @@ class Distributor extends Model
         return $completed;
     }
 
-    // Distributor - gas order list - accepted Orders
+    // Distributor - gas order list - delayed Orders
     public function acceptedGasOrders($user_id) {
         $accepted = array();
 
-        $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='accepted' order by (place_date) ASC;");
+        $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='delayed' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['stock_req_id'];
