@@ -8,6 +8,7 @@ class Distributor extends Model
         parent::__construct();
     }
 
+    // get all distributors from user table
     public function getAllDistributors(){  
         $result = $this->Query("SELECT CONCAT(u.first_name,' ',u.last_name) AS name, u.email AS email, CONCAT(d.street,', ',d.city) AS address, d.contact_no AS contact FROM distributor d INNER JOIN users u ON d.distributor_id = u.user_id");
         $data['distributor'] = array();
@@ -21,6 +22,7 @@ class Distributor extends Model
         return $data['distributor'];
     }
 
+    
     public function getDistributorImage($distributor_id){
         // $result = $this->read('distributor', "distributor_id = $distributor_id");
         $result = $this->Query("SELECT * FROM users u INNER JOIN distributor d ON u.user_id = d.distributor_id WHERE u.user_id = $distributor_id");
@@ -31,6 +33,7 @@ class Distributor extends Model
     public function dashboard($distributor_id,$option){
         $data = [];
 
+        // date break down
         $today = date('Y-m-d');
             if($option == 'today'){
                 $start_date = $today;
@@ -40,8 +43,7 @@ class Distributor extends Model
                 $end_date = date('Y-m-d', strtotime('-1 days'));
             }
 
-
-            // chart
+            // chart => get quantities of each products in completed gas distributions
             $sql = "SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
             FROM purchase_include pi INNER JOIN product p 
             ON pi.product_id = p.product_id WHERE po_id IN 
@@ -69,14 +71,14 @@ class Distributor extends Model
         return $result;
     }
 
-    // public function vehicleExistance($distributor_id) {
+    // get vehicle 
     public function vehicleExistance($number) {
         $sql = "SELECT vehicle_no FROM distributor_vehicle WHERE vehicle_no= '{$number}'";
         $result = $this->Query($sql);
         return $result;
     }
 
-    // insert to distributor_vehicle table
+    // insert details to distributor_vehicle table
     public function distributorVehicle($user_id, $number, $type, $fuelCon){
         return $this->insert('distributor_vehicle', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'type'=>$type, 'fuel_consumption'=> $fuelCon, 'availability'=>"Yes"]);   
     }
@@ -85,15 +87,17 @@ class Distributor extends Model
     public function vehicleCapacity($user_id, $number, $product, $qty){
         return $this->insert('distributor_vehicle_capacity', ['distributor_id'=> $user_id, 'vehicle_no'=> $number, 'product_id'=>$product, 'capacity'=> $qty]);   
     }
-
+    // get vehicle (after inserting)
     public function ifDataInserted($number){
         $sql = "SELECT * FROM distributor_vehicle WHERE vehicle_no='{$number}' ";
         $result = $this->Query($sql);
         return $result;   
     }
 
+    // view vehicle 
     public function viewvehicle($dis_id){
         $vehicles = array();
+        // get all vehicles that owned by selected dsitributor
         $query2= $this->Query("SELECT * FROM distributor_vehicle WHERE distributor_id = '{$dis_id}' ");
             
             if(mysqli_num_rows($query2)>0) {
@@ -144,9 +148,10 @@ class Distributor extends Model
         return $vehicles;     
     }
 
-    // update vehicle
+    // update vehicle - only viewing(can not update)
     public function updatevehicle($user_id, $vehicle_no) {
         $products = array();
+        // get capacities of each products
         $query1 =  $this->Query("SELECT DISTINCT p.name AS product_name, p.product_id as product_id, v.capacity as capacity FROM distributor_vehicle_capacity v INNER JOIN product p ON v.product_id = p.product_id WHERE v.distributor_id = '{$user_id}' and v.vehicle_no = '{$vehicle_no}'");
         
         if(mysqli_num_rows($query1)>0) {
@@ -155,6 +160,7 @@ class Distributor extends Model
 
             }
         }
+        // get the vehicle
         $query2 = $this->read("distributor_vehicle", "vehicle_no = '$vehicle_no' and distributor_id = '$user_id'");
         $row2 = mysqli_fetch_assoc($query2);
  
@@ -162,48 +168,50 @@ class Distributor extends Model
 
     }
 
+    // update vehicle - can edit
     public function updatingVehicle($vehicle_no) {
         $fuel = $_POST['fuel'];
         $user_id = $_SESSION['user_id'];
 
+        // get capacities of each products
         $query1 =  $this->Query("SELECT DISTINCT p.name AS product_name, p.product_id as product_id, v.capacity as capacity FROM distributor_vehicle_capacity v INNER JOIN product p ON v.product_id = p.product_id WHERE v.distributor_id = '{$user_id}' and v.vehicle_no = '{$vehicle_no}'");
         $products = array();
         while($row1 = mysqli_fetch_assoc($query1)){
             array_push($products, ['id'=> $row1["product_id"], "quantity"=>$_POST[$row1["product_id"]] ]);
 
         }
+        // update distributor_vehicle_capacity table with quantities of each product
         foreach($products as $product) {
             $this->update("distributor_vehicle_capacity", ["capacity"=>$product["quantity"]], "distributor_id= $user_id and vehicle_no = '$vehicle_no' and product_id = ".$product['id']);
             
         }
+        // update distributor_vehicle table with other details
         $this->update("distributor_vehicle", ["fuel_consumption"=>$fuel], "distributor_id= $user_id and vehicle_no = '$vehicle_no'" );
     }
 
     // release a vehicle before removing
     public function releaseVehicle($vehicle_no) {
         $user_id = $_SESSION['user_id'];
-       
+        // update the availability as "Yes" of a vehicle
         $query2 = $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
         return $query2;
     }
 
-    // remove e vehicle
+    // remove a vehicle
     public function removeVehicle($vehicle_no) { 
         $user_id = $_SESSION['user_id'];
-        // $data=[];
-
-        // $result = $this->delete('distributor_vehicle', "vehicle_no = '$vehicle_no' AND distributor_id = '$user_id'");  
+         
         $sql = "DELETE FROM distributor_vehicle WHERE vehicle_no = '{$vehicle_no}' AND distributor_id = '{$user_id}'";
         $result = $this ->Query($sql);
-        // $data = $this ->Query($sql);
-
-        return $data;
+       
+        return $result;
     }
 
     // view dealers
     public function viewdealers($user_id) {
         $dealers = array();
 
+        // get dealer information
         $query1 = $this->Query("SELECT DISTINCT d.dealer_id as dealer_id, d.name as name, d.image as image,  u.email as email, d.contact_no as contact_no, d.city as city, d.account_no as account_no, d.bank as bank FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.distributor_id='{$user_id}' AND u.type='dealer' ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -217,8 +225,8 @@ class Distributor extends Model
                 $image = $row1['image'];
 
                 $capacities = array();
+                // get dealer capacities
                 $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM dealer_capacity d INNER JOIN product p ON d.product_id = p.product_id WHERE d.dealer_id = '{$dealer_id}' ");
-                // $query3 =  $this->Query("SELECT DISTINCT d.capacity AS capacity, p.name AS product_name FROM dealer_capacity d INNER JOIN product p ON d.product_id = p.product_id  ");
                 if(mysqli_num_rows($query3)>0) {
                     while($row3 = mysqli_fetch_assoc($query3)) {
                         array_push($capacities,$row3);
@@ -230,10 +238,10 @@ class Distributor extends Model
         return $dealers;
     }
 
-    // Distributor - gas order list - Pending Orders
+    // Gas orders - Pending Orders
     public function pendingGasOrders($user_id) {
         $pending = array();
-
+        // get purchase order details to company , still in pending state, in date ascending order
         $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='pending' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -242,6 +250,7 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
+                // get products quantities 
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
                 from stock_include i 
                 inner join stock_request r on i.stock_req_id = r.stock_req_id 
@@ -258,10 +267,11 @@ class Distributor extends Model
         return $pending;
     }
 
-    // Distributor - gas order list - Completed Orders
+    //Gas orders - Completed Orders
     public function completedGasOrders($user_id) {
         $completed = array();
 
+        // get purchase order details to company ,  completed orders, in date ascending order
         $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='completed' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -270,6 +280,7 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
+                // get product quantities
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
                 from stock_include i 
                 inner join stock_request r on i.stock_req_id = r.stock_req_id
@@ -286,10 +297,10 @@ class Distributor extends Model
         return $completed;
     }
 
-    // Distributor - gas order list - delayed Orders
+    // Gas orders - company delayed gas oders
     public function acceptedGasOrders($user_id) {
         $accepted = array();
-
+        // get purchase order details to company , company delayed, in date ascending order
         $query1 = $this->Query("SELECT stock_req_id, place_date, place_time from stock_request where distributor_id='{$user_id}' and stock_req_state='delayed' order by (place_date) ASC;");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -298,6 +309,7 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
+                // get quantities of products
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
                 from stock_include i 
                 inner join stock_request r on i.stock_req_id = r.stock_req_id
@@ -314,8 +326,9 @@ class Distributor extends Model
         return $accepted;
     }
 
-    // count of received all gas orders
+    // count of received all gas orders (dashboard)
     public function countReceivedOrders($user_id, $option) {
+        // date breakdown
         $today = date('Y-m-d');
         if($option == 'today'){
             $start_date = $today;
@@ -326,7 +339,7 @@ class Distributor extends Model
         }
 
         $count = array();
-        // $query1 = $this->Query("SELECT count(po_id) as receviedOrders from purchase_order where distributor_id='{$user_id}'");
+        // get count of po_id s in purchase_order table
         $query1 = $this->Query("SELECT count(po_id) AS receviedOrders FROM purchase_order WHERE distributor_id='{$user_id}' AND place_date >= '$start_date' AND place_date <= '$end_date' ");
         
         if(mysqli_num_rows($query1)>0) {
@@ -337,10 +350,11 @@ class Distributor extends Model
         return $count;
     }
 
-    // Distributor - gas distributions - pending   
+    //Gas distributions - pending   
     public function pendingdistributions($user_id) {
         $pending = array();
 
+        // get details - in pending stat, date ascending order
         $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time from purchase_order where distributor_id = '{$user_id}' and po_state='pending' order by (place_date) ASC; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -350,7 +364,7 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                // $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.distributor_id='{$user_id}' and o.po_id = '{$order_id}'; ") ;
+                //get product quantities
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name 
                 from purchase_include i 
                 inner join purchase_order o on i.po_id = o.po_id
@@ -372,7 +386,7 @@ class Distributor extends Model
     public function finishpendingdistributions($distribution_id) {
         $user_id = $_SESSION['user_id'];
         $data = [];
-        
+        // get dealer purchase order details 
         $query2 = $this->Query("SELECT i.product_id as product_id, i.quantity as quantity, o.dealer_id as dealer_id
         FROM purchase_order o inner join purchase_include i
         ON o.po_id = i.po_id 
@@ -394,7 +408,7 @@ class Distributor extends Model
                     $this->Query("UPDATE dealer_keep SET quantity = '{$dealer_quantity}' WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
 
                 } else {
-                    // if dealer keeping is empty
+                    // if dealer current capacity is empty
                     $dealer_quantity = $o_quantity;
                     $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
                 }
@@ -419,6 +433,7 @@ class Distributor extends Model
                         $data['success'] = ['type'=>"success", 'message'=>"Gas Distribution Successfully Done!"];
                     }
                 }else {
+                    // if distribtor gas stock is not enough
                     $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas Stock is Empty!"];
                     return $data;
                 }
@@ -427,7 +442,7 @@ class Distributor extends Model
         return $data;
     }
 
-    // dashboard -> count of pending distributions
+    // dashboard -> count of pending distributions (dashboard)
     public function sumpendingdistirbutions($user_id, $option) {
         $today = date('Y-m-d');
         if($option == 'today'){
@@ -440,6 +455,7 @@ class Distributor extends Model
         }
 
         $count = array();
+        // get count of pending dealer purchase order id s 
         $query1 = $this->Query("SELECT count(po_id) as numofpendis from purchase_order where distributor_id = '{$user_id}' AND po_state='pending' AND place_date >= '$start_date' AND place_date <= '$end_date';");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -449,10 +465,10 @@ class Distributor extends Model
         return $count;
     }
 
-    // Distributor - gas distributions -completed
+    // Gas distributions - completed
     public function completedistributions($user_id) {
         $completed = array();
-
+        // get details of completed gas distributios
         $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time from purchase_order where distributor_id = '{$user_id}' and po_state='completed' order by (place_date) ASC; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -462,7 +478,7 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
-                // $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
+                // quantities of each products 
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name
                 from purchase_include i 
                 inner join purchase_order o on i.po_id = o.po_id 
@@ -497,6 +513,7 @@ class Distributor extends Model
         }
 
         $completed = array();
+        // get completed gas distributions' details
         $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time FROM purchase_order WHERE distributor_id = '{$user_id}' and po_state='completed' AND place_date >= '$start_date' AND place_date <= '$end_date';");
 
         if(mysqli_num_rows($query1)>0) {
@@ -507,6 +524,7 @@ class Distributor extends Model
                 $time = $row1['place_time'];
 
                 $capacities = array();
+                // get qunatities of each products.
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity from purchase_include i inner join purchase_order o on i.po_id = o.po_id where o.po_id = '{$order_id}'; ") ;
                 if(mysqli_num_rows($query2)>0) {
                     while($row2= mysqli_fetch_assoc($query2)) {
@@ -519,10 +537,12 @@ class Distributor extends Model
         return $completed;
     }
     
-    //get details of distribution report - past distributions
+    //completed gas distirbution details to pdf 
     public function reportdetails($distribution_no) {
         // $reportdata = array();
         // $query1 = $this->Query("SELECT * from purchase_order where distribution_id = '{$user_id}' and po_state='completed' );
+
+        // get dealer completed purchase order details
         $query1 = $this->Query("SELECT DISTINCT o.po_id as distribution_no, o.dealer_id as dealer_id,
         o.place_date as date, o.place_time as time, o.distributor_id as distributor_id,  CONCAT(u.first_name, ' ', u.last_name) as name
         from purchase_order o INNER JOIN users u 
@@ -539,6 +559,7 @@ class Distributor extends Model
                 $name = $row1['name'];
 
                 $products = array();
+                // get quantities of each products
                 $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity
                 FROM purchase_include i INNER JOIN purchase_order o
                 ON i.po_id = o.po_id 
@@ -558,7 +579,7 @@ class Distributor extends Model
     // current stock
     public function currentstock($user_id) {
         $stock = array();
-
+        // distributor current stock of each products
         $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
@@ -572,12 +593,13 @@ class Distributor extends Model
         return $stock;
 
     }
-    
+    // get distributors from users table
     public function getDistributor($user_id) {
         $result = $this->Query("SELECT * FROM users u inner join distributor d on u.user_id = d.distributor_id where d.distributor_id =$user_id");
         return $result;
     }
 
+    // ------ //
     public function productdetails() {
         $products = array();
 
@@ -593,6 +615,7 @@ class Distributor extends Model
         }
         return $products;
     }
+    //  ----- //
 
     // distributor purchase order
     public function distributorplaceorder($user_id, $productid,$postproducts) {
