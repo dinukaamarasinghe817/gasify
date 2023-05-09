@@ -2,6 +2,8 @@
 
 require_once 'navigation.php';
 require_once 'bodyheader.php';
+require_once 'login.php';
+require_once 'registration.php';
 require_once 'dashboard.php';
 require_once 'profile.php';
 require_once 'body.php';
