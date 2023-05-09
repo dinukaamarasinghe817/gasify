@@ -68,6 +68,7 @@ $user_id = $_SESSION['user_id'];
 
                     <?php
                     $records = $data['allproductsquantity'];
+                    // var_dump($records);
                     
                     $output = '
                     <div class="repbox">
@@ -83,7 +84,8 @@ $user_id = $_SESSION['user_id'];
                     
                         if(count($records)>0) {
                             foreach($records as $record) {
-                                $row1 = $record['quantites'];
+                                $row1 = $record['quantities'];
+                                // var_dump($row1);
                                 // $capacities = $record['capacities'];
 
                                     // $date = $row1['place_date'];

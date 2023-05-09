@@ -981,11 +981,11 @@ class Distributor extends Model
                 $product_id = $row1['product_id'];
                 $product_name = $row1['name'];
                 $quantity = $row1['quantity'];
-                array_push($product_quantites, $row1);
+                array_push($product_quantites,['quantities'=>$row1]);
             }
         }
-        // return $product_quantites;
-        return ['quantities'=>$product_quantites];
+        return $product_quantites;
+        // return ['quantities'=>$product_quantites];
     }
 
 

@@ -66,7 +66,6 @@ class Reports extends Controller{
     public function allsellproducts_pdf() {
         $data = [];
 
-       
         if(isset($_POST['option'])){
             $option = $_POST['option'];
         }else{
