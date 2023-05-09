@@ -106,11 +106,12 @@ class Delivery extends Model
         return $info;
     }
     public function getReviewDetails(){
-        $result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
+        $result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id,customer.image FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN customer ON reservation.customer_id=customer.customer_id;");
+        //$result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
-                array_push($info,['order_id'=>$row['order_id'],'date'=>$row['date'],'time'=>$row['time'],'message'=>$row['message']]);
+                array_push($info,['order_id'=>$row['order_id'],'date'=>$row['date'],'time'=>$row['time'],'message'=>$row['message'],'image'=>$row['image']]);
             }
             return $info;
         }else{
@@ -255,6 +256,18 @@ class Delivery extends Model
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
                 array_push($info,['min_distance'=>$row['min_distance'],'max_distance'=>$row['max_distance'],'charge_per_kg'=>$row['charge_per_kg']]);
+            }
+            return $info;
+        }else{
+            return null;
+        }
+    }public function getMostRecentReviews(){
+        $result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id,customer.image,CONCAT(users.first_name,' ',users.last_name) AS name FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN customer ON reservation.customer_id=customer.customer_id INNER JOIN users ON customer.customer_id=users.user_id ORDER BY review.date LIMIT 10;");
+        //$result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($info,['order_id'=>$row['order_id'],'date'=>$row['date'],'time'=>$row['time'],'message'=>$row['message'],'image'=>$row['image'],'name'=>$row['name']]);
             }
             return $info;
         }else{

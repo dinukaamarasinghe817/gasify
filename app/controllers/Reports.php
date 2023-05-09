@@ -66,13 +66,12 @@ class Reports extends Controller{
     public function allsellproducts_pdf() {
         $data = [];
 
-       
         if(isset($_POST['option'])){
             $option = $_POST['option'];
         }else{
             $option = 'today';
         }
-
+        
         $data['details'] = $this->model("Distributor")->AllSellProductsDetails($option);
         // $data['details'] = $this->model("Distributor")->AllSellProductsDetails($start_date, $end_date);
 

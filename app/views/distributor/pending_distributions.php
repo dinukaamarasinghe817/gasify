@@ -40,7 +40,8 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                             $row1 = $pending['pendinginfo'];
                             $capacities = $pending['capacities'];
                    
-                            $output = '<div class="box">
+                            $output = '
+                            <div class="box">
                                 <div class="labelbgn">';
                                 $distribution_id = $row1['po_id'];
                             $output .= ' 

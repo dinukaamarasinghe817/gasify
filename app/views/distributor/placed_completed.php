@@ -34,7 +34,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_pending" class="pending"><b>Pending Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted"><b>Accepted Gas Orders</b><a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted"><b>Delayed Gas Orders</b><a>
                     </li>
                     <li>
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed active"><b>Completed Gas Orders</b><a>

@@ -34,7 +34,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_pending" class="pending active"><b>Pending Gas Orders</b><a>
                     </li>
                     <li>
-                        <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted"><b>Accepted Gas Orders</b><a>
+                        <a href="<?php echo BASEURL ?>/orders/dis_placed_accepted" class="accepted"><b>Delayed Gas Orders</b><a>
                     </li>
                     <li>
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed"><b>Completed Gas Orders</b><a>
@@ -71,6 +71,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                     <div class="details">
                                         <span><strong>Placed Date : '.$date.' </strong></span><br><br>
                                         <span><strong>Placed Time : '.$time.' </strong></span><br><br>
+                                        <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button></span>
                                     </div>
                             
                                     <hr>
