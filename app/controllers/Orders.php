@@ -8,10 +8,13 @@ class Orders extends Controller{
     public $user_id;
     function __construct(){
         parent::__construct();
+        $this->AuthorizeLogin();
         $this->user_id = $_SESSION['user_id'];
     }
 
     function dealer($tab1, $tab2=null){
+        $this->AuthorizeUser('dealer');
+
         $dealer_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
         $dealer_details = $this->model('Dealer')->getDealer($dealer_id);
@@ -27,16 +30,22 @@ class Orders extends Controller{
     }
 
     function dealeraccept($order_id){
+        $this->AuthorizeUser('dealer');
+
         $this->model('Dealer')->dealerAcceptOrder($order_id);
         header('LOCATION: '.BASEURL.'/orders/dealer/pending');
     }
 
     function dealerissue($order_id){
+        $this->AuthorizeUser('dealer');
+
         $this->model('Dealer')->dealerIssueOrder($order_id);
         header('LOCATION: '.BASEURL.'/orders/dealer/accepted/pickup');
     }
 
     function dealersubmitpayslip($order_id){
+        $this->AuthorizeUser('dealer');
+
         $data = $this->model('Dealer')->dealersubmitpayslipOrder($order_id);
         header('LOCATION: '.BASEURL.'/orders/dealer/canceled');
     }
@@ -45,6 +54,7 @@ class Orders extends Controller{
     /*.................Customer my reservation...............*/
     //customer all past reservtions
     function customer_allreservations($error = null){
+        $this->AuthorizeUser('customer');
 
         switch($error){
             case "1":
@@ -62,6 +72,8 @@ class Orders extends Controller{
 
     //customer selected one reservation details from all past reservations
     function customer_myreservation($order_id){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -73,6 +85,8 @@ class Orders extends Controller{
 
     //get collecting method for display review type in review form
     function customer_reviewform($order_id,$error=null){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
@@ -89,6 +103,8 @@ class Orders extends Controller{
 
     //add review for the selected past reservstion
     function customer_addreview($order_id){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $reviews = $_POST['review'];
         $review_type = "";
@@ -109,6 +125,7 @@ class Orders extends Controller{
 
     //cancel the reservation
     function customer_cancelreservation($order_id,$error = null){
+        $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
@@ -128,6 +145,8 @@ class Orders extends Controller{
 
     //refund form data for update reservation table
     function refund_bank_details($order_id){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         if(isset($_POST['bank'])){
             $bank = $_POST['bank'];
@@ -151,6 +170,8 @@ class Orders extends Controller{
     /*.................Customer place reservation.................*/
     //select brand,city and dealer
     function select_brand_city_dealer($error=null){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -169,6 +190,7 @@ class Orders extends Controller{
     }
 
     function filter_dealers($company_id=null,$city=null,$dealer=null){
+        $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -180,6 +202,7 @@ class Orders extends Controller{
 
 
     function get_brand_city_dealer(){
+        $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -209,6 +232,7 @@ class Orders extends Controller{
 
      //display all products according to the selected dealer
      function select_products($error=null){
+        $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -239,6 +263,8 @@ class Orders extends Controller{
 
     //get customer selected products 
     function selected_products($dealer_id){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
         $result = $this->model('Customer')->getCustomer($customer_id);
@@ -296,6 +322,8 @@ class Orders extends Controller{
 
     //select payment method
     function select_payment_method($error=null){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -315,7 +343,8 @@ class Orders extends Controller{
 
     //display bank slip uploader
     function bank_slip_upload($error=null){
-    
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
@@ -332,6 +361,8 @@ class Orders extends Controller{
     }
 
     function get_bank_slip(){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
@@ -379,7 +410,8 @@ class Orders extends Controller{
 
     //display payment gateway
     function payment_gateway(){
-       
+       $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
@@ -413,6 +445,8 @@ class Orders extends Controller{
 
     //select collecting method of reservation(display delivery charge in pop up)
     function select_collecting_method(){
+        $this->AuthorizeUser('customer');
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
         
@@ -435,6 +469,8 @@ class Orders extends Controller{
 
     //select delivery as collecting method then get delivery address and display delivery charge
     function change_delivery_address(){
+        $this->AuthorizeUser('customer');
+
         $order_id = $_SESSION['order_id'];
         $data['order_id'] = $order_id;
         $customer_id = $_SESSION['user_id'];
@@ -469,6 +505,8 @@ class Orders extends Controller{
     }
 
     function getcollecting_method($collecting_method,$delivery_city=null,$delivery_street=null,$delivery_charge=null){
+        $this->AuthorizeUser('customer');
+
         $_SESSION['collecting_method'] = $collecting_method;
         $order_id = $_SESSION['order_id']; 
 
@@ -489,6 +527,8 @@ class Orders extends Controller{
     /*..........................Customer quota......................... */
   
     function customer_quota(){
+        $this->AuthorizeUser('customer');
+
         $data = array();
         $customer_id = $_SESSION['user_id'];
 
@@ -506,6 +546,8 @@ class Orders extends Controller{
 
     // distributor -> phurchase order interface
      public function distributor($param=null, $error=null) {
+        $this->AuthorizeUser('distributor');
+
         // navigation and active tab in body
         $data['navigation'] = 'orders';
         $data['tab'] = $param;
@@ -523,6 +565,8 @@ class Orders extends Controller{
     }
 
     public function purchase_order($param=null) {
+        $this->AuthorizeUser('distributor');
+
         $productid = $_SESSION['productarray'];
         $postproducts = [];
 
@@ -541,6 +585,8 @@ class Orders extends Controller{
 
     // distributor current stock (Gas Orders)
     public function distributor_currentstock() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
@@ -557,6 +603,8 @@ class Orders extends Controller{
     
     //Placed orders list (Gas Orders)
     public function distributor_orderlist() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
@@ -574,6 +622,8 @@ class Orders extends Controller{
 
     // (Gas Orders -> Placed Orders List) Pending gas orders
     public function dis_placed_pending() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
@@ -590,6 +640,8 @@ class Orders extends Controller{
 
     // Gas Orders -> Places orders list , accepted gas orders
     public function dis_placed_accepted() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
@@ -606,6 +658,8 @@ class Orders extends Controller{
     
     // Gas Orders -> Places orders list , completed gas orders
     public function dis_placed_completed() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
@@ -621,6 +675,8 @@ class Orders extends Controller{
     
     // suitable vehicle list for pending , accepted gas orders
     public function suitableVehicleList(){
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'orders';
 
@@ -637,11 +693,15 @@ class Orders extends Controller{
     /*****************************************************************************************************/
 
     public function validatepayments($tab){
+        $this->AuthorizeUser('admin');
+
         $data = $this->model('Admin')->getPaymentVerifications($tab);
         $this->view('admin/payments',$data);
     }
 
     public function validatepaymentsubmit($validity,$tab,$order_id){
+        $this->AuthorizeUser('admin');
+        
         $validity = ($validity == 'valid') ? true : false;
         $data = $this->model('Admin')->validatepaymentsubmit($validity,$tab,$order_id);
         header('location:'.BASEURL.'/orders/validatepayments/'.$tab.'');

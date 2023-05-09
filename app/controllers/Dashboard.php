@@ -1,8 +1,5 @@
 <?php
-    // session_start();
-    // if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    //     header('Location: ' . BASEURL . '/home');
-    // }
+    session_start();
     class Dashboard extends Controller{
         public $user_id;
         public function __construct(){
@@ -11,6 +8,7 @@
         }
 
         public function dealer($error = null){
+            $this->AuthorizeUser('dealer');
             // check if the user is actually a gas dealer
             $this->AuthorizeUser("dealer");
             if(isset($_POST['option'])){
@@ -49,6 +47,8 @@
             $this->view('dashboard/dealer', $data);
         }
         public function company($error=null){
+            $this->AuthorizeUser('company');
+
             $company_id=$_SESSION['user_id'];
             $company_details = $this->model('Company')->getCompanyImage($company_id);
             $user_id=mysqli_fetch_assoc($company_details);
@@ -84,6 +84,8 @@
             $this->view('dashboard/company', $data);
         }
         public function delivery($error=null){
+            $this->AuthorizeUser('delivery');
+
             $data=[];
             $delivery_id=$_SESSION['user_id'];
             $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
@@ -122,7 +124,7 @@
 
         //customer dashboard 
         public function customer($error = null){
-
+            $this->AuthorizeUser('customer');
             //toast for place reservation
             switch($error){
                 case "1":
@@ -148,6 +150,8 @@
 
         
         public function distributor($error = null){
+            $this->AuthorizeUser('distributor');
+
             $distributor_id = $_SESSION['user_id'];
             if(isset($_POST['option'])){
                 $option = $_POST['option'];
@@ -180,6 +184,8 @@
         }
 
         public function admin($error = null){
+            $this->AuthorizeUser('admin');
+
             if(isset($_POST['option1'])){
                 $option = $_POST['option1'];
             }else{

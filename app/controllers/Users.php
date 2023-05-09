@@ -4,6 +4,7 @@ class Users extends Controller{
     public $user_id;
     function __construct(){
         parent::__construct();
+        $this->AuthorizeLogin();
         $this->user_id = $_SESSION['user_id'];
     }
 
@@ -12,6 +13,8 @@ class Users extends Controller{
     }
 
     function companies(){
+        $this->AuthorizeUser('admin');
+
         if(isset($_POST['option'])){
             $option = $_POST['option'];
         }else{
@@ -22,6 +25,8 @@ class Users extends Controller{
     }
     
     function distributors(){
+        $this->AuthorizeUser('admin');
+
         if(isset($_POST['option1'])){
             $option1 = $_POST['option1'];
         }else{
@@ -37,6 +42,8 @@ class Users extends Controller{
     }
 
     function dealers(){
+        $this->AuthorizeUser('admin');
+
         if(isset($_POST['option1'])){
             $option1 = $_POST['option1'];
         }else{
@@ -52,6 +59,8 @@ class Users extends Controller{
     }
 
     function deliveries($tab=null){
+        $this->AuthorizeUser('admin');
+
         if(isset($_POST['option'])){
             $option = $_POST['option'];
         }else{
@@ -79,6 +88,8 @@ class Users extends Controller{
     }
 
     function customers(){
+        $this->AuthorizeUser('admin');
+        
         if(isset($_POST['option'])){
             $option = $_POST['option'];
         }else{

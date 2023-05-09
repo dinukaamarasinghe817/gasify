@@ -3,9 +3,12 @@
 class Delvery extends Controller{
     public $user_id;
     function __construct(){
+        $this->AuthorizeLogin();
         $this->user_id = $_SESSION['user_id'];
     }
     function deliveries($error=null){
+        $this->AuthorizeUser('delivery');
+
         $data['navigation'] = 'deliveries';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
@@ -35,6 +38,8 @@ class Delvery extends Controller{
         $this->view('dashboard/delivery', $data);
     }
     function currentdeliveries(){
+        $this->AuthorizeUser('delivery');
+
         $data['navigation'] = 'currentgasdeliveries';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
@@ -59,12 +64,16 @@ class Delvery extends Controller{
         $this->view('dashboard/delivery', $data);
     }
     function acceptDelivery(){
+        $this->AuthorizeUser('delivery');
+
         $orderID = $_POST["orderID"];
         $delivery_id=$_SESSION['user_id'];
         $message=$this->model('Delivery')->acceptDelivery($orderID,$delivery_id);
         echo $message;
     }
     function reviews(){
+        $this->AuthorizeUser('delivery');
+
         $data['navigation'] = 'reviews';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
@@ -79,6 +88,8 @@ class Delvery extends Controller{
     }
 
     public function getdeliverypeople($option){
+        $this->AuthorizeUser('dealer');
+
         $data = $this->model("Dealer")->getdeliverypeople($option,$this->user_id);
         $data['navigation'] = 'delivery';
         $data['option'] = $option;
@@ -101,6 +112,8 @@ class Delvery extends Controller{
         $this->view('dashboard/delivery', $data);
     }*/
     public function deliveryReports(){
+        $this->AuthorizeUser('delivery');
+
         $data['navigation'] = 'reports';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
@@ -116,11 +129,15 @@ class Delvery extends Controller{
         $this->view('dashboard/delivery',$data);
     }
     function cancelDelivery(){
+        $this->AuthorizeUser('delivery');
+
         $orderID = $_POST["orderID"];
         $message=$this->model('Delivery')->cancelDelivery($orderID);
         return $message;
     }
     function deliverJob(){
+        $this->AuthorizeUser('delivery');
+
         $orderID = $_POST["orderID"];
         $charge = $_POST['charge'];
         $date=date('Y-m-d');
@@ -129,6 +146,8 @@ class Delvery extends Controller{
         $message=$this->model('Delivery')->setReservationStateDelivered($orderID,$charge);
         return $message;
     }function getCharts(){
+        $this->AuthorizeUser('delivery');
+
         $delivery_id=$_SESSION['user_id'];
         $joinedDate = $this->model('Delivery')->getRegisteredDate($delivery_id);
         $currentDate=explode("-",date('Y-m-d'));
@@ -316,12 +335,18 @@ class Delvery extends Controller{
         //print_r("---------------------");
         //print_r($orderCount);
     }function redirectToPoolFromOrderDispatched(){
+        $this->AuthorizeUser('delivery');
+
         $this->deliveries('dispatched');
 
     }function redirectToPoolFromOrderDelivered(){
+        $this->AuthorizeUser('delivery');
+
         $this->deliveries('delivered');
 
     }function redirectToPoolFromOrderCancelled(){
+        $this->AuthorizeUser('delivery');
+        
         $this->deliveries('cancelled');
 
     }

@@ -7,10 +7,12 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 class Products extends Controller{
     function __construct(){
         parent::__construct();
+        $this->AuthorizeLogin();
     }
 
     // customer view company products in dashboard
     function view_company_products($company_id){
+        $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'dashboard';
