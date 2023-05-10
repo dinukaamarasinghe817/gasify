@@ -10,6 +10,7 @@ class Vehicles extends Controller{
         $this->AuthorizeLogin();
     }
 
+    // add vehicle interface
     public function distributor($error=null,$success = null){
         $this->AuthorizeUser('distributor');
 
@@ -21,6 +22,7 @@ class Vehicles extends Controller{
         $data['image'] = $row['image'];
 
         $data['confirmation'] = '';
+        // display success and error messages
         if($error != null){
             $data['toast'] = ['type' => 'error', 'message' => $error];
         }
@@ -34,6 +36,7 @@ class Vehicles extends Controller{
 
     }
 
+    // add vehicle
     public function addvehicle() {
         $this->AuthorizeUser('distributor');
 
@@ -100,7 +103,8 @@ class Vehicles extends Controller{
         
 
     }
-
+    
+    // view vehicles
     public function viewvehicle() {
         $this->AuthorizeUser('distributor');
 

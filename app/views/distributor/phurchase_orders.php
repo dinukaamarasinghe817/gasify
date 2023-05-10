@@ -57,7 +57,6 @@ $user_id = $_SESSION['user_id'];
                                 $product_id = $row['product_id'];
                                 $product_array[$j] = $product_id;
                                 $j++;
-                                // $unit_price = number_format($row['unit_price']);
 
                                 $output .= '
                                 <tr class="data'.$row['product_id'].'">

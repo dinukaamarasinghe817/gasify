@@ -67,7 +67,6 @@ $user_id = $_SESSION['user_id'];
                 }
                 echo $output;
             ?>
-            <!-- </div> -->
         </div>
     </section>
 </section>

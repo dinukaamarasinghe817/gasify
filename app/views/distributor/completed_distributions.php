@@ -25,7 +25,6 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 
             <div class="middle">
                 <div class="accordion new">
-                    <!-- <div class="box"> -->
                     <?php 
                         $completes = $data['completed_distributions'];
                         foreach($completes as $complete) {

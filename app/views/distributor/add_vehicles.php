@@ -21,8 +21,6 @@ $user_id = $_SESSION['user_id'];
           ?>
 
           <div class="main2">
-
-            <!-- <form action=BASEURL."/vehicles/addvehicle" method="POST"> -->
             <form action="<?php echo BASEURL;?>/vehicles/addvehicle" method="POST">
                 <div class="err-txt1">
                     <?php
@@ -39,10 +37,7 @@ $user_id = $_SESSION['user_id'];
 
                 <div class="part1">
                     <label>Vehicle Type (axels) </label>
-                    <!-- <option value="-1" selected disabled hidden>Select vehicle type</option> -->
-                    <!-- <input type="text" name="type" placeholder="Vehicle Type" required> -->
                     <select name="type">
-                        <!-- <option value="-1" selected disabled hidden class="optiontxt" name="type">Select vehicle type</option> -->
                         <option value="-1" selected disabled hidden class="optiontxt">Select vehicle type</option>
 
                         <?php
@@ -74,33 +69,10 @@ $user_id = $_SESSION['user_id'];
                     <input type="number" name = "consumption" min="0" placeholder="Fuel Consumption" required>
                 </div>
 
-                <!-- <div class="part1">
-                    <label>Driver Name </label>
-                    <input type="text" name="drivername" placeholder="Driver Name" required>
-                </div> -->
-
-                <!-- <div class="part1">
-                    <label>Driver Contact Number </label>
-                    <input type="number" name="contact" placeholder="Contact Number" required>
-                </div> -->
-                
-
                 <div>
                     <button class="btn2" type="submit" name ="submit"><b>Submit</b></button>
-                    <!-- <button class="btn2" type="submit" name ="submit" onclick="openPopup();"><b>Submit</b></button> -->
                 </div>
             </form>
-
-                    
-                    <!-- popup box -->
-                    <!-- <div class="popup" id="popup">
-                        <?php echo '
-                        <img src="'.BASEURL.'/public/img/tick.png" alt="tick img" class="img"> ';
-                        ?>
-                       
-                        <p>Your vehicle successfully added!!</p>
-                        <button type="button" onclick="closePopup();">OK</button>
-                    </div> -->
         </div>
         </section>
 </section>

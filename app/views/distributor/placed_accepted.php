@@ -41,11 +41,8 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     </li>
 
                 </ul>
-            <!-- </div> -->
 
                 <div class="accordion new">
-
-                    <!-- <div class="box"> -->
                         <?php
                             $acceptedorders = $data['acceptedorders'];
                             foreach($acceptedorders as $acceptedorder) {
@@ -127,9 +124,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             echo $output;
 
                             }
-                            // echo $output;
                         ?>
-                    <!-- </div>                 -->
                 </div>
             </div>
         </div>
