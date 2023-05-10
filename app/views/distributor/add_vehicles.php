@@ -38,7 +38,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="part1">
-                    <label>Vehicle Type  </label>
+                    <label>Vehicle Type (axels) </label>
                     <!-- <option value="-1" selected disabled hidden>Select vehicle type</option> -->
                     <!-- <input type="text" name="type" placeholder="Vehicle Type" required> -->
                     <select name="type">
@@ -70,7 +70,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
 
                 <div class="part1">
-                    <label>Fuel Consumption </label>
+                    <label>Fuel Consumption (L/Km) </label>
                     <input type="number" name = "consumption" min="0" placeholder="Fuel Consumption" required>
                 </div>
 

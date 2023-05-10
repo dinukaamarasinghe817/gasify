@@ -65,7 +65,7 @@ $user_id = $_SESSION['user_id'];
                         </tbody>
                     </table>
 
-                    <label>Fuel Consumption :</label>
+                    <label>Fuel Consumption (L/Km) :</label>
                     <input type="number" name="fuel" value='.$upproducts['fuel_consumption'].' min=0 required>
                 </div>
 
