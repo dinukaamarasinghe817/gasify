@@ -4,6 +4,7 @@
         public $user_id;
         public $role;
         public function __construct(){
+            $this->AuthorizeLogin();
             $this->user_id = $_SESSION['user_id'];
             $this->role = $_SESSION['role'];
         }

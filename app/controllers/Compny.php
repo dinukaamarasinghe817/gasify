@@ -2,6 +2,7 @@
     session_start();
 class Compny extends Controller{
     function __construct(){
+        $this->AuthorizeLogin();
         if(isset($_POST['productImage '])){
             echo "done";
             die();
@@ -10,6 +11,8 @@ class Compny extends Controller{
     }
 
     function dealer($error=null){
+        $this->AuthorizeUser('company');
+
         if($error!=null){
             switch($error){
                 case '1':
@@ -33,6 +36,8 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);
     }
     function distributor($error=null){
+        $this->AuthorizeUser('company');
+
         if($error!=null){
             switch($error){
                 case '1':
@@ -51,6 +56,8 @@ class Compny extends Controller{
         $data['distributor']=$distributor_details;
         $this->view('dashboard/company', $data);
     }function products($error=null){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'products';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -69,6 +76,8 @@ class Compny extends Controller{
             //$data=[];
         $this->view('dashboard/company', $data);
     }function regproducts(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'regproducts';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -79,6 +88,8 @@ class Compny extends Controller{
             //$data=[];
         $this->view('dashboard/company', $data);
     }function regDealer(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'regDealer';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -90,6 +101,8 @@ class Compny extends Controller{
         $data['image'] = $user_id['logo'];
         $this->view('dashboard/company', $data);
     }function regDistributor(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'regDistributor';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -101,6 +114,8 @@ class Compny extends Controller{
         $data['image'] = $user_id['logo'];
         $this->view('dashboard/company', $data);
     }function updateProducts(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'updateProducts';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -114,6 +129,8 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);
     }
     function registerProducts(){
+        $this->AuthorizeUser('company');
+
         $lastUpdatedDate = date("Y-m-d");
         $img_name = $_FILES['productImage']['name'];
         $time=time();
@@ -124,6 +141,8 @@ class Compny extends Controller{
         $this->products('registeredSuccessful');
     }
     function registerDealer(){
+        $this->AuthorizeUser('company');
+
         $img_name = $_FILES['productImage']['name'];
         $time=time();
         $img_name = $time.$img_name;
@@ -157,6 +176,8 @@ class Compny extends Controller{
         //$this->model('Company')->registerNewProduct($data);
     }
     function registerDistributor(){
+        $this->AuthorizeUser('company');
+
         $img_name = $_FILES['productImage']['name'];
         $time=time();
         $img_name = $time.$img_name;
@@ -185,6 +206,8 @@ class Compny extends Controller{
         $this->distributor();
     }
     function updateProduct(){
+        $this->AuthorizeUser('company');
+
         $lastUpdatedDate = date("Y-m-d");
         $img_name="";
         if(!($_FILES['productImage']['size'] == 0)){
@@ -218,6 +241,8 @@ class Compny extends Controller{
 
     }
     function orders($error=null){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'orders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -243,6 +268,8 @@ class Compny extends Controller{
 
     }
     function limitquota($error=null){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'limitquota';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -266,6 +293,8 @@ class Compny extends Controller{
 
     }
     function setQuota(){
+        $this->AuthorizeUser('company');
+
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $quota = mysqli_real_escape_string($conn,$_POST["quota"]);
         $customer = mysqli_real_escape_string($conn,$_POST["customer"]);
@@ -274,6 +303,8 @@ class Compny extends Controller{
         //echo $r;
     }
     function resetQuota(){
+        $this->AuthorizeUser('company');
+
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $customer = mysqli_real_escape_string($conn,$_POST["customer"]);
         $state = mysqli_real_escape_string($conn,$_POST["state"]);
@@ -282,6 +313,8 @@ class Compny extends Controller{
         die();
     }
     function analysis(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'analysis';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -294,6 +327,8 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);
     }
     function reports(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'reports';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -306,6 +341,8 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);
     }
     public function companyReports(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'reportsCompany';
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $company_id=$_SESSION['user_id'];
@@ -438,6 +475,8 @@ class Compny extends Controller{
         $this->view('dashboard/company',$data);
     }
     public function issuedOrders(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'issuedorders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -457,6 +496,8 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);
     }
     public function delayedOrders(){
+        $this->AuthorizeUser('company');
+
         $data['navigation'] = 'delayedorders';
         $company_id=$_SESSION['user_id'];
         $company_details = $this->model('Company')->getCompanyImage($company_id);
@@ -475,6 +516,8 @@ class Compny extends Controller{
         $this->view('dashboard/company', $data);
     }
     public function issueOrder(){
+        $this->AuthorizeUser('company');
+
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $orderID = mysqli_real_escape_string($conn,$_POST["orderID"]);
         $key = mysqli_real_escape_string($conn,$_POST["key"]);
@@ -486,6 +529,8 @@ class Compny extends Controller{
         $this->model('Company')->addStockToDistributor($distributorID,$key,$qty);
     }
     public function delayOrder(){
+        $this->AuthorizeUser('company');
+
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $orderID = mysqli_real_escape_string($conn,$_POST["orderID"]);
         $company_id=$_SESSION['user_id'];
@@ -493,16 +538,22 @@ class Compny extends Controller{
         die();
     }
     public function ProductCount(){
+        $this->AuthorizeUser('company');
+
         $product_count = $this->model('Company')->getProductCount($_SESSION['user_id']);
         echo json_encode($product_count);
     }
     public function getDateRange(){
+        $this->AuthorizeUser('company');
+
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $ID = mysqli_real_escape_string($conn,$_POST["ID"]);
         $dates = $this->model('Company')->getOrderDates($ID);
         echo json_encode($dates);
     }
     public function getCharts(){
+        $this->AuthorizeUser('company');
+
         $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $company_id=$_SESSION['user_id'];
         $distributorID=mysqli_real_escape_string($conn,$_POST["distNames"]);
@@ -683,15 +734,25 @@ class Compny extends Controller{
         //print_r($order_details);
     }
     function redirectToOrdersFromIssued(){
+        $this->AuthorizeUser('company');
+
         $this->orders('issuedSucessfully');
     }
     function redirectToOrdersFromDelayed(){
+        $this->AuthorizeUser('company');
+
         $this->orders('delayedSucessfully');
     }function redirectToLimitQuotaFromSetQuota(){
+        $this->AuthorizeUser('company');
+
         $this->limitquota('quotaChanged');
     }function redirectToLimitQuotaFromQuotaStateOff(){
+        $this->AuthorizeUser('company');
+
         $this->limitquota('quotaoff');
     }function redirectToLimitQuotaFromQuotaStateOn(){
+        $this->AuthorizeUser('company');
+        
         $this->limitquota('quotaon');
     }
 

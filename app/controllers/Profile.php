@@ -3,7 +3,7 @@
     class Profile extends Controller{
         public $user_id;
         public function __construct(){
-            // $this->AuthorizeLogin();
+            $this->AuthorizeLogin();
             $this->user_id = $_SESSION['user_id'];
         }
 
@@ -82,6 +82,8 @@
         }
 
         public function updatedealer($tab){
+            $this->AuthorizeUser('dealer');
+
             $user_id = $_SESSION['user_id'];
             $role = $_SESSION['role'];
             if($tab == 'profile'){
@@ -115,6 +117,8 @@
         }
 
         public function updatedistributor($tab){
+            $this->AuthorizeUser('distributor');
+
             $user_id = $_SESSION['user_id'];
             $role = $_SESSION['role'];
             if($tab == 'profile'){
@@ -142,6 +146,8 @@
         }
 
         public function updatecompany($tab){
+            $this->AuthorizeUser('company');
+
             $user_id = $_SESSION['user_id'];
             $role = $_SESSION['role'];
             if($tab == 'profile'){
@@ -166,6 +172,8 @@
         }
 
         public function updatedelivery($tab){
+            $this->AuthorizeUser('delivery');
+
             $user_id = $_SESSION['user_id'];
             $role = $_SESSION['role'];
             if($tab == 'profile'){
@@ -194,6 +202,8 @@
         }
 
         public function updatecustomer($tab){
+            $this->AuthorizeUser('customer');
+
             $user_id = $_SESSION['user_id'];
             $role = $_SESSION['role'];
             if($tab == 'profile'){

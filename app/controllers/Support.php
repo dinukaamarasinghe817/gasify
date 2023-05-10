@@ -7,10 +7,12 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 class Support extends Controller{
     function __construct(){
         parent::__construct();
+        $this->AuthorizeLogin();
     }
 
 
     public function customer_support(){
+        $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'help';
@@ -32,6 +34,8 @@ class Support extends Controller{
     }
 
     public function customer_send_message(){
+        $this->AuthorizeUser('customer');
+        
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'help';
 

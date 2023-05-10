@@ -7,9 +7,12 @@ session_start();
 class GasDistributions extends Controller {
     function __construct() {
         parent::__construct();
+        $this->AuthorizeLogin();
     }
 
     public function pending_distributions($error=null, $success=null) {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'distributions';
 
@@ -30,7 +33,8 @@ class GasDistributions extends Controller {
     }
 
     public function donepending($distribution_id) {
-       
+        $this->AuthorizeUser('distributor');
+
         $data = $this->model("Distributor")->finishpendingdistributions($distribution_id);
 
         if(isset($data['toast'])) {
@@ -50,6 +54,8 @@ class GasDistributions extends Controller {
     }
 
     public function completed_distributions() {
+        $this->AuthorizeUser('distributor');
+        
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'distributions';
 

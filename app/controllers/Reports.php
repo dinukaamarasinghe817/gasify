@@ -6,11 +6,14 @@ class Reports extends Controller{
     private $user_id;
     function __construct() {
         parent::__construct();
+        $this->AuthorizeLogin();
         $this->user_id = $_SESSION['user_id'];
     }
 
     // summary of past distirbutions [report1]
-    public function distributor() {   
+    public function distributor() {  
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'reports';
 
@@ -32,6 +35,8 @@ class Reports extends Controller{
     }
 
     public function distributor_pdf($user_id) {
+        $this->AuthorizeUser('distributor');
+
         $data = [];
         $data['reportdetails'] = $this->model("Distributor")-> reportdetails($user_id);
         // $data = $this->model("Distributor")->reportdetails($user_id);
@@ -43,6 +48,8 @@ class Reports extends Controller{
 
     // all sold products report  [report2]
     public function allsellproducts() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'reports';
 
@@ -64,6 +71,8 @@ class Reports extends Controller{
     }
 
     public function allsellproducts_pdf() {
+        $this->AuthorizeUser('distributor');
+
         $data = [];
 
         if(isset($_POST['option'])){
@@ -80,6 +89,8 @@ class Reports extends Controller{
 
     // all requested products  [report3]
     public function allrequestedproducts() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'reports';
 
@@ -101,6 +112,8 @@ class Reports extends Controller{
     }
 
     public function allrequestedproducts_pdf() {
+        $this->AuthorizeUser('distributor');
+
         $data = [];
         $data['details'] = $this->model("Distributor")->AllRequestedProducts($option);
 
@@ -110,6 +123,8 @@ class Reports extends Controller{
     /*-------------------------------------------------------------------------------------------------------------------*/
 
     public function dealer(){
+        $this->AuthorizeUser('dealer');
+
         if(isset($_POST['start_date'])){
             $start_date = $_POST['start_date'];
         }else{
@@ -135,6 +150,8 @@ class Reports extends Controller{
     }
 
     public function salesdealer($start_date,$end_date,$order_by){
+        $this->AuthorizeUser('dealer');
+
         // $start_date = $_POST['start_date'];
         // $end_date = $_POST['end_date'];
         // $order_by = $_POST['filter'];
@@ -147,15 +164,19 @@ class Reports extends Controller{
         $this->view('dealer/reports/salesreport',$data);
     }
     public function companySales(){
+        $this->AuthorizeUser('company');
         $data = [];
         $this->view('company/reports/salesreport',$data);
     }
     public function deliverySales(){
+        $this->AuthorizeUser('delivery');
         $data = [];
         $this->view('delivery/reports/salesreport',$data);
     }
 
     public function admin(){
+        $this->AuthorizeUser('admin');
+
         if(isset($_POST['start_date'])){
             $start_date = $_POST['start_date'];
         }else{
@@ -178,10 +199,14 @@ class Reports extends Controller{
     }
 
     public function salesadmin($start_date,$end_date,$filter_by){
+        $this->AuthorizeUser('admin');
+
         $data = $this->model("Admin")->getReportInfo($start_date,$end_date,$filter_by);
         $this->view('admin/reports/salesreport',$data);
     }
     public function salesCompany(){
+        $this->AuthorizeUser('company');
+
         //$conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $data=[];
         $distID = $_POST["distID"];
@@ -205,6 +230,8 @@ class Reports extends Controller{
         //echo $res;
     }
     public function companySale(){
+        $this->AuthorizeUser('company');
+
         $data=[];
         $orderID= $_POST["orderID"];
         $distID = $_POST["distID"];

@@ -4,9 +4,12 @@ session_start();
 class Dealers extends Controller {
     function __construct() {
         parent::__construct();
+        $this->AuthorizeLogin();
     }
 
     public function distributor_dealers() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'dealers';
 
@@ -24,6 +27,7 @@ class Dealers extends Controller {
     /*..........................................................customer view dealers.........................................................*/
     //Display dealers according to all brand and customer home city(Default)
     public function customer_dealers($brand_name=null,$city_name = null) {
+        $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'dealers';
@@ -42,6 +46,8 @@ class Dealers extends Controller {
 
     //display dealers table according to selected brand and city
     public function selected_brand_dealers($brand_name=null,$city_name=null) {
+        $this->AuthorizeUser('customer');
+
         $data['dealers']= $this->model("Customer")->getdealersDetails($brand_name,$city_name);
         //view of changing part of table
         $this -> view('customer/dealers/dealers_ajax',$data);

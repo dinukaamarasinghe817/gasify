@@ -4,11 +4,13 @@
         public $user_id;
         public $role;
         public function __construct(){
+            $this->AuthorizeLogin();
             $this->user_id = $_SESSION['user_id'];
             $this->role = $_SESSION['role'];
         }
 
         public function dealer(){
+            $this->AuthorizeUser('dealer');
             if(isset($_POST['start_date'])){
                 $start_date = $_POST['start_date'];
             }else{
@@ -35,6 +37,7 @@
         }
 
         public function admin(){
+            $this->AuthorizeUser('admin');
             if(isset($_POST['start_date'])){
                 $start_date = $_POST['start_date'];
             }else{

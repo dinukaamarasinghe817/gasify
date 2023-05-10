@@ -7,9 +7,12 @@ session_start();
 class Vehicles extends Controller{
     function __construct(){
         parent::__construct();
+        $this->AuthorizeLogin();
     }
 
     public function distributor($error=null,$success = null){
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'vehicles';
         // profile picture & notifications
@@ -32,6 +35,8 @@ class Vehicles extends Controller{
     }
 
     public function addvehicle() {
+        $this->AuthorizeUser('distributor');
+
         $number=$_POST['vehiclenum'];
         $type = $_POST['type'];
         $fuelCon = $_POST['consumption'];
@@ -97,6 +102,8 @@ class Vehicles extends Controller{
     }
 
     public function viewvehicle() {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
         $data['navigation'] = 'vehicles';
 
@@ -112,6 +119,8 @@ class Vehicles extends Controller{
     
     // update vehicle page (view page)
     public function updateVehiclePage($vehicle_no) {
+        $this->AuthorizeUser('distributor');
+
         $user_id = $_SESSION['user_id'];
        
         $capacity = array();
@@ -128,6 +137,8 @@ class Vehicles extends Controller{
     }
 
     public function updateVehicle($vehicle_no){
+        $this->AuthorizeUser('distributor');
+
        $this->model("Distributor")->updatingVehicle( $vehicle_no);
        $this->updateVehiclePage($vehicle_no);
 
@@ -135,18 +146,24 @@ class Vehicles extends Controller{
 
     // release a vehicle
     public function releasing($vehicle_no) {
+        $this->AuthorizeUser('distributor');
+
         $this->model("Distributor")->releaseVehicle($vehicle_no);
         $this->viewvehicle();
     }
 
     // remove a vehicle
-    public function removeVehicle($vehicle_no) {        
+    public function removeVehicle($vehicle_no) {
+        $this->AuthorizeUser('distributor');
+
         $this->model("Distributor")->removeVehicle($vehicle_no);
         $this->viewvehicle();  
 
     }
 
     public function updatesinglevehicle($number){
+        $this->AuthorizeUser('distributor');
+        
         $data = $this->model('Distributor')->updatesinglevehicle($number);
         $this->view('',$data);
     }

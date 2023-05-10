@@ -24,6 +24,8 @@
         }
 
         public function dealer($error=null){
+            $this->AuthorizeUser('company');
+
             $company_id = $_SESSION['user_id']; // company_id should be taken from session
             // prduct breakdown
             $data = $this->model("Dealer")->dealerSignupForm($company_id);
@@ -69,6 +71,7 @@
         }
 
         public function dealersignup(){
+            $this->AuthorizeUser('company');
 
             // take post inputs
             $data = [];
@@ -243,6 +246,8 @@
         }
 
         public function distributor($error=null) {
+            $this->AuthorizeUser('company');
+
             $company_id = $_SESSION['user_id']; // company_id should be taken from session
             $data = $this->model("Distributor")->distributorSignupForm($company_id);
 
@@ -285,6 +290,8 @@
         }
 
         public function distributorsignup() {
+            $this->AuthorizeUser('company');
+
             // take post inputs
             $data = [];
             $company_id=$_SESSION['user_id'];

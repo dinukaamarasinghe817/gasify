@@ -8,10 +8,13 @@ class Stock extends Controller{
     public $user_id;
     function __construct(){
         parent::__construct();
+        $this->AuthorizeLogin();
         $this->user_id = $_SESSION['user_id'];
     }
 
     function dealer($param = null, $error = null) {
+        $this->AuthorizeUser('dealer');
+
         // navigation and active tab in body
         $data['navigation'] = 'stock';
         $data['tab'] = $param;
@@ -21,6 +24,8 @@ class Stock extends Controller{
     }
 
     public function dealerpoplace($param=null){
+        $this->AuthorizeUser('dealer');
+
         $productid = $_SESSION['productarray'];
         $postproducts = [];
         for($i=0; $i<count($productid); $i++){
@@ -35,6 +40,8 @@ class Stock extends Controller{
     }
 
     public function dealerpoinfo($poid=null){
+        $this->AuthorizeUser('dealer');
+        
         if($poid!= null){
             $data = $this->model('Dealer')->dealerpoinfo($poid);
             return $this->view("dealer/poinfo", $data);
