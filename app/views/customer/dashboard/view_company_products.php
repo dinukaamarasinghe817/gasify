@@ -7,9 +7,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
-        
     ?>
 
     <div class="under_topbar">
@@ -60,7 +57,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
             }
 
         }
-
 
             echo '</div>
             </div>';

@@ -11,7 +11,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
             $bodycontent = new Body('customerdashboard', $data);
         ?>
 </section>
-<!-- <script src="<?php echo BASEURL;?>/public/js/dashboard.js"></script> -->
 <script>
     let accordion = document.querySelectorAll('.recent_order .dropdown');
     for(i=0; i<accordion.length; i++) {

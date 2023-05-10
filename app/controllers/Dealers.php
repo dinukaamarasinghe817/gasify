@@ -24,8 +24,8 @@ class Dealers extends Controller {
     }
 
 
-    /*................................customer view dealers....................................*/
-    //select dealers according to brand and city
+    /*..........................................................customer view dealers.........................................................*/
+    //Display dealers according to all brand and customer home city(Default)
     public function customer_dealers($brand_name=null,$city_name = null) {
         $this->AuthorizeUser('customer');
 
@@ -34,13 +34,12 @@ class Dealers extends Controller {
 
         $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
         $row1 = mysqli_fetch_assoc($customer_details);
-    
-        $data['mycity'] = $row1['city'];
 
-        $data['brands']= $this->model("Customer")->getCompanyBrand();
-        $data['dealers']= $this->model("Customer")->getdealersDetails($brand_name,$city_name);
+        $data['mycity'] = $row1['city'];    //get customer home city to display in dropdown
+        $data['brands']= $this->model("Customer")->getCompanyBrand(); //get company brands to display in dropdown
+        //get dealers according to all brands and customer home city
+        $data['dealers']= $this->model("Customer")->getdealersDetails($brand_name,$city_name); 
        
-
         $this->view('customer/dealers/viewdealers',$data);
 
     }

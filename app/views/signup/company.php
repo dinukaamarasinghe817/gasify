@@ -54,13 +54,16 @@
 
             }else if (idArr[index] == "image") {
                 let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
-                let type = document.getElementById('image').files[0].type;
-                if (allowedExtensions.indexOf(type) > -1) {
+                if(document.getElementById("image").value != "") {
+                    let type = document.getElementById('image').files[0].type;
+                    if (allowedExtensions.indexOf(type) > -1) {
                     document.getElementById("imageerr").innerHTML = "";
-                } else {
-                    isOk = false;
-                    document.getElementById("imageerr").innerHTML = "Invalid image type";
+                    } else {
+                        isOk = false;
+                        document.getElementById("imageerr").innerHTML = "Invalid image type";
+                    }
                 }
+                
             }else{
                 if(document.getElementById(idArr[index]).value.length==0){
                     isOk=false;

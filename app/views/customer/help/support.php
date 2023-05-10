@@ -7,13 +7,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        $profile_image = BASEURL.'/public/img/profile/'.$data['image'];
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
-        
-        $admin = $data['admin'];
-        $admin_image = $admin['image'];
 
+        $profile_image = BASEURL.'/public/img/profile/'.$data['image']; //customer profile image
+        $admin = $data['admin']; //admin user_id
+        $admin_image = $admin['image']; //admin profile image
     ?>
        
     <div class="under_topbar">

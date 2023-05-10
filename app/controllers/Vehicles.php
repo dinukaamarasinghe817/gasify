@@ -157,7 +157,8 @@ class Vehicles extends Controller{
         $this->AuthorizeUser('distributor');
 
         $this->model("Distributor")->removeVehicle($vehicle_no);
-        $this->viewvehicle();     
+        $this->viewvehicle();  
+
     }
 
     public function updatesinglevehicle($number){
