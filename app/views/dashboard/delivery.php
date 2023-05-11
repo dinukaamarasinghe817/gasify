@@ -14,8 +14,10 @@
             $bodycontent = new Body('currentgasdeliveries', $data);
         }elseif($data['navigation']=='reviews'){
             $bodycontent = new Body('viewReviews', $data);
-        }elseif($data['navigation']=='reports'){
+        }elseif($data['navigation']=='analysis'){
             $bodycontent = new Body('deliveryAnalysis', $data);
+        }elseif($data['navigation']=='reports'){
+            $bodycontent = new Body('deliveryReports', $data);
         }
         
         ?>
