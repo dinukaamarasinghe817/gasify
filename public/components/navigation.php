@@ -763,17 +763,31 @@ class Navigation {
                         </a>
                     </li>
                     <li class="nav-tile">';
-                if($active == 'reports'){
-                    echo '<a href="'.BASEURL.'/Delvery/deliveryReports" class="panel-tile active reports">';
+                if($active == 'analysis'){
+                    echo '<a href="'.BASEURL.'/Delvery/deliveryAnalysis" class="panel-tile active reports">';
                 }else{
-                    echo '<a href="'.BASEURL.'/Delvery/deliveryReports" class="panel-tile reports">';
+                    echo '<a href="'.BASEURL.'/Delvery/deliveryAnalysis" class="panel-tile reports">';
                 }
                         
+                            echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M29 5L17.3409 22.4167L11.2045 13.25L2 27" stroke="" stroke-width="3.35444" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21.6365 5H29.0001V16" stroke="" stroke-width="3.35444" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <h3>Analysis</h3>
+                        </a>
+                    </li>
+                    <li class="nav-tile">';
+                if($active == 'reports'){
+                        echo '<a href="'.BASEURL.'/Delvery/reports" class="panel-tile active reports">';
+                }else{
+                        echo '<a href="'.BASEURL.'/Delvery/reports" class="panel-tile reports">';
+                }
+                            
                         echo '<svg width="26" height="26" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.5839 4.79688H4.87327C4.21322 4.79688 3.58019 5.08094 3.11346 5.58659C2.64673 6.09223 2.38452 6.77803 2.38452 7.49312V26.3668C2.38452 27.0819 2.64673 27.7677 3.11346 28.2734C3.58019 28.779 4.21322 29.0631 4.87327 29.0631H22.2945C22.9546 29.0631 23.5876 28.779 24.0544 28.2734C24.5211 27.7677 24.7833 27.0819 24.7833 26.3668V16.93" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M22.9168 2.77512C23.4118 2.2388 24.0832 1.9375 24.7833 1.9375C25.4834 1.9375 26.1549 2.2388 26.6499 2.77512C27.145 3.31143 27.4231 4.03883 27.4231 4.7973C27.4231 5.55577 27.145 6.28317 26.6499 6.81949L14.8283 19.6267L9.85083 20.9748L11.0952 15.5823L22.9168 2.77512Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <h3>Analysis</h3>
+                            <h3>Reports</h3>
                         </a>
                     </li>
                 </ul>

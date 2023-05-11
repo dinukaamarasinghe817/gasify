@@ -95,7 +95,7 @@ class Delvery extends Controller{
         $data['option'] = $option;
         $this->view('dealer/deliverypeople',$data);
     }
-    /*function reports(){
+    function reports(){
         $data['navigation'] = 'reports';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
@@ -110,11 +110,11 @@ class Delvery extends Controller{
         $data['joinedDate']=$joinedDate;
         $data['currentDate']=$currentDate;
         $this->view('dashboard/delivery', $data);
-    }*/
-    public function deliveryReports(){
+    }
+    public function deliveryAnalysis(){
         $this->AuthorizeUser('delivery');
 
-        $data['navigation'] = 'reports';
+        $data['navigation'] = 'analysis';
         $delivery_id=$_SESSION['user_id'];
         $delivery_details = $this->model('Delivery')->getDeliveryImage($delivery_id);
         $joinedDate = $this->model('Delivery')->getRegisteredDate($delivery_id);
