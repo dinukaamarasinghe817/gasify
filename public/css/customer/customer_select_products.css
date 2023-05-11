@@ -32,14 +32,6 @@ a,button{
     color: var(--button-orange);
 }
 
-
-
-
-
-
-
-
-
 .product_list{
     display: flex;
     flex-direction: row;
@@ -48,8 +40,7 @@ a,button{
     padding-bottom: 20px;
 
 }
-
-
+/* product card css */
 .product_card{
 
     width: 20%;
@@ -61,7 +52,6 @@ a,button{
     margin: 10px;
     transition: 0.3s ease;
 }
-
 
 .product_card:hover{
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px -1px, rgba(0, 0, 0, 0.15) 0px 2px 12px -1px;
@@ -79,9 +69,6 @@ a,button{
      height: 100%;
     border-radius: 5px;
 }
-
-
-
 .product_details{
     margin-top: 5px;
 }
@@ -94,8 +81,6 @@ a,button{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
-    /* column-gap: 20px; */
 }
 .name h5{
     color: #71717f;
@@ -115,14 +100,7 @@ a,button{
     color: var(--currency);
 }
 
-/* .count h4{
-    font-size: 15px;
-    font-weight: 900;
-    color: var(--button-blue);
-} */
-
 .increment_box{
-    
     width: 40%;
     height: 50px;
     margin-left: 90px;
@@ -167,7 +145,7 @@ a,button{
     padding-top: 10px;
 }
 
-
+/* total display field css */
 .total{
     display: flex;
     flex-direction: row;
@@ -197,7 +175,6 @@ a,button{
     display: flex;
     justify-content: space-between;
     margin-right: 80px;
-    /* column-gap: 50px; */
     margin-left: 40px;
 }
 
