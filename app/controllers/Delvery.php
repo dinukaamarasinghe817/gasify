@@ -153,7 +153,7 @@ class Delvery extends Controller{
         $currentDate=explode("-",date('Y-m-d'));
         $data['joinedDate']=$joinedDate;
         $data['currentDate']=$currentDate;
-        $data['navigation'] = 'reports';
+        $data['navigation'] = 'analysis';
         $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $deliveryID=$_SESSION['user_id'];
         $yearFrom=mysqli_real_escape_string($conn,$_POST['yearFrom']);

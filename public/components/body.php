@@ -2784,60 +2784,46 @@ class Body{
             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
                 <input type="submit" name="sub" value="Submit" style="font-family:poppins" class="getAnalysisButton">
             </div></form></div>'; 
-            echo'<div class="AnalysisContainer" style="display:flex;width:100%;height:90%">
-                    <div class="leftAnalysis" style="width:50%;height:100%">';
-                    if(isset($data['barChart'])){
-                        echo'<h4 style="margin-left:5%">Total Deliveries</h4>';
+            echo'<table class="styled-table" id="reporttable">
+                <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th style="text-align:center">Unit price (Rs.)</th>
+                        <th style="text-align:center">Quantity</th>
+                        <th style="text-align:right">Total (Rs.)</th>
+                    </tr>
+                </thead>';
+                if(isset($data['products'])){
+                    echo'<tbody>';
+                    //print_r($data['products']) ;
+                    $result=$data['products'];
+                    $tag="";
+                    $sum=0;
+                    foreach($result as $key=>$value){
+                        $tag.='<tr>
+                        <td >'.$key.'</td>
+                        <td style="text-align:center">'.$value[0].'</td>
+                        <td style="text-align:center">'.$value[1].'</td>
+                        <td style="text-align:right" >'.number_format($value[0]*$value[1],2).'</td>
+                        </tr>';
+                        $sum+=$value[0]*$value[1];
                     }
-                    
-                        echo'<div class="barChart" id="barChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                        if(isset($data['barChart'])){
-                                
-                            $chart['vector']=$data['barChart']['values'];
-                            $chart['labels']=$data['barChart']['dates'];
-                            $chart['color']=$data['barColor'];
-                            $chart['y']='Deliveries';
-                            $chart = new Chart('bar',$chart,1);
-                        } 
-                            
-                        echo'</div>';
-                        if(isset($data['lineChart'])){
-                            echo'<h4 style="margin-left:5%">Total Revenue</h4>';
-                        }
-                        
-                        echo'<div class="lineChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                        if(isset($data['lineChart'])){
-                            $chart_3['vector']=$data['lineChart']['values'];
-                            $chart_3['labels']=$data['lineChart']['names'];
-                            $chart_3['color']="rgba(30, 105, 176, 1)";
-                            $chart_3['y']='Revenue (Rs)';
-                            $chart_3 = new Chart('line',$chart_3,4);
-                        }
-                        
-                                    
-                        echo'</div>
-                    </div>';
-                    if(isset($data['doughNut'])){
-                        echo'<h4 style="margin-left:5%">Delivered quantity</h4>';
-                    }
-                    
-                    echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                    if(isset($data['doughNut'])){
-                        $chart_2['vector']=$data['doughNut']['values'];
-                        $chart_2['labels']=$data['doughNut']['products'];
-                        $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
-                        $chart_2['y']='Delivered';
-                        $chart_2['main']="fgdff";
-                        $chart_2 = new Chart('doughnut',$chart_2,3);
-                    }
-                    
-                    
-                    
-                    
+                    $tag.='<tr>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td style="text-align:right" >'.number_format($sum,2).'</td>
+                    </tr>';
+                    echo $tag;
+                    echo'</tbody>';
+
+                }    
+            echo '</table>';    
                     echo'</div>
                 
                 
                 </div>';
+                
                 
 
         echo ' 
