@@ -10,9 +10,4 @@
         $progresscircle = new Quota($product_id,$product_weight,$total_cylinders,$remaining_cylinders);
     echo '</div>';
 
-
-
-
-
-
 ?>

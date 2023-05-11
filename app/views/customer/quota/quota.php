@@ -7,10 +7,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
-       
-        
     ?>
 
     <div class="under_topbar">
@@ -40,10 +36,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 foreach($companies_array as $company_array){
 
                                     $next_month = date('m', strtotime('+1 month'));  //quota finished month
-            
                                     $start_date = date('Y/m/01');  //quota start date
                                     $end_date = date('Y/'.$next_month.'/01');  //quota end date
-        
                                     $today = date('Y/m/d');  //today's date
         
                                     $Date1 = new DateTime($today);
@@ -84,7 +78,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                                     foreach ($all_products as $product) {
                                                                         if($product['product_id']==$selected_pid){
                                                                             echo '<option value="'.$product['product_id'].'" selected >'.$product['product_weight'].' Kg '.$product['product_name'].'</option>'; 
-
                                                                         }else{
                                                                             echo '<option value="'.$product['product_id'].'">'.$product['product_weight'].' Kg '.$product['product_name'].'</option>';
                                                                         }

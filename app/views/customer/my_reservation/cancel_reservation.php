@@ -7,8 +7,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        // call whatever the component you need to show
-        // $bodycontent = new Body('viewmyreservation', $data);
+        
         if(isset($data['toast'])){
             $error = new Prompt('toast',$data['toast']);
 
@@ -42,8 +41,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 </div>';
 
         ?>
-        <!-- onclick ="customerprompt(\'confirmcancellation\',\''.BASEURL.'/Orders/refund_bank_details/'.$order_id.'\',\''.BASEURL.'/Orders/customer_myreservation/'.$order_id.'\'); return false; -->
-        <!-- onclick="customerprompt(\'cancelorder\',\''.BASEURL.'/Orders/customer_allreservations\'); return false;" -->
             <div class="image">
                 <img src="<?php echo BASEURL;?>/public/img/customer/refund.png" alt="">
             </div>

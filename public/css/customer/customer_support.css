@@ -41,10 +41,6 @@ a,button{
 .wrapper{
     background-color:var(--navmenu-orange);
     width: 600px;
-    /* height: 650px; */
-    /* margin: 0px 0 0px 0px; */
-    /* box-shadow: 0 0 1px 0 rgba(0, 0, 0, 1),
-                 0 32px 64px -48px rgba(0, 0, 0, 5); */
     box-shadow: var(--shadow-3d);
     border-radius:  10px;
     
@@ -84,7 +80,6 @@ a,button{
     border-radius: 5px;
     color: var(--navmenu-gray-dark);
     font-weight: 600;
-    /* font-size: var(--mediums); */
 }
 
 /* outgoing css */

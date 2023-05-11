@@ -7,13 +7,7 @@ class Customer extends Model{
         parent::__construct();
     }
 
-
-    // public function customerSignupForm(){
-    //     $data['productresult'] = $this->read('product', 'company_id = '.$company_id);
-    //     $data['distributorresult'] = $this->read('distributor', "company_id = $company_id", "city");
-    //     return $data;
-    // }//
-
+    //get customer details
     public function getCustomer($customer_id){
         $result = $this->Query("SELECT c.city ,c.street,c.image,c.contact_no,c.ebill_no,c.ebill_verification_state,c.type as c_type  
         FROM customer c INNER JOIN users u ON u.user_id = c.customer_id WHERE c.customer_id = $customer_id");
