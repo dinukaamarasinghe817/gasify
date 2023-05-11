@@ -1,6 +1,5 @@
-
+<!-- Replacing part(progress circle) -->
 <?php
-
    $product_id = $data['product_id'];
    $product_weight = $data['product_weight'];
    $total_cylinders = $data['total_cylinders'];
