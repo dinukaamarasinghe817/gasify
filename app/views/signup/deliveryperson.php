@@ -26,6 +26,24 @@
                     document.getElementById("emailerr").innerHTML="Invalid email";
                 }
 
+            }else if(idArr[index]=="cno" && document.getElementById("cno").value.length!=0){
+                var regex = /^[0-9]{10}$/;
+                var cno=document.getElementById("cno").value;
+                if(cno.match(regex)){
+                    document.getElementById("cnoerr").innerHTML="";
+                }else{
+                    isOk=false;
+                    document.getElementById("cnoerr").innerHTML="Invalid length";
+                }
+
+            }else if (idArr[index] == "vno" && document.getElementById(idArr[index]).value.length!=0) {
+                var regex = /^([a-zA-Z]{1,3}|((?!0*-)[0-9]{1,3}))-[0-9]{4}(?<!0{4})/;
+                if(document.getElementById("vno").value.match(regex)) {
+                    console.log("YES");
+                    document.getElementById("vnoerr").innerHTML = "";
+                }else{
+                    document.getElementById("vnoerr").innerHTML = "Enter valid number";
+                }
             }else if (idArr[index] == "image") {
                 let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
                 if(document.getElementById("image").value != "") {
