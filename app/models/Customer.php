@@ -803,7 +803,10 @@ class Customer extends Model{
                 $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
             }
         }
-        
+        // set a minimum value for the delivery charge. (uncomment when you need)
+        // if($delivery_charge < MIN_DEL_CHARGE){
+        //     $delivery_charge = MIN_DEL_CHARGE;
+        // }
         return $delivery_charge;
     }
 
@@ -813,6 +816,7 @@ class Customer extends Model{
         
         $collecting_method = $_SESSION['collecting_method'];
         $delivery_charge = doubleval($delivery_charge);
+
         //update reservation table with collecting method
         if($collecting_method == "Delivery"){
             $this ->update('reservation',['collecting_method'=>$collecting_method,'deliver_city'=>$delivery_city,'deliver_street'=>$delivery_street,'deliver_charge'=>$delivery_charge],'order_id='.$order_id);
@@ -823,7 +827,15 @@ class Customer extends Model{
         
     }
 
-    function getdealerpubkey($dealer_id){
+    public function confirmCompleteOrder($order_id){
+        if($this->update('reservation',['order_state'=>'Completed'],"order_id = $order_id")){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    public function getdealerpubkey($dealer_id){
         $row = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $dealer_id"));
         return ['pub_key'=>$row['pub_key'], 'rest_key'=>$row['rest_key']];
     }

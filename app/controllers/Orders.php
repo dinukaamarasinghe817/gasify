@@ -521,6 +521,24 @@ class Orders extends Controller{
         unset($_SESSION['collecting_method']);
     }
 
+    function sendMailLateDelivery(){
+        echo $this->model("Dealer")->sendMailonLateDelivery();
+    }
+
+    function actiontodelay($mode,$order_id){
+        $data = $this->model('Dealer')->actiontodelay($mode,$order_id);
+        header('LOCATION: '.BASEURL.'/dashboard/customer/'.$data['error']);
+    }
+
+    function confirmCompleteOrder($order_id){
+        if($this->model('Customer')->confirmCompleteOrder($order_id)){
+            $toastnum = '4';
+        }else{
+            $toastnum = '5';
+        }
+        header('LOCATION: '.BASEURL.'/dashboard/customer/$toastnum');
+    }
+
 
 
     /*..........................Customer quota......................... */
