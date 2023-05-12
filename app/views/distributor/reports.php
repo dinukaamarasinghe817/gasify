@@ -14,8 +14,6 @@ $user_id = $_SESSION['user_id'];
         <div class="split right">
         
             <h2>Reports</h2>
-
-            <!-- <div class="main"> -->
                 <div class="top-panel">
                     <ul>
                         <li>
@@ -107,10 +105,8 @@ $user_id = $_SESSION['user_id'];
 
                     $output .= '</div>';                    
                     echo $output;
-                    ?>
-                   
+                    ?>    
                 </div>
-            <!-- </div> -->
         </div>
     </section>
 </section>

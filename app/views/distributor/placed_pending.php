@@ -43,8 +43,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </ul>
 
                 <div class="accordion new">
-
-                    <!-- <div class="box"> -->
                         <?php
                             $pendingorders = $data['pendingorders'];
                             foreach($pendingorders as $pendingorder) {
@@ -122,9 +120,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             echo $output;
 
                             }
-                            // echo $output;
                         ?>
-                    <!-- </div> -->
                 </div>
             </div>
         </div>

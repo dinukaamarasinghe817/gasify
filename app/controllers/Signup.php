@@ -27,7 +27,7 @@
             $this->AuthorizeUser('company');
 
             $company_id = $_SESSION['user_id']; // company_id should be taken from session
-            // prduct breakdown
+            // product breakdown
             $data = $this->model("Dealer")->dealerSignupForm($company_id);
 
             // if any errors to be printed

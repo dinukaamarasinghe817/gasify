@@ -40,11 +40,8 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed active"><b>Completed Gas Orders</b><a>
                     </li>
                 </ul>
-            <!-- </div> -->
 
                 <div class="accordion new">
-
-                    <!-- <div class="box"> -->
                         <?php
                             $completedorders = $data['completedorders'];
                             foreach($completedorders as $completedorder) {
@@ -119,9 +116,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                             echo $output;
 
                             }
-                            // echo $output;
                         ?>                        
-                    <!-- </div> -->
                 </div>
             </div>
         </div>
