@@ -130,6 +130,12 @@
                 case "1":
                     $data['toast'] = ['type' => 'success', 'message' => "You've successfully placed order."];
                     break;
+                case "2":
+                    $data['toast'] = ['type' => 'success', 'message' => "Update successful!"];
+                    break;
+                case "3":
+                    $data['toast'] = ['type' => 'error', 'message' => "Delivery option can only be changed once!"];
+                    break;
             }
 
             $customer_id = $_SESSION['user_id'];

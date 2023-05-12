@@ -20,24 +20,24 @@ class Dealer extends Model
             $data['dealer'] = $info;
         }
         return $data['dealer'];
-    }//
+    }// takes all the dealers
 
     public function dealerSignupForm($company_id){
         $data['productresult'] = $this->read('product', 'company_id = '.$company_id);
         $data['distributorresult'] = $this->Query('SELECT * FROM users u INNER JOIN distributor d ON u.user_id = d.distributor_id AND d.company_id = '.$company_id.' ORDER BY d.city');
         return $data;
-    }//
+    }// prepare data for the dealer's signup form
 
     public function getDealer($dealer_id){
         // $result = $this->read('dealer', "dealer_id = $dealer_id");
         $result = $this->Query("SELECT * FROM users u INNER JOIN dealer d ON u.user_id = d.dealer_id WHERE d.dealer_id = $dealer_id");
         return $result;
-    }//
+    }// get the details of the given dealer
     
     public function getProducts($company_id){
         $result = $this->read('product', 'company_id = '.$company_id);
         return $result;
-    }//
+    }// takes all the products of the given company
     
     public function dashboard($dealer_id,$option){
         $data = [];
@@ -150,7 +150,7 @@ class Dealer extends Model
         $data['chart'] = $chart;
 
         return $data;
-    }//
+    }// takes the information needed for the dealer's dashboard
 
     public function dealerpoplace($user_id,$productid, $postproducts){
         $data = [];
@@ -280,7 +280,7 @@ class Dealer extends Model
             $data = ['po_id'=>$po_id, 'dealer_id'=>$user_id, 'business_name'=>$business_name, 'distributor_id'=>$distributor_id, 'date'=>$date, 'time'=>$time, 'products'=>$products, 'total'=>$total];
         }
         return $data;
-    }//
+    }// dealers purchase order place
     
     public function dealerStock($dealer_id,$tab){
         switch($tab){
@@ -328,7 +328,7 @@ class Dealer extends Model
                 return $purchase_orders;
                 break;
         }
-    }//
+    }// takes the stock information of the given dealer 
 
     public function addtoReservation($customer_id,$dealer_id,$products,$payment_method,$stock_verification,$place_date,$place_time){
         if($payment_method == 'Credit card'){
@@ -383,7 +383,7 @@ class Dealer extends Model
         $mail = new Mail('admin@gasify.com',$customer['email'],$customer['first_name'].' '.$customer['last_name'],"Gasify: Your order has been $state!",$mailbody,$link=null);
         $mail->send();
         return $order_id;
-    }
+    } // add the customer order information to reservation and reservation_includes
 
     public function customerOrder($customer_id,$dealer_id,$products,$payment_method){
         //collecting previouse reorder flags before updating the dealer keep table
@@ -484,7 +484,7 @@ class Dealer extends Model
                     }
                     // $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
                     // $customer_Name = $q['first_name'].' '.$q['last_name'];
-                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$mailbody,$link=null);
+                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Gasify: Re-Order Alert',$mailbody,$link=null);
                     $mail->send();
                 }
 
@@ -583,7 +583,7 @@ class Dealer extends Model
                     }
                     // $q = mysqli_fetch_assoc($this->read('users',"user_id = $customer_id"));
                     // $customer_Name = $q['first_name'].' '.$q['last_name'];
-                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$mailbody,$link=null);
+                    $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Gasify: Re-Order Alert',$mailbody,$link=null);
                     $mail->send();
                 }
 
@@ -603,7 +603,7 @@ class Dealer extends Model
             return $order_id;
 
         }
-    }
+    } // handle the customer order by taking session information
 
     public function dealerOrders($dealer_id,$tab1,$tab2){
         $tab1 = ucwords($tab1);
@@ -617,9 +617,14 @@ class Dealer extends Model
         r.payment_method AS payment_method,
         r.pay_slip AS pay_slip,
         r.payment_verification AS payment_verification,
+        r.stock_verification AS stock_verification,
         r.collecting_method AS collecting_method,
+        r.priority AS priority,
+        r.mailed AS mailed,
         r.place_date AS place_date,
         r.place_time AS place_time,
+        r.accepted_date AS accepted_date,
+        r.accepted_time AS accepted_time,
         r.dealer_id AS dealer_id,
         r.bank AS bank,
         r.acc_no AS acc_no,
@@ -676,12 +681,19 @@ class Dealer extends Model
                 $total_amount += $product['unit_price']*$product['quantity'];
             }
 
+            if($order['stock_verification'] == 1){
+                $stockverification = 'available';
+            }else{
+                $stockverification = 'notavailable';
+            }
+
+
             // get the reviews for the order
             $reviews = $this->read('review',"order_id = $id AND review_type = 'Dealer'","date DESC, time DESC");
             array_push($orders, ['order'=>$order, 'products'=>$products, 'reviews'=>$reviews, 'payment'=>$order['payment_verification'], 'stock'=>$stockverification, 'total_amount'=>$total_amount]);
         }
         return $orders;
-    }//
+    }// takes 6 types of orders (Pending,Accepted,Dispatched,Delivered,Completed,Canceled)
 
     public function dealerNofifycustomer($order_id,$dealer_id,$state){
         // sendig email updates
@@ -730,9 +742,9 @@ class Dealer extends Model
         date_default_timezone_set("Asia/Colombo");
         $time = date('H:i');
         $date = date('Y-m-d');
-        // sending notification
-        $this->insert('notifications',['user_id' => $customer_id,'date'=> $date,'time'=> $time,'type' => 'Order Status','message' => $message,'state' => 'delivered']);
-    }
+        // sending notification now done by the trigger
+        // $this->insert('notifications',['user_id' => $customer_id,'date'=> $date,'time'=> $time,'type' => 'Order Status','message' => $message,'state' => 'delivered']);
+    }// notify the customer when order is issued via an Email
 
     public function dealerAcceptOrder($order_id){
         $user_id = $_SESSION['user_id'];
@@ -745,19 +757,13 @@ class Dealer extends Model
         $this->update('reservation',['order_state' => 'Accepted'],"order_id = $order_id");
         $this->dealerNofifycustomer($order_id,$user_id,'accepted');
         
-    }
+    } // updated system never use this. the order acceptance was automated
 
     public function dealerIssueOrder($order_id){
         $user_id = $_SESSION['user_id'];
-        // $result = $this->read('reservation_include',"order_id = $order_id");
-        // while($row = mysqli_fetch_assoc($result)){
-        //     $product_id = $row['product_id'];
-        //     $product_quantity = $row['quantity'];
-        //     $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
-        // }
         $this->update('reservation',['order_state' => "Completed"],"order_id = $order_id");
         $this->dealerNofifycustomer($order_id,$user_id,'completed');
-    }
+    } // Dealer issuing a pickup or a prioritized delivery type order
 
     public function dealersubmitpayslipOrder($order_id){
         $image_name = '';$tmp_name = '';
@@ -774,7 +780,7 @@ class Dealer extends Model
             $data['toast'] = ['type'=>'error', 'message'=>'couldn\'t upload, try again'];
         }
         return $data;
-    }
+    } // Refunding payment slip submit
 
     public function dealerpoinfo($poid){
         $sql = "SELECT pi.product_id AS product_id, pi.quantity AS quantity, pr.name AS name ,pi.unit_price AS unit_price,pr.weight AS weight,pr.image AS image
@@ -965,6 +971,74 @@ class Dealer extends Model
         $data['start_date'] = $start_date;
         $data['end_date'] = $end_date;
         $data['filter'] = $order_by;
+        return $data;
+    }
+
+    public function sendMailonLateDelivery(){
+        date_default_timezone_set("Asia/Colombo");
+
+        $query1 = $this->read('reservation',"order_state = 'Accepted' AND mailed = 0");
+        while($row1 = mysqli_fetch_assoc($query1)){
+            $date = $row1['accepted_date'];
+            $time = $row1['accepted_time'];
+            $accepted_time = strtotime($date.' '.$time);
+            $current_time = time();
+            $difference = round(($current_time - $accepted_time)/60);
+
+            if($difference > DELIVERY_DELAY_TIME){
+                // then send an email
+                $customer = mysqli_fetch_assoc($this->read('users',"user_id = ".$row1['customer_id']));
+                $from = 'admin@gasify.com';
+                $to = $customer['email'];
+                $reciepName = $customer['first_name'].' '.$customer['last_name'];
+                $subject = "Gasify: Your order might get delayed";
+                $mailbody = file_get_contents('./emailTemplates/changecolmethod.php');
+
+                // prepare replacements
+                $swap_variables = array(
+                    "{RECEIVER_NAME}"=> $reciepName,
+                    "{ORDER_ID}"=> $row1['order_id'],
+                    "{CURRENT_DELIVERY_CHARGE}" => $row1['deliver_charge'],
+                    "{SWITCH_TO_PICKUP}"=> BASEURL.'/orders/actiontodelay/switch/'.$row1['order_id'],
+                    "{DOUBLE_AND_DELIVER}"=> BASEURL.'/orders/actiontodelay/double/'.$row1['order_id'],
+                    "{WAIT}"=> BASEURL.'/orders/actiontodelay/wait/'.$row1['order_id']
+                );
+                // replace
+                foreach(array_keys($swap_variables) as $key){
+                    if(strlen($key) > 2 && trim($key) != ""){
+                        $mailbody = str_replace($key,$swap_variables[$key],$mailbody);
+                    }
+                }
+
+                $mail = new Mail($from,$to,$reciepName,$subject,$mailbody,$link=null);
+                $data = $mail->send();
+                $toast = $data['toast'];
+                if($toast['type'] == 'success'){
+                    // update the mailed to 1
+                    $this->update('reservation',['mailed'=>1],"order_id = ".$row1['order_id']);
+                }
+            }
+        }
+
+        return 1;
+    }
+
+    public function actiontodelay($mode,$order_id){
+        $data = [];
+        $query = $this->read('reservation',"order_id = $order_id AND responded_to_mail = 0");
+        if(mysqli_num_rows($query) > 0){
+            if(strtoupper($mode) == 'SWITCH'){
+                $this->update('reservation',['collecting_method'=>'Pickup','deliver_charge'=>0],"order_id = ".$order_id);
+            }elseif(strtoupper($mode) == 'DOUBLE'){
+                $order = mysqli_fetch_assoc($this->read('reservation',"order_id = ".$order_id));
+                $newcharge = $order['deliver_charge']*2;
+                $this->update('reservation',['priority'=>1,'deliver_charge'=>$newcharge],"order_id = ".$order_id);
+            }
+            $data['error'] = '2';
+            $this->update('reservation',['responded_to_mail'=>1],"order_id = $order_id");
+        }else{
+            $data['error'] = '3';
+        }
         return $data;
     }
 }

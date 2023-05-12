@@ -133,7 +133,7 @@
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-family: Bitter; font-size: 22px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;">Your order has been accepted! </p>
+    <p style="line-height: 140%;">Want to switched to Pickup?</p>
   </div>
 
       </td>
@@ -167,7 +167,7 @@
   <tr>
     <td style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="http://localhost/mvc/public/img/mail/image-3.jpeg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 180px;" width="180"/>
+      <img align="center" border="0" src="http://localhost/mvc/public/img/mail/image-10.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 180px;" width="180"/>
       
     </td>
   </tr>
@@ -200,7 +200,7 @@
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
-  <h1 style="margin: 0px; line-height: 140%; text-align: left; word-wrap: break-word; font-family: Bitter; font-size: 22px; font-weight: 400;">Hi {RECIEVER_NAME},</h1>
+  <h1 style="margin: 0px; line-height: 140%; text-align: left; word-wrap: break-word; font-family: Bitter; font-size: 22px; font-weight: 400;">Hi {RECEIVER_NAME},</h1>
 
       </td>
     </tr>
@@ -212,9 +212,9 @@
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
-  <div style="font-family: 'Montserrat',sans-serif; font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;">Your order with <strong>Order ID : {ORDER_ID}</strong> has been <strong>accepted.</strong> You can visit the store and collect your order. Check the details of your order using the link below.</p>
-  </div>
+        <div style="font-family: 'Montserrat',sans-serif; font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
+          <p style="line-height: 140%;">Your order with <strong>Order ID : {ORDER_ID}</strong> has been <strong>Dispatched </strong>and stays in the delivery queue for a longer time. It <strong></strong>might get delayed because of the un availability of delivery people. You can <strong>change your collecting method to 'Pickup'</strong> if you can visit the store and get the order. Or if you still want it to <strong>get delivered with double delivery charges</strong>, Or you can <strong>wait</strong> untill it delivered to you. Please  provide your opinion to proceed further.</p>
+        </div>
 
       </td>
     </tr>
@@ -226,9 +226,30 @@
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
-<div align="center">
-    <a href="{ORDER_LINK}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #fc9b44; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">View Order<br /></span></span>
+        <div style="font-family: 'Montserrat',sans-serif; font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
+          <p style="line-height: 140%;">
+            <strong>Your Current Delivery Charge</strong> : {CURRENT_DELIVERY_CHARGE}</p>
+        </div>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+  <tbody>
+    <tr>
+      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
+        
+<div align="center" style="display: flex; flex-direction: column; gap: 10px;">
+    <a href="{SWITCH_TO_PICKUP}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #fc9b44; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">Switch to Pickup<br /></span></span>
+    </a>
+    <a href="{DOUBLE_AND_DELIVER}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #447efc; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">Double & Deliver<br /></span></span>
+    </a>
+    <a href="{WAIT}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #464646; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">Wait<br /></span></span>
     </a>
 </div>
 
@@ -286,7 +307,7 @@
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
 <div align="center">
-    <a href="http://localhost/mvc/" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #000000; background-color: #ffffff; border-radius: 20px;-webkit-border-radius: 20px; -moz-border-radius: 20px; width:55%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-family: 'Montserrat',sans-serif; font-size: 14px;">
+    <a href="https://localhost/mvc/" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #000000; background-color: #ffffff; border-radius: 20px;-webkit-border-radius: 20px; -moz-border-radius: 20px; width:55%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-family: 'Montserrat',sans-serif; font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">Give us feedback</span></span>
     </a>
 </div>

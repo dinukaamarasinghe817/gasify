@@ -158,7 +158,7 @@ class Body{
         echo '<div class="under_topbar">
         <div class="top_image">
             <div class="image">
-                <img src="../img/customer_dashboard/dashboardimg.jpg" alt="">
+                <img src="'.BASEURL.'/public/img/customer_dashboard/dashboardimg.jpg" alt="">
             </div>
             <div class="text">
                 <div class="logo">

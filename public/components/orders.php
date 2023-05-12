@@ -21,6 +21,10 @@ class Order{
                         }else if($active1 == 'pending'){
                             echo '<button onclick="location.href = \''.BASEURL.'/orders/dealeraccept/'.$order['order_id'].'\'" class="btn">Accept</button>';
                         }else if($active1 == 'accepted' && $active2 == 'pickup'){
+                            // pick up orders
+                            echo '<button onclick="location.href = \''.BASEURL.'/orders/dealerissue/'.$order['order_id'].'\'" class="btn">Issue</button>';
+                        }else if($active1 == 'accepted' && $active2 == 'delivery' && $order['priority'] == 1){
+                            // priritized orders
                             echo '<button onclick="location.href = \''.BASEURL.'/orders/dealerissue/'.$order['order_id'].'\'" class="btn">Issue</button>';
                         }else if($active1 == 'canceled' && $order['refund_verification'] == 'verified'){
                             echo '<button class="btn transparent">Refunded</button>';

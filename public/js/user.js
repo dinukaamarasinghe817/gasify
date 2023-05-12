@@ -1,4 +1,5 @@
 setInterval(refreshnotification, 1000);
+setInterval(sendmailonlatedelivery, 60000);
 function refreshnotification(){
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost/mvc/notification/count', true);
@@ -13,6 +14,17 @@ function refreshnotification(){
                     bell.innerHTML = ``;
                 }
             }
+        }
+    }
+    xhr.send();
+}
+
+function sendmailonlatedelivery(){
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/mvc/orders/sendMailLateDelivery', true);
+    xhr.onload = ()=>{
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+            let data = xhr.response;
         }
     }
     xhr.send();
