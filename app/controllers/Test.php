@@ -6,9 +6,7 @@
         }
 
         public function index(){
-            echo "Testing ...";
+            // echo "Testing ...";
         }
-
-        
     }
 ?>
