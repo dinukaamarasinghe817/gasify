@@ -181,9 +181,10 @@ class Dealer extends Model
             if(mysqli_num_rows($result)>0){
                 while($row = mysqli_fetch_assoc($result)){
                     $po_id = $row['po_id'];
-                    $result = $this->Query("SELECT * FROM purchase_include WHERE po_id = '{$po_id}' AND product_id = '{$product}'");
-                    $row2 = mysqli_fetch_assoc($result);
-                    $pending_stock += $row2['quantity'];
+                    $result2 = $this->Query("SELECT * FROM purchase_include WHERE po_id = '{$po_id}' AND product_id = '{$product}'");
+                    while($row2 = mysqli_fetch_assoc($result2)){
+                        $pending_stock += $row2['quantity'];
+                    }
                 }
             }
 
@@ -195,6 +196,10 @@ class Dealer extends Model
                 $capacity = $row['capacity'];
             }
             if($postproducts[$product] > ($capacity - $current_stock - $pending_stock)){
+                echo $postproducts[$product].'<br>';
+                echo $capacity.'<br>';
+                echo $current_stock.'<br>';
+                echo $pending_stock;
                 $flag = true;
             }
             // post $productid <= capacity - current stock - pending stock
@@ -219,7 +224,7 @@ class Dealer extends Model
         $place_date = date('Y-m-d');
 
         
-        $query3 = $this->Query("INSERT INTO purchase_order (dealer_id,po_state,distributor_id,place_date,place_time) VALUES ('{$user_id}','pending','{$distributor_id}','{$place_date}','{$place_time}');");
+        $query3 = $this->Query("INSERT INTO purchase_order (dealer_id,po_state,distributor_id,place_date,place_time) VALUES ('{$user_id}','Pending','{$distributor_id}','{$place_date}','{$place_time}');");
         $query4 = $this->Query("SELECT * FROM purchase_order WHERE dealer_id = '{$user_id}' ORDER BY place_date DESC, place_time DESC LIMIT 1");
         $row4 = mysqli_fetch_assoc($query4);
         $po_id = $row4['po_id'];

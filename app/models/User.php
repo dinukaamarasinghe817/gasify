@@ -1284,6 +1284,7 @@ class User extends Model
             $product = $capacity[$i][0];
             $qty = $capacity[$i][1];
             $query3 = $this->insert('distributor_capacity',['distributor_id'=> $distributor_id,'product_id'=>$product,'capacity'=>$qty]);
+            $query4 = $this->insert('distributor_keep',['dealer_id'=> $distributor_id,'product_id'=>$product,'quantity'=>0]);
         }
 
         // sending account verification codes

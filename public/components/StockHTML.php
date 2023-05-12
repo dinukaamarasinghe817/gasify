@@ -132,13 +132,13 @@ class StockHTML{
                 $time = $row2['place_time']; 
                 $time = date('h:i a', strtotime($time)); 
                 switch($row2['po_state']){
-                    case 'pending':
+                    case 'Pending':
                         $color = "#F1C40F";
                         break;
-                    case 'accepted':
+                    case 'Accepted':
                         $color = "#F39C12";
                         break;
-                    case 'completed':
+                    case 'Completed':
                         $color = "#239B56";
                         break;
                     default:

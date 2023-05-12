@@ -116,7 +116,7 @@ class Admin extends Model
             $data['toast'] = ['type' => 'success', 'message' => 'Successfully updated delivery charges!'];
             // notify the delivery people about updated delivery charges through an email
             $query = $this->read('users',"type = 'delivery'");
-            while ($row = $query->mysqli_fetch_assoc($query)){
+            while ($row = mysqli_fetch_assoc($query)){
                 $to = $row['email'];
                 $recipientName = $row['first_name'].' '.$row['last_name'];
                 $subject = "Gasify: New update about delivery charges";
@@ -126,9 +126,9 @@ class Admin extends Model
                 while($dchargrow = mysqli_fetch_assoc($dcharges)){
                     $charge = file_get_contents('./emailTemplates/deliverychargerow.php');
                     $swap_charge = array(
-                        '{MIN}' => $charge['min_distance'],
-                        '{MAX}' => $charge['max_distance'],
-                        '{DELIVERY_CHARGE}'=>$dchargrow['charge_per_kg']
+                        '{MIN}' => $dchargrow['min_distance'],
+                        '{MAX}' => $dchargrow['max_distance'],
+                        '{DELIVERY_CHARGE}'=>number_format($dchargrow['charge_per_kg'],2)
                     );
                     foreach(array_keys($swap_charge) as $key){
                         if(strlen($key) > 2 && trim($key) != ""){
@@ -139,7 +139,7 @@ class Admin extends Model
                 }
                 $swap_body = array(
                     '{RECIEVER_NAME}'=>$recipientName,
-                    '{DELIVERY_CHARGES_URL}'=>$url,
+                    '{DELIVERY_CHARGES_URL}'=>BASEURL.'/dashboard/delivery',
                     '{DELIVERY_CHARGES}'=>$charges
                 );
                 foreach(array_keys($swap_body) as $key){
