@@ -31,6 +31,7 @@ class Stock extends Controller{
         for($i=0; $i<count($productid); $i++){
             $postproducts[$productid[$i]] = $_POST[$productid[$i]];
         }
+        unset($_SESSION['productarray']);
         $data = $this->model('Dealer')->dealerpoplace($this->user_id, $productid, $postproducts);
         if(isset($data['toast'])){
             $this->dealer("purchaseorder", $data['toast']);

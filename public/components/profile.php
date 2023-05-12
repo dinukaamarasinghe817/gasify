@@ -361,7 +361,7 @@ class ProfileHTML{
                                     <div class="input half"><label>Last Name</label><input type="text" name="last_name" placeholder="last name" value="'.$row['last_name'].'"></div>
                                 </div>
                                 <div>
-                                    <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'"></div>
+                                    <div class="input half"><label>City</label><input type="text" name="city" placeholder="city" value="'.$row['city'].'" readonly></div>
                                     <div class="input half"><label>Address</label><input type="text" name="street" placeholder="address" value="'.$row['street'].'"></div>
                                 </div>
                                 <div class="input"><label>Store Name</label><input type="text" name="name" placeholder="store name" value="'.$row['store_name'].'"></div>
