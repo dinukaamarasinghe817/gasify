@@ -937,7 +937,7 @@ class Body{
                     echo'    
                     </div>
                     <div class="card">
-                        <div class="cmValue" ><h1>2423.00</h1></div>
+                        <div class="cmValue" ><h1>'.number_format($data['revenue'],2).'</h1></div>
                         <div class="cmTitle">Rupeese</div>
                         <div class="cmTitle">Earned Today</div>
                     </div>
@@ -1068,23 +1068,24 @@ class Body{
             if(isset($data["pool"])){
             echo'<div  class="bar">
             <div class="currentContainer">
-                <label class="capacityTitle" style="color:white;margin-right:2%">Total capacity : </label>
+                <label class="capacityTitle">Total capacity : </label>
                 <label class="capacityVlue" style="color:white">'.$data['weight_limit'].'KG</label>
             </div>
             <div class="remainingContainer">
-                <label class="capacityTitle" style="color:white;margin-right:2%">Remaining capacity : </label>
+                <label class="capacityTitle" style="color:white;margin-right:2%">Remaining : </label>
                 <label class="capacityVlue" style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
             </div>
             <div class="container">
-                <div class="progress-bar__container" style="overflow: hidden"">
-                    <div class="cprogress" id="cprogress" ></div>';
-                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
-                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
-                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else{
-                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }
+                <div class="progress-bar__container"">
+                    <div class="cprogress" id="cprogress" >';
+                        if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                            echo'<label style="color:rgb(0,0,0)" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                        }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                            echo'<label style="color:rgb(255,255,255)"class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                        }else{
+                            echo'<label style="color:rgb(255,255,255)" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                        }
+                    echo'</div>';
                     echo'
                 </div>';
                 /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
@@ -1103,7 +1104,7 @@ class Body{
                 </script>';
             echo'</div>         
          </div>
-        <div class="DealerTables" id="DealerTables" style="margin:0;height:80%">';
+        <div class="DealerTables" id="DealerTables" >';
         echo '<table class="styled-table" style="margin-top:0.3%">
                         <thead>
                             <tr>
@@ -1158,13 +1159,13 @@ class Body{
                     $pool .=  '<tr>
                             <td>'.$row['order_id'].'</td>
                             <td>'.$row['first_name'].' '.$row['last_name'].'</td>
-                            <td>'.$row['street'].','.$row['city'].'</td>
+                            <td style="overflow:auto">'.$row['street'].','.$row['city'].'</td>
                             <td>'.$row['contact_no'].'</td>
                             <td>'.date('F j, Y', strtotime($row['place_date'].' '.$row['place_time'])).'</td>
                             <td>'.$row['place_time'].'</td>
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                             <td>Rs.'.number_format($weight * $charge,2).'</td>
-                            <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" style="width:103%;margin:auto;display:flex;align-items:center;align-content:center;justify-content:center" key="data[index].order_id "><a  style="color:white" >Accept</a></div></td>
+                            <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" >Accept</a></div></td>
                             <td><img onclick="collapse(this,'.$Count.')" class="downArrow" src="http://localhost/mvc/public/img/icons/down.png"></td>
                             </tr><tr style="display:none" id="'.$Count.'row">
                             <td colspan="10">
@@ -1202,25 +1203,38 @@ class Body{
                 <label style="color:white">'.$data['weight_limit'].'KG</label>
             </div>
             <div class="remainingContainer">
-                <label style="color:white;margin-right:2%">Remaining capacity : </label>
+                <label style="color:white;margin-right:2%">Remaining : </label>
                 <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
             </div>
             <div class="container">
                 <div class="progress-bar__container" style="overflow: hidden"">
-                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')"></div>';
-                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
-                        echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
-                        echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }else{
-                        echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                    }
-                    echo'
-                </div>
-            </div>         
+                    <div class="cprogress" id="cprogress" onClick="fillProgress()" style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')">';
+                        if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                            echo'<label style="color:rgb(0,0,0)" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                        }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                            echo'<label style="color:rgb(255,255,255)"class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                        }else{
+                            echo'<label style="color:rgb(255,255,255)" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                        } 
+                    echo'</div>
+                </div>';
+                echo'<script>
+                const myDiv = document.getElementById("cprogress");
+                const keyframes = [
+                { width: "0",backgroundColor: "rgb(45,119,188)" },
+                { width: "'.(($data['total_weight']/$data['weight_limit'])*100).'%",backgroundColor: "rgb('.$redValue.','.$blueValue.','.$greenValue.')" }
+                ];
+                const options = {
+                duration: 3000,
+                easing: "ease",
+                fill: "forwards"
+                };
+                const animation = myDiv.animate(keyframes, options);                           
+            </script>';
+            echo'</div>         
          </div>';
             echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center;align-items:center">';
-                echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
+                echo'<img src="../img/placeholders/2.png" class="noImage" >';
                 echo '</div></section>';
         }
     }   
@@ -1235,25 +1249,28 @@ class Body{
          <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" id="temp" style="width:100%;height:100%;color:white;background-color:#2d77bc">Current deliveries</div></a>
          </div>';
          if(isset($data["current"])){
-         echo'<div  class="bar" style="width:97%;height:7%;display:flex;align-items: center;border-left-style:solid;border-right-style:solid;border-color: #2d77bc;box-sizing:border-box">
+         echo'<div  class="bar">
             <div class="currentContainer">
                 <label style="color:white;margin-right:2%">Total capacity : </label>
                 <label style="color:white">'.$data['weight_limit'].'KG</label>
             </div>
             <div class="remainingContainer">
-                <label style="color:white;margin-right:2%">Remaining capacity : </label>
+                <label style="color:white;margin-right:2%">Remaining : </label>
                 <label style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
             </div>
             <div class="container">
                 <div class="progress-bar__container" style="overflow: hidden"">
-                <div class="cprogress" id="cprogress" ></div>';
-                if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
-                    echo'<label style="color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
-                    echo'<label style="white" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                }else{
-                    echo'<label style="black" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
-                }
+                <div class="cprogress" id="cprogress" >';
+                    if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
+                        echo'<label style="color:rgb(0,0,0)" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)>52){
+                        echo'<label style="color:rgb(255,255,255)"class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }else{
+                        echo'<label style="color:rgb(255,255,255)" class="progress-text">'.number_format(($data['total_weight']/$data['weight_limit'])*100,2).'%</label>';
+                    }
+                
+                
+                echo'</div>';
                 echo'
             </div>';
             /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
@@ -1321,7 +1338,7 @@ class Body{
                     $pool .=  '<tr>
                             <td>'.$row['order_id'].'</td>
                             <td>'.$row['first_name'].' '.$row['last_name'].'</td>
-                            <td>'.$row['street'].','.$row['city'].'</td>
+                            <td style="overflow:auto">'.$row['street'].','.$row['city'].'</td>
                             <td>'.$row['contact_no'].'</td>
                             <td>'.$row['place_date'].'</td>
                             <td>'.$row['place_time'].'</td>
@@ -1712,20 +1729,38 @@ class Body{
          <a href="../Delvery/reviews" style="width:97%;height:100%" class="deliveries_link" ><div class="DealerTableTopics" onClick="loadDeliveryTableTopics()" style="width:100%;height:100%;color:white">Reviews</div></a>
          </div>';
         if(isset($data['reviews'])){
-            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0">';
-            $reviews=$data['reviews'];
+            echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0;">';
             $tag='';
-            foreach($reviews as $row){
-                $tag.='<div class="reviewRow" >
-                <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
-                    <div class="messageRow">'.$row['message'].'</div>
-                    <div class="dateTimeRow">
-                        <div class="reviewTime">Time -'.$row['time'].'</div>
-                        <div class="reviewDate">Date -'.$row['date'].'</div> 
-                    </div>        
-                </div>';
+            // foreach($reviews as $row){
+            //     $tag.='<div class="reviewRow" >
+            //     <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
+            //         <div class="messageRow">'.$row['message'].'</div>
+            //         <div class="dateTimeRow">
+            //             <div class="reviewTime">Time -'.$row['time'].'</div>
+            //             <div class="reviewDate">Date -'.$row['date'].'</div> 
+            //         </div>        
+            //     </div>';
+            // }
+            // echo $tag;
+            if(isset($data['reviews'])){
+                $tag="";
+                foreach($data['reviews'] as $row){
+                    $tag.='<div class="reviewContent" style="margin-left:5%">
+                            <div class="review_row">
+                                <img class="review_profile" src = "'.BASEURL.'/public/img/profile/'.$row['image'].'">
+                                <div class="review_content">
+                                    <div class="name_time" >
+                                        <h3 style="color:black">'.$row['name'].'</h3> 
+                                        <span style="color:black">'.date('F j, Y, g:i A', strtotime($row['date'].' '.$row['time'])).'</span>   
+                                    </div>
+                                    <div class="review">'.$row['message'].'</div>
+                                </div>
+                            </div>
+                
+                        </div>';
+                }
+                echo $tag;
             }
-            echo $tag;
             echo'</div></section>';
         }else{
             echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center;align-items:center">';
@@ -2213,7 +2248,7 @@ class Body{
         $pdf->Output();
 
     }
-    function deliveryReports($data){
+    /*function deliveryReports($data){
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
@@ -2254,7 +2289,7 @@ class Body{
             </div>';     
         echo ' 
         </section>';
-    }
+    }*/
     function issuedOrdersCompany($data){
         echo 
         '<section class="body-content">
@@ -2637,6 +2672,158 @@ class Body{
                 
                 
                 </div>';
+                
+
+        echo ' 
+        </section>';
+    }
+    function deliveryReports($data){
+        echo 
+        '<section class="body-content">
+            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
+            <a href="../Delvery/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Reports</div></a>
+            </div>';
+            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;">'; 
+                echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
+                <form action="'. BASEURL.'/Delvery/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
+                <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                From<select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
+                    if(isset($data['joinedDate'])){
+                        echo'<option value="" disabled selected >Year</option>';
+                        $tag='';
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                            
+                            if($i==intval($data['joinedDate'][0])){
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }
+                                
+                            
+                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Year</option></select>';
+                    }
+                echo'<select name="monthFrom" id="monthFrom">';
+                if(isset($data['currentdate'])){
+                    echo'<option value="" disabled >Month</option>';
+                    $tag='';
+                    $to=0;
+                    if(intval($data['fromyearandmonth'][0])==intval($data['currentdate'][0])){
+                        $to=intval($data['currentdate'][1])+1;
+                    }else{
+                        $to=13;
+                    }
+                    for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                        if($i==$data['fromyearandmonth'][1]){
+                            $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                        }else{
+                            $tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                    }
+                    $tag.='</select>';
+                    echo $tag;
+
+                }else{
+                    echo'<option value="" disabled selected>Month</option>
+                    </select>';
+                }
+            echo'
+            </div>
+            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
+                To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
+                if(isset($data['joinedDate'])){
+                    echo'<option value="" disabled selected>Year</option>';
+                    $tag='';
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                            if($i==intval($data['joinedDate'][0])){
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            }
+                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Year</option></select>';
+                    }
+                
+                echo'
+                <select name="monthTo" id="monthTo">';
+                    if(isset($data['currentdate'])){
+                        echo'<option value="" disabled >Month</option>';
+                        $tag='';
+                        $to=0;
+                        if(intval($data['toyearandmonth'][0])==intval($data['currentdate'][0])){
+                            $to=intval($data['currentdate'][1])+1;
+                        }else{
+                            $to=13;
+                        }
+                        for ($i=(intval($data['joineddate'][0])==intval($data['toyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
+                            if($i==$data['toyearandmonth'][1]){
+                                $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
+                            }else{
+                                $tag.='<option value="'.$i.'">'.$i.'</option>';
+                            }
+                        }
+                        $tag.='</select>';
+                        echo $tag;
+
+                    }else{
+                        echo'<option value="" disabled selected>Month</option>
+                        </select>';
+                    }
+                echo'</select>
+            </div>
+            <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
+                <input type="submit" name="sub" value="Submit" style="font-family:poppins" class="getAnalysisButton">
+            </div></form></div>'; 
+            echo'<table class="styled-table" id="reporttable">
+                <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th style="text-align:center">Unit price (Rs.)</th>
+                        <th style="text-align:center">Quantity</th>
+                        <th style="text-align:right">Total (Rs.)</th>
+                    </tr>
+                </thead>';
+                if(isset($data['products'])){
+                    echo'<tbody>';
+                    //print_r($data['products']) ;
+                    $result=$data['products'];
+                    $tag="";
+                    $sum=0;
+                    foreach($result as $key=>$value){
+                        $tag.='<tr>
+                        <td >'.$key.'</td>
+                        <td style="text-align:center">'.$value[0].'</td>
+                        <td style="text-align:center">'.$value[1].'</td>
+                        <td style="text-align:right" >'.number_format($value[0]*$value[1],2).'</td>
+                        </tr>';
+                        $sum+=$value[0]*$value[1];
+                    }
+                    $tag.='<tr>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td style="text-align:right" >'.number_format($sum,2).'</td>
+                    </tr>';
+                    echo $tag;
+                    echo'</tbody>';
+
+                }    
+            echo '</table>';    
+                    echo'</div>
+                
+                
+                </div>';
+                
                 
 
         echo ' 

@@ -25,10 +25,7 @@ a,button{
 .content{
     display: flex;
     flex-direction: row;
-    /* justify-content: space-evenly; */
     margin-right: 80px;
-    /* column-gap: 20px; */
-    
 }
 
 #quota_form{
@@ -62,8 +59,6 @@ a,button{
     font-weight: 800;
     font-size: var(--larger);
     align-items: center;
-    /* display: flex;
-    justify-content: center; */
 }
   
 .company_details .date{
@@ -71,8 +66,6 @@ a,button{
     font-size: small;
     font-weight: 800;
     padding-top: 20px;
-    /* justify-content: right; */
-    /* padding-right: 150px; */
 }
   
   
@@ -93,7 +86,6 @@ a,button{
 .company_quota img{
     width: 120px;
     height: 120px;
-   
 }
 
 .quota-bars{
@@ -130,9 +122,6 @@ a,button{
     justify-content: space-between;
     align-items: baseline;
 }
-
-
-
 
 .bar .total{
     display: flex;

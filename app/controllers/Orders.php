@@ -51,11 +51,12 @@ class Orders extends Controller{
     }
 
 
-    /*.................Customer my reservation...............*/
+    /*...................................................Customer my reservation.............................................................*/
     //customer all past reservtions
     function customer_allreservations($error = null){
         $this->AuthorizeUser('customer');
 
+        //if there is error display the error message
         switch($error){
             case "1":
                 $data['toast'] = ['type' => 'success', 'message' => "You've successfully cancelled your order."];
@@ -64,10 +65,9 @@ class Orders extends Controller{
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
-
+        //get all reservations relavant to customer
         $data['allmyreservations'] = $this->model('Customer')->getAllmyreservations($customer_id);
-       
-        $this->view('customer/my_reservation/allmyreservation', $data);
+        $this->view('customer/my_reservation/allmyreservation', $data);   //send data to allmyreservation view
     }
 
     //customer selected one reservation details from all past reservations
@@ -76,11 +76,11 @@ class Orders extends Controller{
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
-
+        //get selected reservation details relavant to customer
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
         $data['confirmation'] = '';
 
-        $this->view('customer/my_reservation/viewmyreservation', $data);
+        $this->view('customer/my_reservation/viewmyreservation', $data); //send data to viewmyreservation view
     }
 
     //get collecting method for display review type in review form
@@ -94,7 +94,6 @@ class Orders extends Controller{
         $data['order_id'] = $order_id;
         $data['customer_id'] = $customer_id;
         if($error != null){
-            // $data['error'] = $error;
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
        

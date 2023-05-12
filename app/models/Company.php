@@ -120,6 +120,10 @@ class Company extends Model
             $used_quota =$old_monthly_limit-$old_remaining_amount;
             $new_remaining_amount = intval($quota) - $used_quota;
             
+            //company set new quota limit as zero
+            if($quota == 0){
+                $new_remaining_amount = 0;
+            }
             if($new_remaining_amount <= 0){
                 $new_remaining_amount = 0;
             }  
@@ -127,7 +131,7 @@ class Company extends Model
             $this ->update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id= '.$customer_id.' AND company_id='.$companyID.'');
         }
 
-        // //update quota table with new quota monthly limit
+        //update quota table with new quota monthly limit
         $this->Query("UPDATE quota SET monthly_limit=$quota WHERE (company_id=$companyID AND customer_type='$customer')");
     }
     public function resetQuota($companyID,$customer,$state){

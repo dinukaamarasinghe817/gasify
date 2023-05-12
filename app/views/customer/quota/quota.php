@@ -7,10 +7,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
     <?php
         // call the default header for yout interface
         $bodyheader = new BodyHeader($data);
-        // call whatever the component you need to show
-        // $bodycontent = new Body('addreview', $data);
-       
-        
     ?>
 
     <div class="under_topbar">
@@ -40,31 +36,32 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 foreach($companies_array as $company_array){
 
                                     $next_month = date('m', strtotime('+1 month'));  //quota finished month
-            
                                     $start_date = date('Y/m/01');  //quota start date
                                     $end_date = date('Y/'.$next_month.'/01');  //quota end date
-        
                                     $today = date('Y/m/d');  //today's date
-        
+                                    
+                                    //convert dates to DateTime objects to get difference
                                     $Date1 = new DateTime($today);
                                     $Date2 = new DateTime($end_date);
         
-                                    $interval = $Date1->diff($Date2);
-                                    $remaingDays = $interval->days;     //calculate current days
+                                    $interval = $Date1->diff($Date2);   // get difference between today's Date and the end date
+                                    $remaingDays = $interval->days;     //convert that difference to days
 
+                                    //take company details from array
                                     $company_id = $company_array['company_id'];
                                     $company_name = $company_array['name'];
                                     $company_logo = $company_array['logo'];
-                                    $active_count = 0;
+                                    // $active_count = 0;
                                 
                                     //if quota is active 
                                     if($company_array['quota_state']=='ON'){
 
-                                        $active_count = $active_count + 1;
+                                        // $active_count = $active_count + 1;  
                                         $selected_pid = $company_array['selected_pid'];
                                         $total_cylinders = $company_array['total_cyl'];
                                         $remaining_cylinders = $company_array['remaining_cyl'];
                                         
+                                        // display time period and product dropdown
                                         echo  '<div class="one_company">
                                                 <div class="company_details">
                                                     <div class="name">'.$company_name.'</div>
@@ -76,7 +73,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                         <div class="bar">
                                                             <div class="total_dropdown">
                                                                 <div class="total">
-                                                                    <span style="color:#0047AB;"><strong>Total : </strong></span><span id="total_cylinders" style="color:#0047AB;"><strong> &nbsp '.$total_cylinders.'</strong></span><span style="color:#0047AB;"><strong> &nbsp Cylinders</strong></span> 
+                                                                    <span style="color:#0047AB;"><strong>Total Quota: </strong></span><span id="total_cylinders" style="color:#0047AB;"><strong> &nbsp '.$total_cylinders.'</strong></span><span style="color:#0047AB;"><strong> &nbsp Cylinders</strong></span> 
                                                                 </div>
                                                                 <div>
                                                                     <select id="product_dropdown"  name = "'.$company_id.'" class="dropdowndate" onchange = "this.form.submit()">';
@@ -84,12 +81,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                                     foreach ($all_products as $product) {
                                                                         if($product['product_id']==$selected_pid){
                                                                             echo '<option value="'.$product['product_id'].'" selected >'.$product['product_weight'].' Kg '.$product['product_name'].'</option>'; 
-
                                                                         }else{
                                                                             echo '<option value="'.$product['product_id'].'">'.$product['product_weight'].' Kg '.$product['product_name'].'</option>';
                                                                         }
                                                                     }
-                                                                        
+                                                                     //Display company details and progress circle   
                                                                     echo '</select>
                                                                 </div>
                                                             </div>
@@ -100,7 +96,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                                 <div id ="progress_bar">';
                                                                     //progress circle
                                                                     $progresscircle = new Quota($selected_pid,$total_cylinders,$remaining_cylinders); 
-                                                        echo '</div><div class="remaining"><span style="color:#0047AB;"><strong> Remaining : </strong></span><span style="color:#0047AB;"  id = "remaining_cylinders"><strong>'.$remaining_cylinders.'</strong></span><span style="color:#0047AB;"><strong>&nbsp Cylinders</strong></span></div></div></div><div class="bottom_details">
+                                                        //display remaining cylinders and remaing days to renew quota
+                                                        echo '</div><div class="remaining"><span style="color:#0047AB;"><strong>Quota Balance: </strong></span><span style="color:#0047AB;"  id = "remaining_cylinders"><strong>'.$remaining_cylinders.'</strong></span><span style="color:#0047AB;"><strong>&nbsp Cylinders</strong></span></div></div></div><div class="bottom_details">
                                                                 <div class="days" >'.$remaingDays.' days more</div>   
                                                             </div>
                                                         </div>
