@@ -862,7 +862,7 @@ class Distributor extends Model
 
         $product_quantites = array();
 
-        $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
+        $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name, p.weight, p.unit_price as unit_price
         FROM purchase_include pi INNER JOIN product p 
         ON pi.product_id = p.product_id WHERE po_id IN 
             (SELECT po_id FROM purchase_order 
@@ -873,6 +873,8 @@ class Distributor extends Model
             while($row1=mysqli_fetch_assoc($query1)) {
                 $product_id = $row1['product_id'];
                 $product_name = $row1['name'];
+                $weight = $row1['weight'];
+                $unit_price = $row1['unit_price'];
                 $quantity = $row1['quantity'];
                 array_push($product_quantites, ['quantites'=>$row1]);
             }
@@ -882,47 +884,35 @@ class Distributor extends Model
 
     // all sell products report details 
     // public function AllSellProductsDetails($start_date, $end_date) {
-    public function AllSellProductsDetails($option) {
-        $user_id = $_SESSION['user_id'];  //distirbutor id
+    // public function AllSellProductsDetails($option) {
+    //     $user_id = $_SESSION['user_id'];  //distirbutor id
 
-        // if($start_date == 'today' && $end_date == 'today'){
-        //     $start_date = date('Y-m-d');
-        //     $end_date = date('Y-m-d');
-        // }elseif($start_date == '7day' && $end_date == '7day'){
-        //     $start_date = date('Y-m-d', strtotime('-7 days'));
-        //     $end_date = date('Y-m-d', strtotime('-1 days')); 
-        // }else{
-        //     $start_date = date('Y-m-d', strtotime('-30 days'));
-        //     $end_date = date('Y-m-d', strtotime('-1 days'));
-            
-        // }
+    //     if($option == 'today'){
+    //         $start_date = date('Y-m-d');
+    //         $end_date = date('Y-m-d');
+    //     }elseif($option == '7day'){
+    //         $start_date = date('Y-m-d', strtotime('-7 days'));
+    //         $end_date = date('Y-m-d', strtotime('-1 days'));        
+    //     }else{
+    //         $start_date = date('Y-m-d', strtotime('-30 days'));
+    //         $end_date = date('Y-m-d', strtotime('-1 days'));
+    //     }
 
-        if($option == 'today'){
-            $start_date = date('Y-m-d');
-            $end_date = date('Y-m-d');
-        }elseif($option == '7day'){
-            $start_date = date('Y-m-d', strtotime('-7 days'));
-            $end_date = date('Y-m-d', strtotime('-1 days'));        
-        }else{
-            $start_date = date('Y-m-d', strtotime('-30 days'));
-            $end_date = date('Y-m-d', strtotime('-1 days'));
-        }
+    //     $product_quantites = array();
+    //     $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
+    //     FROM purchase_include pi INNER JOIN product p 
+    //     ON pi.product_id = p.product_id WHERE po_id IN 
+    //         (SELECT po_id FROM purchase_order 
+    //         WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND po_state != 'pending') 
+    //         GROUP BY product_id");
 
-        $product_quantites = array();
-        $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
-        FROM purchase_include pi INNER JOIN product p 
-        ON pi.product_id = p.product_id WHERE po_id IN 
-            (SELECT po_id FROM purchase_order 
-            WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND po_state != 'pending') 
-            GROUP BY product_id");
-
-        if(mysqli_num_rows($query1)>0) {
-            while($row1=mysqli_fetch_assoc($query1)) {
-                array_push($product_quantites, $row1);
-            }
-        }
-        return ['start'=> $start_date, 'end'=> $end_date, 'quantites'=>$product_quantites];
-    }
+    //     if(mysqli_num_rows($query1)>0) {
+    //         while($row1=mysqli_fetch_assoc($query1)) {
+    //             array_push($product_quantites, $row1);
+    //         }
+    //     }
+    //     return ['start'=> $start_date, 'end'=> $end_date, 'quantites'=>$product_quantites];
+    // }
 
 
 
@@ -946,7 +936,7 @@ class Distributor extends Model
 
         $product_quantites = array();
 
-        $query1 = $this->Query("SELECT p.product_id, SUM(s.quantity) as quantity, p.name as name
+        $query1 = $this->Query("SELECT p.product_id, SUM(s.quantity) as quantity, p.name as name, p.weight as weight, p.unit_price as unit_price
         FROM stock_include s INNER JOIN product p 
         ON s.product_id = p.product_id WHERE stock_req_id IN 
             (SELECT stock_req_id FROM stock_request 
@@ -958,6 +948,8 @@ class Distributor extends Model
                 $product_id = $row1['product_id'];
                 $product_name = $row1['name'];
                 $quantity = $row1['quantity'];
+                $weight = $row1['weight'];
+                $unit_price = $row1['unit_price'];
                 array_push($product_quantites,['quantities'=>$row1]);
             }
         }
