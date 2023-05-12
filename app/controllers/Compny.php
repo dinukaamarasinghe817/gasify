@@ -276,8 +276,10 @@ class Compny extends Controller{
         $user_id=mysqli_fetch_assoc($company_details);
         $data['name']=$user_id['first_name'].' '.$user_id['last_name'];
         $product_details = $this->model('Company')->getQuotaDetails($company_id);
+        $lowestWeight = $this->model('Company')->getLowestProductWeight($company_id);
         $row = mysqli_fetch_assoc($company_details);
         $data['image'] = $user_id['logo'];
+        $data['lowestWeight']=$lowestWeight;
         //$row = mysqli_fetch_assoc($dealer_details);
         $data['quotaDetails']=$product_details;
         //$data['cc']=$row['account_no'];
