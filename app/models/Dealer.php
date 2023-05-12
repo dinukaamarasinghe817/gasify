@@ -1033,7 +1033,46 @@ class Dealer extends Model
             $data['error'] = '3';
         }
         return $data;
-    } 
+    }
+
+    // describes first come first serve order acceptance when the po receives
+    public function fcfsonPOcomplete($distribution_id){
+        // take dealer information
+        $dealer = mysqli_fetch_assoc($this->read('purchase_order',"po_id = ".$distribution_id));
+        $dealer_id = $dealer['dealer_id'];
+        // take order information
+        $query = $this->read('reservation','stock_verification = 0',"place_date ASC, place_time ASC");
+        while($row = mysqli_fetch_assoc($query)){
+            // take the order includes
+            $query2 = $this->read('reservation_include',"order_id = ".$row['order_id']);
+            $flag = true; // assuming the order can be accept
+            while($row2 = mysqli_fetch_assoc($query2)){
+                $query3 = $this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = ".$row2['product_id']);
+                if(mysqli_num_rows($query3) > 0){
+                    $row3 = mysqli_fetch_assoc($query3);
+                    if($row2['quantity'] > $row3['quantity']){
+                        // not having enough stock for the order
+                        $flag = false;
+                    }
+                }else{
+                    // no stock at all
+                    $flag = false;
+                }
+            }
+
+            // check if order actually can be processed
+            if($flag){
+                $query2 = $this->read('reservation_include',"order_id = ".$row['order_id']);
+                while($row2 = mysqli_fetch_assoc($query2)){
+                    $query3 = $this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = ".$row2['product_id']);
+                    if(mysqli_num_rows($query3) > 0){
+                        $row3 = mysqli_fetch_assoc($query3);
+                        $this->update('dealer_keep',['quantity'=>$row3['quantity']-$row2['quantity']],"dealer_id = $dealer_id AND product_id = ".$row2['product_id']);
+                    }
+                }
+            }
+        }
+    }
 
 }
 

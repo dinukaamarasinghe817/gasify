@@ -37,6 +37,9 @@ class GasDistributions extends Controller {
 
         $data = $this->model("Distributor")->finishpendingdistributions($distribution_id);
 
+        // serve customers on fcfs with newly added stock
+        $this->fcfsDealer($distribution_id);
+
         if(isset($data['toast'])) {
             $this->pending_distributions($data['toast']);
         }elseif(isset($data['success'])) {
@@ -68,6 +71,10 @@ class GasDistributions extends Controller {
 
         $this->view('distributor/completed_distributions', $data);
 
+    }
+
+    public function fcfsDealer($distribution_id){
+        $this->model('Dealer')->fcfsonPOcomplete($distribution_id);
     }
 }
 

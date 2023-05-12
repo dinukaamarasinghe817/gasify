@@ -428,7 +428,7 @@ class Distributor extends Model
                         $com_time = date("H:i:s");
 
                         $this->Query("UPDATE distributor_keep SET quantity = '{$distributor_quantity}' WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
-                        $this->Query("UPDATE purchase_order SET po_state = 'completed', place_date = '{$com_date}', place_time = '{$com_time}'  WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+                        $this->Query("UPDATE purchase_order SET po_state = 'Completed', place_date = '{$com_date}', place_time = '{$com_time}'  WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
                         // echo "success";
                         $data['success'] = ['type'=>"success", 'message'=>"Gas Distribution Successfully Done!"];
                     }
@@ -888,6 +888,34 @@ class Distributor extends Model
         // get the total cost to distribute using given vehicle
         $cost = $row['cost_per_km']*$distance*$total_weight;
         return $cost;
+    }
+
+    public function getOnlyEligibleVehicles($po_id){
+        // get eligible vehicles for the po
+        $nominated_vehicles = $this->eligibleVechicles($po_id);
+        $_SESSION['nominated_vehicles'] = $nominated_vehicles;
+        $vehicles = $nominated_vehicles['eligible_vehicles'];
+
+        $vehicle_info = array();
+        foreach ($vehicles as $vehicl_no => $cost){
+            // get basic information of the vehicle
+            $row = mysqli_fetch_assoc($this->read('distributor_vehicle',"vehicle_no = '$vehicl_no'"));
+            array_push($vehicle_info,['vehicle_no' => $row['vehicle_no'],'type' => $row['type'],'fuel_consumption'=>$row['fuel_consumption'],'cost'=>$cost]);
+        }
+
+        return ['vehicle_info' => $vehicle_info, 'capacity' => array()];
+    }
+
+    public function selectedVehicle($vehicle_no){
+        $nominated_vehicles = $_SESSION['nominated_vehicles'];
+        $vehicles = $nominated_vehicles['eligible_vehicles'];
+        $final_remain_eligibility = $nominated_vehicles['final_eligibility'];
+        $final_eligibility_selected = $final_remain_eligibility[$vehicl_no];
+
+        // update the vehicle remaining capacity
+        foreach($final_eligibility_selected as $key => $value){
+            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$value],"vehicle_id = '$vehicle_no' AND product_id = $key");
+        }
     }
 
     // reports - get totals of each product from dealer received orders(sell to dealers)

@@ -691,7 +691,7 @@ class Orders extends Controller{
     }
     
     // suitable vehicle list for pending , accepted gas orders
-    public function suitableVehicleList(){
+    public function suitableVehicleList($po_id){
         $this->AuthorizeUser('distributor');
 
         $user_id = $_SESSION['user_id'];
@@ -701,9 +701,17 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
+        // previouse method
+        // $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
+        $data['suitablevehiclelist'] = $this->model("Distributor")->getOnlyEligibleVehicles($po_id);
 
         $this->view('distributor/suitableVehicleList', $data);
+    }
+
+    public function selectedVehicle($vehicle_id){
+        $this->model('Distributor')->selectedVehicle($vehicle_id);
+        // navigate user to pending distributions
+        header('Location: '.BASEURL.'/gasdistributions/pending_distributions');
     }
 
 
