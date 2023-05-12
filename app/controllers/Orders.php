@@ -687,7 +687,7 @@ class Orders extends Controller{
 
     }
     
-    // suitable vehicle list for pending , accepted gas orders
+    // suitable vehicle list for pending  gas orders
     public function suitableVehicleList(){
         $this->AuthorizeUser('distributor');
 

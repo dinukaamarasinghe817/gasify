@@ -59,7 +59,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                     </svg>
                                 </div>';
                                 
-
                                 $output .= '
                                 <div class="content">';
                                     $date = $row1['place_date'];
@@ -76,9 +75,10 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             <tr>
                                                 <th>Product ID</th>
                                                 <th>Product Name</th>
+                                                <th>Weight</th>
                                                 <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
-                                                <th>Total(Rs.)</th>
+                                                <th>Subtotal(Rs.)</th>
                                             </tr>
                                         </thead>
                                         <tbody>';
@@ -95,6 +95,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
                                                 <td>'.$row2['product_name'].'</td>
+                                                <td>'.$row2['weight'].' Kg</td>
                                                 <td>'.number_format($unit_price,2).'</td>
                                                 <td>'.$row2['quantity'].'</td>
                                                 <td>'.number_format($subtotal,2).'</td>
@@ -102,26 +103,25 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             $total += $subtotal;
                                         }
                                         $output.='
-                                        <tr>
-                                            <td><b>Total Amount</b></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><b>'.number_format($total,2).'</b></td>
-                                        </tr> 
+                                            <tr>
+                                                <td><b>Total Amount</b></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b>Rs. '.number_format($total,2).'</b></td>
+                                            </tr> 
                                         </tbody>
                                     </table>
                                 </div> 
                             </div>';
                             echo $output;
-
                             }
                         ?>                        
                 </div>
             </div>
         </div>
     </section>
-
 </section>
 
 <script>

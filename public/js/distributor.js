@@ -28,33 +28,6 @@ function gettotal() {
     return total.toLocaleString('en-US');
 }
 
-// pending distributions => toggle button 
-    function Animatedtoggle() {
-        let toggle = document.querySelector('.toggle');
-        let text = document.querySelector('.text');
-
-        toggle.classList.toggle('active');
-
-        if(toggle.classList.contains('active')) {
-            text.innerHTML = "Enable";
-        }else {
-            text.innerHTML = "Disable";
-        }
-    }
-
-    // vehicle open & close popups
-    
-    // function openPopup() {
-    //     let popup = document.getElementById("popup");
-    //     popup.classList.add("open-popup");
-
-    // }
-    // function closePopup() {
-    //     let popup = document.getElementById("popup");
-    //     popup.classList.remove("open-popup");
-
-    // }
-
 
 
  

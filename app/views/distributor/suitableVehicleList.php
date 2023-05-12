@@ -44,10 +44,12 @@ $user_id = $_SESSION['user_id'];
                                     <td>'.$row2['fuel_consumption'].' L</td>';
                                     $output .= '<td><button type="button" style="background-color: B4AAFF class="btn4" onclick="document.location.href=\''.BASEURL.'/orders/dis_placed_pending\'">Assign</button></td>';                             
                                 $output .=  '
-                                        </tr>';
+                                </tr>';
                 }
             
-                $output .= '</tbody></table>';
+                $output .= '
+                    </tbody>
+                </table>';
                 echo $output;
             ?>
         </div>

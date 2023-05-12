@@ -70,24 +70,16 @@ $user_id = $_SESSION['user_id'];
                 </form>';
                 echo $output;
             
-            ?>
-
-
-               
-          
-             
-            
+            ?> 
 
         </div>
     </section>
 </section>
 
 <script>
-
     document.querySelector("form").addEventListener("submit", function(event) {
         event.preventDefault(); // prevent default form submission behavior
     });
-
     function edit(){
         let btn = document.querySelector('form .beginbtn');
         btn.querySelector('button.edit').onclick = function(){
@@ -99,7 +91,6 @@ $user_id = $_SESSION['user_id'];
             }
         }
     }
-
 </script>
 
 <?php
