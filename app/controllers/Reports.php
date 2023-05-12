@@ -67,21 +67,21 @@ class Reports extends Controller{
 
     }
     // generate pdf [report2]
-    public function allsellproducts_pdf() {
-        $this->AuthorizeUser('distributor');
+    // public function allsellproducts_pdf() {
+    //     $this->AuthorizeUser('distributor');
 
-        $data = [];
+    //     $data = [];
 
-        if(isset($_POST['option'])){
-            $option = $_POST['option'];
-        }else{
-            $option = 'today';
-        }
+    //     if(isset($_POST['option'])){
+    //         $option = $_POST['option'];
+    //     }else{
+    //         $option = 'today';
+    //     }
         
-        $data['details'] = $this->model("Distributor")->AllSellProductsDetails($option);
+    //     $data['details'] = $this->model("Distributor")->AllSellProductsDetails($option);
 
-        $this->view('distributor/reports/allsellproducts_pdf',$data);
-    }
+    //     $this->view('distributor/reports/allsellproducts_pdf',$data);
+    // }
 
     // all requested products  [report3]
     public function allrequestedproducts() {
@@ -107,14 +107,14 @@ class Reports extends Controller{
 
     }
     // generate pdf [report3]
-    public function allrequestedproducts_pdf() {
-        $this->AuthorizeUser('distributor');
+    // public function allrequestedproducts_pdf() {
+    //     $this->AuthorizeUser('distributor');
 
-        $data = [];
-        $data['details'] = $this->model("Distributor")->AllRequestedProducts($option);
+    //     $data = [];
+    //     $data['details'] = $this->model("Distributor")->AllRequestedProducts($option);
 
-        $this->view('distributor/reports/allsellproducts',$data);
-    }
+    //     $this->view('distributor/reports/allsellproducts',$data);
+    // }
 
     /*-------------------------------------------------------------------------------------------------------------------*/
 
