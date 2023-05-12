@@ -1,5 +1,5 @@
 <?php
-$header = new Header("vehicles");
+$header = new Header("vehicles", $data);
 $sidebar = new Navigation('distributor',$data['navigation']);
 
 $user_id = $_SESSION['user_id'];

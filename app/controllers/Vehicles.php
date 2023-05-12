@@ -149,11 +149,24 @@ class Vehicles extends Controller{
     }
 
     // release a vehicle
-    public function releasing($vehicle_no) {
+    public function releasing($vehicle_no,$success=null) {
         $this->AuthorizeUser('distributor');
 
-        $this->model("Distributor")->releaseVehicle($vehicle_no);
-        $this->viewvehicle();
+        $data['confirmation'] = '';
+        // display success and error messages
+        // if($error != null){
+        //     $data['toast'] = ['type' => 'error', 'message' => $error];
+        // }
+        if($success != null){
+            $data['toast'] = ['type' => 'success', 'message' => $success];
+            
+        }
+
+        // $this->model("Distributor")->releaseVehicle($vehicle_no);
+        // $this->viewvehicle();
+        $data['releasevehicle'] = $this->model("Distributor")->releaseVehicle($vehicle_no);
+        // $this->view('distributor/view_vehicles', $data);
+        $this->viewvehicle($data);
     }
 
     // remove a vehicle

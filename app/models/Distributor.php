@@ -159,10 +159,17 @@ class Distributor extends Model
 
     // release a vehicle before removing
     public function releaseVehicle($vehicle_no) {
+        // $user_id = $_SESSION['user_id'];
+        // // update the availability as "Yes" of a vehicle
+        // $query2 = $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
+        // return $query2;
+
         $user_id = $_SESSION['user_id'];
+        $data = [];
         // update the availability as "Yes" of a vehicle
-        $query2 = $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
-        return $query2;
+       $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
+        // return $query2;
+        $data['success'] = ['type' => "success", 'message'=> "Vehicle released"];
     }
 
     // remove a vehicle
