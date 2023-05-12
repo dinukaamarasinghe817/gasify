@@ -1,6 +1,6 @@
 <?php
 
-class Test extends Model
+class TestModel extends Model
 {
 
     public function __construct()
@@ -56,6 +56,13 @@ class Test extends Model
             // $customer_Name = $q['first_name'].' '.$q['last_name'];
             $mail = new Mail('admin@gasify.com',$q['email'],$q['first_name'].' '.$q['last_name'],'Re-Order Alert',$mailbody,$link=null);
             $mail->send();
+    }
+
+    public function testpayment(){
+        $row = mysqli_fetch_assoc($this->read('dealer',"dealer_id = 61"));
+        echo $row['pub_key'];
+        echo '<br>';
+        echo decryptStripeKey($row['pub_key']);
     }
 }
 ?>
