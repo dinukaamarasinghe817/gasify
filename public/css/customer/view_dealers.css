@@ -28,18 +28,20 @@ a,button{
 .drop_down{
     display: flex;
     flex-direction: row;
-    column-gap: 90px;
+    column-gap: 50px;
     padding-bottom: 20px;
     padding-top: 20px;
     margin-left: 40px;
 
 }
 
+.dropdown_topic{
+    margin-bottom: 5px;
+}
+
 .branddropdown,.citydropdown{
-    width: 300px;
-    font-size: var(--medium);
-    
-    
+    width: 200px;
+    font-size: var(--small); 
 }
 
 
@@ -57,3 +59,27 @@ a,button{
     height: 75%;
 }
 
+/* search bar css */
+.searchbox{
+    margin-left: auto;
+    display: flex;
+    max-width: fit-content;
+    margin-right: 90px;
+}
+.searchbox .searchbar{
+    margin-top: auto;
+    margin-left: 0px;
+    border-left: none;
+}
+.searchbar:focus{
+    outline: none;
+}
+.searchbox img{
+    margin-top: auto;
+    margin-bottom: 10px;
+    background-color: var(--navmenu-orange-dark);
+    height: 20px;
+    padding: 10px;
+    width: 20px;
+    border-radius: 5px 0px 0px 5px;
+}

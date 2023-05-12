@@ -78,7 +78,7 @@ class Orders extends Controller{
         $data['navigation'] = 'myreservation';
         //get selected reservation details relavant to customer
         $data['myreservation'] = $this->model('Customer')->ViewMyreservation($order_id,$customer_id);
-        $data['confirmation'] = '';
+        $data['confirmation'] = '';  //to display popup confirmation
 
         $this->view('customer/my_reservation/viewmyreservation', $data); //send data to viewmyreservation view
     }
@@ -110,13 +110,13 @@ class Orders extends Controller{
         if(isset($_POST['review_type'])){
             $review_type = $_POST['review_type'];
         }
+        //return if there is any errors(emppty fields)
         $data['add_review_error'] = $this->model('Customer')->AddReview($order_id,$customer_id,$reviews,$review_type);
         if(!empty($data['add_review_error'])){
             $this->customer_reviewform($order_id,$data['add_review_error']);
         }
         else{
             $this->customer_myreservation($order_id);
-            // $this->view('customer/viewmyreservation', $data);
         }    
        
     }
@@ -126,17 +126,17 @@ class Orders extends Controller{
     function customer_cancelreservation($order_id,$error = null){
         $this->AuthorizeUser('customer');
 
-        $customer_id = $_SESSION['user_id'];
-        $data['navigation'] = 'myreservation';
-
-       
-        $data['order_id'] = $order_id;
-
-        if($error != null){
-            $data['toast'] = ['type'=>'error', 'message'=>$error];
+         //if there is error display the error message
+         switch($error){
+            case "1":
+                $data['toast'] = ['type' => 'error', 'message' => "All fields are required"];
+                break;
         }
 
-        $data['confirmation'] = '';
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'myreservation';
+        $data['order_id'] = $order_id;
+        $data['confirmation'] = ''; //to display popup confirmation
         $this->view('customer/my_reservation/cancel_reservation', $data);
 
 
@@ -156,12 +156,12 @@ class Orders extends Controller{
         $Acc_no = $_POST['Acc_no'];
         
        
-        $data['refund_detail_error'] = $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
-        if(!empty($data['refund_detail_error'])){
-            $this->customer_cancelreservation($order_id,$data['refund_detail_error']);
+
+        $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
+        if($bank == -1 || empty($branch) ||empty($Acc_no) ){
+            $this->customer_cancelreservation($order_id,1);
         }
         else{
-            // $this->customer_cancelreservation($order_id);
             $this->customer_allreservations(1);
         }    
     }
@@ -350,7 +350,7 @@ class Orders extends Controller{
      
 
         $data['bank_details'] = $this->model('Customer')->getDealerBankDetails();
-        $data['confirmation'] = '';
+        $data['confirmation'] = ''; //to display popup confirmation
         if($error != null){
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
@@ -457,7 +457,7 @@ class Orders extends Controller{
         $data['street'] = $row1['street'];
         $data['delivery_charge']= number_format($this->model('Customer')->get_delivery_charge($order_id,$data['street'],$data['city']),2); //take delivery charge 
 
-        $data['confirmation'] = '';
+        $data['confirmation'] = ''; //to display popup confirmation
         $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
        
         $this->view('customer/place_reservation/collecting_method',$data);
@@ -498,7 +498,7 @@ class Orders extends Controller{
         }
 
         $data['delivery_charge']= number_format($this->model('Customer')->get_delivery_charge($order_id,$data['street'],$data['city']),2);   //take delivery charge
-        $data['confirmation'] = '';
+        $data['confirmation'] = ''; //to display popup confirmation
 
         echo json_encode($data);
     }
