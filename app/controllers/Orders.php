@@ -530,6 +530,15 @@ class Orders extends Controller{
         header('LOCATION: '.BASEURL.'/dashboard/customer/'.$data['error']);
     }
 
+    function confirmCompleteOrder($order_id){
+        if($this->model('Customer')->confirmCompleteOrder($order_id)){
+            $toastnum = '4';
+        }else{
+            $toastnum = '5';
+        }
+        header('LOCATION: '.BASEURL.'/dashboard/customer/$toastnum');
+    }
+
 
 
     /*..........................Customer quota......................... */

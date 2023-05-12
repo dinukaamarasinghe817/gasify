@@ -829,7 +829,15 @@ class Customer extends Model{
         
     }
 
-    function getdealerpubkey($dealer_id){
+    public function confirmCompleteOrder($order_id){
+        if($this->update('reservation',['order_state'=>'Completed'],"order_id = $order_id")){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    public function getdealerpubkey($dealer_id){
         $row = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $dealer_id"));
         return ['pub_key'=>$row['pub_key'], 'rest_key'=>$row['rest_key']];
     }

@@ -136,6 +136,12 @@
                 case "3":
                     $data['toast'] = ['type' => 'error', 'message' => "Delivery option can only be changed once!"];
                     break;
+                case "4":
+                    $data['toast'] = ['type' => 'success', 'message' => "Your order has been successfully completed!"];
+                    break;
+                case "5":
+                    $data['toast'] = ['type' => 'error', 'message' => "Database server error!"];
+                    break;
             }
 
             $customer_id = $_SESSION['user_id'];
