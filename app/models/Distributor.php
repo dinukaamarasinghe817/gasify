@@ -551,11 +551,13 @@ class Distributor extends Model
     public function currentstock($user_id) {
         $stock = array();
         // distributor current stock of each products
-        $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, d.quantity as quantity FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
+        $query1 = $this->Query("SELECT DISTINCT p.product_id as product_id, p.name as name, p.weight as weight, p.image as image, d.quantity as quantity  FROM distributor_keep d inner join product p on d.product_id=p.product_id where d.distributor_id= $user_id");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $product_id = $row1['product_id'];
                 $product_name = $row1['name'];
+                $weight = $row1['weight'];
+                $image = $row1['image'];
                 $quantity = $row1['quantity'];
 
                 array_push($stock, ['stockinfo'=> $row1]);
@@ -670,6 +672,7 @@ class Distributor extends Model
             $query5 = $this->Query("SELECT unit_price FROM product WHERE product_id = '$product'");
             $row7 = mysqli_fetch_assoc($query5);
             $unit_price = $row7['unit_price'];
+            // $weight = $row7['weight'];
             if($quantity>0) {
                 // insert quantities of each product into stock_include table 
                 $query5 = $this->Query("INSERT INTO stock_include (stock_req_id, product_id, quantity, unit_price) VALUES ($req_id, '$product', $quantity, $unit_price)");
@@ -690,7 +693,7 @@ class Distributor extends Model
 
             // get details for pdf
             $result6 = $this->Query("SELECT  s.product_id as product_id,
-            p.name as product_name,
+            p.name as product_name, p.weight as weight
             s.quantity as quantity,
             s.unit_price as unit_price
             FROM stock_include s INNER JOIN product p
@@ -698,7 +701,7 @@ class Distributor extends Model
             WHERE stock_req_id = $stock_req_id");
             if(mysqli_num_rows($result6)>0) {
                 while($row = mysqli_fetch_assoc($result6)) {
-                    array_push($products, ['product_id'=>$row['product_id'], 'product_name'=>$row['product_name'], 'quantity'=>$row['quantity'], 'unit_price'=>$row['unit_price'], 'subtotal'=>$row['unit_price']*$row['quantity']]);
+                    array_push($products, ['product_id'=>$row['product_id'], 'product_name'=>$row['product_name'], 'weight'=>$row['weight'], 'quantity'=>$row['quantity'], 'unit_price'=>$row['unit_price'], 'subtotal'=>$row['unit_price']*$row['quantity']]);
                     $total +=$row['unit_price']*$row['quantity'];
                 }
             }
@@ -717,7 +720,7 @@ class Distributor extends Model
         $company_id = $row1['company_id'];
 
         // get products of company
-        $query2 = $this->Query("SELECT product_id, name, unit_price, image
+        $query2 = $this->Query("SELECT product_id, name, unit_price, image, weight
         FROM product 
         WHERE company_id  = $company_id");
 

@@ -38,6 +38,7 @@ $pdf->Ln(10);
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(33,5,'Item Code',0,0,'L');
 $pdf->Cell(33,5,'Description',0,0,'L');
+$pdf->Cell(33,5,'Weight',0,0,'L');
 $pdf->Cell(33,5,'Quantity',0,0,'R');
 $pdf->Cell(33,5,'Unit Price (Rs)',0,0,'R');
 $pdf->Cell(33,5,'SubTotal (Rs)',0,0,'R');
@@ -49,6 +50,7 @@ $pdf->SetFont('Times', '', 12);
 foreach($products as $product){
     $pdf->Cell(33,5,"{$product['product_id']}",0,0,'L');
     $pdf->Cell(33,5,"{$product['product_name']}",0,0,'L');
+    $pdf->Cell(33,5,"{$product['weight']}",0,0,'L');
     $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
     $unit_price = number_format($product['unit_price']).'.00';
     $pdf->Cell(33,5,"{$unit_price}",0,0,'R');
