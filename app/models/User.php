@@ -1164,7 +1164,7 @@ class User extends Model
         $query3 = $this->insert('company', ['company_id'=>$company_id,'name'=> $data['companyname'], 'city'=> $data['city'],'street'=>$data['street']]);
         $customerArray= array("Domestic","Small Scale Business","Large Scale Business");
         foreach ($customerArray as $customer) {
-            $query4 = $this->insert('quota',['company_id'=>$company_id,'customer_type'=>$customer, 'monthly_limit'=>0, 'state'=>"OFF"]);
+            $query4 = $this->insert('quota',['company_id'=>$company_id,'customer_type'=>$customer, 'monthly_limit'=>2.3, 'state'=>"OFF"]);
         }
         if(!empty($image_name) && !empty($tmp_name)){
 

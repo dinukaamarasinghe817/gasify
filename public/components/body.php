@@ -1690,10 +1690,10 @@ class Body{
                             <div class="productQuotaName" style="font-size: large"><lable>'.$row['customer_type'].'</lable></div>
                             <div class="productQuotaCurrent" style="font-size:large"><lable>Current :</lable><label>'.$row['monthly_limit'].'KG</label></div>';
                             if($row['state']=="ON"){
-                                $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" style="width:70%"></div>
+                                $quota.='<div class="productQuotaNew"><input type="text" onchange="changeValue(this)" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" lowest='.$data['lowestWeight'].' style="width:70%"></div>
                                 <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>';
                             }else{
-                                $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" style="width:70%" disabled></div>
+                                $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" lowest='.$data['lowestWeight'].' style="width:70%" disabled></div>
                                 <div class="productQuotaResetCurrent"  key="'.$row['customer_type'].'"><div class="quotaButtons" style="pointer-events:none"><label>Set Quota</label></div></div>';
                             }
                             
@@ -1701,10 +1701,10 @@ class Body{
                             <div class="productQuotaSetNew">
                             <label class="switch">';
                                 if($row['state']=="ON"){
-                                    $quota.='<input type="checkbox" oninput="resetQuota(this)" key='.$row['customer_type'].' checked>';
+                                    $quota.='<input type="checkbox" oninput="resetQuota(this)" val='.$row['monthly_limit'].' fieldId='.strtolower($row['customer_type']).' key='.$row['customer_type'].' checked>';
 
                                 }else{
-                                    $quota.='<input type="checkbox" oninput="resetQuota(this)"key='.$row['customer_type'].'>';
+                                    $quota.='<input type="checkbox" oninput="resetQuota(this)" val='.$row['monthly_limit'].' fieldId='.strtolower($row['customer_type']).' key='.$row['customer_type'].'>';
                                 }
                                 $quota.='
                                 <span class="slider round"></span>
