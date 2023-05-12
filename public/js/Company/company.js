@@ -446,9 +446,9 @@ function updateProducts() {
     document.getElementById("productUpdateForm").submit();
 }
 function changeValue(div) {
-    var value = parseInt(div.getAttribute("lowest"));
+    var value = parseFloat(div.getAttribute("lowest"));
     //console.log(typeof(value));
-    if (parseInt(div.value) < value) {
-         div.value = "";
-     }
+    if (parseFloat(div.value) < value) {
+        div.value = value;
+    }
 }
