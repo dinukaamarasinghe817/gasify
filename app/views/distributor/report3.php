@@ -20,7 +20,6 @@ $user_id = $_SESSION['user_id'];
         
             <h2>Reports</h2>
 
-            <!-- <div class="main"> -->
                 <div class="top-panel">
                     <ul>
                         <li>
@@ -59,7 +58,6 @@ $user_id = $_SESSION['user_id'];
                                 <option value="7day">Last 7 days</option>
                                 <option value="30day" selected>Last 30 days</option>';
                             }
-                        
                         echo '
                         </select>
                     </form>
@@ -67,9 +65,7 @@ $user_id = $_SESSION['user_id'];
                     ?>
 
                     <?php
-                    $records = $data['allproductsquantity'];
-                    // var_dump($records);
-                    
+                    $records = $data['allproductsquantity'];                    
                     $output = '
                     <div class="repbox">
                         <table class="styled-table">
@@ -119,12 +115,11 @@ $user_id = $_SESSION['user_id'];
                             $output .= '<p class="nofoundtxt">No records found</p>';
                         }
 
-                    $output .= '</div>';                    
+                    $output .= '
+                    </div>';                    
                     echo $output;
                     ?>
-                   
                 </div>
-            <!-- </div> -->
         </div>
     </section>
 </section>

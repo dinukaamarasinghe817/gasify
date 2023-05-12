@@ -64,6 +64,22 @@ class GasDistributions extends Controller {
         $this->view('distributor/completed_distributions', $data);
 
     }
+
+    // suitable vehicle list for pending gas distributions
+    public function suitableVehicleList(){
+        $this->AuthorizeUser('distributor');
+
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'orders';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
+
+        $this->view('distributor/suitableVehicleList', $data);
+    }
 }
 
 ?>

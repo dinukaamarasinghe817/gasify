@@ -226,7 +226,7 @@ class Distributor extends Model
 
                 $capacities = array();
                 // get products quantities 
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name,p.weight as weight
                 from stock_include i 
                 inner join stock_request r on i.stock_req_id = r.stock_req_id 
                 inner join product p on i.product_id = p.product_id
@@ -256,7 +256,7 @@ class Distributor extends Model
 
                 $capacities = array();
                 // get product quantities
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name, p.weight as weight
                 from stock_include i 
                 inner join stock_request r on i.stock_req_id = r.stock_req_id
                 inner join product p on i.product_id = p.product_id
@@ -285,7 +285,7 @@ class Distributor extends Model
 
                 $capacities = array();
                 // get quantities of products
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.quantity as quantity, i.unit_price as unit_price, p.name as product_name, p.weight as weight
                 from stock_include i 
                 inner join stock_request r on i.stock_req_id = r.stock_req_id
                 inner join product p on i.product_id = p.product_id
@@ -340,7 +340,7 @@ class Distributor extends Model
 
                 $capacities = array();
                 //get product quantities
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name 
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name, p.weight as weight 
                 from purchase_include i 
                 inner join purchase_order o on i.po_id = o.po_id
                 inner join product p on i.product_id = p.product_id
@@ -385,7 +385,8 @@ class Distributor extends Model
                 } else {
                     // if dealer current capacity is empty
                     $dealer_quantity = $o_quantity;
-                    $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
+                    // $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
+                    $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}')");
                 }
                 
                 // update distributor keeping capacities
@@ -453,7 +454,7 @@ class Distributor extends Model
 
                 $capacities = array();
                 // quantities of each products 
-                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name
+                $query2 = $this->Query("SELECT DISTINCT i.product_id as product_id, i.unit_price as unit_price, i.quantity as quantity, p.name as product_name,p.weight as weight
                 from purchase_include i 
                 inner join purchase_order o on i.po_id = o.po_id 
                 inner join product p on i.product_id = p.product_id

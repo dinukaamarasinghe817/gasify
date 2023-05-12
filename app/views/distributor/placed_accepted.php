@@ -39,7 +39,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                     <li>
                         <a href="<?php echo BASEURL ?>/orders/dis_placed_completed" class="completed"><b>Completed Gas Orders</b><a>
                     </li>
-
                 </ul>
 
                 <div class="accordion new">
@@ -71,7 +70,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                         <span><strong>Placed Date : '.$date.' </strong></span><br><br>
                                         <span><strong>Placed Time : '.$time.' </strong></span><br><br>
                                         <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button></span>
-
                                     </div>
 
                                     <hr>
@@ -80,9 +78,10 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             <tr>
                                                 <th>Product ID</th>
                                                 <th>Product Name</th>
+                                                <th>Weight</th>
                                                 <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
-                                                <th>Total(Rs.)</th>
+                                                <th>Subtotal(Rs.)</th>
                                             </tr>
                                         </thead>
 
@@ -100,6 +99,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             <tr>
                                                 <td>'.$row2['product_id'].'</td>
                                                 <td>'.$row2['product_name'].'</td>
+                                                <td>'.$row2['weight'].' Kg</td>
                                                 <td>'.number_format($unit_price,2).'</td>
                                                 <td>'.$row2['quantity'].'</td>
                                                 <td>'.number_format($subtotal,2).'</td>    
@@ -108,13 +108,14 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                                         }
                                         $output.='
-                                        <tr>
-                                            <td><b>Total Amount</b></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><b>'.number_format($total,2).'</b></td>
-                                        </tr>';
+                                            <tr>
+                                                <td><b>Total Amount</b></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b>Rs. '.number_format($total,2).'</b></td>
+                                            </tr>';
 
                                         $output .= '
                                         </tbody>
@@ -122,7 +123,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 </div>
                             </div>'; 
                             echo $output;
-
                             }
                         ?>
                 </div>

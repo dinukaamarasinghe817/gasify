@@ -384,9 +384,9 @@ class Body{
                                                 }
                                                 $output1 .= '
                                                 <tr>
-                                                    <td><b>Total Amount (Rs.)</b></td>
+                                                    <td><b>Total Amount</b></td>
                                                     <td></td>
-                                                    <td><b>'.number_format($total,2).'</b></td>
+                                                    <td><b>Rs. '.number_format($total,2).'</b></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -396,34 +396,35 @@ class Body{
                                 }
                             echo '
                             </div>';
+
                             $output = '
                             <div class="box3">
                                 <h3>Current Stock</h3>
-    
                                     <div class="content1">
                                         <table class="styled-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Product Name</th>
-                                                <th>Current Stock</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>';     
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Current Stock</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';     
                                     
-                                    $stocks = $data['currentstock'];
-                                    foreach($stocks as $stock) {
-                                        $row1 = $stock['stockinfo'];
-    
+                                        $stocks = $data['currentstock'];
+                                        foreach($stocks as $stock) {
+                                            $row1 = $stock['stockinfo'];
+                                            $output .= '
+                                                <tr>
+                                                    <td>'.$row1['name'].'</td>
+                                                    <td>'.$row1['quantity'].'</td> 
+                                                </tr>';
+                                        }
                                         $output .= '
-                                        <tr>
-                                            <td>'.$row1['name'].'</td>
-                                            <td>'.$row1['quantity'].'</td> 
-                                        </tr>';
-                                    }
-                                        $output .= '</tbody></table>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>';
-                                        echo $output;
+                            </div>';
+                            echo $output;
                     echo '</div>';
         echo '</section>';                         
     }
