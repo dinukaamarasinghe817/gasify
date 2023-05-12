@@ -287,7 +287,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 //display the already exist reviews
                                 foreach($reviews as $review){
                                     echo '<div class="review_box">
-                                            <div class="date"><h5>'.$review['date'].'</h5></div>
+                                            <div class="date">
+                                                <div><h5>To:'.$review['review_type'].'</h5></div>
+                                                <div><h5>'.$review['date'].'</h5></div>
+                                            </div>
                                             <div class="content"><p>'.$review['message'].'</p></div>
                                         </div>';
                                 }

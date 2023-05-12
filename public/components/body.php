@@ -183,11 +183,12 @@ class Body{
             
             </div></div>';
 
+            
             echo '<div class="middle">
                 <div class="brand">
                 <div class="brand_title"> <h3>Our Brands</h3></div>
                 <div class="brand_img">';
-
+            //display all brands(companies) registered in system
             if(isset($data["brand"])){
                 $result = $data["brand"];
                 $brand = "";
@@ -206,10 +207,10 @@ class Body{
                
             }
 
+            //display recent reservations
             echo '<div class="recent_order">';
-
             if(isset($data['orders'])){
-                echo '  <div class="order_title"> <h3>Recent Orders</h3></div>';
+                echo '  <div class="order_title"> <h3>Recent Reservations</h3></div>';
 
                 $orders = $data['orders'];
                 if(count($orders) > 0){
@@ -247,7 +248,7 @@ class Body{
             echo '</div>
                 </div>';
 
-
+            // display popular products
             echo '<div class="bottom">
             <div class="product_title"><h3>Popular Products</h3></div>
             <div class="cards">';
