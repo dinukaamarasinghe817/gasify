@@ -393,50 +393,61 @@ class Distributor extends Model
         WHERE o.distributor_id='{$user_id}' AND o.po_id = '{$distribution_id}'");
 
         if(mysqli_num_rows($query2)>0) {
-            while($row2 = mysqli_fetch_assoc($query2)) {
-                $dealer_id = $row2['dealer_id'];
-                $product_id = $row2['product_id'];
-                $o_quantity = $row2['quantity'];
-
-                // update dealer keeping stock according to the order capacities
-                $query3 = $this->Query("SELECT product_id, quantity FROM dealer_keep WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
-                if(mysqli_num_rows($query3)>0) {
-                    $row3 = mysqli_fetch_assoc($query3);
-                    $dealer_quantity = $row3['quantity'];
-                    $dealer_quantity = $dealer_quantity + $o_quantity;
-
-                    $this->Query("UPDATE dealer_keep SET quantity = '{$dealer_quantity}' WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
-
-                } else {
-                    // if dealer current capacity is empty
-                    $dealer_quantity = $o_quantity;
-                    $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
+            // first check whether the distributor has the required stock
+            $query3 = $query2;
+            $flag = true; // assume stock is available
+            while($row3 = mysqli_fetch_assoc($query3)){
+                $row4 = mysqli_fetch_assoc($this->read('distributor_keep',"distributor_id = $user_id AND product_id = ".$row3['product_id']));
+                if($row4['quantity'] < $row3['quantity']){
+                    $flag = false;
                 }
-                
-                // update distributor keeping capacities
-                $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
-                if(mysqli_num_rows($query4)>0) {
-                    $row4 = mysqli_fetch_assoc($query4);
-                    $distributor_quantity = $row4['quantity'];
-                    $distributor_quantity = $distributor_quantity - $o_quantity;
+            }
 
-                    if($row4['quantity'] < $o_quantity) {
-                        $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Not Enough Gas Stock in Your Stock!"];
-                        return $data;
-                    }else {
+            if($flag){
+                // reduce stock and add it to the dealer
+                while($row2 = mysqli_fetch_assoc($query2)) {
+                    $dealer_id = $row2['dealer_id'];
+                    $product_id = $row2['product_id'];
+                    $o_quantity = $row2['quantity'];
+
+                    // update dealer keeping stock according to the order capacities
+                    $query3 = $this->Query("SELECT product_id, quantity FROM dealer_keep WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
+                    if(mysqli_num_rows($query3)>0) {
+                        $row3 = mysqli_fetch_assoc($query3);
+                        $dealer_quantity = $row3['quantity'];
+                        $dealer_quantity = $dealer_quantity + $o_quantity;
+
+                        $this->Query("UPDATE dealer_keep SET quantity = '{$dealer_quantity}' WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
+
+                    } else {
+                        // if dealer current capacity is empty
+                        $dealer_quantity = $o_quantity;
+                        $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
+                    }
+                    
+                    // update distributor keeping capacities
+                    $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
+                    if(mysqli_num_rows($query4)>0) {
+                        $row4 = mysqli_fetch_assoc($query4);
+                        $distributor_quantity = $row4['quantity'];
+                        $distributor_quantity = $distributor_quantity - $o_quantity;
+
                         $com_date = date('Y-m-d');
                         $com_time = date("H:i:s");
 
                         $this->Query("UPDATE distributor_keep SET quantity = '{$distributor_quantity}' WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
-                        $this->Query("UPDATE purchase_order SET po_state = 'Completed', place_date = '{$com_date}', place_time = '{$com_time}'  WHERE distributor_id = '{$user_id}' AND po_id = '{$distribution_id}' ");
+                        $this->Query("UPDATE purchase_order SET po_state = 'Completed', delivered_date = '{$com_date}', delivered_time = '{$com_time}'  WHERE po_id = '{$distribution_id}' ");
                         // echo "success";
                         $data['success'] = ['type'=>"success", 'message'=>"Gas Distribution Successfully Done!"];
+                        
+                    }else {
+                        // if distribtor gas stock is not enough
+                        $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas Stock is Empty!"];
+                        return $data;
                     }
-                }else {
-                    // if distribtor gas stock is not enough
-                    $data['toast'] = ['type'=>"error", 'message'=>"Sorry, Gas Stock is Empty!"];
-                    return $data;
                 }
+            }else{
+                $data['toast'] = ['type'=>"error", 'message'=>'Sorry, not enough gas stock'];
             }
         }
         return $data;
