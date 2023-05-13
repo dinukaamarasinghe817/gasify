@@ -20,7 +20,6 @@ $user_id = $_SESSION['user_id'];
         
             <h2>Reports</h2>
 
-            <!-- <div class="main"> -->
                 <div class="top-panel">
                     <ul>
                         <li>
@@ -59,7 +58,6 @@ $user_id = $_SESSION['user_id'];
                                 <option value="7day">Last 7 days</option>
                                 <option value="30day" selected>Last 30 days</option>';
                             }
-                        
                         echo '
                         </select>
                     </form>
@@ -67,59 +65,61 @@ $user_id = $_SESSION['user_id'];
                     ?>
 
                     <?php
-                    $records = $data['allproductsquantity'];
-                    // var_dump($records);
-                    
+                    $records = $data['allproductsquantity'];                    
                     $output = '
                     <div class="repbox">
                         <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Product ID</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-                    
+                            <thead>
+                                <tr>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th>Weight</th>
+                                    <th>Requested Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+                        $total = 0;
                         if(count($records)>0) {
                             foreach($records as $record) {
                                 $row1 = $record['quantities'];
-                                // var_dump($row1);
-                                // $capacities = $record['capacities'];
-
-                                    // $date = $row1['place_date'];
-                                    // $time = $row1['place_time'];
-                                    // $distribution_num = $row1['po_id'];
-                                    // $dealer_id = $row1['dealer_id'];
                                     $product_id = $row1['product_id'];
                                     $name = $row1['name'];
                                     $quantity = $row1['quantity'];
+                                    $weight = $row1['weight'];
+                                    $unit_price = $row1['unit_price'];
+                                    $subtotal = $unit_price * $quantity;
 
                                 $output .= '
-                                    <tr>
-                                        <td>'.$product_id.'</td>
-                                        <td>'.$name.'</td>
-                                        <td>'.$quantity.'</td>                                                                     
-                                    </tr>';
+                                <tr>
+                                    <td>'.$product_id.'</td>
+                                    <td>'.$name.'</td>
+                                    <td>'.$weight.' Kg</td>
+                                    <td>'.$quantity.'</td> 
+                                    <td>Rs. '.number_format($subtotal,2).'</td>                                                                     
+                                </tr>';
+                                $total += $subtotal;
                             }
                             $output .= '
-                            </tbody></table>
+                                <tr>
+                                    <td><b>Total Expence</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>Rs. '.number_format($total,2).'</b></td>
+                                </tr>
 
-                            <button class="pdfbtn" onclick="document.location.href=\''.BASEURL.'/reports/allrequestedproducts_pdf\'">Generate a report</button>
-                            
-                            ';
+                        </tbody></table>';
                         }else {
                             $output .= '</table>';
                             $output .= '<p class="nofoundtxt">No records found</p>';
                         }
 
-                    $output .= '</div>';                    
+                    $output .= '
+                    </div>';                    
                     echo $output;
                     ?>
-                   
                 </div>
-            <!-- </div> -->
         </div>
     </section>
 </section>

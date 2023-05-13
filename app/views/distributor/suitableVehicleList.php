@@ -56,7 +56,9 @@ $user_id = $_SESSION['user_id'];
                     $output .= '<tr><td colspan="4" style="text-align: center;">No vehicles found</td></tr>';
                 }
             
-                $output .= '</tbody></table>';
+                $output .= '
+                    </tbody>
+                </table>';
                 echo $output;
             ?>
         </div>

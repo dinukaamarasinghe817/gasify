@@ -581,6 +581,7 @@ class Orders extends Controller{
      
     }
 
+    // distributor place a purchase order
     public function purchase_order($param=null) {
         $this->AuthorizeUser('distributor');
 
@@ -615,7 +616,6 @@ class Orders extends Controller{
         $data['currentstock']= $this->model("Distributor")->currentstock($user_id);
         
         $this->view('distributor/current_stock',$data);
-        // $this->view('distributor/dashboard/distributor',$data);
     }
     
     //Placed orders list (Gas Orders)
@@ -630,9 +630,6 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // phurchase order  view
-        // create the model
-        // $this->view('distributor/reports',$data);
         $this->view('distributor/placed_pending',$data);
 
     }
@@ -655,7 +652,7 @@ class Orders extends Controller{
 
     }
 
-    // Gas Orders -> Places orders list , accepted gas orders
+    // (Gas Orders -> Placed Orders List) Delayed gas orders
     public function dis_placed_accepted() {
         $this->AuthorizeUser('distributor');
 
@@ -673,7 +670,7 @@ class Orders extends Controller{
 
     }
     
-    // Gas Orders -> Places orders list , completed gas orders
+    // (Gas Orders -> Placed Orders List) completed gas orders
     public function dis_placed_completed() {
         $this->AuthorizeUser('distributor');
 

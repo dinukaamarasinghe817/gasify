@@ -299,4 +299,15 @@ class Company extends Model
     public function addStockToDistributor($distributorID,$productID,$qty){
         $this->Query("UPDATE distributor_keep SET distributor_keep.quantity=quantity+$qty WHERE distributor_keep.product_id=$productID AND distributor_keep.distributor_id=$distributorID");
     }
+    public function getLowestProductWeight($companyID){
+        $result=$this->Query("SELECT weight FROM product WHERE company_id=$companyID AND type='Cylinder' ORDER BY weight ASC LIMIT 1;");
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                $info=$row['weight'];
+            }
+            return $info;
+        }else{
+            return 0;
+        }
+    }
 }

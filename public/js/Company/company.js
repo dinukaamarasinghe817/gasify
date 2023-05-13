@@ -19,9 +19,18 @@ function setQuota(div) {
     xmlhttp.send(formData);
 }
 function resetQuota(div) {
-    console.log("hello");
     var cutomerType = div.getAttribute("key");
-    if (div.checked) {
+    var currentQuota = div.getAttribute("val");
+    console.log(cutomerType);
+    var fieldId = "";
+    if (cutomerType == "Large") {
+        fieldId = "large scale business";
+    } else if (cutomerType == "Small") {
+        fieldId = "small scale business";
+    } else {
+        fieldId = "domestic";
+    }
+    if (div.checked && currentQuota > 0) {
         var formData = new FormData();
         if (cutomerType == "Large") {
             formData.append("customer", "Large Scale Business");
@@ -42,6 +51,11 @@ function resetQuota(div) {
         };
         xmlhttp.open("POST", "../Compny/resetQuota");
         xmlhttp.send(formData);
+    } else if (div.checked && currentQuota == 0) {
+        document.getElementById(fieldId).disabled = false;
+    } else if (!div.checked) {
+        document.getElementById(fieldId).disabled = true;
+
     } else {
         var formData = new FormData();
         if (cutomerType == "Large") {
@@ -430,4 +444,11 @@ function addProducts() {
 }
 function updateProducts() {
     document.getElementById("productUpdateForm").submit();
+}
+function changeValue(div) {
+    var value = parseFloat(div.getAttribute("lowest"));
+    //console.log(typeof(value));
+    if (parseFloat(div.value) < value) {
+        div.value = value;
+    }
 }

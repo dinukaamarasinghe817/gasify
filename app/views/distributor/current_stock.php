@@ -36,7 +36,9 @@ $user_id = $_SESSION['user_id'];
                             <thead>
                                 <tr>
                                     <th>Item ID</th>
+                                    <th>Item</th>
                                     <th>Item Name</th>
+                                    <th>Weight</th>
                                     <th>Current Quantity</th>
                                    
                                 </tr>
@@ -51,9 +53,11 @@ $user_id = $_SESSION['user_id'];
                         $output .= '
                             <tr>
                                 <td>'.$row1['product_id'].'</td>
+                                <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row1['image'].'"></td>
                                 <td>'.$row1['name'].'</td>
+                                <td>'.$row1['weight'].' Kg</td>
                                 <td>'.$row1['quantity'].'</td> 
-                                <td></td>                       
+                                                       
                             </tr>';
                         }
                         $output .= '

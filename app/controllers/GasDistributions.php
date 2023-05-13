@@ -10,6 +10,7 @@ class GasDistributions extends Controller {
         $this->AuthorizeLogin();
     }
 
+        // gas distributions - pending gas distributions
     public function pending_distributions($error=null, $success=null) {
         $this->AuthorizeUser('distributor');
 
@@ -37,6 +38,7 @@ class GasDistributions extends Controller {
    
     }
 
+    // after distributing an order
     public function donepending($distribution_id) {
         $this->AuthorizeUser('distributor');
 
@@ -51,17 +53,10 @@ class GasDistributions extends Controller {
             $this->pending_distributions($data['success']);
         }
         $this->pending_distributions();
-
-        // if(isset($data['toast'])) {
-        //     $this->pending_distributions($data['toast']);
-        // }
-        // $this->pending_distributions();
-
-        // $this->model("Distributor")->finishpendingdistributions($distribution_id);
-        // $this->pending_distributions();
     }
 
-    public function completed_distributions() {
+        // gas distributions - completed gas distributions
+        public function completed_distributions() {
         $this->AuthorizeUser('distributor');
         
         $user_id = $_SESSION['user_id'];
