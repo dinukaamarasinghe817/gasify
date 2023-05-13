@@ -136,7 +136,7 @@ class Compny extends Controller{
         $time=time();
         $img_name = $time.$img_name;
         move_uploaded_file($_FILES['productImage']['tmp_name'],$_SERVER["DOCUMENT_ROOT"]."/mvc/public/img/products/".$img_name);
-        $data=array('company_id'=>$_SESSION['user_id'],'name'=>$_POST['Productname'],'type'=>$_POST['Producttype'],'unit_price'=>$_POST['unitprice'],'weight'=>$_POST['weight'],'image'=>$img_name,'production_time'=>$_POST['productiontime'],'last_updated_date'=>$lastUpdatedDate,'quantity'=>$_POST['quantity'],'cylinder_limit'=>$_POST['threshold']);
+        $data=array('company_id'=>$_SESSION['user_id'],'name'=>$_POST['Productname'],'type'=>$_POST['Producttype'],'unit_price'=>$_POST['unitprice'],'weight'=>$_POST['weight'],'image'=>$img_name,'last_updated_date'=>$lastUpdatedDate,'quantity'=>$_POST['quantity'],'cylinder_limit'=>$_POST['threshold']);
         $this->model('Company')->registerNewProduct($data);
         $this->products('registeredSuccessful');
     }
@@ -222,10 +222,6 @@ class Compny extends Controller{
         }
         if((isset($_POST['Productname']) && $_POST['Productname'] != "")){
             $data=array('unit_price'=>$_POST['Productname']);
-            $this->model('Company')->updateProduct($data,$_POST['Producttype'],$_SESSION['user_id']);
-        }
-        if((isset($_POST['productiontime']) && $_POST['productiontime'] != "")){
-            $data=array('production_time'=>$_POST['productiontime']);
             $this->model('Company')->updateProduct($data,$_POST['Producttype'],$_SESSION['user_id']);
         }
         if((isset($_POST['quantity']) && $_POST['quantity'] != "")){
