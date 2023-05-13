@@ -1342,13 +1342,14 @@ class Body{
                             <td>'.$row['place_time'].'</td>
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                             <td>Rs.'.number_format($weight * $charge,2).'</td>
-                            <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>';
+                            <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Deliver/div></td>';
                             $str_time = $row['place_time'];
                             $time = date('H:i:s');
                             sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
                             $placedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
                             sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
                             $currentTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                            echo'<script></script>';
                             if(($currentTime-$placedTime)<=900){
                                 $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
                             }else{
@@ -1691,7 +1692,7 @@ class Body{
                                 <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>';
                             }else{
                                 $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" lowest='.$data['lowestWeight'].' style="width:70%" disabled></div>
-                                <div class="productQuotaResetCurrent"  key="'.$row['customer_type'].'"><div class="quotaButtons" style="pointer-events:none"><label>Set Quota</label></div></div>';
+                                <div class="productQuotaResetCurrent"  key="'.$row['customer_type'].'"><div class="quotaButtons"  id="'.strtolower($row['customer_type']).'btn" style="pointer-events:none"><label>Set Quota</label></div></div>';
                             }
                             
                             $quota.='

@@ -21,7 +21,7 @@ function setQuota(div) {
 function resetQuota(div) {
     var cutomerType = div.getAttribute("key");
     var currentQuota = div.getAttribute("val");
-    console.log(cutomerType);
+    //console.log(div.previousSibling);
     var fieldId = "";
     if (cutomerType == "Large") {
         fieldId = "large scale business";
@@ -53,8 +53,10 @@ function resetQuota(div) {
         xmlhttp.send(formData);
     } else if (div.checked && currentQuota == 0) {
         document.getElementById(fieldId).disabled = false;
+        document.getElementById(fieldId + "btn").style.pointerEvents = "auto";
     } else if (!div.checked && currentQuota == 0) {
         document.getElementById(fieldId).disabled = true;
+        document.getElementById(fieldId + "btn").style.pointerEvents = "none";
 
     } else {
         var formData = new FormData();
