@@ -172,7 +172,7 @@ class Reports extends Controller{
 
     public function admin(){
         $this->AuthorizeUser('admin');
-
+        date_default_timezone_set("Asia/Colombo");
         if(isset($_POST['start_date'])){
             $start_date = $_POST['start_date'];
         }else{

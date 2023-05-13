@@ -969,7 +969,7 @@ class Dealer extends Model
     public function sendMailonLateDelivery(){
         date_default_timezone_set("Asia/Colombo");
 
-        $query1 = $this->read('reservation',"order_state = 'Accepted' AND mailed = 0");
+        $query1 = $this->read('reservation',"order_state = 'Accepted' AND collecting_method = 'Delivery' AND mailed = 0");
         while($row1 = mysqli_fetch_assoc($query1)){
             $date = $row1['accepted_date'];
             $time = $row1['accepted_time'];

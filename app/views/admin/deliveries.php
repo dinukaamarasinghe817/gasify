@@ -58,7 +58,7 @@ $sidebar = new Navigation('admin','delivery');
                                         <td>'.$row['name'].'</td>
                                         <td>'.$row['city'].'</td>
                                         <td>'.$row['orders_count'].'</td>
-                                        <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/admin/deliveryprofile" >View Profile</a></td>
+                                        <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/delivery/'.$row['user_id'].'/profile/admin/deliveryprofile" >Profile</a></td>
                                     </tr>';
                             }
                         }else{

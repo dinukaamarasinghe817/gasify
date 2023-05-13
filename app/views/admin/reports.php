@@ -67,10 +67,10 @@ $sidebar = new Navigation('admin','reports');
                             <td>'.$row['company'].'</td>
                             <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['product_image'].'"></td>
                             <td>'.$row['product_name'].'</td>
-                            <td class="numbers">'.$row['current_stock'].'</td>
-                            <td class="numbers">'.$row['total_sale'].'</td>
+                            <td class="numbers">'.number_format($row['current_stock']).'</td>
+                            <td class="numbers">'.number_format($row['total_sale']).'</td>
                             <td class="numbers">'.number_format($row['total_revenue'],2).'</td>
-                            <td class="numbers">'.$row['monthly_sale'].'</td>
+                            <td class="numbers">'.number_format($row['monthly_sale']).'</td>
                             <td>'.$row['availability'].'</td>
                         </tr>';
                     }
