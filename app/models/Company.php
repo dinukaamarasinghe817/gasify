@@ -101,8 +101,14 @@ class Company extends Model
     public function registerNewDistributor($data){
         $this->insert("distributor",$data);
     }public function updateProduct($data,$productID,$companyID){
-        //print_r("tu");
-        $this->update("product",$data,"company_id=".$companyID." AND product_id=".$productID);
+        if(isset($data['quantity'])){
+            $qty=intval($data['quantity']);
+            //print_r($data['quantity']);
+            $this->Query("UPDATE product SET quantity=quantity+$qty WHERE product_id=$productID");
+        }else{
+            $this->update("product",$data,"company_id=".$companyID." AND product_id=".$productID);
+        }
+        //$this->update("product",$data,"company_id=".$companyID." AND product_id=".$productID);
     }
     //update quota and customer_quota table when updated the quota limit
     public function setQuota($companyID,$customer,$quota){
