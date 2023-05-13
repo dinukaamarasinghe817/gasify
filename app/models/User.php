@@ -396,14 +396,15 @@ class User extends Model
 
        //insert intial record into customer_quota table
         $query5 = $this->read('company');
-        while ($row2 = mysqli_fetch_assoc($query5)) {
-            $company_id = $row2['company_id'];
-            //take the monthly limit in quota table and insert it as remaining amount in customer_quota table
-            $query6  = $this->read('quota',"company_id = '$company_id' AND customer_type = '$type'");
-            $row3 = mysqli_fetch_assoc($query6);
-            $remaining_amount = $row3['monthly_limit'];
-            $query7 = $this->insert('customer_quota', ['customer_id'=>$customer_id,'company_id'=>$company_id,'customer_type'=>$type,'remaining_amount'=>$remaining_amount]);
-        
+        if(mysqli_num_rows($query5) >0){
+            while ($row2 = mysqli_fetch_assoc($query5)) {
+                $company_id = $row2['company_id'];
+                //take the monthly limit in quota table and insert it as remaining amount in customer_quota table
+                $query6  = $this->read('quota',"company_id = '$company_id' AND customer_type = '$type'");
+                $row3 = mysqli_fetch_assoc($query6);
+                $remaining_amount = $row3['monthly_limit'];
+                $query7 = $this->insert('customer_quota', ['customer_id'=>$customer_id,'company_id'=>$company_id,'customer_type'=>$type,'remaining_amount'=>$remaining_amount]);
+            }
         }
       
         // sending account verification codes
@@ -1166,6 +1167,17 @@ class User extends Model
         foreach ($customerArray as $customer) {
             $query4 = $this->insert('quota',['company_id'=>$company_id,'customer_type'=>$customer, 'monthly_limit'=>0, 'state'=>"OFF"]);
         }
+        //insert customer_quota table initial data for exist customers when new company register 
+        $query5 = $this->read("customer");
+        if(mysqli_num_rows($query5)>0){
+            while($row1 = mysqli_fetch_assoc($query5)){
+                $customer_id = $row1['customer_id'];
+                $customer_type = $row1['type']; 
+                $query6 = $this->insert('customer_quota',['customer_id'=>$customer_id,'company_id'=>$company_id,'customer_type'=>$customer_type,'remaining_amount'=>0]);
+            }
+        }
+
+
         if(!empty($image_name) && !empty($tmp_name)){
 
             $image = getImageRename($image_name,$tmp_name);
