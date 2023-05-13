@@ -380,7 +380,12 @@ class Distributor extends Model
 
             if($flag){
                 // reduce stock and add it to the dealer
+                $query2 = $this->Query("SELECT i.product_id as product_id, i.quantity as quantity, o.dealer_id as dealer_id
+                FROM purchase_order o inner join purchase_include i
+                ON o.po_id = i.po_id 
+                WHERE o.distributor_id='{$user_id}' AND o.po_id = '{$distribution_id}'");
                 while($row2 = mysqli_fetch_assoc($query2)) {
+                    // echo 'ok';
                     $dealer_id = $row2['dealer_id'];
                     $product_id = $row2['product_id'];
                     $o_quantity = $row2['quantity'];
@@ -705,7 +710,7 @@ class Distributor extends Model
 
             // get details for pdf
             $result6 = $this->Query("SELECT  s.product_id as product_id,
-            p.name as product_name, p.weight as weight
+            p.name as product_name, p.weight as weight,
             s.quantity as quantity,
             s.unit_price as unit_price
             FROM stock_include s INNER JOIN product p

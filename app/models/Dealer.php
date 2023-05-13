@@ -1041,7 +1041,7 @@ class Dealer extends Model
         $dealer = mysqli_fetch_assoc($this->read('purchase_order',"po_id = ".$distribution_id));
         $dealer_id = $dealer['dealer_id'];
         // take order information
-        $query = $this->read('reservation','stock_verification = 0',"place_date ASC, place_time ASC");
+        $query = $this->read('reservation',"dealer_id = $dealer_id AND stock_verification = 0","place_date ASC, place_time ASC");
         while($row = mysqli_fetch_assoc($query)){
             // take the order includes
             $query2 = $this->read('reservation_include',"order_id = ".$row['order_id']);
@@ -1070,6 +1070,38 @@ class Dealer extends Model
                         $this->update('dealer_keep',['quantity'=>$row3['quantity']-$row2['quantity']],"dealer_id = $dealer_id AND product_id = ".$row2['product_id']);
                     }
                 }
+
+                // then change that order's stock_verification to 1
+                $this->update('reservation',['stock_verification'=>1],"order_id = ".$row['order_id']);
+                $verifyacceptance = mysqli_fetch_assoc($this->read('reservation',"order_id = ".$row['order_id']));
+                if(strtoupper($verifyacceptance['order_state']) == 'ACCEPTED') {
+                    // then send a mail to the customer
+                    $user_id = $verifyacceptance['customer_id'];
+                    $customer = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
+                    $user_name = $customer['first_name'].' '.$customer['last_name'];
+                    $subject = "Gasify: Order has been accpeted!";
+                    // get template
+                    if(strtoupper($verifyacceptance['collecting_method']) == 'PICKUP'){
+                        $mailbody = file_get_contents('./emailTemplates/orderacceptedpickup.php');
+                    }else{
+                        $mailbody = file_get_contents('./emailTemplates/orderaccepteddelivery.php');
+                    }
+                    // prepare replacements
+                    $swap_variables = array(
+                        "{RECIEVER_NAME}"=> $user_name,
+                        "{ORDER_ID}"=> $order_id,
+                        "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$order_id
+                    );
+                    // replace
+                    foreach(array_keys($swap_variables) as $key){
+                        if(strlen($key) > 2 && trim($key) != ""){
+                            $mailbody = str_replace($key,$swap_variables[$key],$mailbody);
+                        }
+                    }
+                    $mail = new Mail('admin@gasify.com',$customer['email'],$user_name,$subject,$mailbody,$link=null);
+                    $mail->send();
+                }
+                
             }
         }
     }
