@@ -357,6 +357,22 @@ div{
 }
 .accept_btn:hover{
     cursor: pointer;
+}.accept_btn_disabled{
+    text-align: center;
+    height: 70%;
+    margin: auto;
+    color: white;
+    border-radius: 5px;
+    background-color: dodgerblue;
+    width:103%;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    align-content:center;
+    justify-content:center;
+}
+.accept_btn_disabled:hover{
+    cursor: not-allowed;
 }
 .content {
     padding: 0 18px;
@@ -371,7 +387,22 @@ div{
     border-radius: 10px;
     background-color: var(--table-gray);
   }
-
+  .delete_btn{
+    background-color: transparent;
+    border-radius: 5px;
+    margin:auto;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}#delete_btn{
+    width: 16%;
+    margin-left: 1%;
+    background-color: #ec3535; 
+    color: white;
+}.delete_btn:hover{
+    cursor: pointer;
+}
 
  
  /* ==========================================================Gas delivery CSS end===============================================================*/

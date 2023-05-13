@@ -55,7 +55,7 @@ class Delivery extends Model
             $city=$row['city'];
         }
         //print_r(gettype($city));
-        $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.name,product.image,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Accepted' AND reservation.collecting_method='Delivery' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id AND dealer.city='$city'");
+        $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.name,product.image,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Accepted' AND reservation.collecting_method='Delivery' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id AND dealer.city='$city' ORDER BY priority DESC,place_date DESC,place_time DESC");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -179,7 +179,7 @@ class Delivery extends Model
         $swap_reorder = array(
             "{RECIEVER_NAME}"=> $customer['first_name'].' '.$customer['last_name'],
             "{ORDER_ID}"=> $orderID,
-            "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$orderID
+            "{ORDER_LINK}"=> BASEURL.'/orders/confirmCompleteOrder/'.$orderID
         );
         // replace
         foreach(array_keys($swap_reorder) as $key){
