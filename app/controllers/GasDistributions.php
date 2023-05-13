@@ -21,12 +21,17 @@ class GasDistributions extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        if($error != null) {
-            $data['toast'] = $error;
+        switch($error){
+            case '1':
+                $data['toast'] = ['type' => 'success', 'message' => "Vehicle assigned successfully!"];
+                break;
         }
-        if($success != null) {
-            $data['success'] = $success;
-        }
+        // if($error != null) {
+        //     $data['toast'] = ['type' => 'error', 'message' => $error];
+        // }
+        // if($success != null) {
+        //     $data['success'] = $success;
+        // }
 
         $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
         $this->view('distributor/pending_distributions', $data);
@@ -38,6 +43,9 @@ class GasDistributions extends Controller {
         $this->AuthorizeUser('distributor');
 
         $data = $this->model("Distributor")->finishpendingdistributions($distribution_id);
+
+        // serve customers on fcfs with newly added stock
+        $this->fcfsDealer($distribution_id);
 
         if(isset($data['toast'])) {
             $this->pending_distributions($data['toast']);
@@ -65,20 +73,8 @@ class GasDistributions extends Controller {
 
     }
 
-    // suitable vehicle list for pending gas distributions
-    public function suitableVehicleList(){
-        $this->AuthorizeUser('distributor');
-
-        $user_id = $_SESSION['user_id'];
-        $data['navigation'] = 'orders';
-
-        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
-        $row = mysqli_fetch_assoc($distributor_details);
-        $data['image'] = $row['image'];
-
-        $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
-
-        $this->view('distributor/suitableVehicleList', $data);
+    public function fcfsDealer($distribution_id){
+        $this->model('Dealer')->fcfsonPOcomplete($distribution_id);
     }
 }
 

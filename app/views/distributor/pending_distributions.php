@@ -51,9 +51,11 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                     <div class="details">
                                         <span><strong>Dealer ID : '.$dealer_id.' </strong></span>
                                         <span><strong>Placed Date : '.$date.' </strong></span>
-                                        <span><strong>Placed Time : '.$time.' </strong></span>
-                                        <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/suitableVehicleList\'">Assign Vehicle</button></span>
-                                    </div>
+                                        <span><strong>Placed Time : '.$time.' </strong></span>';
+                                        if($row1['vehicle_allocated'] == 0){
+                                         $output .= '<span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList/'.$distribution_id.'\'">Assign Vehicle</button></span>';
+                                        }
+                                    $output .= '</div>
                                     <hr>
 
                                     <table class="styled-table">
@@ -98,9 +100,11 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                 <td><b>Rs. '.number_format($total,2).'</b></td>
                                             </tr>
                                         </tbody>
-                                    </table>
-                                    <button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Distribution Done</button>
-                                </div>
+                                    </table>';
+                                    if($row1['vehicle_allocated'] == 1){
+                                        $output .= '<button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Distribution Done</button>';
+                                    }
+                                $output .= '</div>
                             </div>';
                             echo $output;
                         }               

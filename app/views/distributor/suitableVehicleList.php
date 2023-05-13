@@ -27,24 +27,33 @@ $user_id = $_SESSION['user_id'];
                         <tr>
                             <th>Vehicle Number</th>
                             <th>Vehicle Type(axels)</th>
-                            <th>Fuel Consumption(L/Km)</th>
+                            <th>Fuel cost(L)</th>
                         </tr>
                     </thead>
                     <tbody>';
                 
                 $vehicles = $data['suitablevehiclelist'];
+                $po_id = $data['po_id'];
+                // var_dump($vehicles);
+                if(count($vehicles) > 0){
+                    foreach($vehicles as $vehicle){
+                        $row2 = $vehicle['vehicleinfo'];
+                        $capacities = $vehicle['capacities'];
+                        $output .= '
+                                    <tr>
+                                        <td>'.$row2['vehicle_no'].'</td>
+                                        <td>'.$row2['type'].' </td>
+                                        <td>'.$row2['cost'].' L</td>
+                                        ';
 
-                foreach($vehicles as $vehicle){
-                    $row2 = $vehicle['vehicleinfo'];
-                    $capacities = $vehicle['capacities'];
-                    $output .= '
-                                <tr>
-                                    <td>'.$row2['vehicle_no'].'</td>
-                                    <td>'.$row2['type'].' </td>
-                                    <td>'.$row2['fuel_consumption'].' L</td>';
-                                    $output .= '<td><button type="button" style="background-color: B4AAFF class="btn4" onclick="document.location.href=\''.BASEURL.'/orders/dis_placed_pending\'">Assign</button></td>';                             
-                                $output .=  '
-                                </tr>';
+                                    // if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
+                                        $output .= '<td><button type="button" style="background-color: B4AAFF class="btn4" onclick="document.location.href=\''.BASEURL.'/orders/selectedVehicle/'.$po_id.'/'.$row2['vehicle_no'].'\'">Assign</button></td>';
+                                    // }                              
+                                    $output .=  '
+                                            </tr>';
+                    }
+                }else{
+                    $output .= '<tr><td colspan="4" style="text-align: center;">No vehicles found</td></tr>';
                 }
             
                 $output .= '
