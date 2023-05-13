@@ -158,7 +158,7 @@ class Body{
         echo '<div class="under_topbar">
         <div class="top_image">
             <div class="image">
-                <img src="../img/customer_dashboard/dashboardimg.jpg" alt="">
+                <img src="'.BASEURL.'/public/img/customer_dashboard/dashboardimg.jpg" alt="">
             </div>
             <div class="text">
                 <div class="logo">
@@ -183,11 +183,12 @@ class Body{
             
             </div></div>';
 
+            
             echo '<div class="middle">
                 <div class="brand">
                 <div class="brand_title"> <h3>Our Brands</h3></div>
                 <div class="brand_img">';
-
+            //display all brands(companies) registered in system
             if(isset($data["brand"])){
                 $result = $data["brand"];
                 $brand = "";
@@ -206,10 +207,10 @@ class Body{
                
             }
 
+            //display recent reservations
             echo '<div class="recent_order">';
-
             if(isset($data['orders'])){
-                echo '  <div class="order_title"> <h3>Recent Orders</h3></div>';
+                echo '  <div class="order_title"> <h3>Recent Reservations</h3></div>';
 
                 $orders = $data['orders'];
                 if(count($orders) > 0){
@@ -247,7 +248,7 @@ class Body{
             echo '</div>
                 </div>';
 
-
+            // display popular products
             echo '<div class="bottom">
             <div class="product_title"><h3>Popular Products</h3></div>
             <div class="cards">';
@@ -383,9 +384,9 @@ class Body{
                                                 }
                                                 $output1 .= '
                                                 <tr>
-                                                    <td><b>Total Amount (Rs.)</b></td>
+                                                    <td><b>Total Amount</b></td>
                                                     <td></td>
-                                                    <td><b>'.number_format($total,2).'</b></td>
+                                                    <td><b>Rs. '.number_format($total,2).'</b></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -395,34 +396,35 @@ class Body{
                                 }
                             echo '
                             </div>';
+
                             $output = '
                             <div class="box3">
                                 <h3>Current Stock</h3>
-    
                                     <div class="content1">
                                         <table class="styled-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Product Name</th>
-                                                <th>Current Stock</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>';     
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Current Stock</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';     
                                     
-                                    $stocks = $data['currentstock'];
-                                    foreach($stocks as $stock) {
-                                        $row1 = $stock['stockinfo'];
-    
+                                        $stocks = $data['currentstock'];
+                                        foreach($stocks as $stock) {
+                                            $row1 = $stock['stockinfo'];
+                                            $output .= '
+                                                <tr>
+                                                    <td>'.$row1['name'].'</td>
+                                                    <td>'.$row1['quantity'].'</td> 
+                                                </tr>';
+                                        }
                                         $output .= '
-                                        <tr>
-                                            <td>'.$row1['name'].'</td>
-                                            <td>'.$row1['quantity'].'</td> 
-                                        </tr>';
-                                    }
-                                        $output .= '</tbody></table>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>';
-                                        echo $output;
+                            </div>';
+                            echo $output;
                     echo '</div>';
         echo '</section>';                         
     }

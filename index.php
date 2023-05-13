@@ -10,7 +10,7 @@
     }else if(isset($_SESSION['userID']) && isset($_SESSION['role']) && $_SESSION['role'] == 'company'){
         header('Location: view/Company/delivery.php');
     }else if(isset($_SESSION['admin_id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin'){
-        header('Location: view/Amin/dashboard.php');
+        header('Location: view/Admin/dashboard.php');
     }else if(isset($_SESSION['userID']) && isset($_SESSION['role']) && $_SESSION['role'] == 'delivery'){
         header('Location: view/Delivery/delivery.php');
     }

@@ -42,6 +42,7 @@ $user_id = $_SESSION['user_id'];
                             <tr>
                                 <th>Product</th>
                                 <th>Product Name</th>
+                                <th>Weight</th>
                                 <th>Unit Price(Rs.)</th>
                                 <th>Quantity</th>
                                 <th>Subtotal(Rs.)</th>
@@ -57,12 +58,12 @@ $user_id = $_SESSION['user_id'];
                                 $product_id = $row['product_id'];
                                 $product_array[$j] = $product_id;
                                 $j++;
-                                // $unit_price = number_format($row['unit_price']);
 
                                 $output .= '
                                 <tr class="data'.$row['product_id'].'">
                                     <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                                     <td>'.$row['name'].'</td>
+                                    <td>'.$row['weight'].' Kg</td>
                                     <td>'.number_format($row['unit_price'],2).'</td>
                                     <td><input type="number" step="1" value=0 name="'.$row['product_id'].'" min=0 onchange="changeqty('.$row['product_id'].','.$row['unit_price'].'); return false;"></td>
                                     <td class="subtotal">Rs. 0</td>
@@ -77,9 +78,11 @@ $user_id = $_SESSION['user_id'];
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td class="amount">Rs. 0.00</td>
                                 </tr>
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

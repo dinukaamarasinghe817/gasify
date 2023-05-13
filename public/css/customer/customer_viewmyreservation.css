@@ -115,7 +115,7 @@ a,button{
 
 .card_bottom .review_side .review_box .date{
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
 }
 
 .review_btn button{
@@ -277,6 +277,14 @@ a,button{
     column-gap: 30px;
 }
 
+/* payslip upload button when pay slip rejected */
+.reject_payslip_uploadbtn{
+    padding: 10px;
+    border-radius: 5px;
+    background: var(--button-blue);
+    color: white;
+  }
+  
 
 
 

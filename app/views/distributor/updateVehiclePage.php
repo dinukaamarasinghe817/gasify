@@ -21,10 +21,6 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-            // $products = $data['products'];
-            // $row1 = $products['productinfo'];
-            
-            // $number = $row1['vehicle_no'];
             $upproducts = $data['updateproduct'];
             $vehicle_no = $upproducts['vehicle_no'];
             echo "Vehicle Number : $vehicle_no ".'<br><br>';
@@ -49,11 +45,8 @@ $user_id = $_SESSION['user_id'];
                     
                     $upproducts = $data['updateproduct'];
                     $products = $upproducts['products'];
-                    // echo count($products);
                     foreach($products as $product) {
-                        $row1 = $product;
-                        // $capacities = $product['capacities'];
-                      
+                        $row1 = $product;                      
                         $output .= '
                             <tr>
                                 <td>'.$row1['product_name'].'</td>
@@ -77,24 +70,16 @@ $user_id = $_SESSION['user_id'];
                 </form>';
                 echo $output;
             
-            ?>
-
-
-               
-          
-             
-            
+            ?> 
 
         </div>
     </section>
 </section>
 
 <script>
-
     document.querySelector("form").addEventListener("submit", function(event) {
         event.preventDefault(); // prevent default form submission behavior
     });
-
     function edit(){
         let btn = document.querySelector('form .beginbtn');
         btn.querySelector('button.edit').onclick = function(){
@@ -106,7 +91,6 @@ $user_id = $_SESSION['user_id'];
             }
         }
     }
-
 </script>
 
 <?php

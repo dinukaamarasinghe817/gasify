@@ -275,7 +275,7 @@
         <thead>
           <tr>
             <th>Distance Range</th>
-            <th>Delivery Charge</th>
+            <th>Delivery Charge (Rs.)</th>
           </tr>
         </thead>
         <tbody>

@@ -23,16 +23,6 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             </div>
 
             <div class="middle">
-                    <!-- <p>Delay Time</p>
-                    <div class = "togglemain">
-                       
-                        <div class="text">Disable</div>
-                        <div class="toggle">
-                            <div class="toggle-button" onclick = "Animatedtoggle()"></div>
-                        </div> <br>
-                    </div>
-                <br> -->
-
                 <div class="accordion new">
                     <?php 
                         $pendings = $data['pending_distributions'];
@@ -61,9 +51,11 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                     <div class="details">
                                         <span><strong>Dealer ID : '.$dealer_id.' </strong></span>
                                         <span><strong>Placed Date : '.$date.' </strong></span>
-                                        <span><strong>Placed Time : '.$time.' </strong></span>
-                                        <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button></span>
-                                    </div>
+                                        <span><strong>Placed Time : '.$time.' </strong></span>';
+                                        if($row1['vehicle_allocated'] == 0){
+                                         $output .= '<span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList/'.$distribution_id.'\'">Assign Vehicle</button></span>';
+                                        }
+                                    $output .= '</div>
                                     <hr>
 
                                     <table class="styled-table">
@@ -71,9 +63,10 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             <tr>
                                                 <th>Product ID</th>
                                                 <th>Product Name</th>
+                                                <th>Weight</th>
                                                 <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
-                                                <th>Total(Rs.)</th>
+                                                <th>Subtotal(Rs.)</th>
                                             </tr>
                                         </thead>
 
@@ -87,14 +80,15 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             $subtotal = $unit_price * $quantity;
 
                                             $output .= '
-                                                <tr>
-                                                    <td>'.$row2['product_id'].'</td>
-                                                    <td>'.$row2['product_name'].'</td>
-                                                    <td>'.number_format($unit_price,2).'</td>
-                                                    <td>'.$row2['quantity'].'</td>
-                                                    <td>'.number_format($subtotal,2).'</td>
-                                                </tr>';
-                                                $total += $subtotal;           
+                                            <tr>
+                                                <td>'.$row2['product_id'].'</td>
+                                                <td>'.$row2['product_name'].'</td>
+                                                <td>'.$row2['weight'].' Kg</td>
+                                                <td>'.number_format($unit_price,2).'</td>
+                                                <td>'.$row2['quantity'].'</td>
+                                                <td>'.number_format($subtotal,2).'</td>
+                                            </tr>';
+                                            $total += $subtotal;           
                                         }
                                         $output.='
                                             <tr>
@@ -102,14 +96,17 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><b>'.number_format($total,2).'</b></td>
+                                                <td></td>
+                                                <td><b>Rs. '.number_format($total,2).'</b></td>
                                             </tr>
                                         </tbody>
-                                    </table>
-                                    <button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Distribution Done</button>
-                                </div>
+                                    </table>';
+                                    if($row1['vehicle_allocated'] == 1){
+                                        $output .= '<button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Distribution Done</button>';
+                                    }
+                                $output .= '</div>
                             </div>';
-                                        echo $output;
+                            echo $output;
                         }               
                     ?>
                 </div>   

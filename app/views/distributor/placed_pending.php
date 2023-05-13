@@ -43,8 +43,6 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                 </ul>
 
                 <div class="accordion new">
-
-                    <!-- <div class="box"> -->
                         <?php
                             $pendingorders = $data['pendingorders'];
                             foreach($pendingorders as $pendingorder) {
@@ -80,9 +78,10 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             <tr>
                                                 <th>Product ID</th>
                                                 <th>Product Name</th>
+                                                <th>Weight</th>
                                                 <th>Unit Price(Rs.)</th>
                                                 <th>Quantity</th>
-                                                <th>Total(Rs.)</th>
+                                                <th>Subtotal(Rs.)</th>
                                             </tr>
                                         </thead>
 
@@ -97,34 +96,32 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                             $subtotal = $unit_price * $quantity;
                                            
                                             $output .= '
-                                                <tr>
-                                                    <td>'.$row2['product_id'].'</td>
-                                                    <td>'.$row2['product_name'].'</td>
-                                                    <td>'.number_format($unit_price,2).'</td>
-                                                    <td>'.$row2['quantity'].'</td>
-                                                    <td>'.number_format($subtotal,2).'</td>    
-                                                </tr>';
-                                                $total += $subtotal;
+                                            <tr>
+                                                <td>'.$row2['product_id'].'</td>
+                                                <td>'.$row2['product_name'].'</td>
+                                                <td>'.$row2['weight'].' Kg</td>
+                                                <td>'.number_format($unit_price,2).'</td>
+                                                <td>'.$row2['quantity'].'</td>
+                                                <td>'.number_format($subtotal,2).'</td>    
+                                            </tr>';
+                                            $total += $subtotal;
                                         }
                                         $output.='
-                                        <tr>
-                                            <td><b>Total Amount</b></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><b>'.number_format($total,2).'</b></td>
-                                        </tr>          
+                                            <tr>
+                                                <td><b>Total Amount</b></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b>Rs. '.number_format($total,2).'</b></td>
+                                            </tr>          
                                         </tbody>
-                                    </table>
-                                   
+                                    </table>    
                                 </div> 
                             </div>';
                             echo $output;
-
                             }
-                            // echo $output;
                         ?>
-                    <!-- </div> -->
                 </div>
             </div>
         </div>

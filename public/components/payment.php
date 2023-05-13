@@ -28,13 +28,14 @@ class Charge{
     private $amount;
 
     public function __construct($restkey,$description,$amount){
-        $this->restkey = decryptStripeKey($restkey);
+        $this->restkey = $restkey;
         $this->description = $description;
         $this->amount = $amount*100;
     }
 
     public function make(){
         $this->token = $_POST['stripeToken'];
+        echo $this->restkey;
         \Stripe\Stripe::setApiKey($this->restkey);
         $charge = \Stripe\Charge::create([
             'source' => $this->token,

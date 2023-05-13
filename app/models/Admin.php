@@ -7,21 +7,15 @@ class Admin extends Model
     {
         parent::__construct();
     }
+
+    // takes admin information
     public function getAdmin($user_id){
         $data = [];
         $result = $this->Query("SELECT * FROM users u INNER JOIN admin a ON u.user_id = a.admin_id WHERE a.admin_id = $user_id");
         return $result;
     }
-
-    // public function gever(){
-    //     $distance = getDistance("No:43, Lional Jayasinghe Mawatha, Godagama", "Akarawita Patumaga, Homagama");
-    //     if ($distance) {
-    //         echo "The distance between the two addresses is " . $distance . " km.";
-    //     } else {
-    //         echo "Error calculating distance.";
-    //     }
-    // }
     
+    // takes all the companies
     public function companies($option){
         $data['option'] = $option;
         if($option == 'stock'){ $option = 'quantity'; }
@@ -41,6 +35,8 @@ class Admin extends Model
         $data['companies'] = $this->Query($sql);
         return $data;
     }
+
+    // takes all the distributors
     public function distributors($option1,$option2){
         $data['option1'] = $option1;
         $data['option2'] = $option2;
@@ -67,6 +63,8 @@ class Admin extends Model
         $data['companies'] = $this->read('company');
         return $data;
     }
+
+    // takes all the dealers
     public function dealers($option1,$option2){
         $data['option1'] = $option1;
         $data['option2'] = $option2;
@@ -93,6 +91,8 @@ class Admin extends Model
         $data['companies'] = $this->read('company');
         return $data;
     }
+
+    // takes all the delivery perople 
     public function deliveries($option){
         $data['option'] = $option;
         $sql = "SELECT d.delivery_id as user_id,
@@ -108,6 +108,8 @@ class Admin extends Model
         $data['delivery_people'] = $this->Query($sql);
         return $data;
     }
+
+    // update the delivery charges table
     public function deliverycharges($mindist=null){
         if($mindist != null){
             foreach($mindist as $key => $value){
@@ -116,7 +118,7 @@ class Admin extends Model
             $data['toast'] = ['type' => 'success', 'message' => 'Successfully updated delivery charges!'];
             // notify the delivery people about updated delivery charges through an email
             $query = $this->read('users',"type = 'delivery'");
-            while ($row = $query->mysqli_fetch_assoc($query)){
+            while ($row = mysqli_fetch_assoc($query)){
                 $to = $row['email'];
                 $recipientName = $row['first_name'].' '.$row['last_name'];
                 $subject = "Gasify: New update about delivery charges";
@@ -126,9 +128,9 @@ class Admin extends Model
                 while($dchargrow = mysqli_fetch_assoc($dcharges)){
                     $charge = file_get_contents('./emailTemplates/deliverychargerow.php');
                     $swap_charge = array(
-                        '{MIN}' => $charge['min_distance'],
-                        '{MAX}' => $charge['max_distance'],
-                        '{DELIVERY_CHARGE}'=>$dchargrow['charge_per_kg']
+                        '{MIN}' => $dchargrow['min_distance'],
+                        '{MAX}' => $dchargrow['max_distance'],
+                        '{DELIVERY_CHARGE}'=>number_format($dchargrow['charge_per_kg'],2)
                     );
                     foreach(array_keys($swap_charge) as $key){
                         if(strlen($key) > 2 && trim($key) != ""){
@@ -139,7 +141,7 @@ class Admin extends Model
                 }
                 $swap_body = array(
                     '{RECIEVER_NAME}'=>$recipientName,
-                    '{DELIVERY_CHARGES_URL}'=>$url,
+                    '{DELIVERY_CHARGES_URL}'=>BASEURL.'/dashboard/delivery',
                     '{DELIVERY_CHARGES}'=>$charges
                 );
                 foreach(array_keys($swap_body) as $key){
@@ -157,6 +159,8 @@ class Admin extends Model
         $data['delivery_charges'] = $this->read('delivery_charge');
         return $data;
     }
+
+    // takes all the customers
     public function customers($option){
         $data['option'] = $option;
         $sql = "SELECT u.user_id,CONCAT(u.first_name,' ',u.last_name) AS name,
@@ -177,6 +181,7 @@ class Admin extends Model
         return $data;
     }
 
+    // takes sales analysis for the admin
     public function getanalysis($user_id,$start_date,$end_date,$company){
         $row = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
         $data['date_joined'] = $row['date_joined'];
@@ -301,6 +306,7 @@ class Admin extends Model
         return $data;
     }
 
+    // get info for the sales report
     public function getReportInfo($start_date,$end_date,$filter_by){
         // company name, product name, total sale (total revenue), current stock, monthly sale, enough time(months)
         $user_id = $_SESSION['user_id'];
@@ -374,6 +380,7 @@ class Admin extends Model
         return $data;
     }
 
+    // navigates to admin's dashboard
     public function dashboard($user_id,$option,$option2){
         // variable data
         date_default_timezone_set("Asia/Colombo");
@@ -447,6 +454,7 @@ class Admin extends Model
         return $data;
     }
 
+    // get payment verification infor for the payslips
     public function getPaymentVerifications($tab){
         $data['activetab'] = $tab;
         if($tab == 'regular'){
@@ -487,6 +495,7 @@ class Admin extends Model
         return $data;
     }
 
+    // validate/reject payment slips
     public function validatepaymentsubmit($validity,$tab,$order_id){
         if($tab == 'regular'){
             if($validity){
@@ -555,6 +564,7 @@ class Admin extends Model
         }
     }
 
+    // to take backups (not implemented)
     public function takebackup(){
         date_default_timezone_set("Asia/Colombo");
         $datetime = date('Ymd');
@@ -571,6 +581,7 @@ class Admin extends Model
         echo "success";
     }
 
+    // to restore previousely taken backups (not implemented)
     public function restorebackup(){
         $datetime = $_POST['date'];
         // Set the backup filename

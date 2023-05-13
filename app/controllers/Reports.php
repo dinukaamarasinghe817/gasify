@@ -10,7 +10,7 @@ class Reports extends Controller{
         $this->user_id = $_SESSION['user_id'];
     }
 
-    // summary of past distirbutions [report1]
+    // summary of past distirbutions interface [report1]
     public function distributor() {  
         $this->AuthorizeUser('distributor');
 
@@ -34,15 +34,12 @@ class Reports extends Controller{
 
     }
 
+    // generate pdf [report1]
     public function distributor_pdf($user_id) {
         $this->AuthorizeUser('distributor');
 
         $data = [];
         $data['reportdetails'] = $this->model("Distributor")-> reportdetails($user_id);
-        // $data = $this->model("Distributor")->reportdetails($user_id);
-        // $row = mysqli_fetch_assoc($this->model("Distributor")->reportdetails($this->$user_id));
-        // $data['distribution_no'] = $row['distribution_no'];
-
         $this->view('distributor/reports/report_pdf',$data);
     }
 
@@ -69,23 +66,22 @@ class Reports extends Controller{
         $this->view('distributor/report2',$data);
 
     }
+    // generate pdf [report2]
+    // public function allsellproducts_pdf() {
+    //     $this->AuthorizeUser('distributor');
 
-    public function allsellproducts_pdf() {
-        $this->AuthorizeUser('distributor');
+    //     $data = [];
 
-        $data = [];
-
-        if(isset($_POST['option'])){
-            $option = $_POST['option'];
-        }else{
-            $option = 'today';
-        }
+    //     if(isset($_POST['option'])){
+    //         $option = $_POST['option'];
+    //     }else{
+    //         $option = 'today';
+    //     }
         
-        $data['details'] = $this->model("Distributor")->AllSellProductsDetails($option);
-        // $data['details'] = $this->model("Distributor")->AllSellProductsDetails($start_date, $end_date);
+    //     $data['details'] = $this->model("Distributor")->AllSellProductsDetails($option);
 
-        $this->view('distributor/reports/allsellproducts_pdf',$data);
-    }
+    //     $this->view('distributor/reports/allsellproducts_pdf',$data);
+    // }
 
     // all requested products  [report3]
     public function allrequestedproducts() {
@@ -110,15 +106,15 @@ class Reports extends Controller{
         $this->view('distributor/report3',$data);
 
     }
+    // generate pdf [report3]
+    // public function allrequestedproducts_pdf() {
+    //     $this->AuthorizeUser('distributor');
 
-    public function allrequestedproducts_pdf() {
-        $this->AuthorizeUser('distributor');
+    //     $data = [];
+    //     $data['details'] = $this->model("Distributor")->AllRequestedProducts($option);
 
-        $data = [];
-        $data['details'] = $this->model("Distributor")->AllRequestedProducts($option);
-
-        $this->view('distributor/reports/allsellproducts',$data);
-    }
+    //     $this->view('distributor/reports/allsellproducts',$data);
+    // }
 
     /*-------------------------------------------------------------------------------------------------------------------*/
 

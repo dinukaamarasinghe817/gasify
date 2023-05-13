@@ -16,6 +16,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <div class="drop_down">
             <!-- brand dropdown -->
             <div class="brand_dropdown">
+                <div class="dropdown_topic"><strong>Filter by Brand</strong></div>
                 <select name="brand" id="brand" class="branddropdown dropdowndate" onchange="get_select_value('brand','city');">
                     <!-- Default display all brands -->
                     <option value="-1" selected>All Brands</option>
@@ -35,6 +36,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
             </div>
             <!-- city dropdown -->
             <div class="city_drapdown">
+                <div class="dropdown_topic"><strong>Filter by city</strong></div>
                 <select name="city" id="city" class="citydropdown dropdowndate" onchange="get_select_value('brand','city');">
                     <!--Display defualt city as customer home city  -->
                     <option value="<?php echo $data['mycity'];?>" selected hidden ><?php echo $data['mycity'];?></option>
@@ -47,6 +49,10 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     ?>
                 </select>
             </div>
+            <!-- search bar -->
+            <?php 
+                $search = new Search([0,1,2,]);
+            ?>
         </div>
         
          <!-- table -->
