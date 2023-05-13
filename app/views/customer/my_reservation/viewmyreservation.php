@@ -26,7 +26,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
         
             if(isset($data['myreservation'])){
                 foreach($myreservation as $order){
-
                     $row1 = $order['order'];
                     $products = $order['products'];
                     $total_amount = $order['total_amount'];
@@ -40,6 +39,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                     $url_dealer = BASEURL.'/profile/preview/dealer/'.$row1['dealer_id'].'/profile/customer/viewdealerprofile';
                     $url_delivery = BASEURL.'/profile/preview/delivery/'.$row1['delivery_id'].'/profile/customer/viewdeliveryprofile';
                     $url_cancel = BASEURL.'/Orders/customer_cancelreservation/'.$row1['order_id'].'';
+                    $url_pay_slip_upload = BASEURL.'/Orders/reject_bank_slip_upload/'.$row1['order_id'].'/'.$row1['dealer_id'].'';
                    
                     //display order_id,order_state,place_date,Total Amount,collecting_method,payment_method
                     echo '<div class="order_card">
@@ -162,6 +162,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                          </div>';
                                 }
                             echo '</div>';
+
+                            
+                          
                             
                             //display delivery details and canceled details(cancelled orders) and refund details(refunded orders)
                             echo'<div class = "after_dealer_delivery_details">';
@@ -194,6 +197,18 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                                     '.$row1['bank'].'
                                                 </div>';
                                             }
+                                    echo '</div>';
+                                }
+                                //display pay slip upload button only for payment rejected 
+                                if($row1['order_state'] == "Pending" && $row1['payment_verification'] == "rejected"){
+                                    echo '<div class="cancel_details">
+                                            <div>
+                                                <strong style="color:#f20202">Your Payment Slip was rejected.Please upload clear payslip again !</strong> 
+                                            </div>
+                                            <div>
+                                                <button class="reject_payslip_uploadbtn" onclick="location.href=\''.$url_pay_slip_upload.'\'">Upload payslip</button>
+                                            </div>';
+                                            
                                     echo '</div>';
                                 }
                             echo '</div>';
