@@ -53,7 +53,7 @@ function resetQuota(div) {
         xmlhttp.send(formData);
     } else if (div.checked && currentQuota == 0) {
         document.getElementById(fieldId).disabled = false;
-    } else if (!div.checked) {
+    } else if (!div.checked && currentQuota == 0) {
         document.getElementById(fieldId).disabled = true;
 
     } else {
@@ -380,7 +380,7 @@ function addProducts() {
     form.onsubmit = (e) => {
         e.preventDefault();
     }
-    var idArr = ["prodName", "Producttype", "unitPrice", "weight", "productionTime", "quantity", "threshold", "productImage"]
+    var idArr = ["prodName", "Producttype", "unitPrice", "weight", "quantity", "threshold", "productImage"]
     var isOk = true;
     for (let index = 0; index < idArr.length; index++) {
         console.log(idArr[index]);
@@ -409,8 +409,6 @@ function addProducts() {
                     document.getElementById("unitPriceerr").innerHTML = "Enter price";
                 } else if (idArr[index] == "weight") {
                     document.getElementById("weighterr").innerHTML = "Enter weight";
-                } else if (idArr[index] == "productionTime") {
-                    document.getElementById("productionTimeerr").innerHTML = "Enter production time";
                 } else if (idArr[index] == "quantity") {
                     document.getElementById("quantityerr").innerHTML = "Enter quantity";
                 } else if (idArr[index] == "threshold") {
@@ -424,8 +422,6 @@ function addProducts() {
                     document.getElementById("unitPriceerr").innerHTML = "";
                 } else if (idArr[index] == "weight") {
                     document.getElementById("weighterr").innerHTML = "";
-                } else if (idArr[index] == "productionTime") {
-                    document.getElementById("productionTimeerr").innerHTML = "";
                 } else if (idArr[index] == "quantity") {
                     document.getElementById("quantityerr").innerHTML = "";
                 } else if (idArr[index] == "threshold") {

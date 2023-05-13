@@ -822,7 +822,6 @@ class Body{
                                 <th class="tdLeft">Type</th>
                                 <th class="tdRight">Unit Price (Rs)</th>
                                 <th class="tdRight">Weight (KG)</th>
-                                <th class="tdRight">Production Time</th>
                                 <th class="tdRight">Last Updated</th>
                                 <th class="tdRight">Quantity</th>
                             </tr>
@@ -838,7 +837,6 @@ class Body{
                                                     <td class="tdLeft">'.$row['type'].'</td>
                                                     <td class="tdRight">'.number_format($row['unit_price'],2).'</td>
                                                     <td class="tdRight">'.$row['weight'].'</td>
-                                                    <td class="tdRight">'.$row['production_time']. '</td>
                                                     <td class="tdRight">'.$row['last_updated_date'].'</td>
                                                     <td class="tdRight">'.$row['quantity'].'</td>
                                                 </tr>';
@@ -887,11 +885,9 @@ class Body{
                                 <div id="weighterr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
                         </div>
                         <div class="product_reg_row">
-                            <input id="productionTime" type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30" > <br>
-                            <input id="quantity" type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"  > <br>
+                            <input id="quantity" type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins;width:65%"  > <br>
                         </div>
                         <div class="product_reg_row" style="margin-left:6%">
-                                <div id="productionTimeerr" style="width:32.5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
                                 <div id="quantityerr" style="width:32.5%;margin-left:5%;margin-right:0px;text-align:left;color:red;font-size:smaller"></div>
                         </div>
                         <div class="product_reg_row">
@@ -1534,8 +1530,7 @@ class Body{
                 <input type="text" class="registerProduct" name="Productname" placeholder="Enter new price" style="margin-bottom:3%;border:3px solid #d8ca30">
                 </div>
                 <div class="product_reg_row">
-                <input type="text" class="registerProduct" name="productiontime" placeholder="Enter production time" style="margin-bottom:3%;border:3px solid #d8ca30"> <br>
-                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins"> <br>
+                <input type="text" class="registerProduct" name="quantity" placeholder="Enter quantity" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins;width:65%"> <br>
                 </div>
                 <div class="product_reg_row">
                 <input type="text" class="registerProduct" name="threshold" placeholder="Minimum threshold" style="margin-bottom:3%;border:3px solid #d8ca30;font-family:poppins" required > <br>
