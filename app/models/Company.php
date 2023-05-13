@@ -64,6 +64,8 @@ class Company extends Model
                 array_push($info,['product_id'=>$row['product_id'], 'name'=>$row['name'], 'type'=>$row['type'], 'unit_price'=>$row['unit_price'],'weight'=>$row['weight'],'production_time'=>$row['production_time'],'last_updated_date'=>$row['last_updated_date'],'quantity'=>$row['quantity'],'cylinder_limit'=>$row['cylinder_limit'],'image'=>$row['image']]);
             }
             return $info;
+        }else{
+            return null;
         }
 
     }
