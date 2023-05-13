@@ -94,9 +94,9 @@
     align-items: center;
     justify-content: center;
 }
-.reviews .contents img{
-    /* width: 200px;
-    height: auto !important; */
+.reviews .contents .noreviews{
+    width: 200px;
+    height: auto !important;
 }
 .reviews h2{
     margin: 5px;

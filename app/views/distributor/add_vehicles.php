@@ -66,7 +66,7 @@ $user_id = $_SESSION['user_id'];
 
                 <div class="part1">
                     <label>Fuel Consumption (L/Km) </label>
-                    <input type="number" name = "consumption" min="0" placeholder="Fuel Consumption" required>
+                    <input type="number" name = "consumption" min="0" step="0.01" placeholder="Fuel Consumption" required>
                 </div>
 
                 <div>
