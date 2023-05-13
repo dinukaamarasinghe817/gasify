@@ -524,7 +524,7 @@ class Body{
                         </div>';
                         }
                     }else{
-                        echo '<img src="'.BASEURL.'/public/img/placeholders/noreviews.jpg">';
+                        echo '<img class="noreviews" src="'.BASEURL.'/public/img/placeholders/noreviews.jpg">';
                         echo '<h3>No recent reviews to show</h3>';
                         echo '<p class="gray">recent reviews will show up here. stay tuned!</p>';
                     }
