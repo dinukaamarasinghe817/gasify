@@ -24,7 +24,7 @@ class User extends Model
     }
     public function getnotifications($user_id){
         $this->update('notifications',array('state'=>'read'),"user_id = $user_id AND state = 'delivered'");
-        $data['notifications'] = $this->read('notifications', "user_id = '$user_id'",'date AND time DESC');
+        $data['notifications'] = $this->read('notifications', "user_id = '$user_id'",'date DESC,time DESC');
         return $data;
     }
     public function resetPassword($email){

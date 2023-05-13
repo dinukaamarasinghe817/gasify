@@ -662,9 +662,8 @@ class Customer extends Model{
         //query to get remaining quota for relevant customer
         $result2 = $this->Query("SELECT * FROM customer_quota WHERE company_id = '{$company_id}' AND customer_id = '{$customer_id}'");
         $row2 = mysqli_fetch_assoc($result2);
-        if($row2!= null){
-            $remaining_weight = $row2['remaining_amount'];
-        }
+        $remaining_weight = $row2['remaining_amount'];
+
         array_push($quota_details,['state'=>$quota_state,'monthly_limit'=>$monthly_limit,'remaining_weight'=>$remaining_weight]);
 
         return $quota_details;
@@ -830,7 +829,7 @@ class Customer extends Model{
             $min_distance = $row2['min_distance']; 
             $max_distance = $row2['max_distance'];
             $charge_per_kilo = $row2['charge_per_kg'];
-
+            $sum_of_weights = ceil($sum_of_weights);
             //check customer distance range
             if($distance>=$min_distance && $distance<=$max_distance){  
                 $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
