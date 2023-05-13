@@ -125,6 +125,10 @@ function phpArrtoJs($array){
     return $result;
 }
 
+function removeHyphen($string) {
+    return str_replace('-', '', $string);
+  }
+
 function notificationIcon($type){
     $source = '';
     if($type == 'Re-order Level Alert'){

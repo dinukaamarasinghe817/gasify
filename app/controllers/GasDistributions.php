@@ -20,12 +20,17 @@ class GasDistributions extends Controller {
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        if($error != null) {
-            $data['toast'] = $error;
+        switch($error){
+            case '1':
+                $data['toast'] = ['type' => 'success', 'message' => "Vehicle assigned successfully!"];
+                break;
         }
-        if($success != null) {
-            $data['success'] = $success;
-        }
+        // if($error != null) {
+        //     $data['toast'] = ['type' => 'error', 'message' => $error];
+        // }
+        // if($success != null) {
+        //     $data['success'] = $success;
+        // }
 
         $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
         $this->view('distributor/pending_distributions', $data);

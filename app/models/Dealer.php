@@ -483,7 +483,7 @@ class Dealer extends Model
                 
             }else{
                 // order is pending due to low stock but place the reservation
-                return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,'Pending',$place_date,$place_time);
+                return $this->addtoReservation($customer_id,$dealer_id,$products,$payment_method,0,$place_date,$place_time);
                 // should handle the reduction of stock when the dealer gets a new stock
                 // consider customer orders on fcfs
             }

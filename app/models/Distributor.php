@@ -355,7 +355,7 @@ class Distributor extends Model
         $pending = array();
 
         // get details - in pending stat, date ascending order
-        $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time from purchase_order where distributor_id = '{$user_id}' and po_state='pending' order by (place_date) ASC; ");
+        $query1 = $this->Query("SELECT po_id, dealer_id, place_date, place_time, vehicle_allocated from purchase_order where distributor_id = '{$user_id}' and po_state='pending' order by (place_date) ASC; ");
         if(mysqli_num_rows($query1)>0) {
             while($row1 = mysqli_fetch_assoc($query1)) {
                 $order_id = $row1['po_id'];
@@ -791,31 +791,36 @@ class Distributor extends Model
     public function eligibleVechicles($po_id){
         // init empty array to have eligible vehicles
         $eligible_vehicles = [];
+        $final_eligibility = [];
         $query1 = $this->read('distributor_vehicle',"distributor_id = ".$_SESSION['user_id']);
         if(mysqli_num_rows($query1) > 0){
             while($row1 = mysqli_fetch_assoc($query1)){
                 // intializing the session for the vehicle
-                $_SESSION['eligibility'.$row1['vehicle_no']] = [];
+                // session_start();
+                $flag = true; // to dissmiss the vehicle when even the po included product can't fit in
+                $_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])] = [];
                 $query2 = $this->read('distributor_vehicle_capacity',"distributor_id = ".$_SESSION['user_id']." AND vehicle_no = '".$row1['vehicle_no']."'");
                 if(mysqli_num_rows($query2) > 0){
                     // push the remainging eligibility into the session (check this not sure)
                     while($row2 = mysqli_fetch_assoc($query2)){
-                        $_SESSION['eligibility'.$row1['vehicle_no']][$row2['product_id']] = $row2['remain_eligibility'];
+                        $_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])][$row2['product_id']] = $row2['remain_eligibility'];
                     }
+                    // var_dump($_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])]);
 
                     // take product ids of po
                     $query3 = $this->read('purchase_include',"po_id = $po_id");
                     if(mysqli_num_rows($query3) > 0){
                         while($row3 = mysqli_fetch_assoc($query3)){
                             $product_considering = $row3['product_id'];
-                            $_SESSION['eligibility'.$row1['vehicle_no']][$product_considering] -= $row3['quantity'];
-                            if($_SESSION['eligibility'.$row1['vehicle_no']][$product_considering] < 0){
+                            $_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])][$product_considering] -= $row3['quantity'];
+                            if($_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])][$product_considering] < 0){
                                 // must go to the next vehicle
                                 // destroy the session of the current vehicle
-                                unset($_SESSION['eligibility'.$row1['vehicle_no']]);
+                                unset($_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])]);
+                                $flag = false;
                                 break;
                             }else{
-                                $remaining = $_SESSION['eligibility'.$row1['vehicle_no']][$product_considering];
+                                $remaining = $_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])][$product_considering];
                                 // update the session of all products
                                 $query4 = $this->read('distributor_vehicle_capacity',"distributor_id = ".$_SESSION['user_id']." AND vehicle_no = '".$row1['vehicle_no']."'");
                                 while($row4 = mysqli_fetch_assoc($query4)){
@@ -825,35 +830,46 @@ class Distributor extends Model
                                         $row5 = mysqli_fetch_assoc($this->read('distributor_vehicle_capacity',"product_id = $product_considering"));
                                         $total_eligibility_considering = $row5['capacity'];
                                         // set the new eligibility of affected products
-                                        $_SESSION['eligibility'.$row1['vehicle_no']][$product_affected] = floor($total_eligibility/$total_eligibility_considering)*$remaining;
+                                        $_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])][$product_affected] = floor(($total_eligibility/$total_eligibility_considering)*$remaining);
                                     }
                                 }
                             }
                         }
 
                         // init final remain products array
-                        $final_remain_products = [];
-                        foreach($_SESSION['eligibility'.$row1['vehicle_no']] as $key => $value){
-                            if($value >= 0){
-                                // put into remain products
-                                $final_remain_products[$key] = $value;
-                                // put that vid into a set
-                                $cost = getCostforVehicle($po_id,$row1['vehicle_no']);
-                                $eligible_vehicles[$row1['vehicle_no']] = $cost;
-                            }else{
-                                // must go to the next vehicle
-                                // destroy the session of the current vehicle
-                                unset($_SESSION['eligibility'.$row1['vehicle_no']]);
-                                break;
+                        if($flag){
+                            $final_remain_products = [];
+                            // var_dump($_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])]);
+                            foreach($_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])] as $key => $value){
+                                if($value >= 0){
+                                    // put into remain products
+                                    $final_remain_products[$key] = $value;
+                                    // put that vid into a set
+                                    $cost = $this->getCostforVehicle($po_id,$row1['vehicle_no']);
+                                    $eligible_vehicles[$row1['vehicle_no']] = $cost;
+                                }else{
+                                    // must go to the next vehicle
+                                    // destroy the session of the current vehicle
+                                    unset($_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])]);
+                                    // remove that vehicle from eligible vehicle list
+                                    unset($eligible_vehicles[$row1['vehicle_no']]);
+                                    // and destroy final remaining products array for that vehicle
+                                    $final_remain_products = [];
+                                    break;
+                                }
+                            }
+
+                            if(count($final_remain_products) > 0){
+                                $final_eligibility[$row1['vehicle_no']] = $final_remain_products;
+                                // make sure to unset after used
                             }
                         }
-
-                        if(count($final_remain_products) > 0){
-                            $final_eligibility[$row1['vehicle_no']] = $final_remain_products;
-                            // make sure to unset after used
-                        }
                     }
+
                 }
+
+                // unset the session for the discussed vehicle
+                unset($_SESSION['eligibility'.removeHyphen($row1['vehicle_no'])]);
             }
         }else{
             // have to show that he has no vehicles to distribute
@@ -867,26 +883,26 @@ class Distributor extends Model
     public function getCostforVehicle($po_id,$vehicle_no){
         //take distributor id and address
         $user_id = $_SESSION['user_id'];
-        $row = $this->read('distributor',"distributor_id = $user_id");
+        $row = mysqli_fetch_assoc($this->read('distributor',"distributor_id = $user_id"));
         $distributor_address = $row['street'].', '.$row['city'];
         // take dealer id and address
         $row = mysqli_fetch_assoc($this->read('purchase_order',"po_id = $po_id"));
         $dealer_id = $row['dealer_id'];
-        $row = $this->read('dealer',"dealer_id = $dealer_id");
+        $row = mysqli_fetch_assoc($this->read('dealer',"dealer_id = $dealer_id"));
         $dealer_address = $row['street'].', '.$row['city'];
         // calculate distance between addresses
         $distance = getDistance($dealer_address,$distributor_address);
         // calculate total weight of the po
         $total_weight = 0;
-        $query2 = $this->read('purchase_order',"po_id = $po_id");
+        $query2 = $this->read('purchase_include',"po_id = $po_id");
         while($row2 = mysqli_fetch_assoc($query2)){
             $row3 = mysqli_fetch_assoc($this->read('product',"product_id = ".$row2['product_id']));
             $total_weight += $row3['weight']*$row2['quantity'];
         }
         // get the cost per km
-        $row = $this->read('distributor_vehicle',"distributor_id = $user_id AND vehicle_no = '$vehicle_no'");
+        $row = mysqli_fetch_assoc($this->read('distributor_vehicle',"distributor_id = $user_id AND vehicle_no = '$vehicle_no'"));
         // get the total cost to distribute using given vehicle
-        $cost = $row['cost_per_km']*$distance*$total_weight;
+        $cost = $row['fuel_consumption']*$distance*$total_weight;
         return $cost;
     }
 
@@ -896,26 +912,34 @@ class Distributor extends Model
         $_SESSION['nominated_vehicles'] = $nominated_vehicles;
         $vehicles = $nominated_vehicles['eligible_vehicles'];
 
-        $vehicle_info = array();
+        $vehiclesarr = array();
+
         foreach ($vehicles as $vehicl_no => $cost){
             // get basic information of the vehicle
             $row = mysqli_fetch_assoc($this->read('distributor_vehicle',"vehicle_no = '$vehicl_no'"));
-            array_push($vehicle_info,['vehicle_no' => $row['vehicle_no'],'type' => $row['type'],'fuel_consumption'=>$row['fuel_consumption'],'cost'=>$cost]);
+            $vehicle_info = ['vehicle_no' => $row['vehicle_no'],'type' => $row['type'],'fuel_consumption'=>$row['fuel_consumption'],'cost'=>number_format($cost,2)];
+            array_push($vehiclesarr,['vehicleinfo' => $vehicle_info, 'capacities' => array()]);
         }
 
-        return ['vehicle_info' => $vehicle_info, 'capacity' => array()];
+        return $vehiclesarr;
     }
 
-    public function selectedVehicle($vehicle_no){
+    public function selectedVehicle($po_id,$vehicle_no){
         $nominated_vehicles = $_SESSION['nominated_vehicles'];
         $vehicles = $nominated_vehicles['eligible_vehicles'];
         $final_remain_eligibility = $nominated_vehicles['final_eligibility'];
-        $final_eligibility_selected = $final_remain_eligibility[$vehicl_no];
+        $final_eligibility_selected = $final_remain_eligibility[$vehicle_no];
 
         // update the vehicle remaining capacity
         foreach($final_eligibility_selected as $key => $value){
-            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$value],"vehicle_id = '$vehicle_no' AND product_id = $key");
+            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$value],"vehicle_no = '$vehicle_no' AND product_id = $key");
         }
+
+        // mark the po as vehicle allocated
+        $this->update('purchase_order',['vehicle_allocated'=>1],"po_id = $po_id");
+
+        // destroy the session of nominates vehicles
+        unset($_SESSION['nominated_vehicles']);
     }
 
     // reports - get totals of each product from dealer received orders(sell to dealers)

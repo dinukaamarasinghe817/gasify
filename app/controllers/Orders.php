@@ -695,7 +695,7 @@ class Orders extends Controller{
         $this->AuthorizeUser('distributor');
 
         $user_id = $_SESSION['user_id'];
-        $data['navigation'] = 'orders';
+        $data['navigation'] = 'distributions';
 
         $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
         $row = mysqli_fetch_assoc($distributor_details);
@@ -704,14 +704,15 @@ class Orders extends Controller{
         // previouse method
         // $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
         $data['suitablevehiclelist'] = $this->model("Distributor")->getOnlyEligibleVehicles($po_id);
-
+        // var_dump($data['suitablevehiclelist']);
+        $data['po_id'] = $po_id;
         $this->view('distributor/suitableVehicleList', $data);
     }
 
-    public function selectedVehicle($vehicle_id){
-        $this->model('Distributor')->selectedVehicle($vehicle_id);
+    public function selectedVehicle($po_id,$vehicle_id){
+        $this->model('Distributor')->selectedVehicle($po_id,$vehicle_id);
         // navigate user to pending distributions
-        header('Location: '.BASEURL.'/gasdistributions/pending_distributions');
+        header('Location: '.BASEURL.'/gasdistributions/pending_distributions/1');
     }
 
 
