@@ -14,7 +14,7 @@ $pdf->Cell(0,5,'Purchase Order Details',0,1,'C');
 $pdf->Ln(20);
 
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(30,5,'Stock Request ID',0,0,'l');
+$pdf->Cell(30,5,'Request ID',0,0,'l');
 $pdf->SetFont('Times', '', 12);
 $pdf->Cell(90,5,": {$data['stock_req_id']}",0,0,'l');
 
@@ -36,26 +36,26 @@ $pdf->Cell(0,5,": {$data['time']}",0,1,'l');
 $pdf->Ln(10);
 
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(33,5,'Item Code',0,0,'L');
-$pdf->Cell(33,5,'Description',0,0,'L');
-$pdf->Cell(33,5,'Weight',0,0,'L');
-$pdf->Cell(33,5,'Quantity',0,0,'R');
-$pdf->Cell(33,5,'Unit Price (Rs)',0,0,'R');
-$pdf->Cell(33,5,'SubTotal (Rs)',0,0,'R');
+$pdf->Cell(27,5,'Item Code',0,0,'C');
+$pdf->Cell(27,5,'Description',0,0,'C');
+$pdf->Cell(27,5,'Weight(Kg)',0,0,'C');
+$pdf->Cell(27,5,'Quantity',0,0,'C');
+$pdf->Cell(27,5,'Unit Price(Rs)',0,0,'C');
+$pdf->Cell(27,5,'SubTotal(Rs)',0,0,'C');
 $pdf->Ln();
 $pdf->Ln();
 
 $products = $data['products'];
 $pdf->SetFont('Times', '', 12);
 foreach($products as $product){
-    $pdf->Cell(33,5,"{$product['product_id']}",0,0,'L');
-    $pdf->Cell(33,5,"{$product['product_name']}",0,0,'L');
-    $pdf->Cell(33,5,"{$product['weight']}",0,0,'L');
-    $pdf->Cell(33,5,"{$product['quantity']}",0,0,'R');
+    $pdf->Cell(27,5,"{$product['product_id']}",0,0,'C');
+    $pdf->Cell(27,5,"{$product['product_name']}",0,0,'L');
+    $pdf->Cell(27,5,"{$product['weight']}",0,0,'C');
+    $pdf->Cell(27,5,"{$product['quantity']}",0,0,'C');
     $unit_price = number_format($product['unit_price']).'.00';
-    $pdf->Cell(33,5,"{$unit_price}",0,0,'R');
+    $pdf->Cell(27,5,"{$unit_price}",0,0,'R');
     $subtotal = number_format($product['subtotal']).'.00';
-    $pdf->Cell(33,5,"{$subtotal}",0,0,'R');
+    $pdf->Cell(27,5,"{$subtotal}",0,0,'R');
     $pdf->Ln();
 }
 
@@ -65,9 +65,13 @@ $pdf->Line($x, $y, $x+165, $y);
 
 $pdf->Ln();
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(132,5,'Total Amount (Rs)',0,0,'R');
+$pdf->Cell(27,5,'Total Amount (Rs)',0,0,'L');
+$pdf->Cell(27,5,'',0,0,'C');
+$pdf->Cell(27,5,'',0,0,'C');
+$pdf->Cell(27,5,'',0,0,'C');
+$pdf->Cell(27,5,'',0,0,'C');
 $total = number_format($data['total']).'.00';
-$pdf->Cell(33,5,"{$total}",0,0,'R');
+$pdf->Cell(27,5,"{$total}",0,0,'R');
 $pdf->Ln();
 
 $x = $pdf->GetX();
