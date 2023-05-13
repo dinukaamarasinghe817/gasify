@@ -662,8 +662,9 @@ class Customer extends Model{
         //query to get remaining quota for relevant customer
         $result2 = $this->Query("SELECT * FROM customer_quota WHERE company_id = '{$company_id}' AND customer_id = '{$customer_id}'");
         $row2 = mysqli_fetch_assoc($result2);
-        $remaining_weight = $row2['remaining_amount'];
-
+        if($row2!= null){
+            $remaining_weight = $row2['remaining_amount'];
+        }
         array_push($quota_details,['state'=>$quota_state,'monthly_limit'=>$monthly_limit,'remaining_weight'=>$remaining_weight]);
 
         return $quota_details;
