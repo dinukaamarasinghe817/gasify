@@ -71,8 +71,15 @@ class Orders extends Controller{
     }
 
     //customer selected one reservation details from all past reservations
-    function customer_myreservation($order_id){
+    function customer_myreservation($order_id,$error=null){
         $this->AuthorizeUser('customer');
+
+        //if there is error display the error message
+        switch($error){
+            case "1":
+                $data['toast'] = ['type' => 'success', 'message' => "You've successfully uploaded your payslip."];
+                break;
+        }
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
@@ -537,6 +544,82 @@ class Orders extends Controller{
             $toastnum = '5';
         }
         header('LOCATION: '.BASEURL.'/dashboard/customer/$toastnum');
+    }
+
+
+
+
+     //display bank slip uploader for rejected payslips
+     function reject_bank_slip_upload($order_id,$dealer_id,$error=null){
+        $this->AuthorizeUser('customer');
+
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'placereservation';
+
+        $data['order_id'] = $order_id;
+        $data['dealer_id'] = $dealer_id;
+        $data['bank_details'] = $this->model('Customer')->getDealerBankDetails_rejectpayment($dealer_id);
+        $data['confirmation'] = ''; //to display popup confirmation
+        if($error != null){
+            $data['toast'] = ['type'=>'error', 'message'=>$error];
+        }
+        
+        $this->view('customer/place_reservation/rejected_bank_slip_upload',$data);
+        
+    }
+
+    function get_rejected_bank_slip($order_id,$dealer_id){
+        $this->AuthorizeUser('customer');
+
+        $customer_id = $_SESSION['user_id'];
+        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
+        $row1 = mysqli_fetch_assoc($customer_details);
+        $customer_type = $row1['type'];
+
+        $data['navigation'] = 'placereservation';
+        
+        if(isset($_POST['submit_btn'])){
+           $file_name = $_FILES['slip_img']['name'];
+            $file_type = $_FILES['slip_img']['type'];
+            $file_size = $_FILES['slip_img']['size'];
+            $temp_name = $_FILES['slip_img']['tmp_name'];
+
+            $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
+
+            $slip_image = array();
+            array_push($slip_image,['file_name' => $file_name, 'temp_name' =>$temp_name]);
+            $new_pay_slip = ['file_name' => $file_name, 'temp_name' =>$temp_name];
+
+            // if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
+            //     $image_name = $_FILES['image']['name'];
+            //     $tmp_name = $_FILES['image']['tmp_name'];
+            // }
+            // move_uploaded_file($temp_name,$upload_to . $file_name);
+
+
+            if($file_size<=0){
+                $error = "Please upload a bank slip image!";
+                $this -> reject_bank_slip_upload($order_id,$dealer_id,$error);
+            }
+            else{
+                // $this->model('Customer')->place_reservation($customer_type);  ///
+                // $this->model('Customer')->check_quota_state($customer_type);  ///
+                // $this->select_collecting_method();
+                //successfully payed
+                // $dealer_id = $_SESSION['dealer_id'];
+                // $products = $_SESSION['order_products'];
+                // $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Bank Deposit');
+                // $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
+                // $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
+                // $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
+                // $data['confirmation'] = '';
+                // $this->view('customer/place_reservation/collecting_method',$data);
+                // header('LOCATION:'.BASEURL.'/Orders/select_collecting_method');
+                $this->model('Customer')->update_payment_slip($order_id,$file_name);
+                $this->customer_myreservation($order_id,1);
+            }
+            
+        } 
     }
 
 

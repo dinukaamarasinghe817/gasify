@@ -162,7 +162,7 @@ class Customer extends Model{
 
             //query for get details about selected reservation
             $result1 = $this->Query("SELECT r.order_id,r.order_state,r.place_date,r.place_time,r.collecting_method, r.dealer_id,r.delivery_id,
-            r.cancel_date,r.cancel_time,r.payment_method,r.deliver_city,r.deliver_street,r.deliver_charge,r.deliver_date,r.deliver_time,r.bank,r.acc_no,r.refund_date,r.refund_time,r.refund_verification,d.name as dealer_name,d.city as dealer_city,d.street as dealer_street
+            r.cancel_date,r.cancel_time,r.payment_method,r.payment_verification,r.deliver_city,r.deliver_street,r.deliver_charge,r.deliver_date,r.deliver_time,r.bank,r.acc_no,r.refund_date,r.refund_time,r.refund_verification,d.name as dealer_name,d.city as dealer_city,d.street as dealer_street
             FROM reservation r
             INNER JOIN dealer d ON r.dealer_id = d.dealer_id
             WHERE r.customer_id = '{$customer_id}' and r.order_id = '{$order_id}'");
@@ -295,8 +295,10 @@ class Customer extends Model{
             'order_id='.$order_id);
 
             //check and update the quota if it is active and canceled reservation is placed during this month
-            $result1 = $this->Query("SELECT place_date FROM reservation WHERE order_id = '{$order_id}'");
+            $result1 = $this->Query("SELECT place_date,stock_verification,dealer_id FROM reservation WHERE order_id = '{$order_id}'");
             $row1  = mysqli_fetch_assoc($result1);
+            $dealer_id = $row1['dealer_id'];
+            $stock_verification = $row1['stock_verification'];  //stock_verification for increase dealer stock
             $place_date = $row1['place_date'];
             $current_month = date('m');    //current month and year
             $current_year = date('Y'); 
@@ -308,7 +310,6 @@ class Customer extends Model{
             //if the reservation is placed during the current month
             if (date('m-Y', strtotime($place_date)) === $current_month . '-' . $current_year) {
                 $result2 = $this->Query("SELECT r.quantity,r.product_id,p.company_id,p.weight FROM reservation_include r INNER JOIN product p ON p.product_id = r.product_id WHERE r.order_id = '{$order_id}' AND p.type = 'cylinder'");
-     
                 $total_weight = 0;
                 while( $row2 = mysqli_fetch_assoc($result2)){
                     $company_id = $row2['company_id'];
@@ -316,9 +317,10 @@ class Customer extends Model{
                     $item_weight = $row2['weight'];
                     $total_weight = $total_weight + $item_weight*$qty;
 
-                    $result4 = $this->Query("SELECT state FROM quota WHERE company_id = '{$company_id}' AND customer_type='{$customer_type}'");
+                    $result4 = $this->Query("SELECT state,monthly_limit FROM quota WHERE company_id = '{$company_id}' AND customer_type='{$customer_type}'");
                     $row4 = mysqli_fetch_assoc($result4);
                     $quota_state = $row4['state'];
+                    $monthly_limit = $row4['monthly_limit'];
 
                         //if quota is active then increase remaining amount according to reservation cylinder weight
                         if($quota_state == "ON"){
@@ -326,12 +328,31 @@ class Customer extends Model{
                         $row5 = mysqli_fetch_assoc($result5);
                         $remaining_amount = $row5['remaining_amount'];
                         $new_remaining_amount =  $remaining_amount + $total_weight;
+                        if($new_remaining_amount <= $monthly_limit){
+                            $new_remaining_amount = $new_remaining_amount;
+                        }else{
+                            $new_remaining_amount = $monthly_limit;
+                        }
 
                         $this -> update('customer_quota',['remaining_amount'=>$new_remaining_amount],'customer_id=' .$customer_id , 'company_id=' .$company_id); 
                     }
                 }
                         
             }
+            //if dealer stock already decreased then have to increase stock amount
+           if($stock_verification == 1){
+                $result6 = $this->Query("SELECT quantity,product_id FROM reservation_include WHERE order_id = '{$order_id}'");
+                while( $row6 = mysqli_fetch_assoc($result6)){
+                    $product_id = $row6['product_id'];
+                    $order_quantity = intval($row6['quantity']);  //quantity of relevant product
+                   
+                    //update current stock quantity of relevant product
+                    $sql = "UPDATE dealer_keep SET quantity = quantity + $order_quantity WHERE dealer_id = $dealer_id AND product_id = $product_id";
+                    $this->Query($sql);
+                     
+
+                }
+           }
         }
     
 
@@ -701,6 +722,17 @@ class Customer extends Model{
         $result = $this->Query("SELECT d.bank,d.branch,d.account_no,CONCAT(u.first_name ,'  ' ,u.last_name) as full_name FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE dealer_id = '{$dealer_id}'");
         return $result;
 
+    }
+
+     //display dealer bank details for bank deposit payments slip upload page
+     public function getDealerBankDetails_rejectpayment($dealer_id){
+        $result = $this->Query("SELECT d.bank,d.branch,d.account_no,CONCAT(u.first_name ,'  ' ,u.last_name) as full_name FROM dealer d INNER JOIN users u ON d.dealer_id = u.user_id WHERE dealer_id = '{$dealer_id}'");
+        return $result;
+
+    }
+
+    public function update_payment_slip($order_id,$payslip){
+        $this->update('reservation',['pay_slip'=>$payslip,'payment_verification'=>"pending"],'order_id= '.$order_id.'');
     }
 
 
