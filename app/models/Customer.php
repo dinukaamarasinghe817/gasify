@@ -500,7 +500,16 @@ class Customer extends Model{
 
                     $query5 = $this->read('customer_quota',"customer_id = $customer_id AND company_id = $company_id");
                     $row5 = mysqli_fetch_assoc($query5);
-                    $remaining_quota = $row5['remaining_amount'];
+                    
+                    //check if date is 1st of any month to renew the quota
+                    date_default_timezone_set("Asia/Colombo");
+                    if (date('d') === '01' && date('H:i') === '00:00'){
+                        $remaining_quota= $total_quota;
+                        $this->update('customer_quota',['remaining_amount'=>$remaining_quota],'customer_id= '.$customer_id.' AND company_id= '.$company_id);
+
+                    }else{
+                        $remaining_quota = $row5['remaining_amount'];
+                    }
 
                     $allproducts = array();
                 
