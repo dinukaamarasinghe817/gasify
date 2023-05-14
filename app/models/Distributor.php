@@ -433,6 +433,7 @@ class Distributor extends Model
                 $data['toast'] = ['type'=>"error", 'message'=>'Sorry, not enough gas stock'];
             }
         }
+        $this->resetAfterDistribute($distribution_id);
         return $data;
     }
 
