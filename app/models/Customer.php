@@ -813,7 +813,7 @@ class Customer extends Model{
 
         $delivery_address = $delivery_street.', '.$delivery_city;
         $distance = getDistance($dealer_address,$delivery_address);  //take distance between customer and dealer address using google maps
-       
+        $delivery_charge = 0;
 
         $order_products = $_SESSION['order_products'];
 
