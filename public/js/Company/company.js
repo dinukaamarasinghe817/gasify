@@ -80,18 +80,6 @@ function resetQuota(div) {
         xmlhttp.open("POST", "../Compny/resetQuota");
         xmlhttp.send(formData);
     }
-
-    /*var customerName = div.getAttribute("key");
-    var formData = new FormData();
-    formData.append("customer", customerName);
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-        }
-    };
-    xmlhttp.open("POST", "../Compny/resetQuota");
-    xmlhttp.send(formData);*/
 }
 function removeStyles(div) {
     console.log("heas");
