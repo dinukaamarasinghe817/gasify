@@ -9,12 +9,19 @@ class Order{
             $stock = $tuple['stock'];
         }
         $totalamount = $tuple['total_amount'];
+        if(strtoupper($active1) == 'CANCELED'){
+            $refundableamount = get_final_refund_amount($totalamount);
+        }
         echo '<li>
                 <div class="order">
                     <div class="head">
-                        <div class="details">
-                            <div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Total amount : </strong>Rs.'.$totalamount.'</div>
-                            <div><strong>Date : </strong>'.$order['place_date'].'<br><strong>Time : </strong>'.$order['place_time'].'</div>
+                        <div class="details">';
+                            if(strtoupper($active1) == 'CANCELED'){
+                                echo '<div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Refund amount : </strong>Rs.'.number_format($refundableamount,2).'</div>';
+                            }else{
+                                echo '<div><strong>Order ID : </strong>'.$order['order_id'].'<br><strong>Total amount : </strong>Rs.'.number_format($totalamount,2).'</div>';
+                            }
+                            echo '<div><strong>Date : </strong>'.$order['place_date'].'<br><strong>Time : </strong>'.$order['place_time'].'</div>
                         </div>';
                         if($active1 == 'pending' && !($payment == 'verified' && $stock == 'available')){
                             echo '<button onclick="orderverification(\''.$payment.'\',\''.$stock.'\'); return false;" class="btn gray">Info</button>';
@@ -42,11 +49,15 @@ class Order{
                             </svg>
                     </div>
                     <div class="info">
-                        <div><p><strong>Customer ID : </strong>'.$order['customer_id'].'</p><p><strong>Customer Name : </strong>'.$order['first_name'].' '.$order['last_name'].'</p></div><br>';
+                        <div><p><strong>Customer ID : </strong>'.$order['customer_id'].'</p><p><strong>Customer Name : </strong>'.$order['first_name'].' '.$order['last_name'].'</p></div>';
+                        if(strtoupper($active1) == 'CANCELED'){
+                            echo '<div><p><strong>Customer\'s Bank : </strong>'.$order['customer_bank'].'</p><p><strong>Bank Branch : </strong>'.$order['customer_branch'].'</p></div>
+                        <div><p><strong>Account No : </strong>'.$order['customer_account_no'].'</p></div><br>';
+                        }
                         if($active2 != 'delivery' && ($active1 == 'dispatched' || $active1 == 'delivered' || $active1 == 'completed')){
                             echo '<div><p><strong>Delivery ID : </strong>'.$order['delivery_id'].'</p><p><strong>Delivery Name : </strong>'.$order['delivery_first_name'].' '.$order['delivery_last_name'].'</p></div><br>';
                         }
-                    echo '<table class="styled-table">
+                    echo '<br><table class="styled-table">
                             <thead>
                             <tr>
                                 <th>Product ID</th>
@@ -61,9 +72,9 @@ class Order{
                                 echo '<tr>
                                     <td>'.$product['product_id'].'</td>
                                     <td>'.$product['name'].'</td>
-                                    <td>Rs.'.$product['unit_price'].'</td>
-                                    <td>'.$product['quantity'].'</td>
-                                    <td>Rs.'.$product['unit_price']*$product['quantity'].'</td>
+                                    <td>Rs.'.number_format($product['unit_price'],2).'</td>
+                                    <td>'.number_format($product['quantity']).'</td>
+                                    <td>Rs.'.number_format($product['unit_price']*$product['quantity'],2).'</td>
                                 </tr>';
                             }
                     echo   '<tr>
@@ -71,7 +82,7 @@ class Order{
                                 <td></td>
                                 <td></td>
                                 <td><strong>Total</strong></td>
-                                <td><strong>Rs.'.$totalamount.'</strong></td>
+                                <td><strong>Rs.'.number_format($totalamount,2).'</strong></td>
                             </tr>
                             </tbody></table>';
 

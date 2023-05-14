@@ -139,6 +139,10 @@ function notificationIcon($type){
     return '<img src="'.BASEURL.'/public/img/icons/'.$source.'" alt="">';
 }
 
+function get_final_refund_amount($total_amount){
+    return $total_amount*80/100;
+}
+
 // for electricity bill number verification
 require_once('../app/library/selenium/vendor/autoload.php');
 use Facebook\WebDriver\Firefox\FirefoxOptions;
@@ -257,9 +261,9 @@ function userRole(){
 
 function deleteFile($file_name,$type){
     $primary_path = BASEURL.'/public/img/'.$type.'/'.$file_name;
-    if((strpos($file_name, 'default') === false) && file_exists($primary)){
-        unlink($file_path);
-    }
+    // if((strpos($file_name, 'default') === false) && file_exists($primary)){
+    //     unlink($file_path);
+    // }
 }
 
 // Encrypt the Stripe key
