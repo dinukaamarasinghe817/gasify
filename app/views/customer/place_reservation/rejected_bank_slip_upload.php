@@ -34,6 +34,8 @@ $sidebar = new Navigation('customer',$data['navigation']);
         ?>
         
         <div class="bank_details">
+            <!-- rejected payslip uploader -->
+            <!-- dealer details -->
                 <?php
                     echo "<span><strong>Account Holder's Name :</strong> $acc_holder_name</span>
                           <span><strong>Dealer's Bank Name :</strong> $bank_name</span>
@@ -41,7 +43,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                           <span><strong>Dealer's Bank Account No :</strong> $acc_no</span>";
                 ?>
                 </div>
-
+            <!-- image uploader -->
                 <div class="upload_box">
                     <div class="box_area">
                         <div class="image">

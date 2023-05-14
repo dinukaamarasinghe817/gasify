@@ -29,13 +29,14 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
             $products = $data['products'];
 
+            //check if previous selected products are available(in the session)
             if(isset($_SESSION['order_products'])){
                 $old_selected_products = $_SESSION['order_products'];
                 
                     echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
                     
                     //check if there are any refill cylinder products available in company 
-                    $r_cylinder_count = 0;
+                        $r_cylinder_count = 0;
                         foreach($products as $product){
                             if($product['type'] == 'cylinder'){
                                 $r_cylinder_count = $r_cylinder_count + 1;
@@ -50,7 +51,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             }
                         }
                         $total_amount = 0;
-                    //if there are refill cylinder products available in company
+                        //if there are refill cylinder products available in company
                         if($r_cylinder_count > 0){
                             echo '
                             <div class="gas_cylinder">
@@ -58,10 +59,79 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     <h4>Re-Fill Cylinders</h4>
                                 </div>
                                 <div class="product_list">';
-
+                            //check cylinders are available in the session
                             foreach($products as $product){
                                 if($product['type']=="cylinder"){
-                                    $flag = false;
+                                    $flag = false;  //flag for identify that product is available in session or not(default not available in session)
+
+                                    foreach($old_selected_products as $old_selected_product){
+                                        //if product p_id is in the old_selected_products array(session) then that product in session 
+                                        if($old_selected_product['product_id'] == $product['p_id']){
+                                            $flag = true;
+                                            $old_product_id = $old_selected_product['product_id'];
+                                            $old_unit_price = $old_selected_product['unit_price'];
+                                            $old_qty = $old_selected_product['qty'];
+                                            $old_subtotal= $old_qty*$old_unit_price;
+                                            $total_amount += $old_subtotal;
+                                        }
+                                    }
+
+                                    //display this part for any product which is in the session
+                                    if($flag){ 
+                                        echo '
+                                            <div class="product_card">
+                                                <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+                                                <div class="product_details">
+                                                    <div class="brand_name">'.$product['c_name'].'</div>
+                                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+                                                    <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+                                                </div>
+                                                <div class="increment_box">
+                                                    <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                                    <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
+                                                    <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+                                                </div>
+                                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. '.number_format($old_subtotal,2).' </h4></div>
+                                            </div>
+                                        ';
+                                    }else{
+                                        echo '
+                                            <div class="product_card">
+                                                <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+                                                <div class="product_details">
+                                                    <div class="brand_name">'.$product['c_name'].'</div>
+                                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+                                                    <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+                                                </div>
+                                                <div class="increment_box">
+                                                    <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                                    <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
+                                                    <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+                                                </div>
+                                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
+                                            </div>
+                                        ';
+                                    }
+                                }
+                                
+                                
+                            }
+
+                            echo '</div>';
+
+                        }
+
+                        //if there are accessory products available in company
+                        if($accessory_count > 0){
+                            echo '<div class="accessories">
+                            <div class="subtitle">
+                                <h4>Accessories</h4>
+                            </div>
+                            <div class="product_list">';
+                            //check accessories are available in the session
+                            foreach($products as $product){
+                                if($product['type']=="accessory"){
+                                    $flag = false; //flag for identify that product is available in session or not(default not available in session)
 
                                     foreach($old_selected_products as $old_selected_product){
                                         if($old_selected_product['product_id'] == $product['p_id']){
@@ -75,120 +145,48 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                     }
 
                                     if($flag){
-                                        
-                                        // 
                                         echo '
-                                                    <div class="product_card">
-                                                        <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                                        <div class="product_details">
-                                                            <div class="brand_name">'.$product['c_name'].'</div>
-                                                            <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                                            <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                                        </div>
-                                                        <div class="increment_box">
-                                                            <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                                            <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
-                                                            <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                                        </div>
-                                                        <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. '.number_format($old_subtotal,2).' </h4></div>
-                                                    </div>
-                                                ';
+                                            <div class="product_card">
+                                                <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+                                                <div class="product_details">
+                                                    <div class="brand_name">'.$product['c_name'].'</div>
+                                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+                                                    <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+                                                </div>
+                                                <div class="increment_box">
+                                                    <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                                    <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
+                                                    <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+                                                </div>
+                                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'">Rs. '.number_format($old_subtotal,2).'</h4></div>
+                                            </div>
+                                        ';
                                     }else{
                                         echo '
-                                                    <div class="product_card">
-                                                        <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                                        <div class="product_details">
-                                                            <div class="brand_name">'.$product['c_name'].'</div>
-                                                            <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                                            <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                                        </div>
-                                                        <div class="increment_box">
-                                                            <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                                            <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
-                                                            <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                                        </div>
-                                                        <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
-                                                    </div>
-                                                ';
+                                            <div class="product_card">
+                                                <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+                                                <div class="product_details">
+                                                    <div class="brand_name">'.$product['c_name'].'</div>
+                                                    <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+                                                    <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
+                                                </div>
+                                                <div class="increment_box">
+                                                    <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                                    <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
+                                                    <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+                                                </div>
+                                                <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
+                                            </div>
+                                        ';
                                     }
                                 }
-                                
-                                
-                            }
-
-                            echo '</div>';
-
-                        }
-
-                         //if there are accessory products available in company
-                    if($accessory_count > 0){
-                        echo '<div class="accessories">
-                        <div class="subtitle">
-                            <h4>Accessories</h4>
-                        </div>
-                        <div class="product_list">';
+                            } 
+                            echo '</div>
+                            </div>'; 
                     
-                        foreach($products as $product){
-                            if($product['type']=="accessory"){
-                                $flag = false;
-
-                                foreach($old_selected_products as $old_selected_product){
-                                    if($old_selected_product['product_id'] == $product['p_id']){
-                                        $flag = true;
-                                        $old_product_id = $old_selected_product['product_id'];
-                                        $old_unit_price = $old_selected_product['unit_price'];
-                                        $old_qty = $old_selected_product['qty'];
-                                        $old_subtotal= $old_qty*$old_unit_price;
-                                        $total_amount += $old_subtotal;
-                                    }
-                                }
-
-                                if($flag){
-                                    
-                                    // 
-                                    echo '
-                                                <div class="product_card">
-                                                    <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                                    <div class="product_details">
-                                                        <div class="brand_name">'.$product['c_name'].'</div>
-                                                        <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                                        <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                                    </div>
-                                                    <div class="increment_box">
-                                                        <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                                        <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="'.$old_qty.'" class="num" readonly>
-                                                        <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                                    </div>
-                                                    <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'">Rs. '.number_format($old_subtotal,2).'</h4></div>
-                                                </div>
-                                            ';
-                                }else{
-                                    echo '
-                                                <div class="product_card">
-                                                    <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                                    <div class="product_details">
-                                                        <div class="brand_name">'.$product['c_name'].'</div>
-                                                        <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                                        <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                                    </div>
-                                                    <div class="increment_box">
-                                                        <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                                        <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
-                                                        <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                                    </div>
-                                                    <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
-                                                </div>
-                                            ';
-                                }
-                            }
-                        } 
-                        echo '</div>
-                        </div>'; 
-                
-            }          
-                        echo '<!-- <div class="total"> -->
-                        <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
-                    <!-- </div> -->
+                        }   
+                        //display total        
+                        echo '
                     <div class="total"> 
                         <h3>Total Amount : </h3><h3 class="amount"> Rs. '.number_format($total_amount,2).'</h3>
                     </div>
@@ -205,6 +203,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 
                 unset($_SESSION['order_products']);
             } 
+            //if session variable is not available display this part
             else{ 
 
                 echo '<form action="'.BASEURL.'/Orders/selected_products/'.$dealer_id.'" method="POST">';
@@ -233,25 +232,25 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                 <h4>Re-Fill Cylinders</h4>
                             </div>
                             <div class="product_list">';
-
+                        //display cylinder products in company
                         foreach($products as $product){
                             if($product['type']=="cylinder"){
                                 echo '
-                                        <div class="product_card">
-                                            <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
-                                            <div class="product_details">
-                                                <div class="brand_name">'.$product['c_name'].'</div>
-                                                <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
-                                                <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
-                                            </div>
-                                            <div class="increment_box">
-                                                <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
-                                                <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
-                                                <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
-                                            </div>
-                                            <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
+                                    <div class="product_card">
+                                        <div class="product_img"><img src="'.BASEURL.'/public/img/products/'.$product['image'].'" alt=""></div>
+                                        <div class="product_details">
+                                            <div class="brand_name">'.$product['c_name'].'</div>
+                                            <div class="name"><h5>'.$product['weight'].'Kg '.$product['p_name'].'</h5><h4>'.$product['dealer_stock'].' in stock</h4></div>
+                                            <div class="price"><h4>Rs.'.number_format($product['unit_price']).'.00</h4></div>
                                         </div>
-                                    ';
+                                        <div class="increment_box">
+                                            <div class="minus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',minus); return false;">-</div>
+                                            <input type="number" name="'.$product['p_id'].'" id="'.$product['p_id'].'" value="0" class="num" readonly>
+                                            <div class = "plus" onclick="changeqty('.$product['p_id'].','.$product['unit_price'].',plus); return false;">+</div>
+                                        </div>
+                                        <div class="subtotal_part"><p>Subtotal :  </p><h4 class="subtotal" id="sub'.$product['p_id'].'"> Rs. 0.00 </h4></div>
+                                    </div>
+                                ';
                             }
                         }
 
@@ -266,7 +265,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                             <h4>Accessories</h4>
                         </div>
                         <div class="product_list">';
-                    
+                        //display accessories in company
                         foreach($products as $product){
                             if($product['type']=="accessory"){
                                 echo '
@@ -290,15 +289,9 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         echo '</div>
                         </div>'; 
                     }
-
-                    
-                    
-                
-                        
-                
-                    echo '<!-- <div class="total"> -->
-                        <!-- <p>sub totals : </p><h3 class="total">" "</h3> -->
-                    <!-- </div> -->
+ 
+                    //display the total
+                    echo '
                     <div class="total"> 
                         <h3>Total Amount : </h3><h3 class="amount"> Rs. 0.00</h3>
                     </div>
