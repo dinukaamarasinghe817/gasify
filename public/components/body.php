@@ -2316,7 +2316,7 @@ class Body{
                     }else{
                         echo'<option value="" disabled selected>Year</option></select>';
                     }
-                echo'<select name="monthFrom" id="monthFrom">';
+                echo'<select name="monthFrom" id="monthFrom">'; //add months
                 if(isset($data['currentdate'])){
                     echo'<option value="" disabled >Month</option>';
                     $tag='';
@@ -2327,7 +2327,7 @@ class Body{
                         $to=13;
                     }
                     for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
-                        if($i==$data['fromyearandmonth'][1]){
+                        if($i==$data['fromyearandmonth'][1]){// add years
                             $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
                         }else{
                             $tag.='<option value="'.$i.'">'.$i.'</option>';
@@ -2347,7 +2347,7 @@ class Body{
                 if(isset($data['joinedDate'])){
                     echo'<option value="" disabled selected>Year</option>';
                     $tag='';
-                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { //add years
                             if($i==intval($data['joinedDate'][0])){
                                 $tag.='<option value="'.$i.'" >'.$i.'</option>';
                             }else{
@@ -2363,7 +2363,7 @@ class Body{
                 
                 echo'
                 <select name="monthTo" id="monthTo">';
-                    if(isset($data['currentdate'])){
+                    if(isset($data['currentdate'])){ // add months
                         echo'<option value="" disabled >Month</option>';
                         $tag='';
                         $to=0;
@@ -2398,7 +2398,7 @@ class Body{
                     }
                     
                         echo'<div class="barChart" id="barChart" style="height:50%;width:100%;display:flex;align-content:center;align-items:center;justify-content:center">';
-                        if(isset($data['barChart'])){
+                        if(isset($data['barChart'])){ // show barchart if barchart values are setted
                                 
                             $chart['vector']=$data['barChart']['values'];
                             $chart['labels']=$data['barChart']['dates'];
@@ -2408,7 +2408,7 @@ class Body{
                         } 
                             
                         echo'</div>';
-                        if(isset($data['lineChart'])){
+                        if(isset($data['lineChart'])){ // show linechart if barchart values are setted
                             echo'<h4 style="margin-left:5%">Total Revenue</h4>';
                         }
                         
@@ -2424,7 +2424,7 @@ class Body{
                                     
                         echo'</div>
                     </div>';
-                    if(isset($data['doughNut'])){
+                    if(isset($data['doughNut'])){ // show doughnut if barchart values are setted
                         echo'<h4 style="margin-left:5%">Delivered products</h4>';
                     }
                     
@@ -2450,7 +2450,7 @@ class Body{
         echo ' 
         </section>';
     }
-    function deliveryReports($data){
+    function deliveryReports($data){ //delivery reports
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
@@ -2464,7 +2464,7 @@ class Body{
                     if(isset($data['joinedDate'])){
                         echo'<option value="" disabled selected >Year</option>';
                         $tag='';
-                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
+                        for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) {  // add years from joined year
                             
                             if( isset($data['yearfrom']) && $i==intval($data['yearfrom'])){
                                 $tag.='<option value="'.$i.'" selected>'.$i.'</option>';
