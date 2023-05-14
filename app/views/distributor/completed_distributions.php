@@ -27,7 +27,8 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                 <div class="accordion new">
                     <?php 
                         $completes = $data['completed_distributions'];
-                        if(count($completes)>0){
+                        // if completed distributions are available
+                        if(count($completes)>0){ 
                             foreach($completes as $complete) {
                                 $row1 = $complete['completedinfo'];
                                 $capacities = $complete['capacities'];
@@ -43,7 +44,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         </svg> 
                                     
                                     </div>';
-
+                                    // get details of completed distribution
                                     $date = $row1['place_date'];
                                     $dealer_id = $row1['dealer_id'];
                                     $time = $row1['place_time'];
@@ -72,12 +73,13 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             <tbody>';
 
                                             $total = 0;
+                                            // get product capacity details
                                             foreach($capacities as $capacity) {
                                                 $row2 = $capacity;
                                                 
                                                 $unit_price = $row2['unit_price'];
                                                 $quantity = $row2['quantity'];
-                                                $subtotal = $unit_price * $quantity;
+                                                $subtotal = $unit_price * $quantity; //calculate the subtotals
 
                                                 $output .= '
                                                 <tr>
@@ -86,9 +88,10 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                     <td>'.$row2['weight'].' Kg</td>
                                                     <td>'.number_format($unit_price,2).'</td>
                                                     <td>'.$row2['quantity'].'</td>
-                                                    <td>'.number_format($subtotal,2).'</td>
+                                                    <td>'.number_format($subtotal,2).'</td> 
                                                 </tr>';  
                                                 $total += $subtotal;
+                                                // calculate the total values
                                             }
                                             $output.='
                                                 <tr>
@@ -105,6 +108,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                 </div>';
                                 echo $output;                                                
                             }
+                            // if completed distributions are not available
                         }else {
                             $output = '';
                             $output = '</table>';
