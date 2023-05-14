@@ -538,13 +538,14 @@ class Body{
         </div>
     </section>';
     }
+    // company dashboard window
     function companydashboard($data){
         echo 
         '<section class="body-content">';
-        $prod=$data['products'];
-        $reqCount=$data['reqCount'];
-        $distCount=$data['distCount'];
-        $dealerCount=$data['dealerCount'];
+        $prod=$data['products'];    //product count
+        $reqCount=$data['reqCount'];    //current pending distributor order count
+        $distCount=$data['distCount'];  //currently registered distributor count
+        $dealerCount=$data['dealerCount'];  //currently registered dealer count
         foreach($prod as $row){
             $prod=$row['count'];
         }
@@ -557,7 +558,7 @@ class Body{
         foreach($dealerCount as $row){
             $dealerCount=$row['count'];
         }
-        
+        //implement 4 cards contains product count,Pending order count,dealer count,distributor count
             echo'<div class="Top" id="Top">
                 <div class="card">
                     <div class="cmValue">'.$reqCount.'</div>
@@ -581,8 +582,9 @@ class Body{
             <div class="productTableTitle" style="font-size:1.17em">Products (low stock)</div>
             <div class="recentRequestTableTitle" style="font-size:1.17em">Recent Orders</div>
             </div>
-            <div class="tables">
-                    <div class="productTable">';
+            <div class="tables">';
+                // implement table that contains info of products that currently low on stock
+                    echo'<div class="productTable">';
                     if(isset($data['lowStock']) && count($data['lowStock'])>0){
                         echo'<table class="styled-table" style="width:45%">
                             <thead>
@@ -608,6 +610,7 @@ class Body{
                         echo'<img src="../img/placeholders/2.png" alt="">';
                     }
             echo'</div>';
+            //implement thw window that contains current distributor requests and product details
             if (isset($data['order_details'])){
                 echo'<div class="recentRequestTable" style="align-content: center;">';
                     echo'<table class="styled-table" style="margin-left:5%">
@@ -627,6 +630,7 @@ class Body{
                     $placedDate='';
                     $placedTime='';
                     $orderArray=array();
+                    // push distributor and their product details to array
                     foreach ($result as $row){
                         
                         
@@ -647,6 +651,7 @@ class Body{
                         }
                         
                     }
+                    //implement the pending request products and their quantity table
                     $orders='';
                     $productNamesOnly=$data['productnames'];
                     foreach($orderArray as $key=>$value ){
@@ -685,7 +690,7 @@ class Body{
                 }
     
     }
-    function companyDealers($data){
+    function companyDealers($data){//view company dealers
         echo 
         '
         <script>
@@ -705,7 +710,7 @@ class Body{
                 </div>
             
             </div>';
-            
+            // if company have any dealers show their info on table
             if (isset($data["dealer"])) {
                 echo '<div class="DealerTables" id="DealerTables" style="margin:0">
                 <table class="styled-table">
@@ -734,11 +739,12 @@ class Body{
                                 echo '</tbody>      
                             </table>';
             }else{
+                //else show no data available window
                 echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
                 echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
             }       
     }
-    function companyDistributors($data){
+    function companyDistributors($data){//view company distributors
         echo '
             <script>
                 function dealerSignup(){
@@ -756,6 +762,7 @@ class Body{
                 </div>
             
             </div>';
+            // if company have any distributors show their info on table
             if (isset($data["distributor"])) {
             echo'<div class="DealerTables" id="DealerTables" style="margin:0">';
                 echo '<table class="styled-table">
@@ -784,36 +791,14 @@ class Body{
                 echo '</tbody>      
             </table>';
         }else{
+            //else show no data available window
             echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
             echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
         }
-            
-            
-            
-            
-            
-            
-            
-            
-            /*if(isset($data["distributor"])){
-                $result = $data["distributor"];
-                $distributor = "";
-                foreach($result as $row){
-                    //print_r($data) ;
-                    $distributor .=   '<div class="dealer_tableHead_row" id="dealer_tableHead_row" style="background-color: #d8ca30;height:10%">
-                                    <div class="dealer_name" id="col" style="margin-top:1%">Sample</div>
-                                    <div class="dealer_location" id="col" style="margin-top:1%">'.$row['city'].'</div>
-                                    <div class="dealer_contactno" id="col" style="margin-top:1%">'.$row['street'].'</div>
-                                    <div class="dealer_accountno" id="col" style="margin-top:1%">'.$row['contact_no'].'</div>
-                                    <div class="dealer_capacity" id="col" style="margin-top:1%">'.$row['hold_time'].'</div>
-                                    </div>';             
-                }
-                echo $distributor;
-            }*/
             echo '</div>
         </section>';
     }
-    function companyProducts($data){
+    function companyProducts($data){//view company products
         echo 
         '<section class="body-content">
              <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.3%">
@@ -821,6 +806,7 @@ class Body{
                  <a href="../Compny/regproducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductRegistrationForm()" style="background-color:#fff">Register New Product</div></a>
                  <a href="../Compny/updateProducts" style="width:32.33%" ><div class="ProductTableTopics" onClick="loadProductUpdateForm()" style="background-color:#fff">Update Product</div></a>
              </div>';
+             //if company have any products, show product info on table
              if (isset($data["products"])) {
              echo'<div class="DealerTables" id="DealerTables" style="margin:0;width: 97.4%;height:80%"">';
                 echo '<table class="styled-table" style="margin-top:0.3%">
@@ -857,12 +843,13 @@ class Body{
                                     echo '</div>
                                 </section>';
             }else{
+                // show no data available image
                 echo '<div class="DealerTables" id="DealerTables" style="margin:0;display:flex;justify-content:center">';
                 echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
                 echo '</div></section>';
             }
     }
-    function companyRegProducts($data){
+    function companyRegProducts($data){ //product registration form
         echo 
         '<section class="body-content">
             <div class="Distributor_table_name" id="Distributor_table_name"  style="margin:0;margin-left:-1.3%">
@@ -914,14 +901,13 @@ class Body{
                 </div>
             <div class="right">
                 <div style="height:18vh"></div>';
-                /*<label>Preview</label>*/
                 echo'<div class="productPreview" id="productPreview"><img id="ff" style="width:100%;height:100%;border-radius: 10px;outline:none">
                 </div></div>
             </div>
         </section>';
     }
-    function deliverydashboard($data){
-        echo
+    function deliverydashboard($data){ //delivery dashboard
+        echo//implement cards that contain currently dispached order count,today completed order count,review count,today total earnings
         ' <section class="body-content">
                 <div class="Top" id="Top">
                     <div class="card">
@@ -949,12 +935,13 @@ class Body{
                         <div class="cmTitle">Earned Today</div>
                     </div>
                 </div>';
+                // implement the window that contains recent reviews
                 echo'<div class="bottom">
                     <div class="vehicleCard">
                         <div class="recentReviewsTopic"><h2>Recent reviews</h2></div>';
                         if(isset($data['reviews'])){
                             $tag="";
-                            foreach($data['reviews'] as $row){
+                            foreach($data['reviews'] as $row){ // if there are any reviews,show them on recent reviews window
                                 $tag.='<div class="reviewContent">
                                         <div class="review_row">
                                             <img class="review_profile" src = "'.BASEURL.'/public/img/profile/'.$row['image'].'">
@@ -970,13 +957,13 @@ class Body{
                                     </div>';
                             }
                             echo $tag;
-                        }else{
+                        }else{// else show no data available window
                             echo'<img src="../img/placeholders/2.png" style="width: 50%;height: 50%;">';
                         }
                         
                     echo'
                     </div>
-                    <div class="salesChart">';
+                    <div class="salesChart">'; // implement delivery charges window
                         echo'<div class="deliveryChargesTopic"><h2>Delivery charges</h2></div>';
                         if(isset($data['delivey_charge'])) {
                             echo'<div class="deliveryChargeContainer">';
@@ -997,74 +984,13 @@ class Body{
                                 </tr>';
                             }
                             echo $table;
-                        }                        
-                    /*echo '</tbody></table></div>   
-                    </div>
-                </div>';*/
-        echo'</section>';
-        /*'<section class="body-content">
-            <div class="Top" id="Top">
-            <div class="Col_1" id="Col_1">
-                <div class="Title_1">
-                <div class="ChartTitle">Previous</div><br>
-                </div>
-                <div class="Content_1"></div>
-            </div>
-            <div class="Col_2" id="Col_2">
-                <div class="Title_2">
-                <div class="ChartTitle">Today</div>
-                </div>
-                <div class="Content_3" id="Content_3">';
-                echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Completed Orders</div><div class="data_value" style="margin-right: 10%;">6</div></div>';
-                echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;"> Ongoing  Orders</div><div class="data_value" style="margin-right: 10%;">1</div></div>';
-                
-                
-                echo'</div>
-            
-            </div>
-            <div class="Col_3" id="Col_3">
-                <div class="Title_3">
-                <div class="ChartTitle">My Vehicle</div>
-                </div>
-                <div class="Content_3" id="Content_3">';
-                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Vehicle no</div><div class="data_value" style="margin-right: 10%;">'.$data['vehicle_no'].'</div></div>';
-                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Vehicle type</div><div class="data_value" style="margin-right: 10%;">'. $data['vehicle_type'].'</div></div>';
-                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Weight limit</div><div class="data_value" style="margin-right: 10%;">'.$data['weight_limit'].'</div></div>';
-                    echo '<div class="Content_3_row" id="Content_3_row"><div class="data_title" style="margin-left: 4%;">Cost per KM</div><div class="data_value" style="margin-right: 10%;">'.$data['cost_per_km'].'</div></div>';
-                
-                
-                '</div>
-                </div>
-            </div>'*/
-            /*<div class="DistributorTableHeadings" id="DistributorTableHeadings">
-                <div class="Distributor_table_name" id="Distributor_table_name">
-                    <div class="distibutor_title">Current Deliveries</div>
-                </div>
-                <div class="tableTitles" id="tableTitles">
-                    <div class="distributor_name" id="col"style="width:25%;margin-top:1%">Customer</div>
-                    <div class="distributor_contactno" id="col"style="width:25%;margin-top:1%">Destination</div>
-                    <div class="distributor_location" id="col"style="width:25%;margin-top:1%">Contact no</div>
-                </div>       
-            </div> 
-            <div class="DistributorTable" id="DistributorTable">
-
-            </div> 
-            <div class="DealerTableHeadings" id="DealerTableHeadings">
-                <div class="Dealer_table_name" id=\"Dealer_table_name\">
-                    <div class="distibutor_title">Available Deliveries</div>
-                    </div>
-                    <div class="tableTitles" id="tableTitles">
-                    <div class="Dealer_name" id="col" style="width:25%;margin-top:1%">Name</div>
-                    <div class="Dealer_contactno" id="col"style="width:20%;margin-top:1%">Destination</div>
-                    <div class="Dealer_location" id="col"style="width:22%;margin-top:1%">Contact no</div>
-                    <div class="Dealer_email" id="col" style="width:20%;margin-top:1%">Placed date</div>
-                    </div>
-                </div>
-            </div>  
-            <div class="DealerTable" id="DealerTable"></div>*/
+                        }else{// else show no data available window
+                            echo'<img src="../img/placeholders/2.png" style="width: 50%;height: 50%;">';
+                        }                     
         echo'</section>';
     }
-    function gasdeliveries($data){
+    function gasdeliveries($data){ //implement "Accepted" gas deliveries for delivery person 
+        // calculate the red,green,blue value for vehilce progress bar according to current weight of dispatched orders
         $redValue=45+ (((255-45)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $blueValue=119- (((119)/100)*(($data['total_weight']/$data['weight_limit'])*100));
         $greenValue=188- (((188-51)/100)*(($data['total_weight']/$data['weight_limit'])*100));
@@ -1075,16 +1001,19 @@ class Body{
             <a href="../Delvery/currentdeliveries" style="width:48.5%";height:100%  class="deliveries_link"><div class="DealerTableTopics" onClick="loadCurrentDeliveries()" style="width:100%;height:100%;color:black;" >Current deliveries</div></a>
             </div>';
             if(isset($data["pool"])){
+            // implement the label that contains vehicle total capacity
             echo'<div  class="bar">
             <div class="currentContainer">
                 <label class="capacityTitle">Total capacity : </label>
                 <label class="capacityVlue" style="color:white">'.$data['weight_limit'].'KG</label>
-            </div>
-            <div class="remainingContainer">
+            </div>';
+            // implement the label that contains vehicle remaining capacity
+            echo'<div class="remainingContainer">
                 <label class="capacityTitle" style="color:white;margin-right:2%">Remaining : </label>
                 <label class="capacityVlue" style="color:white;">'.floatval($data['weight_limit']-$data['total_weight']).'KG</label>
-            </div>
-            <div class="container">
+            </div>';
+            // implement progress bar that contains current load of orders.
+            echo'<div class="container">
                 <div class="progress-bar__container"">
                     <div class="cprogress" id="cprogress" >';
                         if(number_format(($data['total_weight']/$data['weight_limit'])*100,2)<41){
@@ -1097,7 +1026,7 @@ class Body{
                     echo'</div>';
                     echo'
                 </div>';
-                /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
+                // animate the progressbar at begining
                 echo'<script>
                     const myDiv = document.getElementById("cprogress");
                     const keyframes = [
@@ -1133,17 +1062,6 @@ class Body{
         if(isset($data["pool"])) {
             $result=$data['pool'];
             $pool = "";
-            /*$pool .=  '<button class="collapsible" ">
-                                    <div class="orderColumn">Name</div>
-                                    <div class="orderColumn">Address</div>
-                                    <div class="orderColumn">Contact no</div>
-                                    <div class="orderColumn">Placed date</div>
-                                    <div class="orderColumn">Placed time</div>
-                                    <div class="orderColumn">Distance</div>
-                                    <div class="orderColumn">Charge</div>
-                                    <div class="orderColumn"></div></div>
-                                    <label></label>
-                                </button>';*/
             $processedOrders=array();
             $Count=1;
             foreach ($result as $row) {
@@ -1163,7 +1081,6 @@ class Body{
                             $charge=$row3['charge_per_kg'];
                         }
                     }
-                    //date('F j, Y, g:i A', strtotime($row['date'].' '.$row['time']))
                     array_push($processedOrders, $row['order_id']);
                     $pool .=  '<tr>
                             <td>'.$row['order_id'].'</td>
@@ -1287,7 +1204,6 @@ class Body{
                 echo'</div>';
                 echo'
             </div>';
-            /*style="width:'.(($data['total_weight']/$data['weight_limit'])*100).'%;background-color:rgb('.$redValue.','.$blueValue.','.$greenValue.')" */
             echo'<script>
                 const myDiv = document.getElementById("cprogress");
                 const keyframes = [
@@ -1330,9 +1246,7 @@ class Body{
             $processedOrders=array();
             $Count=0;
             foreach ($result as $row) {
-                //print_r($row);
                 if(!(in_array($row['order_id'],$processedOrders))){
-                    //print_r($row['order_id']);
                     array_push($processedOrders,$row['order_id']);
                     $weight=0;
                     $charge=0;
@@ -1341,7 +1255,6 @@ class Body{
                         if($row['order_id']==$row2['order_id']){
                             $weight+=$row2['quantity']*$row2['weight'];
                             array_push($products,array($row2['image'],$row2['name'],$row2['quantity']));
-                            //$weight+=intval($row2['quantity']*floatval($row2['weight']));
                         }
                     }
                     foreach($data['charges'] as $row3){
@@ -1541,7 +1454,6 @@ class Body{
                 <div class="product_reg_row">
                 <select name="Producttype" id="Producttype" class="registerProduct" style="margin-bottom:3%;border:3px solid #d8ca30">';
                 $result=$data['products'];
-                //echo $result;
                 foreach($result as $results){
                     echo '<option value='.$results['product_id'].'>'.$results['name'].'</option>';
                 }echo
@@ -1589,10 +1501,6 @@ class Body{
                 $distName='';
                 $placedDate='';
                 $placedTime='';
-                
-                
-                
-                //$encodedArray=json_encode($productIDlist);
                 foreach ($result as $row) {
                     $orderID=$row['stock_req_id'];
                     $imgIndex=1;
@@ -1646,7 +1554,6 @@ class Body{
                                     }else{
                                         $isEnabled=false;
                                         $orders.=' oninput="changeOrderDetails('.$imgIndex.','.$imgCount.','.$orderID.','.$row_2['product_id'].','.$row_2['unit_price'].','.$row_3['quantity'].','.$row_2['stock_req_id'].',\''.$productIDlist.'\')"></td>';
-                                        //$orders.=' oninput="changeOrderDetails(\''.$productIDlist.'\')"></td>';
                                         $orders.='<td style="text-align:center"><img src='.BASEURL.'/public/icons/warning.png'.' width="32px" height="32px" title="Current Stock is '.$row_3['quantity'].' Cylinders" id="'.$orderID.$imgIndex."2".'" class="stateImg"></td>';
                                     }
                                     
@@ -1751,17 +1658,6 @@ class Body{
         if(isset($data['reviews'])){
             echo'<div class="DealerTables" id="DealerTables" style="height:80%;margin:0;">';
             $tag='';
-            // foreach($reviews as $row){
-            //     $tag.='<div class="reviewRow" >
-            //     <div class="orderIDRow"><div>Order ID :'.$row['order_id'].'</div></div>
-            //         <div class="messageRow">'.$row['message'].'</div>
-            //         <div class="dateTimeRow">
-            //             <div class="reviewTime">Time -'.$row['time'].'</div>
-            //             <div class="reviewDate">Date -'.$row['date'].'</div> 
-            //         </div>        
-            //     </div>';
-            // }
-            // echo $tag;
             if(isset($data['reviews'])){
                 $tag="";
                 foreach($data['reviews'] as $row){
@@ -1787,18 +1683,6 @@ class Body{
                 echo'<img src="../img/placeholders/2.png" style="width: 40%;height: 70%;">';
                 echo '</div></section>';
         }
-        
-        /*echo '
-        <div class="reviewRow" >
-            <div class="orderIDRow"><div>Order ID : </div></div>
-            <div class="messageRow">Delivered fast!.Great service.Thumbs up</div>
-            <div class="dateTimeRow">
-                <div class="reviewTime">04:23PM</div>
-                <div class="reviewDate">2023/01/18</div> 
-            </div>        
-        </div>';*/
-
-       
     }
 
     function notifications($data){
@@ -1827,19 +1711,6 @@ class Body{
                             <p class="gray">Stay tuned! notifications about your activity will show up here.</p>
                         </div>';
                     }
-                
-                // <li>
-                //     <div class="notification">
-                //         <h2>Re-Order level alert</h2>
-                //         <p>You're runnig low stock on the following products. Hurry up and place a new purchase order. Products : (Buddy, Budget)</p>
-                //     </div>
-                // </li>
-                // <li>
-                //     <div class="notification">
-                //         <h2>Re-Order level alert</h2>
-                //         <p>You're runnig low stock on the following products. Hurry up and place a new purchase order. Products : (Buddy, Budget)</p>
-                //     </div>
-                // </li>
             echo '</ul>
                 </div>
         </section>
@@ -1893,7 +1764,6 @@ class Body{
                                                 }else{
                                                     $tag.='<option value="'.$i.'">'.$i.'</option>';
                                                 }
-                                                //$tag.='<option value="'.$i.'">'.$i.'</option>';
                                             }
                                             $tag.='</select>';
                                             echo $tag;
@@ -1938,7 +1808,6 @@ class Body{
                                                 }else{
                                                     $tag.='<option value="'.$i.'">'.$i.'</option>';
                                                 }
-                                                //$tag.='<option value="'.$i.'">'.$i.'</option>';
                                             }
                                             $tag.='</select>';
                                             echo $tag;
@@ -2085,7 +1954,6 @@ class Body{
                                         }else{
                                             $tag.='<option value="'.$i.'">'.$i.'</option>';
                                         }
-                                        //$tag.='<option value="'.$i.'">'.$i.'</option>';
                                     }
                                     $tag.='</select>';
                                     echo $tag;
@@ -2130,7 +1998,6 @@ class Body{
                                         }else{
                                             $tag.='<option value="'.$i.'">'.$i.'</option>';
                                         }
-                                        //$tag.='<option value="'.$i.'">'.$i.'</option>';
                                     }
                                     $tag.='</select>';
                                     echo $tag;
@@ -2183,7 +2050,6 @@ class Body{
                     </thead>';
                     if(isset($data['products'])){
                         echo'<tbody>';
-                        //print_r($data['products']) ;
                         $result=$data['products'];
                         $tag="";
                         $sum=0;
@@ -2210,7 +2076,6 @@ class Body{
                 echo'</div>'; 
                 echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
                 echo'<div style="height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport()" class="generatePDF">';
-                //echo'<a href="../Reports/salesCompany">Generate PDF</a></div>';
                 echo'Generate Report</div>';
                 
                 echo'</div>';
@@ -2275,48 +2140,6 @@ class Body{
         $pdf->Output();
 
     }
-    /*function deliveryReports($data){
-        echo 
-        '<section class="body-content">
-            <div class="Distributor_table_name" id="Distributor_table_name" style="margin:0;margin-left:-1.5%">
-            <a href="../Compny/analysis" style="width:97%" ><div class="DealerTableTopics" style="width:100%;height:100%;background-color:#2d77bc;color:white">Analysis</div></a>
-            </div>';
-            echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0; display:flex; flex-direction:row;">
-            
-                <div class="analysis_top" style="flex-direction:column;">
-                    <div class="graph" style="width:500px; padding:20px;">
-                        <h4>Last Week</h4>';
-                        $chart['vector']=[12,18,23,15,17];
-                        $chart['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart['color']="rgba(30, 105, 176, 1)";
-                        $chart['y']='Deliveries-Last week';
-                        $chart = new Chart('bar',$chart,1);                    
-                    echo'</div>
-                    <div class="graph" style="width:500px; padding:20px;">
-                    <h4>Last Week Revenue</h4>';
-                        $chart_3['vector']=[5500,3250,4800,4130,3900];
-                        $chart_3['labels']=['Mon','Tue','Wed','Thu','Fri'];
-                        $chart_3['color']="rgba(30, 105, 176, 1)";
-                        $chart_3['y']='Revenue-Last week(Rs)';
-                        $chart_3 = new Chart('line',$chart_3,4);                    
-                    echo'</div>
-                </div>
-                <div class="analysis_bottom">
-                    <div class="graph" style="height: 70vh; padding:20px; width:500px;">
-                        <h4>Last Month</h4>';
-                            $chart_2['vector']=array(20,80);
-                            $chart_2['labels']=array('Canceled','Delivered');
-                            $chart_2['color']='["red","rgba(30, 105, 176, 1)","rgba(23, 45, 89, 1)"]';
-                            $chart_2['y']='Last month deliveries';
-                            $chart_2['main']="fgdff";
-                            $chart_2 = new Chart('doughnut',$chart_2,3);
-                    echo'</div>
-     
-                </div>  
-            </div>';     
-        echo ' 
-        </section>';
-    }*/
     function issuedOrdersCompany($data){
         echo 
         '<section class="body-content">
@@ -2559,9 +2382,6 @@ class Body{
                             }else{
                                 $tag.='<option value="'.$i.'" >'.$i.'</option>';
                             }
-                                
-                            
-                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
                         }
                         $tag.='</select>';
                         echo $tag;
@@ -2606,7 +2426,6 @@ class Body{
                             }else{
                                 $tag.='<option value="'.$i.'" >'.$i.'</option>';
                             }
-                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
                         }
                         $tag.='</select>';
                         echo $tag;
@@ -2726,8 +2545,6 @@ class Body{
                                 $tag.='<option value="'.$i.'" >'.$i.'</option>';
                             }
                                 
-                            
-                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
                         }
                         $tag.='</select>';
                         echo $tag;
@@ -2772,7 +2589,6 @@ class Body{
                             }else{
                                 $tag.='<option value="'.$i.'" >'.$i.'</option>';
                             }
-                            //$tag.='<option value="'.$i.'">'.$i.'</option>';
                         }
                         $tag.='</select>';
                         echo $tag;
@@ -2829,7 +2645,6 @@ class Body{
                         <td >'.$names[$i].'</td>
                         <td style="text-align:center">'.$values[$i].'</td>
                         </tr>';
-                        //$sum+=$value[0]*$value[1];
                     }
                     echo $tag;
                     echo'</tbody>';   
@@ -2841,7 +2656,6 @@ class Body{
                 
                 echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
                 echo'<div style="height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport()" class="generatePDF">';
-                //echo'<a href="../Reports/salesCompany">Generate PDF</a></div>';
                 echo'Generate Report</div>';
             }
             
