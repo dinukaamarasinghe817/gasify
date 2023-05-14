@@ -85,7 +85,21 @@ class Company extends Model
             // $sql .= "$key = '$value', ";
             print_r($data['cmp_id']);
          }*/
+        $company_id = $_SESSION['user_id'];
         $this->insert("product",$data);
+        //  sasangi 
+        //take the product table minimum weight product to insert it to quota table and customer quota table
+        $result1 = $this->Query("SELECT product_id, MIN(weight) as min_weight FROM product WHERE type='cylinder' AND company_id=$company_id");
+        $row1 = mysqli_fetch_assoc($result1);
+        
+        if(mysqli_num_rows($result1)!=0){
+            $min_weight = $row1['min_weight'];
+            $product_id = $row1['product_id'];
+
+            $this->update("quota",['monthly_limit' => $min_weight],'company_id=' .$company_id,'monthly_limit<='.$min_weight);
+            $this->update("customer_quota",['remaining_amount' => $min_weight],'company_id=' .$company_id,'remainig_amount='.'0');
+        
+        }
         //print_r($data);
 
     }
