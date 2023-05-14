@@ -112,13 +112,10 @@
             $processedOrders = array();
             $revenue=0;
             foreach($data['completed_orders'] as $row){
-                $orderID = $row['order_id'];
-                if(!(in_array($orderID,$processedOrders))){
-                    $revenue+=floatval($row['deliver_charge']);
-                    array_push($processedOrders,$orderID);
-                }
+                $revenue+=floatval($row['deliver_charge']);
                 
             }
+            
             $data['revenue']=$revenue;
             //$data=[];
             $this->view('dashboard/delivery', $data);
