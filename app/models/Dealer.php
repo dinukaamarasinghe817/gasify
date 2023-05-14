@@ -378,7 +378,7 @@ class Dealer extends Model
     // handle the customer order by taking session information
     public function customerOrder($customer_id,$dealer_id,$products,$payment_method){
         //collecting previouse reorder flags before updating the dealer keep table
-        $prev_flags;
+        $prev_flags = [];
         foreach($products as $product){
             $product_id = $product['product_id'];
             $row = mysqli_fetch_assoc($this->read('dealer_keep',"dealer_id = $dealer_id AND product_id = $product_id"));
@@ -461,7 +461,7 @@ class Dealer extends Model
                     // prepare replacements
                     $swap_reorder = array(
                         "{RECIEVER_NAME}"=> $q['first_name'].' '.$q['last_name'],
-                        "{STOCK_LINK}"=> BASERURL.'/stock/dealer/currentstock',
+                        "{STOCK_LINK}"=> BASEURL.'/stock/dealer/currentstock',
                         "{PRODUCT_DETAILS}"=>$mailproducts
                     );
                     // template
@@ -559,7 +559,7 @@ class Dealer extends Model
                     // prepare replacements
                     $swap_reorder = array(
                         "{RECIEVER_NAME}"=> $q['first_name'].' '.$q['last_name'],
-                        "{STOCK_LINK}"=> BASERURL.'/stock/dealer/currentstock',
+                        "{STOCK_LINK}"=> BASEURL.'/stock/dealer/currentstock',
                         "{PRODUCT_DETAILS}"=>$mailproducts
                     );
                     // template
@@ -597,7 +597,7 @@ class Dealer extends Model
     public function dealerOrders($dealer_id,$tab1,$tab2){
         $tab1 = ucwords($tab1);
         $orders = array();
-        $result;
+        // $result;
 
         $sql = "SELECT 
         r.order_id AS order_id,
@@ -619,6 +619,9 @@ class Dealer extends Model
         r.acc_no AS acc_no,
         r.refund_date AS refund_date,
         r.refund_time AS refund_time,
+        r.bank AS customer_bank,
+        r.branch AS customer_branch,
+        r.acc_no AS customer_account_no,
         r.refund_verification AS refund_verification,
         r.delivery_id AS delivery_id,
         r.deliver_date AS deliver_date,
@@ -746,7 +749,7 @@ class Dealer extends Model
         while($row = mysqli_fetch_assoc($result)){
             $product_id = $row['product_id'];
             $product_quantity = $row['quantity'];
-            $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $dealer_id");
+            $this->Query("UPDATE dealer_keep SET quantity = quantity - $product_quantity WHERE product_id = $product_id AND dealer_id = $user_id");
         }
         $this->update('reservation',['order_state' => 'Accepted'],"order_id = $order_id");
         $this->dealerNofifycustomer($order_id,$user_id,'accepted');
@@ -803,7 +806,7 @@ class Dealer extends Model
     public function getdeliverypeople($option,$user_id){
         $row = mysqli_fetch_assoc($this->read('dealer','dealer_id = '.$user_id));
         $city = $row['city'];
-        if($option = 'all'){
+        if($option == 'all'){
             $sql = "SELECT u.first_name AS first_name,
             u.last_name AS last_name,
             de.image AS image,
@@ -1085,6 +1088,7 @@ class Dealer extends Model
                 $verifyacceptance = mysqli_fetch_assoc($this->read('reservation',"order_id = ".$row['order_id']));
                 if(strtoupper($verifyacceptance['order_state']) == 'ACCEPTED') {
                     // then send a mail to the customer
+                    $order_id = $row['order_id'];
                     $user_id = $verifyacceptance['customer_id'];
                     $customer = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
                     $user_name = $customer['first_name'].' '.$customer['last_name'];
