@@ -318,4 +318,17 @@ class Company extends Model
             return 0;
         }
     }
+    public function getProductNamesOnly($companyID){
+        $result=$this->Query("SELECT product.product_id,product.name FROM product WHERE product.company_id=$companyID;");
+        if(mysqli_num_rows($result)>0){
+            $info = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $info+=array(intval($row['product_id'])=>$row['name']);
+                //array_push($info,[intval($row['product_id'])=>$row['name']]);
+            }
+            return $info;
+        }else{
+            return 0;
+        }
+    }
 }
