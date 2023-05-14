@@ -774,6 +774,26 @@ class Orders extends Controller{
         header('Location: '.BASEURL.'/gasdistributions/pending_distributions/1');
     }
 
+    // suitable vehicle list for gas orders 
+    public function suitableVehicles(){
+        $this->AuthorizeUser('distributor');
+
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'distributions';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        // previouse method
+        $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
+        // $data['suitablevehiclelist'] = $this->model("Distributor")->getOnlyEligibleVehicles($po_id);
+        // var_dump($data['suitablevehiclelist']);
+        // $data['po_id'] = $po_id;
+        $this->view('distributor/suitable', $data);
+
+    }
+
 
     /*****************************************************************************************************/
 
