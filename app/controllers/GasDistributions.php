@@ -56,7 +56,7 @@ class GasDistributions extends Controller {
     }
 
         // gas distributions - completed gas distributions
-        public function completed_distributions() {
+    public function completed_distributions() {
         $this->AuthorizeUser('distributor');
         
         $user_id = $_SESSION['user_id'];

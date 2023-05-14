@@ -168,6 +168,12 @@ class Distributor extends Model
         $data = [];
         // update the availability as "Yes" of a vehicle
        $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
+       // reset the vehicle eligibility of products
+       $query = $this->read('distributor_vehicle_capacity',"vehicle_no = '$vehicle_no'");
+       while($row = $query->mysqli_fetch_assoc($query)){
+            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$row['capacity']],"vehicle_no = '$vehicle_no' AND product_id = ".$row['product_id']);
+       }
+        // return $query2;
         $data['success'] = ['type' => "success", 'message'=> "Vehicle released"];
     }
 
@@ -368,7 +374,6 @@ class Distributor extends Model
 
         if(mysqli_num_rows($query2)>0) {
             // first check whether the distributor has the required stock
-            // $query3 = $query2;
             $flag = true; // assume stock is available
             while($row2 = mysqli_fetch_assoc($query2)){
                 $row3 = mysqli_fetch_assoc($this->read('distributor_keep',"distributor_id = $user_id AND product_id = ".$row2['product_id']));
@@ -434,6 +439,33 @@ class Distributor extends Model
             }
         }
         return $data;
+    }
+
+    public function resetAfterDistribute($distribution_id){
+        $row = mysqli_fetch_assoc($this->read('purchase_order',"po_id = $distribution_id"));
+        $vehicle_no = $row['vehicle_allocated'];
+
+        $query1 = $this->read('purchase_include',"po_id = $distribution_id");
+        while($row1 = mysqli_fetch_assoc($query1)){
+            // take all the capacities of the current vehicle.
+            $product_considering = $row1['product_id'];
+            $row2 = mysqli_fetch_assoc($this->read('distributor_vehicle_capacity',"vehicle_no = '$vehicle_no' AND product_id = $product_considering"));
+            $remain_eligibility_considering = $row2['remain_eligibility'];
+            $total_capacity_product_consideing = $row2['capacity'];
+            $query3 = $this->read('distributor_vehicle_capacity',"vehicle_no = '$vehicle_no' AND product_id != $product_considering");
+            while($row3 = mysqli_fetch_assoc($query3)){
+                $product_affected = $row3['product_id'];
+                // adjust  eligible capacities of all the products of the current vehicle
+                $newaddition = floor(($row3['capacity']*$row1['quantity'])/$total_capacity_product_consideing);
+                $newNeweligibility = $row3['remain_eligibility']+$newaddition;
+
+                // update the new eligible amount for affected products
+                $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$newNeweligibility],"vehicle_no = $vehicle_no AND product_id = $product_affected");
+            }
+            // update the new eligible amount for considering product
+            $final_eligibility_considering = $remain_eligibility_considering+$row1['quantity'];
+            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$final_eligibility_considering],"vehicle_no = $vehicle_no AND product_id = $product_affected");
+        }
     }
 
     // dashboard -> count of pending distributions (dashboard)
@@ -909,7 +941,7 @@ class Distributor extends Model
         }
 
         // mark the po as vehicle allocated
-        $this->update('purchase_order',['vehicle_allocated'=>1],"po_id = $po_id");
+        $this->update('purchase_order',['vehicle_allocated'=>$vehicle_no],"po_id = $po_id");
 
         // destroy the session of nominates vehicles
         unset($_SESSION['nominated_vehicles']);
