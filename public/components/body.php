@@ -935,7 +935,7 @@ class Body{
                     echo'    
                     </div>
                     <div class="card">
-                        <div class="cmValue" ><h1>'.number_format($data['revenue'],2).'</h1></div>
+                        <div class="cmValue" ><h4>'.number_format($data['revenue'],2).'</h4></div>
                         <div class="cmTitle">Rupeese</div>
                         <div class="cmTitle">Earned Today</div>
                     </div>
@@ -961,6 +961,8 @@ class Body{
                                     </div>';
                             }
                             echo $tag;
+                        }else{
+                            echo'<img src="../img/placeholders/2.png" style="width: 50%;height: 50%;">';
                         }
                         
                     echo'
@@ -1071,7 +1073,7 @@ class Body{
             </div>
             <div class="remainingContainer">
                 <label class="capacityTitle" style="color:white;margin-right:2%">Remaining : </label>
-                <label class="capacityVlue" style="color:white;">'.$data['weight_limit']-$data['total_weight'].'KG</label>
+                <label class="capacityVlue" style="color:white;">'.floatval($data['weight_limit']-$data['total_weight']).'KG</label>
             </div>
             <div class="container">
                 <div class="progress-bar__container"">
@@ -1152,18 +1154,23 @@ class Body{
                             $charge=$row3['charge_per_kg'];
                         }
                     }
-
+                    //date('F j, Y, g:i A', strtotime($row['date'].' '.$row['time']))
                     array_push($processedOrders, $row['order_id']);
                     $pool .=  '<tr>
                             <td>'.$row['order_id'].'</td>
                             <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                             <td style="overflow:auto">'.$row['street'].','.$row['city'].'</td>
                             <td>'.$row['contact_no'].'</td>
-                            <td>'.date('F j, Y', strtotime($row['place_date'].' '.$row['place_time'])).'</td>
-                            <td>'.$row['place_time'].'</td>
+                            <td>'.date('F j, Y', strtotime($row['place_date'])).'</td>
+                            <td>'.date('g:i A', strtotime($row['place_time'])).'</td>
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
-                            <td>Rs.'.number_format($weight * $charge,2).'</td>
-                            <td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" >Accept</a></div></td>
+                            <td>Rs.'.number_format($weight * $charge,2).'</td>';
+                            if($weight<($data['weight_limit']-$data['total_weight'])){
+                                $pool.='<td><div class="accept_btn" id="col" onClick="takeJob('.$row['order_id'].')" >Accept</a></div></td>';
+                            }else{
+                                $pool.='<td><div class="accept_btn_disabled" id="col" >Accept</a></div></td>';
+                            }
+                            $pool.='
                             <td><img onclick="collapse(this,'.$Count.')" class="downArrow" src="http://localhost/mvc/public/img/icons/down.png"></td>
                             </tr><tr style="display:none" id="'.$Count.'row">
                             <td colspan="10">
@@ -1338,17 +1345,18 @@ class Body{
                             <td>'.$row['first_name'].' '.$row['last_name'].'</td>
                             <td style="overflow:auto">'.$row['street'].','.$row['city'].'</td>
                             <td>'.$row['contact_no'].'</td>
-                            <td>'.$row['place_date'].'</td>
-                            <td>'.$row['place_time'].'</td>
+                            <td>'.date('F j, Y', strtotime($row['place_date'])).'</td>
+                            <td>'.date('g:i A', strtotime($row['place_time'])).'</td>
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                             <td>Rs.'.number_format($weight * $charge,2).'</td>
-                            <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.number_format($charge*$weight,2).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Delivered</div></td>';
+                            <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.($charge*$weight).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Deliver</div></td>';
                             $str_time = $row['place_time'];
                             $time = date('H:i:s');
                             sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
                             $placedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
                             sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
                             $currentTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                            echo'<script></script>';
                             if(($currentTime-$placedTime)<=900){
                                 $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
                             }else{
@@ -1691,7 +1699,7 @@ class Body{
                                 <div class="productQuotaResetCurrent" onClick="setQuota(this)" key="'.$row['customer_type'].'"><div class="quotaButtons" ><label>Set Quota</label></div></div>';
                             }else{
                                 $quota.='<div class="productQuotaNew"><input type="text" placeholder="Enter new quota" class="newQuota" id="'.strtolower($row['customer_type']).'" lowest='.$data['lowestWeight'].' style="width:70%" disabled></div>
-                                <div class="productQuotaResetCurrent"  key="'.$row['customer_type'].'"><div class="quotaButtons" style="pointer-events:none"><label>Set Quota</label></div></div>';
+                                <div class="productQuotaResetCurrent"  key="'.$row['customer_type'].'"><div class="quotaButtons"  id="'.strtolower($row['customer_type']).'btn" style="pointer-events:none"><label>Set Quota</label></div></div>';
                             }
                             
                             $quota.='
@@ -2656,7 +2664,7 @@ class Body{
                         echo'</div>
                     </div>';
                     if(isset($data['doughNut'])){
-                        echo'<h4 style="margin-left:5%">Delivered quantity</h4>';
+                        echo'<h4 style="margin-left:5%">Delivered products</h4>';
                     }
                     
                     echo'<div class="rightAnalysis" style="margin-top:1%;width:50%;height:100%;display:flex;align-content:center;align-items:center;justify-content:center">';

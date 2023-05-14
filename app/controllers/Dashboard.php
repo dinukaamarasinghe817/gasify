@@ -113,7 +113,7 @@
             foreach($data['completed_orders'] as $row){
                 $orderID = $row['order_id'];
                 if(!(in_array($orderID,$processedOrders))){
-                    $revenue+=intval($row['deliver_charge']);
+                    $revenue+=floatval($row['deliver_charge']);
                     array_push($processedOrders,$orderID);
                 }
                 
