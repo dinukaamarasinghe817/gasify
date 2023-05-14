@@ -1716,12 +1716,16 @@ class Body{
                             $quota.='
                             <div class="productQuotaSetNew">
                             <label class="switch">';
+                            if(isset($data['lowestWeight'])){
                                 if($row['state']=="ON"){
                                     $quota.='<input type="checkbox" oninput="resetQuota(this)" val='.$row['monthly_limit'].' fieldId='.strtolower($row['customer_type']).' key='.$row['customer_type'].' checked>';
 
                                 }else{
-                                    $quota.='<input type="checkbox" oninput="resetQuota(this)" val='.$row['monthly_limit'].' fieldId='.strtolower($row['customer_type']).' key='.$row['customer_type'].'>';
+                                    $quota.='<input type="checkbox" oninput="resetQuota(this)" val='.$row['monthly_limit'].' fieldId='.strtolower($row['customer_type']).' key='.$row['customer_type'].' >';
                                 }
+                            }else{
+                                    $quota.='<input type="checkbox" oninput="resetQuota(this)" val='.$row['monthly_limit'].' fieldId='.strtolower($row['customer_type']).' key='.$row['customer_type'].' disabled >';
+                                }                                
                                 $quota.='
                                 <span class="slider round"></span>
                             </label>
