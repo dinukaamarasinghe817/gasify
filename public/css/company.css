@@ -1249,6 +1249,23 @@ input[type="text"]::placeholder{
     width: 40%;
     height: 100%;
 }
+.orderButtons_disabled{
+    margin-left: 10%;
+    background-color:var(--button-blue) ;
+    border-radius: 5px;
+    display: flex;
+    align-items:center;
+    align-content: center;
+    justify-content: center;
+    width: 40%;
+    height: 100%;
+}
+.orderButtons_disabled:hover{
+    cursor: not-allowed;
+}
+.orderButtons:disabled>label:hover{
+    cursor: not-allowed;
+}
 .orderButtons:disabled:hover{
     cursor: pointer;
 }

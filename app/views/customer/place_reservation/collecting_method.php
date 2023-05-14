@@ -22,7 +22,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         </div> 
         <div class="middle">
            
-            <!-- take hidden inputs as city,street and delivery charge -->
+            <!-- take hidden inputs as city,street and delivery charge and pass to pop up -->
             <input type="text" class="home_city" name="city" value="<?= $data['city'] ?>" hidden>
             <input type="text" class="home_street" name="street" value="<?= $data['street'] ?>" hidden>
             <input type="text"  class="d_charge" name="d_charge" step= 0.01 value="<?= $data['delivery_charge'] ?>" hidden>

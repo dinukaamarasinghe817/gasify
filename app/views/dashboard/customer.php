@@ -12,6 +12,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         ?>
 </section>
 <script>
+    //for recent orders
     let accordion = document.querySelectorAll('.recent_order .dropdown');
     for(i=0; i<accordion.length; i++) {
         accordion[i].addEventListener('click', function(){

@@ -609,7 +609,7 @@ class Body{
                     }
             echo'</div>';
             if (isset($data['order_details'])){
-                echo'<div class="recentRequestTable" style="overflow-y: auto; align-items: center;align-content: center;">';
+                echo'<div class="recentRequestTable" style="align-content: center;">';
                     echo'<table class="styled-table" style="margin-left:5%">
                     <thead>
                         <tr>
@@ -648,6 +648,7 @@ class Body{
                         
                     }
                     $orders='';
+                    $productNamesOnly=$data['productnames'];
                     foreach($orderArray as $key=>$value ){
                         foreach($value as $key_2=>$value_2){
                             $orders.='<tr>
@@ -656,16 +657,19 @@ class Body{
                                         <table class="requestProducts" style="margin-top:1%;width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="z-index:1">Product ID </th>
+                                                    <th style="z-index:1">Product name </th>
                                                     <th style="z-index:1">Quantity</th>
                                                 </tr>
                                             </thead>
                                         <tbody style="overflow-y:auto;height:100px">';
                             foreach($value_2 as $key_3=>$value_3){
-                                $orders.='<tr>
-                                            <td class="tdCenter">'.$key_3.'</td>
+                                if(intval($value_3)>0){
+                                    $orders.='<tr>
+                                            <td class="tdCenter">'.$productNamesOnly[$key_3].'</td>
                                             <td class="tdRight">'.$value_3.'</td>
                                         </tr>';
+                                }
+                                
                                 }
                             }
                             $orders.='</tbody></table></td></tr>';
@@ -1355,17 +1359,19 @@ class Body{
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
                             <td>Rs.'.number_format($weight * $charge,2).'</td>
                             <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.($charge*$weight).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Deliver</div></td>';
-                            $str_time = $row['place_time'];
+                            $str_time = $row['dispatched_time'];
+                            date_default_timezone_set("Asia/Colombo");
+                            $date = date('Y-m-d');
                             $time = date('H:i:s');
                             sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
-                            $placedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+                            $dispatchedTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
                             sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
                             $currentTime = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
                             echo'<script></script>';
-                            if(($currentTime-$placedTime)<=900){
+                            if($date==$row['dispatched_date']&&($currentTime-$dispatchedTime)<=900){
                                 $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
                             }else{
-                                $pool.='<td><div class="delete_btn" id="delete_btn" onClick="cancelJob('.$row['order_id'].')" style="width:100%;height:100%;margin:auto;background-color:transparent" key="data[index].order_id "></div></td>';
+                                $pool.='<td><div class="delete_btn_disabled" id="delete_btn_disabled" style="width:100%;height:100%;margin:auto" key="data[index].order_id ">Cancel</div></td>';
                             }
                             $pool.='<td><img onclick="collapse(this,'.$Count.')" class="downArrow" src="http://localhost/mvc/public/img/icons/down.png"></td>
                             </tr><tr style="display:none" id="'.$Count.'row">
@@ -1610,8 +1616,8 @@ class Body{
                         <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
                     </div>
                     <div class="orderRow">
-                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
-                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.date('F j, Y', strtotime($placedDate)).'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.date('g:i A', strtotime($placedTime)).'</div>
                     </div>
                     <div class="orderTbl">
                         <table class="styled-table">
@@ -2349,8 +2355,8 @@ class Body{
                         <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label><label id="'.$orderID.'dist" value="'.$distName.'">'.$distName.'</label></div>
                     </div>
                     <div class="orderRow">
-                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label><label id="'.$orderID.'placedDate" value="'.$placedDate.'">'.$placedDate.'</label></div>
-                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label><label id="'.$orderID.'placedTime" value="'.$placedTime.'">'.$placedTime.'</label></div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label><label id="'.$orderID.'placedDate" value="'.$placedDate.'">'.date('F j, Y', strtotime($placedDate)).'</label></div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label><label id="'.$orderID.'placedTime" value="'.$placedTime.'">'.date('g:i A', strtotime($placedTime)).'</label></div>
                     </div>
                     <div class="orderTbl" style="height:45%">
                         <table class="styled-table" id="'.$orderID.'table">
@@ -2450,7 +2456,7 @@ class Body{
                         <div class="orderColumn"><label style="margin-left: 2%;">Distributor Name :</label>'.$distName.'</div>
                     </div>
                     <div class="orderRow">
-                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.$placedDate.'</div>
+                        <div class="orderColumn"><label style="margin-left: 2%;">Placed Date :</label>'.date('F j, Y', strtotime($placedDate)).'</div>
                         <div class="orderColumn"><label style="margin-left: 2%;">Placed Time :</label>'.$placedTime.'</div>
                     </div>
                     <div class="orderTbl">

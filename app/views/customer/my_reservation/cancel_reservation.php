@@ -23,7 +23,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
         <?php
 
             $order_id = $data['order_id'];
-
+        // bank refund details form
             echo'<div class="detail_form">
                     <form id="bank_details_form" method="POST"  action="'.BASEURL.'/Orders/refund_bank_details/'.$data['order_id'].'" >
                         

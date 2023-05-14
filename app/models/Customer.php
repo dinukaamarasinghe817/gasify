@@ -16,7 +16,7 @@ class Customer extends Model{
 
 
 
-    /*......................................................Customer Dashboard...............................................................*/
+    /*.........................................................Customer Dashboard...............................................................*/
 
     //display customer profile image
     public function getCustomerImage($customer_id){
@@ -104,7 +104,7 @@ class Customer extends Model{
 
 
 
-    /*......................................................Customer My Reservation tab......................................................*/
+    /*.........................................................Customer My Reservation tab.......................................................*/
 
     //display all past reservations in my reservation tab
     public function getAllmyreservations($customer_id){
@@ -385,7 +385,7 @@ class Customer extends Model{
 
 
     
-    /*...........................................................Customer dealers tab .......................................................*/
+    /*...........................................................Customer dealers tab ...........................................................*/
 
     //display  dealers details according to selected brand and city
     function getdealersDetails($company_id=null,$city_name = null) {
@@ -445,7 +445,7 @@ class Customer extends Model{
 
 
 
-    /*.......................................................customer help tab.............................................................. */
+    /*.......................................................customer help tab.................................................................. */
     
     //get admin id as a other user in chat box
     public function getAdminId(){
@@ -479,7 +479,7 @@ class Customer extends Model{
 
 
 
-    /*............................................................Quota tab..................................................................*/
+    /*............................................................Quota tab.......................................................................*/
     
     //display customer quota according to relavant company 
     function getcustomerquota($customer_id){
@@ -615,11 +615,6 @@ class Customer extends Model{
                     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
                 }
             }
-            // else if(isset($_SESSION['city']) && isset($_SESSION['company_id'])){
-            //     $company_id = $_SESSION['company_id'];
-            //     $city_name = $_SESSION['city'];
-            //     $result1 = $this->Query("SELECT d.dealer_id,d.name as d_name,d.city,c.name as c_name FROM dealer d INNER JOIN company c ON  d.company_id = c.company_id WHERE c.company_id = '$company_id' AND d.city = '$city_name'");
-            // }
             else{
                 $customer_id = $_SESSION['user_id'];
                 $row = mysqli_fetch_assoc($this->read('customer',"customer_id = $customer_id"));
@@ -746,7 +741,7 @@ class Customer extends Model{
 
 
 
-    /*======insert reservation details and selected product details to database in Dealer controller and return order_id==================== */
+    /*===========insert reservation details and selected product details to database in Dealer controller and return order_id==================== */
   
 
 
@@ -799,7 +794,7 @@ class Customer extends Model{
    
 
 
-    /*=======================================select delivery method========================================================================= */
+    /*=====================================================select delivery method=============================================================== */
     //insert delivery distance ranges to reservation table and return delivery charge  
     function get_delivery_charge($order_id,$delivery_street,$delivery_city){
        
@@ -844,10 +839,7 @@ class Customer extends Model{
                 $delivery_charge = $charge_per_kilo * $sum_of_weights;  //calculate delivery charge
             }
         }
-        // set a minimum value for the delivery charge. (uncomment when you need)
-        // if($delivery_charge < MIN_DEL_CHARGE){
-        //     $delivery_charge = MIN_DEL_CHARGE;
-        // }
+        
         return $delivery_charge;
     }
 

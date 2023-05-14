@@ -1061,10 +1061,6 @@ class Distributor extends Model
         // return ['quantities'=>$product_quantites];
     }
 
-
-    // reports - income
-
-    // reprots - expendition
     
 }
 
