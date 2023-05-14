@@ -2327,7 +2327,7 @@ class Body{
                         $to=13;
                     }
                     for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
-                        if($i==$data['fromyearandmonth'][1]){// add years
+                        if($i==$data['fromyearandmonth'][1]){// add months
                             $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
                         }else{
                             $tag.='<option value="'.$i.'">'.$i.'</option>';
@@ -2344,7 +2344,7 @@ class Body{
             </div>
             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
                 To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
-                if(isset($data['joinedDate'])){
+                if(isset($data['joinedDate'])){ // add years
                     echo'<option value="" disabled selected>Year</option>';
                     $tag='';
                         for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { //add years
@@ -2462,7 +2462,7 @@ class Body{
                 <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
                 From<select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
                     if(isset($data['joinedDate'])){
-                        echo'<option value="" disabled selected >Year</option>';
+                        echo'<option value="" disabled selected >Year</option>';// add years
                         $tag='';
                         for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) {  // add years from joined year
                             
@@ -2480,7 +2480,7 @@ class Body{
                         echo'<option value="" disabled selected>Year</option></select>';
                     }
                 echo'<select name="monthFrom" id="monthFrom">';
-                if(isset($data['currentDate'])&& isset($data['redirect'])){
+                if(isset($data['currentDate'])&& isset($data['redirect'])){// add months
                     echo'<option value="" disabled >Month</option>';
                     $tag='';
                     $to=0;
@@ -2508,7 +2508,7 @@ class Body{
             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
                 To <select name="yearTo" id="yearTo" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
                 if(isset($data['joinedDate'])){
-                    echo'<option value="" disabled selected>Year</option>';
+                    echo'<option value="" disabled selected>Year</option>'; // add years
                     $tag='';
                         for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
                             if(($data['yearto']) && $i==intval($data['yearto'])){
@@ -2525,7 +2525,7 @@ class Body{
                     }
                 
                 echo'
-                <select name="monthTo" id="monthTo">';
+                <select name="monthTo" id="monthTo">'; // add months
                     if(isset($data['currentDate']) && isset($data['redirect'])){
                         echo'<option value="" disabled >Month</option>';
                         $tag='';
