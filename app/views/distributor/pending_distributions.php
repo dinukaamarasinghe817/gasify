@@ -101,7 +101,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                             </tr>
                                         </tbody>
                                     </table>';
-                                    if($row1['vehicle_allocated'] == 1){
+                                    if($row1['vehicle_allocated'] != ""){
                                         $output .= '<button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Distribution Done</button>';
                                     }
                                 $output .= '</div>
