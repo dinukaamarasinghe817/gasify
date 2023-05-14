@@ -204,7 +204,7 @@ class Delivery extends Model
             }
         }
     }public function getDeliveredOrders($delivery_id){
-        $result=$this->Query("SELECT deliver_date AS date FROM reservation WHERE reservation.order_state='completed' AND reservation.delivery_id=$delivery_id ORDER BY date ");
+        $result=$this->Query("SELECT deliver_date AS date FROM reservation WHERE reservation.order_state='Delivered' AND reservation.delivery_id=$delivery_id ORDER BY date ");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -234,7 +234,7 @@ class Delivery extends Model
     
     
     }public function getDeliveredProducts($delivery_id){
-        $result=$this->Query("SELECT reservation.order_id,reservation.deliver_date,reservation_include.product_id,reservation_include.quantity,product.name FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Completed' INNER JOIN product ON reservation_include.product_id=product.product_id;");
+        $result=$this->Query("SELECT reservation.order_id,reservation.deliver_date,reservation_include.product_id,reservation_include.quantity,product.name FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Delivered' INNER JOIN product ON reservation_include.product_id=product.product_id;");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
@@ -244,7 +244,7 @@ class Delivery extends Model
         }
 
     }public function getRevenueForAnalysis($delivery_id){
-        $result=$this->Query("SELECT reservation.deliver_date,reservation.deliver_charge FROM reservation WHERE reservation.order_state='Completed' AND reservation.delivery_id=$delivery_id ORDER BY deliver_date");
+        $result=$this->Query("SELECT reservation.deliver_date,reservation.deliver_charge FROM reservation WHERE reservation.order_state='Delivered' AND reservation.delivery_id=$delivery_id ORDER BY deliver_date");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
