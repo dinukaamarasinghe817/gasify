@@ -53,11 +53,11 @@ class Delivery extends Model
         foreach($result as $row){
             $city=$row['city'];
         }
-        $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.name,product.image,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Accepted' AND reservation.collecting_method='Delivery' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id AND dealer.city='$city' ORDER BY priority DESC,place_date DESC,place_time DESC");
+        $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.deliver_charge,reservation.place_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.name,product.image,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Accepted' AND reservation.collecting_method='Delivery' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id AND dealer.city='$city' ORDER BY priority DESC,place_date DESC,place_time DESC");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
-                array_push($info,['order_id'=>$row['order_id'], 'place_date'=>$row['place_date'], 'place_time'=>$row['place_time'],'customer_id'=>$row['customer_id'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'name'=>$row['name'],'image'=>$row['image'],'weight'=>$row['weight'],'city'=>$row['city'],'street'=>$row['street'],'contact_no'=>$row['contact_no'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'dcity'=>$row['dcity'],'dstreet'=>$row['dstreet']]);
+                array_push($info,['order_id'=>$row['order_id'], 'place_date'=>$row['place_date'], 'deliver_charge'=>$row['deliver_charge'],'place_time'=>$row['place_time'],'customer_id'=>$row['customer_id'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'name'=>$row['name'],'image'=>$row['image'],'weight'=>$row['weight'],'city'=>$row['city'],'street'=>$row['street'],'contact_no'=>$row['contact_no'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'dcity'=>$row['dcity'],'dstreet'=>$row['dstreet']]);
             }
             return $info;
         }
@@ -72,14 +72,14 @@ class Delivery extends Model
         foreach($result as $row){
             $city=$row['city'];
         }
-        $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,reservation.dispatched_date,reservation.dispatched_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.name,product.image,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet  FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Dispatched' AND reservation.collecting_method='Delivery' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id AND dealer.city='$city'");
+        $result = $this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,reservation.deliver_charge,reservation.dispatched_date,reservation.dispatched_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.name,product.image,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet  FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Dispatched' AND reservation.collecting_method='Delivery' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id AND dealer.city='$city'");
         //print_r($result);
         if(mysqli_num_rows($result)>0){
             //print_r('yes');
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
                 //print_r($row);
-                array_push($info,['order_id'=>$row['order_id'], 'place_date'=>$row['place_date'], 'place_time'=>$row['place_time'],'customer_id'=>$row['customer_id'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'name'=>$row['name'],'image'=>$row['image'],'weight'=>$row['weight'],'city'=>$row['city'],'street'=>$row['street'],'contact_no'=>$row['contact_no'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'dcity'=>$row['dcity'],'dstreet'=>$row['dstreet'],'dispatched_date'=>$row['dispatched_date'],'dispatched_time'=>$row['dispatched_time']]);
+                array_push($info,['order_id'=>$row['order_id'], 'place_date'=>$row['place_date'],'deliver_charge'=>$row['deliver_charge'],'place_time'=>$row['place_time'],'customer_id'=>$row['customer_id'],'product_id'=>$row['product_id'],'quantity'=>$row['quantity'],'name'=>$row['name'],'image'=>$row['image'],'weight'=>$row['weight'],'city'=>$row['city'],'street'=>$row['street'],'contact_no'=>$row['contact_no'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'dcity'=>$row['dcity'],'dstreet'=>$row['dstreet'],'dispatched_date'=>$row['dispatched_date'],'dispatched_time'=>$row['dispatched_time']]);
             }
             return $info;
         }else{
@@ -168,7 +168,7 @@ class Delivery extends Model
         $date = date('Y-m-d');
         $time = date('H:i:s');
         //echo($date);
-        $this->update('reservation',['order_state'=>"Delivered",'deliver_date'=>$date,'deliver_time'=>$time,'deliver_charge'=>$charge],'order_id='.$orderID);
+        $this->update('reservation',['order_state'=>"Delivered",'deliver_date'=>$date,'deliver_time'=>$time],'order_id='.$orderID);
         // order information
         $order = mysqli_fetch_assoc($this->read('reservation',"order_id = $orderID"));
         // customer information
