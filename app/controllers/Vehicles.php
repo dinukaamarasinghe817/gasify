@@ -153,19 +153,11 @@ class Vehicles extends Controller{
         $this->AuthorizeUser('distributor');
 
         $data['confirmation'] = '';
-        // display success and error messages
-        // if($error != null){
-        //     $data['toast'] = ['type' => 'error', 'message' => $error];
-        // }
         if($success != null){
             $data['toast'] = ['type' => 'success', 'message' => $success];
             
         }
-
-        // $this->model("Distributor")->releaseVehicle($vehicle_no);
-        // $this->viewvehicle();
         $data['releasevehicle'] = $this->model("Distributor")->releaseVehicle($vehicle_no);
-        // $this->view('distributor/view_vehicles', $data);
         $this->viewvehicle($data);
     }
 

@@ -43,11 +43,8 @@ $user_id = $_SESSION['user_id'];
                                         <td>'.$row2['type'].' </td>
                                         <td>'.$row2['fuel_consumption'].' L</td>
                                         ';
-
-                                    // if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
-                                        $output .= '<td><button type="button" style="background-color: B4AAFF class="btn4" onclick="document.location.href=\''.BASEURL.'/orders/suitableVehicles/\'">Assign</button></td>';
-                                    // }                              
-                                    $output .=  '
+                                        $output .= '<td><button type="button" style="background-color: B4AAFF class="btn4" onclick="document.location.href=\''.BASEURL.'/orders/suitableVehicles/\'">Assign</button></td>';                             
+                                        $output .=  '
                                             </tr>';
                     }
                 }else{

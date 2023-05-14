@@ -159,10 +159,6 @@ class Distributor extends Model
 
     // release a vehicle before removing
     public function releaseVehicle($vehicle_no) {
-        // $user_id = $_SESSION['user_id'];
-        // // update the availability as "Yes" of a vehicle
-        // $query2 = $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
-        // return $query2;
 
         $user_id = $_SESSION['user_id'];
         $data = [];
@@ -173,7 +169,6 @@ class Distributor extends Model
        while($row = $query->mysqli_fetch_assoc($query)){
             $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$row['capacity']],"vehicle_no = '$vehicle_no' AND product_id = ".$row['product_id']);
        }
-        // return $query2;
         $data['success'] = ['type' => "success", 'message'=> "Vehicle released"];
     }
 
@@ -624,7 +619,7 @@ class Distributor extends Model
         return $result;
     }
 
-    // ------ //
+    // product details
     public function productdetails() {
         $products = array();
 
@@ -640,7 +635,6 @@ class Distributor extends Model
         }
         return $products;
     }
-    //  ----- //
 
     // distributor purchase order
     public function distributorplaceorder($user_id, $productid,$postproducts) {
@@ -724,7 +718,6 @@ class Distributor extends Model
             $query5 = $this->Query("SELECT unit_price FROM product WHERE product_id = '$product'");
             $row7 = mysqli_fetch_assoc($query5);
             $unit_price = $row7['unit_price'];
-            // $weight = $row7['weight'];
             if($quantity>0) {
                 // insert quantities of each product into stock_include table 
                 $query5 = $this->Query("INSERT INTO stock_include (stock_req_id, product_id, quantity, unit_price) VALUES ($req_id, '$product', $quantity, $unit_price)");
@@ -986,40 +979,6 @@ class Distributor extends Model
         return $product_quantites;
     }
 
-    // all sell products report details 
-    // public function AllSellProductsDetails($start_date, $end_date) {
-    // public function AllSellProductsDetails($option) {
-    //     $user_id = $_SESSION['user_id'];  //distirbutor id
-
-    //     if($option == 'today'){
-    //         $start_date = date('Y-m-d');
-    //         $end_date = date('Y-m-d');
-    //     }elseif($option == '7day'){
-    //         $start_date = date('Y-m-d', strtotime('-7 days'));
-    //         $end_date = date('Y-m-d', strtotime('-1 days'));        
-    //     }else{
-    //         $start_date = date('Y-m-d', strtotime('-30 days'));
-    //         $end_date = date('Y-m-d', strtotime('-1 days'));
-    //     }
-
-    //     $product_quantites = array();
-    //     $query1 = $this->Query("SELECT p.product_id, SUM(pi.quantity) as quantity, p.name as name
-    //     FROM purchase_include pi INNER JOIN product p 
-    //     ON pi.product_id = p.product_id WHERE po_id IN 
-    //         (SELECT po_id FROM purchase_order 
-    //         WHERE place_date >= '$start_date' AND place_date <= '$end_date' AND distributor_id = $user_id AND po_state != 'pending') 
-    //         GROUP BY product_id");
-
-    //     if(mysqli_num_rows($query1)>0) {
-    //         while($row1=mysqli_fetch_assoc($query1)) {
-    //             array_push($product_quantites, $row1);
-    //         }
-    //     }
-    //     return ['start'=> $start_date, 'end'=> $end_date, 'quantites'=>$product_quantites];
-    // }
-
-
-
     // reports - get totals of each product to company purchase orders
     public function AllRequestedProducts($option) {
         $user_id = $_SESSION['user_id'];  //distirbutor id
@@ -1058,7 +1017,6 @@ class Distributor extends Model
             }
         }
         return $product_quantites;
-        // return ['quantities'=>$product_quantites];
     }
 
     

@@ -35,6 +35,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
         
                 <div class="middle">
+                    <!-- time breakdown -->
                     <?php echo'
                     <form action ="'.BASEURL.'/reports/allrequestedproducts" method="POST">
                     
@@ -65,6 +66,7 @@ $user_id = $_SESSION['user_id'];
                     ?>
 
                     <?php
+                    // get details of each requested product
                     $records = $data['allproductsquantity'];                    
                     $output = '
                     <div class="repbox">
@@ -80,6 +82,7 @@ $user_id = $_SESSION['user_id'];
                             </thead>
                             <tbody>';
                         $total = 0;
+                        // if requested products are available
                         if(count($records)>0) {
                             foreach($records as $record) {
                                 $row1 = $record['quantities'];
@@ -88,7 +91,7 @@ $user_id = $_SESSION['user_id'];
                                     $quantity = $row1['quantity'];
                                     $weight = $row1['weight'];
                                     $unit_price = $row1['unit_price'];
-                                    $subtotal = $unit_price * $quantity;
+                                    $subtotal = $unit_price * $quantity; //calculate the subtotals
 
                                 $output .= '
                                 <tr>
@@ -98,7 +101,7 @@ $user_id = $_SESSION['user_id'];
                                     <td>'.$quantity.'</td> 
                                     <td>Rs. '.number_format($subtotal,2).'</td>                                                                     
                                 </tr>';
-                                $total += $subtotal;
+                                $total += $subtotal; //calculate the totals
                             }
                             $output .= '
                                 <tr>
@@ -110,7 +113,7 @@ $user_id = $_SESSION['user_id'];
                                 </tr>
 
                         </tbody></table>';
-                        }else {
+                        }else { //if requested products are not available
                             $output .= '</table>';
                             $output .= '<p class="nofoundtxt">No records found</p>';
                         }

@@ -21,6 +21,7 @@ $user_id = $_SESSION['user_id'];
           ?>
 
           <div class="main2">
+              <!-- form for get details of vehicle -->
             <form action="<?php echo BASEURL;?>/vehicles/addvehicle" method="POST">
                 <div class="err-txt1">
                     <?php
@@ -52,6 +53,7 @@ $user_id = $_SESSION['user_id'];
                 <div class="part2">
                     <label>Weight Limit - </label>
                     <?php 
+                    // get details of product
                         $result = $data['vehicles'];
                         while($product = mysqli_fetch_assoc($result)) {
                             $productid = $product['product_id'];

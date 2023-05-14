@@ -27,8 +27,9 @@ $user_id = $_SESSION['user_id'];
             <div class="accordion new">
      
                     <?php
+                    // get dealers' details 
                     $dealers = $data['dealers'];
-                    if(count($dealers)>0) {
+                    if(count($dealers)>0) { //if delaers are available
                   
                         foreach($dealers as $dealer) {
                             $row1 = $dealer['dealerinfo'];
@@ -84,7 +85,7 @@ $user_id = $_SESSION['user_id'];
                                                         </tr>
                                                     </thead>
                                                     <tbody>';
-
+                                            // products details
                                             foreach($capacities as $capacity) {
                                                 $row3 = $capacity;
                                                 $output .= '
@@ -115,7 +116,7 @@ $user_id = $_SESSION['user_id'];
                         
                             echo $output;
                         }
-                    }else {
+                    }else { //if dealers are not available
                         $output ='';
                         $output .= '</table>';
                         $output .= '<p class="nofoundtxt">No records found</p>';

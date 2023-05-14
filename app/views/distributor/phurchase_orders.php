@@ -35,6 +35,7 @@ $user_id = $_SESSION['user_id'];
             <div class="middle">
                 <?php 
                 $output = '';
+                // form for get quantities of products
                     $output .='
                     <form action="'.BASEURL.'/orders/purchase_order" class="po" method="POST" onsubmit="pobuttonclicked(); return false;">
                     <table class="po styled-table">
@@ -49,7 +50,7 @@ $user_id = $_SESSION['user_id'];
                             </tr>
                         </thead>
                         <tbody>';
-
+                        // get details of products 
                         if(mysqli_num_rows($data['purchaseorder'])>0) {
                             $product_array = array();
                             $j = 0;

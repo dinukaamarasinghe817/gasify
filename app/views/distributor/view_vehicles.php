@@ -33,9 +33,9 @@ $user_id = $_SESSION['user_id'];
                         </tr>
                     </thead>
                     <tbody>';
-                
+                // get vehicle details 
                 $vehicles = $data['vehicles'];
-                if(count($vehicles)>0) {
+                if(count($vehicles)>0) { //if vehicles are available
 
                     foreach($vehicles as $vehicle){
                         $row2 = $vehicle['vehicleinfo'];
@@ -61,7 +61,7 @@ $user_id = $_SESSION['user_id'];
                     }
                 
                     $output .= '</tbody></table>';
-                }else {
+                }else { //if vehicles are not available
                     $output .= '</table>';
                     $output .= '<p class="emptytxt">No vehicles found</p>';
                 }

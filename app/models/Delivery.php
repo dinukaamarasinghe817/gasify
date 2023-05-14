@@ -102,7 +102,7 @@ class Delivery extends Model
     }
     public function getDeliveredOrdersCount(){
         $date = date('Y-m-d');
-        $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}' AND reservation.deliver_date='$date'");
+        $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Delivered' AND reservation.delivery_id='{$_SESSION['user_id']}' AND reservation.deliver_date='$date'");
         $info=mysqli_fetch_assoc($result);
         return $info;
     }
@@ -171,7 +171,7 @@ class Delivery extends Model
         $date = date('Y-m-d');
         $time = date('H:i:s');
         //echo($date);
-        $this->update('reservation',['order_state'=>"Completed",'deliver_date'=>$date,'deliver_time'=>$time,'deliver_charge'=>$charge],'order_id='.$orderID);
+        $this->update('reservation',['order_state'=>"Delivered",'deliver_date'=>$date,'deliver_time'=>$time,'deliver_charge'=>$charge],'order_id='.$orderID);
         // order information
         $order = mysqli_fetch_assoc($this->read('reservation',"order_id = $orderID"));
         // customer information
@@ -220,7 +220,7 @@ class Delivery extends Model
     }
     public function getTodayRevenue($delivery_id){
         $date = date('Y-m-d');
-        $result=$this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,reservation.deliver_charge,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Completed' AND reservation.collecting_method='delivery' AND reservation.delivery_id='{$_SESSION['user_id']}' AND reservation.deliver_date='$date' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id;");
+        $result=$this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,reservation.deliver_charge,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Delivered' AND reservation.collecting_method='delivery' AND reservation.delivery_id='{$_SESSION['user_id']}' AND reservation.deliver_date='$date' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id;");
         return $result;
     }
     
