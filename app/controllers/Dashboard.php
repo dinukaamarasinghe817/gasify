@@ -62,6 +62,7 @@
             $order_details=$this->model('Company')->getStockReqDetails($company_id);
             $productDetails = $this->model('Company')->getProductDetails($company_id);
             $data['products']=$product_details;
+            $data['productnames']=$this->model('Company')->getProductNamesOnly($company_id);
             $data['reqCount']=$pendingReq;
             $data['distCount']=$distCount;
             $data['dealerCount']=$dealerCount;

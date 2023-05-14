@@ -410,7 +410,24 @@ div{
     cursor: pointer;
     background-color: var(--button-blue-hover);
 }
-
+.delete_btn_disabled{
+    background-color: transparent;
+    border-radius: 5px;
+    margin:auto;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#delete_btn_disabled{
+    width: 16%;
+    margin-left: 1%;
+    background-color: #ec3535; 
+    color: white;
+}
+.delete_btn_disabled:hover{
+    cursor: not-allowed;
+}
  
  /* ==========================================================Gas delivery CSS end===============================================================*/
  
