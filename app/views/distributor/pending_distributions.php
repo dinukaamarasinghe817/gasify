@@ -52,7 +52,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                         <span><strong>Dealer ID : '.$dealer_id.' </strong></span>
                                         <span><strong>Placed Date : '.$date.' </strong></span>
                                         <span><strong>Placed Time : '.$time.' </strong></span>';
-                                        if($row1['vehicle_allocated'] == 0){
+                                        if($row1['vehicle_allocated'] == ""){
                                          $output .= '<span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList/'.$distribution_id.'\'">Assign Vehicle</button></span>';
                                         }
                                     $output .= '</div>
