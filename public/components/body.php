@@ -1282,7 +1282,7 @@ class Body{
                             <td>'.date('F j, Y', strtotime($row['place_date'])).'</td>
                             <td>'.date('g:i A', strtotime($row['place_time'])).'</td>
                             <td>'.getDistance($row['city'].','.$row['street'], $row['dcity'].','.$row['dstreet']).'KM</td>
-                            <td>Rs.'.number_format($weight * $charge,2).'</td>
+                            <td>Rs.'.number_format($row['deliver_charge'],2).'</td>
                             <td><div class="accept_btn" id="accept_btn" onClick="deliverJob('.$row['order_id'].','.($charge*$weight).')" style="width:100%;height:100%;margin:auto;color:white" key="data[index].order_id ">Deliver</div></td>';
                             $str_time = $row['dispatched_time'];
                             date_default_timezone_set("Asia/Colombo");
