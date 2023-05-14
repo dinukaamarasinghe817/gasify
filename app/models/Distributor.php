@@ -378,7 +378,8 @@ class Distributor extends Model
                 }
             }
 
-            if($flag){  //reduce stock from distirubtor keep and add it to the dealer keep
+            if($flag){  
+                //reduce stock from distirubtor keep and add it to the dealer keep
                 $query2 = $this->Query("SELECT i.product_id as product_id, i.quantity as quantity, o.dealer_id as dealer_id
                 FROM purchase_order o inner join purchase_include i
                 ON o.po_id = i.po_id 
