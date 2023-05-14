@@ -7,12 +7,12 @@ class Company extends Model
     {
         parent::__construct();
     }
-
+    // get all distributors
     public function getDistributors($company_id){  
         $result = $this->read('distributor', "company_id = $company_id", "city");
         return $result;
     }
-
+    // get all company details
     public function getAllCompanies(){ 
         $result = $this->Query("SELECT c.name AS name, u.email AS email, CONCAT(c.street,', ',c.city) AS address FROM company c INNER JOIN users u ON c.company_id = u.user_id");
         $data['company'] = array();
@@ -25,6 +25,7 @@ class Company extends Model
         }
         return $data['company'];
     }
+    // get all product details
     public function getAllProducts(){
         $sql = "SELECT c.name AS company_name,
         p.name AS name,
@@ -37,11 +38,13 @@ class Company extends Model
         $result = $this->Query($sql);
         return $result;
     }
+    // get all details of company including logo
     public function getCompanyImage($company_id){
         $result = $this->Query("SELECT * FROM users u INNER JOIN company c ON u.user_id = c.company_id WHERE u.user_id = '$company_id' ");
         // $result = $this->read('company', "company_id = $company_id");
         return $result;
     }
+    // get all dealers for a company
     public function getRegisteredDealers($company_id){
         //$result = $this->read('dealer',"company_id=$company_id");
         $result = $this->read('dealer',"company_id = $company_id");
@@ -56,6 +59,7 @@ class Company extends Model
         //return $result;
 
     }
+    // get all products for a company
     public function getProductDetails($company_id){
         $result = $this->read('product', "company_id = $company_id");
         if(mysqli_num_rows($result)>0){
@@ -69,6 +73,7 @@ class Company extends Model
         }
 
     }
+    // get all distributors for a company
     public function getRegisteredDistributors($company_id){
         $result = $this->Query("SELECT CONCAT(users.first_name,' ',users.last_name) AS name,distributor.contact_no,distributor.hold_time,distributor.city,distributor.street FROM users INNER JOIN distributor ON users.user_id=distributor.distributor_id AND distributor.company_id=$company_id;");
         if(mysqli_num_rows($result)>0){
@@ -79,6 +84,7 @@ class Company extends Model
             return $info;
         }
     }
+    // register a product for a company
     public function registerNewProduct($data){
         /*foreach ($data as $key => $value) {
             //print_r($data);
@@ -103,20 +109,28 @@ class Company extends Model
         //print_r($data);
 
     }
+    // get registered dealer ID
     public function getDealerID($data){
         $result=$this->read('users','email =\''.$data.'\'');
         $row=mysqli_fetch_assoc($result);
         return $row['user_id'];
 
-    }public function registerUser($data){
+    }
+    // register a user to users table
+    public function registerUser($data){
         $this->insert("users",$data);
 
-    }public function registerNewDealer($data){
+    }
+    // register new dealer
+    public function registerNewDealer($data){
         $this->insert("dealer",$data);
     }
+    // register new distributor
     public function registerNewDistributor($data){
         $this->insert("distributor",$data);
-    }public function updateProduct($data,$productID,$companyID){
+    }
+    // update a product
+    public function updateProduct($data,$productID,$companyID){
         if(isset($data['quantity'])){
             $qty=intval($data['quantity']);
             //print_r($data['quantity']);
@@ -156,9 +170,11 @@ class Company extends Model
         //update quota table with new quota monthly limit
         $this->Query("UPDATE quota SET monthly_limit=$quota WHERE (company_id=$companyID AND customer_type='$customer')");
     }
+    // reset quota
     public function resetQuota($companyID,$customer,$state){
         $this->Query("UPDATE quota SET state='$state' WHERE (company_id=$companyID AND customer_type='$customer');");
     }
+    // get stock requestdetails from distributors
     public function getStockReqDetails($company_id){
         $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=$company_id INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='pending';");
         if(mysqli_num_rows($result)>0){
@@ -176,9 +192,11 @@ class Company extends Model
         
         return $result;
     }
+    // issue order to distributor
     public function issueOrder($orderID){
         $this->Query("UPDATE stock_request SET stock_req_state='completed' WHERE stock_req_id=$orderID");
     }
+    // get issued stock request details
     public function getIssuedStockReqDetails($company_id){
         $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=$company_id INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='completed';");
         if(mysqli_num_rows($result)>0){
@@ -190,9 +208,11 @@ class Company extends Model
         }
         //return $result;
     }
+    // delay a stock request
     public function delayOrder($orderID){
         $this->Query("UPDATE stock_request SET stock_req_state='delayed' WHERE stock_req_id=$orderID");
     }
+    // get deayed stock request details
     public function getDelayedStockReqDetails($company_id){
         $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=$company_id INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.stock_req_state='delayed';");
         if(mysqli_num_rows($result)>0){
@@ -202,8 +222,8 @@ class Company extends Model
             }
             return $info;
         }
-        //return $result;
     }
+    // get registered product count of a company
     public function getProductCount($company_id){
         $result=$this->Query("SELECT COUNT(product.product_id) as count FROM product WHERE product.company_id=$company_id");
         if(mysqli_num_rows($result)>0){
@@ -214,6 +234,7 @@ class Company extends Model
             return $info;
         }
     }
+    // get pending stock request count
     public function getPendingReqCount($company_id){
         $result=$this->Query("SELECT COUNT(stock_request.stock_req_id) as count FROM stock_request WHERE stock_request.company_id=$company_id AND stock_request.stock_req_state='pending';");
         if(mysqli_num_rows($result)>0){
@@ -224,6 +245,7 @@ class Company extends Model
             return $info;
         }
     }
+    // get registered distributor count
     public function getDistributorCount($company_id){
         $result=$this->Query("SELECT COUNT(distributor.distributor_id) AS count FROM distributor INNER JOIN users ON distributor.distributor_id=users.user_id AND distributor.company_id=$company_id;");
         if(mysqli_num_rows($result)>0){
@@ -234,6 +256,7 @@ class Company extends Model
             return $info;
         }
     }
+    // get registered dealer count
     public function getDealerCount($company_id){
         $result=$this->Query("SELECT COUNT(dealer.dealer_id) AS count FROM dealer INNER JOIN users ON dealer.dealer_id=users.user_id AND dealer.company_id=$company_id;");
         if(mysqli_num_rows($result)>0){
@@ -244,9 +267,11 @@ class Company extends Model
             return $info;
         }
     }
+    // reduce company sock after order issued
     public function reduceStock($key,$qty){
         $this->Query("UPDATE product SET quantity=quantity-$qty WHERE product_id=$key;");
     }
+    // get quotadetails issued by company
     public function getQuotaDetails($company_id){
         $result=$this->Query("SELECT * FROM `quota` WHERE company_id=$company_id");
         if(mysqli_num_rows($result)>0){
@@ -258,6 +283,7 @@ class Company extends Model
         }
 
     }
+    // get only deistributor names
     public function getDistributorNamesOnly($company_id){
         $result=$this->Query("SELECT CONCAT(users.first_name,' ',users.last_name)AS names,distributor.distributor_id AS id FROM users INNER JOIN distributor ON users.user_id=distributor.distributor_id AND distributor.company_id=$company_id");
         if(mysqli_num_rows($result)>0){
@@ -269,6 +295,7 @@ class Company extends Model
         }
     
     }
+    // get stock request dates
     public function getOrderDates($ID){
         $result=$this->Query("SELECT users.date_joined AS joinedDate FROM users WHERE users.user_id=$ID");
         if(mysqli_num_rows($result)>0){
@@ -279,6 +306,7 @@ class Company extends Model
             return $info;
         }
     }
+    // get product sold details for analysis within given time period
     public function getProductsForAnalysis($company_id,$distributorID,$yearFrom,$yearTo){
         $result=$this->Query("SELECT users.first_name,users.last_name,stock_request.place_date,stock_request.place_time,stock_request.stock_req_id,stock_request.distributor_id,stock_include.product_id,stock_include.quantity,stock_include.unit_price FROM users INNER JOIN stock_request ON users.user_id=stock_request.distributor_id AND stock_request.company_id=$company_id INNER JOIN stock_include ON stock_include.stock_req_id=stock_request.stock_req_id AND stock_request.distributor_id=$distributorID AND stock_request.stock_req_state='completed' AND YEAR(stock_request.place_date) BETWEEN $yearFrom AND $yearTo ;");
         if(mysqli_num_rows($result)>0){
@@ -288,8 +316,8 @@ class Company extends Model
             }
             return $info;
         }
-        //return $result;
     }
+    //get distributor name using distributor id
     public function getDistributorName($distributorID){
         $result=$this->Query("SELECT CONCAT(users.first_name,' ',users.last_name) AS name FROM users WHERE users.user_id=$distributorID");
         if(mysqli_num_rows($result)>0){
@@ -300,6 +328,7 @@ class Company extends Model
             return $info;
         }
     }
+    // get distributor joined date
     public function getDateJoined($distributorID){
         $result=$this->Query("SELECT date_joined AS date FROM users WHERE users.user_id=$distributorID");
         if(mysqli_num_rows($result)>0){
@@ -308,6 +337,7 @@ class Company extends Model
             }
         }
     }
+    // get distributor id using order id
     public function getDistributorID($orderID){
         $result = $this->Query("SELECT stock_request.distributor_id FROM stock_request WHERE stock_request.stock_req_id=$orderID");
         if(mysqli_num_rows($result)>0){
@@ -318,9 +348,11 @@ class Company extends Model
             return $info;
         }
     }
+    // add stock to distributor after order issued
     public function addStockToDistributor($distributorID,$productID,$qty){
         $this->Query("UPDATE distributor_keep SET distributor_keep.quantity=quantity+$qty WHERE distributor_keep.product_id=$productID AND distributor_keep.distributor_id=$distributorID");
     }
+    // get company lowest product weight
     public function getLowestProductWeight($companyID){
         $result=$this->Query("SELECT weight FROM product WHERE company_id=$companyID AND type='Cylinder' ORDER BY weight ASC LIMIT 1;");
         if(mysqli_num_rows($result)>0){
@@ -333,13 +365,13 @@ class Company extends Model
             return null;
         }
     }
+    // get only product names registered under company
     public function getProductNamesOnly($companyID){
         $result=$this->Query("SELECT product.product_id,product.name FROM product WHERE product.company_id=$companyID;");
         if(mysqli_num_rows($result)>0){
             $info = array();
             while($row = mysqli_fetch_assoc($result)){
                 $info+=array(intval($row['product_id'])=>$row['name']);
-                //array_push($info,[intval($row['product_id'])=>$row['name']]);
             }
             return $info;
         }else{

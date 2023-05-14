@@ -7,12 +7,11 @@ class Delivery extends Model
     {
         parent::__construct();
     }
-
     public function getDistributors($delivery_id){  
         $result = $this->read('distributor', "company_id = $delivery_id", "city");
         return $result;
     }
-
+    // get all companies
     public function getAllCompanies(){  
         $result = $this->Query("SELECT c.name AS name, u.email AS email, CONCAT(c.street,', ',c.city) AS address FROM company c INNER JOIN users u ON c.company_id = u.user_id");
         $data = [];
@@ -25,15 +24,18 @@ class Delivery extends Model
         }
         return $data['company'];
     }
+    // get delivery profile pic and other details
     public function getDeliveryImage($delivery_id){
         $result = $this->Query("SELECT * FROM users u INNER JOIN delivery_person d ON u.user_id = d.delivery_id WHERE u.user_id = '$delivery_id' ");
         // $result = $this->read('delivery_person', "delivery_id = $delivery_id");
         return $result;
     }
+    //get delivery vehicle details
     public function getDeliveryVehicle($delivery_id){
         $result = $this->read('delivery_person', "delivery_id = $delivery_id");
         return $result;
     }
+    //get delivery person personal details
     public function getMyDetails($delivery_id){
         $result=$this->Query("SELECT * FROM delivery_person WHERE delivery_id=$delivery_id");
         if(mysqli_num_rows($result)>0){
@@ -45,6 +47,7 @@ class Delivery extends Model
         }
 
     }
+    //get pool details
     public function getPoolDetails(){
         $delivery_id=$_SESSION['user_id'];
         $result = $this->getMyDetails($delivery_id);
@@ -63,6 +66,7 @@ class Delivery extends Model
         }
         //return $result;
     }
+    //get currently dispatched orders
     public function getCurrentDeliveries(){
         $delivery_id=$_SESSION['user_id'];
         $result = $this->getMyDetails($delivery_id);
@@ -86,6 +90,7 @@ class Delivery extends Model
             return null;
         }
     }
+    //get dispatched delivery count
     public function getPendingDeliveryCount(){
         $delivery_id=$_SESSION['user_id'];
         $result = $this->getMyDetails($delivery_id);
@@ -97,12 +102,14 @@ class Delivery extends Model
         $info=mysqli_fetch_assoc($result);
         return $info;
     }
+    //get delivered delivery count
     public function getDeliveredOrdersCount(){
         $date = date('Y-m-d');
         $result=$this->Query("SELECT COUNT(reservation.order_id) AS count FROM reservation WHERE reservation.order_state='Delivered' AND reservation.delivery_id='{$_SESSION['user_id']}' AND reservation.deliver_date='$date'");
         $info=mysqli_fetch_assoc($result);
         return $info;
     }
+    //get review details
     public function getReviewDetails(){
         $result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id,customer.image,CONCAT(users.first_name,' ',users.last_name) AS name FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN customer ON reservation.customer_id=customer.customer_id INNER JOIN users ON customer.customer_id=users.user_id ORDER BY review.date LIMIT 10;");
         //$result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
@@ -117,11 +124,13 @@ class Delivery extends Model
         }
     
     }
+    // get erview count
     public function getReviewCount(){
         $result=$this->Query("SELECT COUNT(review.order_id) AS count FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
         $info=mysqli_fetch_assoc($result);
         return $info;
     }
+    // accept a delivery from pool
     public function acceptDelivery($orderID,$delivery_id){
         date_default_timezone_set("Asia/Colombo");
         $date = date('Y-m-d');
@@ -157,13 +166,16 @@ class Delivery extends Model
             return 0;
         }
     }
+    // cancel accepted delivery
     public function cancelDelivery($orderID){
         if($this->Query(("UPDATE `reservation` SET order_state='Accepted' WHERE order_id=$orderID;"))){
             return 1;
         }else{
             return 0;
         }
-    }public function setReservationStateDelivered($orderID,$charge){
+    }
+    // deliver picked order
+    public function setReservationStateDelivered($orderID,$charge){
         date_default_timezone_set("Asia/Colombo");
         $date = date('Y-m-d');
         $time = date('H:i:s');
@@ -196,14 +208,18 @@ class Delivery extends Model
         }else{
             return 0;
         }*/
-    }public function getRegisteredDate($delivery_id){
+    }
+    //get delivery registered date only
+    public function getRegisteredDate($delivery_id){
         $result=$this->Query("SELECT date_joined AS date FROM users WHERE users.user_id=$delivery_id");
         if(mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)){
                 return explode("-",$row['date']);
             }
         }
-    }public function getDeliveredOrders($delivery_id){
+    }
+    //get all info about delivered orders
+    public function getDeliveredOrders($delivery_id){
         $result=$this->Query("SELECT deliver_date AS date FROM reservation WHERE reservation.order_state='Delivered' AND reservation.delivery_id=$delivery_id ORDER BY date ");
         if(mysqli_num_rows($result)>0){
             $info = array();
@@ -214,13 +230,14 @@ class Delivery extends Model
         }
         //print_r($info);
     }
+    //get revenue of today delivered orders
     public function getTodayRevenue($delivery_id){
         date_default_timezone_set("Asia/Colombo");
         $date = date('Y-m-d');
         $result=$this->Query("SELECT reservation.deliver_charge FROM reservation WHERE reservation.order_state='Delivered' AND reservation.delivery_id=$delivery_id AND  reservation.deliver_date='$date';");
         return $result;
     }
-    
+    // get total revenue of all time
     public function getRevenue($delivery_id){
         $result=$this->Query("SELECT reservation.order_id,reservation.place_date,reservation.place_time,customer.customer_id,reservation_include.product_id,reservation_include.quantity,product.weight,customer.city,customer.street,customer.contact_no,users.first_name,users.last_name,dealer.city AS dcity,dealer.street AS dstreet FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id INNER JOIN product ON reservation_include.product_id=product.product_id INNER JOIN customer ON reservation.customer_id=customer.customer_id AND reservation.order_state='Completed' AND reservation.collecting_method='delivery' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN users ON users.user_id=customer.customer_id INNER JOIN dealer ON reservation.dealer_id=dealer.dealer_id;");
         return $result;
@@ -233,7 +250,9 @@ class Delivery extends Model
         }
     
     
-    }public function getDeliveredProducts($delivery_id){
+    }
+    //get delvivered products
+    public function getDeliveredProducts($delivery_id){
         $result=$this->Query("SELECT reservation.order_id,reservation.deliver_date,reservation_include.product_id,reservation_include.quantity,product.name FROM reservation INNER JOIN reservation_include ON reservation.order_id=reservation_include.order_id AND reservation.delivery_id=$delivery_id AND reservation.order_state='Delivered' INNER JOIN product ON reservation_include.product_id=product.product_id;");
         if(mysqli_num_rows($result)>0){
             $info = array();
@@ -243,7 +262,9 @@ class Delivery extends Model
             return $info;
         }
 
-    }public function getRevenueForAnalysis($delivery_id){
+    }
+    // get all revenue for analysis
+    public function getRevenueForAnalysis($delivery_id){
         $result=$this->Query("SELECT reservation.deliver_date,reservation.deliver_charge FROM reservation WHERE reservation.order_state='Delivered' AND reservation.delivery_id=$delivery_id ORDER BY deliver_date");
         if(mysqli_num_rows($result)>0){
             $info = array();
@@ -252,7 +273,9 @@ class Delivery extends Model
             }
             return $info;
         }
-    }public function getDeliveryCharges(){
+    }
+    // get delivery charges from delivery charges table
+    public function getDeliveryCharges(){
         $result=$this->Query("SELECT * FROM delivery_charge;");
         if(mysqli_num_rows($result)>0){
             $info = array();
@@ -263,7 +286,9 @@ class Delivery extends Model
         }else{
             return null;
         }
-    }public function getMostRecentReviews(){
+    }
+    // get most recent reviews
+    public function getMostRecentReviews(){
         $result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id,customer.image,CONCAT(users.first_name,' ',users.last_name) AS name FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}' INNER JOIN customer ON reservation.customer_id=customer.customer_id INNER JOIN users ON customer.customer_id=users.user_id ORDER BY review.date LIMIT 10;");
         //$result=$this->Query("SELECT review.order_id,review.date,review.time,review.message,reservation.delivery_id FROM review INNER JOIN reservation ON review.order_id=reservation.order_id AND review.review_type='Delivery' AND reservation.order_state='Completed' AND reservation.delivery_id='{$_SESSION['user_id']}'");
         if(mysqli_num_rows($result)>0){
@@ -275,5 +300,5 @@ class Delivery extends Model
         }else{
             return null;
         }
-    }/*public function getDeliveredProduct*/
+    }
 }
