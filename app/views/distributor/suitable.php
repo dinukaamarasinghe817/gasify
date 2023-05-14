@@ -19,7 +19,7 @@ $user_id = $_SESSION['user_id'];
 
         <div class="main2">
             <?php
-            $output = '
+                $output = '
                 <table class="styled-table">
                     <thead>
                         <tr>
@@ -31,7 +31,7 @@ $user_id = $_SESSION['user_id'];
                     <tbody>';
                 
                 $vehicles = $data['suitablevehiclelist'];
-                $po_id = $data['po_id'];
+                // $po_id = $data['po_id'];
                 // var_dump($vehicles);
                 if(count($vehicles) > 0){
                     foreach($vehicles as $vehicle){
@@ -41,11 +41,11 @@ $user_id = $_SESSION['user_id'];
                                     <tr>
                                         <td>'.$row2['vehicle_no'].'</td>
                                         <td>'.$row2['type'].' </td>
-                                        <td>'.$row2['cost'].' L</td>
+                                        <td>'.$row2['fuel_consumption'].' L</td>
                                         ';
 
                                     // if($row2['availability'] == 'No'|| $row2['availability'] == 'NO' || $row2['availability'] == 'no' ){
-                                        $output .= '<td><button type="button" style="background-color: B4AAFF class="btn4" onclick="document.location.href=\''.BASEURL.'/orders/selectedVehicle/'.$po_id.'/'.$row2['vehicle_no'].'\'">Assign</button></td>';
+                                        $output .= '<td><button type="button" style="background-color: B4AAFF class="btn4" onclick="document.location.href=\''.BASEURL.'/orders/suitableVehicles/\'">Assign</button></td>';
                                     // }                              
                                     $output .=  '
                                             </tr>';
