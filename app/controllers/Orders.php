@@ -785,11 +785,7 @@ class Orders extends Controller{
         $row = mysqli_fetch_assoc($distributor_details);
         $data['image'] = $row['image'];
 
-        // previouse method
         $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
-        // $data['suitablevehiclelist'] = $this->model("Distributor")->getOnlyEligibleVehicles($po_id);
-        // var_dump($data['suitablevehiclelist']);
-        // $data['po_id'] = $po_id;
         $this->view('distributor/suitable', $data);
 
     }

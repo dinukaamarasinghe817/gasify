@@ -168,7 +168,6 @@ class Distributor extends Model
         $data = [];
         // update the availability as "Yes" of a vehicle
        $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
-        // return $query2;
         $data['success'] = ['type' => "success", 'message'=> "Vehicle released"];
     }
 
@@ -1030,10 +1029,6 @@ class Distributor extends Model
         // return ['quantities'=>$product_quantites];
     }
 
-
-    // reports - income
-
-    // reprots - expendition
     
 }
 
