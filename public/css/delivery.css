@@ -403,6 +403,13 @@ div{
 }.delete_btn:hover{
     cursor: pointer;
 }
+.generatePDF{
+    background-color: var(--button-blue);
+}
+.generatePDF:hover{
+    cursor: pointer;
+    background-color: var(--button-blue-hover);
+}
 
  
  /* ==========================================================Gas delivery CSS end===============================================================*/
