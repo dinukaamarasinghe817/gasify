@@ -2702,7 +2702,7 @@ class Body{
             </div>';
             echo'<div class="DealerTables" id="DealerTables" style="height:90%;margin:0;">'; 
                 echo'<div class="selectBoxes" style="width:100%;height:10%;display:flex;flex-direction:row;margin-top:1%">
-                <form action="'. BASEURL.'/Delvery/getCharts" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
+                <form action="'. BASEURL.'/Delvery/deliveryGetReports" enctype="multipart/form-data" method="POST" style="display:flex;flex-direction:row;width:100%">
                 <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex">
                 From<select name="yearFrom" id="yearFrom" style="margin-left:1%" onchange="addMonthsToSelectBoxes(this,'.intval($data['joinedDate'][0]).','.intval($data['joinedDate'][1]).')">';
                     if(isset($data['joinedDate'])){
@@ -2710,8 +2710,8 @@ class Body{
                         $tag='';
                         for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
                             
-                            if($i==intval($data['joinedDate'][0])){
-                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            if( isset($data['yearfrom']) && $i==intval($data['yearfrom'])){
+                                $tag.='<option value="'.$i.'" selected>'.$i.'</option>';
                             }else{
                                 $tag.='<option value="'.$i.'" >'.$i.'</option>';
                             }
@@ -2726,17 +2726,17 @@ class Body{
                         echo'<option value="" disabled selected>Year</option></select>';
                     }
                 echo'<select name="monthFrom" id="monthFrom">';
-                if(isset($data['currentdate'])){
+                if(isset($data['currentDate'])&& isset($data['redirect'])){
                     echo'<option value="" disabled >Month</option>';
                     $tag='';
                     $to=0;
-                    if(intval($data['fromyearandmonth'][0])==intval($data['currentdate'][0])){
-                        $to=intval($data['currentdate'][1])+1;
+                    if(intval($data['fromyearandmonth'][0])==intval($data['currentDate'][0])){
+                        $to=intval($data['currentDate'][1])+1;
                     }else{
                         $to=13;
                     }
                     for ($i=(intval($data['joineddate'][0])==intval($data['fromyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
-                        if($i==$data['fromyearandmonth'][1]){
+                        if(isset($data['monthfrom']) && $i==intval($data['monthfrom'])){
                             $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
                         }else{
                             $tag.='<option value="'.$i.'">'.$i.'</option>';
@@ -2757,8 +2757,8 @@ class Body{
                     echo'<option value="" disabled selected>Year</option>';
                     $tag='';
                         for ($i=intval($data['joinedDate'][0]); $i < intval($data['currentDate'][0])+1; $i++) { 
-                            if($i==intval($data['joinedDate'][0])){
-                                $tag.='<option value="'.$i.'" >'.$i.'</option>';
+                            if(($data['yearto']) && $i==intval($data['yearto'])){
+                                $tag.='<option value="'.$i.'" selected>'.$i.'</option>';
                             }else{
                                 $tag.='<option value="'.$i.'" >'.$i.'</option>';
                             }
@@ -2773,17 +2773,17 @@ class Body{
                 
                 echo'
                 <select name="monthTo" id="monthTo">';
-                    if(isset($data['currentdate'])){
+                    if(isset($data['currentDate']) && isset($data['redirect'])){
                         echo'<option value="" disabled >Month</option>';
                         $tag='';
                         $to=0;
-                        if(intval($data['toyearandmonth'][0])==intval($data['currentdate'][0])){
-                            $to=intval($data['currentdate'][1])+1;
+                        if(intval($data['toyearandmonth'][0])==intval($data['currentDate'][0])){
+                            $to=intval($data['currentDate'][1])+1;
                         }else{
                             $to=13;
                         }
                         for ($i=(intval($data['joineddate'][0])==intval($data['toyearandmonth'][0]))?intval($data['joineddate'][1]):1; $i <$to ; $i++) { 
-                            if($i==$data['toyearandmonth'][1]){
+                            if(isset($data['monthto']) && $i==intval($data['monthto'])){
                                 $tag.='<option value="'.$i.'"selected>'.$i.'</option>';
                             }else{
                                 $tag.='<option value="'.$i.'">'.$i.'</option>';
@@ -2801,45 +2801,44 @@ class Body{
             <div class="selectBox" style="width:40%;height:100%;background-color:white;margin-right:2%;align-content:center;align-items:center;justify-content:center;display:flex" onClick="showCharts()">
                 <input type="submit" name="sub" value="Submit" style="font-family:poppins" class="getAnalysisButton">
             </div></form></div>'; 
-            echo'<table class="styled-table" id="reporttable">
+            if(isset($data['doughNut']) && count($data['doughNut']['products'])>0){
+                echo'<table class="styled-table" id="reporttable">
                 <thead>
                     <tr>
                         <th>Product name</th>
-                        <th style="text-align:center">Unit price (Rs.)</th>
-                        <th style="text-align:center">Quantity</th>
-                        <th style="text-align:right">Total (Rs.)</th>
+                        <th style="text-align:center">Quantity</th
                     </tr>
                 </thead>';
-                if(isset($data['products'])){
                     echo'<tbody>';
-                    //print_r($data['products']) ;
-                    $result=$data['products'];
+                    $names=$data['doughNut']['products'];
+                    $values=$data['doughNut']['values'];
                     $tag="";
                     $sum=0;
-                    foreach($result as $key=>$value){
+                    for ($i=0; $i < count($names); $i++) { 
                         $tag.='<tr>
-                        <td >'.$key.'</td>
-                        <td style="text-align:center">'.$value[0].'</td>
-                        <td style="text-align:center">'.$value[1].'</td>
-                        <td style="text-align:right" >'.number_format($value[0]*$value[1],2).'</td>
+                        <td >'.$names[$i].'</td>
+                        <td style="text-align:center">'.$values[$i].'</td>
                         </tr>';
-                        $sum+=$value[0]*$value[1];
+                        //$sum+=$value[0]*$value[1];
                     }
-                    $tag.='<tr>
-                    <td ></td>
-                    <td ></td>
-                    <td ></td>
-                    <td style="text-align:right" >'.number_format($sum,2).'</td>
-                    </tr>';
                     echo $tag;
-                    echo'</tbody>';
-
-                }    
-            echo '</table>';    
-                    echo'</div>
-                
-                
+                    echo'</tbody>';   
+                echo '</table>';
+                echo'<div class="orderRow" style="height:9%;margin-top:3%">
+                        <div class="orderColumn" style="display:flex;height:80%"><div style="min-width:25%;color:white;background-color:var(--table-header);margin-left:1%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px" ><label style="color:white"> Net Total (Rs):</label><label style="color:white"  id="totalRevenueLabel">'.number_format($data['totalRevenue'],2).'</label></div></div>
                 </div>';
+                echo'</div>'; 
+                
+                echo'<div style="display:flex;align-items:center;align-content:center;justify-content:center;margin-top:-5%">';
+                echo'<div style="height:130%;width:20%;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:10px;color:white;" onClick="submitReport()" class="generatePDF">';
+                //echo'<a href="../Reports/salesCompany">Generate PDF</a></div>';
+                echo'Generate Report</div>';
+            }
+            
+                
+                
+                
+                echo'</div>';
                 
                 
 

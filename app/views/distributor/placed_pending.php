@@ -69,7 +69,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                     <div class="details">
                                         <span><strong>Placed Date : '.$date.' </strong></span><br><br>
                                         <span><strong>Placed Time : '.$time.' </strong></span><br><br>
-                                        <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicleList\'">Assign Vehicle</button></span>
+                                        <span><button class="inside" onclick = "document.location.href=\''.BASEURL.'/orders/suitableVehicles\'">Assign Vehicle</button></span>
                                     </div>
                             
                                     <hr>

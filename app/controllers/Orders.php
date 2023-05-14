@@ -50,8 +50,8 @@ class Orders extends Controller{
         header('LOCATION: '.BASEURL.'/orders/dealer/canceled');
     }
 
-
-    /*...................................................Customer my reservation.............................................................*/
+    /*************************************************************CUSTOMER ORDERS******************************************************************/ 
+    /*....................................................Customer my reservation.................................................................*/
     //customer all past reservtions
     function customer_allreservations($error = null){
         $this->AuthorizeUser('customer');
@@ -76,6 +76,7 @@ class Orders extends Controller{
 
         //if there is error display the error message
         switch($error){
+            //rejected payslip upload successful message
             case "1":
                 $data['toast'] = ['type' => 'success', 'message' => "You've successfully uploaded your payslip."];
                 break;
@@ -97,13 +98,15 @@ class Orders extends Controller{
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'myreservation';
 
+        //get collecting method to display review type(Only delivery orders have review type)
         $data['collecting_method'] = $this->model('Customer')->getcollecting_method($order_id,$customer_id);
         $data['order_id'] = $order_id;
         $data['customer_id'] = $customer_id;
         if($error != null){
             $data['toast'] = ['type'=>'error', 'message'=>$error];
         }
-       
+    
+        //view of review form
         $this->view('customer/my_reservation/addreview', $data);
     }
 
@@ -117,24 +120,24 @@ class Orders extends Controller{
         if(isset($_POST['review_type'])){
             $review_type = $_POST['review_type'];
         }
-        //return if there is any errors(emppty fields)
+        //return if there is any errors(emppty fields) or insert review 
         $data['add_review_error'] = $this->model('Customer')->AddReview($order_id,$customer_id,$reviews,$review_type);
         if(!empty($data['add_review_error'])){
-            $this->customer_reviewform($order_id,$data['add_review_error']);
+            $this->customer_reviewform($order_id,$data['add_review_error']);  //in the same page with error message
         }
         else{
-            $this->customer_myreservation($order_id);
+            $this->customer_myreservation($order_id); //moves to myreservation page
         }    
        
     }
 
 
-    //cancel the reservation
+    //cancel the reservation(display refund form)
     function customer_cancelreservation($order_id,$error = null){
         $this->AuthorizeUser('customer');
 
-         //if there is error display the error message
-         switch($error){
+        //if there is error display the error message
+        switch($error){
             case "1":
                 $data['toast'] = ['type' => 'error', 'message' => "All fields are required"];
                 break;
@@ -144,16 +147,18 @@ class Orders extends Controller{
         $data['navigation'] = 'myreservation';
         $data['order_id'] = $order_id;
         $data['confirmation'] = ''; //to display popup confirmation
-        $this->view('customer/my_reservation/cancel_reservation', $data);
+        $this->view('customer/my_reservation/cancel_reservation', $data);  //display refund form
 
 
     }
 
-    //refund form data for update reservation table
+    //take refund form data and update reservation table
     function refund_bank_details($order_id){
         $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
+
+        //get form data
         if(isset($_POST['bank'])){
             $bank = $_POST['bank'];
         }else{
@@ -162,21 +167,102 @@ class Orders extends Controller{
         $branch = $_POST['branch'];
         $Acc_no = $_POST['Acc_no'];
         
-       
-
         $this->model('Customer')->add_refund_details($order_id, $bank,$branch,$Acc_no);
         if($bank == -1 || empty($branch) ||empty($Acc_no) ){
-            $this->customer_cancelreservation($order_id,1);
+            $this->customer_cancelreservation($order_id,1); //in the same page with error message
         }
         else{
-            $this->customer_allreservations(1);
+            $this->customer_allreservations(1);  //move to all reservations tab with success message
         }    
     }
 
-    /*.................Customer place reservation.................*/
+    /*............................................................Rejected payslip...............................................................*/ 
+
+    //display bank slip uploader for rejected payslips
+    function reject_bank_slip_upload($order_id,$dealer_id,$error=null){
+        $this->AuthorizeUser('customer');
+
+        //if there is error display the error message
+        switch($error){
+            //not upload bank slip
+            case "1":
+                $data['toast'] = ['type' => 'error', 'message' => "Please upload a bank slip image!"];
+                break;
+        }
+
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'myreservation';
+
+        $data['order_id'] = $order_id;
+        $data['dealer_id'] = $dealer_id;
+        //get bank details of relevant dealer
+        $data['bank_details'] = $this->model('Customer')->getDealerBankDetails_rejectpayment($dealer_id);
+        $data['confirmation'] = ''; //to display popup confirmation
+        
+        $this->view('customer/place_reservation/rejected_bank_slip_upload',$data);  //display bank slip uploader
+        
+    }
+
+    //get new bank slip and store when previous slip rejected
+    function get_rejected_bank_slip($order_id,$dealer_id){
+        $this->AuthorizeUser('customer');
+
+        $customer_id = $_SESSION['user_id'];
+        $data['navigation'] = 'myreservation';
+        
+        if(isset($_POST['submit_btn'])){
+            $file_name = $_FILES['slip_img']['name']; 
+            $file_type = $_FILES['slip_img']['type'];
+            $file_size = $_FILES['slip_img']['size'];
+            $temp_name = $_FILES['slip_img']['tmp_name'];
+
+            $image = getImageRename($file_name,$temp_name);  //timebind the image and rename
+            $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
+            move_uploaded_file($temp_name,$upload_to . $file_name);  //store the payslip ipayslips folder 
+
+
+            if($file_size<=0){
+                $this -> reject_bank_slip_upload($order_id,$dealer_id,1);  //if not upload any file display error message
+            }
+            else{
+                $this->model('Customer')->update_payment_slip($order_id,$image); //update reservation table with new payslip
+                $this->customer_myreservation($order_id,1); //move to myreservation tab with success message
+            }
+            
+        } 
+    }
+
+   
+
+    /*.........................................................Customer quota.................................................................... */
+  
+    function customer_quota(){
+        $this->AuthorizeUser('customer');
+
+        $data = array();
+        $customer_id = $_SESSION['user_id'];
+
+        // take quota information on each company
+        $data['companies_array'] = $this->model('Customer')->getcustomerquota($customer_id);
+
+        // get customer personal information and naviagation
+        $data['navigation'] = 'quota';
+        $this->view('customer/quota/quota',$data);   //display the quota details
+    }
+
+ 
+    /*..........................................................Customer place reservation........................................................*/
     //select brand,city and dealer
     function select_brand_city_dealer($error=null){
         $this->AuthorizeUser('customer');
+
+         //if there is error display the error message
+         switch($error){
+            //not selected brand,city,dealer error
+            case "1":
+                $data['toast'] = ['type' => 'error', 'message' => "Please fill all fields"];
+                break;
+        }
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
@@ -186,15 +272,11 @@ class Orders extends Controller{
         $data['dealers'] = $this->model('Customer')->getdealers();          //get all dealers for display
         $data['city'] = $this->model('Customer')->getCustomer($customer_id);  //get customer city for display
 
-        //not selected brand,city,dealer error
-        if($error != null){
-            $data['toast'] = ['type'=>'error', 'message'=>$error];
-        }
-
-        $this->view('customer/place_reservation/select_brand_city_dealer',$data);
+        $this->view('customer/place_reservation/select_brand_city_dealer',$data);  //display to select brand,city,dealer
 
     }
 
+    //display dealer dropdown ,dealers according to brand and city
     function filter_dealers($company_id=null,$city=null,$dealer=null){
         $this->AuthorizeUser('customer');
 
@@ -202,36 +284,32 @@ class Orders extends Controller{
         $data['navigation'] = 'placereservation';
         $data['dealers'] = $this->model('Customer')->getdealers($company_id,$city);  //get dealers according to selected company and city
         
-        $this -> view('customer/place_reservation/filter_dealers',$data);
+        $this -> view('customer/place_reservation/filter_dealers',$data);  //display dealer dropdown with relevant options
 
     }
 
-
+    //get brand,city,dealer values and store them in session variables
     function get_brand_city_dealer(){
         $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
-        
-
+        //get brand,city,dealer values
         if(isset($_POST['brand'])){$brand = $_POST['brand'];}else{$brand = null;}
         $city = $_POST['city'];
         if(isset($_POST['dealer'])){$dealer = $_POST['dealer'];}else{$dealer = null;}
-      
+
+        //declare session variables
         $_SESSION['company_id'] = $brand;
         $_SESSION['city'] = $city;
         $_SESSION['dealer_id'] = $dealer;
 
        if($brand == null || $dealer == null){
-            $error = "Please fill all fields";
-            $this->select_brand_city_dealer($error);
-            // $this -> select_products($brand,$city,$dealer);
-
+            $this->select_brand_city_dealer(1); //in the same page with error message
        }
        if($brand != null && $dealer != null){
-            // $this -> select_products($brand,$city,$dealer);
-            $this -> select_products();
+            $this -> select_products();  //move to select products page
        }
 
     }
@@ -240,39 +318,43 @@ class Orders extends Controller{
      function select_products($error=null){
         $this->AuthorizeUser('customer');
 
+        //if there is error display the error message
+        switch($error){
+            //not selected atleast one product
+            case "1":
+                $data['toast'] = ['type' => 'error', 'message' => "You must select at least one product"];
+                break;
+            //exceed quota limit error message
+            case "2":
+                $data['toast'] = ['type' => 'error', 'message' => "Your quota amount is exceeded!"];
+                break;
+        }
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
       
-       
-
+        //get brand,city,dealer from session
         $company_id = $_SESSION['company_id'];
-
         $city = $_SESSION['city'];
         $dealer_id = $_SESSION['dealer_id'];
 
-        
+        //get selected dealer selling products from database
         $data['products']= $this ->model('Customer')->getDealerProducts($dealer_id);
-
         $data['company_id'] = $company_id;
         $data['city'] = $city;
         $data['dealer_id'] = $dealer_id;
 
-        if($error != NULL){
-            $data['toast'] = ['type'=>'error', 'message'=>$error];
-        }
+        $this->view('customer/place_reservation/select_products',$data);  //display relevant dealer selling products
 
-
-        $this->view('customer/place_reservation/select_products',$data);
-
-        
     }
 
-    //get customer selected products 
+    //get customer selected products and insert into database
     function selected_products($dealer_id){
         $this->AuthorizeUser('customer');
 
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
+        //customer type to check quota
         $result = $this->model('Customer')->getCustomer($customer_id);
         $row = mysqli_fetch_assoc($result);
         $customer_type = $row['c_type'];
@@ -288,8 +370,8 @@ class Orders extends Controller{
            $remaining_weight = $quota_detail['remaining_weight'];
         }
 
+        //selected product details put into array
         $selected_products = array();
-
         foreach($products as $product){
             $product_id = $product['p_id'];
             $unit_price = $product['unit_price'];
@@ -300,28 +382,25 @@ class Orders extends Controller{
             }
         }
 
-      
         //check atleast one product is selected
         if(count($selected_products) > 0){
-            $_SESSION['order_products'] = $selected_products;
-            $total_weight_cylinders = $this->model('Customer')->products_total_weight();
+            $_SESSION['order_products'] = $selected_products;  //store the selected products in the session
+            $total_weight_cylinders = $this->model('Customer')->products_total_weight();   //total weight of selected cylinder products
             //check quota is active or not
             if($quota_state == 'ON'){
                 //check remaining quota exceed or not
                 if($total_weight_cylinders <= $remaining_weight ){
                     $this->select_payment_method();
                 }else{
-                   $error = "Your quota amount is exceeded!";
-                   $this->select_products($error);
+                   $this->select_products(2);  //in the same page with error message
                 }
             }else{
-                $this->select_payment_method();
+                $this->select_payment_method();  //move to select payment method
             }
                
         }
         else{
-            $error = "You must select at least one product";
-            $this->select_products($error);
+            $this->select_products(1);  //in the same page with error message
         }
 
     }
@@ -337,13 +416,13 @@ class Orders extends Controller{
         $row1 = mysqli_fetch_assoc($customer_details);
         $data['email'] = $row1['email'];
        
-        $data['selected_products']= $this ->model('Customer')->getSelectedProducts();
-        $data['dealer_keys'] = $this ->model('Customer')->getdealerpubkey($_SESSION['dealer_id']);
+        $data['selected_products']= $this ->model('Customer')->getSelectedProducts();  //get require details of selected products in session
+        $data['dealer_keys'] = $this ->model('Customer')->getdealerpubkey($_SESSION['dealer_id']); //get dealer keys for payment gateway
         if($error != null){
             $data['toast'] = $error;
         }
        
-        $this->view('customer/place_reservation/select_payment_method',$data);
+        $this->view('customer/place_reservation/select_payment_method',$data); //display to select payment method
     }
 
 
@@ -351,21 +430,24 @@ class Orders extends Controller{
     function bank_slip_upload($error=null){
         $this->AuthorizeUser('customer');
 
+        //if there is error display the error message
+        switch($error){
+            //not upload slip
+            case "1":
+                $data['toast'] = ['type' => 'error', 'message' => "Please upload a bank slip image!"];
+                break;
+        }
+
         $customer_id = $_SESSION['user_id'];
         $data['navigation'] = 'placereservation';
 
-     
-
         $data['bank_details'] = $this->model('Customer')->getDealerBankDetails();
         $data['confirmation'] = ''; //to display popup confirmation
-        if($error != null){
-            $data['toast'] = ['type'=>'error', 'message'=>$error];
-        }
-        
-        $this->view('customer/place_reservation/bank_slip_upload',$data);
+        $this->view('customer/place_reservation/bank_slip_upload',$data);  //display bank slip uploader
         
     }
 
+    //place reservation if bank slip upload sucessfully
     function get_bank_slip(){
         $this->AuthorizeUser('customer');
 
@@ -383,38 +465,28 @@ class Orders extends Controller{
             $temp_name = $_FILES['slip_img']['tmp_name'];
 
             $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
-
-            // $slip_image = array();
-            // array_push($slip_image,['file_name' => $file_name, 'temp_name' =>$temp_name]);
             $_SESSION['slip_img'] = ['file_name' => $file_name, 'temp_name' =>$temp_name];
             // move_uploaded_file($temp_name,$upload_to . $file_name);
 
-
+            //check bank slip upload or not
             if($file_size<=0){
-                $error = "Please upload a bank slip image!";
-                $this -> bank_slip_upload($error);
+                $this -> bank_slip_upload(1);
             }
             else{
-                // $this->model('Customer')->place_reservation($customer_type);  ///
-                // $this->model('Customer')->check_quota_state($customer_type);  ///
-                // $this->select_collecting_method();
-                //successfully payed
                 $dealer_id = $_SESSION['dealer_id'];
                 $products = $_SESSION['order_products'];
+                //place the reservation(insert reservation to db in Dealer model query)
                 $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Bank Deposit');
-                $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
-                $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
-                // $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
-                // $data['confirmation'] = '';
-                // $this->view('customer/place_reservation/collecting_method',$data);
-                header('LOCATION:'.BASEURL.'/Orders/select_collecting_method');
+                $_SESSION['order_id'] = $data['order_id']; //store the order id in session variable
+                $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota if active
+                header('LOCATION:'.BASEURL.'/Orders/select_collecting_method'); //move to select collecting method page
 
             }
             
         } 
     }
 
-    //display payment gateway
+    //place reservation if credit card payment sucessful
     function payment_gateway(){
        $this->AuthorizeUser('customer');
 
@@ -434,11 +506,10 @@ class Orders extends Controller{
         if($charge->make()){
             //successfully charged
             $products = $_SESSION['order_products'];
+             //place the reservation(insert reservation to db in Dealer model query)
             $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Credit card');
-            $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
-            $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
-            // $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
-            // $data['confirmation'] = '';
+            $_SESSION['order_id'] = $data['order_id']; //store the order id in session variable
+            $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota if active
             header('LOCATION:'.BASEURL.'/Orders/select_collecting_method');
 
         }else{
@@ -446,7 +517,7 @@ class Orders extends Controller{
             $data['toast'] = ['type' => 'error', 'message' => "Payment failed, Please check you card details"];
             $this->select_payment_method($data['toast']);
         }
-        // $this->view('customer/place_reservation/payment_gateway',$data);
+        
     }
 
     //select collecting method of reservation(display delivery charge in pop up)
@@ -467,7 +538,7 @@ class Orders extends Controller{
         $data['confirmation'] = ''; //to display popup confirmation
         $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
        
-        $this->view('customer/place_reservation/collecting_method',$data);
+        $this->view('customer/place_reservation/collecting_method',$data);  //display to select collecting method
         
     }
 
@@ -487,10 +558,11 @@ class Orders extends Controller{
         
 
         $data['selected_city'] = $_SESSION['city'];
-        $data['home_city'] = $row1['city'];
+        $data['home_city'] = $row1['city'];  //default city 
 
         $data['city'] = $row1['city'];
         $data['street'] = $row1['street'];
+
         if(isset($_POST['new_street'])){
             if($_POST['new_street']==null){
                 $data['error'] = 'Please enter your street';
@@ -507,17 +579,18 @@ class Orders extends Controller{
         $data['delivery_charge']= number_format($this->model('Customer')->get_delivery_charge($order_id,$data['street'],$data['city']),2);   //take delivery charge
         $data['confirmation'] = ''; //to display popup confirmation
 
-        echo json_encode($data);
+        echo json_encode($data);  //return new address and delivery charge
     }
 
+    //update reservation collecting method and unset session varables(end of the reservation process)
     function getcollecting_method($collecting_method,$delivery_city=null,$delivery_street=null,$delivery_charge=null){
         $this->AuthorizeUser('customer');
 
-        $_SESSION['collecting_method'] = $collecting_method;
+        $_SESSION['collecting_method'] = $collecting_method;  //store collecting method in session
         $order_id = $_SESSION['order_id']; 
 
         $this -> model('Customer')->insertcollectingmethod($order_id,$delivery_city,$delivery_street,$delivery_charge);
-        header('LOCATION:'.BASEURL.'/Dashboard/customer');
+        header('LOCATION:'.BASEURL.'/Dashboard/customer');  //move to dashboard
 
         //unset session variables of place_reservation
         unset($_SESSION['order_id']);
@@ -528,6 +601,7 @@ class Orders extends Controller{
         unset($_SESSION['collecting_method']);
     }
 
+    /****************************************************customer mails and notifications*********************************************************/ 
     function sendMailLateDelivery(){
         echo $this->model("Dealer")->sendMailonLateDelivery();
     }
@@ -547,102 +621,7 @@ class Orders extends Controller{
     }
 
 
-
-
-     //display bank slip uploader for rejected payslips
-     function reject_bank_slip_upload($order_id,$dealer_id,$error=null){
-        $this->AuthorizeUser('customer');
-
-        $customer_id = $_SESSION['user_id'];
-        $data['navigation'] = 'placereservation';
-
-        $data['order_id'] = $order_id;
-        $data['dealer_id'] = $dealer_id;
-        $data['bank_details'] = $this->model('Customer')->getDealerBankDetails_rejectpayment($dealer_id);
-        $data['confirmation'] = ''; //to display popup confirmation
-        if($error != null){
-            $data['toast'] = ['type'=>'error', 'message'=>$error];
-        }
-        
-        $this->view('customer/place_reservation/rejected_bank_slip_upload',$data);
-        
-    }
-
-    function get_rejected_bank_slip($order_id,$dealer_id){
-        $this->AuthorizeUser('customer');
-
-        $customer_id = $_SESSION['user_id'];
-        $customer_details = $this->model('Customer')->getCustomerImage($customer_id);
-        $row1 = mysqli_fetch_assoc($customer_details);
-        $customer_type = $row1['type'];
-
-        $data['navigation'] = 'placereservation';
-        
-        if(isset($_POST['submit_btn'])){
-           $file_name = $_FILES['slip_img']['name'];
-            $file_type = $_FILES['slip_img']['type'];
-            $file_size = $_FILES['slip_img']['size'];
-            $temp_name = $_FILES['slip_img']['tmp_name'];
-
-            $upload_to = 'C:/xampp/htdocs/mvc/public/img/payslips/';
-
-            $slip_image = array();
-            array_push($slip_image,['file_name' => $file_name, 'temp_name' =>$temp_name]);
-            $new_pay_slip = ['file_name' => $file_name, 'temp_name' =>$temp_name];
-
-            // if(isset($_FILES['image']['size']) && $_FILES['image']['size'] > 0){ 
-            //     $image_name = $_FILES['image']['name'];
-            //     $tmp_name = $_FILES['image']['tmp_name'];
-            // }
-            // move_uploaded_file($temp_name,$upload_to . $file_name);
-
-
-            if($file_size<=0){
-                $error = "Please upload a bank slip image!";
-                $this -> reject_bank_slip_upload($order_id,$dealer_id,$error);
-            }
-            else{
-                // $this->model('Customer')->place_reservation($customer_type);  ///
-                // $this->model('Customer')->check_quota_state($customer_type);  ///
-                // $this->select_collecting_method();
-                //successfully payed
-                // $dealer_id = $_SESSION['dealer_id'];
-                // $products = $_SESSION['order_products'];
-                // $data['order_id'] = $this->model('Dealer')->customerOrder($customer_id,$dealer_id,$products,'Bank Deposit');
-                // $_SESSION['order_id'] = $data['order_id']; //get the order id in session variable
-                // $this -> model('Customer')->update_remaining_weight($customer_type);   //update remaining weight of customer quota
-                // $data['toast'] = ['type' => 'success', 'message' => "Your payment was successfull"];
-                // $data['confirmation'] = '';
-                // $this->view('customer/place_reservation/collecting_method',$data);
-                // header('LOCATION:'.BASEURL.'/Orders/select_collecting_method');
-                $this->model('Customer')->update_payment_slip($order_id,$file_name);
-                $this->customer_myreservation($order_id,1);
-            }
-            
-        } 
-    }
-
-
-
-    /*..........................Customer quota......................... */
-  
-    function customer_quota(){
-        $this->AuthorizeUser('customer');
-
-        $data = array();
-        $customer_id = $_SESSION['user_id'];
-
-        // take quota information on each company
-        $data['companies_array'] = $this->model('Customer')->getcustomerquota($customer_id);
-
-        // get customer personal information and naviagation
-        $data['navigation'] = 'quota';
-        $this->view('customer/quota/quota',$data);
-    }
-
- 
-
-    /*..............................DISTRIBUTOR GAS ORDERS TAB.........................................*/
+    /*********************************************************DISTRIBUTOR GAS ORDERS TAB***********************************************************/
 
     // distributor -> phurchase order interface
      public function distributor($param=null, $error=null) {
@@ -793,6 +772,26 @@ class Orders extends Controller{
         $this->model('Distributor')->selectedVehicle($po_id,$vehicle_id);
         // navigate user to pending distributions
         header('Location: '.BASEURL.'/gasdistributions/pending_distributions/1');
+    }
+
+    // suitable vehicle list for gas orders 
+    public function suitableVehicles(){
+        $this->AuthorizeUser('distributor');
+
+        $user_id = $_SESSION['user_id'];
+        $data['navigation'] = 'distributions';
+
+        $distributor_details = $this->model('Distributor')->getDistributorImage($user_id);
+        $row = mysqli_fetch_assoc($distributor_details);
+        $data['image'] = $row['image'];
+
+        // previouse method
+        $data['suitablevehiclelist'] = $this->model("Distributor")->viewvehicle($user_id);
+        // $data['suitablevehiclelist'] = $this->model("Distributor")->getOnlyEligibleVehicles($po_id);
+        // var_dump($data['suitablevehiclelist']);
+        // $data['po_id'] = $po_id;
+        $this->view('distributor/suitable', $data);
+
     }
 
 
