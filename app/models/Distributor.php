@@ -910,7 +910,7 @@ class Distributor extends Model
 
         // mark the po as vehicle allocated
         $this->update('purchase_order',['vehicle_allocated'=>1],"po_id = $po_id");
-
+        
         // destroy the session of nominates vehicles
         unset($_SESSION['nominated_vehicles']);
     }
