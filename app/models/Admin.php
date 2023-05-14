@@ -529,10 +529,39 @@ class Admin extends Model
                 $mail = new Mail('admin@gasify.com',$customer['email'],$user_name,$type,$mailbody,$link=null);
                 $mail->send();
             }
+
+            // check the order state is equals to 'accepted' if so send an email
+            $order = mysqli_fetch_assoc($this->read('reservation',"order_id = $order_id"));
+            if(strtoupper($order['order_state']) == 'ACCEPTED'){
+                // send an email
+                $customer = mysqli_fetch_assoc($this->read('users',"user_id = ".$order['customer_id']));
+                $user_name = $customer['first_name'].' '.$customer['last_name'];
+                $type = "Gasify: Order has been accepted!";
+                // get template
+                if(strtoupper($order['collecting_method']) == 'PICKUP'){
+                    $mailbody = file_get_contents('./emailTemplates/orderacceptedpickup.php');
+                }else{
+                    $mailbody = file_get_contents('./emailTemplates/orderaccepteddelivery.php');
+                }
+                // prepare replacements
+                $swap_reorder = array(
+                    "{RECIEVER_NAME}"=> $user_name,
+                    "{ORDER_ID}"=> $order_id,
+                    "{ORDER_LINK}"=> BASEURL.'/orders/customer_myreservation/'.$order_id
+                );
+                // replace
+                foreach(array_keys($swap_reorder) as $key){
+                    if(strlen($key) > 2 && trim($key) != ""){
+                        $mailbody = str_replace($key,$swap_reorder[$key],$mailbody);
+                    }
+                }
+                $mail = new Mail('admin@gasify.com',$customer['email'],$user_name,$type,$mailbody,$link=null);
+                $mail->send();
+            }
         }else{
             date_default_timezone_set("Asia/Colombo");
             if($validity){
-                $this->update('reservation',['order_state'=>"Refunded",'refund_verification'=>'verified','refund_date'=>date('Y-m-d'),'refund_time'=>date('H:i:s')],"order_id = $order_id");
+                $this->update('reservation',['refund_verification'=>'verified','refund_date'=>date('Y-m-d'),'refund_time'=>date('H:i:s')],"order_id = $order_id");
             }else{
                 $this->update('reservation',['refund_verification'=>'rejected'],"order_id = $order_id");
                 // handle the bouncing of rejected and pending 
@@ -563,6 +592,8 @@ class Admin extends Model
                 $mail->send();
             }
         }
+
+        
     }
 
     // to take backups (not implemented)

@@ -273,5 +273,5 @@ class Delivery extends Model
         }else{
             return null;
         }
-    }
+    }/*public function getDeliveredProduct*/
 }

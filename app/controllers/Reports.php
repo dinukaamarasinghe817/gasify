@@ -172,7 +172,7 @@ class Reports extends Controller{
 
     public function admin(){
         $this->AuthorizeUser('admin');
-
+        date_default_timezone_set("Asia/Colombo");
         if(isset($_POST['start_date'])){
             $start_date = $_POST['start_date'];
         }else{
@@ -242,6 +242,29 @@ class Reports extends Controller{
         $data['tableArr']=$arr;
         //echo json_encode($data);
         $this->view('company/reports/purchaseorder',$data);
+    }
+    public function deliveryPersonDeliveries(){
+        $this->AuthorizeUser('delivery');
+        $deliveryid = $_SESSION['user_id'];
+        //$conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $data=[];
+        $from = $_POST["from"];
+        $to = $_POST["to"];
+        $revenue=$_POST['revenue'];
+        $tableArr = $_POST["tableArr"];
+        $arr=json_decode($tableArr,true);
+        $data['from']=$from;
+        $data['to']=$to;
+        $data['revenue']=$revenue;
+        $data['tableArr']=$arr;
+        $deliverydetails=$this->model('Delivery')->getDeliveryImage($deliveryid);
+        $row = mysqli_fetch_assoc($deliverydetails);
+        $data['name']=$row['first_name'].' '.$row['last_name'];
+        $distributor='';
+        //$data['distname']=$distributor;
+        //$data['distname']=$distributor['name'] ;
+        //echo json_encode($data);
+        $res =$this->view('delivery/reports/salesreport',$data);
     }
 
 }

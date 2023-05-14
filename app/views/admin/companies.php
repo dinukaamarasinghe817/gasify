@@ -55,7 +55,7 @@ $sidebar = new Navigation('admin','companies');
                                 <td>'.$company['distributor_count'].'</td>
                                 <td>'.$company['dealer_count'].'</td>
                                 <td>'.number_format($company['quantity'],2).' Kg</td>
-                                <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/company/'.$company['user_id'].'/profile/admin/companyprofile" >View Profile</a></td>
+                                <td><a class="anchor-button" href="'.BASEURL.'/profile/preview/company/'.$company['user_id'].'/profile/admin/companyprofile" >Profile</a></td>
                             </tr>';
                             }
                             ?>

@@ -369,20 +369,22 @@ class Distributor extends Model
 
         if(mysqli_num_rows($query2)>0) {
             // first check whether the distributor has the required stock
-            $query3 = $query2;
+            // $query3 = $query2;
             $flag = true; // assume stock is available
-            while($row3 = mysqli_fetch_assoc($query3)){
-                $row4 = mysqli_fetch_assoc($this->read('distributor_keep',"distributor_id = $user_id AND product_id = ".$row3['product_id']));
-                if($row4['quantity'] < $row3['quantity']){
+            while($row2 = mysqli_fetch_assoc($query2)){
+                $row3 = mysqli_fetch_assoc($this->read('distributor_keep',"distributor_id = $user_id AND product_id = ".$row2['product_id']));
+                if($row3['quantity'] < $row2['quantity']){
                     $flag = false;
                 }
             }
 
-            if($flag){  //reduce stock and add it to the dealer
+            if($flag){
+                // reduce stock and add it to the dealer
                 $query2 = $this->Query("SELECT i.product_id as product_id, i.quantity as quantity, o.dealer_id as dealer_id
                 FROM purchase_order o inner join purchase_include i
                 ON o.po_id = i.po_id 
                 WHERE o.distributor_id='{$user_id}' AND o.po_id = '{$distribution_id}'");
+                // echo $flag;
                 while($row2 = mysqli_fetch_assoc($query2)) {
                     // echo 'ok';
                     $dealer_id = $row2['dealer_id'];
