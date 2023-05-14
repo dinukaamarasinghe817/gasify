@@ -378,8 +378,7 @@ class Distributor extends Model
                 }
             }
 
-            if($flag){  
-                //reduce stock from distirubtor keep and add it to the dealer keep
+            if($flag){  //reduce stock and add it to the dealer
                 $query2 = $this->Query("SELECT i.product_id as product_id, i.quantity as quantity, o.dealer_id as dealer_id
                 FROM purchase_order o inner join purchase_include i
                 ON o.po_id = i.po_id 
@@ -910,7 +909,7 @@ class Distributor extends Model
 
         // mark the po as vehicle allocated
         $this->update('purchase_order',['vehicle_allocated'=>1],"po_id = $po_id");
-        
+
         // destroy the session of nominates vehicles
         unset($_SESSION['nominated_vehicles']);
     }
