@@ -46,10 +46,10 @@ class Dealer extends Model
     public function dashboard($dealer_id,$option){
         $data = [];
         // stock information
-        $result = $this->Query("SELECT dealer_keep.quantity as quantity, product.name as name
+        $result = $this->Query("SELECT dealer_keep.quantity as quantity, product.name as name, dealer_keep.reorder_flag as reorder_flag
         FROM dealer_keep INNER JOIN product 
         ON dealer_keep.product_id = product.product_id 
-        WHERE dealer_id = '$dealer_id'");
+        WHERE dealer_id = '$dealer_id' ORDER BY reorder_flag DESC");
         $data['stock'] = $result;
 
         // pending order information
@@ -276,7 +276,7 @@ class Dealer extends Model
             case "currentstock":
                 $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
                 p.weight as product_weight,p.unit_price as unit_price,d.quantity as quantity, d.reorder_flag as reorder_flag
-                FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
+                FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id ORDER BY reorder_flag DESC");
                 return $result;
                 break;
             case "purchaseorder":
@@ -289,9 +289,9 @@ class Dealer extends Model
             case "pohistory":
                 // get the dealer's stock information
                 $query2 = $this->Query("SELECT * FROM purchase_order WHERE  dealer_id = '{$dealer_id}' ORDER BY CASE po_state
-                WHEN 'pending' THEN 1
-                WHEN 'accepted' THEN 2
-                WHEN 'completed' THEN 3
+                WHEN 'Pending' THEN 1
+                WHEN 'Accepted' THEN 2
+                WHEN 'Completed' THEN 3
                 ELSE 4
               END, po_id DESC");
                 $purchase_orders = array();
@@ -638,7 +638,16 @@ class Dealer extends Model
         if($tab2 != null){
             $sql .= "AND collecting_method = '$tab2'";
         }
-        $sql .= " ORDER BY r.order_id ASC";
+        
+        if(strtoupper($tab1) == 'CANCELED'){
+            $sql .= " ORDER BY CASE refund_verification 
+            WHEN 'pending' THEN 2
+            WHEN 'verified' THEN 3
+            ELSE 1
+          END, r.order_id ASC";
+        }else{
+            $sql .= " ORDER BY r.order_id ASC";
+        }
         $result = $this->Query($sql);
 
         while($order = mysqli_fetch_assoc($result)){

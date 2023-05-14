@@ -16,6 +16,7 @@ class StockHTML{
                                         <th>Weight</th>
                                         <th>Unit Price</th>
                                         <th>Quantity</th>
+                                        <th>Availability</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -31,6 +32,13 @@ class StockHTML{
                                     <td>'.$row['product_weight'].' Kg</td>
                                     <td>Rs. '.number_format($row['unit_price'],2).'</td>
                                     <td>'.$row['quantity'].'</td>
+                                    <td>';
+                                    if($row['reorder_flag'] == 0){
+                                        $output .= '<img class="reorder_warning" src="'.BASEURL.'/public/img/icons/reorder_ok.png">';
+                                    }else{
+                                        $output .= '<img class="reorder_warning" src="'.BASEURL.'/public/img/icons/reorder_warn.png">';
+                                    }
+                                    $output .= '</td>
                                 </tr>';
                 }
 

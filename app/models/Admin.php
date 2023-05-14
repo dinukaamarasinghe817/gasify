@@ -561,7 +561,7 @@ class Admin extends Model
         }else{
             date_default_timezone_set("Asia/Colombo");
             if($validity){
-                $this->update('reservation',['order_state'=>"Refunded",'refund_verification'=>'verified','refund_date'=>date('Y-m-d'),'refund_time'=>date('H:i:s')],"order_id = $order_id");
+                $this->update('reservation',['refund_verification'=>'verified','refund_date'=>date('Y-m-d'),'refund_time'=>date('H:i:s')],"order_id = $order_id");
             }else{
                 $this->update('reservation',['refund_verification'=>'rejected'],"order_id = $order_id");
                 // handle the bouncing of rejected and pending 

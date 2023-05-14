@@ -49,11 +49,12 @@ class Body{
                                 }
                         echo    '</div>
                         </div>
-                        <table class="styled-table">
+                        <table class="styled-table dashboardstock">
                             <thead>
                                 <tr>
                                     <th>Product Name</th>
                                     <th>Current Stock</th>
+                                    <th>Availability</th>
                                 </tr>
                             </thead>
                             <tbody>';
@@ -66,9 +67,13 @@ class Body{
                                             $qty = $row["quantity"];
                                             $stock .=   '<tr>
                                                             <td>'.$name.'</td>
-                                                            <td>'.$qty.'</td>
-                                                        </tr>';
-                                        
+                                                            <td>'.$qty.'</td>';
+                                                        
+                                            if($row['reorder_flag'] == 0){
+                                                $stock .= '<td><img class="reorder_warning" src="'.BASEURL.'/public/img/icons/reorder_ok.png"></td></tr>';
+                                            }else{
+                                                $stock .= '<td><img class="reorder_warning" src="'.BASEURL.'/public/img/icons/reorder_warn.png"></td></tr>';
+                                            }
                                         }
                                         echo $stock;
 
@@ -148,7 +153,7 @@ class Body{
         echo '<div class="top-panel">
             '.$stockheader.'
         </div>
-        <div class="content-data">';
+        <div class="content-data dealerstock">';
         $stock = new StockHTML('dealer'.$data['tab'],$data);
         echo '</div></section>';
     }
