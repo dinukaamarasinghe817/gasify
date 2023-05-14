@@ -398,17 +398,6 @@
     text-align: right;
 }
 
-/* .body-content .po tr{
-    background-color: var(--table-gray);
-}
-.body-content table.po tr:nth-last-child(1):hover,
-.body-content table.po tr:nth-last-child(2):hover{
-    background-color: transparent;
-}
-.body-content table.po tr td:nth-child(3) input{
-    padding: 8px;
-    border-radius: 5px;
-} */
 
 .poitem{
     display: flex;
@@ -558,4 +547,11 @@
 }
 .content-data.reports .pdfform button{
     margin-left: auto;
+}
+.content-data.dealerstock{
+    padding: 0;
+}
+.dashboardstock .reorder_warning{
+    height: 30px;
+    width: 30px;
 }

@@ -47,12 +47,12 @@ class GasDistributions extends Controller {
         // serve customers on fcfs with newly added stock
         $this->fcfsDealer($distribution_id);
 
-        // if(isset($data['toast'])) {
-        //     $this->pending_distributions($data['toast']);
-        // }elseif(isset($data['success'])) {
-        //     $this->pending_distributions($data['success']);
-        // }
-        // $this->pending_distributions();
+        if(isset($data['toast'])) {
+            $this->pending_distributions($data['toast']);
+        }elseif(isset($data['success'])) {
+            $this->pending_distributions($data['success']);
+        }
+        $this->pending_distributions();
     }
 
         // gas distributions - completed gas distributions

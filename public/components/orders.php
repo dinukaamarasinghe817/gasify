@@ -19,7 +19,7 @@ class Order{
                         if($active1 == 'pending' && !($payment == 'verified' && $stock == 'available')){
                             echo '<button onclick="orderverification(\''.$payment.'\',\''.$stock.'\'); return false;" class="btn gray">Info</button>';
                         }else if($active1 == 'pending'){
-                            echo '<button onclick="location.href = \''.BASEURL.'/orders/dealeraccept/'.$order['order_id'].'\'" class="btn">Accept</button>';
+                            echo '<button onclick="location.href = \''.BASEURL.'/orders/dealeraccept/'.$order['order_id'].'\'" class="btn"></button>';
                         }else if($active1 == 'accepted' && $active2 == 'pickup'){
                             // pick up orders
                             echo '<button onclick="location.href = \''.BASEURL.'/orders/dealerissue/'.$order['order_id'].'\'" class="btn">Issue</button>';

@@ -14,7 +14,7 @@ $sidebar = new Navigation('admin','analysis');
         <h2>Sales Analysis</h2>
         <form action="<?php echo BASEURL;?>/analysis/admin" class="filters" method="POST">
                 <div class="input half start"><label>From</label><input type="date" onchange="this.form.submit()" name="start_date" value="<?php echo $data['start_date']?>" max="<?php echo $data['end_date']?>"  min="<?php echo $data['date_joined'] ?>"></div>
-                <div class="input half end"><label>To</label><input type="date" onchange="this.form.submit()" name="end_date" value="<?php echo $data['end_date']?>" max="<?php echo $max_date;?>" min="<?php echo $data['start_date'] ?>"></div>
+                <div class="input half end"><label>To</label><input type="date" onchange="this.form.submit()" name="end_date" value="<?php echo $data['end_date']?>" max="<?php echo date('Y-m-d');?>" min="<?php echo $data['start_date'] ?>"></div>
                 <div class="input half select"><label>Filter By Company</label>
                     <select id="period" name="company" onchange="this.form.submit()" class="dropdowndate">
                         <option  value="all" selected >All</option>
