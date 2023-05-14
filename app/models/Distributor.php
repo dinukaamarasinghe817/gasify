@@ -378,8 +378,8 @@ class Distributor extends Model
                 }
             }
 
-            if($flag){
-                // reduce stock and add it to the dealer
+            if($flag){  //reduce stock from distirubtor keep and add it to the dealer keep
+                // get order details
                 $query2 = $this->Query("SELECT i.product_id as product_id, i.quantity as quantity, o.dealer_id as dealer_id
                 FROM purchase_order o inner join purchase_include i
                 ON o.po_id = i.po_id 
@@ -388,9 +388,10 @@ class Distributor extends Model
                     // echo 'ok';
                     $dealer_id = $row2['dealer_id'];
                     $product_id = $row2['product_id'];
-                    $o_quantity = $row2['quantity'];
+                    $o_quantity = $row2['quantity']; //requested product quantity
 
                     // update dealer keeping stock according to the order capacities
+                    // get quantities of each product
                     $query3 = $this->Query("SELECT product_id, quantity FROM dealer_keep WHERE dealer_id = '{$dealer_id}' AND product_id = '{$product_id}'");
                     if(mysqli_num_rows($query3)>0) {
                         $row3 = mysqli_fetch_assoc($query3);
@@ -402,10 +403,12 @@ class Distributor extends Model
                     } else {
                         // if dealer current capacity is empty
                         $dealer_quantity = $o_quantity;
-                        $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
+                        // $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity,reorder_level, lead_time, po_counter, reorder_flag) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}', NULL, NULL, NULL, NULL)");
+                        $this->Query("INSERT INTO dealer_keep (dealer_id, product_id, quantity) VALUES ('{$dealer_id}', '{$product_id}', '{$dealer_quantity}'");
                     }
                     
                     // update distributor keeping capacities
+                    // get quantities of each product
                     $query4 = $this->Query("SELECT product_id, quantity FROM distributor_keep WHERE distributor_id = '{$user_id}' AND product_id = '{$product_id}'");
                     if(mysqli_num_rows($query4)>0) {
                         $row4 = mysqli_fetch_assoc($query4);
