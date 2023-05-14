@@ -29,6 +29,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         </div>
                         <div class="title">Brand</div>
                         <div class="drop-down">
+                            <!-- brand dropdown -->
                             <div class="brand_dropdown">
                                 <select name="brand" id="brand" class="branddropdown dropdowndate" onchange = "get_select_value('brand','city','dealer');">
                                        
@@ -73,19 +74,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
                                         }
 
 
-                                        
-                                        //old correct one
-                                        // if(isset($data["brands"])){
-                                        //     $result1 = $data["brands"];
-                                        //     while($brands = mysqli_fetch_assoc($result1)){           
-                                        //         $name = $brands["name"];
-                                        //         $c_id = $brands["company_id"];
-
-                                        //         echo "<option class = 'company_id' value = $c_id id= $c_id > $name </option>";
-                                        //     }
-                                        // }
-
-
                                     ?>
                             
                                 </select>
@@ -101,6 +89,7 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         </div>
                         <div class="title">City</div>
                         <div class="drop-down">
+                            <!-- city dropdown -->
                             <div class="city_drapdown">
                                 <select name="city" id="city" class="citydropdown dropdowndate" onchange = "get_select_value('brand','city','dealer');">
                                 <?php
@@ -144,27 +133,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
 
                                     }
 
-
-
-
-
-
-                                    //old correct one
-                                    // if(isset($data["city"])){
-                                    //     $result1 = $data["city"];
-                                    //     while($customer_city = mysqli_fetch_assoc($result1)){           
-                                    //         $customer_current_city = $customer_city["city"];
-                                    //         echo "<option value = '$customer_current_city' id=$customer_current_city selected hidden>$customer_current_city</option>";
-                                    //     }
-                                    // }
-                                    
-                                            
-                                    //     foreach (CITIES as $city){
-                                    //     if($city != $data['city']){
-
-                                    //             echo "<option value=$city id=$city >$city</option>";
-                                    //     }
-                                    //     }
                                     ?>
                                 
                                 </select>
@@ -180,27 +148,11 @@ $sidebar = new Navigation('customer',$data['navigation']);
                         </div>
                         <div class="title">Dealer</div>
                         <div class="drop-down">
+                            <!-- dealer dropdown -->
                             <div class="dealer_dropdown">
                                 <select name="dealer" id="dealer" class="dealerdropdown dropdowndate" onchange = "get_dealer_value('dealer');">
                                    
                                     <?php 
-
-                                        // if(isset($data["dealers"])){
-                                        //     $result1 = $data["dealers"];
-                                        //     //if no dealers found selected city and brand
-                                        //     if(mysqli_num_rows($result1)==0){
-                                        //         echo '<option value="-1" disabled >No Dealers Found</option>';
-                                        //     }
-                                        //     while($dealers = mysqli_fetch_assoc($result1)){
-                                        //         $name = $dealers["d_name"];
-                                        //         $dealer_id = $dealers["dealer_id"];
-                                        //         echo "<option value = $dealer_id id= $dealer_id> $name </option>";
-                                        //     }
-
-                                            
-
-                                            
-                                        // }
 
                                         if(isset($data["dealers"])){
                                             $result1 = $data["dealers"];
@@ -256,12 +208,6 @@ $sidebar = new Navigation('customer',$data['navigation']);
                 
             </form>
         </div>
-
-        <!-- <div class="bottom"> -->
-            
-            <!-- <a href="<?php echo BASEURL; ?>/Products/select_products" class="btn">Next</a> -->
-            <!-- <button type="submit" onclick="check_values('brand','city','dealer');">Next</button> -->
-        <!-- </div> -->
         
     </div>
 
