@@ -323,6 +323,9 @@ function showCharts() {
 }
 function submitReport() {
     var formData = new FormData();
+    var select = document.getElementById('distNames');
+    var index = select.selectedIndex;
+    var distributorName = select.options[index].getAttribute("key");
     formData.append("distID", document.getElementById('distNames').value);
     formData.append("from", document.getElementById('yearFrom').value + "." + document.getElementById('monthFrom').value);
     formData.append("to", document.getElementById('yearTo').value + "." + document.getElementById('monthTo').value);

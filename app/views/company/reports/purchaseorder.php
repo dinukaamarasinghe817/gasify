@@ -16,7 +16,7 @@ $pdf->Ln(20);
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(30,5,'Company ID',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": GS001",0,0,'l');
+$pdf->Cell(90,5,": ".$data['companyID'],0,0,'l');
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(20,5,'Time',0,0,'l');
 $pdf->SetFont('Times', '', 12);
@@ -24,7 +24,7 @@ $pdf->Cell(0,5,": ".date("h:i:sa"),0,1,'l');
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(30,5,'Company Name',0,0,'l');
 $pdf->SetFont('Times', '', 12);
-$pdf->Cell(90,5,": Litro Gas",0,0,'l');
+$pdf->Cell(90,5,": ".$data['companyName'],0,0,'l');
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(20,5,'Date',0,0,'l');
 $pdf->SetFont('Times', '', 12);
@@ -33,6 +33,28 @@ $x = $pdf->GetX();
 $y = $pdf->GetY();
 $pdf->Line($x, $y, $x+165, $y);
 $pdf->Ln(10);
+
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(30,5,'Placed date',0,0,'l');
+$pdf->SetFont('Times', '', 12);
+$pdf->Cell(90,5,": ".date('F j, Y', strtotime($data['placedDate'])),0,0,'l');
+$pdf->SetFont('Times', '', 12);
+$pdf->Cell(20,5,'Placed time',0,0,'l');
+$pdf->Cell(90,5,": ".date('g:i A', strtotime($data['placedTime'])),0,0,'l');
+
+$pdf->Line($x, $y, $x+165, $y);
+$pdf->Ln(10);
+
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(30,5,'Order ID',0,0,'l');
+$pdf->SetFont('Times', '', 12);
+$pdf->Cell(90,5,": ".$data['orderID'],0,0,'l');
+$pdf->SetFont('Times', '', 12);
+$pdf->Cell(20,5,'Distributor',0,0,'l');
+$pdf->Cell(90,5,": ".$data['distID'],0,0,'l');
+$pdf->Line($x, $y, $x+165, $y);
+$pdf->Ln(10);
+
 
 $pdf->SetFont('Times', 'B', 12);
 $pdf->Cell(25,5,'Product name',0,0,'L');
