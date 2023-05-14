@@ -166,7 +166,7 @@ class Distributor extends Model
        $this->Query("UPDATE distributor_vehicle SET availability ='Yes' WHERE distributor_id = '{$user_id}' AND vehicle_no = '{$vehicle_no}'");
        // reset the vehicle eligibility of products
        $query = $this->read('distributor_vehicle_capacity',"vehicle_no = '$vehicle_no'");
-       while($row = $query->mysqli_fetch_assoc($query)){
+       while($row = mysqli_fetch_assoc($query)){
             $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$row['capacity']],"vehicle_no = '$vehicle_no' AND product_id = ".$row['product_id']);
        }
         $data['success'] = ['type' => "success", 'message'=> "Vehicle released"];
@@ -456,11 +456,11 @@ class Distributor extends Model
                 $newNeweligibility = $row3['remain_eligibility']+$newaddition;
 
                 // update the new eligible amount for affected products
-                $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$newNeweligibility],"vehicle_no = $vehicle_no AND product_id = $product_affected");
+                $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$newNeweligibility],"vehicle_no = '$vehicle_no' AND product_id = $product_affected");
             }
             // update the new eligible amount for considering product
             $final_eligibility_considering = $remain_eligibility_considering+$row1['quantity'];
-            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$final_eligibility_considering],"vehicle_no = $vehicle_no AND product_id = $product_affected");
+            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$final_eligibility_considering],"vehicle_no = '$vehicle_no' AND product_id = $product_affected");
         }
     }
 
@@ -901,7 +901,8 @@ class Distributor extends Model
         // get the cost per km
         $row = mysqli_fetch_assoc($this->read('distributor_vehicle',"distributor_id = $user_id AND vehicle_no = '$vehicle_no'"));
         // get the total cost to distribute using given vehicle
-        $cost = $row['fuel_consumption']*$distance*$total_weight;
+        // $cost = $row['fuel_consumption']*$distance*$total_weight;
+        $cost = $row['fuel_consumption']*$distance;
         return $cost;
     }
 
@@ -933,7 +934,7 @@ class Distributor extends Model
         foreach($final_eligibility_selected as $key => $value){
             $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$value],"vehicle_no = '$vehicle_no' AND product_id = $key");
         }
-
+        $this->update('distributor_vehicle',['availability'=>"No"],"vehicle_no = '$vehilce_no'");
         // mark the po as vehicle allocated
         $this->update('purchase_order',['vehicle_allocated'=>$vehicle_no],"po_id = $po_id");
 

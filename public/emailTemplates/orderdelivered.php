@@ -213,7 +213,7 @@
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
         <div style="font-family: 'Montserrat',sans-serif; font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-          <p style="line-height: 140%;">Your order with <strong>Order ID : {ORDER_ID}</strong> has been <strong>delivered successfully</strong> and don't forget to share your experience with us by providing a review. If you've any issues with the order contact us using the support section. Check the details of your order using the link below.</p>
+          <p style="line-height: 140%;">Your order with <strong>Order ID : {ORDER_ID}</strong> has been <strong>delivered successfully</strong> and don't forget to share your experience with us by providing a review. If you've any issues with the order contact us using the support section. Please confirm whether you received your order using the link below.</p>
         </div>
 
       </td>
@@ -228,7 +228,7 @@
         
 <div align="center">
     <a href="{ORDER_LINK}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #fc9b44; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">View Order<br /></span></span>
+      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">Confirm<br /></span></span>
     </a>
 </div>
 
