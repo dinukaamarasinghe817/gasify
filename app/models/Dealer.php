@@ -94,7 +94,7 @@ class Dealer extends Model
                 users u2
                 ON r.delivery_id = u2.user_id
                 WHERE r.dealer_id = $dealer_id
-                AND r.order_state = 'dispatched'";
+                AND r.order_state = 'Dispatched'";
         $result = $this->Query($sql);
         if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_assoc($result)){
