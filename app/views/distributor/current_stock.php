@@ -40,12 +40,10 @@ $user_id = $_SESSION['user_id'];
                                     <th>Item Name</th>
                                     <th>Weight</th>
                                     <th>Current Quantity</th>
-                                   
                                 </tr>
                             </thead>
-                            
                             <tbody>';
-            
+                        // get distributor current stock details
                         $stocks = $data['currentstock'];
                         foreach($stocks as $stock) {
                             $row1 = $stock['stockinfo'];

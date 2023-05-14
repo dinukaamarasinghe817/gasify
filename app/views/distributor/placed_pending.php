@@ -44,8 +44,9 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                 <div class="accordion new">
                         <?php
+                        // get pending gas orders details
                             $pendingorders = $data['pendingorders'];
-                            if(count($pendingorders)>0) {
+                            if(count($pendingorders)>0) { //if pending gas orders are available
                                 foreach($pendingorders as $pendingorder) {
                                     $row1 = $pendingorder['pendinginfo'];
                                     $capacities = $pendingorder['capacities'];
@@ -88,13 +89,13 @@ $sidebar = new Navigation('distributor',$data['navigation']);
 
                                             <tbody>';
                                             $total = 0;
-
+                                            // get product details
                                             foreach($capacities as $capacity) {
                                                 $row2 = $capacity;
 
                                                 $unit_price = $row2['unit_price'];
                                                 $quantity = $row2['quantity'];
-                                                $subtotal = $unit_price * $quantity;
+                                                $subtotal = $unit_price * $quantity; //calculate the subtotals
                                             
                                                 $output .= '
                                                 <tr>
@@ -105,7 +106,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                                     <td>'.$row2['quantity'].'</td>
                                                     <td>'.number_format($subtotal,2).'</td>    
                                                 </tr>';
-                                                $total += $subtotal;
+                                                $total += $subtotal; //calculate the total
                                             }
                                             $output.='
                                                 <tr>
@@ -122,7 +123,7 @@ $sidebar = new Navigation('distributor',$data['navigation']);
                                 </div>';
                                 echo $output;
                                 }
-                            }else {
+                            }else { //if the pending gas orders are not available
                                 $output = '';
                                 $output = '</table>';
                                 $output .= '<p class="nofoundtxt">No records found</p>';

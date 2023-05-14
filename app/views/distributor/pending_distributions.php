@@ -25,8 +25,9 @@ $sidebar = new Navigation('distributor', $data['navigation']);
             <div class="middle">
                 <div class="accordion new">
                     <?php 
+                    // pending gas distirbutions details
                         $pendings = $data['pending_distributions'];
-                        if(count($pendings)>0) {
+                        if(count($pendings)>0) { //if pending gas distributions are available
                             foreach($pendings as $pending) {
                                 $row1 = $pending['pendinginfo'];
                                 $capacities = $pending['capacities'];
@@ -73,12 +74,13 @@ $sidebar = new Navigation('distributor', $data['navigation']);
 
                                             <tbody>';
                                             $total = 0;
+                                            // get product details
                                             foreach($capacities as $capacity) {
                                                 $row2 = $capacity;
 
                                                 $unit_price = $row2['unit_price'];
                                                 $quantity = $row2['quantity'];
-                                                $subtotal = $unit_price * $quantity;
+                                                $subtotal = $unit_price * $quantity; //calculate subtotals
 
                                                 $output .= '
                                                 <tr>
@@ -89,7 +91,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                     <td>'.$row2['quantity'].'</td>
                                                     <td>'.number_format($subtotal,2).'</td>
                                                 </tr>';
-                                                $total += $subtotal;           
+                                                $total += $subtotal;   // calculate the totals
                                             }
                                             $output.='
                                                 <tr>
@@ -102,6 +104,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                                 </tr>
                                             </tbody>
                                         </table>';
+                                        // if the vehicle is allocated then display the distribution done button
                                         if($row1['vehicle_allocated'] != ""){
                                             $output .= '<button class="btn4" onclick = "document.location.href=\''.BASEURL.'/gasdistributions/donepending/'.$distribution_id.'\'">Distribution Done</button>';
                                         }
@@ -109,7 +112,7 @@ $sidebar = new Navigation('distributor', $data['navigation']);
                                 </div>';
                                 echo $output;
                             } 
-                        }else {
+                        }else { //if pending gas orders are not available
                             $output = '';
                             $output = '</table>';
                             $output .= '<p class="nofoundtxt">No records found</p>';

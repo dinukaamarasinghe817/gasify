@@ -26,12 +26,6 @@ class GasDistributions extends Controller {
                 $data['toast'] = ['type' => 'success', 'message' => "Vehicle assigned successfully!"];
                 break;
         }
-        // if($error != null) {
-        //     $data['toast'] = ['type' => 'error', 'message' => $error];
-        // }
-        // if($success != null) {
-        //     $data['success'] = $success;
-        // }
 
         $data['pending_distributions']= $this->model("Distributor")->pendingdistributions($user_id);
         $this->view('distributor/pending_distributions', $data);

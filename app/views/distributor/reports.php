@@ -29,6 +29,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
         
                 <div class="middle">
+                    <!-- time breakdown -->
                     <?php echo'
                     <form action ="'.BASEURL.'/reports/distributor" method="POST">
                     
@@ -60,6 +61,7 @@ $user_id = $_SESSION['user_id'];
                     ?>
 
                     <?php
+                    // get details of completed distributions
                     $records = $data['distributions'];
                     
                     $output = '
@@ -74,7 +76,7 @@ $user_id = $_SESSION['user_id'];
                             </tr>
                         </thead>
                         <tbody>';
-                    
+                            // if completed orders are available
                         if(count($records)>0) {
                             foreach($records as $record) {
                                 $row1 = $record['completedinfo'];
@@ -98,7 +100,7 @@ $user_id = $_SESSION['user_id'];
                             }
                             $output .= '
                             </tbody></table>';
-                        }else {
+                        }else { //if completed orders are not available
                             $output .= '</table>';
                             $output .= '<p class="nofoundtxt">No records found</p>';
                         }
