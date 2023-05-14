@@ -452,15 +452,20 @@ class Distributor extends Model
             while($row3 = mysqli_fetch_assoc($query3)){
                 $product_affected = $row3['product_id'];
                 // adjust  eligible capacities of all the products of the current vehicle
-                $newaddition = floor(($row3['capacity']*$row1['quantity'])/$total_capacity_product_consideing);
+                $newaddition = ceil(($row3['capacity']*$row1['quantity'])/$total_capacity_product_consideing);
                 $newNeweligibility = $row3['remain_eligibility']+$newaddition;
-
+                if($newNeweligibility > $row3['capacity']){
+                    $newNeweligibility = $row3['capacity'];
+                }
                 // update the new eligible amount for affected products
                 $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$newNeweligibility],"vehicle_no = '$vehicle_no' AND product_id = $product_affected");
             }
             // update the new eligible amount for considering product
             $final_eligibility_considering = $remain_eligibility_considering+$row1['quantity'];
-            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$final_eligibility_considering],"vehicle_no = '$vehicle_no' AND product_id = $product_affected");
+            if($final_eligibility_considering > $total_capacity_product_consideing){
+                $final_eligibility_considering = $total_capacity_product_consideing;
+            }
+            $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$final_eligibility_considering],"vehicle_no = '$vehicle_no' AND product_id = $product_considering");
         }
     }
 
@@ -934,7 +939,7 @@ class Distributor extends Model
         foreach($final_eligibility_selected as $key => $value){
             $this->update('distributor_vehicle_capacity',['remain_eligibility'=>$value],"vehicle_no = '$vehicle_no' AND product_id = $key");
         }
-        $this->update('distributor_vehicle',['availability'=>"No"],"vehicle_no = '$vehilce_no'");
+        $this->update('distributor_vehicle',['availability'=>"No"],"vehicle_no = '$vehicle_no'");
         // mark the po as vehicle allocated
         $this->update('purchase_order',['vehicle_allocated'=>$vehicle_no],"po_id = $po_id");
 
