@@ -652,7 +652,7 @@ class Body{
                                         <table class="requestProducts" style="margin-top:1%;width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="z-index:1">Product ID </th>
+                                                    <th style="z-index:1">Product name </th>
                                                     <th style="z-index:1">Quantity</th>
                                                 </tr>
                                             </thead>
