@@ -275,7 +275,7 @@ class Dealer extends Model
         switch($tab){
             case "currentstock":
                 $result = $this->Query("SELECT p.product_id as product_id,p.name as product_name,p.image as image,
-                p.weight as product_weight,p.unit_price as unit_price,d.quantity as quantity
+                p.weight as product_weight,p.unit_price as unit_price,d.quantity as quantity, d.reorder_flag as reorder_flag
                 FROM product p INNER JOIN dealer_keep d ON p.product_id = d.product_id WHERE d.dealer_id = $dealer_id");
                 return $result;
                 break;
