@@ -202,9 +202,13 @@ class Reports extends Controller{
     }
     public function salesCompany(){
         $this->AuthorizeUser('company');
-
+        $company_details = $this->model('Company')->getCompanyImage($_SESSION['user_id']);
+        $row = mysqli_fetch_assoc($company_details);
+        
         //$conn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
         $data=[];
+        $data['companyName'] = $row['name'];
+        $data['companyID']=$row['company_id'];
         $distID = $_POST["distID"];
         $from = $_POST["from"];
         $to = $_POST["to"];
@@ -227,13 +231,16 @@ class Reports extends Controller{
     }
     public function companySale(){
         $this->AuthorizeUser('company');
-
+        $company_details = $this->model('Company')->getCompanyImage($_SESSION['user_id']);
+        $row = mysqli_fetch_assoc($company_details);
         $data=[];
         $orderID= $_POST["orderID"];
         $distID = $_POST["distID"];
         $placedDate = $_POST["placedDate"];
         $placedTime = $_POST["placedTime"];
         $tableArr = $_POST["tableArr"];
+        $data['companyName'] = $row['name'];
+        $data['companyID']=$row['company_id'];
         $arr=json_decode($tableArr,true);
         $data['orderID']=$orderID;
         $data['distID']=$distID;
