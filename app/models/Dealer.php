@@ -920,7 +920,7 @@ class Dealer extends Model
     } 
 
     // Dealer's sales report information
-    public function getReportInfo($start_date,$end_date,$order_by){
+    public function getReportInfo($start_date,$end_date,$order_by,$catagory_by){
         $user_id = $_SESSION["user_id"];
         if($start_date == null){
             $row = mysqli_fetch_assoc($this->read('users',"user_id = $user_id"));
@@ -966,13 +966,18 @@ class Dealer extends Model
         $tabledata = array();
         foreach($productsquantity as $key => $value){
             $row = mysqli_fetch_assoc($this->read('product',"product_id = $key"));
-            array_push($tabledata,['id'=>$key,'image'=>$row['image'],'name'=>$row['name'],'sold_quantity'=>$value,'total_earnings'=>$productsearnings[$key],'percentage'=>$percentage[$key]]);
+            if($catagory_by == 'all'){
+                array_push($tabledata,['id'=>$key,'image'=>$row['image'],'name'=>$row['name'],'catagory'=>$row['type'],'sold_quantity'=>$value,'total_earnings'=>$productsearnings[$key],'percentage'=>$percentage[$key]]);
+            }elseif(strtoupper($catagory_by) == strtoupper($row['type'])){
+                array_push($tabledata,['id'=>$key,'image'=>$row['image'],'name'=>$row['name'],'catagory'=>$row['type'],'sold_quantity'=>$value,'total_earnings'=>$productsearnings[$key],'percentage'=>$percentage[$key]]);
+            }
         }
         usort($tabledata,'cmp');
         $data['tabledata'] = $tabledata;
         $data['start_date'] = $start_date;
         $data['end_date'] = $end_date;
         $data['filter'] = $order_by;
+        $data['catagory'] = $catagory_by;
         return $data;
     } 
 

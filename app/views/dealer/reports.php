@@ -29,6 +29,28 @@ $sidebar = new Navigation('dealer','reports');
                     ?>
                 </select>
             </div>
+            <div class="input half"><label>Filter by</label>
+                <select id="city" class="dropdowndate" name="catagory" class="half" onchange="this.form.submit()">';
+                    <?php
+                        if($data['catagory'] == 'cylinder'){
+                            echo '
+                            <option value="all">All</option>
+                            <option value="cylinder" selected >Cylinders</option>
+                            <option value="accessory">Accessories</option>';
+                        }elseif($data['catagory'] == 'accessory'){
+                            echo '
+                            <option value="all">All</option>
+                            <option value="cylinder"  >Cylinders</option>
+                            <option value="accessory" selected>Accessories</option>';
+                        }else{
+                            echo '
+                            <option value="all" selected>All</option>
+                            <option value="cylinder"  >Cylinders</option>
+                            <option value="accessory">Accessories</option>';
+                        }
+                    ?>
+                </select>
+            </div>
         </form>
         <div class="content-data reports">
             <!-- <div class="chart">
@@ -39,6 +61,7 @@ $sidebar = new Navigation('dealer','reports');
                     <tr>
                         <th>Product</th>
                         <th>Product Name</th>
+                        <th>Catagory</th>
                         <th>Sold Quantity</th>
                         <th>Total Earnings</th>
                         <th>Percentage</th>
@@ -52,6 +75,7 @@ $sidebar = new Navigation('dealer','reports');
                         '<tr>
                             <td><img class="littleproduct" src="'.BASEURL.'/public/img/products/'.$row['image'].'"></td>
                             <td>'.$row['name'].'</td>
+                            <td>'.ucwords($row['catagory']).'</td>
                             <td>'.number_format($row['sold_quantity']).'</td>
                             <td>Rs.'.number_format($row['total_earnings'],2).'</td>
                             <td>'; 
@@ -63,7 +87,7 @@ $sidebar = new Navigation('dealer','reports');
                 </tbody>
             </table>
             <br>
-            <form class="pdfform" action="<?php echo BASEURL ?>/reports/salesdealer/<?php echo $data['start_date']?>/<?php echo $data['end_date']?>/<?php echo $data['filter']?>" method="POST">
+            <form class="pdfform" action="<?php echo BASEURL ?>/reports/salesdealer/<?php echo $data['start_date']?>/<?php echo $data['end_date']?>/<?php echo $data['filter']?>/<?=$data['catagory']?>" method="POST">
                 <button class="btn-blue">Generate PDF</button>
             </form>
             <!-- <a class="anchor-button" href="/reports/salesdealer/">Generate PDF</a> -->
